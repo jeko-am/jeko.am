@@ -375,7 +375,6 @@ export default function SignupPage() {
       setAnimating(false);
     }, 250);
   }, [step, validateStep]);
-  }, [step, fullName, email, password, confirmPassword, age, city, state, country, dogName, breed, petType, dogAge, weightKg]);
 
   const goBack = useCallback(() => {
     setDirection('backward');

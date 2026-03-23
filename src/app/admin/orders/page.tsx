@@ -104,8 +104,9 @@ function formatDateTime(iso: string): string {
   });
 }
 
-function formatAddress(addr: Address | null): string {
+function formatAddress(addr: Address | string | null): string {
   if (!addr) return 'N/A';
+  if (typeof addr === 'string') return addr;
   return [addr.line1, addr.line2, addr.city, addr.state, addr.postal_code, addr.country]
     .filter(Boolean)
     .join(', ');

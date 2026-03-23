@@ -123,11 +123,11 @@ export default function ProductDetailPage() {
         setProduct(data);
         const { data: rel } = await supabase
           .from('products')
-          .select('id, name, slug, short_description, price, compare_at_price, images, status')
+          .select('*')
           .eq('status', 'active')
           .neq('id', data.id)
           .limit(4);
-        if (rel) setRelated(rel);
+        if (rel) setRelated(rel as Product[]);
       }
       setLoading(false);
     }

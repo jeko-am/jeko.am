@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useCallback, useRef, FormEvent } from "react";
+import { useState, useEffect, useCallback, useRef, FormEvent, Suspense } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
@@ -8,6 +8,8 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { useAuth } from "@/lib/auth";
 import { supabase } from "@/lib/supabase";
+
+export const dynamic = 'force-dynamic';
 
 // ---------------------------------------------------------------------------
 // Types
