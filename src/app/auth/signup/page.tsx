@@ -101,7 +101,6 @@ function StepProgress({ current, completed }: { current: number; completed: numb
         {STEP_LABELS.map((label, i) => {
           const isDone = completed.includes(i);
           const isCurrent = i === current;
-          const isFuture = !isDone && !isCurrent;
 
           return (
             <div key={label} className="flex flex-col items-center relative z-10">
@@ -258,7 +257,6 @@ export default function SignupPage() {
   const [dogAge, setDogAge] = useState('');
   const [weightKg, setWeightKg] = useState('');
   const [gender, setGender] = useState('Unknown');
-  const [profilePhoto, setProfilePhoto] = useState<File | null>(null);
   const [profilePhotoPreview, setProfilePhotoPreview] = useState('');
   const [uploadingPhoto, setUploadingPhoto] = useState(false);
   const [uploadedPhotoUrl, setUploadedPhotoUrl] = useState('');
@@ -303,7 +301,6 @@ export default function SignupPage() {
     const file = e.target.files?.[0];
     if (!file) return;
 
-    setProfilePhoto(file);
     setProfilePhotoPreview(URL.createObjectURL(file));
 
     // Upload immediately
@@ -377,6 +374,7 @@ export default function SignupPage() {
       setStep((s) => Math.min(s + 1, 3));
       setAnimating(false);
     }, 250);
+  }, [step, validateStep]);
   }, [step, fullName, email, password, confirmPassword, age, city, state, country, dogName, breed, petType, dogAge, weightKg]);
 
   const goBack = useCallback(() => {

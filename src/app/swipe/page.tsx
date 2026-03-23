@@ -771,7 +771,6 @@ export default function SwipePage() {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [loadingCandidates, setLoadingCandidates] = useState(true);
   const [allExhausted, setAllExhausted] = useState(false);
-  const offsetRef = useRef(0);
   const loadingMoreRef = useRef(false);
 
   // Stats
@@ -856,7 +855,7 @@ export default function SwipePage() {
 
         // Build query — prefer looking_for_mate, same city, same breed
         // We fetch in two passes: first looking_for_mate=true, then the rest
-        let allCandidates: PetCandidate[] = [];
+        const allCandidates: PetCandidate[] = [];
 
         // Pass 1: looking_for_mate candidates
         const q1 = supabase
