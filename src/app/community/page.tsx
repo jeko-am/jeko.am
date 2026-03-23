@@ -1,15 +1,12 @@
 "use client";
 
-import { useState, useEffect, useCallback, useRef, FormEvent, Suspense } from "react";
+import { useState, useEffect, useCallback, useRef, FormEvent } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { useSearchParams } from "next/navigation";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { useAuth } from "@/lib/auth";
 import { supabase } from "@/lib/supabase";
-
-export const dynamic = 'force-dynamic';
 
 // ---------------------------------------------------------------------------
 // Types
@@ -1693,7 +1690,6 @@ function EmptyState({ activeTab }: { activeTab: FeedTab }) {
 
 export default function FeedPage() {
   const { user, isAdmin, loading: authLoading } = useAuth();
-  const searchParams = useSearchParams();
 
   const [posts, setPosts] = useState<Post[]>([]);
   const [likedPostIds, setLikedPostIds] = useState<Set<number>>(new Set());
@@ -1705,11 +1701,6 @@ export default function FeedPage() {
   const [error, setError] = useState<string | null>(null);
   const [activeTab, setActiveTab] = useState<FeedTab>("all");
   const [showCreateSheet, setShowCreateSheet] = useState(false);
-
-  // Track highlighted post from URL
-  const highlightPostId = searchParams.get("post")
-    ? Number(searchParams.get("post"))
-    : null;
 
   // -----------------------------------------------------------------------
   // Fetch pet profile
@@ -2036,9 +2027,6 @@ export default function FeedPage() {
   // Render helpers
   // -----------------------------------------------------------------------
   const showSkeleton = authLoading || loading;
-
-  // Suppress unused var lint (highlightPostId is available for future scroll-to-post)
-  void highlightPostId;
 
   // =======================================================================
   // UNIFIED LAYOUT (Header + Footer on all screen sizes)
