@@ -85,6 +85,7 @@ const CloseIcon = () => (
 export default function Header({ content }: { content?: any }) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
+  const [mobileActiveDropdown, setMobileActiveDropdown] = useState<string | null>(null);
   const [scrolled, setScrolled] = useState(false);
 
   const logoText = content?.logo_text ?? "PURE";
@@ -203,17 +204,46 @@ export default function Header({ content }: { content?: any }) {
       {/* Mobile Menu Overlay */}
       {mobileMenuOpen && (
         <div className="lg:hidden bg-deep-green border-t border-white/10">
-          <nav className="flex flex-col px-6 py-6 gap-1">
+          <nav className="flex flex-col px-6 py-6 gap-0">
             {navItems.map((item) => (
-              <Link
-                key={item.label}
-                href={item.href}
-                className="text-white text-[18px] font-rubik font-medium py-3 flex items-center justify-between border-b border-white/10 hover:opacity-80 transition-opacity"
-                onClick={() => setMobileMenuOpen(false)}
-              >
-                <span>{item.label}</span>
-                {item.hasDropdown && <ChevronDown />}
-              </Link>
+              <div key={item.label}>
+                {item.hasDropdown ? (
+                  <>
+                    <button
+                      onClick={() => setMobileActiveDropdown(mobileActiveDropdown === item.label ? null : item.label)}
+                      className="w-full text-white text-[18px] font-rubik font-medium py-3 flex items-center justify-between border-b border-white/10 hover:opacity-80 transition-opacity text-left"
+                    >
+                      <span>{item.label}</span>
+                      <ChevronDown />
+                    </button>
+                    {mobileActiveDropdown === item.label && (
+                      <div className="bg-deep-green/80 border-b border-white/10">
+                        {item.dropdown.map((sub) => (
+                          <Link
+                            key={sub.label}
+                            href={sub.href}
+                            className="block px-6 py-2.5 text-white text-[16px] hover:bg-white/10 transition-colors border-b border-white/5"
+                            onClick={() => {
+                              setMobileMenuOpen(false);
+                              setMobileActiveDropdown(null);
+                            }}
+                          >
+                            {sub.label}
+                          </Link>
+                        ))}
+                      </div>
+                    )}
+                  </>
+                ) : (
+                  <Link
+                    href={item.href}
+                    className="text-white text-[18px] font-rubik font-medium py-3 flex items-center justify-between border-b border-white/10 hover:opacity-80 transition-opacity block w-full"
+                    onClick={() => setMobileMenuOpen(false)}
+                  >
+                    <span>{item.label}</span>
+                  </Link>
+                )}
+              </div>
             ))}
 
             <div className="border-b border-white/10" />
