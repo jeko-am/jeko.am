@@ -13,7 +13,7 @@ export default function HeroSection({ content }: { content?: Record<string, any>
   return (
     <>
     <section
-      className="relative w-full overflow-hidden min-h-[480px] lg:min-h-[600px] pt-[76px] lg:pt-[92px]"
+      className="relative w-full overflow-hidden min-h-[480px] lg:min-h-[600px] pt-[120px] lg:pt-[140px]"
     >
       {/* Background image - fills entire section */}
       <div className="absolute inset-0">

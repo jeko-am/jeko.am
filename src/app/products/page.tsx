@@ -82,7 +82,7 @@ export default function ProductsPage() {
   return (
     <>
       <Header />
-      <main className="pt-24">
+      <main className="pt-[120px]">
         {/* Hero Banner */}
         <section className="bg-deep-green py-16 text-center relative zigzag-bottom">
           <div className="max-w-[1200px] mx-auto px-4">

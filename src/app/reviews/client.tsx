@@ -168,7 +168,7 @@ export default function ReviewsPageClient({ sections }: ReviewsPageClientProps) 
         <div data-section-index={0} data-section-name="Hero">
           <section
             className="relative w-full overflow-hidden"
-            style={{ minHeight: "520px", paddingTop: "80px" }}
+            style={{ minHeight: "520px", paddingTop: "120px" }}
           >
             <div className="absolute inset-0">
               <Image
