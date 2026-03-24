@@ -1,7 +1,8 @@
 'use client';
 
 import { supabase } from '@/lib/supabase';
-import { Fragment, useEffect, useState, useCallback } from 'react';
+import { useEffect, useState, useCallback, useRef, Fragment } from 'react';
+import { exportOrdersToCSV, exportSelectedOrdersToCSV } from '@/lib/order-export';
 
 // ---------------------------------------------------------------------------
 // Types
@@ -112,6 +113,50 @@ function formatAddress(addr: Address | string | null): string {
     .join(', ');
 }
 
+// Helper function to extract address from notes field
+function extractAddressFromNotes(notes: string | null, type: 'shipping' | 'billing'): string {
+  if (!notes) return 'N/A';
+  
+  try {
+    const match = notes.match(new RegExp(`${type.charAt(0).toUpperCase() + type.slice(1)} Address: (.*?)(?:, |$)`));
+    if (match && match[1]) {
+      const addressJson = match[1].replace(/,$/, ''); // Remove trailing comma if present
+      const address = JSON.parse(addressJson);
+      if (typeof address === 'object' && address !== null) {
+        return [address.line1, address.line2, address.city, address.state, address.postal_code, address.country]
+          .filter(Boolean)
+          .join(', ');
+      }
+    }
+  } catch (error) {
+    console.warn('Failed to parse address from notes:', error);
+  }
+  
+  return 'N/A';
+}
+
+// Helper function to extract customer info from notes field
+function extractCustomerFromNotes(notes: string | null): { name: string; email: string; phone: string } {
+  const defaultCustomer = { name: 'Unknown', email: '', phone: '' };
+  
+  if (!notes) return defaultCustomer;
+  
+  try {
+    const customerMatch = notes.match(/Customer: ([^,]+), Email: ([^,]+), Phone: ([^,]+)/);
+    if (customerMatch) {
+      return {
+        name: customerMatch[1] || 'Unknown',
+        email: customerMatch[2] || '',
+        phone: customerMatch[3] || '',
+      };
+    }
+  } catch (error) {
+    console.warn('Failed to parse customer from notes:', error);
+  }
+  
+  return defaultCustomer;
+}
+
 // ---------------------------------------------------------------------------
 // Component
 // ---------------------------------------------------------------------------
@@ -126,6 +171,12 @@ export default function AdminOrdersPage() {
   const [error, setError] = useState<string | null>(null);
   const [expandedOrderId, setExpandedOrderId] = useState<string | null>(null);
   const [updatingStatusId, setUpdatingStatusId] = useState<string | null>(null);
+
+  // Bulk operations state
+  const [selectedOrders, setSelectedOrders] = useState<Set<string>>(new Set());
+  const [bulkStatus, setBulkStatus] = useState<OrderStatus | ''>('');
+  const [showBulkActions, setShowBulkActions] = useState(false);
+  const [bulkUpdating, setBulkUpdating] = useState(false);
 
   // Filters
   const [statusFilter, setStatusFilter] = useState<OrderStatus | 'all'>('all');
@@ -223,6 +274,67 @@ export default function AdminOrdersPage() {
   };
 
   // -------------------------------------------------------------------
+  // Bulk operations
+  // -------------------------------------------------------------------
+
+  const toggleOrderSelection = (orderId: string) => {
+    setSelectedOrders((prev) => {
+      const newSet = new Set(prev);
+      if (newSet.has(orderId)) {
+        newSet.delete(orderId);
+      } else {
+        newSet.add(orderId);
+      }
+      return newSet;
+    });
+  };
+
+  const toggleAllOrdersSelection = () => {
+    if (selectedOrders.size === orders.length) {
+      setSelectedOrders(new Set());
+    } else {
+      setSelectedOrders(new Set(orders.map((o) => o.id)));
+    }
+  };
+
+  const bulkUpdateStatus = async () => {
+    if (!bulkStatus || selectedOrders.size === 0) return;
+
+    setBulkUpdating(true);
+    try {
+      const { error: updateError } = await supabase
+        .from('orders')
+        .update({ status: bulkStatus, updated_at: new Date().toISOString() })
+        .in('id', Array.from(selectedOrders));
+
+      if (updateError) throw updateError;
+
+      setOrders((prev) =>
+        prev.map((o) =>
+          selectedOrders.has(o.id) ? { ...o, status: bulkStatus, updated_at: new Date().toISOString() } : o
+        )
+      );
+
+      setSelectedOrders(new Set());
+      setBulkStatus('');
+      alert(`Successfully updated ${selectedOrders.size} orders to ${bulkStatus}`);
+    } catch (err) {
+      alert(err instanceof Error ? err.message : 'Failed to update orders');
+    } finally {
+      setBulkUpdating(false);
+    }
+  };
+
+  const exportAllOrders = () => {
+    exportOrdersToCSV(orders);
+  };
+
+  const exportSelectedOrders = () => {
+    const selectedOrderData = orders.filter((o) => selectedOrders.has(o.id));
+    exportSelectedOrdersToCSV(selectedOrderData);
+  };
+
+  // -------------------------------------------------------------------
   // Expand / collapse row
   // -------------------------------------------------------------------
 
@@ -242,7 +354,19 @@ export default function AdminOrdersPage() {
           <h1 className="text-2xl font-bold text-gray-900">Orders</h1>
           <p className="text-sm text-gray-500 mt-1">Manage and track customer orders</p>
         </div>
-        <span className="text-sm text-gray-500">{totalCount} order{totalCount !== 1 ? 's' : ''} total</span>
+        <div className="flex items-center gap-3">
+          <button
+            onClick={exportAllOrders}
+            disabled={orders.length === 0}
+            className="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed text-sm font-medium flex items-center gap-2"
+          >
+            <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+            </svg>
+            Export All ({orders.length})
+          </button>
+          <span className="text-sm text-gray-500">{totalCount} order{totalCount !== 1 ? 's' : ''} total</span>
+        </div>
       </div>
 
       {/* Filters */}
@@ -325,6 +449,59 @@ export default function AdminOrdersPage() {
         )}
       </div>
 
+      {/* Bulk Actions */}
+      {selectedOrders.size > 0 && (
+        <div className="bg-deep-green/5 border border-deep-green/20 rounded-xl p-4">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-3">
+              <span className="text-sm font-medium text-deep-green">
+                {selectedOrders.size} order{selectedOrders.size !== 1 ? 's' : ''} selected
+              </span>
+              <button
+                onClick={exportSelectedOrders}
+                className="px-3 py-1 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors text-sm font-medium flex items-center gap-1"
+              >
+                <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                </svg>
+                Export Selected
+              </button>
+            </div>
+            
+            <div className="flex items-center gap-3">
+              <select
+                value={bulkStatus}
+                onChange={(e) => setBulkStatus(e.target.value as OrderStatus)}
+                className="px-3 py-1 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-deep-green/30 focus:border-deep-green"
+              >
+                <option value="">Update status...</option>
+                <option value="pending">Pending</option>
+                <option value="processing">Processing</option>
+                <option value="shipped">Shipped</option>
+                <option value="delivered">Delivered</option>
+                <option value="cancelled">Cancelled</option>
+                <option value="refunded">Refunded</option>
+              </select>
+              
+              <button
+                onClick={bulkUpdateStatus}
+                disabled={!bulkStatus || bulkUpdating}
+                className="px-3 py-1 bg-deep-green text-white rounded-lg hover:bg-deep-green/90 transition-colors disabled:opacity-50 disabled:cursor-not-allowed text-sm font-medium"
+              >
+                {bulkUpdating ? 'Updating...' : 'Update Selected'}
+              </button>
+              
+              <button
+                onClick={() => setSelectedOrders(new Set())}
+                className="px-3 py-1 text-gray-600 hover:bg-gray-100 rounded-lg transition-colors text-sm"
+              >
+                Clear Selection
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
       {/* Error */}
       {error && (
         <div className="bg-red-50 border border-red-200 rounded-xl p-4 flex items-center gap-3">
@@ -360,6 +537,14 @@ export default function AdminOrdersPage() {
             <table className="w-full text-sm">
               <thead>
                 <tr className="border-b border-gray-200 bg-gray-50/80">
+                  <th className="w-12 px-4 py-3 text-center">
+                    <input
+                      type="checkbox"
+                      checked={selectedOrders.size === orders.length && orders.length > 0}
+                      onChange={toggleAllOrdersSelection}
+                      className="rounded border-gray-300 text-deep-green focus:ring-deep-green/30"
+                    />
+                  </th>
                   <th className="text-left px-4 py-3 font-semibold text-gray-600 text-xs uppercase tracking-wider">Order #</th>
                   <th className="text-left px-4 py-3 font-semibold text-gray-600 text-xs uppercase tracking-wider">Customer</th>
                   <th className="text-left px-4 py-3 font-semibold text-gray-600 text-xs uppercase tracking-wider">Date</th>
@@ -374,34 +559,68 @@ export default function AdminOrdersPage() {
                   const isExpanded = expandedOrderId === order.id;
                   const customerName = order.customers
                     ? `${order.customers.first_name} ${order.customers.last_name}`
-                    : 'Unknown';
+                    : extractCustomerFromNotes(order.notes).name;
 
                   return (
                     <Fragment key={order.id}>
                       {/* Main row */}
                       <tr
-                        onClick={() => toggleExpand(order.id)}
-                        className={`cursor-pointer transition-colors ${isExpanded ? 'bg-deep-green/[0.03]' : 'hover:bg-gray-50'}`}
+                        className={`transition-colors ${isExpanded ? 'bg-deep-green/[0.03]' : 'hover:bg-gray-50'}`}
                       >
-                        <td className="px-4 py-3 font-medium text-deep-green">{order.order_number}</td>
-                        <td className="px-4 py-3">
+                        <td className="px-4 py-3 text-center">
+                          <input
+                            type="checkbox"
+                            checked={selectedOrders.has(order.id)}
+                            onChange={(e) => {
+                              e.stopPropagation();
+                              toggleOrderSelection(order.id);
+                            }}
+                            onClick={(e) => e.stopPropagation()}
+                            className="rounded border-gray-300 text-deep-green focus:ring-deep-green/30"
+                          />
+                        </td>
+                        <td 
+                          onClick={() => toggleExpand(order.id)}
+                          className="px-4 py-3 font-medium text-deep-green cursor-pointer"
+                        >
+                          {order.order_number}
+                        </td>
+                        <td 
+                          onClick={() => toggleExpand(order.id)}
+                          className="px-4 py-3 cursor-pointer"
+                        >
                           <div>{customerName}</div>
                           {order.customers?.email && (
                             <div className="text-xs text-gray-400">{order.customers.email}</div>
                           )}
                         </td>
-                        <td className="px-4 py-3 text-gray-600">{formatDate(order.created_at)}</td>
-                        <td className="px-4 py-3">
+                        <td 
+                          onClick={() => toggleExpand(order.id)}
+                          className="px-4 py-3 text-gray-600 cursor-pointer"
+                        >
+                          {formatDate(order.created_at)}
+                        </td>
+                        <td 
+                          onClick={() => toggleExpand(order.id)}
+                          className="px-4 py-3 cursor-pointer"
+                        >
                           <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${STATUS_COLORS[order.status]}`}>
                             {order.status.charAt(0).toUpperCase() + order.status.slice(1)}
                           </span>
                         </td>
-                        <td className="px-4 py-3">
+                        <td 
+                          onClick={() => toggleExpand(order.id)}
+                          className="px-4 py-3 cursor-pointer"
+                        >
                           <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${PAYMENT_STATUS_COLORS[order.payment_status]}`}>
                             {order.payment_status.charAt(0).toUpperCase() + order.payment_status.slice(1)}
                           </span>
                         </td>
-                        <td className="px-4 py-3 text-right font-medium">{formatCurrency(order.total)}</td>
+                        <td 
+                          onClick={() => toggleExpand(order.id)}
+                          className="px-4 py-3 text-right font-medium cursor-pointer"
+                        >
+                          {formatCurrency(order.total)}</td>
                         <td className="px-4 py-3">
                           <svg
                             className={`w-4 h-4 text-gray-400 transition-transform ${isExpanded ? 'rotate-180' : ''}`}
@@ -510,14 +729,14 @@ export default function AdminOrdersPage() {
                                     <h4 className="text-xs font-semibold text-gray-600 uppercase tracking-wider mb-2">
                                       Shipping Address
                                     </h4>
-                                    <p className="text-sm text-gray-700">{formatAddress(order.shipping_address)}</p>
+                                    <p className="text-sm text-gray-700">{extractAddressFromNotes(order.notes, 'shipping')}</p>
                                   </div>
 
                                   <div className="bg-white rounded-lg border border-gray-200 p-4">
                                     <h4 className="text-xs font-semibold text-gray-600 uppercase tracking-wider mb-2">
                                       Billing Address
                                     </h4>
-                                    <p className="text-sm text-gray-700">{formatAddress(order.billing_address)}</p>
+                                    <p className="text-sm text-gray-700">{extractAddressFromNotes(order.notes, 'billing')}</p>
                                   </div>
 
                                   {order.notes && (

@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
+import { useCart } from "@/lib/cart-context";
 
 const aboutDropdown = [
   { label: "Our story", href: "/about" },
@@ -62,6 +63,32 @@ const HamburgerIcon = () => (
   </svg>
 );
 
+const CartIcon = () => (
+  <svg
+    width="24"
+    height="24"
+    viewBox="0 0 24 24"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <path
+      d="M9 22C9.55228 22 10 21.5523 10 21C10 20.4477 9.55228 20 9 20C8.44772 20 8 20.4477 8 21C8 21.5523 8.44772 22 9 22Z"
+      fill="currentColor"
+    />
+    <path
+      d="M20 22C20.5523 22 21 21.5523 21 21C21 20.4477 20.5523 20 20 20C19.4477 20 19 20.4477 19 21C19 21.5523 19.4477 22 20 22Z"
+      fill="currentColor"
+    />
+    <path
+      d="M1 1H5L7.68 14.39C7.77144 14.8504 8.02191 15.264 8.38755 15.5583C8.75318 15.8526 9.2107 16.009 9.68 16H19.4C19.8693 16.009 20.3268 15.8526 20.6924 15.5583C21.0581 15.264 21.3086 14.8504 21.4 14.39L23 6H6"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+  </svg>
+);
+
 const CloseIcon = () => (
   <svg
     width="28"
@@ -86,6 +113,7 @@ export default function Header({ content }: { content?: any }) {
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
   const [mobileActiveDropdown, setMobileActiveDropdown] = useState<string | null>(null);
   const [scrolled, setScrolled] = useState(false);
+  const { totalItems, openCart } = useCart();
 
   const logoText = content?.logo_text ?? "PURE";
   const ctaText = content?.cta_text ?? "Create plan";
@@ -165,6 +193,20 @@ export default function Header({ content }: { content?: any }) {
 
           {/* Desktop Right Side */}
           <div className="hidden lg:flex items-center gap-6">
+            {/* Cart Button */}
+            <button
+              onClick={openCart}
+              className="relative text-white hover:opacity-80 transition-opacity"
+              aria-label="Shopping cart"
+            >
+              <CartIcon />
+              {totalItems > 0 && (
+                <span className="absolute -top-2 -right-2 bg-gold text-deep-green text-xs font-bold w-5 h-5 rounded-full flex items-center justify-center">
+                  {totalItems > 99 ? '99+' : totalItems}
+                </span>
+              )}
+            </button>
+            
             {!scrolled && (
               <>
                 <Link

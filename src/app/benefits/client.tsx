@@ -67,12 +67,12 @@ export default function BenefitsPageClient({ sections }: BenefitsPageClientProps
     <>
       <EditorOverlay />
       <Header />
-      <main>
+      <main style={{ paddingTop: "80px" }}>
         {/* ========== Hero Section ========== */}
         <div data-section-index="0" data-section-name="Hero">
           <section
             className="relative w-full overflow-hidden"
-            style={{ minHeight: "520px", paddingTop: "120px" }}
+            style={{ minHeight: "520px" }}
           >
             <div className="absolute inset-0">
               <Image

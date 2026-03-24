@@ -298,7 +298,7 @@ export default function MatchesPage() {
     <div className="min-h-screen bg-off-white flex flex-col">
       <Header />
 
-      <div className="flex-1 pt-[80px] lg:pt-[96px]">
+      <div className="flex-1 pt-[80px] lg:pt-[80px]">
         {!user ? (
           <NotLoggedInCTA />
         ) : matches.length === 0 ? (

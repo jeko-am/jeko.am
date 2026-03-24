@@ -2,6 +2,7 @@
 
 import Link from 'next/link';
 import { useState } from 'react';
+import { useCart } from '@/lib/cart-context';
 
 interface Product {
   id: string;
@@ -20,6 +21,8 @@ function formatPrice(value: number): string {
 
 export default function ProductCard({ product }: { product: Product }) {
   const [imgError, setImgError] = useState(false);
+  const [isAdding, setIsAdding] = useState(false);
+  const { addItem } = useCart();
   const hasDiscount = product.compare_at_price && product.compare_at_price > product.price;
   const discountPercent = hasDiscount
     ? Math.round(((product.compare_at_price! - product.price) / product.compare_at_price!) * 100)
@@ -29,9 +32,28 @@ export default function ProductCard({ product }: { product: Product }) {
     ? product.images[0]
     : "https://images.unsplash.com/photo-1587300003388-59208cc962cb?w=400&h=400&fit=crop";
 
+  const handleAddToCart = (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    
+    setIsAdding(true);
+    
+    addItem({
+      id: product.id,
+      name: product.name,
+      slug: product.slug,
+      price: product.price,
+      compare_at_price: product.compare_at_price,
+      image: imageUrl,
+      short_description: product.short_description,
+    });
+    
+    setTimeout(() => setIsAdding(false), 1000);
+  };
+
   return (
-    <Link href={`/products/${product.slug}`} className="group block">
-      <div className="bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 border-2 border-transparent hover:border-gold/30">
+    <Link href={`/products/${product.slug}`} className="group block h-full" data-testid="product-card">
+      <div className="bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 border-2 border-transparent hover:border-gold/30 h-full flex flex-col">
         {/* Image */}
         <div className="relative aspect-square overflow-hidden bg-beige-light">
           <img
@@ -54,14 +76,14 @@ export default function ProductCard({ product }: { product: Product }) {
         </div>
 
         {/* Info */}
-        <div className="p-4">
+        <div className="p-4 flex-1 flex flex-col justify-between">
           <h3 className="font-semibold text-deep-green text-base leading-tight mb-1 group-hover:text-gold transition-colors line-clamp-2">
             {product.name}
           </h3>
           {product.short_description && (
             <p className="text-sm text-deep-green/60 mb-3 line-clamp-2">{product.short_description}</p>
           )}
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2 mt-auto">
             <span className="text-lg font-bold text-deep-green">{formatPrice(product.price)}</span>
             {hasDiscount && (
               <span className="text-sm text-deep-green/40 line-through">{formatPrice(product.compare_at_price!)}</span>
@@ -76,6 +98,15 @@ export default function ProductCard({ product }: { product: Product }) {
             ))}
             <span className="text-xs text-deep-green/50 ml-1">(4.9)</span>
           </div>
+          
+          {/* Add to Cart Button */}
+          <button
+            onClick={handleAddToCart}
+            disabled={isAdding}
+            className="w-full mt-4 bg-deep-green text-white py-2 px-4 rounded-lg hover:bg-deep-green/90 transition-colors disabled:opacity-50 disabled:cursor-not-allowed text-sm font-medium"
+          >
+            {isAdding ? 'Adding...' : 'Add to Cart'}
+          </button>
         </div>
       </div>
     </Link>

@@ -1026,7 +1026,7 @@ export default function FindOwnersPage() {
   return (
     <>
       <Header />
-      <main className="bg-off-white min-h-screen pb-24">
+      <main className="bg-off-white min-h-screen pt-[80px] pb-24">
         <div className="w-full px-4 lg:max-w-[780px] lg:mx-auto lg:px-12">
           {loading ? (
             <Spinner size="lg" />

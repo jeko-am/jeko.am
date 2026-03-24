@@ -5,34 +5,27 @@ import Image from "next/image";
 import { useState } from "react";
 
 const pureLinks = [
+  { label: "Our story", href: "/about" },
   { label: "Reviews", href: "/reviews" },
   { label: "Recipes", href: "/recipes" },
   { label: "Benefits", href: "/benefits" },
-  { label: "Our story", href: "/about" },
-  { label: "Puppies", href: "/recipes" },
-  { label: "Breeds", href: "/benefits" },
-  { label: "Dog professionals", href: "/about" },
-  { label: "Careers", href: "/about" },
+  { label: "Shop", href: "/products" },
+  { label: "Community", href: "/community" },
 ];
 
 const helpLinks = [
-  { label: "Research", href: "/reviews" },
-  { label: "Blog", href: "/reviews" },
-  { label: "Breeds", href: "/benefits" },
-  { label: "Get in touch", href: "/about" },
-  { label: "Help centre", href: "/about" },
+  { label: "Contact us", href: "/contact" },
+  { label: "Shipping & delivery", href: "/shipping-policy" },
+  { label: "Returns & refunds", href: "/refund-policy" },
+  { label: "Health conditions", href: "/benefits" },
 ];
 
 const infoLinks = [
-  { label: "My account", href: "/signup" },
-  { label: "Delivery information", href: "/about" },
-  { label: "Privacy policy", href: "/about" },
-  { label: "Terms & conditions", href: "/about" },
-  { label: "Returns", href: "/about" },
-  { label: "Site security", href: "/about" },
-  { label: "Sitemap", href: "/about" },
-  { label: "Beyond the bowl", href: "/about" },
-  { label: "Pure policies", href: "/about" },
+  { label: "Privacy policy", href: "/privacy-policy" },
+  { label: "Cookie policy", href: "/cookie-policy" },
+  { label: "Terms of use", href: "/terms-of-use" },
+  { label: "Shipping policy", href: "/shipping-policy" },
+  { label: "Refund policy", href: "/refund-policy" },
 ];
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -66,7 +59,7 @@ export default function Footer({ content }: { content?: any }) {
             <h4 className="text-white font-semibold text-[18px] mb-3">{content?.social_heading || "Follow us on social media"}</h4>
             <div className="flex gap-4 items-center">
               {/* Instagram */}
-              <a href={content?.instagram_url || "#"} className="opacity-80 hover:opacity-100 transition-opacity">
+              <a href={content?.instagram_url || "https://www.instagram.com/purepetfood"} className="opacity-80 hover:opacity-100 transition-opacity" target="_blank" rel="noopener noreferrer">
                 <Image
                   src="https://www.purepetfood.com/_next/static/media/Instagram.cfd52eb9.png"
                   alt="Instagram"
@@ -76,7 +69,7 @@ export default function Footer({ content }: { content?: any }) {
                 />
               </a>
               {/* Facebook */}
-              <a href={content?.facebook_url || "#"} className="opacity-80 hover:opacity-100 transition-opacity">
+              <a href={content?.facebook_url || "https://www.facebook.com/purepetfood"} className="opacity-80 hover:opacity-100 transition-opacity" target="_blank" rel="noopener noreferrer">
                 <Image
                   src="https://www.purepetfood.com/_next/static/media/Facebook.fba085d0.png"
                   alt="Facebook"
@@ -86,7 +79,7 @@ export default function Footer({ content }: { content?: any }) {
                 />
               </a>
               {/* TikTok */}
-              <a href={content?.tiktok_url || "#"} className="text-off-white hover:text-white transition-colors">
+              <a href={content?.tiktok_url || "https://www.tiktok.com/@purepetfood"} className="text-off-white hover:text-white transition-colors" target="_blank" rel="noopener noreferrer">
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 48 48">
                   <path fill="#fff" d="M33.2 11.64A8.56 8.56 0 0 1 31.08 6H24.9v24.8a5.18 5.18 0 0 1-5.18 5c-2.84 0-5.2-2.32-5.2-5.2 0-3.44 3.32-6.02 6.74-4.96v-6.32c-6.9-.92-12.94 4.44-12.94 11.28 0 6.66 5.52 11.4 11.38 11.4 6.28 0 11.38-5.1 11.38-11.4V18.02a14.7 14.7 0 0 0 8.6 2.76V14.6s-3.76.18-6.48-2.96" />
                 </svg>

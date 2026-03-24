@@ -61,11 +61,11 @@ export default function HealthConditionPage({
   return (
     <>
       <Header />
-      <main>
+      <main style={{ paddingTop: "80px" }}>
         {/* Hero */}
         <section
           className="relative w-full overflow-hidden"
-          style={{ minHeight: "520px", paddingTop: "120px" }}
+          style={{ minHeight: "520px" }}
         >
           <div className="absolute inset-0">
             <Image

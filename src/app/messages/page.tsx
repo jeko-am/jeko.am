@@ -152,7 +152,7 @@ function LoginCTA() {
   return (
     <div className="min-h-screen bg-off-white">
       <Header />
-      <div className="pt-[140px] pb-20 flex items-center justify-center px-6">
+      <div className="pt-[80px] pb-20 flex items-center justify-center px-6">
         <div className="bg-white rounded-2xl shadow-lg p-10 max-w-md w-full text-center">
           <div className="w-16 h-16 bg-deep-green/10 rounded-full flex items-center justify-center mx-auto mb-6">
             <svg
@@ -1420,7 +1420,7 @@ export default function MessagesPage() {
     <div className="min-h-screen bg-off-white flex flex-col font-rubik">
       <Header />
 
-      <div className="flex-1 pt-[140px] pb-6 lg:pb-12 px-0 lg:px-12">
+      <div className="flex-1 pt-[80px] pb-6 lg:pb-12 px-0 lg:px-12">
         <div className="max-w-[1400px] mx-auto h-full">
           {/* Page Title - desktop only */}
           <div className="hidden lg:flex items-center gap-3 mb-6">

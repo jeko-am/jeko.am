@@ -2034,7 +2034,7 @@ export default function FeedPage() {
   return (
     <>
       <Header />
-      <main className="bg-off-white min-h-screen pt-[140px] pb-24 font-rubik">
+      <main className="bg-off-white min-h-screen pt-[80px] pb-24 font-rubik">
         <div className="max-w-[1200px] mx-auto px-4 lg:px-12">
           {/* Title section */}
           <div className="text-center mb-8 lg:mb-14">

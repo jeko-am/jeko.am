@@ -76,7 +76,7 @@ export default async function Home() {
       <div data-section-index="0" data-section-name="Header">
         <Header content={sectionData.get(0)} />
       </div>
-      <main>
+      <main style={{ paddingTop: "80px" }}>
         <div data-section-index="1" data-section-name="Hero Section">
           <HeroSection content={sectionData.get(1)} />
         </div>

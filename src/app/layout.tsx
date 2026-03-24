@@ -1,7 +1,9 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import { AuthProvider } from "@/lib/auth";
+import { CartProvider } from "@/lib/cart-context";
 import MobileNavWrapper from "@/components/MobileNavWrapper";
+import SideCart from "@/components/SideCart";
 
 export const metadata: Metadata = {
   title: "Personalised Healthy Natural Dog Food - Pure Pet Food",
@@ -17,8 +19,11 @@ export default function RootLayout({
     <html lang="en">
       <body className="antialiased has-bottom-nav">
         <AuthProvider>
-          {children}
-          <MobileNavWrapper />
+          <CartProvider>
+            {children}
+            <MobileNavWrapper />
+            <SideCart />
+          </CartProvider>
         </AuthProvider>
       </body>
     </html>

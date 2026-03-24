@@ -1080,14 +1080,14 @@ export default function SwipePage() {
 
         {/* Not logged in */}
         {!authLoading && !user && (
-          <div className="flex-1 flex flex-col items-center pt-20 sm:pt-24 lg:pt-28 pb-24 lg:pb-0">
+          <div className="flex-1 flex flex-col items-center pt-24 sm:pt-24 lg:pt-24 pb-24 lg:pb-0">
             <NotLoggedInCTA />
           </div>
         )}
 
         {/* Logged in but no pet profile */}
         {!authLoading && user && hasProfile === false && (
-          <div className="flex-1 flex flex-col items-center pt-20 sm:pt-24 lg:pt-28 pb-24 lg:pb-0">
+          <div className="flex-1 flex flex-col items-center pt-24 sm:pt-24 lg:pt-24 pb-24 lg:pb-0">
             <NoPetProfileCTA />
           </div>
         )}
@@ -1101,7 +1101,7 @@ export default function SwipePage() {
 
         {/* Swipe interface */}
         {!authLoading && user && hasProfile === true && (
-          <div className="flex-1 flex flex-col items-center px-3 sm:px-4 lg:px-8 pt-20 sm:pt-24 lg:pt-28 pb-24 lg:pb-32">
+          <div className="flex-1 flex flex-col items-center px-3 sm:px-4 lg:px-8 pt-24 sm:pt-24 lg:pt-24 pb-24 lg:pb-32">
             {/* Stats bar */}
             <div className="w-full mb-6 lg:mb-8">
               <StatsBar likesToday={likesToday} matchCount={matchCount} />
