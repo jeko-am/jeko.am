@@ -8,7 +8,6 @@ const pureLinks = [
   { label: "Reviews", href: "/reviews" },
   { label: "Recipes", href: "/recipes" },
   { label: "Benefits", href: "/benefits" },
-  { label: "Pet panel", href: "/about" },
   { label: "Our story", href: "/about" },
   { label: "Puppies", href: "/recipes" },
   { label: "Breeds", href: "/benefits" },

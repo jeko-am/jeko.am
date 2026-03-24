@@ -27,7 +27,7 @@ export default function ProductCard({ product }: { product: Product }) {
 
   const imageUrl = product.images?.[0] && !imgError
     ? product.images[0]
-    : "https://www.datocms-assets.com/55536/1685633706-chicken-web-1.jpg?auto=format&fit=crop&h=400&w=400";
+    : "https://images.unsplash.com/photo-1587300003388-59208cc962cb?w=400&h=400&fit=crop";
 
   return (
     <Link href={`/products/${product.slug}`} className="group block">

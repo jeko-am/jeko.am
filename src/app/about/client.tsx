@@ -64,7 +64,7 @@ export default function AboutPageClient({ sections }: { sections: Record<string,
       content: [
         s[2]?.content ?? "Months of research led us to an age-old preservation method of removing the moisture from food, resulting in natural, high-quality, convenient meals without using the harmful extrusion process used to make traditional dry biscuit food.",
       ],
-      image: s[2]?.image || "https://placedog.net/400/300?id=80",
+      image: s[2]?.image || "https://images.unsplash.com/photo-1587300003388-59208cc962cb?w=400&h=300&fit=crop",
       bgColor: "bg-off-white",
       imageRight: true,
       sectionIndex: 2,
@@ -77,7 +77,7 @@ export default function AboutPageClient({ sections }: { sections: Record<string,
       content: [
         s[3]?.content ?? "In 2014, our co-founders entered the Dragons' Den and we were lucky enough to win over two dragons! Despite the fantastic offers, the terms didn't quite suit us, and thanks to Pure's success, it's certainly not a decision we regret.",
       ],
-      image: s[3]?.image || "https://placedog.net/400/300?id=81",
+      image: s[3]?.image || "https://images.unsplash.com/photo-1518717758536-85ae29035b6d?w=400&h=300&fit=crop",
       bgColor: "bg-off-white",
       imageRight: false,
       sectionIndex: 3,
@@ -90,7 +90,7 @@ export default function AboutPageClient({ sections }: { sections: Record<string,
       content: [
         s[4]?.content ?? "Her Royal Highness Princess Anne, a keen animal lover, visited us here in West Yorkshire in 2017. After a tour around, we couldn't let her go without a few treats for her own dogs!",
       ],
-      image: s[4]?.image || "https://placedog.net/400/300?id=82",
+      image: s[4]?.image || "https://images.unsplash.com/photo-1534361960057-19889db9621e?w=400&h=300&fit=crop",
       bgColor: "bg-off-white",
       imageRight: true,
       sectionIndex: 4,
@@ -124,7 +124,7 @@ export default function AboutPageClient({ sections }: { sections: Record<string,
           >
             <div className="absolute inset-0">
               <Image
-                src={s[0]?.hero_image || "https://placedog.net/1600/700?id=85"}
+                src={s[0]?.hero_image || "https://images.unsplash.com/photo-1548199973-03cce0bbc87b?w=1600&h=700&fit=crop"}
                 alt="Pure Pet Food founders"
                 fill
                 unoptimized
@@ -331,7 +331,7 @@ export default function AboutPageClient({ sections }: { sections: Record<string,
             <div className="flex flex-col md:flex-row min-h-[440px]">
               <div className="w-full md:w-[42%] relative min-h-[360px] md:min-h-[440px]">
                 <Image
-                  src={s[7]?.image || "https://placedog.net/700/400?id=86"}
+                  src={s[7]?.image || "https://images.unsplash.com/photo-1601758228041-f3b2795255f1?w=700&h=400&fit=crop"}
                   alt="Learn more about Pure"
                   fill
                   unoptimized
@@ -380,7 +380,7 @@ export default function AboutPageClient({ sections }: { sections: Record<string,
               </div>
               <div className="w-full md:w-[45%] relative min-h-[350px] md:min-h-[420px]">
                 <Image
-                  src={s[8]?.image || "https://placedog.net/700/400?id=87"}
+                  src={s[8]?.image || "https://images.unsplash.com/photo-1544568100-847a948585b9?w=700&h=400&fit=crop"}
                   alt="Personalise your dog's food"
                   fill
                   unoptimized

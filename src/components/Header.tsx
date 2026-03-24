@@ -5,8 +5,6 @@ import Link from "next/link";
 
 const aboutDropdown = [
   { label: "Our story", href: "/about" },
-  { label: "How Pure works", href: "/about" },
-  { label: "Pet panel", href: "/about" },
 ];
 
 const communityDropdown = [
@@ -18,11 +16,11 @@ const communityDropdown = [
 ];
 
 const healthDropdown = [
-  { label: "Colitis", href: "/benefits" },
-  { label: "Digestion issues", href: "/benefits" },
-  { label: "Hypoallergenic", href: "/benefits" },
-  { label: "Pancreatitis", href: "/benefits" },
-  { label: "Weight management", href: "/benefits" },
+  { label: "Colitis", href: "/benefits/colitis" },
+  { label: "Digestion issues", href: "/benefits/digestion-issues" },
+  { label: "Hypoallergenic", href: "/benefits/hypoallergenic" },
+  { label: "Pancreatitis", href: "/benefits/pancreatitis" },
+  { label: "Weight management", href: "/benefits/weight-management" },
 ];
 
 const defaultNavItems = [
