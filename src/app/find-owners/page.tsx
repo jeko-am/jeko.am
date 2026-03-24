@@ -169,7 +169,7 @@ function LoginCTA() {
         </Link>
         <p className="mt-4 text-deep-green/50 text-[13px]">
           Don&apos;t have an account?{" "}
-          <Link href="/signup" className="text-gold hover:underline font-medium">
+          <Link href="/auth/signup" className="text-gold hover:underline font-medium">
             Sign up
           </Link>
         </p>

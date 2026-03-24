@@ -639,28 +639,28 @@ function SwipeCard({
 
 function NotLoggedInCTA() {
   return (
-    <div className="flex-1 flex items-center justify-center px-4">
-      <div className="bg-white rounded-2xl shadow-xl p-8 max-w-md w-full text-center">
-        <div className="w-20 h-20 mx-auto mb-4 bg-gold/20 rounded-full flex items-center justify-center">
-          <PawIcon size={48} />
+    <div className="flex-1 flex items-center justify-center px-4 sm:px-6 lg:px-8 py-20 sm:py-24 lg:py-32">
+      <div className="bg-white rounded-2xl shadow-xl p-6 sm:p-8 lg:p-12 max-w-md w-full text-center">
+        <div className="w-20 h-20 sm:w-24 sm:h-24 mx-auto mb-6 sm:mb-8 bg-gold/20 rounded-full flex items-center justify-center">
+          <PawIcon size={56} />
         </div>
-        <h2 className="font-rubik font-bold text-2xl text-deep-green mb-3">
+        <h2 className="font-rubik font-bold text-2xl sm:text-3xl lg:text-4xl text-deep-green mb-4 sm:mb-6">
           Find Playmates for Your Pup
         </h2>
-        <p className="text-deep-green/60 mb-6 leading-relaxed">
+        <p className="text-deep-green/60 mb-8 sm:mb-10 leading-relaxed text-base sm:text-lg">
           Swipe through local dogs, match with compatible playmates, and set up
           the perfect doggy date. Sign up or log in to get started!
         </p>
-        <div className="flex flex-col sm:flex-row gap-3">
+        <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
           <Link
             href="/auth/login"
-            className="flex-1 bg-gold text-deep-green font-rubik font-bold text-lg py-3 rounded-xl hover:bg-[#d99500] transition-colors"
+            className="flex-1 bg-gold text-deep-green font-rubik font-bold text-lg sm:text-base lg:text-lg py-3 sm:py-3.5 rounded-xl hover:bg-[#d99500] transition-colors"
           >
             Log In
           </Link>
           <Link
-            href="/signup"
-            className="flex-1 bg-deep-green text-white font-rubik font-bold text-lg py-3 rounded-xl hover:bg-deep-green/90 transition-colors"
+            href="/auth/signup"
+            className="flex-1 bg-deep-green text-white font-rubik font-bold text-lg sm:text-base lg:text-lg py-3 sm:py-3.5 rounded-xl hover:bg-deep-green/90 transition-colors"
           >
             Sign Up
           </Link>
@@ -676,21 +676,21 @@ function NotLoggedInCTA() {
 
 function NoPetProfileCTA() {
   return (
-    <div className="flex-1 flex items-center justify-center px-4">
-      <div className="bg-white rounded-2xl shadow-xl p-8 max-w-md w-full text-center">
-        <div className="w-20 h-20 mx-auto mb-4 bg-gold/20 rounded-full flex items-center justify-center text-4xl">
+    <div className="flex-1 flex items-center justify-center px-4 sm:px-6 lg:px-8 py-20 sm:py-24 lg:py-32">
+      <div className="bg-white rounded-2xl shadow-xl p-6 sm:p-8 lg:p-12 max-w-md w-full text-center">
+        <div className="w-20 h-20 sm:w-24 sm:h-24 mx-auto mb-6 sm:mb-8 bg-gold/20 rounded-full flex items-center justify-center text-5xl sm:text-6xl">
           🐶
         </div>
-        <h2 className="font-rubik font-bold text-2xl text-deep-green mb-3">
+        <h2 className="font-rubik font-bold text-2xl sm:text-3xl lg:text-4xl text-deep-green mb-4 sm:mb-6">
           Complete Your Pet Profile
         </h2>
-        <p className="text-deep-green/60 mb-6 leading-relaxed">
+        <p className="text-deep-green/60 mb-8 sm:mb-10 leading-relaxed text-base sm:text-lg">
           Before you can start swiping, we need to know about your furry friend.
           Create a pet profile to get matched with compatible playmates!
         </p>
         <Link
           href="/find-owners"
-          className="inline-block bg-gold text-deep-green font-rubik font-bold text-lg px-8 py-3 rounded-xl hover:bg-[#d99500] transition-colors"
+          className="inline-block bg-gold text-deep-green font-rubik font-bold text-lg sm:text-base lg:text-lg px-8 sm:px-10 py-3 sm:py-3.5 rounded-xl hover:bg-[#d99500] transition-colors"
         >
           Complete Profile
         </Link>
@@ -705,21 +705,21 @@ function NoPetProfileCTA() {
 
 function EmptyState() {
   return (
-    <div className="flex-1 flex items-center justify-center px-4">
-      <div className="bg-white rounded-2xl shadow-xl p-8 max-w-md w-full text-center">
-        <div className="w-20 h-20 mx-auto mb-4 bg-off-white rounded-full flex items-center justify-center text-4xl">
+    <div className="flex-1 flex items-center justify-center px-4 sm:px-6 lg:px-8 py-20 sm:py-24 lg:py-32">
+      <div className="bg-white rounded-2xl shadow-xl p-6 sm:p-8 lg:p-12 max-w-md w-full text-center">
+        <div className="w-20 h-20 sm:w-24 sm:h-24 mx-auto mb-6 sm:mb-8 bg-off-white rounded-full flex items-center justify-center text-5xl sm:text-6xl">
           🐾
         </div>
-        <h2 className="font-rubik font-bold text-2xl text-deep-green mb-3">
+        <h2 className="font-rubik font-bold text-2xl sm:text-3xl lg:text-4xl text-deep-green mb-4 sm:mb-6">
           No More Dogs Nearby!
         </h2>
-        <p className="text-deep-green/60 mb-6 leading-relaxed">
+        <p className="text-deep-green/60 mb-8 sm:mb-10 leading-relaxed text-base sm:text-lg">
           You&apos;ve seen all available dogs for now. Check back later or
           explore the community to find new friends!
         </p>
         <Link
           href="/community"
-          className="inline-block bg-gold text-deep-green font-rubik font-bold text-lg px-8 py-3 rounded-xl hover:bg-[#d99500] transition-colors"
+          className="inline-block bg-gold text-deep-green font-rubik font-bold text-lg sm:text-base lg:text-lg px-8 sm:px-10 py-3 sm:py-3.5 rounded-xl hover:bg-[#d99500] transition-colors"
         >
           Explore Community
         </Link>
@@ -959,19 +959,25 @@ export default function SwipePage() {
   const handleSwipe = useCallback(
     async (direction: "left" | "right") => {
       const candidate = candidates[currentIndex];
+      console.log("[handleSwipe] dir=" + direction, "candidate=" + (candidate?.pet_name || "NONE"), "user=" + (user?.id?.substring(0,8) || "NONE"), "idx=" + currentIndex);
       if (!candidate || !user) return;
 
       const action = direction === "right" ? "like" : "pass";
+      // Check if we actually have a valid session
+      const { data: sessionData } = await supabase.auth.getSession();
+      console.log("[handleSwipe] session?", !!sessionData?.session, "uid:", sessionData?.session?.user?.id?.substring(0,8) || "NONE");
+      console.log("[handleSwipe] inserting swipe:", user.id.substring(0,8), "→", candidate.user_id.substring(0,8), action);
 
       // Insert swipe action
-      await supabase.from("swipe_actions").upsert(
-        {
-          swiper_id: user.id,
-          swiped_id: candidate.user_id,
-          action,
-        },
-        { onConflict: "swiper_id,swiped_id" }
-      );
+      const { error: swipeErr, data: swipeData, status, statusText } = await supabase.from("swipe_actions").insert({
+        swiper_id: user.id,
+        swiped_id: candidate.user_id,
+        action,
+      });
+      console.log("[handleSwipe] insert result: status=" + status, "statusText=" + statusText, "data=", swipeData, "err=", swipeErr);
+      if (swipeErr) {
+        console.error("Swipe insert failed:", swipeErr.message, swipeErr.code, swipeErr.details);
+      }
 
       // Update likes stat
       if (action === "like") {
@@ -994,31 +1000,27 @@ export default function SwipePage() {
               : [candidate.user_id, user.id];
 
           // Insert match
-          const { data: matchRow } = await supabase
+          const { data: matchRow, error: matchErr } = await supabase
             .from("matches")
-            .upsert(
-              {
-                user_a_id: userA,
-                user_b_id: userB,
-                is_active: true,
-              },
-              { onConflict: "user_a_id,user_b_id" }
-            )
+            .insert({
+              user_a_id: userA,
+              user_b_id: userB,
+              is_active: true,
+            })
             .select("id")
             .single();
+          if (matchErr) console.error("Match insert failed:", matchErr.message, matchErr.code);
 
           // Insert conversation
           if (matchRow) {
-            await supabase
+            const { error: convoErr } = await supabase
               .from("conversations")
-              .upsert(
-                {
-                  match_id: matchRow.id,
-                  participant_a: userA,
-                  participant_b: userB,
-                },
-                { onConflict: "participant_a,participant_b" }
-              );
+              .insert({
+                match_id: matchRow.id,
+                participant_a: userA,
+                participant_b: userB,
+              });
+            if (convoErr) console.error("Conversation insert failed:", convoErr.message, convoErr.code);
           }
 
           setMatchCount((prev) => prev + 1);
@@ -1078,14 +1080,14 @@ export default function SwipePage() {
 
         {/* Not logged in */}
         {!authLoading && !user && (
-          <div className="flex-1 flex flex-col pb-24 lg:pb-0">
+          <div className="flex-1 flex flex-col items-center pt-20 sm:pt-24 lg:pt-28 pb-24 lg:pb-0">
             <NotLoggedInCTA />
           </div>
         )}
 
         {/* Logged in but no pet profile */}
         {!authLoading && user && hasProfile === false && (
-          <div className="flex-1 flex flex-col pb-24 lg:pb-0">
+          <div className="flex-1 flex flex-col items-center pt-20 sm:pt-24 lg:pt-28 pb-24 lg:pb-0">
             <NoPetProfileCTA />
           </div>
         )}
@@ -1099,16 +1101,18 @@ export default function SwipePage() {
 
         {/* Swipe interface */}
         {!authLoading && user && hasProfile === true && (
-          <div className="flex-1 flex flex-col items-center px-4 pb-24">
+          <div className="flex-1 flex flex-col items-center px-3 sm:px-4 lg:px-8 pt-20 sm:pt-24 lg:pt-28 pb-24 lg:pb-32">
             {/* Stats bar */}
-            <StatsBar likesToday={likesToday} matchCount={matchCount} />
+            <div className="w-full mb-6 lg:mb-8">
+              <StatsBar likesToday={likesToday} matchCount={matchCount} />
+            </div>
 
             {/* Loading candidates */}
             {loadingCandidates && candidates.length === 0 && (
               <div className="flex-1 flex items-center justify-center">
                 <div className="text-center">
                   <div className="w-12 h-12 border-4 border-gold border-t-transparent rounded-full animate-spin mx-auto mb-4" />
-                  <p className="text-deep-green/60 font-rubik">
+                  <p className="text-deep-green/60 font-rubik text-base sm:text-lg">
                     Finding dogs near you...
                   </p>
                 </div>
@@ -1123,7 +1127,7 @@ export default function SwipePage() {
               <>
                 <div
                   ref={topCardContainerRef}
-                  className="relative w-full flex-1 my-4 max-w-full lg:max-w-[500px] max-h-[75vh] lg:max-h-[70vh]"
+                  className="relative w-full flex-1 min-h-[400px] sm:min-h-[450px] lg:min-h-[500px] my-6 sm:my-8 lg:my-10 max-w-[95vw] sm:max-w-[500px] lg:max-w-[500px] max-h-[60vh] sm:max-h-[65vh] lg:max-h-[70vh]"
                 >
                   {/* Next card (behind) */}
                   {nextCandidate && (
@@ -1145,11 +1149,11 @@ export default function SwipePage() {
                 </div>
 
                 {/* Action buttons */}
-                <div className="flex items-center justify-center gap-8 mt-2 mb-4">
+                <div className="flex items-center justify-center gap-6 sm:gap-8 lg:gap-12 mt-6 sm:mt-8 lg:mt-10 mb-6 lg:mb-8 w-full">
                   {/* Pass button */}
                   <button
                     onClick={() => handleButtonSwipe("left")}
-                    className="w-16 h-16 rounded-full bg-white shadow-lg border-2 border-red-400 flex items-center justify-center text-red-500 hover:bg-red-50 hover:scale-110 active:scale-95 transition-all"
+                    className="w-14 h-14 sm:w-16 sm:h-16 lg:w-20 lg:h-20 rounded-full bg-white shadow-lg border-2 border-red-400 flex items-center justify-center text-red-500 hover:bg-red-50 hover:scale-110 active:scale-95 transition-all"
                     aria-label="Pass"
                   >
                     <svg
@@ -1170,7 +1174,7 @@ export default function SwipePage() {
                   {/* Like button */}
                   <button
                     onClick={() => handleButtonSwipe("right")}
-                    className="w-16 h-16 rounded-full bg-white shadow-lg border-2 border-green-400 flex items-center justify-center text-green-500 hover:bg-green-50 hover:scale-110 active:scale-95 transition-all"
+                    className="w-14 h-14 sm:w-16 sm:h-16 lg:w-20 lg:h-20 rounded-full bg-white shadow-lg border-2 border-green-400 flex items-center justify-center text-green-500 hover:bg-green-50 hover:scale-110 active:scale-95 transition-all"
                     aria-label="Like"
                   >
                     <svg
@@ -1196,7 +1200,7 @@ export default function SwipePage() {
             theirPet={matchModalPet}
             onMessage={() => {
               setMatchModalPet(null);
-              window.location.href = "/messages";
+              window.location.href = "/matches";
             }}
             onKeepSwiping={() => setMatchModalPet(null)}
           />

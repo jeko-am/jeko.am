@@ -12,6 +12,7 @@ const aboutDropdown = [
 const communityDropdown = [
   { label: "Social Feed", href: "/community" },
   { label: "Swipe & Match", href: "/swipe" },
+  { label: "My Matches", href: "/matches" },
   { label: "Find Owners", href: "/find-owners" },
   { label: "Messages", href: "/messages" },
 ];

@@ -1,0 +1,345 @@
+"use client";
+
+import { useState, useEffect } from "react";
+import Image from "next/image";
+import Link from "next/link";
+import Header from "@/components/Header";
+import Footer from "@/components/Footer";
+import { useAuth } from "@/lib/auth";
+import { supabase } from "@/lib/supabase";
+
+/* ─── Types ──────────────────────────────────────────────────────────── */
+
+interface MatchWithProfile {
+  id: number;
+  user_a_id: string;
+  user_b_id: string;
+  is_active: boolean;
+  created_at: string;
+  conversation_id: number | null;
+  otherPet: {
+    user_id: string;
+    pet_name: string;
+    breed: string | null;
+    display_name: string | null;
+    profile_photo_url: string | null;
+    avatar_url: string | null;
+    city: string | null;
+    temperament: string | null;
+    activity_level: string | null;
+    dog_age_years: number | null;
+    gender: string | null;
+    bio: string | null;
+  } | null;
+}
+
+/* ─── Helpers ────────────────────────────────────────────────────────── */
+
+function timeAgo(dateStr: string): string {
+  const now = new Date();
+  const date = new Date(dateStr);
+  const seconds = Math.floor((now.getTime() - date.getTime()) / 1000);
+
+  if (seconds < 60) return "just now";
+  const minutes = Math.floor(seconds / 60);
+  if (minutes < 60) return `${minutes}m ago`;
+  const hours = Math.floor(minutes / 60);
+  if (hours < 24) return `${hours}h ago`;
+  const days = Math.floor(hours / 24);
+  if (days < 7) return `${days}d ago`;
+  return date.toLocaleDateString("en-GB", { day: "numeric", month: "short" });
+}
+
+function petPhoto(pet: MatchWithProfile["otherPet"]): string | null {
+  return pet?.profile_photo_url || pet?.avatar_url || null;
+}
+
+function petInitial(pet: MatchWithProfile["otherPet"]): string {
+  return pet?.pet_name?.charAt(0).toUpperCase() || "?";
+}
+
+/* ─── Not Logged In CTA ──────────────────────────────────────────────── */
+
+function NotLoggedInCTA() {
+  return (
+    <div className="flex-1 flex items-center justify-center px-4 py-20">
+      <div className="bg-white rounded-2xl shadow-xl p-8 max-w-md w-full text-center">
+        <div className="w-20 h-20 mx-auto mb-6 bg-gold/20 rounded-full flex items-center justify-center text-5xl">
+          🐾
+        </div>
+        <h2 className="font-rubik font-bold text-2xl text-deep-green mb-4">
+          See Your Matches
+        </h2>
+        <p className="text-deep-green/60 mb-8 leading-relaxed">
+          Sign up or log in to see your matched playmates and start chatting!
+        </p>
+        <div className="flex flex-col sm:flex-row gap-3">
+          <Link
+            href="/auth/login"
+            className="flex-1 bg-gold text-deep-green font-rubik font-bold text-lg py-3 rounded-xl hover:bg-[#d99500] transition-colors text-center"
+          >
+            Log In
+          </Link>
+          <Link
+            href="/auth/signup"
+            className="flex-1 bg-deep-green text-white font-rubik font-bold text-lg py-3 rounded-xl hover:bg-deep-green/90 transition-colors text-center"
+          >
+            Sign Up
+          </Link>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+/* ─── Empty State ────────────────────────────────────────────────────── */
+
+function EmptyState() {
+  return (
+    <div className="flex-1 flex items-center justify-center px-4 py-20">
+      <div className="bg-white rounded-2xl shadow-xl p-8 max-w-md w-full text-center">
+        <div className="w-20 h-20 mx-auto mb-6 bg-off-white rounded-full flex items-center justify-center text-5xl">
+          💔
+        </div>
+        <h2 className="font-rubik font-bold text-2xl text-deep-green mb-4">
+          No Matches Yet
+        </h2>
+        <p className="text-deep-green/60 mb-8 leading-relaxed">
+          Start swiping to find compatible playmates for your pup! When you and
+          another dog owner both like each other, you&apos;ll see your match here.
+        </p>
+        <Link
+          href="/swipe"
+          className="inline-block bg-gold text-deep-green font-rubik font-bold text-lg px-8 py-3 rounded-xl hover:bg-[#d99500] transition-colors"
+        >
+          Start Swiping
+        </Link>
+      </div>
+    </div>
+  );
+}
+
+/* ─── Match Card ─────────────────────────────────────────────────────── */
+
+function MatchCard({ match }: { match: MatchWithProfile }) {
+  const pet = match.otherPet;
+  const photo = petPhoto(pet);
+
+  return (
+    <div className="bg-white rounded-2xl shadow-md hover:shadow-lg transition-shadow overflow-hidden border border-gray-100">
+      {/* Photo */}
+      <div className="relative h-48 sm:h-56 bg-gradient-to-br from-deep-green/10 to-gold/10">
+        {photo ? (
+          <Image
+            src={photo}
+            alt={pet?.pet_name || "Pet"}
+            fill
+            className="object-cover"
+            unoptimized
+          />
+        ) : (
+          <div className="absolute inset-0 flex items-center justify-center">
+            <div className="w-20 h-20 rounded-full bg-deep-green/10 flex items-center justify-center">
+              <span className="text-3xl font-rubik font-bold text-deep-green/40">
+                {petInitial(pet)}
+              </span>
+            </div>
+          </div>
+        )}
+        {/* Match badge */}
+        <div className="absolute top-3 right-3 bg-white/90 backdrop-blur-sm rounded-full px-3 py-1 text-xs font-semibold text-deep-green flex items-center gap-1">
+          <span className="text-sm">🎉</span> Matched
+        </div>
+      </div>
+
+      {/* Info */}
+      <div className="p-4">
+        <div className="flex items-start justify-between mb-2">
+          <div>
+            <h3 className="font-rubik font-bold text-lg text-deep-green">
+              {pet?.pet_name || "Unknown"}
+            </h3>
+            <p className="text-sm text-deep-green/50">
+              {pet?.breed || "Mixed breed"}
+              {pet?.dog_age_years ? ` · ${pet.dog_age_years}y` : ""}
+              {pet?.gender && pet.gender !== "Unknown" ? ` · ${pet.gender}` : ""}
+            </p>
+          </div>
+          {pet?.city && (
+            <span className="text-xs bg-deep-green/5 text-deep-green/60 px-2 py-1 rounded-full">
+              📍 {pet.city}
+            </span>
+          )}
+        </div>
+
+        {/* Tags */}
+        <div className="flex flex-wrap gap-1.5 mb-3">
+          {pet?.temperament && (
+            <span className="text-xs bg-gold/10 text-gold px-2 py-0.5 rounded-full font-medium">
+              {pet.temperament}
+            </span>
+          )}
+          {pet?.activity_level && (
+            <span className="text-xs bg-deep-green/5 text-deep-green/70 px-2 py-0.5 rounded-full font-medium">
+              {pet.activity_level}
+            </span>
+          )}
+        </div>
+
+        {/* Bio preview */}
+        {pet?.bio && (
+          <p className="text-sm text-deep-green/50 mb-3 line-clamp-2">{pet.bio}</p>
+        )}
+
+        {/* Time & Action */}
+        <div className="flex items-center justify-between pt-3 border-t border-gray-100">
+          <span className="text-xs text-deep-green/40">
+            Matched {timeAgo(match.created_at)}
+          </span>
+          <Link
+            href={`/messages${match.conversation_id ? `?chat=${match.conversation_id}` : ""}`}
+            className="bg-gold text-deep-green font-rubik font-bold text-sm px-5 py-2 rounded-xl hover:bg-[#d99500] transition-colors flex items-center gap-1.5"
+          >
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
+            </svg>
+            Message
+          </Link>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+/* ═══════════════════════════════════════════════════════════════════════ */
+/*  Main Page                                                             */
+/* ═══════════════════════════════════════════════════════════════════════ */
+
+export default function MatchesPage() {
+  const { user, loading: authLoading } = useAuth();
+  const [matches, setMatches] = useState<MatchWithProfile[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    if (!user) return;
+
+    (async () => {
+      // 1. Fetch all active matches for this user
+      const { data: matchRows, error } = await supabase
+        .from("matches")
+        .select("*")
+        .or(`user_a_id.eq.${user.id},user_b_id.eq.${user.id}`)
+        .eq("is_active", true)
+        .order("created_at", { ascending: false });
+
+      if (error || !matchRows) {
+        console.error("Error fetching matches:", error);
+        setLoading(false);
+        return;
+      }
+
+      // 2. Get conversation IDs for each match
+      const matchIds = matchRows.map((m) => m.id);
+      const { data: convos } = await supabase
+        .from("conversations")
+        .select("id, match_id")
+        .in("match_id", matchIds.length > 0 ? matchIds : [-1]);
+
+      const convoMap = new Map<number, number>();
+      convos?.forEach((c) => convoMap.set(c.match_id, c.id));
+
+      // 3. Get pet profiles for the other user in each match
+      const otherUserIds = matchRows.map((m) =>
+        m.user_a_id === user.id ? m.user_b_id : m.user_a_id
+      );
+
+      const { data: petProfiles } = await supabase
+        .from("pet_profiles")
+        .select(
+          "user_id, pet_name, breed, display_name, profile_photo_url, avatar_url, city, temperament, activity_level, dog_age_years, gender, bio"
+        )
+        .in("user_id", otherUserIds.length > 0 ? otherUserIds : ["__none__"]);
+
+      const petMap = new Map<string, MatchWithProfile["otherPet"]>();
+      petProfiles?.forEach((p) => petMap.set(p.user_id, p));
+
+      // 4. Assemble
+      const assembled: MatchWithProfile[] = matchRows.map((m) => {
+        const otherId = m.user_a_id === user.id ? m.user_b_id : m.user_a_id;
+        return {
+          ...m,
+          conversation_id: convoMap.get(m.id) ?? null,
+          otherPet: petMap.get(otherId) ?? null,
+        };
+      });
+
+      setMatches(assembled);
+      setLoading(false);
+    })();
+  }, [user]);
+
+  /* ─── Loading state ─────────────────────────────────────────────────── */
+
+  if (authLoading || loading) {
+    return (
+      <div className="min-h-screen bg-off-white flex flex-col">
+        <Header />
+        <div className="flex-1 flex items-center justify-center pt-[80px]">
+          <div className="w-10 h-10 border-4 border-gold border-t-transparent rounded-full animate-spin" />
+        </div>
+        <Footer />
+      </div>
+    );
+  }
+
+  /* ─── Render ────────────────────────────────────────────────────────── */
+
+  return (
+    <div className="min-h-screen bg-off-white flex flex-col">
+      <Header />
+
+      <div className="flex-1 pt-[80px] lg:pt-[96px]">
+        {!user ? (
+          <NotLoggedInCTA />
+        ) : matches.length === 0 ? (
+          <EmptyState />
+        ) : (
+          <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+            {/* Header */}
+            <div className="mb-8 text-center">
+              <h1 className="font-rubik font-bold text-3xl md:text-4xl text-deep-green">
+                Your Matches
+              </h1>
+              <p className="text-deep-green/50 mt-2">
+                {matches.length} match{matches.length !== 1 ? "es" : ""} — tap
+                Message to start chatting!
+              </p>
+            </div>
+
+            {/* Match Grid */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+              {matches.map((m) => (
+                <MatchCard key={m.id} match={m} />
+              ))}
+            </div>
+
+            {/* CTA at bottom */}
+            <div className="text-center mt-10">
+              <Link
+                href="/swipe"
+                className="inline-flex items-center gap-2 text-deep-green/60 hover:text-deep-green font-rubik font-medium transition-colors"
+              >
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
+                </svg>
+                Find more matches
+              </Link>
+            </div>
+          </div>
+        )}
+      </div>
+
+      <Footer />
+    </div>
+  );
+}

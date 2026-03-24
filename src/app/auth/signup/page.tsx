@@ -12,6 +12,7 @@ import {
   FAVORITE_ACTIVITIES,
   COUNTRIES,
 } from '@/lib/constants';
+import Footer from '@/components/Footer';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { FormEvent, useCallback, useEffect, useMemo, useRef, useState } from 'react';
@@ -437,25 +438,28 @@ export default function SignupPage() {
 
       const displayName = generateDisplayName(fullName);
 
-      // 3. Insert user_profile
-      const { error: profileError } = await supabase.from('user_profiles').insert({
-        user_id: userId,
-        full_name: fullName.trim(),
-        email: email.trim().toLowerCase(),
-        age: age ? parseInt(age) : null,
-        city: city.trim(),
-        state: state.trim(),
-        country,
-        phone: phone.trim() || null,
-      });
+      // Small delay to ensure the auth session is fully propagated
+      await new Promise((r) => setTimeout(r, 1000));
 
-      if (profileError) {
-        console.error('Profile insert error:', profileError);
-        // Don't block — the account is already created
+      // 3. Insert user_profile (with retry)
+      for (let attempt = 0; attempt < 3; attempt++) {
+        const { error } = await supabase.from('user_profiles').upsert({
+          user_id: userId,
+          full_name: fullName.trim(),
+          email: email.trim().toLowerCase(),
+          age: age ? parseInt(age) : null,
+          city: city.trim(),
+          state: state.trim(),
+          country,
+          phone: phone.trim() || null,
+        }, { onConflict: 'user_id' });
+        if (!error) break;
+        console.error(`User profile attempt ${attempt + 1} failed:`, error.message);
+        await new Promise((r) => setTimeout(r, 1000));
       }
 
-      // 4. Insert pet_profile
-      const { error: petError } = await supabase.from('pet_profiles').insert({
+      // 4. Insert pet_profile (with retry)
+      const petPayload = {
         user_id: userId,
         pet_name: dogName.trim(),
         breed: breed.trim(),
@@ -481,13 +485,21 @@ export default function SignupPage() {
         gets_along_with_dogs: getsAlongWithDogs,
         bio: bio.trim() || null,
         profile_photo_url: uploadedPhotoUrl || null,
-      });
+      };
 
-      if (petError) {
-        console.error('Pet profile insert error:', petError);
+      let petSaved = false;
+      for (let attempt = 0; attempt < 3; attempt++) {
+        const { error } = await supabase
+          .from('pet_profiles')
+          .upsert(petPayload, { onConflict: 'user_id' });
+        if (!error) { petSaved = true; break; }
+        console.error(`Pet profile attempt ${attempt + 1} failed:`, error.message);
+        await new Promise((r) => setTimeout(r, 1000));
       }
 
-      // 5. Redirect to community
+      if (!petSaved) {
+        console.error('Pet profile could not be saved — user can complete it later');
+      }
       router.push('/community');
     } catch (err) {
       console.error('Signup error:', err);
@@ -1257,6 +1269,8 @@ export default function SignupPage() {
           By creating an account you agree to our Terms of Service and Privacy Policy.
         </p>
       </main>
+
+      <Footer />
 
       {/* Keyframe animation for conditional sections */}
       <style jsx>{`

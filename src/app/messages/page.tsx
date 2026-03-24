@@ -184,7 +184,7 @@ function LoginCTA() {
           <p className="mt-4 text-deep-green/50 text-sm">
             Don&apos;t have an account?{" "}
             <Link
-              href="/signup"
+              href="/auth/signup"
               className="text-gold font-medium hover:underline"
             >
               Sign up
