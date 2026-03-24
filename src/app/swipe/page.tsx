@@ -1,16 +1,12 @@
 "use client";
 
-import { useState, useEffect, useCallback, useRef } from "react";
+import { useState, useEffect, useCallback, useRef, memo } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { useAuth } from "@/lib/auth";
 import { supabase } from "@/lib/supabase";
-
-// ---------------------------------------------------------------------------
-// Types
-// ---------------------------------------------------------------------------
 
 interface PetCandidate {
   id: number;
@@ -36,61 +32,14 @@ interface PetCandidate {
   owner_name?: string | null;
 }
 
-// ---------------------------------------------------------------------------
-// Constants
-// ---------------------------------------------------------------------------
-
 const BATCH_SIZE = 10;
 const PRELOAD_THRESHOLD = 3;
-const SWIPE_THRESHOLD = 120;
+const SWIPE_THRESHOLD = 100;
 
-const TEMPERAMENT_ICONS: Record<string, string> = {
-  playful: "🎾",
-  calm: "😌",
-  friendly: "🤗",
-  shy: "🙈",
-  energetic: "⚡",
-  gentle: "🕊️",
-  protective: "🛡️",
-  independent: "🐺",
-  affectionate: "💕",
-  curious: "🔍",
-};
-
-const ACTIVITY_ICONS: Record<string, string> = {
-  high: "🔥",
-  medium: "💪",
-  low: "🛋️",
-  "very high": "🚀",
-};
-
-const FAVORITE_ACTIVITY_ICONS: Record<string, string> = {
-  fetch: "🎾",
-  swimming: "🏊",
-  running: "🏃",
-  hiking: "🥾",
-  cuddling: "🤱",
-  "tug of war": "🪢",
-  agility: "🏅",
-  walking: "🚶",
-  playing: "🎮",
-  frisbee: "🥏",
-};
-
-// ---------------------------------------------------------------------------
-// Confetti CSS keyframes (injected once)
-// ---------------------------------------------------------------------------
-
-const confettiCSS = `
+const swipeCSS = `
 @keyframes confetti-fall {
-  0% {
-    transform: translateY(-10vh) rotate(0deg);
-    opacity: 1;
-  }
-  100% {
-    transform: translateY(110vh) rotate(720deg);
-    opacity: 0;
-  }
+  0% { transform: translateY(-10vh) rotate(0deg); opacity: 1; }
+  100% { transform: translateY(110vh) rotate(720deg); opacity: 0; }
 }
 @keyframes confetti-sway {
   0%, 100% { transform: translateX(0); }
@@ -98,199 +47,104 @@ const confettiCSS = `
   75% { transform: translateX(-15px); }
 }
 @keyframes card-fly-left {
-  to {
-    transform: translateX(-150vw) rotate(-30deg);
-    opacity: 0;
-  }
+  0% { transform: translateX(0) rotate(0deg) scale(1); opacity: 1; }
+  40% { transform: translateX(-30%) rotate(-6deg) scale(0.96); opacity: 1; }
+  100% { transform: translateX(-110%) rotate(-14deg) scale(0.8); opacity: 0.2; }
 }
 @keyframes card-fly-right {
-  to {
-    transform: translateX(150vw) rotate(30deg);
-    opacity: 0;
-  }
+  0% { transform: translateX(0) rotate(0deg) scale(1); opacity: 1; }
+  40% { transform: translateX(30%) rotate(6deg) scale(0.96); opacity: 1; }
+  100% { transform: translateX(110%) rotate(14deg) scale(0.8); opacity: 0.2; }
 }
 @keyframes card-enter {
-  from {
-    transform: scale(0.92) translateY(20px);
-    opacity: 0.5;
-  }
-  to {
-    transform: scale(1) translateY(0);
-    opacity: 1;
-  }
+  0% { transform: scale(0.9) translateY(10px); opacity: 0.6; }
+  60% { opacity: 1; }
+  100% { transform: scale(1) translateY(0); opacity: 1; }
+}
+@keyframes card-rise {
+  0% { transform: scale(0.9) translateY(10px); opacity: 0.6; }
+  60% { opacity: 1; }
+  100% { transform: scale(1) translateY(0); opacity: 1; }
 }
 @keyframes pulse-match {
   0%, 100% { transform: scale(1); }
   50% { transform: scale(1.08); }
 }
 @keyframes fade-in-up {
-  from {
-    opacity: 0;
-    transform: translateY(30px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 `;
 
-// ---------------------------------------------------------------------------
-// ConfettiOverlay
-// ---------------------------------------------------------------------------
-
 function ConfettiOverlay() {
-  const colors = [
-    "#F2A900",
-    "#274C46",
-    "#E65A1E",
-    "#5F295E",
-    "#ff6b6b",
-    "#48dbfb",
-    "#ff9ff3",
-    "#feca57",
-    "#54a0ff",
-    "#5f27cd",
-  ];
-
+  const colors = ["#F2A900","#274C46","#E65A1E","#5F295E","#ff6b6b","#48dbfb","#ff9ff3","#feca57","#54a0ff","#5f27cd"];
   const pieces = Array.from({ length: 50 }, (_, i) => ({
-    id: i,
-    left: Math.random() * 100,
-    delay: Math.random() * 3,
-    duration: 2.5 + Math.random() * 2,
-    size: 6 + Math.random() * 8,
-    color: colors[Math.floor(Math.random() * colors.length)],
-    shape: Math.random() > 0.5 ? "circle" : "rect",
+    id: i, left: Math.random()*100, delay: Math.random()*3, duration: 2.5+Math.random()*2,
+    size: 6+Math.random()*8, color: colors[Math.floor(Math.random()*colors.length)],
+    shape: Math.random()>0.5?"circle":"rect",
   }));
-
   return (
     <div className="fixed inset-0 pointer-events-none z-[60] overflow-hidden">
-      {pieces.map((p) => (
-        <div
-          key={p.id}
-          style={{
-            position: "absolute",
-            left: `${p.left}%`,
-            top: "-10px",
-            width: p.shape === "circle" ? p.size : p.size * 0.6,
-            height: p.size,
-            backgroundColor: p.color,
-            borderRadius: p.shape === "circle" ? "50%" : "2px",
-            animation: `confetti-fall ${p.duration}s ${p.delay}s ease-in forwards, confetti-sway ${p.duration * 0.5}s ${p.delay}s ease-in-out infinite`,
-          }}
-        />
+      {pieces.map((p)=>(
+        <div key={p.id} style={{
+          position:"absolute",left:`${p.left}%`,top:"-10px",
+          width:p.shape==="circle"?p.size:p.size*0.6, height:p.size,
+          backgroundColor:p.color, borderRadius:p.shape==="circle"?"50%":"2px",
+          animation:`confetti-fall ${p.duration}s ${p.delay}s ease-in forwards, confetti-sway ${p.duration*0.5}s ${p.delay}s ease-in-out infinite`,
+        }}/>
       ))}
     </div>
   );
 }
 
-// ---------------------------------------------------------------------------
-// MatchModal
-// ---------------------------------------------------------------------------
+function PawIcon({ size=48 }: { size?: number }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="currentColor" className="opacity-40">
+      <ellipse cx="8" cy="6.5" rx="2.2" ry="2.8"/>
+      <ellipse cx="16" cy="6.5" rx="2.2" ry="2.8"/>
+      <ellipse cx="4.5" cy="12" rx="2" ry="2.5"/>
+      <ellipse cx="19.5" cy="12" rx="2" ry="2.5"/>
+      <path d="M7.5 16.5C7.5 14 9.5 12.5 12 12.5C14.5 12.5 16.5 14 16.5 16.5C16.5 19 14.5 21 12 21C9.5 21 7.5 19 7.5 16.5Z"/>
+    </svg>
+  );
+}
 
-function MatchModal({
-  myPet,
-  theirPet,
-  onMessage,
-  onKeepSwiping,
-}: {
-  myPet: PetCandidate | null;
-  theirPet: PetCandidate;
-  onMessage: () => void;
-  onKeepSwiping: () => void;
+function MatchModal({ myPet, theirPet, onMessage, onKeepSwiping }: {
+  myPet: PetCandidate|null; theirPet: PetCandidate; onMessage: ()=>void; onKeepSwiping: ()=>void;
 }) {
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
-      {/* Backdrop */}
-      <div
-        className="absolute inset-0 bg-deep-green/80 backdrop-blur-md"
-        onClick={onKeepSwiping}
-      />
-
-      {/* Confetti */}
-      <ConfettiOverlay />
-
-      {/* Content */}
-      <div
-        className="relative z-10 bg-white rounded-3xl p-8 max-w-md w-full text-center shadow-2xl"
-        style={{ animation: "fade-in-up 0.5s ease-out" }}
-      >
-        <h2
-          className="font-rubik font-bold text-3xl text-gold mb-2"
-          style={{ animation: "pulse-match 1.5s ease-in-out infinite" }}
-        >
+      <div className="absolute inset-0 bg-black/70 backdrop-blur-md" onClick={onKeepSwiping}/>
+      <ConfettiOverlay/>
+      <div className="relative z-10 bg-white rounded-3xl p-8 max-w-md w-full text-center shadow-2xl" style={{animation:"fade-in-up 0.5s ease-out"}}>
+        <h2 className="font-bold text-3xl text-emerald-500 mb-2" style={{animation:"pulse-match 1.5s ease-in-out infinite"}}>
           It&apos;s a Match! 🎉
         </h2>
-        <p className="text-deep-green/70 mb-6 font-rubik">
-          You and {theirPet.pet_name} like each other!
-        </p>
-
-        {/* Dog photos side by side */}
+        <p className="text-gray-500 mb-6">You and {theirPet.pet_name} like each other!</p>
         <div className="flex items-center justify-center gap-4 mb-6">
-          {/* My dog */}
           <div className="flex flex-col items-center">
-            <div className="w-24 h-24 rounded-full overflow-hidden border-4 border-gold shadow-lg bg-off-white">
-              {myPet?.profile_photo_url || myPet?.avatar_url ? (
-                <Image
-                  src={(myPet.profile_photo_url || myPet.avatar_url)!}
-                  alt={myPet.pet_name || "My dog"}
-                  width={96}
-                  height={96}
-                  className="w-full h-full object-cover"
-                  unoptimized
-                />
-              ) : (
-                <div className="w-full h-full flex items-center justify-center text-deep-green/40">
-                  <PawIcon size={40} />
-                </div>
-              )}
+            <div className="w-24 h-24 rounded-full overflow-hidden border-4 border-emerald-400 shadow-lg bg-gray-100">
+              {(myPet?.profile_photo_url||myPet?.avatar_url) ? (
+                <Image src={(myPet.profile_photo_url||myPet.avatar_url)!} alt={myPet.pet_name||"My pet"} width={96} height={96} className="w-full h-full object-cover" unoptimized/>
+              ) : (<div className="w-full h-full flex items-center justify-center"><PawIcon size={40}/></div>)}
             </div>
-            <span className="text-sm font-rubik font-semibold text-deep-green mt-2">
-              {myPet?.pet_name || "Your dog"}
-            </span>
+            <span className="text-sm font-semibold text-gray-700 mt-2">{myPet?.pet_name||"Your pet"}</span>
           </div>
-
-          {/* Heart */}
-          <div className="text-3xl" style={{ animation: "pulse-match 1s ease-in-out infinite" }}>
-            ❤️
-          </div>
-
-          {/* Their dog */}
+          <div className="text-3xl" style={{animation:"pulse-match 1s ease-in-out infinite"}}>❤️</div>
           <div className="flex flex-col items-center">
-            <div className="w-24 h-24 rounded-full overflow-hidden border-4 border-gold shadow-lg bg-off-white">
-              {theirPet.profile_photo_url || theirPet.avatar_url ? (
-                <Image
-                  src={(theirPet.profile_photo_url || theirPet.avatar_url)!}
-                  alt={theirPet.pet_name || "Their dog"}
-                  width={96}
-                  height={96}
-                  className="w-full h-full object-cover"
-                  unoptimized
-                />
-              ) : (
-                <div className="w-full h-full flex items-center justify-center text-deep-green/40">
-                  <PawIcon size={40} />
-                </div>
-              )}
+            <div className="w-24 h-24 rounded-full overflow-hidden border-4 border-emerald-400 shadow-lg bg-gray-100">
+              {(theirPet.profile_photo_url||theirPet.avatar_url) ? (
+                <Image src={(theirPet.profile_photo_url||theirPet.avatar_url)!} alt={theirPet.pet_name||"Their pet"} width={96} height={96} className="w-full h-full object-cover" unoptimized/>
+              ) : (<div className="w-full h-full flex items-center justify-center"><PawIcon size={40}/></div>)}
             </div>
-            <span className="text-sm font-rubik font-semibold text-deep-green mt-2">
-              {theirPet.pet_name}
-            </span>
+            <span className="text-sm font-semibold text-gray-700 mt-2">{theirPet.pet_name}</span>
           </div>
         </div>
-
-        {/* Buttons */}
         <div className="flex flex-col gap-3">
-          <button
-            onClick={onMessage}
-            className="w-full bg-gold text-deep-green font-rubik font-bold text-lg py-3 rounded-xl hover:bg-[#d99500] transition-colors shadow-md"
-          >
+          <button onClick={onMessage} className="w-full bg-emerald-500 text-white font-bold text-lg py-3 rounded-xl hover:bg-emerald-600 transition-colors shadow-md">
             Send a Message
           </button>
-          <button
-            onClick={onKeepSwiping}
-            className="w-full bg-off-white text-deep-green font-rubik font-semibold text-lg py-3 rounded-xl hover:bg-off-white/80 transition-colors"
-          >
+          <button onClick={onKeepSwiping} className="w-full bg-gray-100 text-gray-700 font-semibold text-lg py-3 rounded-xl hover:bg-gray-200 transition-colors">
             Keep Swiping
           </button>
         </div>
@@ -299,914 +153,404 @@ function MatchModal({
   );
 }
 
-// ---------------------------------------------------------------------------
-// PawIcon (fallback for missing photos)
-// ---------------------------------------------------------------------------
-
-function PawIcon({ size = 48 }: { size?: number }) {
-  return (
-    <svg
-      width={size}
-      height={size}
-      viewBox="0 0 24 24"
-      fill="currentColor"
-      className="opacity-40"
-    >
-      <ellipse cx="8" cy="6.5" rx="2.2" ry="2.8" />
-      <ellipse cx="16" cy="6.5" rx="2.2" ry="2.8" />
-      <ellipse cx="4.5" cy="12" rx="2" ry="2.5" />
-      <ellipse cx="19.5" cy="12" rx="2" ry="2.5" />
-      <path d="M7.5 16.5C7.5 14 9.5 12.5 12 12.5C14.5 12.5 16.5 14 16.5 16.5C16.5 19 14.5 21 12 21C9.5 21 7.5 19 7.5 16.5Z" />
-    </svg>
-  );
-}
-
-// ---------------------------------------------------------------------------
-// SwipeCard
-// ---------------------------------------------------------------------------
-
-function SwipeCard({
-  candidate,
-  isTop,
-  onSwipe,
-}: {
-  candidate: PetCandidate;
-  isTop: boolean;
-  onSwipe: (direction: "left" | "right") => void;
+const SwipeCard = memo(function SwipeCard({ candidate, isTop, onSwipe, onLove, likesToday }: {
+  candidate: PetCandidate; isTop: boolean; onSwipe: (d:"left"|"right")=>void; onLove: ()=>void; likesToday: number;
 }) {
   const cardRef = useRef<HTMLDivElement>(null);
-  const [dragState, setDragState] = useState({
-    isDragging: false,
-    startX: 0,
-    currentX: 0,
-    dx: 0,
-  });
-  const [flyDirection, setFlyDirection] = useState<"left" | "right" | null>(null);
+  const [dragState, setDragState] = useState({isDragging:false, startX:0, currentX:0, dx:0});
+  const [flyDirection, setFlyDirection] = useState<"left"|"right"|null>(null);
   const animatingRef = useRef(false);
+  const photoUrl = candidate.profile_photo_url||candidate.avatar_url;
+  const sizeLabel = candidate.weight_kg ? (candidate.weight_kg<10?"Small":candidate.weight_kg<25?"Medium":"Large") : null;
+  const distanceLabel = candidate.city||"Nearby";
 
-  const photoUrl = candidate.profile_photo_url || candidate.avatar_url;
-  const ageText = candidate.dog_age_years
-    ? candidate.dog_age_years === 1
-      ? "1 year old"
-      : `${candidate.dog_age_years} years old`
-    : null;
+  const handleStart = useCallback((clientX:number)=>{
+    if(!isTop||animatingRef.current) return;
+    setDragState({isDragging:true,startX:clientX,currentX:clientX,dx:0});
+  },[isTop]);
 
-  // Gesture handlers
-  const handleStart = useCallback(
-    (clientX: number) => {
-      if (!isTop || animatingRef.current) return;
-      setDragState({ isDragging: true, startX: clientX, currentX: clientX, dx: 0 });
-    },
-    [isTop]
-  );
-
-  const handleMove = useCallback(
-    (clientX: number) => {
-      setDragState((prev) => {
-        if (!prev.isDragging) return prev;
-        return { ...prev, currentX: clientX, dx: clientX - prev.startX };
-      });
-    },
-    []
-  );
-
-  const handleEnd = useCallback(() => {
-    setDragState((prev) => {
-      if (!prev.isDragging) return prev;
-      const dx = prev.dx;
-      if (Math.abs(dx) > SWIPE_THRESHOLD) {
-        const dir = dx > 0 ? "right" : "left";
-        setFlyDirection(dir);
-        animatingRef.current = true;
-        setTimeout(() => {
-          animatingRef.current = false;
-          onSwipe(dir);
-          setFlyDirection(null);
-        }, 350);
-      }
-      return { isDragging: false, startX: 0, currentX: 0, dx: 0 };
+  const handleMove = useCallback((clientX:number)=>{
+    setDragState(prev=>{
+      if(!prev.isDragging) return prev;
+      return {...prev, currentX:clientX, dx:clientX-prev.startX};
     });
-  }, [onSwipe]);
+  },[]);
 
-  // Touch events
-  useEffect(() => {
-    if (!isTop) return;
-    const card = cardRef.current;
-    if (!card) return;
+  const handleEnd = useCallback(()=>{
+    setDragState(prev=>{
+      if(!prev.isDragging) return prev;
+      const dx=prev.dx;
+      if(Math.abs(dx)>SWIPE_THRESHOLD){
+        const dir=dx>0?"right":"left";
+        setFlyDirection(dir); animatingRef.current=true;
+        setTimeout(()=>{onSwipe(dir);animatingRef.current=false;setFlyDirection(null);},600);
+      }
+      return {isDragging:false,startX:0,currentX:0,dx:0};
+    });
+  },[onSwipe]);
 
-    const onTouchStart = (e: TouchEvent) => handleStart(e.touches[0].clientX);
-    const onTouchMove = (e: TouchEvent) => {
-      e.preventDefault();
-      handleMove(e.touches[0].clientX);
-    };
-    const onTouchEnd = () => handleEnd();
+  useEffect(()=>{
+    if(!isTop) return;
+    const card=cardRef.current; if(!card) return;
+    const onTS=(e:TouchEvent)=>{e.preventDefault();e.stopPropagation();handleStart(e.touches[0].clientX);};
+    const onTM=(e:TouchEvent)=>{e.preventDefault();e.stopPropagation();handleMove(e.touches[0].clientX);};
+    const onTE=(e:TouchEvent)=>{e.preventDefault();e.stopPropagation();handleEnd();};
+    card.addEventListener("touchstart",onTS,{passive:false});
+    card.addEventListener("touchmove",onTM,{passive:false});
+    card.addEventListener("touchend",onTE,{passive:false});
+    return()=>{card.removeEventListener("touchstart",onTS);card.removeEventListener("touchmove",onTM);card.removeEventListener("touchend",onTE);};
+  },[isTop,handleStart,handleMove,handleEnd]);
 
-    card.addEventListener("touchstart", onTouchStart, { passive: true });
-    card.addEventListener("touchmove", onTouchMove, { passive: false });
-    card.addEventListener("touchend", onTouchEnd);
+  useEffect(()=>{
+    if(!isTop||!dragState.isDragging) return;
+    const onMM=(e:MouseEvent)=>{e.preventDefault();e.stopPropagation();handleMove(e.clientX);};
+    const onMU=(e:MouseEvent)=>{e.preventDefault();e.stopPropagation();handleEnd();};
+    window.addEventListener("mousemove",onMM); window.addEventListener("mouseup",onMU);
+    return()=>{window.removeEventListener("mousemove",onMM);window.removeEventListener("mouseup",onMU);};
+  },[isTop,dragState.isDragging,handleMove,handleEnd]);
 
-    return () => {
-      card.removeEventListener("touchstart", onTouchStart);
-      card.removeEventListener("touchmove", onTouchMove);
-      card.removeEventListener("touchend", onTouchEnd);
-    };
-  }, [isTop, handleStart, handleMove, handleEnd]);
+  const triggerSwipe = useCallback((dir:"left"|"right")=>{
+    if(animatingRef.current) return;
+    setFlyDirection(dir); animatingRef.current=true;
+    setTimeout(()=>{onSwipe(dir);animatingRef.current=false;setFlyDirection(null);},600);
+  },[onSwipe]);
 
-  // Mouse events
-  useEffect(() => {
-    if (!isTop || !dragState.isDragging) return;
+  useEffect(()=>{
+    const card=cardRef.current; if(!card||!isTop) return;
+    (card as HTMLDivElement&{triggerSwipe?:(d:"left"|"right")=>void}).triggerSwipe=triggerSwipe;
+  },[isTop,triggerSwipe]);
 
-    const onMouseMove = (e: MouseEvent) => handleMove(e.clientX);
-    const onMouseUp = () => handleEnd();
-
-    window.addEventListener("mousemove", onMouseMove);
-    window.addEventListener("mouseup", onMouseUp);
-
-    return () => {
-      window.removeEventListener("mousemove", onMouseMove);
-      window.removeEventListener("mouseup", onMouseUp);
-    };
-  }, [isTop, dragState.isDragging, handleMove, handleEnd]);
-
-  // Trigger swipe from buttons
-  const triggerSwipe = useCallback(
-    (dir: "left" | "right") => {
-      if (animatingRef.current) return;
-      setFlyDirection(dir);
-      animatingRef.current = true;
-      setTimeout(() => {
-        animatingRef.current = false;
-        onSwipe(dir);
-        setFlyDirection(null);
-      }, 350);
-    },
-    [onSwipe]
-  );
-
-  // Expose trigger to parent via data attribute
-  useEffect(() => {
-    const card = cardRef.current;
-    if (!card || !isTop) return;
-    (card as HTMLDivElement & { triggerSwipe?: (dir: "left" | "right") => void }).triggerSwipe =
-      triggerSwipe;
-  }, [isTop, triggerSwipe]);
-
-  const dx = dragState.isDragging ? dragState.dx : 0;
-  const likeOpacity = Math.min(Math.max(dx / SWIPE_THRESHOLD, 0), 1);
-  const nopeOpacity = Math.min(Math.max(-dx / SWIPE_THRESHOLD, 0), 1);
+  const dx=dragState.isDragging?dragState.dx:0;
+  const likeOpacity=Math.min(Math.max(dx/SWIPE_THRESHOLD,0),1);
+  const nopeOpacity=Math.min(Math.max(-dx/SWIPE_THRESHOLD,0),1);
 
   let cardStyle: React.CSSProperties;
-  if (flyDirection) {
-    cardStyle = {
-      animation: `card-fly-${flyDirection} 0.35s ease-in forwards`,
-    };
-  } else if (dragState.isDragging) {
-    cardStyle = {
-      transform: `translateX(${dx}px) rotate(${dx * 0.1}deg)`,
-      transition: "none",
-      cursor: "grabbing",
-    };
-  } else if (isTop) {
-    cardStyle = {
-      transform: "translateX(0) rotate(0deg)",
-      transition: "transform 0.3s ease-out",
-      cursor: "grab",
-      animation: "card-enter 0.35s ease-out",
-    };
-  } else {
-    cardStyle = {
-      transform: "scale(0.95) translateY(10px)",
-      opacity: 0.7,
-      transition: "all 0.35s ease-out",
-    };
-  }
-
-  // Fun fact pills
-  const pills: { icon: string; label: string }[] = [];
-  if (candidate.temperament) {
-    const key = candidate.temperament.toLowerCase();
-    pills.push({
-      icon: TEMPERAMENT_ICONS[key] || "🐕",
-      label: candidate.temperament,
-    });
-  }
-  if (candidate.activity_level) {
-    const key = candidate.activity_level.toLowerCase();
-    pills.push({
-      icon: ACTIVITY_ICONS[key] || "💪",
-      label: `${candidate.activity_level} energy`,
-    });
-  }
-  if (candidate.favorite_activity) {
-    const key = candidate.favorite_activity.toLowerCase();
-    pills.push({
-      icon: FAVORITE_ACTIVITY_ICONS[key] || "🎯",
-      label: candidate.favorite_activity,
-    });
-  }
+  if(flyDirection) cardStyle={animation:`card-fly-${flyDirection} 0.6s cubic-bezier(0.22,0.68,0.35,1) forwards`, willChange:"transform"};
+  else if(dragState.isDragging) cardStyle={transform:`translateX(${dx}px) rotate(${dx*0.05}deg)`,transition:"none",cursor:"grabbing", willChange:"transform"};
+  else if(isTop) cardStyle={transform:"translateX(0) rotate(0deg)",transition:"transform 0.2s ease-out",cursor:"grab",animation:"card-enter 0.5s cubic-bezier(0.22,0.68,0.35,1)", willChange:"transform"};
+  else cardStyle={transform:"scale(0.9) translateY(10px)",opacity:0.6,transition:"all 0.5s cubic-bezier(0.22,0.68,0.35,1)", willChange:"transform"};
 
   return (
-    <div
-      ref={cardRef}
-      className="absolute inset-0 select-none"
-      style={{ ...cardStyle, zIndex: isTop ? 10 : 5 }}
-      onMouseDown={(e) => {
-        e.preventDefault();
-        handleStart(e.clientX);
-      }}
-    >
-      <div className="w-full h-full bg-white rounded-2xl shadow-xl overflow-hidden flex flex-col relative">
-        {/* LIKE / NOPE overlay stamps */}
+    <div ref={cardRef} className="absolute inset-0 select-none touch-none" style={{...cardStyle,zIndex:isTop?10:5}}
+      onMouseDown={(e)=>{const t=e.target as HTMLElement;if(!t.closest('button')){e.preventDefault();handleStart(e.clientX);}}}
+      onTouchStart={(e)=>{const t=e.target as HTMLElement;if(!t.closest('button')){e.preventDefault();handleStart(e.touches[0].clientX);}}}>
+      <div className="w-full h-full rounded-3xl shadow-2xl overflow-hidden flex flex-col bg-white relative">
         {isTop && (
           <>
-            <div
-              className="absolute top-8 left-6 z-20 border-4 border-green-500 text-green-500 font-rubik font-bold text-3xl px-4 py-1 rounded-lg -rotate-12"
-              style={{ opacity: likeOpacity, transition: dragState.isDragging ? "none" : "opacity 0.2s" }}
-            >
-              LIKE ❤️
-            </div>
-            <div
-              className="absolute top-8 right-6 z-20 border-4 border-red-500 text-red-500 font-rubik font-bold text-3xl px-4 py-1 rounded-lg rotate-12"
-              style={{ opacity: nopeOpacity, transition: dragState.isDragging ? "none" : "opacity 0.2s" }}
-            >
-              NOPE ✕
-            </div>
+            <div className="absolute top-6 left-5 z-30 border-[3px] border-emerald-400 text-emerald-400 font-black text-2xl sm:text-3xl px-4 py-1 rounded-xl -rotate-12 bg-white/80 backdrop-blur-sm"
+              style={{opacity:likeOpacity,transition:dragState.isDragging?"none":"opacity 0.15s ease-out"}}>LIKE</div>
+            <div className="absolute top-6 right-5 z-30 border-[3px] border-red-400 text-red-400 font-black text-2xl sm:text-3xl px-4 py-1 rounded-xl rotate-12 bg-white/80 backdrop-blur-sm"
+              style={{opacity:nopeOpacity,transition:dragState.isDragging?"none":"opacity 0.15s ease-out"}}>NOPE</div>
           </>
         )}
-
-        {/* Photo section (~60% height) */}
-        <div className="relative w-full" style={{ height: "60%" }}>
+        <div className="relative flex-1 min-h-0 bg-gradient-to-br from-amber-100 to-orange-50">
           {photoUrl ? (
-            <Image
-              src={photoUrl}
-              alt={candidate.pet_name || "Dog"}
-              fill
-              className="object-cover"
-              unoptimized
-              sizes="400px"
-            />
+            <Image src={photoUrl} alt={candidate.pet_name||"Pet"} fill className="object-cover" unoptimized sizes="(max-width:640px) 95vw, 420px"
+              onError={(e)=>{(e.target as HTMLImageElement).style.display="none";}}/>
           ) : (
-            <div className="w-full h-full bg-off-white flex items-center justify-center">
-              <PawIcon size={80} />
+            <div className="w-full h-full flex items-center justify-center">
+              <div className="text-center"><PawIcon size={80}/><p className="text-gray-400 text-sm mt-2">No photo yet</p></div>
             </div>
           )}
-          {/* Gradient overlay at bottom of photo */}
-          <div className="absolute bottom-0 left-0 right-0 h-20 bg-gradient-to-t from-white/90 to-transparent" />
+          <div className="absolute bottom-4 left-0 right-0 flex justify-center gap-1.5 z-20">
+            <div className="w-6 h-2 rounded-full bg-white shadow"/>
+            <div className="w-2 h-2 rounded-full bg-white/50"/>
+            <div className="w-2 h-2 rounded-full bg-white/50"/>
+            <div className="w-2 h-2 rounded-full bg-white/50"/>
+          </div>
+          <div className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-white via-white/60 to-transparent z-10"/>
         </div>
-
-        {/* Info section (~40% height) */}
-        <div className="flex-1 px-5 py-4 flex flex-col gap-2 overflow-y-auto">
-          {/* Name + age row */}
-          <div className="flex items-baseline gap-2">
-            <h3 className="font-rubik font-bold text-2xl text-deep-green">
-              {candidate.pet_name}
-            </h3>
-            {ageText && (
-              <span className="text-deep-green/60 font-rubik text-base">
-                {ageText}
-              </span>
-            )}
-            {candidate.gender && (
-              <span className="text-deep-green/50 text-sm ml-auto">
-                {candidate.gender === "male" ? "♂" : candidate.gender === "female" ? "♀" : ""}
+        <div className="px-5 pt-1 pb-1">
+          <h3 className="font-bold text-xl sm:text-2xl text-gray-900 text-center">{candidate.pet_name||candidate.breed}</h3>
+          <p className="text-gray-400 text-sm text-center">{candidate.breed}</p>
+          <div className="flex items-center justify-center gap-4 mt-1 text-gray-500 text-sm">
+            <span className="inline-flex items-center gap-1">
+              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a2 2 0 01-2.828 0l-4.243-4.243a8 8 0 1111.314 0z"/><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+              {distanceLabel}
+            </span>
+            {sizeLabel && (
+              <span className="inline-flex items-center gap-1">
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4"/></svg>
+                {sizeLabel}
               </span>
             )}
           </div>
-
-          {/* Breed & city pills */}
-          <div className="flex flex-wrap gap-2">
-            {candidate.breed && (
-              <span className="inline-flex items-center gap-1 bg-off-white text-deep-green text-sm font-medium px-3 py-1 rounded-full">
-                🐕 {candidate.breed}
-              </span>
-            )}
-            {candidate.city && (
-              <span className="inline-flex items-center gap-1 bg-off-white text-deep-green text-sm font-medium px-3 py-1 rounded-full">
-                📍 {candidate.city}
-              </span>
-            )}
-            {candidate.weight_kg && (
-              <span className="inline-flex items-center gap-1 bg-off-white text-deep-green text-sm font-medium px-3 py-1 rounded-full">
-                ⚖️ {candidate.weight_kg}kg
-              </span>
-            )}
-          </div>
-
-          {/* Fun facts */}
-          {pills.length > 0 && (
-            <div className="flex flex-wrap gap-2 mt-1">
-              {pills.map((pill, i) => (
-                <span
-                  key={i}
-                  className="inline-flex items-center gap-1 bg-gold/15 text-deep-green text-xs font-medium px-2.5 py-1 rounded-full"
-                >
-                  {pill.icon} {pill.label}
-                </span>
-              ))}
-            </div>
-          )}
-
-          {/* Gets along with dogs */}
-          {candidate.gets_along_with_dogs !== null && candidate.gets_along_with_dogs !== undefined && (
-            <div className="mt-1">
-              {candidate.gets_along_with_dogs ? (
-                <span className="text-green-600 text-sm font-medium">
-                  ✓ Gets along with dogs
-                </span>
-              ) : (
-                <span className="text-red-500 text-sm font-medium">
-                  ✗ Prefers solo
-                </span>
-              )}
-            </div>
-          )}
-
-          {/* Owner name (subtle) */}
-          {candidate.owner_name && (
-            <p className="text-deep-green/40 text-xs mt-auto">
-              Owner: {candidate.owner_name}
-            </p>
-          )}
         </div>
+        {isTop && (
+          <div className="flex items-center justify-center gap-3 px-5 pb-4 pt-2">
+            <button onClick={(e)=>{e.stopPropagation();triggerSwipe("left");}}
+              className="w-12 h-12 rounded-full bg-gray-800 flex items-center justify-center text-white hover:bg-gray-700 active:scale-90 transition-all shadow-lg" aria-label="Pass">
+              <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M14 9V5a3 3 0 00-5.12-2.12L3.46 8.3A2 2 0 003 9.74V18a2 2 0 002 2h7.12a2 2 0 001.94-1.5l1.88-7.5A1 1 0 0015 10h-1z"/></svg>
+            </button>
+            <button onClick={(e)=>{e.stopPropagation();triggerSwipe("right");}}
+              className="w-14 h-14 rounded-full bg-emerald-500 hover:bg-emerald-600 active:scale-90 flex items-center justify-center text-white shadow-lg transition-all" aria-label="Love">
+              <svg className="w-7 h-7" fill="currentColor" viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+            </button>
+            <button onClick={(e)=>{e.stopPropagation();triggerSwipe("right");}}
+              className="w-12 h-12 rounded-full bg-gray-800 flex items-center justify-center text-white hover:bg-gray-700 active:scale-90 transition-all shadow-lg" aria-label="Next">
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth={2.5} viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6"/></svg>
+            </button>
+          </div>
+        )}
       </div>
     </div>
   );
-}
-
-// ---------------------------------------------------------------------------
-// AuthGate: not logged in
-// ---------------------------------------------------------------------------
+});
 
 function NotLoggedInCTA() {
   return (
-    <div className="flex-1 flex items-center justify-center px-4 sm:px-6 lg:px-8 py-20 sm:py-24 lg:py-32">
-      <div className="bg-white rounded-2xl shadow-xl p-6 sm:p-8 lg:p-12 max-w-md w-full text-center">
-        <div className="w-20 h-20 sm:w-24 sm:h-24 mx-auto mb-6 sm:mb-8 bg-gold/20 rounded-full flex items-center justify-center">
-          <PawIcon size={56} />
-        </div>
-        <h2 className="font-rubik font-bold text-2xl sm:text-3xl lg:text-4xl text-deep-green mb-4 sm:mb-6">
-          Find Playmates for Your Pup
-        </h2>
-        <p className="text-deep-green/60 mb-8 sm:mb-10 leading-relaxed text-base sm:text-lg">
-          Swipe through local dogs, match with compatible playmates, and set up
-          the perfect doggy date. Sign up or log in to get started!
-        </p>
-        <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
-          <Link
-            href="/auth/login"
-            className="flex-1 bg-gold text-deep-green font-rubik font-bold text-lg sm:text-base lg:text-lg py-3 sm:py-3.5 rounded-xl hover:bg-[#d99500] transition-colors"
-          >
-            Log In
-          </Link>
-          <Link
-            href="/auth/signup"
-            className="flex-1 bg-deep-green text-white font-rubik font-bold text-lg sm:text-base lg:text-lg py-3 sm:py-3.5 rounded-xl hover:bg-deep-green/90 transition-colors"
-          >
-            Sign Up
-          </Link>
+    <div className="flex-1 flex items-center justify-center px-4 py-12">
+      <div className="bg-white rounded-3xl shadow-xl p-8 max-w-md w-full text-center">
+        <div className="w-20 h-20 mx-auto mb-6 bg-emerald-100 rounded-full flex items-center justify-center text-4xl">🐾</div>
+        <h2 className="font-bold text-2xl sm:text-3xl text-gray-900 mb-4">Find Playmates for Your Pup</h2>
+        <p className="text-gray-500 mb-8 leading-relaxed">Swipe through local pets, match with compatible playmates, and set up the perfect date!</p>
+        <div className="flex flex-col sm:flex-row gap-3">
+          <Link href="/login" className="flex-1 bg-emerald-500 text-white font-bold text-lg py-3 rounded-xl hover:bg-emerald-600 transition-colors text-center">Log In</Link>
+          <Link href="/signup" className="flex-1 bg-gray-900 text-white font-bold text-lg py-3 rounded-xl hover:bg-gray-800 transition-colors text-center">Sign Up</Link>
         </div>
       </div>
     </div>
   );
 }
-
-// ---------------------------------------------------------------------------
-// AuthGate: no pet profile
-// ---------------------------------------------------------------------------
 
 function NoPetProfileCTA() {
   return (
-    <div className="flex-1 flex items-center justify-center px-4 sm:px-6 lg:px-8 py-20 sm:py-24 lg:py-32">
-      <div className="bg-white rounded-2xl shadow-xl p-6 sm:p-8 lg:p-12 max-w-md w-full text-center">
-        <div className="w-20 h-20 sm:w-24 sm:h-24 mx-auto mb-6 sm:mb-8 bg-gold/20 rounded-full flex items-center justify-center text-5xl sm:text-6xl">
-          🐶
-        </div>
-        <h2 className="font-rubik font-bold text-2xl sm:text-3xl lg:text-4xl text-deep-green mb-4 sm:mb-6">
-          Complete Your Pet Profile
-        </h2>
-        <p className="text-deep-green/60 mb-8 sm:mb-10 leading-relaxed text-base sm:text-lg">
-          Before you can start swiping, we need to know about your furry friend.
-          Create a pet profile to get matched with compatible playmates!
-        </p>
-        <Link
-          href="/find-owners"
-          className="inline-block bg-gold text-deep-green font-rubik font-bold text-lg sm:text-base lg:text-lg px-8 sm:px-10 py-3 sm:py-3.5 rounded-xl hover:bg-[#d99500] transition-colors"
-        >
-          Complete Profile
-        </Link>
+    <div className="flex-1 flex items-center justify-center px-4 py-12">
+      <div className="bg-white rounded-3xl shadow-xl p-8 max-w-md w-full text-center">
+        <div className="w-20 h-20 mx-auto mb-6 bg-amber-100 rounded-full flex items-center justify-center text-4xl">🐶</div>
+        <h2 className="font-bold text-2xl sm:text-3xl text-gray-900 mb-4">Complete Your Pet Profile</h2>
+        <p className="text-gray-500 mb-8 leading-relaxed">Before swiping, add photos and details about your pet. Go to your profile to upload swipe photos!</p>
+        <Link href="/profile" className="inline-block bg-emerald-500 text-white font-bold text-lg px-8 py-3 rounded-xl hover:bg-emerald-600 transition-colors">Set Up Profile</Link>
       </div>
     </div>
   );
 }
-
-// ---------------------------------------------------------------------------
-// EmptyState
-// ---------------------------------------------------------------------------
 
 function EmptyState() {
   return (
-    <div className="flex-1 flex items-center justify-center px-4 sm:px-6 lg:px-8 py-20 sm:py-24 lg:py-32">
-      <div className="bg-white rounded-2xl shadow-xl p-6 sm:p-8 lg:p-12 max-w-md w-full text-center">
-        <div className="w-20 h-20 sm:w-24 sm:h-24 mx-auto mb-6 sm:mb-8 bg-off-white rounded-full flex items-center justify-center text-5xl sm:text-6xl">
-          🐾
-        </div>
-        <h2 className="font-rubik font-bold text-2xl sm:text-3xl lg:text-4xl text-deep-green mb-4 sm:mb-6">
-          No More Dogs Nearby!
-        </h2>
-        <p className="text-deep-green/60 mb-8 sm:mb-10 leading-relaxed text-base sm:text-lg">
-          You&apos;ve seen all available dogs for now. Check back later or
-          explore the community to find new friends!
-        </p>
-        <Link
-          href="/community"
-          className="inline-block bg-gold text-deep-green font-rubik font-bold text-lg sm:text-base lg:text-lg px-8 sm:px-10 py-3 sm:py-3.5 rounded-xl hover:bg-[#d99500] transition-colors"
-        >
-          Explore Community
-        </Link>
+    <div className="flex-1 flex items-center justify-center px-4 py-12">
+      <div className="bg-white rounded-3xl shadow-xl p-8 max-w-md w-full text-center">
+        <div className="w-20 h-20 mx-auto mb-6 bg-gray-100 rounded-full flex items-center justify-center text-4xl">🐾</div>
+        <h2 className="font-bold text-2xl sm:text-3xl text-gray-900 mb-4">No More Pets Nearby!</h2>
+        <p className="text-gray-500 mb-8 leading-relaxed">You&apos;ve seen all available pets. Check back later for new friends!</p>
+        <Link href="/community" className="inline-block bg-emerald-500 text-white font-bold text-lg px-8 py-3 rounded-xl hover:bg-emerald-600 transition-colors">Explore Community</Link>
       </div>
     </div>
   );
 }
-
-// ---------------------------------------------------------------------------
-// StatsBar
-// ---------------------------------------------------------------------------
-
-function StatsBar({
-  likesToday,
-  matchCount,
-}: {
-  likesToday: number;
-  matchCount: number;
-}) {
-  return (
-    <div className="flex items-center justify-center gap-6 py-3">
-      <div className="flex items-center gap-1.5 text-deep-green/70 text-sm font-rubik">
-        <span className="text-lg">❤️</span>
-        <span className="font-semibold">{likesToday}</span>
-        <span>likes today</span>
-      </div>
-      <div className="w-px h-4 bg-deep-green/20" />
-      <div className="flex items-center gap-1.5 text-deep-green/70 text-sm font-rubik">
-        <span className="text-lg">🎉</span>
-        <span className="font-semibold">{matchCount}</span>
-        <span>matches</span>
-      </div>
-    </div>
-  );
-}
-
-// ---------------------------------------------------------------------------
-// Main Page Component
-// ---------------------------------------------------------------------------
 
 export default function SwipePage() {
   const { user, loading: authLoading } = useAuth();
-  // Profile states
-  const [myPetProfile, setMyPetProfile] = useState<PetCandidate | null>(null);
-  const [hasProfile, setHasProfile] = useState<boolean | null>(null);
-
-  // Candidate queue
+  const [myPetProfile, setMyPetProfile] = useState<PetCandidate|null>(null);
+  const [hasProfile, setHasProfile] = useState<boolean|null>(null);
   const [candidates, setCandidates] = useState<PetCandidate[]>([]);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [loadingCandidates, setLoadingCandidates] = useState(true);
   const [allExhausted, setAllExhausted] = useState(false);
   const loadingMoreRef = useRef(false);
-
-  // Stats
   const [likesToday, setLikesToday] = useState(0);
   const [matchCount, setMatchCount] = useState(0);
-
-  // Match modal
-  const [matchModalPet, setMatchModalPet] = useState<PetCandidate | null>(null);
-
-  // Card ref for triggering swipe from buttons
+  const [matchModalPet, setMatchModalPet] = useState<PetCandidate|null>(null);
   const topCardContainerRef = useRef<HTMLDivElement>(null);
 
-  // ---------------------------------------------------------------------------
-  // Load my pet profile
-  // ---------------------------------------------------------------------------
-
-  useEffect(() => {
-    if (!user) return;
-    (async () => {
-      const { data } = await supabase
-        .from("pet_profiles")
-        .select("*")
-        .eq("user_id", user.id)
-        .limit(1)
-        .maybeSingle();
-
-      if (data) {
-        setMyPetProfile(data as PetCandidate);
-        setHasProfile(true);
-      } else {
-        setHasProfile(false);
-      }
+  useEffect(()=>{
+    if(!user) return;
+    (async()=>{
+      const {data}=await supabase.from("pet_profiles").select("*").eq("user_id",user.id).limit(1).maybeSingle();
+      if(data){setMyPetProfile(data as PetCandidate);setHasProfile(true);}
+      else{setHasProfile(false);}
     })();
-  }, [user]);
+  },[user]);
 
-  // ---------------------------------------------------------------------------
-  // Load stats
-  // ---------------------------------------------------------------------------
-
-  useEffect(() => {
-    if (!user) return;
-    (async () => {
-      // Likes today
-      const todayStart = new Date();
-      todayStart.setHours(0, 0, 0, 0);
-      const { count: todayLikes } = await supabase
-        .from("swipe_actions")
-        .select("*", { count: "exact", head: true })
-        .eq("swiper_id", user.id)
-        .eq("action", "like")
-        .gte("created_at", todayStart.toISOString());
-      setLikesToday(todayLikes ?? 0);
-
-      // Total matches
-      const { count: totalMatches } = await supabase
-        .from("matches")
-        .select("*", { count: "exact", head: true })
-        .or(`user_a_id.eq.${user.id},user_b_id.eq.${user.id}`)
-        .eq("is_active", true);
-      setMatchCount(totalMatches ?? 0);
+  useEffect(()=>{
+    if(!user) return;
+    (async()=>{
+      const todayStart=new Date();todayStart.setHours(0,0,0,0);
+      const {count:todayLikes}=await supabase.from("swipe_actions").select("*",{count:"exact",head:true}).eq("swiper_id",user.id).eq("action","like").gte("created_at",todayStart.toISOString());
+      setLikesToday(todayLikes??0);
+      const {count:totalMatches}=await supabase.from("matches").select("*",{count:"exact",head:true}).or(`user_a_id.eq.${user.id},user_b_id.eq.${user.id}`).eq("is_active",true);
+      setMatchCount(totalMatches??0);
     })();
-  }, [user]);
+  },[user]);
 
-  // ---------------------------------------------------------------------------
-  // Load candidates
-  // ---------------------------------------------------------------------------
-
-  const loadCandidates = useCallback(
-    async (append = false) => {
-      if (!user || loadingMoreRef.current) return;
-      loadingMoreRef.current = true;
-      if (!append) setLoadingCandidates(true);
-
-      try {
-        // Get already-swiped IDs
-        const { data: swipedRows } = await supabase
-          .from("swipe_actions")
-          .select("swiped_id")
-          .eq("swiper_id", user.id);
-        const swipedIds = (swipedRows || []).map((r) => r.swiped_id);
-        swipedIds.push(user.id); // exclude self
-
-        // Build query — prefer looking_for_mate, same city, same breed
-        // We fetch in two passes: first looking_for_mate=true, then the rest
-        const allCandidates: PetCandidate[] = [];
-
-        // Pass 1: looking_for_mate candidates
-        const q1 = supabase
-          .from("pet_profiles")
-          .select("*")
-          .not("user_id", "in", `(${swipedIds.join(",")})`)
-          .eq("looking_for_mate", true)
-          .limit(BATCH_SIZE * 2);
-
-        const { data: pass1 } = await q1;
-        if (pass1) allCandidates.push(...(pass1 as PetCandidate[]));
-
-        // Pass 2: if not enough, get others
-        if (allCandidates.length < BATCH_SIZE) {
-          const excludeIds = [...swipedIds, ...allCandidates.map((c) => c.user_id)];
-          const q2 = supabase
-            .from("pet_profiles")
-            .select("*")
-            .not("user_id", "in", `(${excludeIds.join(",")})`)
-            .limit(BATCH_SIZE);
-
-          const { data: pass2 } = await q2;
-          if (pass2) allCandidates.push(...(pass2 as PetCandidate[]));
-        }
-
-        // Sort: same city first, then same breed, then random
-        const myCity = myPetProfile?.city_normalized || "";
-        const myBreed = myPetProfile?.breed_normalized || "";
-
-        allCandidates.sort((a, b) => {
-          const aCity = a.city_normalized === myCity ? 0 : 1;
-          const bCity = b.city_normalized === myCity ? 0 : 1;
-          if (aCity !== bCity) return aCity - bCity;
-
-          const aBreed = a.breed_normalized === myBreed ? 0 : 1;
-          const bBreed = b.breed_normalized === myBreed ? 0 : 1;
-          if (aBreed !== bBreed) return aBreed - bBreed;
-
-          return Math.random() - 0.5;
-        });
-
-        // Trim to batch size
-        const batch = allCandidates.slice(0, BATCH_SIZE);
-
-        // Fetch owner names for the batch
-        if (batch.length > 0) {
-          const userIds = batch.map((c) => c.user_id);
-          const { data: profiles } = await supabase
-            .from("user_profiles")
-            .select("user_id, full_name")
-            .in("user_id", userIds);
-
-          if (profiles) {
-            const nameMap = new Map(profiles.map((p) => [p.user_id, p.full_name]));
-            batch.forEach((c) => {
-              c.owner_name = nameMap.get(c.user_id) || null;
-            });
-          }
-        }
-
-        if (batch.length === 0) {
-          setAllExhausted(true);
-        }
-
-        if (append) {
-          setCandidates((prev) => [...prev, ...batch]);
-        } else {
-          setCandidates(batch);
-          setCurrentIndex(0);
-        }
-      } catch (err) {
-        console.error("Failed to load candidates:", err);
-      } finally {
-        setLoadingCandidates(false);
-        loadingMoreRef.current = false;
+  const loadCandidates = useCallback(async(append=false)=>{
+    if(!user||loadingMoreRef.current) return;
+    loadingMoreRef.current=true;
+    if(!append) setLoadingCandidates(true);
+    try{
+      const {data:swipedRows}=await supabase.from("swipe_actions").select("swiped_id").eq("swiper_id",user.id);
+      const swipedIds=(swipedRows||[]).map(r=>r.swiped_id);
+      swipedIds.push(user.id);
+      const allCandidates:PetCandidate[]=[];
+      const {data:pass1}=await supabase.from("pet_profiles").select("*").not("user_id","in",`(${swipedIds.join(",")})`).eq("looking_for_mate",true).limit(BATCH_SIZE*2);
+      if(pass1) allCandidates.push(...(pass1 as PetCandidate[]));
+      if(allCandidates.length<BATCH_SIZE){
+        const excludeIds=[...swipedIds,...allCandidates.map(c=>c.user_id)];
+        const {data:pass2}=await supabase.from("pet_profiles").select("*").not("user_id","in",`(${excludeIds.join(",")})`).limit(BATCH_SIZE);
+        if(pass2) allCandidates.push(...(pass2 as PetCandidate[]));
       }
-    },
-    [user, myPetProfile]
-  );
-
-  useEffect(() => {
-    if (hasProfile === true) {
-      loadCandidates(false);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [hasProfile]);
-
-  // Preload next batch when few remain
-  useEffect(() => {
-    const remaining = candidates.length - currentIndex;
-    if (remaining <= PRELOAD_THRESHOLD && remaining > 0 && !allExhausted) {
-      loadCandidates(true);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [currentIndex, candidates.length, allExhausted]);
-
-  // ---------------------------------------------------------------------------
-  // Swipe handler
-  // ---------------------------------------------------------------------------
-
-  const handleSwipe = useCallback(
-    async (direction: "left" | "right") => {
-      const candidate = candidates[currentIndex];
-      console.log("[handleSwipe] dir=" + direction, "candidate=" + (candidate?.pet_name || "NONE"), "user=" + (user?.id?.substring(0,8) || "NONE"), "idx=" + currentIndex);
-      if (!candidate || !user) return;
-
-      const action = direction === "right" ? "like" : "pass";
-      // Check if we actually have a valid session
-      const { data: sessionData } = await supabase.auth.getSession();
-      console.log("[handleSwipe] session?", !!sessionData?.session, "uid:", sessionData?.session?.user?.id?.substring(0,8) || "NONE");
-      console.log("[handleSwipe] inserting swipe:", user.id.substring(0,8), "→", candidate.user_id.substring(0,8), action);
-
-      // Insert swipe action
-      const { error: swipeErr, data: swipeData, status, statusText } = await supabase.from("swipe_actions").insert({
-        swiper_id: user.id,
-        swiped_id: candidate.user_id,
-        action,
+      const myCity=myPetProfile?.city_normalized||"";
+      const myBreed=myPetProfile?.breed_normalized||"";
+      allCandidates.sort((a,b)=>{
+        const ac=a.city_normalized===myCity?0:1;
+        const bc=b.city_normalized===myCity?0:1;
+        if(ac!==bc) return ac-bc;
+        const ab2=a.breed_normalized===myBreed?0:1;
+        const bb2=b.breed_normalized===myBreed?0:1;
+        if(ab2!==bb2) return ab2-bb2;
+        return Math.random()-0.5;
       });
-      console.log("[handleSwipe] insert result: status=" + status, "statusText=" + statusText, "data=", swipeData, "err=", swipeErr);
-      if (swipeErr) {
-        console.error("Swipe insert failed:", swipeErr.message, swipeErr.code, swipeErr.details);
+      const batch=allCandidates.slice(0,BATCH_SIZE);
+      if(batch.length>0){
+        const userIds=batch.map(c=>c.user_id);
+        const {data:profiles}=await supabase.from("user_profiles").select("user_id, full_name").in("user_id",userIds);
+        if(profiles){
+          const nameMap=new Map(profiles.map(p=>[p.user_id,p.full_name]));
+          batch.forEach(c=>{c.owner_name=nameMap.get(c.user_id)||null;});
+        }
       }
+      if(batch.length===0) setAllExhausted(true);
+      if(append) setCandidates(prev=>[...prev,...batch]);
+      else{setCandidates(batch);setCurrentIndex(0);}
+    }catch(err){console.error("Failed to load candidates:",err);}
+    finally{setLoadingCandidates(false);loadingMoreRef.current=false;}
+  },[user,myPetProfile]);
 
-      // Update likes stat
-      if (action === "like") {
-        setLikesToday((prev) => prev + 1);
+  useEffect(()=>{
+    if(hasProfile===true) loadCandidates(false);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  },[hasProfile]);
 
-        // Check for mutual match
-        const { data: mutual } = await supabase
-          .from("swipe_actions")
-          .select("id")
-          .eq("swiper_id", candidate.user_id)
-          .eq("swiped_id", user.id)
-          .eq("action", "like")
-          .maybeSingle();
+  useEffect(()=>{
+    const remaining=candidates.length-currentIndex;
+    if(remaining<=PRELOAD_THRESHOLD&&remaining>0&&!allExhausted) loadCandidates(true);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  },[currentIndex,candidates.length,allExhausted]);
 
-        if (mutual) {
-          // It's a match!
-          const [userA, userB] =
-            user.id < candidate.user_id
-              ? [user.id, candidate.user_id]
-              : [candidate.user_id, user.id];
-
-          // Insert match
-          const { data: matchRow, error: matchErr } = await supabase
-            .from("matches")
-            .insert({
-              user_a_id: userA,
-              user_b_id: userB,
-              is_active: true,
-            })
-            .select("id")
-            .single();
-          if (matchErr) console.error("Match insert failed:", matchErr.message, matchErr.code);
-
-          // Insert conversation
-          if (matchRow) {
-            const { error: convoErr } = await supabase
-              .from("conversations")
-              .insert({
-                match_id: matchRow.id,
-                participant_a: userA,
-                participant_b: userB,
-              });
-            if (convoErr) console.error("Conversation insert failed:", convoErr.message, convoErr.code);
+  const handleSwipe = useCallback((direction:"left"|"right")=>{
+    const candidate=candidates[currentIndex];
+    if(!candidate||!user) return;
+    setCurrentIndex(prev=>prev+1);
+    const action=direction==="right"?"like":"pass";
+    if(action==="like") setLikesToday(prev=>prev+1);
+    (async()=>{
+      const {error:swipeErr}=await supabase.from("swipe_actions").upsert({swiper_id:user.id,swiped_id:candidate.user_id,action},{onConflict:"swiper_id,swiped_id"});
+      if(swipeErr) console.error("Swipe insert failed:",swipeErr.message);
+      if(action==="like"){
+        const {data:mutual}=await supabase.from("swipe_actions").select("id").eq("swiper_id",candidate.user_id).eq("swiped_id",user.id).eq("action","like").maybeSingle();
+        if(mutual){
+          const [userA,userB]=user.id<candidate.user_id?[user.id,candidate.user_id]:[candidate.user_id,user.id];
+          const {data:matchRow,error:matchErr}=await supabase.from("matches").insert({user_a_id:userA,user_b_id:userB,is_active:true}).select("id").single();
+          if(matchErr) console.error("Match insert failed:",matchErr.message);
+          if(matchRow){
+            await supabase.from("conversations").insert({match_id:matchRow.id,participant_a:userA,participant_b:userB});
           }
-
-          setMatchCount((prev) => prev + 1);
+          setMatchCount(prev=>prev+1);
           setMatchModalPet(candidate);
         }
       }
+    })();
+  },[candidates,currentIndex,user]);
 
-      // Advance to next card
-      setCurrentIndex((prev) => prev + 1);
-    },
-    [candidates, currentIndex, user]
-  );
+  const handleLove = useCallback(()=>{
+    const container=topCardContainerRef.current;
+    if(!container) return;
+    const topCard=container.querySelector("[style*='z-index: 10']") as (HTMLDivElement&{triggerSwipe?:(d:"left"|"right")=>void})|null;
+    if(topCard?.triggerSwipe) topCard.triggerSwipe("right");
+    else handleSwipe("right");
+  },[handleSwipe]);
 
-  // ---------------------------------------------------------------------------
-  // Button handlers (trigger card fly animation)
-  // ---------------------------------------------------------------------------
-
-  const handleButtonSwipe = useCallback(
-    (dir: "left" | "right") => {
-      const container = topCardContainerRef.current;
-      if (!container) return;
-      const topCard = container.querySelector("[style*='z-index: 10']") as
-        | (HTMLDivElement & { triggerSwipe?: (d: "left" | "right") => void })
-        | null;
-      if (topCard?.triggerSwipe) {
-        topCard.triggerSwipe(dir);
-      } else {
-        // Fallback: just process swipe
-        handleSwipe(dir);
-      }
-    },
-    [handleSwipe]
-  );
-
-  // ---------------------------------------------------------------------------
-  // Render
-  // ---------------------------------------------------------------------------
-
-  const currentCandidate = candidates[currentIndex] || null;
-  const nextCandidate = candidates[currentIndex + 1] || null;
-  const showEmptyState =
-    !loadingCandidates && (allExhausted || !currentCandidate) && currentIndex >= candidates.length;
+  const currentCandidate=candidates[currentIndex]||null;
+  const nextCandidate=candidates[currentIndex+1]||null;
+  const showEmptyState=!loadingCandidates&&(allExhausted||!currentCandidate)&&currentIndex>=candidates.length;
 
   return (
     <>
-      <style dangerouslySetInnerHTML={{ __html: confettiCSS }} />
+      <style dangerouslySetInnerHTML={{__html:swipeCSS}}/>
+      <div className="min-h-screen flex flex-col bg-gray-50 pt-[64px] lg:pt-[80px]">
+        <Header/>
 
-      <div className="min-h-screen flex flex-col bg-off-white">
-        <Header />
+        {!authLoading && user && hasProfile===true && (
+          <div className="sticky top-[64px] lg:top-[80px] z-30 bg-white/90 backdrop-blur-md border-b border-gray-100 shadow-sm">
+            <div className="max-w-lg mx-auto flex items-center justify-between px-4 py-3">
+              <Link href="/profile" className="flex items-center gap-2 text-gray-600 hover:text-gray-900 transition-colors">
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
+                </svg>
+                <span className="text-sm font-medium">Profile</span>
+              </Link>
+              <div className="flex items-center gap-3 text-sm">
+                <span className="flex items-center gap-1 text-gray-500"><span>❤️</span><span className="font-semibold text-gray-700">{likesToday}</span></span>
+                <span className="w-px h-4 bg-gray-200"/>
+                <span className="flex items-center gap-1 text-gray-500"><span>🎯</span><span className="font-semibold text-gray-700">{matchCount}</span></span>
+              </div>
+              <Link href="/matches" className="relative flex items-center gap-2 text-gray-600 hover:text-gray-900 transition-colors">
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/>
+                </svg>
+                <span className="text-sm font-medium">Matches</span>
+                {matchCount>0 && (
+                  <span className="absolute -top-1 -right-2 w-5 h-5 bg-red-500 text-white text-[10px] font-bold rounded-full flex items-center justify-center">{matchCount>9?"9+":matchCount}</span>
+                )}
+              </Link>
+            </div>
+          </div>
+        )}
 
-        {/* Auth loading */}
         {authLoading && (
           <div className="flex-1 flex items-center justify-center">
-            <div className="w-10 h-10 border-4 border-gold border-t-transparent rounded-full animate-spin" />
+            <div className="w-10 h-10 border-4 border-emerald-400 border-t-transparent rounded-full animate-spin"/>
           </div>
         )}
 
-        {/* Not logged in */}
-        {!authLoading && !user && (
-          <div className="flex-1 flex flex-col items-center pt-24 sm:pt-24 lg:pt-24 pb-24 lg:pb-0">
-            <NotLoggedInCTA />
-          </div>
-        )}
-
-        {/* Logged in but no pet profile */}
-        {!authLoading && user && hasProfile === false && (
-          <div className="flex-1 flex flex-col items-center pt-24 sm:pt-24 lg:pt-24 pb-24 lg:pb-0">
-            <NoPetProfileCTA />
-          </div>
-        )}
-
-        {/* Logged in, checking profile */}
-        {!authLoading && user && hasProfile === null && (
+        {!authLoading && !user && <NotLoggedInCTA/>}
+        {!authLoading && user && hasProfile===false && <NoPetProfileCTA/>}
+        {!authLoading && user && hasProfile===null && (
           <div className="flex-1 flex items-center justify-center">
-            <div className="w-10 h-10 border-4 border-gold border-t-transparent rounded-full animate-spin" />
+            <div className="w-10 h-10 border-4 border-emerald-400 border-t-transparent rounded-full animate-spin"/>
           </div>
         )}
 
-        {/* Swipe interface */}
-        {!authLoading && user && hasProfile === true && (
-          <div className="flex-1 flex flex-col items-center px-3 sm:px-4 lg:px-8 pt-24 sm:pt-24 lg:pt-24 pb-24 lg:pb-32">
-            {/* Stats bar */}
-            <div className="w-full mb-6 lg:mb-8">
-              <StatsBar likesToday={likesToday} matchCount={matchCount} />
-            </div>
-
-            {/* Loading candidates */}
-            {loadingCandidates && candidates.length === 0 && (
+        {!authLoading && user && hasProfile===true && (
+          <div className="flex-1 flex flex-col items-center justify-center px-4 py-4 sm:py-6">
+            {loadingCandidates && candidates.length===0 && (
               <div className="flex-1 flex items-center justify-center">
                 <div className="text-center">
-                  <div className="w-12 h-12 border-4 border-gold border-t-transparent rounded-full animate-spin mx-auto mb-4" />
-                  <p className="text-deep-green/60 font-rubik text-base sm:text-lg">
-                    Finding dogs near you...
-                  </p>
+                  <div className="w-12 h-12 border-4 border-emerald-400 border-t-transparent rounded-full animate-spin mx-auto mb-4"/>
+                  <p className="text-gray-500 text-lg">Finding pets near you...</p>
                 </div>
               </div>
             )}
-
-            {/* Empty state */}
-            {showEmptyState && <EmptyState />}
-
-            {/* Card stack */}
+            {showEmptyState && <EmptyState/>}
             {currentCandidate && (
-              <>
-                <div
-                  ref={topCardContainerRef}
-                  className="relative w-full flex-1 min-h-[400px] sm:min-h-[450px] lg:min-h-[500px] my-6 sm:my-8 lg:my-10 max-w-[95vw] sm:max-w-[500px] lg:max-w-[500px] max-h-[60vh] sm:max-h-[65vh] lg:max-h-[70vh]"
-                >
-                  {/* Next card (behind) */}
-                  {nextCandidate && (
-                    <SwipeCard
-                      key={`card-${nextCandidate.user_id}`}
-                      candidate={nextCandidate}
-                      isTop={false}
-                      onSwipe={() => {}}
-                    />
-                  )}
-
-                  {/* Top card */}
-                  <SwipeCard
-                    key={`card-${currentCandidate.user_id}`}
-                    candidate={currentCandidate}
-                    isTop={true}
-                    onSwipe={handleSwipe}
-                  />
-                </div>
-
-                {/* Action buttons */}
-                <div className="flex items-center justify-center gap-6 sm:gap-8 lg:gap-12 mt-6 sm:mt-8 lg:mt-10 mb-6 lg:mb-8 w-full">
-                  {/* Pass button */}
-                  <button
-                    onClick={() => handleButtonSwipe("left")}
-                    className="w-14 h-14 sm:w-16 sm:h-16 lg:w-20 lg:h-20 rounded-full bg-white shadow-lg border-2 border-red-400 flex items-center justify-center text-red-500 hover:bg-red-50 hover:scale-110 active:scale-95 transition-all"
-                    aria-label="Pass"
-                  >
-                    <svg
-                      width="32"
-                      height="32"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="3"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    >
-                      <line x1="18" y1="6" x2="6" y2="18" />
-                      <line x1="6" y1="6" x2="18" y2="18" />
-                    </svg>
-                  </button>
-
-                  {/* Like button */}
-                  <button
-                    onClick={() => handleButtonSwipe("right")}
-                    className="w-14 h-14 sm:w-16 sm:h-16 lg:w-20 lg:h-20 rounded-full bg-white shadow-lg border-2 border-green-400 flex items-center justify-center text-green-500 hover:bg-green-50 hover:scale-110 active:scale-95 transition-all"
-                    aria-label="Like"
-                  >
-                    <svg
-                      width="32"
-                      height="32"
-                      viewBox="0 0 24 24"
-                      fill="currentColor"
-                      stroke="none"
-                    >
-                      <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
-                    </svg>
-                  </button>
-                </div>
-              </>
+              <div ref={topCardContainerRef}
+                className="relative w-full max-w-[360px] sm:max-w-[400px] lg:max-w-[420px]"
+                style={{aspectRatio:"3/4.3", willChange:"transform"}}>
+                {nextCandidate && (
+                  <>
+                    <div className="absolute -left-3 sm:-left-5 top-3 bottom-3 w-[calc(100%-1rem)] rounded-3xl bg-gray-300/40 shadow" style={{zIndex:1, willChange:"transform"}}/>
+                    <div className="absolute -right-2 sm:-right-4 top-2 bottom-2 w-[calc(100%-0.5rem)] rounded-3xl bg-white/60 shadow-md overflow-hidden" style={{zIndex:2, willChange:"transform"}}>
+                      {(nextCandidate.profile_photo_url||nextCandidate.avatar_url) && (
+                        <Image src={(nextCandidate.profile_photo_url||nextCandidate.avatar_url)!} alt="" fill className="object-cover opacity-50" unoptimized/>
+                      )}
+                    </div>
+                  </>
+                )}
+                {nextCandidate && (
+                  <SwipeCard key={`card-${nextCandidate.user_id}`} candidate={nextCandidate} isTop={false} onSwipe={()=>{}} onLove={()=>{}} likesToday={0}/>
+                )}
+                <SwipeCard key={`card-${currentCandidate.user_id}`} candidate={currentCandidate} isTop={true} onSwipe={handleSwipe} onLove={handleLove} likesToday={likesToday}/>
+              </div>
             )}
           </div>
         )}
 
-        {/* Match modal */}
         {matchModalPet && (
-          <MatchModal
-            myPet={myPetProfile}
-            theirPet={matchModalPet}
-            onMessage={() => {
-              setMatchModalPet(null);
-              window.location.href = "/matches";
-            }}
-            onKeepSwiping={() => setMatchModalPet(null)}
-          />
+          <MatchModal myPet={myPetProfile} theirPet={matchModalPet}
+            onMessage={()=>{setMatchModalPet(null);window.location.href="/matches";}}
+            onKeepSwiping={()=>setMatchModalPet(null)}/>
         )}
-
-        <Footer />
+        <Footer/>
       </div>
     </>
   );
