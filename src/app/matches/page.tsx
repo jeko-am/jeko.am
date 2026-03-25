@@ -413,7 +413,7 @@ export default function MatchesPage() {
 
   /* ─── Loading state ─────────────────────────────────────────────────── */
 
-  if (authLoading || loading) {
+  if (authLoading || (user && loading)) {
     return (
       <div className="min-h-screen bg-off-white flex flex-col">
         <Header />
