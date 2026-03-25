@@ -120,7 +120,7 @@ export default function Header({ content }: { content?: any }) {
   const logoText = content?.logo_text ?? "PURE";
   const ctaText = content?.cta_text ?? "Create plan";
   const ctaUrl = content?.cta_url ?? "/signup";
-  const helpUrl = content?.help_url ?? "/help";
+  const helpUrl = content?.help_url ?? "/contact";
   const loginUrl = "/login"; // Customer login page
 
   const navItems = content

@@ -268,7 +268,7 @@ function MobileConversationItem({
   return (
     <button
       onClick={onClick}
-      className="w-full text-left px-4 py-3.5 flex items-center gap-3 active:bg-deep-green/5 transition-colors border-b border-deep-green/5"
+      className="w-full text-left px-5 py-4 flex items-center gap-4 active:bg-deep-green/5 transition-colors border-b border-deep-green/5"
     >
       <Avatar profile={profile} size={48} />
       <div className="flex-1 min-w-0">
@@ -397,7 +397,7 @@ function MobileMessageBubble({
 }) {
   return (
     <div
-      className={`flex ${isMine ? "justify-end" : "justify-start"} px-3 mb-1`}
+      className={`flex ${isMine ? "justify-end" : "justify-start"} px-4 mb-1.5`}
     >
       <div className="relative">
         <div
@@ -1060,7 +1060,7 @@ function MobileChatView({
   return (
     <div className="flex-1 bg-off-white flex flex-col min-h-0">
       {/* Chat Top Bar */}
-      <div className="flex-shrink-0 bg-white border-b border-deep-green/10 px-3 py-2.5 flex items-center gap-3">
+      <div className="flex-shrink-0 bg-white border-b border-deep-green/10 px-4 py-3.5 flex items-center gap-3">
         <button
           onClick={onBack}
           className="flex-shrink-0 w-9 h-9 flex items-center justify-center rounded-full hover:bg-deep-green/5 active:bg-deep-green/10 transition-colors"
@@ -1189,7 +1189,7 @@ function MobileChatView({
       )}
 
       {/* Sticky Input Bar */}
-      <div className="flex-shrink-0 bg-white border-t border-deep-green/10 px-3 py-2 flex items-end gap-2">
+      <div className="flex-shrink-0 bg-white border-t border-deep-green/10 px-4 py-3 flex items-end gap-2.5">
         <input
           ref={fileInputRef}
           type="file"
@@ -1420,10 +1420,10 @@ export default function MessagesPage() {
     <div className="min-h-screen bg-off-white flex flex-col font-rubik">
       <Header />
 
-      <div className="flex-1 pt-[80px] pb-6 lg:pb-12 px-0 lg:px-12">
+      <div className="flex-1 pt-[80px] pb-6 lg:pb-12 px-4 sm:px-6 lg:px-12">
         <div className="max-w-[1400px] mx-auto h-full">
           {/* Page Title - desktop only */}
-          <div className="hidden lg:flex items-center gap-3 mb-6">
+          <div className="hidden lg:flex items-center gap-3 mb-6 mt-2">
             <h1 className="font-rubik font-bold text-deep-green text-2xl">
               Messages
             </h1>
@@ -1528,13 +1528,13 @@ export default function MessagesPage() {
           </div>
 
           {/* ─── Mobile: Full-width panels (below lg) ─── */}
-          <div className="flex lg:hidden flex-col min-h-[60vh]">
+          <div className="flex lg:hidden flex-col min-h-[70vh] mt-4 bg-white rounded-xl shadow-sm border border-deep-green/8 overflow-hidden">
             {/* Mobile: Conversation List (hidden when chat is active) */}
             {!mobileShowChat && (
               <div className="flex-1 bg-white flex flex-col">
                 {/* Mobile title bar */}
-                <div className="flex-shrink-0 bg-white border-b border-deep-green/5 px-4 pt-3 pb-2">
-                  <div className="flex items-center justify-between mb-3">
+                <div className="flex-shrink-0 bg-white border-b border-deep-green/5 px-5 pt-4 pb-3">
+                  <div className="flex items-center justify-between mb-4">
                     <div className="flex items-center gap-2.5">
                       <h1 className="font-rubik font-bold text-deep-green text-[22px]">
                         Messages
@@ -1548,7 +1548,7 @@ export default function MessagesPage() {
                   </div>
 
                   {/* Search bar (visual only) */}
-                  <div className="relative mb-1">
+                  <div className="relative mb-2">
                     <div className="absolute left-3 top-1/2 -translate-y-1/2">
                       <svg
                         width="16"

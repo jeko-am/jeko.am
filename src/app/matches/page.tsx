@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, FormEvent } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import Header from "@/components/Header";
@@ -58,35 +58,168 @@ function petInitial(pet: MatchWithProfile["otherPet"]): string {
   return pet?.pet_name?.charAt(0).toUpperCase() || "?";
 }
 
-/* ─── Not Logged In CTA ──────────────────────────────────────────────── */
+/* ─── Auth Modal ─────────────────────────────────────────────────────── */
 
-function NotLoggedInCTA() {
+function AuthModal() {
+  const [mode, setMode] = useState<"login" | "signup">("login");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [success, setSuccess] = useState("");
+
+  const handleSubmit = async (e: FormEvent) => {
+    e.preventDefault();
+    setError("");
+    setSuccess("");
+    setLoading(true);
+
+    if (mode === "signup" && password !== confirmPassword) {
+      setError("Passwords do not match");
+      setLoading(false);
+      return;
+    }
+
+    if (password.length < 6) {
+      setError("Password must be at least 6 characters");
+      setLoading(false);
+      return;
+    }
+
+    if (mode === "login") {
+      const { error: authError } = await supabase.auth.signInWithPassword({
+        email,
+        password,
+      });
+      if (authError) {
+        setError(authError.message);
+      }
+    } else {
+      const { error: authError } = await supabase.auth.signUp({
+        email,
+        password,
+      });
+      if (authError) {
+        setError(authError.message);
+      } else {
+        setSuccess("Check your email to confirm your account, then log in.");
+        setMode("login");
+      }
+    }
+
+    setLoading(false);
+  };
+
   return (
-    <div className="flex-1 flex items-center justify-center px-4 py-20">
-      <div className="bg-white rounded-2xl shadow-xl p-8 max-w-md w-full text-center">
-        <div className="w-20 h-20 mx-auto mb-6 bg-gold/20 rounded-full flex items-center justify-center text-5xl">
-          🐾
+    <div className="flex-1 flex items-center justify-center px-4 py-12">
+      <div className="bg-white rounded-2xl shadow-xl p-8 max-w-md w-full">
+        {/* Header */}
+        <div className="text-center mb-6">
+          <div className="w-16 h-16 mx-auto mb-4 bg-gold/20 rounded-full flex items-center justify-center text-4xl">
+            🐾
+          </div>
+          <h2 className="font-rubik font-bold text-2xl text-deep-green mb-2">
+            {mode === "login" ? "Log in to see matches" : "Sign up to get started"}
+          </h2>
+          <p className="text-deep-green/50 text-[15px]">
+            {mode === "login"
+              ? "Welcome back! Enter your details below."
+              : "Create an account to find playmates for your pup."}
+          </p>
         </div>
-        <h2 className="font-rubik font-bold text-2xl text-deep-green mb-4">
-          See Your Matches
-        </h2>
-        <p className="text-deep-green/60 mb-8 leading-relaxed">
-          Sign up or log in to see your matched playmates and start chatting!
-        </p>
-        <div className="flex flex-col sm:flex-row gap-3">
-          <Link
-            href="/auth/login"
-            className="flex-1 bg-gold text-deep-green font-rubik font-bold text-lg py-3 rounded-xl hover:bg-[#d99500] transition-colors text-center"
+
+        {/* Tab Switcher */}
+        <div className="flex bg-off-white rounded-xl p-1 mb-6">
+          <button
+            onClick={() => { setMode("login"); setError(""); setSuccess(""); }}
+            className={`flex-1 py-2.5 rounded-lg text-sm font-rubik font-semibold transition-colors ${
+              mode === "login"
+                ? "bg-white text-deep-green shadow-sm"
+                : "text-deep-green/50 hover:text-deep-green/70"
+            }`}
           >
             Log In
-          </Link>
-          <Link
-            href="/auth/signup"
-            className="flex-1 bg-deep-green text-white font-rubik font-bold text-lg py-3 rounded-xl hover:bg-deep-green/90 transition-colors text-center"
+          </button>
+          <button
+            onClick={() => { setMode("signup"); setError(""); setSuccess(""); }}
+            className={`flex-1 py-2.5 rounded-lg text-sm font-rubik font-semibold transition-colors ${
+              mode === "signup"
+                ? "bg-white text-deep-green shadow-sm"
+                : "text-deep-green/50 hover:text-deep-green/70"
+            }`}
           >
             Sign Up
-          </Link>
+          </button>
         </div>
+
+        {/* Form */}
+        <form onSubmit={handleSubmit} className="space-y-4">
+          <div>
+            <label className="block text-deep-green/70 text-sm font-medium mb-1.5">
+              Email
+            </label>
+            <input
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+              placeholder="you@example.com"
+              className="w-full px-4 py-3 rounded-xl border border-deep-green/15 text-deep-green text-[15px] placeholder-deep-green/30 outline-none focus:border-gold transition-colors bg-off-white/40"
+            />
+          </div>
+          <div>
+            <label className="block text-deep-green/70 text-sm font-medium mb-1.5">
+              Password
+            </label>
+            <input
+              type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+              placeholder="••••••••"
+              className="w-full px-4 py-3 rounded-xl border border-deep-green/15 text-deep-green text-[15px] placeholder-deep-green/30 outline-none focus:border-gold transition-colors bg-off-white/40"
+            />
+          </div>
+          {mode === "signup" && (
+            <div>
+              <label className="block text-deep-green/70 text-sm font-medium mb-1.5">
+                Confirm Password
+              </label>
+              <input
+                type="password"
+                value={confirmPassword}
+                onChange={(e) => setConfirmPassword(e.target.value)}
+                required
+                placeholder="••••••••"
+                className="w-full px-4 py-3 rounded-xl border border-deep-green/15 text-deep-green text-[15px] placeholder-deep-green/30 outline-none focus:border-gold transition-colors bg-off-white/40"
+              />
+            </div>
+          )}
+
+          {error && (
+            <p className="text-red-500 text-sm text-center bg-red-50 rounded-lg py-2 px-3">
+              {error}
+            </p>
+          )}
+          {success && (
+            <p className="text-green-600 text-sm text-center bg-green-50 rounded-lg py-2 px-3">
+              {success}
+            </p>
+          )}
+
+          <button
+            type="submit"
+            disabled={loading}
+            className="w-full bg-gold text-deep-green font-rubik font-bold text-[16px] py-3.5 rounded-xl hover:bg-[#d99500] transition-colors disabled:opacity-50"
+          >
+            {loading
+              ? "Please wait..."
+              : mode === "login"
+              ? "Log In"
+              : "Create Account"}
+          </button>
+        </form>
       </div>
     </div>
   );
@@ -300,7 +433,7 @@ export default function MatchesPage() {
 
       <div className="flex-1 pt-[80px] lg:pt-[80px]">
         {!user ? (
-          <NotLoggedInCTA />
+          <AuthModal />
         ) : matches.length === 0 ? (
           <EmptyState />
         ) : (
