@@ -76,7 +76,8 @@ export async function uploadToCloudinary(
 
 export async function deleteFromCloudinary(
   publicId: string,
-  resourceType: 'image' | 'video' = 'image'
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  _resourceType: 'image' | 'video' = 'image'
 ): Promise<boolean> {
   try {
     const cloudName = process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME;

@@ -8,24 +8,25 @@ const pureLinks = [
   { label: "Our story", href: "/about" },
   { label: "Reviews", href: "/reviews" },
   { label: "Recipes", href: "/recipes" },
-  { label: "Benefits", href: "/benefits" },
+  { label: "Beyond the bowl", href: "/beyond-the-bowl" },
   { label: "Shop", href: "/products" },
   { label: "Community", href: "/community" },
 ];
 
 const helpLinks = [
+  { label: "My account", href: "/profile" },
   { label: "Contact us", href: "/contact" },
-  { label: "Shipping & delivery", href: "/shipping-policy" },
-  { label: "Returns & refunds", href: "/refund-policy" },
-  { label: "Health conditions", href: "/benefits" },
+  { label: "Delivery information", href: "/delivery-information" },
+  { label: "Returns", href: "/returns" },
+  { label: "Sitemap", href: "/sitemap-page" },
 ];
 
 const infoLinks = [
   { label: "Privacy policy", href: "/privacy-policy" },
+  { label: "Terms & conditions", href: "/terms-of-use" },
+  { label: "Pure policies", href: "/pure-policies" },
+  { label: "Site security", href: "/site-security" },
   { label: "Cookie policy", href: "/cookie-policy" },
-  { label: "Terms of use", href: "/terms-of-use" },
-  { label: "Shipping policy", href: "/shipping-policy" },
-  { label: "Refund policy", href: "/refund-policy" },
 ];
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any

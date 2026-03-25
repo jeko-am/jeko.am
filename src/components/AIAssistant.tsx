@@ -20,7 +20,7 @@ export default function AIAssistant() {
       const response = await aiAgent.processCommand(input);
       setResponses(prev => [response, ...prev].slice(0, 5)); // Keep last 5 responses
       setInput('');
-    } catch (error) {
+    } catch {
       setResponses(prev => [{
         success: false,
         message: 'Failed to process command. Please try again.',
@@ -154,7 +154,7 @@ export default function AIAssistant() {
                   onClick={() => setInput(command)}
                   className="block w-full text-left text-xs text-gray-600 hover:text-deep-green hover:bg-white px-2 py-1 rounded transition-colors"
                 >
-                  "{command}"
+                  &quot;{command}&quot;
                 </button>
               ))}
             </div>

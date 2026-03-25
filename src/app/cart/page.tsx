@@ -2,7 +2,7 @@
 
 import { useCart } from '@/lib/cart-context';
 import Link from 'next/link';
-import Image from 'next/image';
+
 
 function formatPrice(value: number): string {
   return new Intl.NumberFormat('en-GB', { style: 'currency', currency: 'GBP' }).format(value);
@@ -24,7 +24,7 @@ export default function CartPage() {
             
             <h1 className="text-3xl font-bold text-deep-green mb-4">Your cart is empty</h1>
             <p className="text-gray-600 mb-8 max-w-md mx-auto">
-              Looks like you haven't added anything to your cart yet. Start shopping to fill it up!
+              Looks like you haven&apos;t added anything to your cart yet. Start shopping to fill it up!
             </p>
             
             <div className="flex flex-col sm:flex-row gap-4 justify-center">

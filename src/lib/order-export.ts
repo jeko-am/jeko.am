@@ -221,7 +221,7 @@ function formatAddressForExport(address: string | null): string {
           .join(', ');
       }
     }
-  } catch (error) {
+  } catch {
     // If parsing fails, return as-is
     return address;
   }

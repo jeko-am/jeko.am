@@ -2,7 +2,6 @@
 
 import { useCart } from '@/lib/cart-context';
 import { useState } from 'react';
-import Image from 'next/image';
 import Link from 'next/link';
 
 function formatPrice(value: number): string {
@@ -55,7 +54,7 @@ export default function SideCart() {
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
                 </svg>
                 <h3 className="text-lg font-medium text-gray-900 mb-2">Your cart is empty</h3>
-                <p className="text-gray-500 mb-6">Looks like you haven't added anything yet.</p>
+                <p className="text-gray-500 mb-6">Looks like you haven&apos;t added anything yet.</p>
                 <button
                   onClick={closeCart}
                   className="btn-gold"

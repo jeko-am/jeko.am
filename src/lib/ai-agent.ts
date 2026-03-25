@@ -16,6 +16,7 @@ export interface AICommand {
 export interface AIResponse {
   success: boolean;
   message: string;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   details: any;
   command: AICommand;
 }
@@ -290,6 +291,7 @@ export class AIAgent {
   /**
    * Execute order-related database changes
    */
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   private async executeOrderCommand(command: AICommand): Promise<any> {
     let query = supabase.from('orders').update({ 
       status: command.action,
@@ -308,7 +310,7 @@ export class AIAgent {
     if (command.exceptions.length > 0) {
       if (command.dateRange) {
         // For date range with exceptions, we need to get orders first, then filter
-        let baseQuery = supabase
+        const baseQuery = supabase
           .from('orders')
           .select('order_number')
           .gte('created_at', `${command.dateRange.from}T00:00:00.000Z`)
@@ -317,6 +319,7 @@ export class AIAgent {
         const { data: ordersInRange, error: fetchError } = await baseQuery;
         if (fetchError) throw fetchError;
         
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         const orderNumbersToUpdate = (ordersInRange as any[])
           .map(order => order.order_number)
           .filter(num => !command.exceptions.includes(num.toString()));
@@ -331,8 +334,9 @@ export class AIAgent {
             .in('order_number', orderNumbersToUpdate);
           
           if (error) throw error;
-          return { 
-            updated: (data as unknown as any[])?.length || 0, 
+          return {
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            updated: (data as unknown as any[])?.length || 0,
             type: 'date_range',
             dateRange: command.dateRange,
             exceptions: command.exceptions
@@ -353,6 +357,7 @@ export class AIAgent {
         
         if (fetchError) throw fetchError;
         
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         const orderNumbersToUpdate = (allOrders as any[])
           .map(order => order.order_number)
           .filter(num => !command.exceptions.includes(num.toString()));
@@ -367,6 +372,7 @@ export class AIAgent {
             .in('order_number', orderNumbersToUpdate);
           
           if (error) throw error;
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
           return { updated: (data as unknown as any[])?.length || 0, type: 'all_orders' };
         } else {
           return { updated: 0, type: 'all_orders' };
@@ -378,8 +384,9 @@ export class AIAgent {
     const { data, error } = await query;
     if (error) throw error;
     
-    return { 
-      updated: (data as unknown as any[])?.length || 0, 
+    return {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      updated: (data as unknown as any[])?.length || 0,
       type: command.dateRange ? 'date_range' : 'all_orders',
       dateRange: command.dateRange
     };
@@ -388,6 +395,7 @@ export class AIAgent {
   /**
    * Execute inventory-related database changes
    */
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   private async executeInventoryCommand(command: AICommand): Promise<any> {
     const productName = command.targets[0];
     if (!productName) {
@@ -407,6 +415,7 @@ export class AIAgent {
     }
 
     const product = products[0];
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     let updatedData: any = {};
 
     // Parse the action and update accordingly
@@ -457,6 +466,7 @@ export class AIAgent {
   /**
    * Generate success message
    */
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   private generateSuccessMessage(command: AICommand, result: any): string {
     switch (command.type) {
       case 'order':

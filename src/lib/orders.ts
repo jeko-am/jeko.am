@@ -146,7 +146,8 @@ function generateOrderNumber(): number {
 /**
  * Format address for database storage
  */
-function formatAddress(address: {
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+function _formatAddress(address: {
   line1: string;
   city: string;
   postal_code: string;

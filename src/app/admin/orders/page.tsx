@@ -1,7 +1,7 @@
 'use client';
 
 import { supabase } from '@/lib/supabase';
-import { useEffect, useState, useCallback, useRef, Fragment } from 'react';
+import { useEffect, useState, useCallback, Fragment } from 'react';
 import { exportOrdersToCSV, exportSelectedOrdersToCSV } from '@/lib/order-export';
 
 // ---------------------------------------------------------------------------
@@ -105,7 +105,8 @@ function formatDateTime(iso: string): string {
   });
 }
 
-function formatAddress(addr: Address | string | null): string {
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+function _formatAddress(addr: Address | string | null): string {
   if (!addr) return 'N/A';
   if (typeof addr === 'string') return addr;
   return [addr.line1, addr.line2, addr.city, addr.state, addr.postal_code, addr.country]
@@ -175,7 +176,8 @@ export default function AdminOrdersPage() {
   // Bulk operations state
   const [selectedOrders, setSelectedOrders] = useState<Set<string>>(new Set());
   const [bulkStatus, setBulkStatus] = useState<OrderStatus | ''>('');
-  const [showBulkActions, setShowBulkActions] = useState(false);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [_showBulkActions, _setShowBulkActions] = useState(false);
   const [bulkUpdating, setBulkUpdating] = useState(false);
 
   // Filters

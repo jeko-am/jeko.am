@@ -219,7 +219,7 @@ export default function PetPhotoGallery({
       <div>
         <h3 className="text-lg font-semibold text-gray-900">Photo Gallery</h3>
         <p className="text-sm text-gray-600 mt-1">
-          Add up to {maxPhotos} photos for your pet's swipe card. The first photo will be the primary image.
+          Add up to {maxPhotos} photos for your pet&apos;s swipe card. The first photo will be the primary image.
         </p>
       </div>
 
@@ -343,7 +343,7 @@ export default function PetPhotoGallery({
         <h4 className="font-medium text-blue-900 mb-2">💡 Photo Tips</h4>
         <ul className="text-sm text-blue-700 space-y-1">
           <li>• Use clear, well-lit photos of your pet</li>
-          <li>• Include photos showing your pet's personality</li>
+          <li>• Include photos showing your pet&apos;s personality</li>
           <li>• The first photo will be the primary image in swipe cards</li>
           <li>• Mix of close-ups and full-body photos work best</li>
         </ul>

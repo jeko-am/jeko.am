@@ -153,7 +153,8 @@ function MatchModal({ myPet, theirPet, onMessage, onKeepSwiping }: {
   );
 }
 
-const SwipeCard = memo(function SwipeCard({ candidate, isTop, onSwipe, onLove, likesToday }: {
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+const SwipeCard = memo(function SwipeCard({ candidate, isTop, onSwipe, onLove: _onLove, likesToday: _likesToday }: {
   candidate: PetCandidate; isTop: boolean; onSwipe: (d:"left"|"right")=>void; onLove: ()=>void; likesToday: number;
 }) {
   const cardRef = useRef<HTMLDivElement>(null);
