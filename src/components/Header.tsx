@@ -116,6 +116,16 @@ export default function Header({ content }: { content?: any }) {
   const [scrolled, setScrolled] = useState(false);
   const { totalItems, openCart } = useCart();
   const { user, signOut, isAdmin } = useAuth();
+  const [isLoggingOut, setIsLoggingOut] = useState(false);
+
+  const handleSignOut = async () => {
+    setIsLoggingOut(true);
+    try {
+      await signOut();
+    } finally {
+      setIsLoggingOut(false);
+    }
+  };
 
   const logoText = content?.logo_text ?? "PURE";
   const ctaText = content?.cta_text ?? "Create plan";
@@ -242,13 +252,18 @@ export default function Header({ content }: { content?: any }) {
                       </Link>
                     )}
                     <button
-                      onClick={signOut}
-                      className="bg-red-500/20 backdrop-blur-sm text-white text-[16px] font-rubik font-medium px-4 py-2 rounded-lg hover:bg-red-500/30 transition-all duration-200 flex items-center gap-2"
+                      onClick={handleSignOut}
+                      disabled={isLoggingOut}
+                      className="bg-red-500/20 backdrop-blur-sm text-white text-[16px] font-rubik font-medium px-4 py-2 rounded-lg hover:bg-red-500/30 transition-all duration-200 flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
                     >
-                      <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                        <path strokeLinecap="round" strokeLinejoin="round" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
-                      </svg>
-                      Logout
+                      {isLoggingOut ? (
+                        <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                      ) : (
+                        <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                          <path strokeLinecap="round" strokeLinejoin="round" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+                        </svg>
+                      )}
+                      {isLoggingOut ? 'Logging out...' : 'Logout'}
                     </button>
                   </div>
                 ) : (
@@ -361,16 +376,26 @@ export default function Header({ content }: { content?: any }) {
                   </Link>
                 )}
                 <button
-                  onClick={() => {
-                    signOut();
-                    setMobileMenuOpen(false);
+                  onClick={async () => {
+                    setIsLoggingOut(true);
+                    try {
+                      await signOut();
+                    } finally {
+                      setIsLoggingOut(false);
+                      setMobileMenuOpen(false);
+                    }
                   }}
-                  className="text-white text-[18px] font-rubik font-medium py-3 hover:bg-red-500/20 transition-all duration-200 flex items-center gap-3 px-4 w-full text-left"
+                  disabled={isLoggingOut}
+                  className="text-white text-[18px] font-rubik font-medium py-3 hover:bg-red-500/20 transition-all duration-200 flex items-center gap-3 px-4 w-full text-left disabled:opacity-50"
                 >
-                  <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
-                  </svg>
-                  Logout
+                  {isLoggingOut ? (
+                    <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                  ) : (
+                    <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+                    </svg>
+                  )}
+                  {isLoggingOut ? 'Logging out...' : 'Logout'}
                 </button>
               </>
             ) : (

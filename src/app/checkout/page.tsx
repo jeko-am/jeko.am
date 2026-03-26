@@ -1,9 +1,10 @@
 'use client';
 
 import { useCart } from '@/lib/cart-context';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { createOrder, OrderData, calculateOrderTotals } from '@/lib/orders';
+import { useAuth } from '@/lib/auth';
 
 interface CheckoutForm {
   email: string;
@@ -23,11 +24,25 @@ function formatPrice(value: number): string {
 }
 
 export default function CheckoutPage() {
-  const { items, totalPrice, clearCart } = useCart();
-  const [isGuest, setIsGuest] = useState(true);
+  const { items, totalPrice, clearCart, isHydrated } = useCart();
+  const { user } = useAuth();
+  const [isGuest, setIsGuest] = useState(!user);
   const [isProcessing, setIsProcessing] = useState(false);
   const [orderComplete, setOrderComplete] = useState(false);
   const [orderNumber, setOrderNumber] = useState('');
+  
+  // Pre-fill form with user data when logged in
+  useEffect(() => {
+    if (user) {
+      setFormData(prev => ({
+        ...prev,
+        email: user.email || '',
+        firstName: user.user_metadata?.first_name || user.user_metadata?.name?.split(' ')[0] || '',
+        lastName: user.user_metadata?.last_name || user.user_metadata?.name?.split(' ').slice(1).join(' ') || '',
+        phone: user.user_metadata?.phone || '',
+      }));
+    }
+  }, [user]);
 
   const [formData, setFormData] = useState<CheckoutForm>({
     email: '',
@@ -43,6 +58,19 @@ export default function CheckoutPage() {
   });
 
   const [errors, setErrors] = useState<Partial<CheckoutForm>>({});
+
+  if (!isHydrated) {
+    return (
+      <div className="min-h-screen bg-off-white py-16">
+        <div className="max-w-4xl mx-auto px-4">
+          <div className="text-center py-16">
+            <div className="w-8 h-8 border-4 border-deep-green/20 border-t-deep-green rounded-full animate-spin mx-auto mb-4" />
+            <p className="text-deep-green/60">Loading checkout...</p>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   if (items.length === 0 && !orderComplete) {
     return (
@@ -150,6 +178,7 @@ export default function CheckoutPage() {
         shipping_amount,
         tax_amount,
         total,
+        user_id: user?.id, // Include user_id if logged in
       };
 
       // Create order in database
@@ -195,28 +224,31 @@ export default function CheckoutPage() {
               <div className="bg-white rounded-xl shadow-sm p-6">
                 <h2 className="text-xl font-semibold text-deep-green mb-4">Customer Information</h2>
                 
-                <div className="flex gap-4 mb-6">
-                  <label className="flex items-center cursor-pointer">
-                    <input
-                      type="radio"
-                      name="customerType"
-                      checked={isGuest}
-                      onChange={() => setIsGuest(true)}
-                      className="mr-2"
-                    />
-                    <span>Checkout as Guest</span>
-                  </label>
-                  <label className="flex items-center cursor-pointer">
-                    <input
-                      type="radio"
-                      name="customerType"
-                      checked={!isGuest}
-                      onChange={() => setIsGuest(false)}
-                      className="mr-2"
-                    />
-                    <span>Create Account</span>
-                  </label>
-                </div>
+                {/* Only show guest/create account options if user is not logged in */}
+                {!user && (
+                  <div className="flex gap-4 mb-6">
+                    <label className="flex items-center cursor-pointer">
+                      <input
+                        type="radio"
+                        name="customerType"
+                        checked={isGuest}
+                        onChange={() => setIsGuest(true)}
+                        className="mr-2"
+                      />
+                      <span>Checkout as Guest</span>
+                    </label>
+                    <label className="flex items-center cursor-pointer">
+                      <input
+                        type="radio"
+                        name="customerType"
+                        checked={!isGuest}
+                        onChange={() => setIsGuest(false)}
+                        className="mr-2"
+                      />
+                      <span>Create Account</span>
+                    </label>
+                  </div>
+                )}
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
@@ -227,8 +259,9 @@ export default function CheckoutPage() {
                       type="email"
                       value={formData.email}
                       onChange={(e) => handleInputChange('email', e.target.value)}
+                      readOnly={!!user}
                       className={`w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-gold focus:border-transparent ${
-                        errors.email ? 'border-red-500' : 'border-gray-300'
+                        errors.email ? 'border-red-500' : user ? 'bg-gray-50 border-gray-200' : 'border-gray-300'
                       }`}
                       placeholder="john@example.com"
                     />
@@ -419,9 +452,14 @@ export default function CheckoutPage() {
               <button
                 type="submit"
                 disabled={isProcessing}
-                className="w-full btn-gold disabled:opacity-50 disabled:cursor-not-allowed"
+                className="w-full btn-gold disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
               >
-                {isProcessing ? 'Processing...' : `Place Order • ${formatPrice(totalPrice)}`}
+                {isProcessing ? (
+                  <>
+                    <div className="w-5 h-5 border-2 border-deep-green/30 border-t-deep-green rounded-full animate-spin" />
+                    Processing Order...
+                  </>
+                ) : `Place Order • ${formatPrice(totalPrice)}`}
               </button>
             </form>
           </div>

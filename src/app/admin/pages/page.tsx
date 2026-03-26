@@ -10,8 +10,8 @@ interface Page {
   title: string;
   slug: string;
   content: string;
-  meta_title: string;
-  meta_description: string;
+  seo_title: string;
+  seo_description: string;
   status: 'draft' | 'published';
   template: string;
   created_at: string;
@@ -36,8 +36,8 @@ const emptyPageForm: PageFormData = {
   title: '',
   slug: '',
   content: '',
-  meta_title: '',
-  meta_description: '',
+  seo_title: '',
+  seo_description: '',
   status: 'draft',
   template: 'default',
 };
@@ -131,8 +131,8 @@ export default function AdminPagesPage() {
       title: page.title,
       slug: page.slug,
       content: page.content,
-      meta_title: page.meta_title,
-      meta_description: page.meta_description,
+      seo_title: page.seo_title,
+      seo_description: page.seo_description,
       status: page.status,
       template: page.template,
     });
@@ -554,8 +554,8 @@ export default function AdminPagesPage() {
                     <label className="block text-sm font-medium text-gray-700 mb-1">Meta Title</label>
                     <input
                       type="text"
-                      value={pageForm.meta_title}
-                      onChange={(e) => setPageForm(f => ({ ...f, meta_title: e.target.value }))}
+                      value={pageForm.seo_title}
+                      onChange={(e) => setPageForm(f => ({ ...f, seo_title: e.target.value }))}
                       className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-deep-green/20 focus:border-deep-green outline-none transition-all"
                       placeholder="SEO title"
                     />
@@ -563,8 +563,8 @@ export default function AdminPagesPage() {
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-1">Meta Description</label>
                     <textarea
-                      value={pageForm.meta_description}
-                      onChange={(e) => setPageForm(f => ({ ...f, meta_description: e.target.value }))}
+                      value={pageForm.seo_description}
+                      onChange={(e) => setPageForm(f => ({ ...f, seo_description: e.target.value }))}
                       rows={2}
                       className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-deep-green/20 focus:border-deep-green outline-none transition-all resize-y"
                       placeholder="SEO description..."

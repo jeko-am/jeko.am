@@ -1,6 +1,6 @@
 "use client";
 
-import { createContext, useContext, useEffect, useState, ReactNode } from "react";
+import { createContext, useContext, useEffect, useState, useRef, ReactNode } from "react";
 import { supabase } from "./supabase";
 import type { User, Session } from "@supabase/supabase-js";
 
@@ -29,33 +29,91 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [session, setSession] = useState<Session | null>(null);
   const [isAdmin, setIsAdmin] = useState(false);
   const [loading, setLoading] = useState(true);
+  const adminCheckRef = useRef<string | null>(null);
+  const initializedRef = useRef(false);
 
   useEffect(() => {
-    supabase.auth.getSession().then(async ({ data: { session } }) => {
-      setSession(session);
-      setUser(session?.user ?? null);
-      if (session?.user) await checkAdmin(session.user.id);
-      setLoading(false);
+    let mounted = true;
+
+    // Simple timeout to prevent infinite loading
+    const timeout = setTimeout(() => {
+      if (mounted) {
+        setLoading(false);
+      }
+    }, 1000); // 1 second timeout
+
+    async function initializeAuth() {
+      try {
+        const { data: { session }, error } = await supabase.auth.getSession();
+        
+        if (mounted) {
+          if (error || !session) {
+            setSession(null);
+            setUser(null);
+            setIsAdmin(false);
+          } else {
+            setSession(session);
+            setUser(session.user);
+            await checkAdmin(session.user.id);
+          }
+          setLoading(false);
+        }
+      } catch (err) {
+        if (mounted) {
+          setSession(null);
+          setUser(null);
+          setIsAdmin(false);
+          setLoading(false);
+        }
+      } finally {
+        clearTimeout(timeout);
+      }
+    }
+
+    initializeAuth();
+
+    const { data: { subscription } } = supabase.auth.onAuthStateChange(async (event, session) => {
+      if (!mounted) return;
+
+      if (event === 'SIGNED_OUT') {
+        setSession(null);
+        setUser(null);
+        setIsAdmin(false);
+        adminCheckRef.current = null;
+      } else if (session?.user) {
+        setSession(session);
+        setUser(session.user);
+        await checkAdmin(session.user.id);
+      } else {
+        setSession(null);
+        setUser(null);
+        setIsAdmin(false);
+        adminCheckRef.current = null;
+      }
     });
 
-    const { data: { subscription } } = supabase.auth.onAuthStateChange(async (_event, session) => {
-      setSession(session);
-      setUser(session?.user ?? null);
-      if (session?.user) await checkAdmin(session.user.id);
-      else setIsAdmin(false);
-    });
-
-    return () => subscription.unsubscribe();
+    return () => {
+      mounted = false;
+      clearTimeout(timeout);
+      subscription.unsubscribe();
+    };
   }, []);
 
   async function checkAdmin(userId: string) {
-    const { data } = await supabase
-      .from("admin_users")
-      .select("role")
-      .eq("user_id", userId)
-      .eq("is_active", true)
-      .single();
-    setIsAdmin(!!data && ["super_admin", "admin", "editor"].includes(data.role));
+    // Skip if we already checked this user
+    if (adminCheckRef.current === userId) return;
+    adminCheckRef.current = userId;
+    try {
+      const { data } = await supabase
+        .from("admin_users")
+        .select("role")
+        .eq("user_id", userId)
+        .eq("is_active", true)
+        .single();
+      setIsAdmin(!!data && ["super_admin", "admin", "editor"].includes(data.role));
+    } catch {
+      setIsAdmin(false);
+    }
   }
 
   async function signUp(email: string, password: string, metadata?: Record<string, unknown>) {
@@ -69,8 +127,16 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   }
 
   async function signOut() {
-    await supabase.auth.signOut();
+    // Clear state first so UI updates instantly
+    setUser(null);
+    setSession(null);
     setIsAdmin(false);
+    adminCheckRef.current = null;
+    try {
+      await supabase.auth.signOut({ scope: 'local' });
+    } catch {
+      // Ignore sign-out errors — state is already cleared
+    }
   }
 
   return (

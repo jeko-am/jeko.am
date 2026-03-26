@@ -30,7 +30,7 @@ export default function ProductCard({ product }: { product: Product }) {
 
   const imageUrl = product.images?.[0] && !imgError
     ? product.images[0]
-    : "https://images.unsplash.com/photo-1587300003388-59208cc962cb?w=400&h=400&fit=crop";
+    : `data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Crect width='400' height='400' fill='%2332CD32'/%3E%3Ctext x='50%25' y='50%25' font-size='40' fill='white' text-anchor='middle' dy='.3em'%3E${product.name.slice(0,2).toUpperCase()}%3C/text%3E%3C/svg%3E`;
 
   const handleAddToCart = (e: React.MouseEvent) => {
     e.preventDefault();
@@ -103,9 +103,14 @@ export default function ProductCard({ product }: { product: Product }) {
           <button
             onClick={handleAddToCart}
             disabled={isAdding}
-            className="w-full mt-4 bg-deep-green text-white py-2 px-4 rounded-lg hover:bg-deep-green/90 transition-colors disabled:opacity-50 disabled:cursor-not-allowed text-sm font-medium"
+            className="w-full mt-4 bg-deep-green text-white py-2 px-4 rounded-lg hover:bg-deep-green/90 transition-colors disabled:opacity-50 disabled:cursor-not-allowed text-sm font-medium flex items-center justify-center gap-2"
           >
-            {isAdding ? 'Adding...' : 'Add to Cart'}
+            {isAdding ? (
+              <>
+                <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                Added!
+              </>
+            ) : 'Add to Cart'}
           </button>
         </div>
       </div>

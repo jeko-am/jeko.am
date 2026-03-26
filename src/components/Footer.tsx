@@ -62,7 +62,7 @@ export default function Footer({ content }: { content?: any }) {
               {/* Instagram */}
               <a href={content?.instagram_url || "https://www.instagram.com/purepetfood"} className="opacity-80 hover:opacity-100 transition-opacity" target="_blank" rel="noopener noreferrer">
                 <Image
-                  src="https://www.purepetfood.com/_next/static/media/Instagram.cfd52eb9.png"
+                  src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='28' height='28'%3E%3Crect width='28' height='28' fill='%23FF1493'/%3E%3Ctext x='50%25' y='50%25' font-size='12' fill='white' text-anchor='middle' dy='.3em'%3EIG%3C/text%3E%3C/svg%3E"
                   alt="Instagram"
                   width={28}
                   height={28}
@@ -72,7 +72,7 @@ export default function Footer({ content }: { content?: any }) {
               {/* Facebook */}
               <a href={content?.facebook_url || "https://www.facebook.com/purepetfood"} className="opacity-80 hover:opacity-100 transition-opacity" target="_blank" rel="noopener noreferrer">
                 <Image
-                  src="https://www.purepetfood.com/_next/static/media/Facebook.fba085d0.png"
+                  src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='28' height='28'%3E%3Crect width='28' height='28' fill='%231877F2'/%3E%3Ctext x='50%25' y='50%25' font-size='12' fill='white' text-anchor='middle' dy='.3em'%3EFB%3C/text%3E%3C/svg%3E"
                   alt="Facebook"
                   width={28}
                   height={28}
@@ -139,7 +139,7 @@ export default function Footer({ content }: { content?: any }) {
           {/* Logo */}
           <div className="flex justify-center mb-4">
             <Image
-              src="https://www.purepetfood.com/images/logo.png"
+              src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='50'%3E%3Crect width='100' height='50' fill='%23228B22'/%3E%3Ctext x='50%25' y='50%25' font-size='16' fill='white' text-anchor='middle' dy='.3em'%3ELOGO%3C/text%3E%3C/svg%3E"
               alt="PURE Pet Food"
               width={100}
               height={50}

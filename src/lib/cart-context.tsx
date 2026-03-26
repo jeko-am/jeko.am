@@ -16,6 +16,7 @@ export interface CartItem {
 interface CartContextType {
   items: CartItem[];
   isOpen: boolean;
+  isHydrated: boolean;
   totalItems: number;
   totalPrice: number;
   openCart: () => void;
@@ -29,6 +30,7 @@ interface CartContextType {
 const CartContext = createContext<CartContextType>({
   items: [],
   isOpen: false,
+  isHydrated: false,
   totalItems: 0,
   totalPrice: 0,
   openCart: () => {},
@@ -152,6 +154,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
   const contextValue = {
     items,
     isOpen,
+    isHydrated,
     totalItems,
     totalPrice,
     openCart,

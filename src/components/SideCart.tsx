@@ -3,6 +3,7 @@
 import { useCart } from '@/lib/cart-context';
 import { useState } from 'react';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 
 function formatPrice(value: number): string {
   return new Intl.NumberFormat('en-GB', { style: 'currency', currency: 'GBP' }).format(value);
@@ -11,11 +12,12 @@ function formatPrice(value: number): string {
 export default function SideCart() {
   const { items, isOpen, closeCart, totalItems, totalPrice, removeItem, updateQuantity } = useCart();
   const [isCheckingOut, setIsCheckingOut] = useState(false);
+  const router = useRouter();
 
   const handleCheckout = () => {
     setIsCheckingOut(true);
-    // Navigate to checkout page
-    window.location.href = '/checkout';
+    closeCart();
+    router.push('/checkout');
   };
 
   if (!isOpen) return null;
@@ -163,9 +165,14 @@ export default function SideCart() {
               <button
                 onClick={handleCheckout}
                 disabled={isCheckingOut}
-                className="w-full btn-gold disabled:opacity-50 disabled:cursor-not-allowed"
+                className="w-full btn-gold disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
               >
-                {isCheckingOut ? 'Processing...' : 'Checkout'}
+                {isCheckingOut ? (
+                  <>
+                    <div className="w-5 h-5 border-2 border-deep-green/30 border-t-deep-green rounded-full animate-spin" />
+                    Processing...
+                  </>
+                ) : 'Checkout'}
               </button>
 
               {/* Continue Shopping */}

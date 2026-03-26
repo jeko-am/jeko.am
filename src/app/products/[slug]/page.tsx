@@ -7,6 +7,7 @@ import { supabase } from '@/lib/supabase';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import ProductCard from '@/components/ProductCard';
+import { useCart } from '@/lib/cart-context';
 
 interface Product {
   id: string;
@@ -23,6 +24,35 @@ interface Product {
   status: string;
   category_id: string | null;
   created_at: string;
+}
+
+interface Bundle {
+  id: string;
+  name: string;
+  description: string | null;
+  discount_percentage: number;
+  total_price: number;
+  compare_at_price: number | null;
+  image_url: string | null;
+  is_featured: boolean;
+  sort_order: number;
+  products?: {
+    product_id: string;
+    quantity: number;
+    product: Product;
+  }[];
+}
+
+interface Upsell {
+  id: string;
+  source_product_id: string;
+  target_product_id: string;
+  upsell_type: 'upsell' | 'cross_sell';
+  title: string | null;
+  description: string | null;
+  discount_percentage: number;
+  sort_order: number;
+  target_product: Product;
 }
 
 function formatPrice(value: number): string {
@@ -62,7 +92,7 @@ function VetCard({ vet }: { vet: { name: string; role: string; text: string; pro
       <p className="text-sm text-deep-green/70 leading-relaxed flex-1 mb-4">{vet.text}</p>
       <Link href={`/products/${vet.productSlug}`} className="flex items-center gap-3 mt-auto pt-4 border-t border-deep-green/10">
         <div className="w-10 h-10 rounded-lg bg-white overflow-hidden flex-shrink-0">
-          <img src={`https://placedog.net/80/80?id=${vet.productSlug}`} alt="" className="w-full h-full object-cover" />
+          <img src={`https://images.unsplash.com/photo-1589924691995-400dc9ecc119?w=80&h=80&fit=crop`} alt="" className="w-full h-full object-cover" />
         </div>
         <span className="text-xs font-medium text-deep-green line-clamp-2">{vet.product}</span>
       </Link>
@@ -107,13 +137,15 @@ export default function ProductDetailPage() {
   const slug = params.slug as string;
   const [product, setProduct] = useState<Product | null>(null);
   const [related, setRelated] = useState<Product[]>([]);
+  const [bundles, setBundles] = useState<Bundle[]>([]);
+  const [upsells, setUpsells] = useState<Upsell[]>([]);
   const [loading, setLoading] = useState(true);
   const [selectedImage, setSelectedImage] = useState(0);
   const [quantity, setQuantity] = useState(1);
-  const [purchaseMode, setPurchaseMode] = useState<'subscribe' | 'onetime'>('subscribe');
-  const [deliveryInterval, setDeliveryInterval] = useState('2 weeks');
   const [imgErrors, setImgErrors] = useState<Set<number>>(new Set());
+  const [isAddingToCart, setIsAddingToCart] = useState(false);
   const vetScrollRef = useRef<HTMLDivElement>(null);
+  const { addItem } = useCart();
 
   useEffect(() => {
     async function fetchProduct() {
@@ -121,6 +153,8 @@ export default function ProductDetailPage() {
       const { data } = await supabase.from('products').select('*').eq('slug', slug).eq('status', 'active').single();
       if (data) {
         setProduct(data);
+        
+        // Fetch related products
         const { data: rel } = await supabase
           .from('products')
           .select('*')
@@ -128,6 +162,48 @@ export default function ProductDetailPage() {
           .neq('id', data.id)
           .limit(4);
         if (rel) setRelated(rel as Product[]);
+        
+        // Fetch featured bundles
+        const { data: bundleData } = await supabase
+          .from('bundles')
+          .select(`
+            *,
+            bundle_products (
+              quantity,
+              product:products (*)
+            )
+          `)
+          .eq('is_active', true)
+          .order('sort_order', { ascending: true });
+        if (bundleData) {
+          const bundlesWithProducts = bundleData.map(bundle => ({
+            ...bundle,
+            products: bundle.bundle_products?.map((bp: any) => ({
+              product_id: bp.product.id,
+              quantity: bp.quantity,
+              product: bp.product as Product
+            })) || []
+          }));
+          setBundles(bundlesWithProducts as Bundle[]);
+        }
+        
+        // Fetch upsells for this product
+        const { data: upsellData } = await supabase
+          .from('upsells')
+          .select(`
+            *,
+            target_product:products (*)
+          `)
+          .eq('source_product_id', data.id)
+          .eq('is_active', true)
+          .order('sort_order', { ascending: true });
+        if (upsellData) {
+          const upsellsWithProducts = upsellData.map(upsell => ({
+            ...upsell,
+            target_product: upsell.target_product as Product
+          }));
+          setUpsells(upsellsWithProducts as Upsell[]);
+        }
       }
       setLoading(false);
     }
@@ -135,14 +211,13 @@ export default function ProductDetailPage() {
   }, [slug]);
 
   const hasDiscount = product?.compare_at_price && product.compare_at_price > product.price;
-  const subscribePrice = product ? product.price * 0.85 : 0;
 
   const getImageUrl = (idx: number) => {
     if (product?.images?.[idx] && !imgErrors.has(idx)) return product.images[idx];
-    return `https://placedog.net/600/600?id=${product?.id?.slice(0, 8) ?? 'x'}${idx}`;
+    return `https://images.unsplash.com/photo-1589924691995-400dc9ecc119?w=600&h=600&fit=crop`;
   };
 
-  const images = product?.images?.length ? product.images : [`https://placedog.net/600/600?id=${product?.id?.slice(0, 8) ?? '1'}`];
+  const images = product?.images?.length ? product.images : [`https://images.unsplash.com/photo-1589924691995-400dc9ecc119?w=600&h=600&fit=crop`];
 
   /* Loading state */
   if (loading) {
@@ -233,56 +308,67 @@ export default function ProductDetailPage() {
                   </div>
                 )}
 
-                {/* --- Purchase options (Subscribe & Save / One-time) --- */}
-                <div className="border border-deep-green/10 rounded-2xl overflow-hidden mb-6">
-                  {/* Subscribe */}
-                  <div className={`p-4 cursor-pointer transition-colors ${purchaseMode === 'subscribe' ? 'bg-gold/5' : 'hover:bg-beige-light'}`} onClick={() => setPurchaseMode('subscribe')}>
-                    <div className="flex items-center justify-between">
-                      <div className="flex items-center gap-3">
-                        <div className={`w-5 h-5 rounded-full border-2 flex items-center justify-center ${purchaseMode === 'subscribe' ? 'border-gold' : 'border-deep-green/30'}`}>
-                          {purchaseMode === 'subscribe' && <div className="w-2.5 h-2.5 rounded-full bg-gold" />}
+                {/* --- Bundles --- */}
+                {bundles.length > 0 && (
+                  <div className="mb-6">
+                    <h3 className="font-semibold text-deep-green mb-3">Value Bundles</h3>
+                    <div className="space-y-3">
+                      {bundles.slice(0, 2).map((bundle) => (
+                        <div key={bundle.id} className="border border-deep-green/10 rounded-xl p-4 hover:border-gold/30 transition-colors">
+                          <div className="flex items-start gap-4">
+                            <div className="w-16 h-16 rounded-lg overflow-hidden flex-shrink-0 bg-beige-light">
+                              <img 
+                                src={bundle.image_url || `https://images.unsplash.com/photo-1583337130417-3346a1be7dee?w=80&h=80&fit=crop`} 
+                                alt={bundle.name} 
+                                className="w-full h-full object-cover"
+                              />
+                            </div>
+                            <div className="flex-1 min-w-0">
+                              <h4 className="font-semibold text-deep-green text-sm mb-1">{bundle.name}</h4>
+                              <p className="text-xs text-deep-green/60 mb-2 line-clamp-2">{bundle.description}</p>
+                              <div className="flex items-center justify-between">
+                                <div>
+                                  {bundle.compare_at_price && (
+                                    <span className="text-xs text-deep-green/40 line-through mr-1">
+                                      {formatPrice(bundle.compare_at_price)}
+                                    </span>
+                                  )}
+                                  <span className="font-bold text-deep-green text-sm">{formatPrice(bundle.total_price)}</span>
+                                  {bundle.discount_percentage > 0 && (
+                                    <span className="ml-2 text-xs font-bold text-white bg-gold px-2 py-0.5 rounded-full">
+                                      Save {bundle.discount_percentage}%
+                                    </span>
+                                  )}
+                                </div>
+                                <button
+                                  onClick={() => {
+                                    // Add all bundle products to cart
+                                    bundle.products?.forEach((bp: any) => {
+                                      for (let i = 0; i < bp.quantity; i++) {
+                                        addItem({
+                                          id: bp.product.id,
+                                          name: bp.product.name,
+                                          slug: bp.product.slug,
+                                          price: bp.product.price,
+                                          compare_at_price: bp.product.compare_at_price,
+                                          image: bp.product.images?.[0] || `https://images.unsplash.com/photo-1589924691995-400dc9ecc119?w=600&h=600&fit=crop`,
+                                          short_description: bp.product.short_description,
+                                        });
+                                      }
+                                    });
+                                  }}
+                                  className="px-3 py-1.5 bg-deep-green text-white text-xs font-medium rounded-lg hover:bg-deep-green/90 transition-colors"
+                                >
+                                  Add Bundle
+                                </button>
+                              </div>
+                            </div>
+                          </div>
                         </div>
-                        <span className="font-semibold text-deep-green">Subscribe & Save</span>
-                      </div>
-                      <div className="text-right">
-                        {purchaseMode === 'subscribe' && <span className="text-xs font-bold text-white bg-gold px-2 py-0.5 rounded-full mr-2">Get 15% Off</span>}
-                        <span className="text-deep-green/40 line-through text-sm mr-1">{formatPrice(product.price)}</span>
-                        <span className="font-bold text-deep-green">{formatPrice(subscribePrice)}</span>
-                      </div>
+                      ))}
                     </div>
-                    {purchaseMode === 'subscribe' && (
-                      <div className="mt-4 ml-8">
-                        <ul className="text-sm text-deep-green/70 space-y-1 mb-4">
-                          <li className="flex items-center gap-2"><svg className="w-4 h-4 text-gold flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" /></svg>You save 15%</li>
-                          <li className="flex items-center gap-2"><svg className="w-4 h-4 text-gold flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" /></svg>Fresh meals, delivered on your schedule</li>
-                          <li className="flex items-center gap-2"><svg className="w-4 h-4 text-gold flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" /></svg>Skip, cancel or change any time</li>
-                        </ul>
-                        <div className="text-xs font-semibold text-deep-green mb-2">Deliver every:</div>
-                        <div className="flex flex-wrap gap-2">
-                          {['2 weeks', '3 weeks', '4 weeks', '6 weeks', '8 weeks'].map(interval => (
-                            <button key={interval} onClick={(e) => { e.stopPropagation(); setDeliveryInterval(interval); }} className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-all ${deliveryInterval === interval ? 'bg-deep-green text-white' : 'bg-white border border-deep-green/15 text-deep-green hover:border-deep-green/30'}`}>
-                              <span>{interval}</span>
-                              <span className="block text-[10px] opacity-70">save 15%</span>
-                            </button>
-                          ))}
-                        </div>
-                      </div>
-                    )}
                   </div>
-
-                  {/* One-time */}
-                  <div className={`p-4 cursor-pointer border-t border-deep-green/10 transition-colors ${purchaseMode === 'onetime' ? 'bg-gold/5' : 'hover:bg-beige-light'}`} onClick={() => setPurchaseMode('onetime')}>
-                    <div className="flex items-center justify-between">
-                      <div className="flex items-center gap-3">
-                        <div className={`w-5 h-5 rounded-full border-2 flex items-center justify-center ${purchaseMode === 'onetime' ? 'border-gold' : 'border-deep-green/30'}`}>
-                          {purchaseMode === 'onetime' && <div className="w-2.5 h-2.5 rounded-full bg-gold" />}
-                        </div>
-                        <span className="font-semibold text-deep-green">One-time purchase</span>
-                      </div>
-                      <span className="font-bold text-deep-green">{formatPrice(product.price)}</span>
-                    </div>
-                  </div>
-                </div>
+                )}
 
                 {/* Quantity + Add to Cart */}
                 <div className="flex items-center gap-4 mb-4">
@@ -291,8 +377,102 @@ export default function ProductDetailPage() {
                     <span className="px-4 py-3 font-semibold text-deep-green min-w-[48px] text-center">{quantity}</span>
                     <button onClick={() => setQuantity(quantity + 1)} className="px-4 py-3 text-deep-green/50 hover:text-deep-green transition font-medium text-lg">+</button>
                   </div>
-                  <button className="flex-1 bg-deep-green text-white font-semibold py-3.5 rounded-full hover:bg-deep-green/90 transition text-base">Add to Cart</button>
+                  <button
+                    onClick={() => {
+                      if (!product || isAddingToCart) return;
+                      setIsAddingToCart(true);
+                      const imageUrl = product.images?.[0] || `https://images.unsplash.com/photo-1589924691995-400dc9ecc119?w=600&h=600&fit=crop`;
+                      for (let i = 0; i < quantity; i++) {
+                        addItem({
+                          id: product.id,
+                          name: product.name,
+                          slug: product.slug,
+                          price: product.price,
+                          compare_at_price: product.compare_at_price,
+                          image: imageUrl,
+                          short_description: product.short_description,
+                        });
+                      }
+                      setTimeout(() => {
+                        setIsAddingToCart(false);
+                        setQuantity(1);
+                      }, 800);
+                    }}
+                    disabled={isAddingToCart}
+                    className="flex-1 bg-deep-green text-white font-semibold py-3.5 rounded-full hover:bg-deep-green/90 transition text-base disabled:opacity-60 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                  >
+                    {isAddingToCart ? (
+                      <>
+                        <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                        Adding...
+                      </>
+                    ) : (
+                      `Add to Cart${quantity > 1 ? ` (${quantity})` : ''}`
+                    )}
+                  </button>
                 </div>
+
+                {/* --- Upsells & Cross-sells --- */}
+                {(upsells.length > 0 || related.length > 0) && (
+                  <div className="mb-6">
+                    <h3 className="font-semibold text-deep-green mb-3">
+                      {upsells.some(u => u.upsell_type === 'upsell') ? 'Upgrade Your Order' : 'Perfect Pairings'}
+                    </h3>
+                    <div className="space-y-3">
+                      {(upsells.length > 0 ? upsells : related.slice(0, 2)).map((item, idx) => {
+                        const isUpsell = 'target_product' in item;
+                        const product = isUpsell ? item.target_product : item;
+                        const title = isUpsell ? (item.title || 'Recommended for You') : product.name;
+                        const description = isUpsell ? item.description : product.short_description;
+                        const discount = isUpsell ? item.discount_percentage : 0;
+                        
+                        return (
+                          <div key={isUpsell ? item.id : product.id} className="border border-deep-green/10 rounded-xl p-4 hover:border-gold/30 transition-colors">
+                            <div className="flex items-start gap-4">
+                              <div className="w-16 h-16 rounded-lg overflow-hidden flex-shrink-0 bg-beige-light">
+                                <img 
+                                  src={product.images?.[0] || `https://images.unsplash.com/photo-1589924691995-400dc9ecc119?w=80&h=80&fit=crop`} 
+                                  alt={product.name} 
+                                  className="w-full h-full object-cover"
+                                />
+                              </div>
+                              <div className="flex-1 min-w-0">
+                                <h4 className="font-semibold text-deep-green text-sm mb-1">{title}</h4>
+                                <p className="text-xs text-deep-green/60 mb-2 line-clamp-2">{description}</p>
+                                <div className="flex items-center justify-between">
+                                  <div>
+                                    <span className="font-bold text-deep-green text-sm">{formatPrice(product.price)}</span>
+                                    {discount > 0 && (
+                                      <span className="ml-2 text-xs font-bold text-white bg-gold px-2 py-0.5 rounded-full">
+                                        {discount}% off
+                                      </span>
+                                    )}
+                                  </div>
+                                  <button
+                                    onClick={() => {
+                                      addItem({
+                                        id: product.id,
+                                        name: product.name,
+                                        slug: product.slug,
+                                        price: product.price,
+                                        compare_at_price: product.compare_at_price,
+                                        image: product.images?.[0] || `https://images.unsplash.com/photo-1589924691995-400dc9ecc119?w=600&h=600&fit=crop`,
+                                        short_description: product.short_description,
+                                      });
+                                    }}
+                                    className="px-3 py-1.5 bg-deep-green text-white text-xs font-medium rounded-lg hover:bg-deep-green/90 transition-colors"
+                                  >
+                                    Add to Cart
+                                  </button>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        );
+                      })}
+                    </div>
+                  </div>
+                )}
 
                 {/* Lab tested badge */}
                 <div className="border border-deep-green/10 rounded-xl p-4 flex items-center gap-4 mb-6">
@@ -355,15 +535,34 @@ export default function ProductDetailPage() {
         {/* ============================================================ */}
         {/* SECTION 3 — Nutrition Highlights (image + text)              */}
         {/* ============================================================ */}
-        <section className="bg-deep-green">
-          <div className="max-w-[1400px] mx-auto grid grid-cols-1 lg:grid-cols-2">
-            <div className="aspect-square lg:aspect-auto overflow-hidden">
-              <img src="https://www.purepetfood.com/cdn/images/pure_food_bowl.webp" alt="Pure food in bowl" className="w-full h-full object-cover" onError={(e) => { (e.target as HTMLImageElement).src = `https://placedog.net/700/700?id=nutrition`; }} />
+        <section className="relative overflow-hidden bg-deep-green">
+          <div className="flex flex-col md:flex-row min-h-[480px]">
+            {/* Image Left Side - ~43% with vertical zigzag right edge */}
+            <div className="w-full md:w-[43%] relative min-h-[300px] md:min-h-[480px]">
+              <img 
+                src="https://images.unsplash.com/photo-1548767797-d8c844163c4c?w=800&h=600&fit=crop" 
+                alt="Fresh food in bowl" 
+                className="w-full h-full object-cover"
+              />
+              {/* Vertical zigzag on right edge - deep-green teeth pointing LEFT into image */}
+              <div
+                className="hidden md:block absolute right-0 top-0 h-full z-10"
+                style={{
+                  width: '12px',
+                  backgroundImage: "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 24'%3E%3Cpath d='M12,0 L0,12 L12,24 Z' fill='%23274C46'/%3E%3C/svg%3E\")",
+                  backgroundSize: '12px 24px',
+                  backgroundRepeat: 'repeat-y',
+                }}
+              />
             </div>
-            <div className="flex items-center p-8 lg:p-16">
-              <div>
-                <h2 className="text-3xl md:text-4xl font-bold text-white mb-6 italic">Fresh. Balanced. Irresistible.</h2>
-                <div className="space-y-4 text-white/80 text-sm leading-relaxed">
+
+            {/* Text Right Side - ~57% */}
+            <div className="w-full md:w-[57%] flex items-center">
+              <div className="px-8 md:px-16 lg:px-24 py-12">
+                <h2 className="text-[32px] md:text-[40px] font-semibold text-white font-rubik leading-tight mb-6 italic">
+                  Fresh. Balanced. Irresistible.
+                </h2>
+                <div className="space-y-4 text-white/80 text-[18px] leading-relaxed">
                   <p><strong className="text-gold">Protein Profile:</strong> High-quality, single-source animal protein for lean muscle maintenance and sustained energy.</p>
                   <p><strong className="text-gold">Nutrition Highlights:</strong> Rich in omega-3 fatty acids for a glossy coat, prebiotics for gut health, and essential vitamins for immune support.</p>
                   <p><strong className="text-gold">Preparation:</strong> Gently air-dried to lock in nutrients. Just add warm water, stir, and serve — ready in 10 seconds.</p>
@@ -395,16 +594,37 @@ export default function ProductDetailPage() {
         {/* ============================================================ */}
         {/* SECTION 5 — "Learn The Science" CTA                         */}
         {/* ============================================================ */}
-        <section className="bg-off-white">
-          <div className="max-w-[1400px] mx-auto grid grid-cols-1 lg:grid-cols-2">
-            <div className="aspect-video lg:aspect-auto overflow-hidden">
-              <img src="https://placedog.net/800/500?id=science" alt="The science behind Pure" className="w-full h-full object-cover" />
+        <section className="relative overflow-hidden bg-off-white">
+          <div className="flex flex-col md:flex-row min-h-[480px]">
+            {/* Image Left Side - ~43% with vertical zigzag right edge */}
+            <div className="w-full md:w-[43%] relative min-h-[300px] md:min-h-[480px]">
+              <img 
+                src="https://images.unsplash.com/photo-1532094349884-543bc11b234d?w=800&h=600&fit=crop" 
+                alt="Science lab research" 
+                className="w-full h-full object-cover"
+              />
+              {/* Vertical zigzag on right edge - off-white teeth pointing LEFT into image */}
+              <div
+                className="hidden md:block absolute right-0 top-0 h-full z-10"
+                style={{
+                  width: '12px',
+                  backgroundImage: "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 24'%3E%3Cpath d='M12,0 L0,12 L12,24 Z' fill='%23EAE5DC'/%3E%3C/svg%3E\")",
+                  backgroundSize: '12px 24px',
+                  backgroundRepeat: 'repeat-y',
+                }}
+              />
             </div>
-            <div className="flex items-center p-8 lg:p-16">
-              <div>
-                <h2 className="text-3xl md:text-4xl font-bold text-deep-green mb-4">Learn The Science Behind Pure</h2>
-                <p className="text-deep-green/70 mb-6">Developed with veterinary nutritionists, every recipe is backed by science to deliver optimal nutrition.</p>
-                <Link href="/benefits" className="btn-gold">Learn More</Link>
+
+            {/* Text Right Side - ~57% */}
+            <div className="w-full md:w-[57%] flex items-center">
+              <div className="px-8 md:px-16 lg:px-24 py-12">
+                <h2 className="text-[32px] md:text-[40px] font-semibold text-deep-green font-rubik leading-tight mb-4">
+                  Learn The Science Behind Pure
+                </h2>
+                <p className="text-deep-green/70 text-[18px] leading-relaxed mb-6">
+                  Developed with veterinary nutritionists, every recipe is backed by science to deliver optimal nutrition.
+                </p>
+                <Link href="/benefits" className="btn-gold inline-block">Learn More</Link>
               </div>
             </div>
           </div>
@@ -431,22 +651,41 @@ export default function ProductDetailPage() {
         {/* ============================================================ */}
         {/* SECTION 7 — "Food that fuels their best days" (image + text) */}
         {/* ============================================================ */}
-        <section className="relative">
-          <div className="max-w-[1400px] mx-auto grid grid-cols-1 lg:grid-cols-2">
-            <div className="aspect-square lg:aspect-auto overflow-hidden">
-              <img src="https://placedog.net/800/800?id=lifestyle" alt="Happy dog" className="w-full h-full object-cover" />
+        <section className="relative overflow-hidden">
+          <div className="flex flex-col md:flex-row min-h-[480px]">
+            {/* Image Left Side - ~43% with vertical zigzag right edge */}
+            <div className="w-full md:w-[43%] relative min-h-[300px] md:min-h-[480px]">
+              <img 
+                src="https://images.unsplash.com/photo-1587300003388-59208cc962cb?w=800&h=600&fit=crop" 
+                alt="Happy dog lifestyle" 
+                className="w-full h-full object-cover"
+              />
+              {/* Vertical zigzag on right edge - off-white teeth pointing LEFT into image */}
+              <div
+                className="hidden md:block absolute right-0 top-0 h-full z-10"
+                style={{
+                  width: '12px',
+                  backgroundImage: "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 24'%3E%3Cpath d='M12,0 L0,12 L12,24 Z' fill='%23EAE5DC'/%3E%3C/svg%3E\")",
+                  backgroundSize: '12px 24px',
+                  backgroundRepeat: 'repeat-y',
+                }}
+              />
             </div>
-            <div className="flex items-center bg-off-white p-8 lg:p-16">
-              <div>
-                <h2 className="text-3xl md:text-4xl font-bold text-deep-green mb-6 italic">Food that fuels their best days</h2>
-                <div className="space-y-3 text-deep-green/70">
+
+            {/* Text Right Side - ~57% */}
+            <div className="w-full md:w-[57%] bg-off-white flex items-center">
+              <div className="px-8 md:px-16 lg:px-24 py-12">
+                <h2 className="text-[32px] md:text-[40px] font-semibold text-deep-green font-rubik leading-tight mb-6 italic">
+                  Food that fuels their best days
+                </h2>
+                <div className="space-y-3 text-deep-green/70 text-[18px] leading-relaxed">
                   <p><strong className="text-deep-green">At Pure, the mission is simple:</strong></p>
                   <p>Create food that makes your dog feel as good as it tastes.</p>
                   <p>Always fresh, natural & vet-approved.</p>
                   <p>It&apos;s the kind they love, crave, and sprint to the bowl for every single time — for boundless energy, a shiny coat, and a happier, healthier life.</p>
                   <p>Pure is for the devoted pet parents simply seeking more for their best friend.</p>
                 </div>
-                <Link href="/signup" className="btn-gold mt-6 inline-block">Try Pure</Link>
+                <Link href="/signup" className="btn-gold mt-8 inline-block">Try Pure</Link>
               </div>
             </div>
           </div>
@@ -455,22 +694,41 @@ export default function ProductDetailPage() {
         {/* ============================================================ */}
         {/* SECTION 8 — "Why We Started Pure" (image + text)            */}
         {/* ============================================================ */}
-        <section className="bg-white">
-          <div className="max-w-[1400px] mx-auto grid grid-cols-1 lg:grid-cols-2">
-            <div className="flex items-center p-8 lg:p-16 order-2 lg:order-1">
-              <div>
-                <h2 className="text-3xl md:text-4xl font-bold text-deep-green mb-6 italic">Why We Started Pure</h2>
-                <div className="space-y-3 text-deep-green/70">
+        <section className="relative overflow-hidden bg-white">
+          <div className="flex flex-col md:flex-row min-h-[480px]">
+            {/* Text Left Side - ~57% */}
+            <div className="w-full md:w-[57%] flex items-center order-2 md:order-1">
+              <div className="px-8 md:px-16 lg:px-24 py-12">
+                <h2 className="text-[32px] md:text-[40px] font-semibold text-deep-green font-rubik leading-tight mb-6 italic">
+                  Why We Started Pure
+                </h2>
+                <div className="space-y-3 text-deep-green/70 text-[18px] leading-relaxed">
                   <p>We didn&apos;t start this brand for the trend.</p>
                   <p>We started Pure because our own dogs deserved better — and so does yours.</p>
                   <p>When we looked at what was in most commercial dog food, we were shocked. Fillers, preservatives, mysterious &ldquo;meat derivatives&rdquo; — making our dogs worse, not better.</p>
                   <p>They needed a better option — so we created one.</p>
                 </div>
-                <Link href="/about" className="btn-outline mt-6 inline-block">Learn More</Link>
+                <Link href="/about" className="btn-outline mt-8 inline-block">Learn More</Link>
               </div>
             </div>
-            <div className="aspect-square lg:aspect-auto overflow-hidden order-1 lg:order-2">
-              <img src="https://placedog.net/800/800?id=founders" alt="The Pure team" className="w-full h-full object-cover" />
+
+            {/* Image Right Side - ~43% with vertical zigzag left edge */}
+            <div className="w-full md:w-[43%] relative min-h-[300px] md:min-h-[480px] order-1 md:order-2">
+              <img 
+                src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=800&h=600&fit=crop" 
+                alt="The Pure team" 
+                className="w-full h-full object-cover"
+              />
+              {/* Vertical zigzag on left edge - white teeth pointing RIGHT into image */}
+              <div
+                className="hidden md:block absolute left-0 top-0 h-full z-10"
+                style={{
+                  width: '12px',
+                  backgroundImage: "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 24'%3E%3Cpath d='M0,0 L12,12 L0,24 Z' fill='%23FFFFFF'/%3E%3C/svg%3E\")",
+                  backgroundSize: '12px 24px',
+                  backgroundRepeat: 'repeat-y',
+                }}
+              />
             </div>
           </div>
         </section>
@@ -489,7 +747,7 @@ export default function ProductDetailPage() {
         {/* SECTION 10 — Full-width lifestyle banner                     */}
         {/* ============================================================ */}
         <section className="relative h-[400px] lg:h-[500px] overflow-hidden">
-          <img src="https://placedog.net/1400/500?id=banner" alt="Happy healthy dogs" className="w-full h-full object-cover" />
+          <img src="https://images.unsplash.com/photo-1552053831-71594a27632d?w=1400&h=500&fit=crop" alt="Happy healthy dogs" className="w-full h-full object-cover" />
           <div className="absolute inset-0 bg-gradient-to-r from-deep-green/70 to-transparent flex items-center">
             <div className="max-w-[1400px] mx-auto px-4 w-full">
               <h2 className="text-3xl md:text-5xl font-bold text-white max-w-lg italic leading-tight">Boundless Energy, Shiny Coat, Happier Days</h2>
