@@ -178,10 +178,10 @@ export default function ProductDetailPage() {
         if (bundleData) {
           const bundlesWithProducts = bundleData.map(bundle => ({
             ...bundle,
-            products: bundle.bundle_products?.map((bp: any) => ({
+            products: bundle.bundle_products?.map((bp: { product: Product; quantity: number }) => ({
               product_id: bp.product.id,
               quantity: bp.quantity,
-              product: bp.product as Product
+              product: bp.product
             })) || []
           }));
           setBundles(bundlesWithProducts as Bundle[]);
@@ -343,7 +343,7 @@ export default function ProductDetailPage() {
                                 <button
                                   onClick={() => {
                                     // Add all bundle products to cart
-                                    bundle.products?.forEach((bp: any) => {
+                                    bundle.products?.forEach((bp: { product: Product; quantity: number }) => {
                                       for (let i = 0; i < bp.quantity; i++) {
                                         addItem({
                                           id: bp.product.id,
@@ -419,7 +419,7 @@ export default function ProductDetailPage() {
                       {upsells.some(u => u.upsell_type === 'upsell') ? 'Upgrade Your Order' : 'Perfect Pairings'}
                     </h3>
                     <div className="space-y-3">
-                      {(upsells.length > 0 ? upsells : related.slice(0, 2)).map((item, idx) => {
+                      {(upsells.length > 0 ? upsells : related.slice(0, 2)).map((item) => {
                         const isUpsell = 'target_product' in item;
                         const product = isUpsell ? item.target_product : item;
                         const title = isUpsell ? (item.title || 'Recommended for You') : product.name;
@@ -685,7 +685,7 @@ export default function ProductDetailPage() {
                   <p>It&apos;s the kind they love, crave, and sprint to the bowl for every single time — for boundless energy, a shiny coat, and a happier, healthier life.</p>
                   <p>Pure is for the devoted pet parents simply seeking more for their best friend.</p>
                 </div>
-                <Link href="/signup" className="btn-gold mt-8 inline-block">Try Pure</Link>
+                <Link href="/auth/signup" className="btn-gold mt-8 inline-block">Try Pure</Link>
               </div>
             </div>
           </div>

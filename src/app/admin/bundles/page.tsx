@@ -2,7 +2,6 @@
 
 import { supabase } from '@/lib/supabase';
 import { useEffect, useState, useCallback } from 'react';
-import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 
 // ---------------------------------------------------------------------------
@@ -78,20 +77,11 @@ function formatPrice(value: number): string {
   return new Intl.NumberFormat('en-GB', { style: 'currency', currency: 'GBP' }).format(value);
 }
 
-function formatDate(iso: string): string {
-  return new Date(iso).toLocaleDateString('en-GB', {
-    day: 'numeric',
-    month: 'short',
-    year: 'numeric',
-  });
-}
-
 // ---------------------------------------------------------------------------
 // Main Component
 // ---------------------------------------------------------------------------
 
 export default function BundlesAdminPage() {
-  const router = useRouter();
   const [bundles, setBundles] = useState<Bundle[]>([]);
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
@@ -124,12 +114,12 @@ export default function BundlesAdminPage() {
       if (bundleData) {
         const formattedBundles = bundleData.map(bundle => ({
           ...bundle,
-          products: bundle.bundle_products?.map((bp: any) => ({
+          products: bundle.bundle_products?.map((bp: { id: string; bundle_id: string; product_id: string; quantity: number; product: Product }) => ({
             id: bp.id,
             bundle_id: bp.bundle_id,
             product_id: bp.product_id,
             quantity: bp.quantity,
-            product: bp.product as Product
+            product: bp.product
           })) || []
         }));
         setBundles(formattedBundles as Bundle[]);

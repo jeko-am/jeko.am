@@ -200,7 +200,7 @@ function CustomerLoginForm() {
           <p className="text-white/70 text-sm">
             Don&apos;t have an account?{' '}
             <Link 
-              href="/signup" 
+              href="/auth/signup" 
               className="text-gold hover:text-yellow-400 font-medium transition-colors"
             >
               Sign up for free

@@ -98,7 +98,7 @@ export default function BenefitsPageClient({ sections }: BenefitsPageClientProps
                 </p>
                 <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
                   <Link
-                    href="/signup"
+                    href="/auth/signup"
                     className="inline-block bg-gold text-deep-green px-7 py-3 rounded-[5px] font-semibold text-[16px] hover:bg-[#d99500] transition-colors"
                   >
                     {sections[0]?.button_text ?? "Create a tailored plan"}

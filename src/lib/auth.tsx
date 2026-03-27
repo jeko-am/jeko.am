@@ -30,7 +30,6 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [isAdmin, setIsAdmin] = useState(false);
   const [loading, setLoading] = useState(true);
   const adminCheckRef = useRef<string | null>(null);
-  const initializedRef = useRef(false);
 
   useEffect(() => {
     let mounted = true;
@@ -58,7 +57,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
           }
           setLoading(false);
         }
-      } catch (err) {
+      } catch {
         if (mounted) {
           setSession(null);
           setUser(null);

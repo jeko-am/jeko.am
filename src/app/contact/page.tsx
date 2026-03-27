@@ -589,7 +589,7 @@ export default function ContactPage() {
                   </Link>
 
                   <Link
-                    href="/signup"
+                    href="/auth/signup"
                     className="flex items-center gap-3 p-3 rounded-xl hover:bg-off-white transition-colors group"
                   >
                     <div className="w-10 h-10 rounded-lg bg-gold/20 flex items-center justify-center group-hover:bg-gold/30 transition-colors">

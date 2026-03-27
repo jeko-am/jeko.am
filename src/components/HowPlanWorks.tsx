@@ -118,7 +118,7 @@ export default function HowPlanWorks({ content }: { content?: any }) {
 
         <div className="text-center">
           <Link
-            href="/signup"
+            href="/auth/signup"
             className="inline-block bg-gold text-deep-green px-8 py-3.5 rounded-[5px] font-semibold text-[18px] hover:bg-[#d99500] transition-colors duration-300"
           >
             Create a tailored plan today

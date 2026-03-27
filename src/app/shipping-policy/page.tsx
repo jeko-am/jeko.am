@@ -414,7 +414,7 @@ export default function ShippingPolicyPage() {
               {/* CTA */}
               <div className="text-center">
                 <Link
-                  href="/signup"
+                  href="/auth/signup"
                   className="inline-block bg-gold text-deep-green text-lg font-rubik font-semibold px-8 py-3.5 rounded-lg hover:bg-[#d99500] transition-colors"
                 >
                   Create Your Plan Today

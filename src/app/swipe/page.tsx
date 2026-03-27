@@ -306,8 +306,8 @@ function NotLoggedInCTA() {
         <h2 className="font-bold text-2xl sm:text-3xl text-gray-900 mb-4">Find Playmates for Your Pup</h2>
         <p className="text-gray-500 mb-8 leading-relaxed">Swipe through local pets, match with compatible playmates, and set up the perfect date!</p>
         <div className="flex flex-col sm:flex-row gap-3">
-          <Link href="/login" className="flex-1 bg-emerald-500 text-white font-bold text-lg py-3 rounded-xl hover:bg-emerald-600 transition-colors text-center">Log In</Link>
-          <Link href="/signup" className="flex-1 bg-gray-900 text-white font-bold text-lg py-3 rounded-xl hover:bg-gray-800 transition-colors text-center">Sign Up</Link>
+          <Link href="/auth/login" className="flex-1 bg-emerald-500 text-white font-bold text-lg py-3 rounded-xl hover:bg-emerald-600 transition-colors text-center">Log In</Link>
+          <Link href="/auth/signup" className="flex-1 bg-gray-900 text-white font-bold text-lg py-3 rounded-xl hover:bg-gray-800 transition-colors text-center">Sign Up</Link>
         </div>
       </div>
     </div>

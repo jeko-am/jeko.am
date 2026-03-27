@@ -50,7 +50,7 @@ export default function WhatIsPure({ content }: { content?: Record<string, any> 
               ))}
             </div>
             <Link
-              href="/signup"
+              href="/auth/signup"
               className="inline-block border-2 border-deep-green text-deep-green px-7 py-3 rounded-[5px] font-semibold text-[18px] hover:bg-deep-green hover:text-white transition-all duration-300"
             >
               Get started

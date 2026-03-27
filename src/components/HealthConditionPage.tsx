@@ -91,7 +91,7 @@ export default function HealthConditionPage({
                 {heroDescription}
               </p>
               <Link
-                href="/signup"
+                href="/auth/signup"
                 className="inline-block bg-gold text-deep-green px-7 py-3 rounded-[5px] font-semibold text-[16px] hover:bg-[#d99500] transition-colors"
               >
                 Create your dog&apos;s plan
@@ -280,7 +280,7 @@ export default function HealthConditionPage({
                   trusted by thousands.
                 </p>
                 <Link
-                  href="/signup"
+                  href="/auth/signup"
                   className="inline-block bg-gold text-deep-green px-7 py-3 rounded-[5px] font-semibold text-[16px] hover:bg-[#d99500] transition-colors"
                 >
                   Discover your dog&apos;s menu

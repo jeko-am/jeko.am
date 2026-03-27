@@ -93,7 +93,7 @@ export default function FAQSection({ content }: { content?: any }) {
 
             <div className="mt-8">
               <Link
-                href="/signup"
+                href="/auth/signup"
                 className="inline-block bg-gold text-deep-green px-7 py-3 rounded-[5px] font-semibold text-[18px] hover:bg-[#d99500] transition-colors duration-300"
               >
                 Get started with 25% off

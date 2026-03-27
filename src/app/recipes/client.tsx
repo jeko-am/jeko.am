@@ -315,7 +315,7 @@ export default function RecipesPageClient({ sections }: RecipesPageClientProps) 
                         {recipe.subtitle}
                       </p>
                       <Link
-                        href="/signup"
+                        href="/auth/signup"
                         className="text-deep-green text-[14px] font-medium underline underline-offset-2 decoration-deep-green/40 hover:decoration-deep-green transition-colors"
                       >
                         More info
