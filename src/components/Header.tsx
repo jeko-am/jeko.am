@@ -157,18 +157,45 @@ export default function Header({ content }: { content?: any }) {
       <div className="bg-deep-green h-[64px] lg:h-[80px] header-zigzag-bottom">
         <div className="max-w-[1400px] mx-auto h-full px-5 lg:px-8 flex items-center justify-between">
           {/* Logo */}
-          <Link href="/" className="flex-shrink-0">
+          <Link href="/" className="flex-shrink-0 relative" style={{ width: '100px', height: '70px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+            {/* Yellow burst/splash background */}
+            <svg
+              viewBox="0 0 120 120"
+              className="absolute"
+              style={{ width: '105px', height: '105px', top: '50%', left: '50%', transform: 'translate(-50%, -50%) rotate(-10deg)' }}
+            >
+              <path
+                d="M60 5 L66 25 L82 8 L78 30 L100 22 L88 42 L112 46 L90 56 L110 70 L86 68 L98 90 L78 76 L74 100 L60 82 L46 100 L42 76 L22 90 L34 68 L10 70 L30 56 L8 46 L32 42 L20 22 L42 30 L38 8 L54 25 Z"
+                fill="#F2A900"
+              />
+            </svg>
+            {/* Tilted JEKO text */}
             <span
-              className="select-none text-[32px] lg:text-[38px] leading-none"
+              className="relative select-none text-[26px] lg:text-[30px] leading-none z-10"
               style={{
                 fontFamily: "'Luckiest Guy', cursive",
-                color: '#ffffff',
-                textShadow: '2px 2px 0px rgba(0,0,0,0.3), 1px 1px 0px rgba(0,0,0,0.2)',
+                color: '#274C46',
+                textShadow: '1.5px 1.5px 0px rgba(0,0,0,0.12)',
                 letterSpacing: '2px',
+                transform: 'rotate(-12deg)',
+                display: 'inline-block',
               }}
             >
               {logoText}
             </span>
+            {/* Paw print */}
+            <svg
+              viewBox="0 0 24 24"
+              className="absolute z-10"
+              style={{ width: '18px', height: '18px', bottom: '4px', right: '-2px', transform: 'rotate(20deg)', opacity: 0.85 }}
+              fill="#274C46"
+            >
+              <ellipse cx="8" cy="6.5" rx="2.2" ry="2.8" />
+              <ellipse cx="16" cy="6.5" rx="2.2" ry="2.8" />
+              <ellipse cx="4.2" cy="12.5" rx="2" ry="2.5" />
+              <ellipse cx="19.8" cy="12.5" rx="2" ry="2.5" />
+              <path d="M7.5 16.5C7.5 14 9.5 12.5 12 12.5C14.5 12.5 16.5 14 16.5 16.5C16.5 19 14.5 21 12 21C9.5 21 7.5 19 7.5 16.5Z" />
+            </svg>
           </Link>
 
           {/* Desktop Navigation - Center */}

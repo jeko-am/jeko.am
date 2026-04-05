@@ -138,17 +138,43 @@ export default function Footer({ content }: { content?: any }) {
         <div className="border-t border-white/10 pt-8 text-center">
           {/* Logo */}
           <div className="flex justify-center mb-4">
-            <span
-              className="select-none text-[36px] leading-none"
-              style={{
-                fontFamily: "'Luckiest Guy', cursive",
-                color: '#ffffff',
-                textShadow: '2px 2px 0px rgba(0,0,0,0.3)',
-                letterSpacing: '2px',
-              }}
-            >
-              JEKO
-            </span>
+            <div className="relative" style={{ width: '90px', height: '90px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+              <svg
+                viewBox="0 0 120 120"
+                className="absolute"
+                style={{ width: '100px', height: '100px', top: '50%', left: '50%', transform: 'translate(-50%, -50%)' }}
+              >
+                <path
+                  d="M60 8 L68 28 L88 12 L80 34 L102 30 L86 48 L110 52 L88 60 L108 74 L84 72 L96 94 L76 80 L72 104 L60 84 L48 104 L44 80 L24 94 L36 72 L12 74 L32 60 L10 52 L34 48 L18 30 L40 34 L32 12 L52 28 Z"
+                  fill="#F2A900"
+                />
+              </svg>
+              <span
+                className="relative select-none text-[26px] leading-none z-10"
+                style={{
+                  fontFamily: "'Luckiest Guy', cursive",
+                  color: '#274C46',
+                  textShadow: '1.5px 1.5px 0px rgba(0,0,0,0.1)',
+                  letterSpacing: '1.5px',
+                  transform: 'rotate(-8deg)',
+                  display: 'inline-block',
+                }}
+              >
+                JEKO
+              </span>
+              <svg
+                viewBox="0 0 24 24"
+                className="absolute z-10"
+                style={{ width: '16px', height: '16px', bottom: '12px', right: '6px', transform: 'rotate(15deg)' }}
+                fill="#274C46"
+              >
+                <ellipse cx="8" cy="6.5" rx="2.2" ry="2.8" />
+                <ellipse cx="16" cy="6.5" rx="2.2" ry="2.8" />
+                <ellipse cx="4.2" cy="12.5" rx="2" ry="2.5" />
+                <ellipse cx="19.8" cy="12.5" rx="2" ry="2.5" />
+                <path d="M7.5 16.5C7.5 14 9.5 12.5 12 12.5C14.5 12.5 16.5 14 16.5 16.5C16.5 19 14.5 21 12 21C9.5 21 7.5 19 7.5 16.5Z" />
+              </svg>
+            </div>
           </div>
           <p className="text-off-white/60 text-[14px]">
 {"\u00a9 Jeko 2020-2026"}
