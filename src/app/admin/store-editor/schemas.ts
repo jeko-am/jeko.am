@@ -90,11 +90,15 @@ const HOMEPAGE_SECTIONS: SectionSchema[] = [
       { key: 'button_text', label: 'Button Text', type: 'text', placeholder: 'Get started today' },
       { key: 'button_url', label: 'Button URL', type: 'url', placeholder: '/signup' },
       { key: 'background_image', label: 'Hero Image', type: 'image' },
+      { key: 'trustpilot_label', label: 'Trustpilot Label', type: 'text', placeholder: 'Excellent' },
+      { key: 'trustpilot_score', label: 'Trustpilot Score (e.g. 4.6)', type: 'text', placeholder: '4.6' },
+      { key: 'trustpilot_score_text', label: 'Trustpilot Score Text', type: 'text', placeholder: '4.6 out of 5' },
     ],
     defaultContent: {
       heading: 'The easiest way to feed healthy,', heading_highlight: 'natural dog food',
       subheading: 'Enjoy fresh food without the fuss, from only 89p a day',
       button_text: 'Get started today', button_url: '/signup', background_image: '',
+      trustpilot_label: 'Excellent', trustpilot_score: '4.6', trustpilot_score_text: '4.6 out of 5',
     },
   },
   {
@@ -672,8 +676,9 @@ const REVIEWS_SECTIONS: SectionSchema[] = [
       { key: 'text_1', label: 'Paragraph 1', type: 'textarea' },
       { key: 'text_2', label: 'Paragraph 2', type: 'textarea' },
       { key: 'image', label: 'Image', type: 'image' },
+      { key: 'video_url', label: 'Video URL (optional — shows play button)', type: 'url' },
     ],
-    defaultContent: { heading: 'Lulu is now', subtitle: 'a different dog', text_1: 'We rescued Lulu from the Pro Dogs Direct charity.', text_2: "Within just 2 days her issues had eased.", image: '' },
+    defaultContent: { heading: 'Lulu is now', subtitle: 'a different dog', text_1: 'We rescued Lulu from the Pro Dogs Direct charity.', text_2: "Within just 2 days her issues had eased.", image: '', video_url: '' },
   },
   {
     name: 'Backed by Vets', icon: ICON_PATHS.check, color: 'bg-deep-green',
@@ -701,8 +706,9 @@ const REVIEWS_SECTIONS: SectionSchema[] = [
       { key: 'text_2', label: 'Paragraph 2', type: 'textarea' },
       { key: 'text_3', label: 'Paragraph 3', type: 'textarea' },
       { key: 'image', label: 'Image', type: 'image' },
+      { key: 'video_url', label: 'Video URL (optional — shows play button)', type: 'url' },
     ],
-    defaultContent: { heading: 'Meet Nelly & Polly', text_1: 'I rescued Nelly two years ago. She came to me with alopecia.', text_2: "I couldn't even stroke her.", text_3: 'We switched from brown biscuits to Jeko.', image: '' },
+    defaultContent: { heading: 'Meet Nelly & Polly', text_1: 'I rescued Nelly two years ago. She came to me with alopecia.', text_2: "I couldn't even stroke her.", text_3: 'We switched from brown biscuits to Jeko.', image: '', video_url: '' },
   },
   {
     name: "We've Helped 1000s", icon: ICON_PATHS.users, color: 'bg-amber-500',
@@ -719,8 +725,9 @@ const REVIEWS_SECTIONS: SectionSchema[] = [
       { key: 'text_1', label: 'Paragraph 1', type: 'textarea' },
       { key: 'text_2', label: 'Paragraph 2', type: 'textarea' },
       { key: 'image', label: 'Image', type: 'image' },
+      { key: 'video_url', label: 'Video URL (optional — shows play button)', type: 'url' },
     ],
-    defaultContent: { heading: "Diesel's much healthier", text_1: 'For the first two years, he was a happy and healthy pup.', text_2: 'We switched to Jeko as it\'s nutritious.', image: '' },
+    defaultContent: { heading: "Diesel's much healthier", text_1: 'For the first two years, he was a happy and healthy pup.', text_2: 'We switched to Jeko as it\'s nutritious.', image: '', video_url: '' },
   },
   {
     name: 'Stats', icon: ICON_PATHS.chart, color: 'bg-indigo-500',

@@ -136,20 +136,36 @@ const StarRating = ({ count }: { count: number }) => (
   </div>
 );
 
-const PlayButton = () => (
-  <div className="absolute inset-0 flex items-center justify-center">
-    <div className="w-[72px] h-[72px] bg-gold rounded-full flex items-center justify-center cursor-pointer hover:bg-[#d99500] transition-colors shadow-lg">
-      <svg
-        width="28"
-        height="28"
-        viewBox="0 0 24 24"
-        fill="white"
-      >
-        <path d="M8 5v14l11-7z" />
-      </svg>
-    </div>
-  </div>
-);
+const StoryMedia = ({ src, videoUrl, alt }: { src: string; videoUrl?: string; alt: string }) => {
+  const [playing, setPlaying] = useState(false);
+
+  return (
+    <>
+      {playing && videoUrl ? (
+        <video
+          src={videoUrl}
+          autoPlay
+          controls
+          className="absolute inset-0 w-full h-full object-cover"
+        />
+      ) : (
+        <Image src={src} alt={alt} fill unoptimized className="object-cover" />
+      )}
+      {!playing && videoUrl && (
+        <div
+          className="absolute inset-0 flex items-center justify-center cursor-pointer"
+          onClick={() => setPlaying(true)}
+        >
+          <div className="w-[72px] h-[72px] bg-gold rounded-full flex items-center justify-center hover:bg-[#d99500] transition-colors shadow-lg">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="white">
+              <path d="M8 5v14l11-7z" />
+            </svg>
+          </div>
+        </div>
+      )}
+    </>
+  );
+};
 
 interface ReviewsPageClientProps {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -274,14 +290,11 @@ export default function ReviewsPageClient({ sections }: ReviewsPageClientProps) 
                 </div>
               </div>
               <div className="w-full md:w-[42%] relative min-h-[350px] md:min-h-[500px]">
-                <Image
+                <StoryMedia
                   src={sections[2]?.image || "https://www.datocms-assets.com/55536/1647940616-800x800-review-lloyd-peter-lulu.jpg?auto=format&fit=crop&h=600&w=1000"}
+                  videoUrl={sections[2]?.video_url || undefined}
                   alt="Lulu the rescue dog"
-                  fill
-                  unoptimized
-                  className="object-cover"
                 />
-                <PlayButton />
               </div>
             </div>
           </section>
@@ -352,14 +365,11 @@ export default function ReviewsPageClient({ sections }: ReviewsPageClientProps) 
           <section className="relative overflow-hidden">
             <div className="flex flex-col md:flex-row min-h-[480px]">
               <div className="w-full md:w-[42%] relative min-h-[350px] md:min-h-[480px]">
-                <Image
+                <StoryMedia
                   src={sections[4]?.image || "https://www.datocms-assets.com/55536/1647612430-800x800-review-polly.jpg?auto=format&fit=crop&h=600&w=1000"}
+                  videoUrl={sections[4]?.video_url || undefined}
                   alt="Nelly the dog"
-                  fill
-                  unoptimized
-                  className="object-cover"
                 />
-                <PlayButton />
               </div>
               <div className="w-full md:w-[58%] bg-off-white flex items-center">
                 <div className="px-8 md:px-14 lg:px-20 py-12 max-w-[560px]">
@@ -467,14 +477,11 @@ export default function ReviewsPageClient({ sections }: ReviewsPageClientProps) 
                 </div>
               </div>
               <div className="w-full md:w-[42%] relative min-h-[350px] md:min-h-[500px]">
-                <Image
+                <StoryMedia
                   src={sections[6]?.image || "https://www.datocms-assets.com/55536/1673543479-healthy-dog-food.jpg?auto=format&fit=crop&h=600&w=1000"}
+                  videoUrl={sections[6]?.video_url || undefined}
                   alt="Diesel the dog"
-                  fill
-                  unoptimized
-                  className="object-cover"
                 />
-                <PlayButton />
               </div>
             </div>
           </section>
