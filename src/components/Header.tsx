@@ -127,7 +127,7 @@ export default function Header({ content }: { content?: any }) {
     }
   };
 
-  const logoText = content?.logo_text ?? "JEKO";
+  const logoText = "JEKO";
   const ctaText = content?.cta_text ?? "Create plan";
   const ctaUrl = content?.cta_url ?? "/signup";
   const helpUrl = content?.help_url ?? "/contact";
@@ -162,9 +162,8 @@ export default function Header({ content }: { content?: any }) {
               className="select-none text-[32px] lg:text-[38px] leading-none"
               style={{
                 fontFamily: "'Luckiest Guy', cursive",
-                color: '#1a1a1a',
-                textShadow: '2px 2px 0px rgba(0,0,0,0.15), -1px -1px 0px rgba(255,255,255,0.3)',
-                WebkitTextStroke: '1px rgba(0,0,0,0.2)',
+                color: '#ffffff',
+                textShadow: '2px 2px 0px rgba(0,0,0,0.3), 1px 1px 0px rgba(0,0,0,0.2)',
                 letterSpacing: '2px',
               }}
             >

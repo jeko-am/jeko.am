@@ -90,9 +90,9 @@ export default function Footer({ content }: { content?: any }) {
 
           {/* Link Columns */}
           <div className="lg:w-[65%] grid grid-cols-2 md:grid-cols-3 gap-8">
-            {/* Pure Column */}
+            {/* Jeko Column */}
             <div>
-              <h4 className="text-white font-semibold text-[18px] mb-4">{content?.col1_heading || "Jeko"}</h4>
+              <h4 className="text-white font-semibold text-[18px] mb-4">Jeko</h4>
               <ul className="space-y-2.5">
                 {jekoLinks.map((link) => (
                   <li key={link.label}>
@@ -151,7 +151,7 @@ export default function Footer({ content }: { content?: any }) {
             </span>
           </div>
           <p className="text-off-white/60 text-[14px]">
-            {content?.copyright_text || "\u00a9 Jeko 2020-2026"}
+{"\u00a9 Jeko 2020-2026"}
           </p>
         </div>
       </div>
