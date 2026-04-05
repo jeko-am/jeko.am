@@ -6,12 +6,12 @@ import Image from "next/image";
 
 const faqs = [
   { question: "Am I tied into a subscription?", answer: "Not at all! You can pause, change, or cancel your plan at any time. We believe in our food so much that we don't need to lock you in." },
-  { question: "Is Pure expensive compared to other foods?", answer: "Pure starts from only 89p per day. When you consider the health benefits, it's great value compared to vet bills and other premium foods." },
+  { question: "Is Jeko expensive compared to other foods?", answer: "Jeko starts from only 89p per day. When you consider the health benefits, it's great value compared to vet bills and other premium foods." },
   { question: "Do I pay for delivery?", answer: "No! Delivery is completely free on all orders. We deliver right to your doorstep." },
-  { question: "What is the nutritional value, and is it good for my dog?", answer: "Pure is a complete, balanced meal developed with veterinary nutritionists. Every recipe meets FEDIAF guidelines for complete nutrition." },
-  { question: "What if my dog doesn\u2019t like it?", answer: "We offer a full money-back guarantee. If your dog doesn't love Pure, we'll refund your first box in full." },
-  { question: "Is Pure suitable for my dogs health concern?", answer: "Pure is often recommended for dogs with health concerns. Our recipes are gentle and made with natural, high-quality ingredients." },
-  { question: "Is Pure complete dog food?", answer: "Yes! Every Pure recipe is nutritionally complete and balanced, meeting all FEDIAF guidelines for adult dogs and puppies." },
+  { question: "What is the nutritional value, and is it good for my dog?", answer: "Jeko is a complete, balanced meal developed with veterinary nutritionists. Every recipe meets FEDIAF guidelines for complete nutrition." },
+  { question: "What if my dog doesn\u2019t like it?", answer: "We offer a full money-back guarantee. If your dog doesn't love Jeko, we'll refund your first box in full." },
+  { question: "Is Jeko suitable for my dogs health concern?", answer: "Jeko is often recommended for dogs with health concerns. Our recipes are gentle and made with natural, high-quality ingredients." },
+  { question: "Is Jeko complete dog food?", answer: "Yes! Every Jeko recipe is nutritionally complete and balanced, meeting all FEDIAF guidelines for adult dogs and puppies." },
 ];
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -49,7 +49,7 @@ export default function FAQSection({ content }: { content?: any }) {
               {content?.heading || "Frequently Asked Questions"}
             </h2>
             <p className="text-[18px] text-deep-green mb-8">
-              {content?.subheading || "Everything else you need to know about Pure"}
+              {content?.subheading || "Everything else you need to know about Jeko"}
             </p>
 
             <div className="space-y-0">
@@ -94,7 +94,7 @@ export default function FAQSection({ content }: { content?: any }) {
             <div className="mt-8">
               <Link
                 href="/auth/signup"
-                className="inline-block bg-gold text-deep-green px-7 py-3 rounded-[5px] font-semibold text-[18px] hover:bg-[#d99500] transition-colors duration-300"
+                className="btn-gold inline-block font-semibold text-[18px] transition-colors duration-300"
               >
                 Get started with 25% off
               </Link>

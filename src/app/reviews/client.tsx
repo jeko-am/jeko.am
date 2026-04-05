@@ -219,7 +219,7 @@ export default function ReviewsPageClient({ sections }: ReviewsPageClientProps) 
         {/* Offer Banner */}
         <div data-section-index={1} data-section-name="Offer Banner">
           <Link
-            href={sections[1]?.link_url ?? "/signup"}
+            href={sections[1]?.link_url ?? "/auth/signup"}
             className="block w-full bg-[#E65A1E] hover:bg-[#D04E15] transition-colors duration-200 py-3 text-center text-white"
           >
             <p className="text-[15px] leading-snug tracking-wide">

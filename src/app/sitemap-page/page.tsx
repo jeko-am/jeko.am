@@ -15,7 +15,7 @@ const sitemapSections = [
     ],
   },
   {
-    title: "About Pure",
+    title: "About Jeko",
     links: [
       { label: "Our Story", href: "/about" },
       { label: "Reviews", href: "/reviews" },
@@ -51,7 +51,7 @@ const sitemapSections = [
       { label: "Cookie Policy", href: "/cookie-policy" },
       { label: "Refund Policy", href: "/refund-policy" },
       { label: "Shipping Policy", href: "/shipping-policy" },
-      { label: "Pure Policies", href: "/pure-policies" },
+      { label: "Jeko Policies", href: "/pure-policies" },
       { label: "Site Security", href: "/site-security" },
     ],
   },

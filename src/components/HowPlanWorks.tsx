@@ -28,7 +28,7 @@ const steps = [
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export default function HowPlanWorks({ content }: { content?: any }) {
-  const heading = content?.heading ?? "How does a Pure plan work?";
+  const heading = content?.heading ?? "How does a Jeko plan work?";
   const step1Title = content?.step_1_title ?? "Tell us about your dog";
   const step1Description = content?.step_1_description ?? "Tell us about your dog";
   const step2Title = content?.step_2_title ?? "Choose your tailored recipes";

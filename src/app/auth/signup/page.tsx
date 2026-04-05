@@ -35,6 +35,19 @@ const STEP_TITLES = [
   'Create your account',
 ];
 
+const STEP_MESSAGES = [
+  '🚀 Let\'s get started!',
+  '✨ Great start!',
+  '🎯 You\'re on a roll!',
+  '💪 Halfway there!',
+  '🔥 Getting warmer!',
+  '⭐ Almost done!',
+  '🎉 You\'re crushing it!',
+  '✅ Getting close now!',
+  '🏁 Last lap!',
+  '🎊 Final step!',
+];
+
 /* ------------------------------------------------------------------ */
 /*  Tiny icons                                                         */
 /* ------------------------------------------------------------------ */
@@ -210,12 +223,13 @@ export default function SignupPage() {
   const [gender, setGender] = useState('');
   const [activityLevel, setActivityLevel] = useState('');
   const [temperament, setTemperament] = useState('');
-  const [dietPreference, setDietPreference] = useState('');
+  const [dietPreferences, setDietPreferences] = useState<string[]>([]);
   const [favoriteActivity, setFavoriteActivity] = useState('');
   const [walkPreference, setWalkPreference] = useState('');
   const [getsAlongWithDogs, setGetsAlongWithDogs] = useState<boolean | null>(null);
   const [lookingForMate, setLookingForMate] = useState<boolean | null>(null);
   const [preferredBreed, setPreferredBreed] = useState('');
+  const [sameBreedOnly, setSameBreedOnly] = useState(false);
   const [preferredRadiusKm, setPreferredRadiusKm] = useState(25);
   const [profilePhotoPreview, setProfilePhotoPreview] = useState('');
   const [uploadingPhoto, setUploadingPhoto] = useState(false);
@@ -223,7 +237,25 @@ export default function SignupPage() {
   const [bio, setBio] = useState('');
   const [city, setCity] = useState('');
   const [state, setState] = useState('');
-  const [country, setCountry] = useState('');
+  const [country, setCountry] = useState('Armenia');
+
+  // Armenian provinces and cities
+  const armenianProvinces: Record<string, string[]> = {
+    'Aragatsotn': ['Aragazavan', 'Aparan', 'Talin'],
+    'Ararat': ['Ararat', 'Vedi', 'Artashat'],
+    'Armavir': ['Armavir', 'Ashtarak', 'Nor Amberd'],
+    'Gegharkunik': ['Goris', 'Kapan', 'Martuni'],
+    'Lori': ['Vanadzor', 'Stepanavan', 'Alaverdi'],
+    'Kotayk': ['Abovyan', 'Hrazdan', 'Dilijan'],
+    'Shirak': ['Gyumri', 'Artik', 'Ashotsk'],
+    'Syunik': ['Syunik', 'Sisian', 'Goris'],
+    'Tavush': ['Ijevan', 'Berd', 'Noyemberyan'],
+    'Vayots Dzor': ['Yeghegnadzor', 'Vayk', 'Areni'],
+    'Yerevan': ['Central', 'North', 'South', 'East', 'West'],
+  };
+
+  const [province, setProvince] = useState('Yerevan');
+  const [stateDropdown, setStateDropdown] = useState('Central');
   const [fullName, setFullName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -322,6 +354,18 @@ export default function SignupPage() {
     }, 400);
   }
 
+  /* ---------- toggle diet preference (max 3) ---------- */
+  function toggleDietPreference(diet: string) {
+    setDietPreferences(prev => {
+      if (prev.includes(diet)) {
+        return prev.filter(d => d !== diet);
+      } else if (prev.length < 3) {
+        return [...prev, diet];
+      }
+      return prev;
+    });
+  }
+
   /* ---------- generate display name ---------- */
   function generateDisplayName(name: string): string {
     const parts = name.trim().split(/\s+/);
@@ -400,15 +444,17 @@ export default function SignupPage() {
         contact_phone: phone.trim() || null,
         share_contact: shareContact,
         display_name: displayName,
+        age_years: dogAge ? parseFloat(dogAge) : null,
         dog_age_years: dogAge ? parseFloat(dogAge) : null,
         weight_kg: weightKg ? parseFloat(weightKg) : null,
         gender: gender || 'Unknown',
-        diet_preference: dietPreference || null,
+        diet_preferences: dietPreferences.length > 0 ? dietPreferences : null,
         activity_level: activityLevel || null,
         temperament: temperament || null,
         looking_for_mate: lookingForMate ?? false,
         preferred_radius_km: lookingForMate ? preferredRadiusKm : null,
         preferred_breed: lookingForMate ? preferredBreed || null : null,
+        same_breed_only: lookingForMate ? sameBreedOnly : false,
         favorite_activity: favoriteActivity || null,
         walk_preference: walkPreference || null,
         gets_along_with_dogs: getsAlongWithDogs ?? true,
@@ -454,7 +500,7 @@ export default function SignupPage() {
         <div className="max-w-3xl mx-auto px-5 h-[56px] flex items-center justify-between">
           <Link href="/" className="flex-shrink-0">
             <div className="bg-gold text-deep-green rounded-lg px-2.5 py-1 flex items-center gap-0.5 font-rubik font-bold text-[18px] tracking-wide select-none hover:bg-yellow-400 transition-colors">
-              <span>PURE</span>
+              <span>JEKO</span>
               <PawIcon />
             </div>
           </Link>
@@ -493,9 +539,9 @@ export default function SignupPage() {
         <form onSubmit={handleSubmit} noValidate className="flex-1 flex flex-col">
           <div className={`flex-1 flex flex-col items-center justify-center px-5 py-8 transition-all duration-300 ease-in-out ${slideClass}`}>
 
-            {/* Step counter */}
-            <p className="text-deep-green/40 text-xs font-medium mb-3 tracking-wider uppercase">
-              Step {step + 1} of {TOTAL_STEPS}
+            {/* Motivational message */}
+            <p className="text-deep-green text-2xl font-semibold mb-6">
+              {STEP_MESSAGES[step]}
             </p>
 
             {/* Submit error */}
@@ -735,14 +781,25 @@ export default function SignupPage() {
                 </h1>
                 <p className="text-deep-green/50 text-sm mb-6">Help us find the perfect matches</p>
 
-                <p className="text-sm font-medium text-deep-green mb-3">Diet</p>
+                <div className="flex items-center justify-center gap-2 mb-3">
+                  <p className="text-sm font-medium text-deep-green">Diet</p>
+                  <span className="text-xs font-semibold bg-gold/20 text-gold px-2.5 py-1 rounded-full">
+                    {dietPreferences.length}/3
+                  </span>
+                </div>
                 <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 mb-8">
                   {DIET_PREFERENCES.map((d) => {
                     const emojis: Record<string, string> = {
                       Raw: '🥩', Kibble: '🍖', Mixed: '🍽️', Homemade: '👨‍🍳', 'Jeko': '🌿',
                     };
                     return (
-                      <QuizCard key={d} emoji={emojis[d] || '🍽️'} label={d} selected={dietPreference === d} onClick={() => setDietPreference(d)} />
+                      <QuizCard
+                        key={d}
+                        emoji={emojis[d] || '🍽️'}
+                        label={d}
+                        selected={dietPreferences.includes(d)}
+                        onClick={() => toggleDietPreference(d)}
+                      />
                     );
                   })}
                 </div>
@@ -797,7 +854,7 @@ export default function SignupPage() {
                   <QuizCard emoji="😬" label="Not really" selected={getsAlongWithDogs === false} onClick={() => setGetsAlongWithDogs(false)} />
                 </div>
 
-                <p className="text-sm font-medium text-deep-green mb-3">Looking for a mate?</p>
+                <p className="text-sm font-medium text-deep-green mb-3">Looking for a match?</p>
                 <div className="grid grid-cols-2 gap-4 max-w-xs mx-auto mb-6">
                   <QuizCard emoji="💕" label="Yes!" selected={lookingForMate === true} onClick={() => setLookingForMate(true)} />
                   <QuizCard emoji="🙅" label="No thanks" selected={lookingForMate === false} onClick={() => setLookingForMate(false)} />
@@ -805,11 +862,34 @@ export default function SignupPage() {
 
                 {lookingForMate && (
                   <div className="bg-white border-2 border-deep-green/10 rounded-2xl p-5 max-w-sm mx-auto mb-6 text-left space-y-4">
-                    <p className="text-sm font-semibold text-deep-green text-center">Mate Preferences</p>
-                    <div>
-                      <label className="block text-xs font-medium text-gray-600 mb-1.5">Preferred Breed</label>
-                      <BreedAutocomplete value={preferredBreed} onChange={setPreferredBreed} placeholder="Any breed..." />
-                    </div>
+                    <p className="text-sm font-semibold text-deep-green text-center">Match Preferences</p>
+                    <label className="flex items-center cursor-pointer hover:bg-gray-50 p-2 rounded transition-colors">
+                      <input
+                        type="checkbox"
+                        checked={sameBreedOnly}
+                        onChange={(e) => {
+                          setSameBreedOnly(e.target.checked);
+                          if (e.target.checked && breed.trim()) {
+                            setPreferredBreed(breed.trim());
+                          } else if (!e.target.checked) {
+                            setPreferredBreed('');
+                          }
+                        }}
+                        className="w-4 h-4 text-gold focus:ring-gold border-gray-300 rounded cursor-pointer"
+                      />
+                      <span className="ml-2.5 text-sm font-medium text-deep-green">Same breed only</span>
+                    </label>
+                    {!sameBreedOnly && (
+                      <div>
+                        <label className="block text-xs font-medium text-gray-600 mb-1.5">Preferred Breed (optional)</label>
+                        <BreedAutocomplete value={preferredBreed} onChange={setPreferredBreed} placeholder="Any breed..." />
+                      </div>
+                    )}
+                    {sameBreedOnly && (
+                      <div className="bg-gold/10 border border-gold/30 rounded-lg p-3">
+                        <p className="text-xs font-medium text-gold">✓ Matching with {breed || 'same'} breed only</p>
+                      </div>
+                    )}
                     <div>
                       <label className="block text-xs font-medium text-gray-600 mb-1.5">
                         Search Radius: <span className="text-gold font-semibold">{preferredRadiusKm} km</span>
@@ -915,47 +995,51 @@ export default function SignupPage() {
                 <p className="text-deep-green/50 text-sm mb-8">Connect with nearby pet owners and local events</p>
 
                 <div className="space-y-4 text-left">
-                  <div>
-                    <label className="block text-sm font-medium text-deep-green mb-1.5">City <span className="text-red-400">*</span></label>
-                    <input
-                      type="text"
-                      value={city}
-                      onChange={(e) => setCity(e.target.value)}
-                      placeholder="London"
-                      className={`w-full px-5 py-3.5 border-2 rounded-xl text-gray-900 placeholder:text-gray-300 focus:outline-none focus:ring-2 focus:ring-deep-green focus:border-transparent transition-shadow ${
-                        errors.city ? 'border-red-400' : 'border-gray-200'
-                      }`}
-                    />
-                    {errors.city && <p className="text-red-500 text-xs mt-1">{errors.city}</p>}
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium text-deep-green mb-1.5">State / Province <span className="text-red-400">*</span></label>
-                    <input
-                      type="text"
-                      value={state}
-                      onChange={(e) => setState(e.target.value)}
-                      placeholder="Greater London"
-                      className={`w-full px-5 py-3.5 border-2 rounded-xl text-gray-900 placeholder:text-gray-300 focus:outline-none focus:ring-2 focus:ring-deep-green focus:border-transparent transition-shadow ${
-                        errors.state ? 'border-red-400' : 'border-gray-200'
-                      }`}
-                    />
-                    {errors.state && <p className="text-red-500 text-xs mt-1">{errors.state}</p>}
-                  </div>
+                  {/* Country - Always Armenia */}
                   <div>
                     <label className="block text-sm font-medium text-deep-green mb-1.5">Country <span className="text-red-400">*</span></label>
+                    <div className="w-full px-5 py-3.5 border-2 border-deep-green bg-deep-green/5 rounded-xl text-gray-900 focus:outline-none focus:ring-2 focus:ring-deep-green focus:border-transparent transition-shadow font-semibold flex items-center">
+                      🇦🇲 {country}
+                    </div>
+                  </div>
+
+                  {/* Province/State Dropdown */}
+                  <div>
+                    <label className="block text-sm font-medium text-deep-green mb-1.5">Province / Region <span className="text-red-400">*</span></label>
                     <select
-                      value={country}
-                      onChange={(e) => setCountry(e.target.value)}
+                      value={province}
+                      onChange={(e) => {
+                        setProvince(e.target.value);
+                        setState(e.target.value);
+                        setStateDropdown(armenianProvinces[e.target.value]?.[0] || '');
+                        setCity(armenianProvinces[e.target.value]?.[0] || '');
+                      }}
                       className={`w-full px-5 py-3.5 border-2 rounded-xl text-gray-900 focus:outline-none focus:ring-2 focus:ring-deep-green focus:border-transparent transition-shadow appearance-none bg-white bg-[url('data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2224%22%20height%3D%2224%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22%239CA3AF%22%20stroke-width%3D%222%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpolyline%20points%3D%226%209%2012%2015%2018%209%22%3E%3C%2Fpolyline%3E%3C%2Fsvg%3E')] bg-[length:20px] bg-[right_12px_center] bg-no-repeat pr-10 ${
-                        errors.country ? 'border-red-400' : 'border-gray-200'
-                      } ${!country ? 'text-gray-400' : ''}`}
+                        errors.state ? 'border-red-400' : 'border-gray-200'
+                      }`}
                     >
-                      <option value="" disabled>Select your country</option>
-                      {COUNTRIES.map((c) => (
-                        <option key={c} value={c}>{c}</option>
+                      {Object.keys(armenianProvinces).map((prov) => (
+                        <option key={prov} value={prov}>{prov}</option>
                       ))}
                     </select>
-                    {errors.country && <p className="text-red-500 text-xs mt-1">{errors.country}</p>}
+                    {errors.state && <p className="text-red-500 text-xs mt-1">{errors.state}</p>}
+                  </div>
+
+                  {/* City Dropdown */}
+                  <div>
+                    <label className="block text-sm font-medium text-deep-green mb-1.5">City <span className="text-red-400">*</span></label>
+                    <select
+                      value={city}
+                      onChange={(e) => setCity(e.target.value)}
+                      className={`w-full px-5 py-3.5 border-2 rounded-xl text-gray-900 focus:outline-none focus:ring-2 focus:ring-deep-green focus:border-transparent transition-shadow appearance-none bg-white bg-[url('data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2224%22%20height%3D%2224%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22%239CA3AF%22%20stroke-width%3D%222%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpolyline%20points%3D%226%209%2012%2015%2018%209%22%3E%3C%2Fpolyline%3E%3C%2Fsvg%3E')] bg-[length:20px] bg-[right_12px_center] bg-no-repeat pr-10 ${
+                        errors.city ? 'border-red-400' : 'border-gray-200'
+                      }`}
+                    >
+                      {armenianProvinces[province]?.map((cityOption) => (
+                        <option key={cityOption} value={cityOption}>{cityOption}</option>
+                      ))}
+                    </select>
+                    {errors.city && <p className="text-red-500 text-xs mt-1">{errors.city}</p>}
                   </div>
                 </div>
 
@@ -1085,7 +1169,7 @@ export default function SignupPage() {
                       className="mt-0.5 w-5 h-5 text-deep-green border-gray-300 rounded focus:ring-deep-green accent-deep-green"
                     />
                     <div>
-                      <p className="text-sm font-medium text-gray-700">Share my contact info with matches</p>
+                      <p className="text-sm font-medium text-gray-700">Share pet info with matches</p>
                       <p className="text-xs text-gray-400 mt-0.5">Other pet owners can see your info to arrange meetups</p>
                     </div>
                   </label>

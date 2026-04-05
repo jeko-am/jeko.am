@@ -323,10 +323,10 @@ export default function ContactPage() {
                           Phone
                         </p>
                         <a
-                          href="tel:01onal"
+                          href="tel:+37410000000"
                           className="text-deep-green/70 hover:text-gold transition-colors"
                         >
-                          01onal
+                          +374 10 000 000
                         </a>
                       </div>
                     </div>
@@ -490,7 +490,7 @@ export default function ContactPage() {
                     Yorkshire Business Park, Leeds
                   </p>
                   <p className="text-deep-green/30 text-xs mt-1">
-                    Interactive map coming soon
+                    Yerevan, Armenia
                   </p>
                 </div>
                 <div className="p-5">

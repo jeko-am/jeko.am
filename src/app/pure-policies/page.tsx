@@ -58,7 +58,7 @@ export default function PurePoliciesPage() {
         <section className="bg-deep-green py-16 text-center relative zigzag-bottom">
           <div className="max-w-[1200px] mx-auto px-6">
             <h1 className="font-rubik text-white text-[38px] md:text-[48px] font-bold leading-[1.15] mb-4">
-              Pure <span className="text-gold">Policies</span>
+              Jeko <span className="text-gold">Policies</span>
             </h1>
             <p className="text-white/80 max-w-2xl mx-auto text-lg leading-relaxed">
               All our policies in one place. We believe in transparency, so

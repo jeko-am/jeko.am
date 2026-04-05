@@ -264,7 +264,7 @@ const SwipeCard = memo(function SwipeCard({ candidate, isTop, onSwipe, onLove: _
         <div className="px-5 pt-1 pb-1">
           <h3 className="font-bold text-xl sm:text-2xl text-gray-900 text-center">{candidate.pet_name||candidate.breed}</h3>
           <p className="text-gray-400 text-sm text-center">{candidate.breed}</p>
-          <div className="flex items-center justify-center gap-4 mt-1 text-gray-500 text-sm">
+          <div className="flex items-center justify-center gap-4 mt-1 text-gray-500 text-sm flex-wrap">
             <span className="inline-flex items-center gap-1">
               <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a2 2 0 01-2.828 0l-4.243-4.243a8 8 0 1111.314 0z"/><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
               {distanceLabel}
@@ -273,6 +273,12 @@ const SwipeCard = memo(function SwipeCard({ candidate, isTop, onSwipe, onLove: _
               <span className="inline-flex items-center gap-1">
                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4"/></svg>
                 {sizeLabel}
+              </span>
+            )}
+            {candidate.dog_age_years !== null && candidate.dog_age_years !== undefined && (
+              <span className="inline-flex items-center gap-1">
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                {candidate.dog_age_years} {candidate.dog_age_years === 1 ? "year" : "years"}
               </span>
             )}
           </div>

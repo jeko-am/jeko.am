@@ -122,9 +122,9 @@ export default function DeliveryInformationPage() {
                 Packaging &amp; Storage
               </h2>
               <p className="text-deep-green/80 text-[16px] leading-relaxed mb-4">
-                All Pure meals are delivered in recyclable packaging with
+                All Jeko meals are delivered in recyclable packaging with
                 insulated liners to keep them fresh. Once your delivery arrives,
-                simply pop the packets into your cupboard &mdash; Pure is
+                simply pop the packets into your cupboard &mdash; Jeko is
                 air-dried, so there&apos;s no need for fridge or freezer space.
               </p>
               <p className="text-deep-green/80 text-[16px] leading-relaxed">

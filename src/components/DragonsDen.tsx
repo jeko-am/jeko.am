@@ -43,11 +43,11 @@ export default function DragonsDen({ content }: { content?: any }) {
               {content?.heading || "Dog food so good we ate it on Dragons\u2019 Den"}
             </h2>
             <p className="text-off-white text-[18px] leading-relaxed mb-8">
-              {content?.description || "Pure is complete nutrition from the inside out, and dogs totally love the taste! \u201cIt was possibly the best pitch I have seen in over 10 years of Dragons\u2019 Den\u201d - Duncan Bannatyne"}
+              {content?.description || "Jeko is complete nutrition from the inside out, and dogs totally love the taste! \u201cIt was possibly the best pitch I have seen in over 10 years of Dragons\u2019 Den\u201d - Duncan Bannatyne"}
             </p>
             <Link
-              href={content?.button_url || "/signup"}
-              className="inline-block bg-gold text-deep-green px-7 py-3 rounded-[5px] font-semibold text-[18px] hover:bg-[#d99500] transition-colors duration-300"
+              href={content?.button_url || "/auth/signup"}
+              className="btn-gold inline-block font-semibold text-[18px] transition-colors duration-300"
             >
               {content?.button_text || "Get started today"}
             </Link>

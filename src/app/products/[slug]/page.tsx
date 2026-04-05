@@ -246,7 +246,7 @@ export default function ProductDetailPage() {
     { name: 'Dr. James Chen, DVM', role: 'Veterinary Dermatologist', text: 'I\'ve seen remarkable improvements in skin and coat conditions since recommending Jeko to my patients. The natural, hypoallergenic recipes are a game-changer for dogs with sensitivities.', product: 'Salmon & Potato Grain-Free', productSlug: 'salmon-potato-grain-free' },
     { name: 'Emma Richards', role: 'Canine Behaviourist', text: 'As a canine behaviourist, I see the link between nutrition and behaviour daily. Dogs on Jeko are calmer, more focused, and have better energy regulation throughout the day. It makes a real difference.', product: product.name, productSlug: product.slug },
     { name: 'Dr. Hannah Brooks, MRCVS', role: 'Small Animal Vet', text: 'It is extremely important to me to recommend clean products. Jeko is a brand I can trust is clean and has the research to back it up. The flavour quality is outstanding — dogs genuinely love it. I recommend it to all my patients!', product: 'Puppy Growth Formula', productSlug: 'puppy-growth-formula' },
-    { name: 'Dr. Oliver Patel, BVM&S', role: 'Holistic Veterinarian', text: 'As a holistic vet, I greatly appreciate having a food I can recommend to clients managing chronic conditions. Pure\'s careful ingredient sourcing and gentle processing is exactly what these dogs need.', product: product.name, productSlug: product.slug },
+    { name: 'Dr. Oliver Patel, BVM&S', role: 'Holistic Veterinarian', text: 'As a holistic vet, I greatly appreciate having a food I can recommend to clients managing chronic conditions. Jeko\'s careful ingredient sourcing and gentle processing is exactly what these dogs need.', product: product.name, productSlug: product.slug },
   ];
 
   const scrollVets = (dir: 'left' | 'right') => {
@@ -513,11 +513,11 @@ export default function ProductDetailPage() {
         </section>
 
         {/* ============================================================ */}
-        {/* SECTION 2 — "The Pure Difference" badge row                  */}
+        {/* SECTION 2 — "The Jeko Difference" badge row                  */}
         {/* ============================================================ */}
         <section className="bg-off-white py-14 border-t border-b border-deep-green/5">
           <div className="max-w-[1200px] mx-auto px-4 text-center">
-            <h2 className="text-3xl md:text-4xl font-bold text-deep-green mb-10 italic">The Pure Difference</h2>
+            <h2 className="text-3xl md:text-4xl font-bold text-deep-green mb-10 italic">The Jeko Difference</h2>
             <div className="flex flex-wrap justify-center gap-x-8 gap-y-4">
               {[
                 'Vet Approved', 'Natural Ingredients', 'Grain-Free Options', 'Lab Tested',
@@ -619,7 +619,7 @@ export default function ProductDetailPage() {
             <div className="w-full md:w-[57%] flex items-center">
               <div className="px-8 md:px-16 lg:px-24 py-12">
                 <h2 className="text-[32px] md:text-[40px] font-semibold text-deep-green font-rubik leading-tight mb-4">
-                  Learn The Science Behind Pure
+                  Learn The Science Behind Jeko
                 </h2>
                 <p className="text-deep-green/70 text-[18px] leading-relaxed mb-6">
                   Developed with veterinary nutritionists, every recipe is backed by science to deliver optimal nutrition.
@@ -679,20 +679,20 @@ export default function ProductDetailPage() {
                   Food that fuels their best days
                 </h2>
                 <div className="space-y-3 text-deep-green/70 text-[18px] leading-relaxed">
-                  <p><strong className="text-deep-green">At Pure, the mission is simple:</strong></p>
+                  <p><strong className="text-deep-green">At Jeko, the mission is simple:</strong></p>
                   <p>Create food that makes your dog feel as good as it tastes.</p>
                   <p>Always fresh, natural & vet-approved.</p>
                   <p>It&apos;s the kind they love, crave, and sprint to the bowl for every single time — for boundless energy, a shiny coat, and a happier, healthier life.</p>
-                  <p>Pure is for the devoted pet parents simply seeking more for their best friend.</p>
+                  <p>Jeko is for the devoted pet parents simply seeking more for their best friend.</p>
                 </div>
-                <Link href="/auth/signup" className="btn-gold mt-8 inline-block">Try Pure</Link>
+                <Link href="/auth/signup" className="btn-gold mt-8 inline-block">Try Jeko</Link>
               </div>
             </div>
           </div>
         </section>
 
         {/* ============================================================ */}
-        {/* SECTION 8 — "Why We Started Pure" (image + text)            */}
+        {/* SECTION 8 — "Why We Started Jeko" (image + text)            */}
         {/* ============================================================ */}
         <section className="relative overflow-hidden bg-white">
           <div className="flex flex-col md:flex-row min-h-[480px]">
@@ -700,11 +700,11 @@ export default function ProductDetailPage() {
             <div className="w-full md:w-[57%] flex items-center order-2 md:order-1">
               <div className="px-8 md:px-16 lg:px-24 py-12">
                 <h2 className="text-[32px] md:text-[40px] font-semibold text-deep-green font-rubik leading-tight mb-6 italic">
-                  Why We Started Pure
+                  Why We Started Jeko
                 </h2>
                 <div className="space-y-3 text-deep-green/70 text-[18px] leading-relaxed">
                   <p>We didn&apos;t start this brand for the trend.</p>
-                  <p>We started Pure because our own dogs deserved better — and so does yours.</p>
+                  <p>We started Jeko because our own dogs deserved better — and so does yours.</p>
                   <p>When we looked at what was in most commercial dog food, we were shocked. Fillers, preservatives, mysterious &ldquo;meat derivatives&rdquo; — making our dogs worse, not better.</p>
                   <p>They needed a better option — so we created one.</p>
                 </div>
@@ -716,7 +716,7 @@ export default function ProductDetailPage() {
             <div className="w-full md:w-[43%] relative min-h-[300px] md:min-h-[480px] order-1 md:order-2">
               <img 
                 src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=800&h=600&fit=crop" 
-                alt="The Pure team" 
+                alt="The Jeko team" 
                 className="w-full h-full object-cover"
               />
               {/* Vertical zigzag on left edge - white teeth pointing RIGHT into image */}
@@ -762,8 +762,13 @@ export default function ProductDetailPage() {
           <section className="bg-off-white py-16">
             <div className="max-w-[1200px] mx-auto px-4">
               <h2 className="text-2xl font-bold text-deep-green mb-8">You May Also Like</h2>
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-                {related.map(p => <ProductCard key={p.id} product={p} />)}
+              {/* Mobile: horizontal scroll with 2 cards visible; Desktop: 4-column grid */}
+              <div className="flex gap-4 overflow-x-auto pb-3 snap-x snap-mandatory scrollbar-hide lg:grid lg:grid-cols-4 lg:gap-6 lg:overflow-visible lg:pb-0">
+                {related.map(p => (
+                  <div key={p.id} className="flex-shrink-0 w-[47vw] max-w-[220px] snap-start lg:w-auto lg:max-w-none">
+                    <ProductCard product={p} />
+                  </div>
+                ))}
               </div>
             </div>
           </section>

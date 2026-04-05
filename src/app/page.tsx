@@ -83,7 +83,7 @@ export default async function Home() {
         <div data-section-index="2" data-section-name="Offer Banner">
           <OfferBanner content={sectionData.get(2)} />
         </div>
-        <div data-section-index="3" data-section-name="What is Pure">
+        <div data-section-index="3" data-section-name="What is Jeko">
           <WhatIsPure content={sectionData.get(3)} />
         </div>
         <div data-section-index="4" data-section-name="Benefits Bar">

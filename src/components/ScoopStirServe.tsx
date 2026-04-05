@@ -7,7 +7,7 @@ export default function ScoopStirServe() {
     <section className="relative w-full h-[500px] md:h-[600px] overflow-hidden">
       <Image
         src="https://www.datocms-assets.com/55536/1689943504-healthy-dog-food-subscription.jpg?auto=format&fit=crop&h=700&w=1600"
-        alt="Simply scoop, stir and serve Pure pet food"
+        alt="Simply scoop, stir and serve Jeko pet food"
         fill
         unoptimized
         className="object-cover object-center"

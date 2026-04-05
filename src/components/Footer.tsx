@@ -24,7 +24,7 @@ const helpLinks = [
 const infoLinks = [
   { label: "Privacy policy", href: "/privacy-policy" },
   { label: "Terms & conditions", href: "/terms-of-use" },
-  { label: "Pure policies", href: "/pure-policies" },
+  { label: "Jeko policies", href: "/pure-policies" },
   { label: "Site security", href: "/site-security" },
   { label: "Cookie policy", href: "/cookie-policy" },
 ];
@@ -90,7 +90,7 @@ export default function Footer({ content }: { content?: any }) {
 
           {/* Link Columns */}
           <div className="lg:w-[65%] grid grid-cols-2 md:grid-cols-3 gap-8">
-            {/* Pure Column */}
+            {/* Jeko Column */}
             <div>
               <h4 className="text-white font-semibold text-[18px] mb-4">{content?.col1_heading || "Jeko"}</h4>
               <ul className="space-y-2.5">

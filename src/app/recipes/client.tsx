@@ -182,7 +182,7 @@ export default function RecipesPageClient({ sections }: RecipesPageClientProps) 
         {/* Offer Banner */}
         <div data-section-index={1} data-section-name="Offer Banner">
           <Link
-            href={sections[1]?.link_url ?? "/signup"}
+            href={sections[1]?.link_url ?? "/auth/signup"}
             className="block w-full bg-[#E65A1E] hover:bg-[#D04E15] transition-colors duration-200 py-3 text-center text-white"
           >
             <p className="text-lg leading-snug">
@@ -417,7 +417,7 @@ export default function RecipesPageClient({ sections }: RecipesPageClientProps) 
                     {sections[8]?.description ?? "Proactively invest in your pet\u2019s health with a nutritious, vet-approved dog food that\u2019s trusted by thousands. Discover your dog\u2019s recipe today."}
                   </p>
                   <Link
-                    href={sections[8]?.button_url ?? "/signup"}
+                    href={sections[8]?.button_url ?? "/auth/signup"}
                     className="inline-block bg-gold text-deep-green px-7 py-3 rounded-[5px] font-semibold text-[16px] hover:bg-[#d99500] transition-colors"
                   >
                     {sections[8]?.button_text ?? "Discover your dog\u2019s menu"}

@@ -1,0 +1,375 @@
+- generic [active] [ref=e1]:
+  - banner [ref=e2]:
+    - generic [ref=e4]:
+      - link "JEKO" [ref=e5] [cursor=pointer]:
+        - /url: /
+        - generic [ref=e6]:
+          - generic [ref=e7]: JEKO
+          - img [ref=e8]
+      - navigation [ref=e14]:
+        - link "About" [ref=e16] [cursor=pointer]:
+          - /url: /about
+          - text: About
+          - img [ref=e17]
+        - link "Community" [ref=e20] [cursor=pointer]:
+          - /url: /community
+          - text: Community
+          - img [ref=e21]
+        - link "Shop" [ref=e24] [cursor=pointer]:
+          - /url: /products
+        - link "Reviews" [ref=e26] [cursor=pointer]:
+          - /url: /reviews
+        - link "Health & breeds" [ref=e28] [cursor=pointer]:
+          - /url: /benefits
+          - text: Health & breeds
+          - img [ref=e29]
+      - generic [ref=e31]:
+        - button "Shopping cart" [ref=e32] [cursor=pointer]:
+          - img [ref=e33]
+        - link "Help" [ref=e37] [cursor=pointer]:
+          - /url: /contact
+        - link "Login" [ref=e38] [cursor=pointer]:
+          - /url: /login
+        - link "Sign up" [ref=e39] [cursor=pointer]:
+          - /url: /auth/signup
+  - main [ref=e40]:
+    - generic [ref=e42]:
+      - img "Dog food reviews" [ref=e44]
+      - generic [ref=e47]:
+        - heading "Pet's lives we've changed for the better" [level=1] [ref=e48]
+        - paragraph [ref=e49]: Investing in your pet's diet can have a transformational impact.
+        - link "Create a tailored plan" [ref=e50] [cursor=pointer]:
+          - /url: /auth/signup
+    - link "25% off your first box+10% off your next box" [ref=e52] [cursor=pointer]:
+      - /url: /signup
+      - paragraph [ref=e53]: 25% off your first box+10% off your next box
+    - generic [ref=e56]:
+      - generic [ref=e57] [cursor=pointer]:
+        - generic [ref=e58]:
+          - generic [ref=e59]:
+            - generic [ref=e60]: S
+            - generic [ref=e61]:
+              - paragraph [ref=e62]: Stacey
+              - generic [ref=e63]:
+                - img [ref=e65]
+                - img [ref=e68]
+                - img [ref=e71]
+                - img [ref=e74]
+                - img [ref=e77]
+          - generic [ref=e79]:
+            - img [ref=e80]
+            - generic [ref=e82]: Trustpilot
+        - heading "New lease of life" [level=3] [ref=e83]
+        - paragraph [ref=e84]: Rosie has been on Jeko Food for 6 weeks now & OMG what a difference! You have given our 12 year old American Bulldog a whole new lease of life, her energy levels have raised & you can tell she is feeling better in herself. Her coat is so shiny her fur is really soft, looks like puppy fur again.
+      - generic [ref=e85] [cursor=pointer]:
+        - generic [ref=e86]:
+          - generic [ref=e87]:
+            - generic [ref=e88]: D
+            - generic [ref=e89]:
+              - paragraph [ref=e90]: Dani
+              - generic [ref=e91]:
+                - img [ref=e93]
+                - img [ref=e96]
+                - img [ref=e99]
+                - img [ref=e102]
+                - img [ref=e105]
+          - generic [ref=e107]:
+            - img [ref=e108]
+            - generic [ref=e110]: Trustpilot
+        - heading "Thank you for changing our lives" [level=3] [ref=e111]
+        - paragraph [ref=e112]: We have a fussy almost 2-yr old GSD. Researched a ton about the right food for him, found Jeko and thought let's give it a try! He bloody loves it - breakfast & dinner are now his favourite part of the day. Thank you for changing our lives, we have struggled so much - his coat and weight is already better!
+      - generic [ref=e113] [cursor=pointer]:
+        - generic [ref=e114]:
+          - generic [ref=e115]:
+            - generic [ref=e116]: S
+            - generic [ref=e117]:
+              - paragraph [ref=e118]: Sophie
+              - generic [ref=e119]:
+                - img [ref=e121]
+                - img [ref=e124]
+                - img [ref=e127]
+                - img [ref=e130]
+                - img [ref=e133]
+          - generic [ref=e135]:
+            - img [ref=e136]
+            - generic [ref=e138]: Trustpilot
+        - heading "The nutrition is excellent" [level=3] [ref=e139]
+        - paragraph [ref=e140]: Since swapping food my dogs coat has become less greasy. The nutrition is excellent and I like that there's variety in flavours to the food without causing stomach issues. Her stool is brilliant. Cannot fault the food. The pricing is slightly more expensive than some store providers but for the best nutrition it is certainly worth it.
+      - generic [ref=e141] [cursor=pointer]:
+        - generic [ref=e142]:
+          - generic [ref=e143]:
+            - generic [ref=e144]: K
+            - generic [ref=e145]:
+              - paragraph [ref=e146]: Kelly
+              - generic [ref=e147]:
+                - img [ref=e149]
+                - img [ref=e152]
+                - img [ref=e155]
+                - img [ref=e158]
+                - img [ref=e161]
+          - generic [ref=e163]:
+            - img [ref=e164]
+            - generic [ref=e166]: Trustpilot
+        - heading "Back to his cheeky self" [level=3] [ref=e167]
+        - paragraph [ref=e168]: This food has been fantastic for my Sprocker Ruger. He was diagnosed with pancreatitis. He has been on Jeko for a while and his stools have firmed up and no longer contain blood. He is now back to his cheeky self which I am very thankful for as it was a horrible time.
+      - generic [ref=e169] [cursor=pointer]:
+        - generic [ref=e170]:
+          - generic [ref=e171]:
+            - generic [ref=e172]: D
+            - generic [ref=e173]:
+              - paragraph [ref=e174]: Dottie
+              - generic [ref=e175]:
+                - img [ref=e177]
+                - img [ref=e180]
+                - img [ref=e183]
+                - img [ref=e186]
+                - img [ref=e189]
+          - generic [ref=e191]:
+            - img [ref=e192]
+            - generic [ref=e194]: Trustpilot
+        - heading "Highly recommended" [level=3] [ref=e195]
+        - paragraph [ref=e196]: My dog is in love with Jeko food I've never seen him lick the bowl clean everytime like he dose with Jeko dog food. His fur-skin and health have improved so much in a short space of time with eating Jeko food. I've highly recommended to other dog owners - that's how impressed I am.
+      - generic [ref=e197] [cursor=pointer]:
+        - generic [ref=e198]:
+          - generic [ref=e199]:
+            - generic [ref=e200]: R
+            - generic [ref=e201]:
+              - paragraph [ref=e202]: Robyn
+              - generic [ref=e203]:
+                - img [ref=e205]
+                - img [ref=e208]
+                - img [ref=e211]
+                - img [ref=e214]
+                - img [ref=e217]
+          - generic [ref=e219]:
+            - img [ref=e220]
+            - generic [ref=e222]: Trustpilot
+        - heading "Their stomach has gotten so much better" [level=3] [ref=e223]
+        - paragraph [ref=e224]: My dog has always had a sensitive stomach but since switching to Jeko it has gotten so much better! I started a subscription initially due to the multiple good reviews for dogs with similar issues. Overall recommend Jeko and will be transitioning my second (less fussy) dog once his current food runs low.
+      - generic [ref=e225] [cursor=pointer]:
+        - generic [ref=e226]:
+          - generic [ref=e227]:
+            - generic [ref=e228]: J
+            - generic [ref=e229]:
+              - paragraph [ref=e230]: Jean
+              - generic [ref=e231]:
+                - img [ref=e233]
+                - img [ref=e236]
+                - img [ref=e239]
+                - img [ref=e242]
+                - img [ref=e245]
+          - generic [ref=e247]:
+            - img [ref=e248]
+            - generic [ref=e250]: Trustpilot
+        - heading "So glad we gave it a go" [level=3] [ref=e251]
+        - paragraph [ref=e252]: I am so pleased with this food. Not only does my dog love to eat it, her stomach tolerates it really well. She gets bouts of colitis and this food has improved it dramatically. So glad we gave it a go.
+      - generic [ref=e253] [cursor=pointer]:
+        - generic [ref=e254]:
+          - generic [ref=e255]:
+            - generic [ref=e256]: L
+            - generic [ref=e257]:
+              - paragraph [ref=e258]: Laura
+              - generic [ref=e259]:
+                - img [ref=e261]
+                - img [ref=e264]
+                - img [ref=e267]
+                - img [ref=e270]
+                - img [ref=e273]
+          - generic [ref=e275]:
+            - img [ref=e276]
+            - generic [ref=e278]: Trustpilot
+        - heading "Nothing but positive comments" [level=3] [ref=e279]
+        - paragraph [ref=e280]: They have now been on the food for two months and I have nothing but positive comments... Such a great idea to add water afterwards to reduce packaging and transport weight, best of both worlds for us as it is convenient plus the dogs get enough moisture, as one of ours is a very thirsty pup!
+      - generic [ref=e281] [cursor=pointer]:
+        - generic [ref=e282]:
+          - generic [ref=e283]:
+            - generic [ref=e284]: J
+            - generic [ref=e285]:
+              - paragraph [ref=e286]: Jilly
+              - generic [ref=e287]:
+                - img [ref=e289]
+                - img [ref=e292]
+                - img [ref=e295]
+                - img [ref=e298]
+                - img [ref=e301]
+          - generic [ref=e303]:
+            - img [ref=e304]
+            - generic [ref=e306]: Trustpilot
+        - heading "Much much better quality" [level=3] [ref=e307]
+        - paragraph [ref=e308]: I did some research and started my boxer on Jeko, which he has been on for about 2 months now which doesn't cost me any more than the wet tray food but is much much better quality. His stomach has improved lots and his coat is nicer than it has ever been, it's soft, smooth and shiny! I would highly recommend.
+    - generic [ref=e311]:
+      - generic [ref=e313]:
+        - heading "Lulu is now" [level=2] [ref=e314]
+        - paragraph [ref=e315]: a different dog
+        - generic [ref=e316]:
+          - paragraph [ref=e317]: We rescued Lulu from the Pro Dogs Direct charity.
+          - paragraph [ref=e318]: Within just 2 days her issues had eased.
+      - generic [ref=e319]:
+        - img "Lulu the rescue dog" [ref=e320]
+        - img [ref=e323] [cursor=pointer]
+    - generic [ref=e327]:
+      - generic [ref=e328]:
+        - heading "Backed by vets" [level=2] [ref=e329]
+        - paragraph [ref=e330]: Formulated by nutritionists
+      - generic [ref=e331]:
+        - generic [ref=e332]:
+          - img "Dr Julian Norton MA VetMB GPcertSAP MRCVS" [ref=e334]
+          - generic [ref=e335]:
+            - paragraph [ref=e336]: “I've been a vet for over 30 years.”
+            - paragraph [ref=e337]: Dr Julian Norton MA VetMB GPcertSAP MRCVS
+        - generic [ref=e338]:
+          - img "Dr Brendan Clark MRCVS" [ref=e340]
+          - generic [ref=e341]:
+            - paragraph [ref=e342]: “What is often not considered is how the food is processed.”
+            - paragraph [ref=e343]: Dr Brendan Clark MRCVS
+    - generic [ref=e346]:
+      - img "Nelly the dog" [ref=e348]
+      - generic [ref=e350]:
+        - heading "Meet Nelly & Polly" [level=2] [ref=e351]
+        - generic [ref=e352]:
+          - paragraph [ref=e353]: I rescued Nelly two years ago.
+          - paragraph [ref=e354]: I couldn't even stroke her.
+          - paragraph [ref=e355]: We switched from brown biscuits to Pure.
+    - generic [ref=e358]:
+      - generic [ref=e359]:
+        - heading "We've helped" [level=2] [ref=e360]
+        - paragraph [ref=e361]: 1000's of dogs
+      - generic [ref=e362]:
+        - button "Fussy dogs" [ref=e363] [cursor=pointer]
+        - button "Anal gland problems" [ref=e364] [cursor=pointer]
+        - button "Colitis" [ref=e365] [cursor=pointer]
+        - button "Happy healthy dogs" [ref=e366] [cursor=pointer]
+        - button "Pancreatitis" [ref=e367] [cursor=pointer]
+        - button "Oral health" [ref=e368] [cursor=pointer]
+        - button "Sensitive skin" [ref=e369] [cursor=pointer]
+        - button "Sensitive stomach" [ref=e370] [cursor=pointer]
+        - button "Kidney disease" [ref=e371] [cursor=pointer]
+        - button "Arthritis" [ref=e372] [cursor=pointer]
+        - button "Tear stains" [ref=e373] [cursor=pointer]
+        - button "Weight management" [ref=e374] [cursor=pointer]
+      - generic [ref=e375]:
+        - generic [ref=e376]:
+          - img "Janet & Bunty" [ref=e378]
+          - generic [ref=e379]:
+            - paragraph [ref=e380]: Janet & Bunty
+            - paragraph [ref=e381]: My Maltese was becoming a fussy eater. The ad for Jeko popped up on Instagram and I placed an order. I'm so glad I did, I had to contact them for further advice and their customer service was brilliant.
+            - button "Show more" [ref=e382] [cursor=pointer]
+        - generic [ref=e383]:
+          - img "Louise & Echo" [ref=e385]
+          - generic [ref=e386]:
+            - paragraph [ref=e387]: Louise & Echo
+            - paragraph [ref=e388]: Was a tad sceptical at first that any dog will love this food, even the fussy ones as I have an extremely fussy dog! We tried the starter pack and Echo actually loved it from day one.
+            - button "Show more" [ref=e389] [cursor=pointer]
+        - generic [ref=e390]:
+          - img "Julie & Alfie" [ref=e392]
+          - generic [ref=e393]:
+            - paragraph [ref=e394]: Julie & Alfie
+            - paragraph [ref=e395]: Brilliant I was debating to try yet another food as my chi is very fussy, so glad I did. I have only had him a few months and he was originally on cheap horrible food.
+            - button "Show more" [ref=e396] [cursor=pointer]
+        - generic [ref=e397]:
+          - img "Alejandra & Coco" [ref=e399]
+          - generic [ref=e400]:
+            - paragraph [ref=e401]: Alejandra & Coco
+            - paragraph [ref=e402]: My dog is a very fussy eater and she loved loved loved this food straight away! Now she sits and happily waits for her food to be prepared. This food even smells good!
+            - button "Show more" [ref=e403] [cursor=pointer]
+    - generic [ref=e406]:
+      - generic [ref=e408]:
+        - heading "Diesel's much healthier" [level=2] [ref=e409]
+        - generic [ref=e410]:
+          - paragraph [ref=e411]: For the first two years, he was a happy and healthy pup.
+          - paragraph [ref=e412]: We switched to Pure as it's nutritious.
+      - img "Diesel the dog" [ref=e414]
+    - generic [ref=e417]:
+      - heading "We've delivered" [level=2] [ref=e418]
+      - generic [ref=e419]: 92,871,751
+      - paragraph [ref=e420]: meals and changed the lives of thousands of pets
+      - generic [ref=e421]:
+        - generic [ref=e422]:
+          - generic [ref=e423]: 94%
+          - paragraph [ref=e424]: of customers have seen an improvement in their dog's ailment
+        - generic [ref=e425]:
+          - generic [ref=e426]: 91%
+          - paragraph [ref=e427]: of customers have seen overall health improvements
+  - contentinfo [ref=e428]:
+    - generic [ref=e429]:
+      - generic [ref=e430]:
+        - generic [ref=e431]:
+          - heading "Join our VIP list" [level=4] [ref=e432]
+          - paragraph [ref=e433]: Be the first to hear about new product launches, exclusive competitions and helpful dog content.
+          - generic [ref=e434]:
+            - textbox "Enter your email address" [ref=e435]
+            - button "Sign up" [ref=e436] [cursor=pointer]
+          - heading "Follow us on social media" [level=4] [ref=e437]
+          - generic [ref=e438]:
+            - link "Instagram" [ref=e439] [cursor=pointer]:
+              - /url: https://www.instagram.com/purepetfood
+              - img "Instagram" [ref=e440]
+            - link "Facebook" [ref=e441] [cursor=pointer]:
+              - /url: https://www.facebook.com/purepetfood
+              - img "Facebook" [ref=e442]
+            - link [ref=e443] [cursor=pointer]:
+              - /url: https://www.tiktok.com/@purepetfood
+              - img [ref=e444]
+        - generic [ref=e446]:
+          - generic [ref=e447]:
+            - heading "Jeko" [level=4] [ref=e448]
+            - list [ref=e449]:
+              - listitem [ref=e450]:
+                - link "Our story" [ref=e451] [cursor=pointer]:
+                  - /url: /about
+              - listitem [ref=e452]:
+                - link "Reviews" [ref=e453] [cursor=pointer]:
+                  - /url: /reviews
+              - listitem [ref=e454]:
+                - link "Recipes" [ref=e455] [cursor=pointer]:
+                  - /url: /recipes
+              - listitem [ref=e456]:
+                - link "Beyond the bowl" [ref=e457] [cursor=pointer]:
+                  - /url: /beyond-the-bowl
+              - listitem [ref=e458]:
+                - link "Shop" [ref=e459] [cursor=pointer]:
+                  - /url: /products
+              - listitem [ref=e460]:
+                - link "Community" [ref=e461] [cursor=pointer]:
+                  - /url: /community
+          - generic [ref=e462]:
+            - heading "Help" [level=4] [ref=e463]
+            - list [ref=e464]:
+              - listitem [ref=e465]:
+                - link "My account" [ref=e466] [cursor=pointer]:
+                  - /url: /profile
+              - listitem [ref=e467]:
+                - link "Contact us" [ref=e468] [cursor=pointer]:
+                  - /url: /contact
+              - listitem [ref=e469]:
+                - link "Delivery information" [ref=e470] [cursor=pointer]:
+                  - /url: /delivery-information
+              - listitem [ref=e471]:
+                - link "Returns" [ref=e472] [cursor=pointer]:
+                  - /url: /returns
+              - listitem [ref=e473]:
+                - link "Sitemap" [ref=e474] [cursor=pointer]:
+                  - /url: /sitemap-page
+          - generic [ref=e475]:
+            - heading "Information" [level=4] [ref=e476]
+            - list [ref=e477]:
+              - listitem [ref=e478]:
+                - link "Privacy policy" [ref=e479] [cursor=pointer]:
+                  - /url: /privacy-policy
+              - listitem [ref=e480]:
+                - link "Terms & conditions" [ref=e481] [cursor=pointer]:
+                  - /url: /terms-of-use
+              - listitem [ref=e482]:
+                - link "Pure policies" [ref=e483] [cursor=pointer]:
+                  - /url: /pure-policies
+              - listitem [ref=e484]:
+                - link "Site security" [ref=e485] [cursor=pointer]:
+                  - /url: /site-security
+              - listitem [ref=e486]:
+                - link "Cookie policy" [ref=e487] [cursor=pointer]:
+                  - /url: /cookie-policy
+      - generic [ref=e488]:
+        - generic [ref=e490]:
+          - generic [ref=e491]: JEKO
+          - img [ref=e492]
+        - paragraph [ref=e498]: © Jeko 2020-2026

@@ -3,8 +3,8 @@
 import { useRef } from "react";
 
 const defaultVideos = [
-  { src: "https://pure-website.s3.eu-west-2.amazonaws.com/Product+Benefits+Social+9X16.mp4", duration: "0:55", title: "Pure vs kibble & raw" },
-  { src: "https://pure-website.s3.eu-west-2.amazonaws.com/Preparing+Pure+9X16.mp4", duration: "0:38", title: "Feeding Pure really is simple!" },
+  { src: "https://pure-website.s3.eu-west-2.amazonaws.com/Product+Benefits+Social+9X16.mp4", duration: "0:55", title: "Jeko vs kibble & raw" },
+  { src: "https://pure-website.s3.eu-west-2.amazonaws.com/Preparing+Pure+9X16.mp4", duration: "0:38", title: "Feeding Jeko really is simple!" },
   { src: "https://pure-website.s3.eu-west-2.amazonaws.com/Why+Pure+Works+Compressed.mp4", duration: "0:54", title: "We've done the research" },
   { src: "https://pure-website.s3.eu-west-2.amazonaws.com/Ugc+April+Video+-+Why+Pure+Works.mp4", duration: "0:37", title: "Fully flexible to work around you" },
   { src: "https://pure-website.s3.eu-west-2.amazonaws.com/Fussy+Eater+Ugc(2).mp4", duration: "0:38", title: "Rudy goes from fussy to foodie" },

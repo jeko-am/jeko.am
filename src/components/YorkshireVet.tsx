@@ -35,7 +35,7 @@ export default function YorkshireVet({ content }: { content?: any }) {
               {content?.author || "Julian Norton"}
             </p>
             <p className="text-deep-green text-[18px] leading-relaxed max-w-md italic">
-              {content?.quote || "\u201cI\u2019ve been a vet for almost 30 years. Recently I\u2019ve suggested Pure for some of my patients, often with great results.\u201d"}
+              {content?.quote || "\u201cI\u2019ve been a vet for almost 30 years. Recently I\u2019ve suggested Jeko for some of my patients, often with great results.\u201d"}
             </p>
           </div>
         </div>

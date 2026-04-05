@@ -48,7 +48,7 @@ export default function SignupPageClient({ sections }: { sections: Record<string
             <div className="flex-1" />
             <Link href="/" className="flex-shrink-0">
               <div className="bg-gold text-deep-green rounded-lg px-5 py-2.5 flex items-center gap-1 font-rubik font-bold text-[26px] tracking-wide select-none shadow-sm">
-                <span>PURE</span>
+                <span>JEKO</span>
                 <svg width="22" height="22" viewBox="0 0 24 24" fill="#274C46">
                   <ellipse cx="8" cy="6.5" rx="2.2" ry="2.8" />
                   <ellipse cx="16" cy="6.5" rx="2.2" ry="2.8" />

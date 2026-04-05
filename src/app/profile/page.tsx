@@ -197,6 +197,7 @@ export default function ProfilePage() {
           pet_name: petName,
           breed: petBreed,
           age_years: petAge ? parseInt(petAge) : null,
+          dog_age_years: petAge ? parseInt(petAge) : null,
           weight_kg: petWeight ? parseFloat(petWeight) : null,
           gender: petGender,
           bio: petBio,
@@ -550,7 +551,7 @@ export default function ProfilePage() {
                       onChange={(e) => setPetLookingForMate(e.target.checked)}
                       className="mr-2 h-4 w-4 text-gold focus:ring-gold border-gray-300 rounded"
                     />
-                    <span className="text-sm text-gray-700">Looking for a mate for my pet</span>
+                    <span className="text-sm text-gray-700">Looking for a match for my pet</span>
                   </label>
                 </div>
 

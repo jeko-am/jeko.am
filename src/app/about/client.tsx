@@ -325,14 +325,14 @@ export default function AboutPageClient({ sections }: { sections: Record<string,
           </section>
         </div>
 
-        {/* Learn more about Pure - asymmetrical layout */}
+        {/* Learn more about Jeko - asymmetrical layout */}
         <div data-section-index={7} data-section-name="Learn More">
           <section className="relative overflow-hidden">
             <div className="flex flex-col md:flex-row min-h-[440px]">
               <div className="w-full md:w-[42%] relative min-h-[360px] md:min-h-[440px]">
                 <Image
                   src={s[7]?.image || "https://images.unsplash.com/photo-1601758228041-f3b2795255f1?w=700&h=400&fit=crop"}
-                  alt="Learn more about Pure"
+                  alt="Learn more about Jeko"
                   fill
                   unoptimized
                   className="object-cover"
@@ -344,7 +344,7 @@ export default function AboutPageClient({ sections }: { sections: Record<string,
                     {s[7]?.heading ?? "Learn more"}
                   </h2>
                   <p className="text-gold text-[26px] md:text-[34px] font-semibold font-rubik mb-6">
-                    {s[7]?.subtitle ?? "about Pure"}
+                    {s[7]?.subtitle ?? "about Jeko"}
                   </p>
                   <p className="text-deep-green text-[15px] leading-[1.8]">
                     {s[7]?.description ?? "Our dogs are a part of the family, so they deserve the best food. After all, healthy dogs live longer lives! Just tell us about your dog and we\u2019ll create tailored recipes so they can always enjoy healthy, delicious food that\u2019s delivered straight to your door. Simply add water, stir and serve."}
@@ -371,7 +371,7 @@ export default function AboutPageClient({ sections }: { sections: Record<string,
                     {s[8]?.description ?? "Proactively invest in your pet\u2019s health with a nutritious, vet-approved dog food that\u2019s trusted by thousands. Discover your dog\u2019s recipe today."}
                   </p>
                   <Link
-                    href={s[8]?.button_url ?? "/signup"}
+                    href={s[8]?.button_url ?? "/auth/signup"}
                     className="inline-block bg-gold text-deep-green px-7 py-3 rounded-[5px] font-semibold text-[16px] hover:bg-[#d99500] transition-colors"
                   >
                     {s[8]?.button_text ?? "Discover your dog\u2019s menu"}

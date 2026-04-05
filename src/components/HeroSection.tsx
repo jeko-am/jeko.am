@@ -8,8 +8,13 @@ export default function HeroSection({ content }: { content?: Record<string, any>
   const headingHighlight = content?.heading_highlight || "natural dog food";
   const subheading = content?.subheading || "Enjoy fresh food without the fuss, from only 89p a day";
   const buttonText = content?.button_text || "Get started today";
-  const buttonUrl = content?.button_url || "/signup";
+  const buttonUrl = "/auth/signup";
   const bgImage = content?.background_image || "https://www.datocms-assets.com/55536/1758880069-hertestdesktop.png?auto=format&fit=crop&h=800&w=1920";
+  const trustpilotLabel = content?.trustpilot_label || "Excellent";
+  const trustpilotScoreText = content?.trustpilot_score_text || "4.6 out of 5";
+  const trustpilotScore = parseFloat(content?.trustpilot_score || "4.6");
+  const fullStars = Math.min(4, Math.floor(trustpilotScore));
+  const partialFill = Math.round((trustpilotScore % 1) * 100);
   return (
     <>
     <section
@@ -72,8 +77,8 @@ export default function HeroSection({ content }: { content?: Record<string, any>
           <div className="mt-6 flex items-center gap-2">
             {/* Trustpilot star icon */}
             <div className="flex items-center gap-0.5">
-              {/* 4 full green stars */}
-              {[...Array(4)].map((_, i) => (
+              {/* Full green stars */}
+              {[...Array(fullStars)].map((_, i) => (
                 <span
                   key={i}
                   className="inline-flex h-[22px] w-[22px] items-center justify-center"
@@ -90,38 +95,40 @@ export default function HeroSection({ content }: { content?: Record<string, any>
                   </svg>
                 </span>
               ))}
-              {/* 5th star - partially filled for 4.7 rating */}
-              <span
-                className="relative inline-flex h-[22px] w-[22px] items-center justify-center overflow-hidden"
-                style={{ backgroundColor: "#DCE8E2" }}
-              >
+              {/* Partial star */}
+              {partialFill > 0 && (
                 <span
-                  className="absolute inset-0"
-                  style={{
-                    backgroundColor: "#00B67A",
-                    width: "70%",
-                  }}
-                />
-                <svg
-                  className="relative z-10"
-                  width="14"
-                  height="14"
-                  viewBox="0 0 24 24"
-                  fill="white"
-                  xmlns="http://www.w3.org/2000/svg"
+                  className="relative inline-flex h-[22px] w-[22px] items-center justify-center overflow-hidden"
+                  style={{ backgroundColor: "#DCE8E2" }}
                 >
-                  <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z" />
-                </svg>
-              </span>
+                  <span
+                    className="absolute inset-0"
+                    style={{
+                      backgroundColor: "#00B67A",
+                      width: `${partialFill}%`,
+                    }}
+                  />
+                  <svg
+                    className="relative z-10"
+                    width="14"
+                    height="14"
+                    viewBox="0 0 24 24"
+                    fill="white"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z" />
+                  </svg>
+                </span>
+              )}
             </div>
 
             {/* Rating text */}
             <div className="flex items-center gap-1.5">
               <span className="text-sm font-semibold text-deep-green">
-                Excellent
+                {trustpilotLabel}
               </span>
               <span className="text-sm text-deep-green/70">
-                4.6 out of 5
+                {trustpilotScoreText}
               </span>
               {/* Trustpilot logo */}
               <svg
