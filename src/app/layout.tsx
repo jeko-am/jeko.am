@@ -6,8 +6,8 @@ import MobileNavWrapper from "@/components/MobileNavWrapper";
 import SideCart from "@/components/SideCart";
 
 export const metadata: Metadata = {
-  title: "Personalised Healthy Natural Dog Food - Pure Pet Food",
-  description: "The easiest way to feed healthy, natural dog food. Enjoy fresh food without the fuss, from only 89p a day.",
+  title: "Jeko - Personalised Healthy Natural Pet Food",
+  description: "The easiest way to feed healthy, natural pet food. Enjoy fresh food without the fuss.",
 };
 
 export default function RootLayout({
@@ -17,6 +17,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <head>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link href="https://fonts.googleapis.com/css2?family=Luckiest+Guy&display=swap" rel="stylesheet" />
+      </head>
       <body className="antialiased has-bottom-nav">
         <AuthProvider>
           <CartProvider>

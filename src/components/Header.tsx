@@ -127,7 +127,7 @@ export default function Header({ content }: { content?: any }) {
     }
   };
 
-  const logoText = content?.logo_text ?? "PURE";
+  const logoText = content?.logo_text ?? "JEKO";
   const ctaText = content?.cta_text ?? "Create plan";
   const ctaUrl = content?.cta_url ?? "/signup";
   const helpUrl = content?.help_url ?? "/contact";
@@ -158,16 +158,18 @@ export default function Header({ content }: { content?: any }) {
         <div className="max-w-[1400px] mx-auto h-full px-5 lg:px-8 flex items-center justify-between">
           {/* Logo */}
           <Link href="/" className="flex-shrink-0">
-            <div className="bg-gold text-deep-green rounded-lg px-3 py-1.5 flex items-center gap-0.5 font-rubik font-bold text-[22px] tracking-wide select-none">
-              <span>{logoText}</span>
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" className="inline-block ml-0.5">
-                <ellipse cx="8" cy="6.5" rx="2.2" ry="2.8" />
-                <ellipse cx="16" cy="6.5" rx="2.2" ry="2.8" />
-                <ellipse cx="4.5" cy="12" rx="2" ry="2.5" />
-                <ellipse cx="19.5" cy="12" rx="2" ry="2.5" />
-                <path d="M7.5 16.5C7.5 14 9.5 12.5 12 12.5C14.5 12.5 16.5 14 16.5 16.5C16.5 19 14.5 21 12 21C9.5 21 7.5 19 7.5 16.5Z" />
-              </svg>
-            </div>
+            <span
+              className="select-none text-[32px] lg:text-[38px] leading-none"
+              style={{
+                fontFamily: "'Luckiest Guy', cursive",
+                color: '#1a1a1a',
+                textShadow: '2px 2px 0px rgba(0,0,0,0.15), -1px -1px 0px rgba(255,255,255,0.3)',
+                WebkitTextStroke: '1px rgba(0,0,0,0.2)',
+                letterSpacing: '2px',
+              }}
+            >
+              {logoText}
+            </span>
           </Link>
 
           {/* Desktop Navigation - Center */}

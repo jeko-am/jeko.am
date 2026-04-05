@@ -4,7 +4,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { useState } from "react";
 
-const pureLinks = [
+const jekoLinks = [
   { label: "Our story", href: "/about" },
   { label: "Reviews", href: "/reviews" },
   { label: "Recipes", href: "/recipes" },
@@ -92,9 +92,9 @@ export default function Footer({ content }: { content?: any }) {
           <div className="lg:w-[65%] grid grid-cols-2 md:grid-cols-3 gap-8">
             {/* Pure Column */}
             <div>
-              <h4 className="text-white font-semibold text-[18px] mb-4">{content?.col1_heading || "Pure"}</h4>
+              <h4 className="text-white font-semibold text-[18px] mb-4">{content?.col1_heading || "Jeko"}</h4>
               <ul className="space-y-2.5">
-                {pureLinks.map((link) => (
+                {jekoLinks.map((link) => (
                   <li key={link.label}>
                     <Link href={link.href} className="text-off-white/80 hover:text-white transition-colors text-[15px]">
                       {link.label}
@@ -138,17 +138,20 @@ export default function Footer({ content }: { content?: any }) {
         <div className="border-t border-white/10 pt-8 text-center">
           {/* Logo */}
           <div className="flex justify-center mb-4">
-            <Image
-              src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='50'%3E%3Crect width='100' height='50' fill='%23228B22'/%3E%3Ctext x='50%25' y='50%25' font-size='16' fill='white' text-anchor='middle' dy='.3em'%3ELOGO%3C/text%3E%3C/svg%3E"
-              alt="PURE Pet Food"
-              width={100}
-              height={50}
-              unoptimized
-              className="brightness-0 invert opacity-80"
-            />
+            <span
+              className="select-none text-[36px] leading-none"
+              style={{
+                fontFamily: "'Luckiest Guy', cursive",
+                color: '#ffffff',
+                textShadow: '2px 2px 0px rgba(0,0,0,0.3)',
+                letterSpacing: '2px',
+              }}
+            >
+              JEKO
+            </span>
           </div>
           <p className="text-off-white/60 text-[14px]">
-            {content?.copyright_text || "\u00a9 Pure Pet Food Ltd 2020-2026"}
+            {content?.copyright_text || "\u00a9 Jeko 2020-2026"}
           </p>
         </div>
       </div>
