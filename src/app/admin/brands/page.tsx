@@ -439,7 +439,7 @@ export default function BrandsAdminPage() {
                     }))
                   }
                   className="w-full px-3 py-2.5 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-deep-green/20 focus:border-deep-green"
-                  placeholder="e.g. Pure Pet Food"
+                  placeholder="e.g. Jeko"
                 />
               </div>
 

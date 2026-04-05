@@ -87,7 +87,7 @@ export default function ShippingPolicyPage() {
                 1. Delivery Overview
               </h2>
               <p className="text-deep-green/80 text-[16px] leading-relaxed mb-4">
-                At Pure Pet Food, we are committed to delivering fresh, natural dog food to homes across the United Kingdom. Every order is carefully prepared in our Yorkshire kitchen using real, human-grade ingredients and dispatched to arrive in peak condition at your doorstep.
+                At Jeko, we are committed to delivering fresh, natural pet food to homes across the United Kingdom. Every order is carefully prepared in our Yorkshire kitchen using real, human-grade ingredients and dispatched to arrive in peak condition at your doorstep.
               </p>
               <p className="text-deep-green/80 text-[16px] leading-relaxed mb-4">
                 Whether you are placing a one-off order or receiving regular subscription deliveries, we work with trusted courier partners to ensure your dog&apos;s meals arrive safely, on time, and at the right temperature. Our delivery service covers England, Wales, Scotland, and Northern Ireland, with some variations in timescales and charges depending on your location.
@@ -153,7 +153,7 @@ export default function ShippingPolicyPage() {
                 3. Subscription Deliveries
               </h2>
               <p className="text-deep-green/80 text-[16px] leading-relaxed mb-4">
-                Our subscription service is the most convenient and cost-effective way to keep your dog fed with fresh, natural food. When you sign up for a Pure Pet Food plan, your deliveries are completely tailored to your dog&apos;s needs and your household schedule.
+                Our subscription service is the most convenient and cost-effective way to keep your dog fed with fresh, natural food. When you sign up for a Jeko plan, your deliveries are completely tailored to your dog&apos;s needs and your household schedule.
               </p>
               <p className="text-deep-green/80 text-[16px] leading-relaxed mb-4">
                 <strong>Delivery frequency options:</strong>
@@ -282,7 +282,7 @@ export default function ShippingPolicyPage() {
                 <li><strong>Delivery confirmation:</strong> You will receive a final notification once your parcel has been successfully delivered, including a photo of where it was left if applicable.</li>
               </ul>
               <p className="text-deep-green/80 text-[16px] leading-relaxed mb-4">
-                You can also check the status of your order at any time by logging into your Pure Pet Food account and visiting the &ldquo;My Orders&rdquo; section.
+                You can also check the status of your order at any time by logging into your Jeko account and visiting the &ldquo;My Orders&rdquo; section.
               </p>
             </section>
 
@@ -388,7 +388,7 @@ export default function ShippingPolicyPage() {
                 <ul className="space-y-3 text-deep-green/80 text-[16px] leading-relaxed">
                   <li className="flex items-start gap-3">
                     <span className="text-gold font-bold text-lg">&#9993;</span>
-                    <span><strong>Email:</strong> delivery@purepetfood.com &mdash; we aim to respond within 24 hours</span>
+                    <span><strong>Email:</strong> delivery@jeko.am &mdash; we aim to respond within 24 hours</span>
                   </li>
                   <li className="flex items-start gap-3">
                     <span className="text-gold font-bold text-lg">&#9742;</span>
@@ -408,7 +408,7 @@ export default function ShippingPolicyPage() {
                 When contacting us about a delivery issue, please have your order number and tracking number to hand so we can assist you as quickly as possible.
               </p>
               <p className="text-deep-green/80 text-[16px] leading-relaxed mb-8">
-                We are passionate about making sure every delivery experience is as smooth as the food inside the box. Thank you for choosing Pure Pet Food &mdash; we are glad to be part of your dog&apos;s journey to better health.
+                We are passionate about making sure every delivery experience is as smooth as the food inside the box. Thank you for choosing Jeko &mdash; we are glad to be part of your pet&apos;s journey to better health.
               </p>
 
               {/* CTA */}

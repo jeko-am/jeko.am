@@ -69,7 +69,7 @@ export default function SitemapPage() {
               Site<span className="text-gold">map</span>
             </h1>
             <p className="text-white/80 max-w-2xl mx-auto text-lg leading-relaxed">
-              Find your way around the Pure Pet Food website.
+              Find your way around the Jeko website.
             </p>
           </div>
         </section>

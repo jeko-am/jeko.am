@@ -15,7 +15,7 @@ export default function PrivacyPolicyPage() {
               Privacy <span className="text-gold">Policy</span>
             </h1>
             <p className="text-white/70 max-w-xl mx-auto text-lg">
-              Your privacy matters to us. Learn how Pure Pet Food collects,
+              Your privacy matters to us. Learn how Jeko collects,
               uses, and protects your personal information.
             </p>
           </div>
@@ -35,8 +35,8 @@ export default function PrivacyPolicyPage() {
                 1. Introduction
               </h2>
               <p className="text-deep-green/80 text-[16px] leading-relaxed mb-4">
-                Welcome to Pure Pet Food (&quot;Pure,&quot; &quot;we,&quot;
-                &quot;us,&quot; or &quot;our&quot;). Pure Pet Food Ltd is a
+                Welcome to Jeko (&quot;Jeko,&quot; &quot;we,&quot;
+                &quot;us,&quot; or &quot;our&quot;). Jeko Ltd is a
                 company registered in England and Wales that specialises in
                 producing and delivering natural, nutritionally complete dog
                 food directly to customers across the United Kingdom and
@@ -46,13 +46,13 @@ export default function PrivacyPolicyPage() {
                 We are committed to protecting and respecting your privacy. This
                 Privacy Policy explains how we collect, use, disclose, and
                 safeguard your information when you visit our website at
-                purepetfood.com, use our mobile applications, place orders for
+                jeko.am, use our mobile applications, place orders for
                 our products, create a pet profile, interact with our customer
                 service team, or engage with us through social media and other
                 digital channels.
               </p>
               <p className="text-deep-green/80 text-[16px] leading-relaxed mb-4">
-                Pure Pet Food Ltd acts as the data controller for the personal
+                Jeko Ltd acts as the data controller for the personal
                 data described in this policy. We process personal data in
                 accordance with the UK General Data Protection Regulation (UK
                 GDPR), the Data Protection Act 2018, and all other applicable
@@ -63,9 +63,9 @@ export default function PrivacyPolicyPage() {
               </p>
               <p className="text-deep-green/80 text-[16px] leading-relaxed mb-4">
                 For the purposes of data protection law, our registered office
-                address is Pure Pet Food Ltd, Unit 5, Pure House, Sheffield, S9
+                address is Jeko Ltd, Unit 5, Pure House, Sheffield, S9
                 1TZ, United Kingdom. Our Data Protection Officer can be
-                contacted at privacy@purepetfood.com.
+                contacted at privacy@jeko.am.
               </p>
             </div>
 
@@ -510,7 +510,7 @@ export default function PrivacyPolicyPage() {
                 in relation to your personal data. These rights are not
                 absolute and may be subject to certain conditions and
                 exemptions. You can exercise any of these rights free of charge
-                by contacting us at privacy@purepetfood.com.
+                by contacting us at privacy@jeko.am.
               </p>
               <ul className="list-disc list-outside ml-6 mb-4 space-y-2">
                 <li className="text-deep-green/80 text-[16px] leading-relaxed">
@@ -675,7 +675,7 @@ export default function PrivacyPolicyPage() {
               <p className="text-deep-green/80 text-[16px] leading-relaxed mb-4">
                 If you are a parent or guardian and believe that your child has
                 provided us with personal information without your consent,
-                please contact us immediately at privacy@purepetfood.com and we
+                please contact us immediately at privacy@jeko.am and we
                 will work promptly to remove the data and close any associated
                 account.
               </p>
@@ -693,7 +693,7 @@ export default function PrivacyPolicyPage() {
                 11. International Data Transfers
               </h2>
               <p className="text-deep-green/80 text-[16px] leading-relaxed mb-4">
-                Pure Pet Food is based in the United Kingdom, and the majority
+                Jeko is based in the United Kingdom, and the majority
                 of your data is stored and processed within the UK and the
                 European Economic Area (EEA). However, some of our third-party
                 service providers are based outside the UK and EEA, which means
@@ -731,7 +731,7 @@ export default function PrivacyPolicyPage() {
               <p className="text-deep-green/80 text-[16px] leading-relaxed mb-4">
                 You may request a copy of the safeguards we have in place for
                 international transfers by contacting us at
-                privacy@purepetfood.com.
+                privacy@jeko.am.
               </p>
             </div>
 
@@ -848,16 +848,16 @@ export default function PrivacyPolicyPage() {
               <ul className="list-none ml-0 mb-4 space-y-2">
                 <li className="text-deep-green/80 text-[16px] leading-relaxed">
                   <strong>Data Protection Officer:</strong>{" "}
-                  privacy@purepetfood.com
+                  privacy@jeko.am
                 </li>
                 <li className="text-deep-green/80 text-[16px] leading-relaxed">
-                  <strong>General Enquiries:</strong> hello@purepetfood.com
+                  <strong>General Enquiries:</strong> hello@jeko.am
                 </li>
                 <li className="text-deep-green/80 text-[16px] leading-relaxed">
                   <strong>Telephone:</strong> 0800 008 6455
                 </li>
                 <li className="text-deep-green/80 text-[16px] leading-relaxed">
-                  <strong>Postal Address:</strong> Pure Pet Food Ltd, Unit 5,
+                  <strong>Postal Address:</strong> Jeko Ltd, Unit 5,
                   Pure House, Sheffield, S9 1TZ, United Kingdom
                 </li>
               </ul>

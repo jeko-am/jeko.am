@@ -80,7 +80,7 @@ export default function SiteSecurityPage() {
                 Account Security
               </h2>
               <p className="text-deep-green/80 text-[16px] leading-relaxed mb-4">
-                Your Pure Pet Food account is protected by secure
+                Your Jeko account is protected by secure
                 authentication. We recommend using a strong, unique password for
                 your account and never sharing your login credentials. If you
                 suspect any unauthorised access to your account, please contact
@@ -108,7 +108,7 @@ export default function SiteSecurityPage() {
               </h3>
               <p className="text-deep-green/70 mb-5">
                 If you notice anything suspicious or have security concerns,
-                please let us know at security@purepetfood.com
+                please let us know at security@jeko.am
               </p>
             </div>
           </div>

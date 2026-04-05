@@ -96,7 +96,7 @@ function CustomerLoginForm() {
             <span className="text-deep-green font-bold text-2xl">PP</span>
           </div>
           <h1 className="text-2xl font-bold text-white">Welcome Back!</h1>
-          <p className="text-white/70 text-sm mt-1">Sign in to your Pure Pet account</p>
+          <p className="text-white/70 text-sm mt-1">Sign in to your Jeko account</p>
         </div>
 
         {/* Login Card */}
@@ -210,7 +210,7 @@ function CustomerLoginForm() {
 
         {/* Footer */}
         <p className="text-center text-white/30 text-xs mt-6">
-          Pure Pet Food &middot; Happy pets, happy owners
+          Jeko &middot; Happy pets, happy owners
         </p>
       </div>
     </div>

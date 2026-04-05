@@ -12,7 +12,7 @@ export default function DragonsDen({ content }: { content?: any }) {
         <div className="w-full md:w-[43%] relative min-h-[300px] md:min-h-[480px]">
           <Image
             src={content?.image || "https://www.datocms-assets.com/55536/1680101718-dragons-den-dog-food.jpg?auto=format&fit=crop&h=600&w=1000"}
-            alt="Pure Pet Food on Dragons Den"
+            alt="Jeko on Dragons Den"
             fill
             unoptimized
             className="object-cover"

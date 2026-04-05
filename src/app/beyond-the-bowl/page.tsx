@@ -42,7 +42,7 @@ const articles = [
     category: "Wellbeing",
   },
   {
-    title: "Transitioning Your Dog to Pure",
+    title: "Transitioning Your Dog to Jeko",
     excerpt:
       "Our step-by-step guide to switching your dog's food gradually for a smooth and stress-free transition.",
     image: "https://images.unsplash.com/photo-1548199973-03cce0bbc87b?w=600&h=400&fit=crop",
@@ -117,7 +117,7 @@ export default function BeyondTheBowlPage() {
                 href="/products"
                 className="inline-block bg-gold text-deep-green font-semibold px-8 py-3 rounded-full hover:bg-gold/90 transition-colors"
               >
-                Shop Pure
+                Shop Jeko
               </Link>
             </div>
           </div>

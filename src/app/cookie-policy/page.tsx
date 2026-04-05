@@ -159,7 +159,7 @@ export default function CookiePolicyPage() {
               Cookie Policy
             </h1>
             <p className="text-white/80 text-lg max-w-[600px] mx-auto leading-relaxed">
-              We believe in transparency. This policy explains how Pure Pet Food
+              We believe in transparency. This policy explains how Jeko
               uses cookies and similar technologies when you visit our website.
             </p>
           </div>
@@ -211,7 +211,7 @@ export default function CookiePolicyPage() {
                 2. How We Use Cookies
               </h2>
               <p className="text-deep-green/80 text-[16px] leading-relaxed mb-4">
-                At Pure Pet Food, we use cookies to ensure our website functions
+                At Jeko, we use cookies to ensure our website functions
                 correctly and to provide you with the best possible experience
                 when browsing our range of natural dog food products. Cookies
                 enable us to remember your preferences, keep items in your
@@ -414,7 +414,7 @@ export default function CookiePolicyPage() {
               </h2>
               <p className="text-deep-green/80 text-[16px] leading-relaxed mb-6">
                 The following table provides a detailed list of the cookies used
-                on the Pure Pet Food website, including their name, purpose,
+                on the Jeko website, including their name, purpose,
                 duration, and category.
               </p>
 
@@ -788,7 +788,7 @@ export default function CookiePolicyPage() {
               </p>
               <div className="bg-white rounded-xl shadow-sm p-6">
                 <p className="text-deep-green/80 text-[16px] leading-relaxed mb-2">
-                  <strong>Pure Pet Food Ltd</strong>
+                  <strong>Jeko Ltd</strong>
                 </p>
                 <p className="text-deep-green/80 text-[16px] leading-relaxed mb-2">
                   Unit 1, Riverside Business Park
@@ -804,10 +804,10 @@ export default function CookiePolicyPage() {
                 <p className="text-deep-green/80 text-[16px] leading-relaxed mb-2">
                   Email:{" "}
                   <a
-                    href="mailto:privacy@purepetfood.com"
+                    href="mailto:privacy@jeko.am"
                     className="text-deep-green underline hover:text-deep-green/60"
                   >
-                    privacy@purepetfood.com
+                    privacy@jeko.am
                   </a>
                 </p>
                 <p className="text-deep-green/80 text-[16px] leading-relaxed mb-2">
@@ -822,10 +822,10 @@ export default function CookiePolicyPage() {
                 <p className="text-deep-green/80 text-[16px] leading-relaxed">
                   Data Protection Officer:{" "}
                   <a
-                    href="mailto:dpo@purepetfood.com"
+                    href="mailto:dpo@jeko.am"
                     className="text-deep-green underline hover:text-deep-green/60"
                   >
-                    dpo@purepetfood.com
+                    dpo@jeko.am
                   </a>
                 </p>
               </div>

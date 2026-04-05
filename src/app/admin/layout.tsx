@@ -71,7 +71,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
             <span className="text-deep-green font-bold text-sm">PP</span>
           </div>
           <div>
-            <h1 className="font-semibold text-sm leading-tight">Pure Pet Food</h1>
+            <h1 className="font-semibold text-sm leading-tight">Jeko</h1>
             <p className="text-[11px] text-white/50">Admin Panel</p>
           </div>
         </div>

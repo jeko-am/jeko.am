@@ -43,7 +43,7 @@ export default function DeliveryInformationPage() {
               Delivery <span className="text-gold">Information</span>
             </h1>
             <p className="text-white/80 max-w-2xl mx-auto text-lg leading-relaxed">
-              Everything you need to know about how and when your Pure Pet Food
+              Everything you need to know about how and when your Jeko order
               arrives at your door.
             </p>
           </div>

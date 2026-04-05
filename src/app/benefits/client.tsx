@@ -14,7 +14,7 @@ interface BenefitsPageClientProps {
 export default function BenefitsPageClient({ sections }: BenefitsPageClientProps) {
   const contentSections = [
     {
-      title: sections[2]?.title ?? "Pure common sense",
+      title: sections[2]?.title ?? "Jeko common sense",
       text: sections[2]?.text ?? "We work on facts and common sense over here in Yorkshire. After all, we all know natural, healthy food is the best way to feed any animal. Our food is made in the UK, is full of the same ingredients you'd find in your own food and doesn't include anything you wouldn't eat yourself.",
       image: sections[2]?.image || "https://www.datocms-assets.com/55536/1673605636-delicious-dog-food.jpg?auto=format&fit=crop&h=600&w=1000",
       imageLeft: true,
@@ -53,12 +53,12 @@ export default function BenefitsPageClient({ sections }: BenefitsPageClientProps
     },
     {
       image: sections[5]?.t2_image || "https://www.datocms-assets.com/55536/1664896665-lloyd-peta.jpg?auto=format&fit=crop&h=800&w=800",
-      quote: sections[5]?.t2_quote ?? "We rescued Lulu, she had a whole host of stomach and digestive issues. They were so bad that euthanasia was discussed twice by our vets. We tried everything. We found Pure after seeing a review online, within just 2 days her issues had eased, and now 3 months on she's a different dog.",
+      quote: sections[5]?.t2_quote ?? "We rescued Lulu, she had a whole host of stomach and digestive issues. They were so bad that euthanasia was discussed twice by our vets. We tried everything. We found Jeko after seeing a review online, within just 2 days her issues had eased, and now 3 months on she's a different dog.",
       name: sections[5]?.t2_name ?? "Lloyd, Peta & Lulu",
     },
     {
       image: sections[5]?.t3_image || "https://www.datocms-assets.com/55536/1673543479-healthy-dog-food.jpg?auto=format&fit=crop&h=800&w=800",
-      quote: sections[5]?.t3_quote ?? "We've seen a real difference in our dog's coat and energy levels since switching to Pure. The food is clearly made with care, and the fact that every ingredient is one I recognise gives me real peace of mind. I would recommend it to anyone.",
+      quote: sections[5]?.t3_quote ?? "We've seen a real difference in our dog's coat and energy levels since switching to Jeko. The food is clearly made with care, and the fact that every ingredient is one I recognise gives me real peace of mind. I would recommend it to anyone.",
       name: sections[5]?.t3_name ?? "Sarah, Tim & Biscuit",
     },
   ];

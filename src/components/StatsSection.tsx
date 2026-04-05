@@ -8,7 +8,7 @@ export default function StatsSection({ content }: { content?: any }) {
   const stat1Value = content?.stat_1_value ?? "94%";
   const stat1Label = content?.stat_1_label ?? "of customers have seen an improvement in their dog\u2019s ailment";
   const stat2Value = content?.stat_2_value ?? "91%";
-  const stat2Label = content?.stat_2_label ?? "of customers have seen overall health improvements since switching to Pure";
+  const stat2Label = content?.stat_2_label ?? "of customers have seen overall health improvements since switching to Jeko";
 
   const [count, setCount] = useState(0);
   const [hasAnimated, setHasAnimated] = useState(false);

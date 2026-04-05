@@ -21,7 +21,7 @@ const steps = [
   },
   {
     step: "Step 4",
-    title: "Try it and transition to Pure",
+    title: "Try it and transition to Jeko",
     icon: "https://www.purepetfood.com/_next/static/media/bowl-with-yellow-scoop.5cef6df6.png",
   },
 ];

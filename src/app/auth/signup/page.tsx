@@ -739,7 +739,7 @@ export default function SignupPage() {
                 <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 mb-8">
                   {DIET_PREFERENCES.map((d) => {
                     const emojis: Record<string, string> = {
-                      Raw: '🥩', Kibble: '🍖', Mixed: '🍽️', Homemade: '👨‍🍳', 'Pure Pet Food': '🌿',
+                      Raw: '🥩', Kibble: '🍖', Mixed: '🍽️', Homemade: '👨‍🍳', 'Jeko': '🌿',
                     };
                     return (
                       <QuizCard key={d} emoji={emojis[d] || '🍽️'} label={d} selected={dietPreference === d} onClick={() => setDietPreference(d)} />

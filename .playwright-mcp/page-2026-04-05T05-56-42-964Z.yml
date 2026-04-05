@@ -1,0 +1,382 @@
+- generic [active] [ref=e1]:
+  - banner [ref=e2]:
+    - generic [ref=e4]:
+      - link "JEKO" [ref=e5] [cursor=pointer]:
+        - /url: /
+        - img [ref=e6]
+        - generic [ref=e8]: JEKO
+        - img [ref=e9]
+      - navigation [ref=e15]:
+        - link "About" [ref=e17] [cursor=pointer]:
+          - /url: /about
+          - text: About
+          - img [ref=e18]
+        - link "Community" [ref=e21] [cursor=pointer]:
+          - /url: /community
+          - text: Community
+          - img [ref=e22]
+        - link "Shop" [ref=e25] [cursor=pointer]:
+          - /url: /products
+        - link "Reviews" [ref=e27] [cursor=pointer]:
+          - /url: /reviews
+        - link "Health & breeds" [ref=e29] [cursor=pointer]:
+          - /url: /benefits
+          - text: Health & breeds
+          - img [ref=e30]
+      - generic [ref=e32]:
+        - button "Shopping cart" [ref=e33] [cursor=pointer]:
+          - img [ref=e34]
+        - link "Help" [ref=e38] [cursor=pointer]:
+          - /url: /help
+        - link "Login" [ref=e39] [cursor=pointer]:
+          - /url: /login
+        - link "Create plan" [ref=e40] [cursor=pointer]:
+          - /url: /signup
+  - main [ref=e41]:
+    - generic [ref=e43]:
+      - img "Happy dog eating fresh food from a bowl with product packages" [ref=e45]
+      - generic [ref=e48]:
+        - heading "The easiest way to feed healthy, natural dog food" [level=1] [ref=e49]:
+          - text: The easiest way to feed healthy,
+          - text: natural dog food
+        - paragraph [ref=e50]: Enjoy fresh food without the fuss, from only 89p a day
+        - link "Get started today" [ref=e52] [cursor=pointer]:
+          - /url: /signup
+        - generic [ref=e53]:
+          - generic [ref=e54]:
+            - img [ref=e56]
+            - img [ref=e59]
+            - img [ref=e62]
+            - img [ref=e65]
+            - img [ref=e69]
+          - generic [ref=e71]:
+            - generic [ref=e72]: Excellent
+            - generic [ref=e73]: 4.6 out of 5
+            - img [ref=e74]
+            - generic [ref=e76]: Trustpilot
+    - link "25% off your first box+10% off your next box" [ref=e78] [cursor=pointer]:
+      - /url: /signup
+      - generic [ref=e79]:
+        - img [ref=e80]
+        - paragraph [ref=e82]: 25% off your first box+10% off your next box
+        - img [ref=e83]
+    - generic [ref=e86]:
+      - generic [ref=e87]:
+        - generic [ref=e88]:
+          - img "Preparing Pure dog food" [ref=e89]
+          - img [ref=e91]
+          - img [ref=e94]
+        - generic [ref=e97]:
+          - heading "What is Pure dog food?" [level=2] [ref=e98]
+          - generic [ref=e99]:
+            - paragraph [ref=e100]: A natural, healthy dog food designed to take the stress out of meal times.
+            - paragraph [ref=e101]: Simply add water and stir to quickly rehydrate the food and create a healthy, nutritious meal your pup will love.
+          - link "Get started" [ref=e102] [cursor=pointer]:
+            - /url: /auth/signup
+      - generic:
+        - img
+    - generic [ref=e104]:
+      - generic:
+        - img
+      - generic:
+        - img
+      - generic [ref=e106]:
+        - generic [ref=e107]:
+          - img "Store in the cupboard" [ref=e109]
+          - paragraph [ref=e110]: Store in the cupboard
+        - generic [ref=e111]:
+          - img "From only 89p per day" [ref=e113]
+          - paragraph [ref=e114]: From only 89p per day
+        - generic [ref=e115]:
+          - img "Just add water and serve" [ref=e117]
+          - paragraph [ref=e118]: Just add water and serve
+        - generic [ref=e119]:
+          - img "Ready in 10 seconds" [ref=e121]
+          - paragraph [ref=e122]: Ready in 10 seconds
+    - generic [ref=e125]:
+      - generic [ref=e126]:
+        - generic [ref=e127]: Our Products
+        - heading "Handpicked for Your Pup" [level=2] [ref=e128]
+        - paragraph [ref=e129]: Fresh, natural ingredients your dog will love. Every meal made with care.
+      - link "Shop All Products" [ref=e156] [cursor=pointer]:
+        - /url: /products
+        - text: Shop All Products
+        - img [ref=e157]
+    - generic [ref=e162]:
+      - generic [ref=e163]:
+        - generic [ref=e164]: Trending Now
+        - heading "What Pet Parents Love" [level=2] [ref=e165]
+        - paragraph [ref=e166]: Our most popular picks, loved by thousands of happy dogs.
+      - generic [ref=e167]:
+        - button [ref=e168] [cursor=pointer]:
+          - img [ref=e169]
+        - button [ref=e171] [cursor=pointer]:
+          - img [ref=e172]
+    - generic [ref=e197]:
+      - generic [ref=e198]:
+        - heading "Don't just take our word for it" [level=2] [ref=e199]
+        - paragraph [ref=e200]: Listen to what others have to say about it
+      - generic [ref=e201]:
+        - button "Scroll left" [ref=e202] [cursor=pointer]:
+          - img [ref=e203]
+        - generic [ref=e205]:
+          - generic [ref=e206] [cursor=pointer]:
+            - generic [ref=e207]:
+              - img [ref=e211]
+              - generic [ref=e213]: 0:55
+            - paragraph [ref=e214]: Pure vs kibble & raw
+          - generic [ref=e215] [cursor=pointer]:
+            - generic [ref=e216]:
+              - img [ref=e220]
+              - generic [ref=e222]: 0:38
+            - paragraph [ref=e223]: Feeding Pure really is simple!
+          - generic [ref=e224] [cursor=pointer]:
+            - generic [ref=e225]:
+              - img [ref=e229]
+              - generic [ref=e231]: 0:54
+            - paragraph [ref=e232]: We've done the research
+          - generic [ref=e233] [cursor=pointer]:
+            - generic [ref=e234]:
+              - img [ref=e238]
+              - generic [ref=e240]: 0:37
+            - paragraph [ref=e241]: Fully flexible to work around you
+          - generic [ref=e242] [cursor=pointer]:
+            - generic [ref=e243]:
+              - img [ref=e247]
+              - generic [ref=e249]: 0:38
+            - paragraph [ref=e250]: Rudy goes from fussy to foodie
+          - generic [ref=e251] [cursor=pointer]:
+            - generic [ref=e252]:
+              - img [ref=e256]
+              - generic [ref=e258]: 0:37
+            - paragraph [ref=e259]: Backed by The Yorkshire Vet
+        - button "Scroll right" [ref=e260] [cursor=pointer]:
+          - img [ref=e261]
+    - generic [ref=e264]:
+      - generic:
+        - img
+      - generic:
+        - img
+      - generic [ref=e265]:
+        - heading "How does a Pure plan work?" [level=2] [ref=e266]
+        - generic [ref=e267]:
+          - generic [ref=e268]:
+            - img "Tell us about your dog" [ref=e270]
+            - paragraph [ref=e271]: Step 1
+            - paragraph [ref=e272]: Tell us about your dog
+          - generic [ref=e273]:
+            - img "Choose your tailored recipes" [ref=e275]
+            - paragraph [ref=e276]: Step 2
+            - paragraph [ref=e277]: Choose your tailored recipes
+          - generic [ref=e278]:
+            - img "Delivered to your door for free" [ref=e280]
+            - paragraph [ref=e281]: Step 3
+            - paragraph [ref=e282]: Delivered to your door for free
+          - generic [ref=e283]:
+            - img "Try it and transition to Pure" [ref=e285]
+            - paragraph [ref=e286]: Step 4
+            - paragraph [ref=e287]: Try it and transition to Pure
+        - link "Create a tailored plan today" [ref=e289] [cursor=pointer]:
+          - /url: /auth/signup
+    - generic [ref=e291]:
+      - generic:
+        - img
+      - generic:
+        - img
+      - generic [ref=e292]:
+        - heading "We've delivered" [level=2] [ref=e293]
+        - generic [ref=e294]: "0"
+        - paragraph [ref=e295]: meals and changed the lives of tens of thousands of dogs for the better
+        - generic [ref=e296]:
+          - generic [ref=e297]:
+            - generic [ref=e298]: 94%
+            - paragraph [ref=e299]: of customers have seen an improvement in their dog's ailment
+          - generic [ref=e300]:
+            - generic [ref=e301]: 91%
+            - paragraph [ref=e302]: of customers have seen overall health improvements since switching to Pure
+    - generic [ref=e304]:
+      - generic:
+        - img
+      - generic:
+        - img
+      - generic [ref=e305]:
+        - heading "How Pure compares" [level=2] [ref=e306]
+        - generic [ref=e307]:
+          - generic [ref=e308]:
+            - generic [ref=e310]: PURE
+            - generic [ref=e311]: Dry & wet
+            - generic [ref=e312]: Raw & fresh
+          - generic [ref=e313]:
+            - generic [ref=e315]: Cost
+            - generic [ref=e317]: ££
+            - generic [ref=e319]: £
+            - generic [ref=e321]: £££
+          - generic [ref=e322]:
+            - generic [ref=e324]: No/low processing
+            - img [ref=e326]
+            - img [ref=e331]
+            - img [ref=e337]
+          - generic [ref=e341]:
+            - generic [ref=e343]: High quality ingredients
+            - img [ref=e345]
+            - img [ref=e350]
+            - img [ref=e356]
+          - generic [ref=e360]:
+            - generic [ref=e362]: Easy to store
+            - img [ref=e364]
+            - img [ref=e369]
+            - img [ref=e374]
+          - generic [ref=e379]:
+            - generic [ref=e381]: No risk of harmful pathogens
+            - img [ref=e383]
+            - img [ref=e388]
+            - img [ref=e393]
+    - generic [ref=e400]:
+      - generic [ref=e401]:
+        - generic:
+          - img
+        - generic [ref=e402]:
+          - heading "Backed by The Yorkshire Vet" [level=2] [ref=e403]
+          - paragraph [ref=e404]: Julian Norton
+          - paragraph [ref=e405]: I've been a vet for almost 30 years. Recently I've suggested Pure for some of my patients, often with great results.
+      - img "Julian Norton - The Yorkshire Vet with Pure Pet Food" [ref=e407]
+    - generic [ref=e411]:
+      - generic [ref=e412]:
+        - img "Pure Pet Food on Dragons Den" [ref=e413]
+        - generic:
+          - img
+      - generic [ref=e416]:
+        - heading "Dog food so good we ate it on Dragons' Den" [level=2] [ref=e417]
+        - paragraph [ref=e418]: Pure is complete nutrition from the inside out, and dogs totally love the taste! "It was possibly the best pitch I have seen in over 10 years of Dragons' Den" - Duncan Bannatyne
+        - link "Get started today" [ref=e419] [cursor=pointer]:
+          - /url: /signup
+    - generic [ref=e422]:
+      - generic [ref=e423]:
+        - generic:
+          - img
+        - generic [ref=e424]:
+          - heading "Frequently Asked Questions" [level=2] [ref=e425]
+          - paragraph [ref=e426]: Everything else you need to know about Pure
+          - generic [ref=e427]:
+            - generic [ref=e428]:
+              - button "Am I tied into a subscription?" [ref=e429] [cursor=pointer]:
+                - heading "Am I tied into a subscription?" [level=4] [ref=e430]
+                - img [ref=e431]
+              - paragraph [ref=e433]: Not at all! You can pause, change, or cancel your plan at any time. We believe in our food so much that we don't need to lock you in.
+            - generic [ref=e434]:
+              - button "Is Pure expensive compared to other foods?" [ref=e435] [cursor=pointer]:
+                - heading "Is Pure expensive compared to other foods?" [level=4] [ref=e436]
+                - img [ref=e437]
+              - paragraph [ref=e439]: Pure starts from only 89p per day. When you consider the health benefits, it's great value compared to vet bills and other premium foods.
+            - generic [ref=e440]:
+              - button "Do I pay for delivery?" [ref=e441] [cursor=pointer]:
+                - heading "Do I pay for delivery?" [level=4] [ref=e442]
+                - img [ref=e443]
+              - paragraph [ref=e445]: No! Delivery is completely free on all orders. We deliver right to your doorstep.
+            - generic [ref=e446]:
+              - button "What is the nutritional value, and is it good for my dog?" [ref=e447] [cursor=pointer]:
+                - heading "What is the nutritional value, and is it good for my dog?" [level=4] [ref=e448]
+                - img [ref=e449]
+              - paragraph [ref=e451]: Pure is a complete, balanced meal developed with veterinary nutritionists. Every recipe meets FEDIAF guidelines for complete nutrition.
+            - generic [ref=e452]:
+              - button "What if my dog doesn’t like it?" [ref=e453] [cursor=pointer]:
+                - heading "What if my dog doesn’t like it?" [level=4] [ref=e454]
+                - img [ref=e455]
+              - paragraph [ref=e457]: We offer a full money-back guarantee. If your dog doesn't love Pure, we'll refund your first box in full.
+            - generic [ref=e458]:
+              - button "Is Pure suitable for my dogs health concern?" [ref=e459] [cursor=pointer]:
+                - heading "Is Pure suitable for my dogs health concern?" [level=4] [ref=e460]
+                - img [ref=e461]
+              - paragraph [ref=e463]: Pure is often recommended for dogs with health concerns. Our recipes are gentle and made with natural, high-quality ingredients.
+            - generic [ref=e464]:
+              - button "Is Pure complete dog food?" [ref=e465] [cursor=pointer]:
+                - heading "Is Pure complete dog food?" [level=4] [ref=e466]
+                - img [ref=e467]
+              - paragraph [ref=e469]: Yes! Every Pure recipe is nutritionally complete and balanced, meeting all FEDIAF guidelines for adult dogs and puppies.
+          - link "Get started with 25% off" [ref=e471] [cursor=pointer]:
+            - /url: /auth/signup
+      - img "Happy healthy dog" [ref=e473]
+  - contentinfo [ref=e475]:
+    - generic [ref=e476]:
+      - generic [ref=e477]:
+        - generic [ref=e478]:
+          - heading "Join our VIP list" [level=4] [ref=e479]
+          - paragraph [ref=e480]: Be the first to hear about new product launches, exclusive competitions and helpful dog content.
+          - generic [ref=e481]:
+            - textbox "Enter your email address" [ref=e482]
+            - button "Sign up" [ref=e483] [cursor=pointer]
+          - heading "Follow us on social media" [level=4] [ref=e484]
+          - generic [ref=e485]:
+            - link "Instagram" [ref=e486] [cursor=pointer]:
+              - /url: "#"
+              - img "Instagram" [ref=e487]
+            - link "Facebook" [ref=e488] [cursor=pointer]:
+              - /url: "#"
+              - img "Facebook" [ref=e489]
+            - link [ref=e490] [cursor=pointer]:
+              - /url: "#"
+              - img [ref=e491]
+        - generic [ref=e493]:
+          - generic [ref=e494]:
+            - heading "Jeko" [level=4] [ref=e495]
+            - list [ref=e496]:
+              - listitem [ref=e497]:
+                - link "Our story" [ref=e498] [cursor=pointer]:
+                  - /url: /about
+              - listitem [ref=e499]:
+                - link "Reviews" [ref=e500] [cursor=pointer]:
+                  - /url: /reviews
+              - listitem [ref=e501]:
+                - link "Recipes" [ref=e502] [cursor=pointer]:
+                  - /url: /recipes
+              - listitem [ref=e503]:
+                - link "Beyond the bowl" [ref=e504] [cursor=pointer]:
+                  - /url: /beyond-the-bowl
+              - listitem [ref=e505]:
+                - link "Shop" [ref=e506] [cursor=pointer]:
+                  - /url: /products
+              - listitem [ref=e507]:
+                - link "Community" [ref=e508] [cursor=pointer]:
+                  - /url: /community
+          - generic [ref=e509]:
+            - heading "Help" [level=4] [ref=e510]
+            - list [ref=e511]:
+              - listitem [ref=e512]:
+                - link "My account" [ref=e513] [cursor=pointer]:
+                  - /url: /profile
+              - listitem [ref=e514]:
+                - link "Contact us" [ref=e515] [cursor=pointer]:
+                  - /url: /contact
+              - listitem [ref=e516]:
+                - link "Delivery information" [ref=e517] [cursor=pointer]:
+                  - /url: /delivery-information
+              - listitem [ref=e518]:
+                - link "Returns" [ref=e519] [cursor=pointer]:
+                  - /url: /returns
+              - listitem [ref=e520]:
+                - link "Sitemap" [ref=e521] [cursor=pointer]:
+                  - /url: /sitemap-page
+          - generic [ref=e522]:
+            - heading "Information" [level=4] [ref=e523]
+            - list [ref=e524]:
+              - listitem [ref=e525]:
+                - link "Privacy policy" [ref=e526] [cursor=pointer]:
+                  - /url: /privacy-policy
+              - listitem [ref=e527]:
+                - link "Terms & conditions" [ref=e528] [cursor=pointer]:
+                  - /url: /terms-of-use
+              - listitem [ref=e529]:
+                - link "Pure policies" [ref=e530] [cursor=pointer]:
+                  - /url: /pure-policies
+              - listitem [ref=e531]:
+                - link "Site security" [ref=e532] [cursor=pointer]:
+                  - /url: /site-security
+              - listitem [ref=e533]:
+                - link "Cookie policy" [ref=e534] [cursor=pointer]:
+                  - /url: /cookie-policy
+      - generic [ref=e535]:
+        - generic [ref=e537]:
+          - img [ref=e538]
+          - generic [ref=e540]: JEKO
+          - img [ref=e541]
+        - paragraph [ref=e547]: © Jeko 2020-2026

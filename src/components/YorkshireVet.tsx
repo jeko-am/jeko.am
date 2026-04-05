@@ -44,7 +44,7 @@ export default function YorkshireVet({ content }: { content?: any }) {
         <div className="w-full md:w-[42%] relative min-h-[350px] md:min-h-[480px]">
           <Image
             src={content?.image || "https://www.datocms-assets.com/55536/1749463347-046-pure-pet-food-yorkshire-vet.jpg?auto=format&fit=crop&h=600&w=1000"}
-            alt="Julian Norton - The Yorkshire Vet with Pure Pet Food"
+            alt="Julian Norton - The Yorkshire Vet with Jeko"
             fill
             unoptimized
             className="object-cover"

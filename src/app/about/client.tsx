@@ -75,7 +75,7 @@ export default function AboutPageClient({ sections }: { sections: Record<string,
       title: s[3]?.title ?? "Memorable",
       titleHighlight: s[3]?.title_highlight ?? "milestones",
       content: [
-        s[3]?.content ?? "In 2014, our co-founders entered the Dragons' Den and we were lucky enough to win over two dragons! Despite the fantastic offers, the terms didn't quite suit us, and thanks to Pure's success, it's certainly not a decision we regret.",
+        s[3]?.content ?? "In 2014, our co-founders entered the Dragons' Den and we were lucky enough to win over two dragons! Despite the fantastic offers, the terms didn't quite suit us, and thanks to Jeko's success, it's certainly not a decision we regret.",
       ],
       image: s[3]?.image || "https://images.unsplash.com/photo-1518717758536-85ae29035b6d?w=400&h=300&fit=crop",
       bgColor: "bg-off-white",
@@ -101,7 +101,7 @@ export default function AboutPageClient({ sections }: { sections: Record<string,
       title: s[5]?.title ?? "Where we are",
       titleHighlight: s[5]?.title_highlight ?? "today",
       content: [
-        s[5]?.content_1 ?? "We've come a long way from creating recipes in Dan's kitchen. Pure Pet Food has moved into bigger and better facilities in West Yorkshire, working alongside industry-leading vets and nutritionists to cultivate one of the best, natural dog food brands in the UK. Although we may have grown, what drives us remains the same: to provide happier, healthier and longer lives for our pets.",
+        s[5]?.content_1 ?? "We've come a long way from creating recipes in Dan's kitchen. Jeko has moved into bigger and better facilities in West Yorkshire, working alongside industry-leading vets and nutritionists to cultivate one of the best, natural dog food brands in the UK. Although we may have grown, what drives us remains the same: to provide happier, healthier and longer lives for our pets.",
         s[5]?.content_2 ?? "So you could say that in many ways, this is only the beginning!",
       ],
       image: null as string | null,
@@ -125,7 +125,7 @@ export default function AboutPageClient({ sections }: { sections: Record<string,
             <div className="absolute inset-0">
               <Image
                 src={s[0]?.hero_image || "https://images.unsplash.com/photo-1548199973-03cce0bbc87b?w=1600&h=700&fit=crop"}
-                alt="Pure Pet Food founders"
+                alt="Jeko founders"
                 fill
                 unoptimized
                 className="object-cover"

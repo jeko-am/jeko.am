@@ -30,7 +30,7 @@ export default function ReturnsPage() {
                 Our Satisfaction Guarantee
               </h2>
               <p className="text-deep-green/80 text-[16px] leading-relaxed mb-4">
-                At Pure Pet Food, we stand behind the quality of our products.
+                At Jeko, we stand behind the quality of our products.
                 Every order is backed by our{" "}
                 <strong>30-day satisfaction guarantee</strong>. If your dog
                 doesn&apos;t love their new meals or you&apos;re not completely
@@ -50,7 +50,7 @@ export default function ReturnsPage() {
                   </div>
                   <p className="text-deep-green/80 text-[16px] leading-relaxed">
                     <strong>Contact us</strong> within 30 days of receiving your
-                    order via email at hello@purepetfood.com or through our{" "}
+                    order via email at hello@jeko.am or through our{" "}
                     <Link
                       href="/contact"
                       className="text-deep-green underline font-semibold"

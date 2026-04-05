@@ -293,10 +293,10 @@ export default function ContactPage() {
                           Email
                         </p>
                         <a
-                          href="mailto:hello@purepetfood.com"
+                          href="mailto:hello@jeko.am"
                           className="text-deep-green/70 hover:text-gold transition-colors"
                         >
-                          hello@purepetfood.com
+                          hello@jeko.am
                         </a>
                       </div>
                     </div>
@@ -384,7 +384,7 @@ export default function ContactPage() {
                           Address
                         </p>
                         <p className="text-deep-green/70 text-sm leading-relaxed">
-                          Pure Pet Food
+                          Jeko
                           <br />
                           Unit 5, Yorkshire Business Park
                           <br />

@@ -13,14 +13,14 @@ const reviews = [
     initial: "S",
     rating: 5,
     title: "New lease of life",
-    text: "Rosie has been on Pure Food for 6 weeks now & OMG what a difference! You have given our 12 year old American Bulldog a whole new lease of life, her energy levels have raised & you can tell she is feeling better in herself. Her coat is so shiny her fur is really soft, looks like puppy fur again.",
+    text: "Rosie has been on Jeko Food for 6 weeks now & OMG what a difference! You have given our 12 year old American Bulldog a whole new lease of life, her energy levels have raised & you can tell she is feeling better in herself. Her coat is so shiny her fur is really soft, looks like puppy fur again.",
   },
   {
     name: "Dani",
     initial: "D",
     rating: 5,
     title: "Thank you for changing our lives",
-    text: "We have a fussy almost 2-yr old GSD. Researched a ton about the right food for him, found Pure and thought let's give it a try! He bloody loves it - breakfast & dinner are now his favourite part of the day. Thank you for changing our lives, we have struggled so much - his coat and weight is already better!",
+    text: "We have a fussy almost 2-yr old GSD. Researched a ton about the right food for him, found Jeko and thought let's give it a try! He bloody loves it - breakfast & dinner are now his favourite part of the day. Thank you for changing our lives, we have struggled so much - his coat and weight is already better!",
   },
   {
     name: "Sophie",
@@ -34,21 +34,21 @@ const reviews = [
     initial: "K",
     rating: 5,
     title: "Back to his cheeky self",
-    text: "This food has been fantastic for my Sprocker Ruger. He was diagnosed with pancreatitis. He has been on Pure Pet Food for a while and his stools have firmed up and no longer contain blood. He is now back to his cheeky self which I am very thankful for as it was a horrible time.",
+    text: "This food has been fantastic for my Sprocker Ruger. He was diagnosed with pancreatitis. He has been on Jeko for a while and his stools have firmed up and no longer contain blood. He is now back to his cheeky self which I am very thankful for as it was a horrible time.",
   },
   {
     name: "Dottie",
     initial: "D",
     rating: 5,
     title: "Highly recommended",
-    text: "My dog is in love with pure food I've never seen him lick the bowl clean everytime like he dose with pure dog food. His fur-skin and health have improved so much in a short space of time with eating pure food. I've highly recommended to other dog owners - that's how impressed I am.",
+    text: "My dog is in love with Jeko food I've never seen him lick the bowl clean everytime like he dose with Jeko dog food. His fur-skin and health have improved so much in a short space of time with eating Jeko food. I've highly recommended to other dog owners - that's how impressed I am.",
   },
   {
     name: "Robyn",
     initial: "R",
     rating: 5,
     title: "Their stomach has gotten so much better",
-    text: "My dog has always had a sensitive stomach but since switching to Pure it has gotten so much better! I started a subscription initially due to the multiple good reviews for dogs with similar issues. Overall recommend Pure and will be transitioning my second (less fussy) dog once his current food runs low.",
+    text: "My dog has always had a sensitive stomach but since switching to Jeko it has gotten so much better! I started a subscription initially due to the multiple good reviews for dogs with similar issues. Overall recommend Jeko and will be transitioning my second (less fussy) dog once his current food runs low.",
   },
   {
     name: "Jean",
@@ -69,7 +69,7 @@ const reviews = [
     initial: "J",
     rating: 5,
     title: "Much much better quality",
-    text: "I did some research and started my boxer on Pure, which he has been on for about 2 months now which doesn't cost me any more than the wet tray food but is much much better quality. His stomach has improved lots and his coat is nicer than it has ever been, it's soft, smooth and shiny! I would highly recommend.",
+    text: "I did some research and started my boxer on Jeko, which he has been on for about 2 months now which doesn't cost me any more than the wet tray food but is much much better quality. His stomach has improved lots and his coat is nicer than it has ever been, it's soft, smooth and shiny! I would highly recommend.",
   },
 ];
 
@@ -92,7 +92,7 @@ const categoryTestimonials = [
   {
     name: "Janet & Bunty",
     image: "https://www.datocms-assets.com/55536/1639735109-bunty-janet-cowie1.jpg?auto=format&fit=crop&h=400&w=400",
-    text: "My Maltese was becoming a fussy eater. The ad for Pure popped up on Instagram and I placed an order. I'm so glad I did, I had to contact them for further advice and their customer service was brilliant.",
+    text: "My Maltese was becoming a fussy eater. The ad for Jeko popped up on Instagram and I placed an order. I'm so glad I did, I had to contact them for further advice and their customer service was brilliant.",
   },
   {
     name: "Louise & Echo",
@@ -268,7 +268,7 @@ export default function ReviewsPageClient({ sections }: ReviewsPageClientProps) 
                       {sections[2]?.text_1 ?? "We rescued Lulu from the Pro Dogs Direct charity, who were great. She came to us with a whole host of stomach and digestive issues. They were so bad that euthanasia was discussed twice by our vets."}
                     </p>
                     <p className="text-deep-green/90 text-[15px] leading-[1.7]">
-                      {sections[2]?.text_2 ?? "We tried tablets, gels, and prescription kibble diets, and by this point, we were at our wits end. We found Pure after seeing a review online, within just 2 days her issues had eased, and now 3 months on she\u2019s a different dog. Thank you so much for saving our dog\u2019s life!"}
+                      {sections[2]?.text_2 ?? "We tried tablets, gels, and prescription kibble diets, and by this point, we were at our wits end. We found Jeko after seeing a review online, within just 2 days her issues had eased, and now 3 months on she\u2019s a different dog. Thank you so much for saving our dog\u2019s life!"}
                     </p>
                   </div>
                 </div>
@@ -314,7 +314,7 @@ export default function ReviewsPageClient({ sections }: ReviewsPageClientProps) 
                   </div>
                   <div className="flex-1">
                     <p className="text-white/90 text-[14px] leading-[1.7] mb-3 italic">
-                      &ldquo;{sections[3]?.vet_1_quote ?? "I\u2019ve been a vet for over 30 years and for about the last 5 years I\u2019ve been suggesting Pure to my patients. I\u2019ve found it to be incredibly helpful and some of the dogs have responded dramatically well."}&rdquo;
+                      &ldquo;{sections[3]?.vet_1_quote ?? "I\u2019ve been a vet for over 30 years and for about the last 5 years I\u2019ve been suggesting Jeko to my patients. I\u2019ve found it to be incredibly helpful and some of the dogs have responded dramatically well."}&rdquo;
                     </p>
                     <p className="text-white font-bold text-[13px]">
                       {sections[3]?.vet_1_name ?? "Dr Julian Norton MA VetMB GPcertSAP MRCVS, Partner"}
@@ -374,7 +374,7 @@ export default function ReviewsPageClient({ sections }: ReviewsPageClientProps) 
                       {sections[4]?.text_2 ?? "I couldn\u2019t even stroke her, which was heart-breaking."}
                     </p>
                     <p className="text-deep-green/90 text-[15px] leading-[1.7]">
-                      {sections[4]?.text_3 ?? "We switched from brown biscuits to Pure, and after just a week she completely stopped itching, and her skin cleared up. Thank you Pure for giving Nelly her life back."}
+                      {sections[4]?.text_3 ?? "We switched from brown biscuits to Jeko, and after just a week she completely stopped itching, and her skin cleared up. Thank you Jeko for giving Nelly her life back."}
                     </p>
                   </div>
                 </div>
@@ -461,7 +461,7 @@ export default function ReviewsPageClient({ sections }: ReviewsPageClientProps) 
                       {sections[6]?.text_1 ?? "This is Diesel. For the first two years, he was a happy and healthy pup, it wasn\u2019t until just after his 2nd birthday that he started to develop skin, stomach and bladder problems."}
                     </p>
                     <p className="text-white/85 text-[15px] leading-[1.7]">
-                      {sections[6]?.text_2 ?? "We switched to Pure as it\u2019s nutritious and doesn\u2019t have any of the nasty stuff in it. We\u2019ve realised by investing in Diesel\u2019s health we can give him a healthy, happy life."}
+                      {sections[6]?.text_2 ?? "We switched to Jeko as it\u2019s nutritious and doesn\u2019t have any of the nasty stuff in it. We\u2019ve realised by investing in Diesel\u2019s health we can give him a healthy, happy life."}
                     </p>
                   </div>
                 </div>
@@ -507,7 +507,7 @@ export default function ReviewsPageClient({ sections }: ReviewsPageClientProps) 
                     {sections[7]?.stat_2_value ?? "91%"}
                   </span>
                   <p className="text-left text-[15px] font-semibold text-deep-green leading-snug">
-                    {sections[7]?.stat_2_label ?? "of customers have seen overall health improvements since switching to Pure"}
+                    {sections[7]?.stat_2_label ?? "of customers have seen overall health improvements since switching to Jeko"}
                   </p>
                 </div>
               </div>

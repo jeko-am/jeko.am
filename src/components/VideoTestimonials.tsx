@@ -2,7 +2,7 @@
 
 import { useRef } from "react";
 
-const videos = [
+const defaultVideos = [
   { src: "https://pure-website.s3.eu-west-2.amazonaws.com/Product+Benefits+Social+9X16.mp4", duration: "0:55", title: "Pure vs kibble & raw" },
   { src: "https://pure-website.s3.eu-west-2.amazonaws.com/Preparing+Pure+9X16.mp4", duration: "0:38", title: "Feeding Pure really is simple!" },
   { src: "https://pure-website.s3.eu-west-2.amazonaws.com/Why+Pure+Works+Compressed.mp4", duration: "0:54", title: "We've done the research" },
@@ -11,9 +11,30 @@ const videos = [
   { src: "https://pure-website.s3.eu-west-2.amazonaws.com/Julian+Social+H265.mp4", duration: "0:37", title: "Backed by The Yorkshire Vet" },
 ];
 
+function getVideosFromContent(content?: Record<string, string>) {
+  if (!content) return defaultVideos;
+
+  const videos = [];
+  for (let i = 1; i <= 6; i++) {
+    const url = content[`video_${i}_url`];
+    if (url) {
+      videos.push({
+        src: url,
+        title: content[`video_${i}_title`] || defaultVideos[i - 1]?.title || '',
+        duration: content[`video_${i}_duration`] || defaultVideos[i - 1]?.duration || '',
+      });
+    } else if (defaultVideos[i - 1]) {
+      videos.push(defaultVideos[i - 1]);
+    }
+  }
+
+  return videos.length > 0 ? videos : defaultVideos;
+}
+
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export default function VideoTestimonials({ content }: { content?: any }) {
   const scrollRef = useRef<HTMLDivElement>(null);
+  const videos = getVideosFromContent(content);
 
   const scroll = (direction: "left" | "right") => {
     if (scrollRef.current) {

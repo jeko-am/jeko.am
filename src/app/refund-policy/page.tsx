@@ -35,7 +35,7 @@ export default function RefundPolicyPage() {
                 1. Our Satisfaction Guarantee
               </h2>
               <p className="text-deep-green/80 text-[16px] leading-relaxed mb-4">
-                At Pure Pet Food, nothing matters more to us than your dog&apos;s
+                At Jeko, nothing matters more to us than your dog&apos;s
                 health and happiness. That&apos;s why every order is backed by our
                 <strong> 30-day satisfaction guarantee</strong>. We want your dog
                 to love their food just as much as we love making it.
@@ -149,10 +149,10 @@ export default function RefundPolicyPage() {
                   <p className="text-deep-green/80 text-[16px] leading-relaxed">
                     Get in touch by emailing{" "}
                     <a
-                      href="mailto:help@purepetfood.com"
+                      href="mailto:help@jeko.am"
                       className="text-gold font-semibold hover:underline"
                     >
-                      help@purepetfood.com
+                      help@jeko.am
                     </a>{" "}
                     or calling us on{" "}
                     <a
@@ -302,7 +302,7 @@ export default function RefundPolicyPage() {
               </h2>
               <p className="text-deep-green/80 text-[16px] leading-relaxed mb-4">
                 We understand that your dog&apos;s needs may change, so you can
-                cancel or pause your Pure Pet Food subscription at any time from
+                cancel or pause your Jeko subscription at any time from
                 your online account or by contacting our customer care team.
               </p>
 
@@ -534,7 +534,7 @@ export default function RefundPolicyPage() {
                         Damaged or defective product
                       </td>
                       <td className="text-deep-green/80 text-[15px] py-3">
-                        Pure Pet Food (prepaid label provided)
+                        Jeko (prepaid label provided)
                       </td>
                     </tr>
                     <tr className="border-b border-deep-green/10">
@@ -542,7 +542,7 @@ export default function RefundPolicyPage() {
                         Wrong item received
                       </td>
                       <td className="text-deep-green/80 text-[15px] py-3">
-                        Pure Pet Food (prepaid label provided)
+                        Jeko (prepaid label provided)
                       </td>
                     </tr>
                     <tr className="border-b border-deep-green/10">
@@ -550,7 +550,7 @@ export default function RefundPolicyPage() {
                         Exchange for different recipe/size
                       </td>
                       <td className="text-deep-green/80 text-[15px] py-3">
-                        Pure Pet Food (prepaid label provided)
+                        Jeko (prepaid label provided)
                       </td>
                     </tr>
                     <tr className="border-b border-deep-green/10">
@@ -566,7 +566,7 @@ export default function RefundPolicyPage() {
                         First order satisfaction guarantee
                       </td>
                       <td className="text-deep-green/80 text-[15px] py-3">
-                        Pure Pet Food (prepaid label provided)
+                        Jeko (prepaid label provided)
                       </td>
                     </tr>
                   </tbody>
@@ -675,8 +675,8 @@ export default function RefundPolicyPage() {
                 12. Gift Orders
               </h2>
               <p className="text-deep-green/80 text-[16px] leading-relaxed mb-4">
-                We know Pure Pet Food makes a wonderful gift for dog owners. If
-                you&apos;ve received a Pure Pet Food product as a gift and need to
+                We know Jeko makes a wonderful gift for dog owners. If
+                you&apos;ve received a Jeko product as a gift and need to
                 return it, here&apos;s what you need to know:
               </p>
               <ul className="list-disc pl-6 mb-4 space-y-2">
@@ -722,10 +722,10 @@ export default function RefundPolicyPage() {
                       Email
                     </h4>
                     <a
-                      href="mailto:help@purepetfood.com"
+                      href="mailto:help@jeko.am"
                       className="text-gold font-semibold hover:underline text-[16px]"
                     >
-                      help@purepetfood.com
+                      help@jeko.am
                     </a>
                     <p className="text-deep-green/60 text-sm mt-1">
                       We aim to respond within 24 hours
@@ -761,7 +761,7 @@ export default function RefundPolicyPage() {
                       Post
                     </h4>
                     <p className="text-deep-green/80 text-[16px]">
-                      Pure Pet Food Ltd
+                      Jeko Ltd
                       <br />
                       Customer Care Team
                       <br />

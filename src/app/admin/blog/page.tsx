@@ -678,7 +678,7 @@ export default function BlogPage() {
                       {form.meta_title || form.title}
                     </p>
                     <p className="text-emerald-700 text-xs mt-0.5 truncate">
-                      purepetfood.com/blog/{form.slug || '...'}
+                      jeko.am/blog/{form.slug || '...'}
                     </p>
                     <p className="text-gray-600 text-xs mt-1 line-clamp-2">
                       {form.meta_description || form.excerpt || 'No description set.'}

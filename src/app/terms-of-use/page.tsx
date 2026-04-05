@@ -33,13 +33,13 @@ export default function TermsOfUsePage() {
               1. Acceptance of Terms
             </h2>
             <p className="text-deep-green/80 text-[16px] leading-relaxed mb-4">
-              Welcome to Pure Pet Food. These Terms of Use (&quot;Terms&quot;) constitute a
+              Welcome to Jeko. These Terms of Use (&quot;Terms&quot;) constitute a
               legally binding agreement between you (&quot;you&quot;, &quot;your&quot;, or
-              &quot;User&quot;) and Pure Pet Food Ltd (&quot;Pure Pet Food&quot;, &quot;we&quot;,
+              &quot;User&quot;) and Jeko Ltd (&quot;Jeko&quot;, &quot;we&quot;,
               &quot;us&quot;, or &quot;our&quot;), a company registered in England and Wales.
             </p>
             <p className="text-deep-green/80 text-[16px] leading-relaxed mb-4">
-              By accessing or using our website at purepetfood.com (the &quot;Website&quot;),
+              By accessing or using our website at jeko.am (the &quot;Website&quot;),
               placing orders, creating an account, subscribing to our meal plans, or engaging
               with our community features, you acknowledge that you have read, understood, and
               agree to be bound by these Terms, together with our{" "}
@@ -59,12 +59,12 @@ export default function TermsOfUsePage() {
               capacity to enter into these Terms.
             </p>
 
-            {/* 2. About Pure Pet Food */}
+            {/* 2. About Jeko */}
             <h2 className="text-deep-green font-rubik font-bold text-2xl mb-4 mt-12">
-              2. About Pure Pet Food
+              2. About Jeko
             </h2>
             <p className="text-deep-green/80 text-[16px] leading-relaxed mb-4">
-              Pure Pet Food is a natural dog food company dedicated to providing freshly
+              Jeko is a natural dog food company dedicated to providing freshly
               prepared, nutritionally balanced meals made from 100% natural, human-grade
               ingredients. We operate as both an e-commerce platform and a subscription-based
               meal delivery service, offering personalised nutrition plans tailored to your
@@ -92,7 +92,7 @@ export default function TermsOfUsePage() {
               </li>
             </ul>
             <p className="text-deep-green/80 text-[16px] leading-relaxed mb-4">
-              Pure Pet Food Ltd is registered in England and Wales with company number
+              Jeko Ltd is registered in England and Wales with company number
               09498491. Our registered office is located at Unit 1, Brookfields Park,
               Manvers, Rotherham, South Yorkshire, S63 5DR, United Kingdom.
             </p>
@@ -122,8 +122,8 @@ export default function TermsOfUsePage() {
             <p className="text-deep-green/80 text-[16px] leading-relaxed mb-4">
               You are responsible for maintaining the confidentiality of your account
               credentials, including your password. You agree to notify us immediately at{" "}
-              <a href="mailto:help@purepetfood.com" className="text-deep-green underline font-semibold">
-                help@purepetfood.com
+              <a href="mailto:help@jeko.am" className="text-deep-green underline font-semibold">
+                help@jeko.am
               </a>{" "}
               if you become aware of any unauthorised use of your account or any other breach
               of security. We shall not be liable for any loss or damage arising from your
@@ -149,7 +149,7 @@ export default function TermsOfUsePage() {
               4.1 Subscription Plans
             </p>
             <p className="text-deep-green/80 text-[16px] leading-relaxed mb-4">
-              Pure Pet Food offers personalised subscription meal plans designed around your
+              Jeko offers personalised subscription meal plans designed around your
               dog&apos;s individual nutritional needs. When you create a plan, we will ask you
               questions about your dog&apos;s breed, age, weight, activity level, and any
               known health conditions or dietary sensitivities. Based on this information, we
@@ -231,7 +231,7 @@ export default function TermsOfUsePage() {
             <p className="text-deep-green/80 text-[16px] leading-relaxed mb-4">
               When you place an order, you will receive an email acknowledging receipt of your
               order. Please note that this acknowledgement does not constitute acceptance of
-              your order. A binding contract between you and Pure Pet Food is formed only when
+              your order. A binding contract between you and Jeko is formed only when
               we send you a dispatch confirmation email. We reserve the right to refuse or
               cancel any order for any reason, including but not limited to product
               availability, errors in pricing or product information, or suspected fraudulent
@@ -303,8 +303,8 @@ export default function TermsOfUsePage() {
               If your order arrives damaged, with missing items, or does not arrive within the
               expected timeframe, please contact us within 48 hours of the expected delivery
               date at{" "}
-              <a href="mailto:help@purepetfood.com" className="text-deep-green underline font-semibold">
-                help@purepetfood.com
+              <a href="mailto:help@jeko.am" className="text-deep-green underline font-semibold">
+                help@jeko.am
               </a>
               . We will investigate the issue and, where appropriate, arrange a replacement
               delivery or issue a refund. Risk of loss and damage to products passes to you
@@ -409,7 +409,7 @@ export default function TermsOfUsePage() {
               9. Pet Health Disclaimer
             </h2>
             <p className="text-deep-green/80 text-[16px] leading-relaxed mb-4">
-              Pure Pet Food provides nutritionally balanced meals formulated to meet the
+              Jeko provides nutritionally balanced meals formulated to meet the
               dietary needs of dogs. However, our products and services are not a substitute
               for professional veterinary care. We strongly recommend the following:
             </p>
@@ -434,7 +434,7 @@ export default function TermsOfUsePage() {
               </li>
             </ul>
             <p className="text-deep-green/80 text-[16px] leading-relaxed mb-4">
-              Pure Pet Food shall not be held liable for any adverse health effects resulting
+              Jeko shall not be held liable for any adverse health effects resulting
               from the use of our products, particularly where the products have been used
               contrary to the feeding guidelines, stored improperly, or administered without
               appropriate veterinary consultation for dogs with known health conditions.
@@ -460,7 +460,7 @@ export default function TermsOfUsePage() {
               10.2 Licence Grant
             </p>
             <p className="text-deep-green/80 text-[16px] leading-relaxed mb-4">
-              By submitting User Content to our Website, you grant Pure Pet Food a
+              By submitting User Content to our Website, you grant Jeko a
               non-exclusive, worldwide, royalty-free, perpetual, irrevocable, sublicensable
               licence to use, reproduce, modify, adapt, publish, translate, distribute,
               display, and create derivative works from your User Content in any media format
@@ -482,7 +482,7 @@ export default function TermsOfUsePage() {
               10.4 Content Responsibility
             </p>
             <p className="text-deep-green/80 text-[16px] leading-relaxed mb-4">
-              You are solely responsible for the User Content you submit. Pure Pet Food does
+              You are solely responsible for the User Content you submit. Jeko does
               not endorse, guarantee, or assume responsibility for any User Content. Any
               reliance you place on User Content posted by other users is at your own risk.
             </p>
@@ -526,8 +526,8 @@ export default function TermsOfUsePage() {
               <li className="text-deep-green/80 text-[16px] leading-relaxed">
                 <strong>Report concerns:</strong> If you encounter content or behaviour that
                 violates these guidelines, please report it to our team at{" "}
-                <a href="mailto:community@purepetfood.com" className="text-deep-green underline font-semibold">
-                  community@purepetfood.com
+                <a href="mailto:community@jeko.am" className="text-deep-green underline font-semibold">
+                  community@jeko.am
                 </a>
                 .
               </li>
@@ -545,8 +545,7 @@ export default function TermsOfUsePage() {
               All content on the Website, including but not limited to text, graphics, logos,
               icons, images, audio clips, video content, digital downloads, data compilations,
               software, trademarks, trade names, and the overall design and layout of the
-              Website (collectively, &quot;Our Content&quot;), is the property of Pure Pet
-              Food Ltd or its licensors and is protected by United Kingdom and international
+              Website (collectively, &quot;Our Content&quot;), is the property of Jeko Ltd or its licensors and is protected by United Kingdom and international
               copyright, trademark, patent, and other intellectual property laws.
             </p>
             <p className="text-deep-green/80 text-[16px] leading-relaxed mb-4">
@@ -570,9 +569,8 @@ export default function TermsOfUsePage() {
               </li>
             </ul>
             <p className="text-deep-green/80 text-[16px] leading-relaxed mb-4">
-              The &quot;Pure Pet Food&quot; name, logo, and all related names, logos,
-              product and service names, designs, and slogans are trademarks of Pure Pet
-              Food Ltd. You must not use such marks without our prior written permission.
+              The &quot;Jeko&quot; name, logo, and all related names, logos,
+              product and service names, designs, and slogans are trademarks of Jeko Ltd. You must not use such marks without our prior written permission.
             </p>
 
             {/* 13. Limitation of Liability */}
@@ -580,7 +578,7 @@ export default function TermsOfUsePage() {
               13. Limitation of Liability
             </h2>
             <p className="text-deep-green/80 text-[16px] leading-relaxed mb-4">
-              To the fullest extent permitted by applicable law, Pure Pet Food Ltd, its
+              To the fullest extent permitted by applicable law, Jeko Ltd, its
               directors, officers, employees, agents, suppliers, and affiliates shall not be
               liable for any indirect, incidental, special, consequential, or punitive
               damages, including but not limited to loss of profits, data, use, goodwill, or
@@ -620,7 +618,7 @@ export default function TermsOfUsePage() {
               14. Indemnification
             </h2>
             <p className="text-deep-green/80 text-[16px] leading-relaxed mb-4">
-              You agree to indemnify, defend, and hold harmless Pure Pet Food Ltd, its
+              You agree to indemnify, defend, and hold harmless Jeko Ltd, its
               directors, officers, employees, agents, suppliers, and affiliates from and
               against any and all claims, liabilities, damages, losses, costs, expenses, or
               fees (including reasonable legal fees) arising out of or relating to:
@@ -675,8 +673,8 @@ export default function TermsOfUsePage() {
               We are committed to resolving disputes fairly and efficiently. If you have a
               complaint or dispute regarding our products or services, we encourage you to
               first contact our customer support team at{" "}
-              <a href="mailto:help@purepetfood.com" className="text-deep-green underline font-semibold">
-                help@purepetfood.com
+              <a href="mailto:help@jeko.am" className="text-deep-green underline font-semibold">
+                help@jeko.am
               </a>{" "}
               so that we can attempt to resolve the matter informally.
             </p>
@@ -741,7 +739,7 @@ export default function TermsOfUsePage() {
             </p>
             <div className="bg-white rounded-xl p-6 mb-4 shadow-sm">
               <p className="text-deep-green font-rubik font-semibold text-lg mb-3">
-                Pure Pet Food Ltd
+                Jeko Ltd
               </p>
               <ul className="space-y-2">
                 <li className="text-deep-green/80 text-[16px] leading-relaxed">
@@ -750,20 +748,20 @@ export default function TermsOfUsePage() {
                 </li>
                 <li className="text-deep-green/80 text-[16px] leading-relaxed">
                   <strong>Email:</strong>{" "}
-                  <a href="mailto:help@purepetfood.com" className="text-deep-green underline font-semibold">
-                    help@purepetfood.com
+                  <a href="mailto:help@jeko.am" className="text-deep-green underline font-semibold">
+                    help@jeko.am
                   </a>
                 </li>
                 <li className="text-deep-green/80 text-[16px] leading-relaxed">
                   <strong>Community enquiries:</strong>{" "}
-                  <a href="mailto:community@purepetfood.com" className="text-deep-green underline font-semibold">
-                    community@purepetfood.com
+                  <a href="mailto:community@jeko.am" className="text-deep-green underline font-semibold">
+                    community@jeko.am
                   </a>
                 </li>
                 <li className="text-deep-green/80 text-[16px] leading-relaxed">
                   <strong>Website:</strong>{" "}
                   <Link href="/" className="text-deep-green underline font-semibold">
-                    www.purepetfood.com
+                    www.jeko.am
                   </Link>
                 </li>
               </ul>

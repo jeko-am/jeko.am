@@ -5,7 +5,7 @@ import Image from "next/image";
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export default function WhatIsPure({ content }: { content?: Record<string, any> }) {
-  const heading = content?.heading || "What is Pure dog food?";
+  const heading = content?.heading || "What is Jeko pet food?";
   const description = content?.description || "A natural, healthy dog food designed to take the stress out of meal times.\n\nSimply add water and stir to quickly rehydrate the food and create a healthy, nutritious meal your pup will love.";
   const image = content?.image || "https://www.datocms-assets.com/55536/1689943504-healthy-dog-food-subscription.jpg?auto=format&fit=crop&h=600&w=1000";
 
@@ -18,7 +18,7 @@ export default function WhatIsPure({ content }: { content?: Record<string, any> 
         <div className="w-full md:w-[42%] relative min-h-[400px] md:min-h-[500px]">
           <Image
             src={image}
-            alt="Preparing Pure dog food"
+            alt="Preparing Jeko pet food"
             fill
             unoptimized
             className="object-cover"

@@ -95,7 +95,7 @@ function LoginForm() {
             <span className="text-deep-green font-bold text-2xl">PP</span>
           </div>
           <h1 className="text-2xl font-bold text-white">Sign in to Admin</h1>
-          <p className="text-white/50 text-sm mt-1">Pure Pet Food Admin Panel</p>
+          <p className="text-white/50 text-sm mt-1">Jeko Admin Panel</p>
         </div>
 
         {/* Login Card */}
@@ -124,7 +124,7 @@ function LoginForm() {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 disabled={submitting}
-                placeholder="admin@purepetfood.com"
+                placeholder="admin@jeko.am"
                 className="w-full px-4 py-3 border border-gray-300 rounded-xl text-gray-900 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-deep-green focus:border-transparent transition-shadow disabled:bg-gray-50 disabled:text-gray-500"
               />
             </div>
@@ -186,7 +186,7 @@ function LoginForm() {
 
         {/* Footer */}
         <p className="text-center text-white/30 text-xs mt-6">
-          Pure Pet Food Admin &middot; Authorized personnel only
+          Jeko Admin &middot; Authorized personnel only
         </p>
       </div>
     </div>
