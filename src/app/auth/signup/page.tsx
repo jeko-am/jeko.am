@@ -933,7 +933,7 @@ export default function SignupPage() {
                 <p className="text-deep-green/50 text-sm mb-8">Add a photo and tell us what makes them special</p>
 
                 {/* Photo upload */}
-                <button type="button" onClick={() => fileInputRef.current?.click()} className="relative group mx-auto block mb-6">
+                <button type="button" onClick={() => fileInputRef.current?.click()} className="relative group mx-auto block mb-3">
                   <div className={`w-36 h-36 rounded-full border-3 border-dashed flex items-center justify-center overflow-hidden transition-all duration-200 ${
                     profilePhotoPreview ? 'border-deep-green border-solid' : 'border-gray-300 hover:border-gold group-hover:border-gold'
                   }`}>
@@ -959,6 +959,9 @@ export default function SignupPage() {
                     </div>
                   )}
                 </button>
+                {/* Photo guidance */}
+                <p className="text-xs text-deep-green/50 mb-1">📸 Please upload a clear photo of your pet — pets only, no humans!</p>
+                <p className="text-xs text-gray-400 mb-5">Best size: at least 400×400px · JPG, PNG or WebP · max 5MB</p>
                 <input ref={fileInputRef} type="file" accept="image/jpeg,image/png,image/webp,image/gif" className="hidden" onChange={handlePhotoSelect} />
                 {errors.profilePhoto && <p className="text-red-500 text-xs mb-4">{errors.profilePhoto}</p>}
 
@@ -968,7 +971,7 @@ export default function SignupPage() {
                   onChange={(e) => setBio(e.target.value)}
                   rows={3}
                   maxLength={500}
-                  placeholder={`What makes ${petName} one-of-a-kind? A fun fact, quirky habit, or special talent...`}
+                  placeholder={`Anything special about ${petName} you think Jeko should know?`}
                   className="w-full px-5 py-4 border-2 border-gray-200 rounded-2xl text-gray-900 placeholder:text-gray-300 focus:outline-none focus:ring-2 focus:ring-deep-green focus:border-transparent transition-shadow resize-none text-sm"
                 />
                 <p className="text-xs text-gray-400 text-right mt-1 mb-6">{bio.length}/500</p>
