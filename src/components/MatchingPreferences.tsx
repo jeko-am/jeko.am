@@ -250,53 +250,53 @@ export default function MatchingPreferences({ petProfileId, onPreferencesChange 
 
           {/* Age Range */}
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
-              Age Range: {preferences.preferred_age_min} - {preferences.preferred_age_max} years
-            </label>
-            <div className="flex items-center space-x-4">
-              <input
-                type="range"
-                min="0"
-                max="20"
+            <label className="block text-sm font-medium text-gray-700 mb-2">Age Range (years)</label>
+            <div className="flex items-center gap-2">
+              <select
                 value={preferences.preferred_age_min}
                 onChange={(e) => updatePreference("preferred_age_min", parseInt(e.target.value))}
-                className="flex-1"
-              />
-              <input
-                type="range"
-                min="0"
-                max="20"
+                className="w-24 px-2 py-1.5 border border-gray-300 rounded-lg text-sm bg-white focus:outline-none focus:ring-2 focus:ring-gold"
+              >
+                {Array.from({ length: 21 }, (_, i) => (
+                  <option key={i} value={i}>{i} yr</option>
+                ))}
+              </select>
+              <span className="text-gray-400 text-sm">to</span>
+              <select
                 value={preferences.preferred_age_max}
                 onChange={(e) => updatePreference("preferred_age_max", parseInt(e.target.value))}
-                className="flex-1"
-              />
+                className="w-24 px-2 py-1.5 border border-gray-300 rounded-lg text-sm bg-white focus:outline-none focus:ring-2 focus:ring-gold"
+              >
+                {Array.from({ length: 21 }, (_, i) => (
+                  <option key={i} value={i}>{i} yr</option>
+                ))}
+              </select>
             </div>
           </div>
 
           {/* Weight Range */}
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
-              Weight Range: {preferences.preferred_weight_min} - {preferences.preferred_weight_max} kg
-            </label>
-            <div className="flex items-center space-x-4">
-              <input
-                type="range"
-                min="0"
-                max="100"
-                step="1"
+            <label className="block text-sm font-medium text-gray-700 mb-2">Weight Range (kg)</label>
+            <div className="flex items-center gap-2">
+              <select
                 value={preferences.preferred_weight_min}
-                onChange={(e) => updatePreference("preferred_weight_min", parseFloat(e.target.value))}
-                className="flex-1"
-              />
-              <input
-                type="range"
-                min="0"
-                max="100"
-                step="1"
+                onChange={(e) => updatePreference("preferred_weight_min", parseInt(e.target.value))}
+                className="w-24 px-2 py-1.5 border border-gray-300 rounded-lg text-sm bg-white focus:outline-none focus:ring-2 focus:ring-gold"
+              >
+                {[0,1,2,3,4,5,7,10,15,20,25,30,40,50,60,70,80,90,100].map(w => (
+                  <option key={w} value={w}>{w} kg</option>
+                ))}
+              </select>
+              <span className="text-gray-400 text-sm">to</span>
+              <select
                 value={preferences.preferred_weight_max}
-                onChange={(e) => updatePreference("preferred_weight_max", parseFloat(e.target.value))}
-                className="flex-1"
-              />
+                onChange={(e) => updatePreference("preferred_weight_max", parseInt(e.target.value))}
+                className="w-24 px-2 py-1.5 border border-gray-300 rounded-lg text-sm bg-white focus:outline-none focus:ring-2 focus:ring-gold"
+              >
+                {[0,1,2,3,4,5,7,10,15,20,25,30,40,50,60,70,80,90,100].map(w => (
+                  <option key={w} value={w}>{w} kg</option>
+                ))}
+              </select>
             </div>
           </div>
         </div>
