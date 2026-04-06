@@ -10,7 +10,6 @@ import {
   TEMPERAMENTS,
   WALK_PREFERENCES,
   FAVORITE_ACTIVITIES,
-  COUNTRIES,
 } from '@/lib/constants';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
@@ -237,7 +236,7 @@ export default function SignupPage() {
   const [bio, setBio] = useState('');
   const [city, setCity] = useState('');
   const [state, setState] = useState('');
-  const [country, setCountry] = useState('Armenia');
+  const [country] = useState('Armenia');
 
   // Armenian provinces and cities
   const armenianProvinces: Record<string, string[]> = {
@@ -255,7 +254,7 @@ export default function SignupPage() {
   };
 
   const [province, setProvince] = useState('Yerevan');
-  const [stateDropdown, setStateDropdown] = useState('Central');
+  const [, setStateDropdown] = useState('Central');
   const [fullName, setFullName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');

@@ -1,4 +1,4 @@
-export type FieldType = 'text' | 'textarea' | 'image' | 'color' | 'url' | 'toggle' | 'number';
+export type FieldType = 'text' | 'textarea' | 'image' | 'color' | 'url' | 'toggle' | 'number' | 'list';
 
 export interface FieldDef {
   key: string;
@@ -774,6 +774,48 @@ const SIGNUP_SECTIONS: SectionSchema[] = [
 ];
 
 /* ═══════════════════════════════════════════════════════════════════════════
+   MATCHING PREFERENCES CONFIG
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+const PREFERENCES_CONFIG_SECTIONS: SectionSchema[] = [
+  {
+    name: 'Temperament Options', icon: ICON_PATHS.star, color: 'bg-purple-500',
+    fields: [
+      { key: 'options', label: 'Options', type: 'list', placeholder: 'Add a temperament option…' },
+    ],
+    defaultContent: { options: ['Friendly', 'Energetic', 'Calm', 'Playful', 'Protective', 'Shy'] },
+  },
+  {
+    name: 'Activity Levels', icon: ICON_PATHS.chart, color: 'bg-orange-500',
+    fields: [
+      { key: 'options', label: 'Options', type: 'list', placeholder: 'Add an activity level…' },
+    ],
+    defaultContent: { options: ['Low', 'Moderate', 'High', 'Very High'] },
+  },
+  {
+    name: 'Gender Options', icon: ICON_PATHS.users, color: 'bg-pink-500',
+    fields: [
+      { key: 'options', label: 'Options', type: 'list', placeholder: 'Add a gender option…' },
+    ],
+    defaultContent: { options: ['Male', 'Female', 'Unknown'] },
+  },
+  {
+    name: 'Walk Preferences', icon: ICON_PATHS.steps, color: 'bg-blue-500',
+    fields: [
+      { key: 'options', label: 'Options', type: 'list', placeholder: 'Add a walk preference…' },
+    ],
+    defaultContent: { options: ['Short walks', 'Long hikes', 'Off-lead runs', 'City strolls'] },
+  },
+  {
+    name: 'Favourite Activities', icon: ICON_PATHS.heart, color: 'bg-red-500',
+    fields: [
+      { key: 'options', label: 'Options', type: 'list', placeholder: 'Add a favourite activity…' },
+    ],
+    defaultContent: { options: ['Fetch', 'Swimming', 'Agility', 'Socialising', 'Tug of war', 'Frisbee'] },
+  },
+];
+
+/* ═══════════════════════════════════════════════════════════════════════════
    ALL PAGES CONFIG
    ═══════════════════════════════════════════════════════════════════════════ */
 
@@ -784,4 +826,11 @@ export const ALL_PAGE_CONFIGS: PageConfig[] = [
   { label: 'Recipes', slug: '/recipes', previewPath: '/recipes', indexKey: '_section_index', sections: RECIPES_SECTIONS },
   { label: 'Reviews', slug: '/reviews', previewPath: '/reviews', indexKey: '_section_index', sections: REVIEWS_SECTIONS },
   { label: 'Signup', slug: '/signup', previewPath: '/signup', indexKey: '_section_index', sections: SIGNUP_SECTIONS },
+  {
+    label: 'Matching Preferences',
+    slug: 'preferences-config',
+    previewPath: '/profile',
+    indexKey: '_section_index',
+    sections: PREFERENCES_CONFIG_SECTIONS,
+  },
 ];

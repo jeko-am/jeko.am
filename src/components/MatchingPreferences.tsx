@@ -41,6 +41,19 @@ export default function MatchingPreferences({ petProfileId, onPreferencesChange 
   const { user } = useAuth();
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
+  const [configOptions, setConfigOptions] = useState<{
+    temperaments: string[];
+    activityLevels: string[];
+    genders: string[];
+    walkPreferences: string[];
+    favoriteActivities: string[];
+  }>({
+    temperaments: ['Friendly', 'Energetic', 'Calm', 'Playful', 'Protective', 'Shy'],
+    activityLevels: ['Low', 'Moderate', 'High', 'Very High'],
+    genders: ['Male', 'Female', 'Unknown'],
+    walkPreferences: ['Short walks', 'Long hikes', 'Off-lead runs', 'City strolls'],
+    favoriteActivities: ['Fetch', 'Swimming', 'Agility', 'Socialising', 'Tug of war', 'Frisbee'],
+  });
   const [preferences, setPreferences] = useState<PreferencesState>({
     preferred_distance_km: 50,
     accept_any_city: true,
@@ -66,6 +79,43 @@ export default function MatchingPreferences({ petProfileId, onPreferencesChange 
       fetchPreferences();
     }
   }, [user, petProfileId]);
+
+  useEffect(() => {
+    async function loadConfig() {
+      try {
+        // Find the preferences-config page
+        const { data: pages } = await supabase
+          .from('pages')
+          .select('id')
+          .or('slug.eq.preferences-config,slug.eq./preferences-config')
+          .limit(1);
+        if (!pages?.[0]) return;
+
+        const { data: sectionData } = await supabase
+          .from('page_sections')
+          .select('*')
+          .eq('page_id', pages[0].id);
+        if (!sectionData) return;
+
+        const find = (name: string) => {
+          const s = sectionData.find(s => s.section_type === name);
+          const opts = (s?.content as Record<string, unknown>)?.options;
+          return Array.isArray(opts) && opts.length > 0 ? (opts as string[]) : null;
+        };
+
+        setConfigOptions(prev => ({
+          temperaments: find('Temperament Options') ?? prev.temperaments,
+          activityLevels: find('Activity Levels') ?? prev.activityLevels,
+          genders: find('Gender Options') ?? prev.genders,
+          walkPreferences: find('Walk Preferences') ?? prev.walkPreferences,
+          favoriteActivities: find('Favourite Activities') ?? prev.favoriteActivities,
+        }));
+      } catch {
+        // silently keep defaults
+      }
+    }
+    loadConfig();
+  }, []);
 
   const fetchPreferences = async () => {
     try {
@@ -209,24 +259,17 @@ export default function MatchingPreferences({ petProfileId, onPreferencesChange 
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-2">Gender Preference</label>
             <div className="space-x-4">
-              <label className="inline-flex items-center">
-                <input
-                  type="checkbox"
-                  checked={(preferences.preferred_genders || []).includes("Male")}
-                  onChange={() => toggleArrayItem("preferred_genders", "Male")}
-                  className="mr-2 h-4 w-4 text-gold focus:ring-gold border-gray-300 rounded"
-                />
-                <span className="text-sm">Male</span>
-              </label>
-              <label className="inline-flex items-center">
-                <input
-                  type="checkbox"
-                  checked={(preferences.preferred_genders || []).includes("Female")}
-                  onChange={() => toggleArrayItem("preferred_genders", "Female")}
-                  className="mr-2 h-4 w-4 text-gold focus:ring-gold border-gray-300 rounded"
-                />
-                <span className="text-sm">Female</span>
-              </label>
+              {configOptions.genders.map(gender => (
+                <label key={gender} className="inline-flex items-center">
+                  <input
+                    type="checkbox"
+                    checked={(preferences.preferred_genders || []).includes(gender)}
+                    onChange={() => toggleArrayItem("preferred_genders", gender)}
+                    className="mr-2 h-4 w-4 text-gold focus:ring-gold border-gray-300 rounded"
+                  />
+                  <span className="text-sm">{gender}</span>
+                </label>
+              ))}
             </div>
           </div>
 
@@ -311,7 +354,7 @@ export default function MatchingPreferences({ petProfileId, onPreferencesChange 
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-2">Temperament Preferences</label>
             <div className="space-x-4">
-              {["Friendly", "Energetic", "Calm", "Playful", "Protective", "Shy"].map(temperament => (
+              {configOptions.temperaments.map(temperament => (
                 <label key={temperament} className="inline-flex items-center">
                   <input
                     type="checkbox"
@@ -329,7 +372,7 @@ export default function MatchingPreferences({ petProfileId, onPreferencesChange 
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-2">Activity Level</label>
             <div className="space-x-4">
-              {["Low", "Moderate", "High", "Very High"].map(level => (
+              {configOptions.activityLevels.map(level => (
                 <label key={level} className="inline-flex items-center">
                   <input
                     type="checkbox"

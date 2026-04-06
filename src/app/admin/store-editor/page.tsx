@@ -2,7 +2,7 @@
 
 import { supabase } from '@/lib/supabase';
 import { useEffect, useState, useCallback, useRef, DragEvent, ChangeEvent } from 'react';
-import { ALL_PAGE_CONFIGS, type SectionSchema, type PageConfig } from './schemas';
+import { ALL_PAGE_CONFIGS, type SectionSchema, type PageConfig, type FieldDef } from './schemas';
 
 /* ═══════════════════════════════════════════════════════════════════════════
    TYPES
@@ -162,6 +162,83 @@ function ImageField({
           placeholder="Or paste image URL..."
           className="w-full px-3 py-1.5 text-xs border border-gray-200 rounded-lg focus:ring-2 focus:ring-deep-green/20 focus:border-deep-green outline-none text-gray-600 placeholder:text-gray-300"
         />
+      </div>
+    </div>
+  );
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   LIST FIELD COMPONENT
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+function ListField({
+  field,
+  value,
+  updateField,
+}: {
+  field: FieldDef;
+  value: unknown;
+  updateField: (key: string, value: unknown) => void;
+}) {
+  const items: string[] = Array.isArray(value) ? (value as string[]) : [];
+  const [newItem, setNewItem] = useState('');
+
+  return (
+    <div>
+      <label className="block text-[13px] font-medium text-gray-700 mb-2">{field.label}</label>
+      <div className="space-y-1 mb-2">
+        {items.map((item, i) => (
+          <div key={i} className="flex items-center gap-2 bg-gray-50 rounded-lg px-3 py-1.5">
+            <input
+              type="text"
+              value={item}
+              onChange={(e) => {
+                const next = [...items];
+                next[i] = e.target.value;
+                updateField(field.key, next);
+              }}
+              className="flex-1 bg-transparent text-sm text-gray-800 outline-none"
+            />
+            <button
+              onClick={() => updateField(field.key, items.filter((_, j) => j !== i))}
+              className="text-gray-300 hover:text-red-400 transition-colors flex-shrink-0"
+              title="Remove"
+            >
+              <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </button>
+          </div>
+        ))}
+        {items.length === 0 && (
+          <p className="text-xs text-gray-400 italic px-1">No options yet — add one below</p>
+        )}
+      </div>
+      <div className="flex gap-2">
+        <input
+          type="text"
+          value={newItem}
+          onChange={(e) => setNewItem(e.target.value)}
+          onKeyDown={(e) => {
+            if (e.key === 'Enter' && newItem.trim()) {
+              updateField(field.key, [...items, newItem.trim()]);
+              setNewItem('');
+            }
+          }}
+          placeholder={field.placeholder || 'Type and press Enter…'}
+          className="flex-1 px-3 py-1.5 text-sm border border-gray-200 rounded-lg focus:ring-2 focus:ring-deep-green/20 focus:border-deep-green outline-none"
+        />
+        <button
+          onClick={() => {
+            if (newItem.trim()) {
+              updateField(field.key, [...items, newItem.trim()]);
+              setNewItem('');
+            }
+          }}
+          className="px-3 py-1.5 bg-deep-green text-white text-sm rounded-lg hover:bg-deep-green/90 transition-colors"
+        >
+          Add
+        </button>
       </div>
     </div>
   );
@@ -347,13 +424,47 @@ export default function AdminStoreEditorPage() {
     setHasChanges(true);
   }
 
+  // ─── Ensure page exists (auto-create if needed) ───────────────────────
+  async function ensurePageExists(slug: string): Promise<Page | null> {
+    // Try to find existing page
+    const { data: existing } = await supabase
+      .from('pages')
+      .select('*')
+      .or(`slug.eq.${slug},slug.eq./${slug}`)
+      .limit(1);
+    if (existing?.[0]) return existing[0] as Page;
+
+    // Create it
+    const { data: created, error } = await supabase
+      .from('pages')
+      .insert([{
+        title: activePageConfig.label,
+        slug: slug,
+        content: '{}',
+        meta_title: activePageConfig.label,
+        meta_description: '',
+        status: 'published',
+        template: 'default',
+      }])
+      .select()
+      .single();
+    if (error) throw error;
+    return created as Page;
+  }
+
   // ─── Save section ─────────────────────────────────────────────────────
   async function saveSection() {
-    if (selectedIndex === null || !currentPage) return;
+    if (selectedIndex === null) return;
     setSaving(true);
     setError(null);
 
     try {
+      let page = currentPage;
+      if (!page) {
+        page = await ensurePageExists(activePageConfig.slug);
+        setCurrentPage(page);
+      }
+
       const indexKey = activePageConfig.indexKey;
       const contentToSave = { ...editValues, [indexKey]: selectedIndex };
       // For homepage backward compat, also include _homepage_index
@@ -373,7 +484,7 @@ export default function AdminStoreEditorPage() {
         const { error: err } = await supabase
           .from('page_sections')
           .insert([{
-            page_id: currentPage.id,
+            page_id: page!.id,
             section_type: schema.name,
             content: contentToSave,
             sort_order: selectedIndex,
@@ -386,7 +497,7 @@ export default function AdminStoreEditorPage() {
       const { data } = await supabase
         .from('page_sections')
         .select('*')
-        .eq('page_id', currentPage.id)
+        .eq('page_id', page!.id)
         .order('sort_order', { ascending: true });
       setSections(data || []);
 
@@ -421,21 +532,6 @@ export default function AdminStoreEditorPage() {
         <div className="flex flex-col items-center gap-3">
           <div className="w-8 h-8 border-3 border-deep-green border-t-transparent rounded-full animate-spin" />
           <p className="text-sm text-gray-500">Loading store editor...</p>
-        </div>
-      </div>
-    );
-  }
-
-  if (!currentPage) {
-    return (
-      <div>
-        <h1 className="text-2xl font-bold text-gray-900 mb-4">Store Editor</h1>
-        <div className="bg-white rounded-xl border border-gray-200 p-12 text-center">
-          <h3 className="text-lg font-semibold text-gray-800 mb-2">No Page Found</h3>
-          <p className="text-sm text-gray-500 mb-4">No page found for &ldquo;{activePageConfig.label}&rdquo;. Create it in Pages first.</p>
-          <a href="/admin/pages" className="inline-flex px-4 py-2 bg-deep-green text-white rounded-lg text-sm font-medium hover:bg-deep-green/90 transition-colors">
-            Go to Pages
-          </a>
         </div>
       </div>
     );
@@ -635,6 +731,17 @@ export default function AdminStoreEditorPage() {
                           className="w-full px-3 py-2 text-sm border border-gray-200 rounded-lg focus:ring-2 focus:ring-deep-green/20 focus:border-deep-green outline-none resize-y"
                         />
                       </div>
+                    );
+                  }
+
+                  if (field.type === 'list') {
+                    return (
+                      <ListField
+                        key={field.key}
+                        field={field}
+                        value={value}
+                        updateField={updateField}
+                      />
                     );
                   }
 

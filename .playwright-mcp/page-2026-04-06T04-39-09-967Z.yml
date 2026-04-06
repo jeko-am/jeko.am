@@ -1,0 +1,623 @@
+- generic [active] [ref=e1]:
+  - banner [ref=e2]:
+    - generic [ref=e4]:
+      - link "JEKO" [ref=e5] [cursor=pointer]:
+        - /url: /
+        - generic [ref=e6]: JEKO
+      - navigation [ref=e7]:
+        - link "About" [ref=e9] [cursor=pointer]:
+          - /url: /about
+          - text: About
+          - img [ref=e10]
+        - link "Community" [ref=e13] [cursor=pointer]:
+          - /url: /community
+          - text: Community
+          - img [ref=e14]
+        - link "Shop" [ref=e17] [cursor=pointer]:
+          - /url: /products
+        - link "Reviews" [ref=e19] [cursor=pointer]:
+          - /url: /reviews
+        - link "Health & breeds" [ref=e21] [cursor=pointer]:
+          - /url: /benefits
+          - text: Health & breeds
+          - img [ref=e22]
+      - generic [ref=e24]:
+        - button "Shopping cart" [ref=e25] [cursor=pointer]:
+          - img [ref=e26]
+        - link "Help" [ref=e30] [cursor=pointer]:
+          - /url: /help
+        - generic [ref=e531]:
+          - link "Admin Console" [ref=e532] [cursor=pointer]:
+            - /url: /admin/dashboard
+            - img [ref=e533]
+            - text: Admin Console
+          - button "Logout" [ref=e536] [cursor=pointer]:
+            - img [ref=e537]
+            - text: Logout
+        - link "Sign up" [ref=e32] [cursor=pointer]:
+          - /url: /auth/signup
+  - main [ref=e33]:
+    - generic [ref=e35]:
+      - img "Happy dog eating fresh food from a bowl with product packages" [ref=e37]
+      - generic [ref=e40]:
+        - heading "The easiest way to feed healthy, natural dog food" [level=1] [ref=e41]:
+          - text: The easiest way to feed healthy,
+          - text: natural dog food
+        - paragraph [ref=e42]: Enjoy fresh food without the fuss, from only 89p a day
+        - link "Get started today" [ref=e44] [cursor=pointer]:
+          - /url: /auth/signup
+        - generic [ref=e45]:
+          - generic [ref=e46]:
+            - img [ref=e48]
+            - img [ref=e51]
+            - img [ref=e54]
+            - img [ref=e57]
+            - img [ref=e61]
+          - generic [ref=e63]:
+            - generic [ref=e64]: Excellent
+            - generic [ref=e65]: 4.6 out of 5
+            - img [ref=e66]
+            - generic [ref=e68]: Trustpilot
+    - link "25% off your first box+10% off your next box" [ref=e70] [cursor=pointer]:
+      - /url: /signup
+      - generic [ref=e71]:
+        - img [ref=e72]
+        - paragraph [ref=e74]: 25% off your first box+10% off your next box
+        - img [ref=e75]
+    - generic [ref=e78]:
+      - generic [ref=e79]:
+        - generic [ref=e80]:
+          - img "Preparing Jeko pet food" [ref=e81]
+          - img [ref=e83]
+          - img [ref=e86]
+        - generic [ref=e89]:
+          - heading "What is Pure dog food?" [level=2] [ref=e90]
+          - generic [ref=e91]:
+            - paragraph [ref=e92]: A natural, healthy dog food designed to take the stress out of meal times.
+            - paragraph [ref=e93]: Simply add water and stir to quickly rehydrate the food and create a healthy, nutritious meal your pup will love.
+          - link "Get started" [ref=e94] [cursor=pointer]:
+            - /url: /auth/signup
+      - generic:
+        - img
+    - generic [ref=e96]:
+      - generic:
+        - img
+      - generic:
+        - img
+      - generic [ref=e98]:
+        - generic [ref=e99]:
+          - img "Store in the cupboard" [ref=e101]
+          - paragraph [ref=e102]: Store in the cupboard
+        - generic [ref=e103]:
+          - img "From only 89p per day" [ref=e105]
+          - paragraph [ref=e106]: From only 89p per day
+        - generic [ref=e107]:
+          - img "Just add water and serve" [ref=e109]
+          - paragraph [ref=e110]: Just add water and serve
+        - generic [ref=e111]:
+          - img "Ready in 10 seconds" [ref=e113]
+          - paragraph [ref=e114]: Ready in 10 seconds
+    - generic [ref=e117]:
+      - generic [ref=e118]:
+        - generic [ref=e119]: Our Products
+        - heading "Handpicked for Your Pup" [level=2] [ref=e120]
+        - paragraph [ref=e121]: Fresh, natural ingredients your dog will love. Every meal made with care.
+      - generic [ref=e122]:
+        - link "Test Product - Beef Formula View Product Test Product - Beef Formula Premium beef formula for adult dogs £28.99 (4.9) Add to Cart" [ref=e539] [cursor=pointer]:
+          - /url: /products/test-product-beef-formula
+          - generic [ref=e540]:
+            - generic [ref=e541]:
+              - img "Test Product - Beef Formula" [ref=e542]
+              - generic [ref=e544]: View Product
+            - generic [ref=e545]:
+              - heading "Test Product - Beef Formula" [level=3] [ref=e546]
+              - paragraph [ref=e547]: Premium beef formula for adult dogs
+              - generic [ref=e549]: £28.99
+              - generic [ref=e550]:
+                - img [ref=e551]
+                - img [ref=e553]
+                - img [ref=e555]
+                - img [ref=e557]
+                - img [ref=e559]
+                - generic [ref=e561]: (4.9)
+              - button "Add to Cart" [ref=e562]
+        - link "Cloudinary Test Product View Product Cloudinary Test Product £19.99 (4.9) Add to Cart" [ref=e563] [cursor=pointer]:
+          - /url: /products/cloudinary-test-product
+          - generic [ref=e564]:
+            - generic [ref=e565]:
+              - img "Cloudinary Test Product" [ref=e566]
+              - generic [ref=e568]: View Product
+            - generic [ref=e569]:
+              - heading "Cloudinary Test Product" [level=3] [ref=e570]
+              - generic [ref=e572]: £19.99
+              - generic [ref=e573]:
+                - img [ref=e574]
+                - img [ref=e576]
+                - img [ref=e578]
+                - img [ref=e580]
+                - img [ref=e582]
+                - generic [ref=e584]: (4.9)
+              - button "Add to Cart" [ref=e585]
+        - link "Renal Support Duck Recipe View Product Renal Support Duck Recipe Low-phosphorus duck recipe specially formulated for kidney health. £36.99 (4.9) Add to Cart" [ref=e586] [cursor=pointer]:
+          - /url: /products/renal-support-duck-recipe
+          - generic [ref=e587]:
+            - generic [ref=e588]:
+              - img "Renal Support Duck Recipe" [ref=e589]
+              - generic [ref=e591]: View Product
+            - generic [ref=e592]:
+              - heading "Renal Support Duck Recipe" [level=3] [ref=e593]
+              - paragraph [ref=e594]: Low-phosphorus duck recipe specially formulated for kidney health.
+              - generic [ref=e596]: £36.99
+              - generic [ref=e597]:
+                - img [ref=e598]
+                - img [ref=e600]
+                - img [ref=e602]
+                - img [ref=e604]
+                - img [ref=e606]
+                - generic [ref=e608]: (4.9)
+              - button "Add to Cart" [ref=e609]
+        - link "Natural Dental Chew Sticks -25% View Product Natural Dental Chew Sticks All-natural dental chews that clean teeth and freshen breath. £14.99 £19.99 (4.9) Add to Cart" [ref=e610] [cursor=pointer]:
+          - /url: /products/natural-dental-chew-sticks
+          - generic [ref=e611]:
+            - generic [ref=e612]:
+              - img "Natural Dental Chew Sticks" [ref=e613]
+              - generic [ref=e614]: "-25%"
+              - generic [ref=e616]: View Product
+            - generic [ref=e617]:
+              - heading "Natural Dental Chew Sticks" [level=3] [ref=e618]
+              - paragraph [ref=e619]: All-natural dental chews that clean teeth and freshen breath.
+              - generic [ref=e620]:
+                - generic [ref=e621]: £14.99
+                - generic [ref=e622]: £19.99
+              - generic [ref=e623]:
+                - img [ref=e624]
+                - img [ref=e626]
+                - img [ref=e628]
+                - img [ref=e630]
+                - img [ref=e632]
+                - generic [ref=e634]: (4.9)
+              - button "Add to Cart" [ref=e635]
+      - link "Shop All Products" [ref=e148] [cursor=pointer]:
+        - /url: /products
+        - text: Shop All Products
+        - img [ref=e149]
+    - generic [ref=e153]:
+      - generic [ref=e154]:
+        - generic [ref=e155]:
+          - generic [ref=e156]: Trending Now
+          - heading "What Pet Parents Love" [level=2] [ref=e157]
+          - paragraph [ref=e158]: Our most popular picks, loved by thousands of happy dogs.
+        - generic [ref=e159]:
+          - button [ref=e160] [cursor=pointer]:
+            - img [ref=e161]
+          - button [ref=e163] [cursor=pointer]:
+            - img [ref=e164]
+      - generic [ref=e166]:
+        - link "Turkey & Sweet Potato View Product Turkey & Sweet Potato A delicious grain-free recipe packed with real turkey £29.99 (4.9) Add to Cart" [ref=e637] [cursor=pointer]:
+          - /url: /products/turkey-sweet-potato
+          - generic [ref=e638]:
+            - generic [ref=e639]:
+              - img "Turkey & Sweet Potato" [ref=e640]
+              - generic [ref=e642]: View Product
+            - generic [ref=e643]:
+              - heading "Turkey & Sweet Potato" [level=3] [ref=e644]
+              - paragraph [ref=e645]: A delicious grain-free recipe packed with real turkey
+              - generic [ref=e647]: £29.99
+              - generic [ref=e648]:
+                - img [ref=e649]
+                - img [ref=e651]
+                - img [ref=e653]
+                - img [ref=e655]
+                - img [ref=e657]
+                - generic [ref=e659]: (4.9)
+              - button "Add to Cart" [ref=e660]
+        - link "Chicken & Brown Rice -17% View Product Chicken & Brown Rice Tender chicken breast with wholesome brown rice for everyday nutrition. £24.99 £29.99 (4.9) Add to Cart" [ref=e662] [cursor=pointer]:
+          - /url: /products/chicken-brown-rice
+          - generic [ref=e663]:
+            - generic [ref=e664]:
+              - img "Chicken & Brown Rice" [ref=e665]
+              - generic [ref=e666]: "-17%"
+              - generic [ref=e668]: View Product
+            - generic [ref=e669]:
+              - heading "Chicken & Brown Rice" [level=3] [ref=e670]
+              - paragraph [ref=e671]: Tender chicken breast with wholesome brown rice for everyday nutrition.
+              - generic [ref=e672]:
+                - generic [ref=e673]: £24.99
+                - generic [ref=e674]: £29.99
+              - generic [ref=e675]:
+                - img [ref=e676]
+                - img [ref=e678]
+                - img [ref=e680]
+                - img [ref=e682]
+                - img [ref=e684]
+                - generic [ref=e686]: (4.9)
+              - button "Add to Cart" [ref=e687]
+        - link "Salmon & Potato Grain-Free View Product Salmon & Potato Grain-Free Wild-caught salmon with potato for dogs with sensitive stomachs. £32.99 (4.9) Add to Cart" [ref=e689] [cursor=pointer]:
+          - /url: /products/salmon-potato-grain-free
+          - generic [ref=e690]:
+            - generic [ref=e691]:
+              - img "Salmon & Potato Grain-Free" [ref=e692]
+              - generic [ref=e694]: View Product
+            - generic [ref=e695]:
+              - heading "Salmon & Potato Grain-Free" [level=3] [ref=e696]
+              - paragraph [ref=e697]: Wild-caught salmon with potato for dogs with sensitive stomachs.
+              - generic [ref=e699]: £32.99
+              - generic [ref=e700]:
+                - img [ref=e701]
+                - img [ref=e703]
+                - img [ref=e705]
+                - img [ref=e707]
+                - img [ref=e709]
+                - generic [ref=e711]: (4.9)
+              - button "Add to Cart" [ref=e712]
+        - link "Lamb & Mint Fresh Bites -20% View Product Lamb & Mint Fresh Bites Grass-fed lamb with garden mint for fresh breath and happy tummies. £27.99 £34.99 (4.9) Add to Cart" [ref=e714] [cursor=pointer]:
+          - /url: /products/lamb-mint-fresh-bites
+          - generic [ref=e715]:
+            - generic [ref=e716]:
+              - img "Lamb & Mint Fresh Bites" [ref=e717]
+              - generic [ref=e718]: "-20%"
+              - generic [ref=e720]: View Product
+            - generic [ref=e721]:
+              - heading "Lamb & Mint Fresh Bites" [level=3] [ref=e722]
+              - paragraph [ref=e723]: Grass-fed lamb with garden mint for fresh breath and happy tummies.
+              - generic [ref=e724]:
+                - generic [ref=e725]: £27.99
+                - generic [ref=e726]: £34.99
+              - generic [ref=e727]:
+                - img [ref=e728]
+                - img [ref=e730]
+                - img [ref=e732]
+                - img [ref=e734]
+                - img [ref=e736]
+                - generic [ref=e738]: (4.9)
+              - button "Add to Cart" [ref=e739]
+        - link "Puppy Growth Formula View Product Puppy Growth Formula Specially designed for growing puppies with extra DHA and calcium. £34.99 (4.9) Add to Cart" [ref=e741] [cursor=pointer]:
+          - /url: /products/puppy-growth-formula
+          - generic [ref=e742]:
+            - generic [ref=e743]:
+              - img "Puppy Growth Formula" [ref=e744]
+              - generic [ref=e746]: View Product
+            - generic [ref=e747]:
+              - heading "Puppy Growth Formula" [level=3] [ref=e748]
+              - paragraph [ref=e749]: Specially designed for growing puppies with extra DHA and calcium.
+              - generic [ref=e751]: £34.99
+              - generic [ref=e752]:
+                - img [ref=e753]
+                - img [ref=e755]
+                - img [ref=e757]
+                - img [ref=e759]
+                - img [ref=e761]
+                - generic [ref=e763]: (4.9)
+              - button "Add to Cart" [ref=e764]
+        - link "Premium Leather Collar - Forest Green -20% View Product Premium Leather Collar - Forest Green Handcrafted genuine leather collar in our signature deep green. £39.99 £49.99 (4.9) Add to Cart" [ref=e766] [cursor=pointer]:
+          - /url: /products/premium-leather-collar-forest-green
+          - generic [ref=e767]:
+            - generic [ref=e768]:
+              - img "Premium Leather Collar - Forest Green" [ref=e769]
+              - generic [ref=e770]: "-20%"
+              - generic [ref=e772]: View Product
+            - generic [ref=e773]:
+              - heading "Premium Leather Collar - Forest Green" [level=3] [ref=e774]
+              - paragraph [ref=e775]: Handcrafted genuine leather collar in our signature deep green.
+              - generic [ref=e776]:
+                - generic [ref=e777]: £39.99
+                - generic [ref=e778]: £49.99
+              - generic [ref=e779]:
+                - img [ref=e780]
+                - img [ref=e782]
+                - img [ref=e784]
+                - img [ref=e786]
+                - img [ref=e788]
+                - generic [ref=e790]: (4.9)
+              - button "Add to Cart" [ref=e791]
+        - link "Natural Dental Chew Sticks -25% View Product Natural Dental Chew Sticks All-natural dental chews that clean teeth and freshen breath. £14.99 £19.99 (4.9) Add to Cart" [ref=e793] [cursor=pointer]:
+          - /url: /products/natural-dental-chew-sticks
+          - generic [ref=e794]:
+            - generic [ref=e795]:
+              - img "Natural Dental Chew Sticks" [ref=e796]
+              - generic [ref=e797]: "-25%"
+              - generic [ref=e799]: View Product
+            - generic [ref=e800]:
+              - heading "Natural Dental Chew Sticks" [level=3] [ref=e801]
+              - paragraph [ref=e802]: All-natural dental chews that clean teeth and freshen breath.
+              - generic [ref=e803]:
+                - generic [ref=e804]: £14.99
+                - generic [ref=e805]: £19.99
+              - generic [ref=e806]:
+                - img [ref=e807]
+                - img [ref=e809]
+                - img [ref=e811]
+                - img [ref=e813]
+                - img [ref=e815]
+                - generic [ref=e817]: (4.9)
+              - button "Add to Cart" [ref=e818]
+        - link "Renal Support Duck Recipe View Product Renal Support Duck Recipe Low-phosphorus duck recipe specially formulated for kidney health. £36.99 (4.9) Add to Cart" [ref=e820] [cursor=pointer]:
+          - /url: /products/renal-support-duck-recipe
+          - generic [ref=e821]:
+            - generic [ref=e822]:
+              - img "Renal Support Duck Recipe" [ref=e823]
+              - generic [ref=e825]: View Product
+            - generic [ref=e826]:
+              - heading "Renal Support Duck Recipe" [level=3] [ref=e827]
+              - paragraph [ref=e828]: Low-phosphorus duck recipe specially formulated for kidney health.
+              - generic [ref=e830]: £36.99
+              - generic [ref=e831]:
+                - img [ref=e832]
+                - img [ref=e834]
+                - img [ref=e836]
+                - img [ref=e838]
+                - img [ref=e840]
+                - generic [ref=e842]: (4.9)
+              - button "Add to Cart" [ref=e843]
+    - generic [ref=e189]:
+      - generic [ref=e190]:
+        - heading "Don't just take our word for it" [level=2] [ref=e191]
+        - paragraph [ref=e192]: Listen to what others have to say about it
+      - generic [ref=e193]:
+        - button "Scroll left" [ref=e194] [cursor=pointer]:
+          - img [ref=e195]
+        - generic [ref=e197]:
+          - generic [ref=e198] [cursor=pointer]:
+            - generic [ref=e199]:
+              - img [ref=e203]
+              - generic [ref=e205]: 0:55
+            - paragraph [ref=e206]: Jeko vs kibble & raw
+          - generic [ref=e207] [cursor=pointer]:
+            - generic [ref=e208]:
+              - img [ref=e212]
+              - generic [ref=e214]: 0:38
+            - paragraph [ref=e215]: Feeding Jeko really is simple!
+          - generic [ref=e216] [cursor=pointer]:
+            - generic [ref=e217]:
+              - img [ref=e221]
+              - generic [ref=e223]: 0:54
+            - paragraph [ref=e224]: We've done the research
+          - generic [ref=e225] [cursor=pointer]:
+            - generic [ref=e226]:
+              - img [ref=e230]
+              - generic [ref=e232]: 0:37
+            - paragraph [ref=e233]: Fully flexible to work around you
+          - generic [ref=e234] [cursor=pointer]:
+            - generic [ref=e235]:
+              - img [ref=e239]
+              - generic [ref=e241]: 0:38
+            - paragraph [ref=e242]: Rudy goes from fussy to foodie
+          - generic [ref=e243] [cursor=pointer]:
+            - generic [ref=e244]:
+              - img [ref=e248]
+              - generic [ref=e250]: 0:37
+            - paragraph [ref=e251]: Backed by The Yorkshire Vet
+        - button "Scroll right" [ref=e252] [cursor=pointer]:
+          - img [ref=e253]
+    - generic [ref=e256]:
+      - generic:
+        - img
+      - generic:
+        - img
+      - generic [ref=e257]:
+        - heading "How does a Pure plan work?" [level=2] [ref=e258]
+        - generic [ref=e259]:
+          - generic [ref=e260]:
+            - img "Tell us about your dog" [ref=e262]
+            - paragraph [ref=e263]: Step 1
+            - paragraph [ref=e264]: Tell us about your dog
+          - generic [ref=e265]:
+            - img "Choose your tailored recipes" [ref=e267]
+            - paragraph [ref=e268]: Step 2
+            - paragraph [ref=e269]: Choose your tailored recipes
+          - generic [ref=e270]:
+            - img "Delivered to your door for free" [ref=e272]
+            - paragraph [ref=e273]: Step 3
+            - paragraph [ref=e274]: Delivered to your door for free
+          - generic [ref=e275]:
+            - img "Try it and transition to Jeko" [ref=e277]
+            - paragraph [ref=e278]: Step 4
+            - paragraph [ref=e279]: Try it and transition to Jeko
+        - link "Create a tailored plan today" [ref=e281] [cursor=pointer]:
+          - /url: /auth/signup
+    - generic [ref=e283]:
+      - generic:
+        - img
+      - generic:
+        - img
+      - generic [ref=e284]:
+        - heading "We've delivered" [level=2] [ref=e285]
+        - generic [ref=e286]: "0"
+        - paragraph [ref=e287]: meals and changed the lives of tens of thousands of dogs for the better
+        - generic [ref=e288]:
+          - generic [ref=e289]:
+            - generic [ref=e290]: 94%
+            - paragraph [ref=e291]: of customers have seen an improvement in their dog's ailment
+          - generic [ref=e292]:
+            - generic [ref=e293]: 91%
+            - paragraph [ref=e294]: of customers have seen overall health improvements since switching to Pure
+    - generic [ref=e296]:
+      - generic:
+        - img
+      - generic:
+        - img
+      - generic [ref=e297]:
+        - heading "How Pure compares" [level=2] [ref=e298]
+        - generic [ref=e299]:
+          - generic [ref=e300]:
+            - generic [ref=e302]: PURE
+            - generic [ref=e303]: Dry & wet
+            - generic [ref=e304]: Raw & fresh
+          - generic [ref=e305]:
+            - generic [ref=e307]: Cost
+            - generic [ref=e309]: ££
+            - generic [ref=e311]: £
+            - generic [ref=e313]: £££
+          - generic [ref=e314]:
+            - generic [ref=e316]: No/low processing
+            - img [ref=e318]
+            - img [ref=e323]
+            - img [ref=e329]
+          - generic [ref=e333]:
+            - generic [ref=e335]: High quality ingredients
+            - img [ref=e337]
+            - img [ref=e342]
+            - img [ref=e348]
+          - generic [ref=e352]:
+            - generic [ref=e354]: Easy to store
+            - img [ref=e356]
+            - img [ref=e361]
+            - img [ref=e366]
+          - generic [ref=e371]:
+            - generic [ref=e373]: No risk of harmful pathogens
+            - img [ref=e375]
+            - img [ref=e380]
+            - img [ref=e385]
+    - generic [ref=e392]:
+      - generic [ref=e393]:
+        - generic:
+          - img
+        - generic [ref=e394]:
+          - heading "Backed by The Yorkshire Vet" [level=2] [ref=e395]
+          - paragraph [ref=e396]: Julian Norton
+          - paragraph [ref=e397]: I've been a vet for almost 30 years. Recently I've suggested Pure for some of my patients, often with great results.
+      - img "Julian Norton - The Yorkshire Vet with Jeko" [ref=e399]
+    - generic [ref=e403]:
+      - generic [ref=e404]:
+        - img "Jeko on Dragons Den" [ref=e405]
+        - generic:
+          - img
+      - generic [ref=e408]:
+        - heading "Dog food so good we ate it on Dragons' Den" [level=2] [ref=e409]
+        - paragraph [ref=e410]: Pure is complete nutrition from the inside out, and dogs totally love the taste! "It was possibly the best pitch I have seen in over 10 years of Dragons' Den" - Duncan Bannatyne
+        - link "Get started today" [ref=e411] [cursor=pointer]:
+          - /url: /signup
+    - generic [ref=e414]:
+      - generic [ref=e415]:
+        - generic:
+          - img
+        - generic [ref=e416]:
+          - heading "Frequently Asked Questions" [level=2] [ref=e417]
+          - paragraph [ref=e418]: Everything else you need to know about Pure
+          - generic [ref=e419]:
+            - generic [ref=e420]:
+              - button "Am I tied into a subscription?" [ref=e421] [cursor=pointer]:
+                - heading "Am I tied into a subscription?" [level=4] [ref=e422]
+                - img [ref=e423]
+              - paragraph [ref=e425]: Not at all! You can pause, change, or cancel your plan at any time. We believe in our food so much that we don't need to lock you in.
+            - generic [ref=e426]:
+              - button "Is Jeko expensive compared to other foods?" [ref=e427] [cursor=pointer]:
+                - heading "Is Jeko expensive compared to other foods?" [level=4] [ref=e428]
+                - img [ref=e429]
+              - paragraph [ref=e431]: Jeko starts from only 89p per day. When you consider the health benefits, it's great value compared to vet bills and other premium foods.
+            - generic [ref=e432]:
+              - button "Do I pay for delivery?" [ref=e433] [cursor=pointer]:
+                - heading "Do I pay for delivery?" [level=4] [ref=e434]
+                - img [ref=e435]
+              - paragraph [ref=e437]: No! Delivery is completely free on all orders. We deliver right to your doorstep.
+            - generic [ref=e438]:
+              - button "What is the nutritional value, and is it good for my dog?" [ref=e439] [cursor=pointer]:
+                - heading "What is the nutritional value, and is it good for my dog?" [level=4] [ref=e440]
+                - img [ref=e441]
+              - paragraph [ref=e443]: Jeko is a complete, balanced meal developed with veterinary nutritionists. Every recipe meets FEDIAF guidelines for complete nutrition.
+            - generic [ref=e444]:
+              - button "What if my dog doesn’t like it?" [ref=e445] [cursor=pointer]:
+                - heading "What if my dog doesn’t like it?" [level=4] [ref=e446]
+                - img [ref=e447]
+              - paragraph [ref=e449]: We offer a full money-back guarantee. If your dog doesn't love Jeko, we'll refund your first box in full.
+            - generic [ref=e450]:
+              - button "Is Jeko suitable for my dogs health concern?" [ref=e451] [cursor=pointer]:
+                - heading "Is Jeko suitable for my dogs health concern?" [level=4] [ref=e452]
+                - img [ref=e453]
+              - paragraph [ref=e455]: Jeko is often recommended for dogs with health concerns. Our recipes are gentle and made with natural, high-quality ingredients.
+            - generic [ref=e456]:
+              - button "Is Jeko complete dog food?" [ref=e457] [cursor=pointer]:
+                - heading "Is Jeko complete dog food?" [level=4] [ref=e458]
+                - img [ref=e459]
+              - paragraph [ref=e461]: Yes! Every Jeko recipe is nutritionally complete and balanced, meeting all FEDIAF guidelines for adult dogs and puppies.
+          - link "Get started with 25% off" [ref=e463] [cursor=pointer]:
+            - /url: /auth/signup
+      - img "Happy healthy dog" [ref=e465]
+  - contentinfo [ref=e467]:
+    - generic [ref=e468]:
+      - generic [ref=e469]:
+        - generic [ref=e470]:
+          - heading "Join our VIP list" [level=4] [ref=e471]
+          - paragraph [ref=e472]: Be the first to hear about new product launches, exclusive competitions and helpful dog content.
+          - generic [ref=e473]:
+            - textbox "Enter your email address" [ref=e474]
+            - button "Sign up" [ref=e475] [cursor=pointer]
+          - heading "Follow us on social media" [level=4] [ref=e476]
+          - generic [ref=e477]:
+            - link "Instagram" [ref=e478] [cursor=pointer]:
+              - /url: "#"
+              - img "Instagram" [ref=e479]
+            - link "Facebook" [ref=e480] [cursor=pointer]:
+              - /url: "#"
+              - img "Facebook" [ref=e481]
+            - link [ref=e482] [cursor=pointer]:
+              - /url: "#"
+              - img [ref=e483]
+        - generic [ref=e485]:
+          - generic [ref=e486]:
+            - heading "Pure" [level=4] [ref=e487]
+            - list [ref=e488]:
+              - listitem [ref=e489]:
+                - link "Our story" [ref=e490] [cursor=pointer]:
+                  - /url: /about
+              - listitem [ref=e491]:
+                - link "Reviews" [ref=e492] [cursor=pointer]:
+                  - /url: /reviews
+              - listitem [ref=e493]:
+                - link "Recipes" [ref=e494] [cursor=pointer]:
+                  - /url: /recipes
+              - listitem [ref=e495]:
+                - link "Beyond the bowl" [ref=e496] [cursor=pointer]:
+                  - /url: /beyond-the-bowl
+              - listitem [ref=e497]:
+                - link "Shop" [ref=e498] [cursor=pointer]:
+                  - /url: /products
+              - listitem [ref=e499]:
+                - link "Community" [ref=e500] [cursor=pointer]:
+                  - /url: /community
+          - generic [ref=e501]:
+            - heading "Help" [level=4] [ref=e502]
+            - list [ref=e503]:
+              - listitem [ref=e504]:
+                - link "My account" [ref=e505] [cursor=pointer]:
+                  - /url: /profile
+              - listitem [ref=e506]:
+                - link "Contact us" [ref=e507] [cursor=pointer]:
+                  - /url: /contact
+              - listitem [ref=e508]:
+                - link "Delivery information" [ref=e509] [cursor=pointer]:
+                  - /url: /delivery-information
+              - listitem [ref=e510]:
+                - link "Returns" [ref=e511] [cursor=pointer]:
+                  - /url: /returns
+              - listitem [ref=e512]:
+                - link "Sitemap" [ref=e513] [cursor=pointer]:
+                  - /url: /sitemap-page
+          - generic [ref=e514]:
+            - heading "Information" [level=4] [ref=e515]
+            - list [ref=e516]:
+              - listitem [ref=e517]:
+                - link "Privacy policy" [ref=e518] [cursor=pointer]:
+                  - /url: /privacy-policy
+              - listitem [ref=e519]:
+                - link "Terms & conditions" [ref=e520] [cursor=pointer]:
+                  - /url: /terms-of-use
+              - listitem [ref=e521]:
+                - link "Jeko policies" [ref=e522] [cursor=pointer]:
+                  - /url: /pure-policies
+              - listitem [ref=e523]:
+                - link "Site security" [ref=e524] [cursor=pointer]:
+                  - /url: /site-security
+              - listitem [ref=e525]:
+                - link "Cookie policy" [ref=e526] [cursor=pointer]:
+                  - /url: /cookie-policy
+      - generic [ref=e527]:
+        - generic [ref=e529]: JEKO
+        - paragraph [ref=e530]: © Pure Pet Food Ltd 2020-2026
+  - generic [ref=e844]:
+    - generic [ref=e845]:
+      - paragraph [ref=e846]: Bow Wow! 🐾
+      - paragraph [ref=e847]: Find a friend for your pup!
+    - button "Find pet matches" [ref=e849] [cursor=pointer]:
+      - img [ref=e850]
+  - alert [ref=e870]
