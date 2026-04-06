@@ -158,27 +158,17 @@ export default function Header({ content }: { content?: any }) {
         <div className="max-w-[1400px] mx-auto h-full px-5 lg:px-8 flex items-center justify-between">
           {/* Logo */}
           <Link href="/" className="flex-shrink-0">
-            <div
-              className="bg-gold text-deep-green rounded-lg px-3 py-1.5 flex items-center gap-1 select-none"
-              style={{ transform: 'rotate(-10deg)' }}
+            <span
+              className="text-[36px] lg:text-[42px] leading-none select-none"
+              style={{
+                fontFamily: "'TR Frankfurter', 'Rubik', sans-serif",
+                color: '#F2A900',
+                transform: 'rotate(-6deg)',
+                display: 'inline-block',
+              }}
             >
-              <span
-                className="text-[22px] lg:text-[26px] leading-none"
-                style={{
-                  fontFamily: "'Luckiest Guy', cursive",
-                  letterSpacing: '2px',
-                }}
-              >
-                {logoText}
-              </span>
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" className="inline-block ml-0.5">
-                <ellipse cx="8" cy="6.5" rx="2.2" ry="2.8" />
-                <ellipse cx="16" cy="6.5" rx="2.2" ry="2.8" />
-                <ellipse cx="4.5" cy="12" rx="2" ry="2.5" />
-                <ellipse cx="19.5" cy="12" rx="2" ry="2.5" />
-                <path d="M7.5 16.5C7.5 14 9.5 12.5 12 12.5C14.5 12.5 16.5 14 16.5 16.5C16.5 19 14.5 21 12 21C9.5 21 7.5 19 7.5 16.5Z" />
-              </svg>
-            </div>
+              {logoText}
+            </span>
           </Link>
 
           {/* Desktop Navigation - Center */}

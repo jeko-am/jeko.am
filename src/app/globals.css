@@ -4,6 +4,30 @@
 
 @import url('https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;600;700&family=Caveat:wght@400;500;600;700&display=swap');
 
+@font-face {
+  font-family: 'Frankfurter';
+  src: url('/Franxurter-w11D9.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Frankfurter Highlight';
+  src: url('/frankfrt.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'TR Frankfurter';
+  src: url('/TRFrankfurterHltITCNormal.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
 :root {
   --deep-green: #274C46;
   --off-white: #EAE5DC;
@@ -31,7 +55,13 @@ body {
   overflow-x: hidden;
 }
 
-h1, h2, h3, h4, h5, h6 {
+h1, h2, h3 {
+  font-family: 'Frankfurter', 'Rubik', Helvetica, Arial, sans-serif;
+  font-weight: normal;
+  color: var(--deep-green);
+}
+
+h4, h5, h6 {
   font-family: 'Rubik', Helvetica, Arial, sans-serif;
   font-weight: 600;
   color: var(--deep-green);

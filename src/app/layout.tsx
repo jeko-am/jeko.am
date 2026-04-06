@@ -4,6 +4,7 @@ import { AuthProvider } from "@/lib/auth";
 import { CartProvider } from "@/lib/cart-context";
 import MobileNavWrapper from "@/components/MobileNavWrapper";
 import SideCart from "@/components/SideCart";
+import DogChatbot from "@/components/DogChatbot";
 
 export const metadata: Metadata = {
   title: "Jeko - Personalised Healthy Natural Pet Food",
@@ -20,7 +21,6 @@ export default function RootLayout({
       <head>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        <link href="https://fonts.googleapis.com/css2?family=Luckiest+Guy&display=swap" rel="stylesheet" />
       </head>
       <body className="antialiased has-bottom-nav">
         <AuthProvider>
@@ -28,6 +28,7 @@ export default function RootLayout({
             {children}
             <MobileNavWrapper />
             <SideCart />
+            <DogChatbot />
           </CartProvider>
         </AuthProvider>
       </body>

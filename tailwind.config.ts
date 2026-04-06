@@ -19,6 +19,7 @@ const config: Config = {
       fontFamily: {
         rubik: ['Rubik', 'Helvetica', 'Arial', 'sans-serif'],
         sofia: ['Sofia Pro', 'Rubik', 'Arial', 'sans-serif'],
+        frankfurter: ['Frankfurter', 'Rubik', 'Arial', 'sans-serif'],
       },
       maxWidth: {
         'container': '1200px',

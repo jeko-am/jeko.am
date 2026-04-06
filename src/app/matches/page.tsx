@@ -433,7 +433,43 @@ export default function MatchesPage() {
 
       <div className="flex-1 pt-[80px] lg:pt-[80px]">
         {!user ? (
-          <AuthModal />
+          <>
+            {/* Community promo banner */}
+            <div className="bg-deep-green text-white py-16 px-6 text-center relative overflow-hidden">
+              {/* Decorative paw prints */}
+              <div className="absolute inset-0 opacity-5 pointer-events-none select-none flex flex-wrap gap-12 p-8">
+                {Array.from({ length: 20 }).map((_, i) => (
+                  <span key={i} className="text-5xl">🐾</span>
+                ))}
+              </div>
+              <div className="relative z-10 max-w-2xl mx-auto">
+                <div className="text-6xl mb-4">🐶</div>
+                <h1
+                  className="text-4xl md:text-5xl text-gold mb-4"
+                  style={{ fontFamily: "'TR Frankfurter', 'Rubik', sans-serif" }}
+                >
+                  Looking for a partner for your pet?
+                </h1>
+                <p className="text-white/80 text-lg md:text-xl font-rubik leading-relaxed mb-8">
+                  Come join the community — connect with thousands of pet owners, find playmates, and make lifelong friendships for you and your furry friend.
+                </p>
+                <div className="flex flex-wrap justify-center gap-6 mb-8">
+                  {[
+                    { icon: "🐾", label: "Find Playmates" },
+                    { icon: "💬", label: "Chat with Owners" },
+                    { icon: "❤️", label: "Make Matches" },
+                    { icon: "📍", label: "Near You" },
+                  ].map((f) => (
+                    <div key={f.label} className="flex items-center gap-2 bg-white/10 rounded-full px-5 py-2.5">
+                      <span className="text-xl">{f.icon}</span>
+                      <span className="font-rubik font-semibold text-white text-[15px]">{f.label}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+            <AuthModal />
+          </>
         ) : matches.length === 0 ? (
           <EmptyState />
         ) : (

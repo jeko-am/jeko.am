@@ -138,27 +138,17 @@ export default function Footer({ content }: { content?: any }) {
         <div className="border-t border-white/10 pt-8 text-center">
           {/* Logo */}
           <div className="flex justify-center mb-4">
-            <div
-              className="bg-gold text-deep-green rounded-lg px-3 py-1.5 flex items-center gap-1 select-none inline-flex"
-              style={{ transform: 'rotate(-10deg)' }}
+            <span
+              className="text-[36px] leading-none select-none"
+              style={{
+                fontFamily: "'TR Frankfurter', 'Rubik', sans-serif",
+                color: '#F2A900',
+                transform: 'rotate(-6deg)',
+                display: 'inline-block',
+              }}
             >
-              <span
-                className="text-[24px] leading-none"
-                style={{
-                  fontFamily: "'Luckiest Guy', cursive",
-                  letterSpacing: '2px',
-                }}
-              >
-                JEKO
-              </span>
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" className="inline-block ml-0.5">
-                <ellipse cx="8" cy="6.5" rx="2.2" ry="2.8" />
-                <ellipse cx="16" cy="6.5" rx="2.2" ry="2.8" />
-                <ellipse cx="4.5" cy="12" rx="2" ry="2.5" />
-                <ellipse cx="19.5" cy="12" rx="2" ry="2.5" />
-                <path d="M7.5 16.5C7.5 14 9.5 12.5 12 12.5C14.5 12.5 16.5 14 16.5 16.5C16.5 19 14.5 21 12 21C9.5 21 7.5 19 7.5 16.5Z" />
-              </svg>
-            </div>
+              JEKO
+            </span>
           </div>
           <p className="text-off-white/60 text-[14px]">
             {content?.copyright_text || "\u00a9 Jeko 2020-2026"}
