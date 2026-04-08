@@ -149,9 +149,9 @@ export async function createOrder(orderData: OrderData): Promise<CreatedOrder> {
     const orderItems = orderData.items.map((item) => ({
       order_id: order.id,
       product_id: item.id,
-      variant_id: null, // No variants for now
+      variant_id: item.variant_id || null,
       product_name: item.name,
-      variant_name: null,
+      variant_name: item.variant_name || null,
       quantity: item.quantity,
       unit_price: item.price,
       total_price: item.price * item.quantity,

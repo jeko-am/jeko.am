@@ -79,7 +79,7 @@ export default function CartPage() {
                         {item.name}
                       </Link>
                       <button
-                        onClick={() => removeItem(item.id)}
+                        onClick={() => removeItem(item.id, item.variant_id)}
                         className="text-gray-400 hover:text-red-500 transition-colors"
                       >
                         <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -88,6 +88,9 @@ export default function CartPage() {
                       </button>
                     </div>
 
+                    {item.variant_name && (
+                      <p className="text-sm text-deep-green/70 font-medium mb-1">{item.variant_name}</p>
+                    )}
                     {item.short_description && (
                       <p className="text-gray-600 text-sm mb-3">{item.short_description}</p>
                     )}
@@ -109,7 +112,7 @@ export default function CartPage() {
                       <div className="flex items-center gap-3">
                         <div className="flex items-center border border-gray-300 rounded-lg">
                           <button
-                            onClick={() => updateQuantity(item.id, item.quantity - 1)}
+                            onClick={() => updateQuantity(item.id, item.quantity - 1, item.variant_id)}
                             className="p-2 hover:bg-gray-100 transition-colors"
                           >
                             <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -120,7 +123,7 @@ export default function CartPage() {
                             {item.quantity}
                           </span>
                           <button
-                            onClick={() => updateQuantity(item.id, item.quantity + 1)}
+                            onClick={() => updateQuantity(item.id, item.quantity + 1, item.variant_id)}
                             className="p-2 hover:bg-gray-100 transition-colors"
                           >
                             <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">

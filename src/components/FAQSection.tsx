@@ -45,7 +45,7 @@ export default function FAQSection({ content }: { content?: any }) {
           </div>
 
           <div className="px-8 md:pl-48 md:pr-12 py-16">
-            <h2 className="text-[32px] md:text-[40px] font-semibold text-deep-green font-rubik leading-tight mb-3">
+            <h2 className="text-[32px] md:text-[40px] font-medium text-deep-green tracking-wide leading-tight mb-3">
               {content?.heading || "Frequently Asked Questions"}
             </h2>
             <p className="text-[18px] text-deep-green mb-8">

@@ -345,62 +345,6 @@ export default function MatchingPreferences({ petProfileId, onPreferencesChange 
         </div>
       </div>
 
-      {/* Compatibility Preferences */}
-      <div className="bg-gray-50 p-4 rounded-lg">
-        <h4 className="font-medium text-gray-900 mb-3">🤝 Compatibility</h4>
-        
-        <div className="space-y-3">
-          {/* Temperament */}
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">Temperament Preferences</label>
-            <div className="space-x-4">
-              {configOptions.temperaments.map(temperament => (
-                <label key={temperament} className="inline-flex items-center">
-                  <input
-                    type="checkbox"
-                    checked={(preferences.preferred_temperaments || []).includes(temperament)}
-                    onChange={() => toggleArrayItem("preferred_temperaments", temperament)}
-                    className="mr-2 h-4 w-4 text-gold focus:ring-gold border-gray-300 rounded"
-                  />
-                  <span className="text-sm">{temperament}</span>
-                </label>
-              ))}
-            </div>
-          </div>
-
-          {/* Activity Level */}
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">Activity Level</label>
-            <div className="space-x-4">
-              {configOptions.activityLevels.map(level => (
-                <label key={level} className="inline-flex items-center">
-                  <input
-                    type="checkbox"
-                    checked={(preferences.preferred_activity_levels || []).includes(level)}
-                    onChange={() => toggleArrayItem("preferred_activity_levels", level)}
-                    className="mr-2 h-4 w-4 text-gold focus:ring-gold border-gray-300 rounded"
-                  />
-                  <span className="text-sm">{level}</span>
-                </label>
-              ))}
-            </div>
-          </div>
-
-          <div className="flex items-center">
-            <input
-              type="checkbox"
-              id="must-get-along"
-              checked={preferences.must_get_along_with_dogs}
-              onChange={(e) => updatePreference("must_get_along_with_dogs", e.target.checked)}
-              className="mr-2 h-4 w-4 text-gold focus:ring-gold border-gray-300 rounded"
-            />
-            <label htmlFor="must-get-along" className="text-sm text-gray-700">
-              Must get along with other dogs
-            </label>
-          </div>
-        </div>
-      </div>
-
       {/* Matching Goals */}
       <div className="bg-gray-50 p-4 rounded-lg">
         <h4 className="font-medium text-gray-900 mb-3">🎯 What are you looking for?</h4>

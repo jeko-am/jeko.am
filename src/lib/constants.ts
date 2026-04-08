@@ -4,7 +4,7 @@ export const COMMON_BREEDS = [
 
 export const PET_TYPES = ["Dog", "Cat", "Other"] as const;
 
-export const DIET_PREFERENCES = ["Raw", "Kibble", "Mixed", "Homemade", "Jeko"] as const;
+export const DIET_PREFERENCES = ["Raw", "Kibble", "Mixed", "Homemade", "Natural", "Chicken", "Beef", "Lamb", "Vegetables"] as const;
 
 export const ACTIVITY_LEVELS = ["Low", "Moderate", "High", "Very High"] as const;
 

@@ -45,6 +45,7 @@ const ICON_PATHS: Record<string, string> = {
   clock: 'M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z',
   users: 'M15 19.128a9.38 9.38 0 002.625.372 9.337 9.337 0 004.121-.952 4.125 4.125 0 00-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 018.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0111.964-3.07M12 6.375a3.375 3.375 0 11-6.75 0 3.375 3.375 0 016.75 0zm8.25 2.25a2.625 2.625 0 11-5.25 0 2.625 2.625 0 015.25 0z',
   book: 'M12 6.042A8.967 8.967 0 006 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 016 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 016-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0018 18a8.967 8.967 0 00-6 2.292m0-14.25v14.25',
+  code: 'M17.25 6.75L22.5 12l-5.25 5.25m-10.5 0L1.5 12l5.25-5.25m7.5-3l-4.5 16.5',
 };
 
 /* ═══════════════════════════════════════════════════════════════════════════
@@ -816,6 +817,126 @@ const PREFERENCES_CONFIG_SECTIONS: SectionSchema[] = [
 ];
 
 /* ═══════════════════════════════════════════════════════════════════════════
+   SEO & TRACKING CONFIG
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+const SEO_SECTIONS: SectionSchema[] = [
+  {
+    name: 'Meta Tags', icon: ICON_PATHS.text, color: 'bg-blue-600',
+    fields: [
+      { key: 'site_title', label: 'Site Title', type: 'text', placeholder: 'Jeko - Personalised Healthy Natural Pet Food' },
+      { key: 'site_description', label: 'Meta Description', type: 'textarea', placeholder: 'The easiest way to feed healthy, natural pet food...' },
+      { key: 'og_image', label: 'Open Graph Image (social sharing)', type: 'image' },
+    ],
+    defaultContent: {
+      site_title: 'Jeko - Personalised Healthy Natural Pet Food',
+      site_description: 'The easiest way to feed healthy, natural pet food. Enjoy fresh food without the fuss.',
+      og_image: '',
+    },
+  },
+  {
+    name: 'Custom Head Code', icon: ICON_PATHS.code, color: 'bg-purple-600',
+    fields: [
+      { key: 'custom_head_enabled', label: 'Enable Custom Head Code', type: 'toggle' },
+      { key: 'custom_head_code', label: 'Custom Code (inserted in <head>)', type: 'textarea', placeholder: '<!-- Insert any custom tracking or meta tags here -->' },
+    ],
+    defaultContent: {
+      custom_head_enabled: false,
+      custom_head_code: '',
+    },
+  },
+];
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   PRODUCT PAGE (per-product customisation)
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+export const PRODUCT_PAGE_SECTIONS: SectionSchema[] = [
+  {
+    name: 'Hero Override', icon: ICON_PATHS.image, color: 'bg-deep-green',
+    fields: [
+      { key: 'subtitle', label: 'Subtitle / Badge', type: 'text', placeholder: 'e.g. Vet Recommended' },
+      { key: 'hero_image', label: 'Hero Banner Image', type: 'image' },
+      { key: 'hero_description', label: 'Hero Description Override', type: 'textarea' },
+    ],
+    defaultContent: { subtitle: '', hero_image: '', hero_description: '' },
+  },
+  {
+    name: 'Feature Highlights', icon: ICON_PATHS.grid, color: 'bg-gold',
+    fields: [
+      { key: 'features_heading', label: 'Section Heading', type: 'text', placeholder: 'Why choose this product?' },
+      { key: 'feature_1_title', label: 'Feature 1 Title', type: 'text' },
+      { key: 'feature_1_description', label: 'Feature 1 Description', type: 'textarea' },
+      { key: 'feature_2_title', label: 'Feature 2 Title', type: 'text' },
+      { key: 'feature_2_description', label: 'Feature 2 Description', type: 'textarea' },
+      { key: 'feature_3_title', label: 'Feature 3 Title', type: 'text' },
+      { key: 'feature_3_description', label: 'Feature 3 Description', type: 'textarea' },
+    ],
+    defaultContent: { features_heading: '', feature_1_title: '', feature_1_description: '', feature_2_title: '', feature_2_description: '', feature_3_title: '', feature_3_description: '' },
+  },
+  {
+    name: 'Detailed Description', icon: ICON_PATHS.text, color: 'bg-teal-600',
+    fields: [
+      { key: 'detail_heading', label: 'Section Heading', type: 'text', placeholder: 'About this product' },
+      { key: 'detail_body', label: 'Full Description', type: 'textarea' },
+      { key: 'detail_image', label: 'Description Image', type: 'image' },
+    ],
+    defaultContent: { detail_heading: '', detail_body: '', detail_image: '' },
+  },
+  {
+    name: 'Ingredients & Nutrition', icon: ICON_PATHS.book, color: 'bg-green-600',
+    fields: [
+      { key: 'ingredients_heading', label: 'Section Heading', type: 'text', placeholder: 'Ingredients' },
+      { key: 'ingredients_list', label: 'Ingredients', type: 'textarea', placeholder: 'List ingredients...' },
+      { key: 'nutrition_heading', label: 'Nutrition Heading', type: 'text', placeholder: 'Nutritional Information' },
+      { key: 'nutrition_info', label: 'Nutrition Details', type: 'textarea' },
+    ],
+    defaultContent: { ingredients_heading: 'Ingredients', ingredients_list: '', nutrition_heading: 'Nutritional Information', nutrition_info: '' },
+  },
+  {
+    name: 'Feeding Guide', icon: ICON_PATHS.steps, color: 'bg-orange-600',
+    fields: [
+      { key: 'feeding_heading', label: 'Section Heading', type: 'text', placeholder: 'Feeding Guide' },
+      { key: 'feeding_body', label: 'Feeding Instructions', type: 'textarea' },
+      { key: 'feeding_image', label: 'Feeding Guide Image', type: 'image' },
+    ],
+    defaultContent: { feeding_heading: 'Feeding Guide', feeding_body: '', feeding_image: '' },
+  },
+  {
+    name: 'Upsells & Cross-sells', icon: ICON_PATHS.heart, color: 'bg-pink-600',
+    fields: [
+      { key: 'upsells_heading', label: 'Section Heading', type: 'text', placeholder: 'You may also like' },
+      { key: 'upsells_enabled', label: 'Show Upsells', type: 'toggle' },
+    ],
+    defaultContent: { upsells_heading: 'You may also like', upsells_enabled: true },
+  },
+  {
+    name: 'Product FAQ', icon: ICON_PATHS.faq, color: 'bg-purple-600',
+    fields: [
+      { key: 'faq_heading', label: 'FAQ Heading', type: 'text', placeholder: 'Frequently Asked Questions' },
+      { key: 'faq_1_q', label: 'Q1', type: 'text' },
+      { key: 'faq_1_a', label: 'A1', type: 'textarea' },
+      { key: 'faq_2_q', label: 'Q2', type: 'text' },
+      { key: 'faq_2_a', label: 'A2', type: 'textarea' },
+      { key: 'faq_3_q', label: 'Q3', type: 'text' },
+      { key: 'faq_3_a', label: 'A3', type: 'textarea' },
+      { key: 'faq_4_q', label: 'Q4', type: 'text' },
+      { key: 'faq_4_a', label: 'A4', type: 'textarea' },
+    ],
+    defaultContent: { faq_heading: 'Frequently Asked Questions', faq_1_q: '', faq_1_a: '', faq_2_q: '', faq_2_a: '', faq_3_q: '', faq_3_a: '', faq_4_q: '', faq_4_a: '' },
+  },
+  {
+    name: 'Reviews Display', icon: ICON_PATHS.star, color: 'bg-amber-600',
+    fields: [
+      { key: 'reviews_heading', label: 'Reviews Section Heading', type: 'text', placeholder: 'Customer Reviews' },
+      { key: 'show_reviews', label: 'Show Reviews Section', type: 'toggle' },
+      { key: 'reviews_count', label: 'Number of Reviews to Show', type: 'number' },
+    ],
+    defaultContent: { reviews_heading: 'Customer Reviews', show_reviews: true, reviews_count: 5 },
+  },
+];
+
+/* ═══════════════════════════════════════════════════════════════════════════
    ALL PAGES CONFIG
    ═══════════════════════════════════════════════════════════════════════════ */
 
@@ -832,5 +953,12 @@ export const ALL_PAGE_CONFIGS: PageConfig[] = [
     previewPath: '/profile',
     indexKey: '_section_index',
     sections: PREFERENCES_CONFIG_SECTIONS,
+  },
+  {
+    label: 'SEO',
+    slug: 'seo-tracking',
+    previewPath: '/',
+    indexKey: '_section_index',
+    sections: SEO_SECTIONS,
   },
 ];

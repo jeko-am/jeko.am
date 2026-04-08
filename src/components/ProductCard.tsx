@@ -28,9 +28,8 @@ export default function ProductCard({ product }: { product: Product }) {
     ? Math.round(((product.compare_at_price! - product.price) / product.compare_at_price!) * 100)
     : 0;
 
-  const imageUrl = product.images?.[0] && !imgError
-    ? product.images[0]
-    : `data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Crect width='400' height='400' fill='%2332CD32'/%3E%3Ctext x='50%25' y='50%25' font-size='40' fill='white' text-anchor='middle' dy='.3em'%3E${product.name.slice(0,2).toUpperCase()}%3C/text%3E%3C/svg%3E`;
+  const hasImage = product.images?.[0] && !imgError;
+  const imageUrl = hasImage ? product.images![0] : '';
 
   const handleAddToCart = (e: React.MouseEvent) => {
     e.preventDefault();
@@ -56,12 +55,23 @@ export default function ProductCard({ product }: { product: Product }) {
       <div className="bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 border-2 border-transparent hover:border-gold/30 h-full flex flex-col">
         {/* Image */}
         <div className="relative aspect-square overflow-hidden bg-beige-light">
-          <img
-            src={imageUrl}
-            alt={product.name}
-            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-            onError={() => setImgError(true)}
-          />
+          {hasImage ? (
+            <img
+              src={imageUrl}
+              alt={product.name}
+              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+              onError={() => setImgError(true)}
+            />
+          ) : (
+            <div className="w-full h-full flex flex-col items-center justify-center text-deep-green/20">
+              <svg className="w-16 h-16 mb-2" fill="none" stroke="currentColor" strokeWidth={1} viewBox="0 0 24 24">
+                <rect x="3" y="3" width="18" height="18" rx="2" strokeDasharray="4 2" />
+                <path d="M3 16l5-5 4 4 3-3 6 6" />
+                <circle cx="15.5" cy="8.5" r="1.5" />
+              </svg>
+              <span className="text-xs font-medium">No image</span>
+            </div>
+          )}
           {hasDiscount && (
             <span className="absolute top-3 left-3 bg-orange-brand text-white text-xs font-bold px-3 py-1.5 rounded-full">
               -{discountPercent}%
@@ -77,7 +87,7 @@ export default function ProductCard({ product }: { product: Product }) {
 
         {/* Info */}
         <div className="p-4 flex-1 flex flex-col justify-between">
-          <h3 className="font-semibold text-deep-green text-base leading-tight mb-1 group-hover:text-gold transition-colors line-clamp-2">
+          <h3 className="font-medium text-deep-green text-lg leading-snug mb-2 group-hover:text-gold transition-colors line-clamp-2 tracking-wide">
             {product.name}
           </h3>
           {product.short_description && (

@@ -39,7 +39,7 @@ export default function WhatIsPure({ content }: { content?: Record<string, any> 
         {/* Text Right Side - larger */}
         <div className="w-full md:w-[58%] flex items-center bg-off-white">
           <div className="px-8 md:px-16 py-12 md:py-0 max-w-[560px]">
-            <h2 className="text-[36px] md:text-[40px] font-semibold text-deep-green leading-tight mb-6 font-rubik">
+            <h2 className="text-[36px] md:text-[40px] font-medium text-deep-green leading-tight mb-6 tracking-wide">
               {heading}
             </h2>
             <div className="space-y-4 mb-8">

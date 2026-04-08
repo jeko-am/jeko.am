@@ -89,6 +89,9 @@ export default function SideCart() {
                         {item.name}
                       </Link>
                       
+                      {item.variant_name && (
+                        <p className="text-xs text-deep-green/70 mt-1 font-medium">{item.variant_name}</p>
+                      )}
                       {item.short_description && (
                         <p className="text-xs text-gray-500 mt-1 line-clamp-2">
                           {item.short_description}
@@ -111,7 +114,7 @@ export default function SideCart() {
                       <div className="flex items-center gap-3 mt-3">
                         <div className="flex items-center border border-gray-300 rounded-lg">
                           <button
-                            onClick={() => updateQuantity(item.id, item.quantity - 1)}
+                            onClick={() => updateQuantity(item.id, item.quantity - 1, item.variant_id)}
                             className="p-1 hover:bg-gray-100 transition-colors"
                           >
                             <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -122,7 +125,7 @@ export default function SideCart() {
                             {item.quantity}
                           </span>
                           <button
-                            onClick={() => updateQuantity(item.id, item.quantity + 1)}
+                            onClick={() => updateQuantity(item.id, item.quantity + 1, item.variant_id)}
                             className="p-1 hover:bg-gray-100 transition-colors"
                           >
                             <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -132,7 +135,7 @@ export default function SideCart() {
                         </div>
                         
                         <button
-                          onClick={() => removeItem(item.id)}
+                          onClick={() => removeItem(item.id, item.variant_id)}
                           className="text-xs text-red-600 hover:text-red-700 transition-colors"
                         >
                           Remove

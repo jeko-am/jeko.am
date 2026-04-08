@@ -5,6 +5,8 @@ import { CartProvider } from "@/lib/cart-context";
 import MobileNavWrapper from "@/components/MobileNavWrapper";
 import SideCart from "@/components/SideCart";
 import DogChatbot from "@/components/DogChatbot";
+import TrackingScripts from "@/components/TrackingScripts";
+import GTMNoScript from "@/components/GTMNoScript";
 
 export const metadata: Metadata = {
   title: "Jeko - Personalised Healthy Natural Pet Food",
@@ -21,8 +23,11 @@ export default function RootLayout({
       <head>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <TrackingScripts />
       </head>
       <body className="antialiased has-bottom-nav">
+        {/* Google Tag Manager (noscript) - only renders when GTM is enabled */}
+        <GTMNoScript />
         <AuthProvider>
           <CartProvider>
             {children}

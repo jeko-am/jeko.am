@@ -63,7 +63,7 @@ export default function PrivacyPolicyPage() {
               </p>
               <p className="text-deep-green/80 text-[16px] leading-relaxed mb-4">
                 For the purposes of data protection law, our registered office
-                address is Jeko Ltd, Unit 5, Pure House, Sheffield, S9
+                address is Jeko Ltd, Unit 5, Jeko House, Sheffield, S9
                 1TZ, United Kingdom. Our Data Protection Officer can be
                 contacted at privacy@jeko.am.
               </p>
@@ -858,7 +858,7 @@ export default function PrivacyPolicyPage() {
                 </li>
                 <li className="text-deep-green/80 text-[16px] leading-relaxed">
                   <strong>Postal Address:</strong> Jeko Ltd, Unit 5,
-                  Pure House, Sheffield, S9 1TZ, United Kingdom
+                  Jeko House, Sheffield, S9 1TZ, United Kingdom
                 </li>
               </ul>
               <p className="text-deep-green/80 text-[16px] leading-relaxed mb-4">

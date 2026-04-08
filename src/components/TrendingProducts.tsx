@@ -56,7 +56,7 @@ export default function TrendingProducts({ content }: { content?: any }) {
             <span className="inline-block bg-gold/20 text-gold text-sm font-semibold px-4 py-1.5 rounded-full mb-4">
               Trending Now
             </span>
-            <h2 className="text-3xl md:text-4xl font-bold text-white mb-2">
+            <h2 className="text-3xl md:text-4xl font-medium text-white mb-2 tracking-wide">
               {content?.heading || 'What Pet Parents Love'}
             </h2>
             <p className="text-white/60 max-w-md">

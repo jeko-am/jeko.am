@@ -66,11 +66,11 @@ export default function StatsSection({ content }: { content?: any }) {
         </svg>
       </div>
       <div className="max-w-[1200px] mx-auto px-6 text-center relative z-10">
-        <h2 className="text-[36px] md:text-[40px] font-semibold text-deep-green font-rubik mb-4">
+        <h2 className="text-[36px] md:text-[40px] font-medium text-deep-green tracking-wide mb-4">
           We&apos;ve delivered
         </h2>
 
-        <div className="text-[48px] md:text-[64px] font-bold text-gold font-rubik mb-4 leading-tight">
+        <div className="text-[48px] md:text-[64px] font-medium text-gold tracking-wide mb-4 leading-tight">
           {count.toLocaleString()}
         </div>
 
@@ -80,7 +80,7 @@ export default function StatsSection({ content }: { content?: any }) {
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-3xl mx-auto">
           <div className="bg-beige-light rounded-xl p-6 flex items-center gap-4">
-            <span className="text-[42px] md:text-[48px] font-bold text-gold font-rubik shrink-0">
+            <span className="text-[42px] md:text-[48px] font-medium text-gold tracking-wide shrink-0">
               {stat1Value}
             </span>
             <p className="text-left text-[16px] font-semibold text-deep-green leading-snug">
@@ -89,7 +89,7 @@ export default function StatsSection({ content }: { content?: any }) {
           </div>
 
           <div className="bg-beige-light rounded-xl p-6 flex items-center gap-4">
-            <span className="text-[42px] md:text-[48px] font-bold text-gold font-rubik shrink-0">
+            <span className="text-[42px] md:text-[48px] font-medium text-gold tracking-wide shrink-0">
               {stat2Value}
             </span>
             <p className="text-left text-[16px] font-semibold text-deep-green leading-snug">

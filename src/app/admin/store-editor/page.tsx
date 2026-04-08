@@ -2,7 +2,7 @@
 
 import { supabase } from '@/lib/supabase';
 import { useEffect, useState, useCallback, useRef, DragEvent, ChangeEvent } from 'react';
-import { ALL_PAGE_CONFIGS, type SectionSchema, type PageConfig, type FieldDef } from './schemas';
+import { ALL_PAGE_CONFIGS, PRODUCT_PAGE_SECTIONS, type SectionSchema, type PageConfig, type FieldDef } from './schemas';
 
 /* ═══════════════════════════════════════════════════════════════════════════
    TYPES
@@ -245,6 +245,199 @@ function ListField({
 }
 
 /* ═══════════════════════════════════════════════════════════════════════════
+   UPSELL MANAGER (inline for product pages)
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+interface UpsellItem {
+  id?: string;
+  target_product_id: string;
+  target_name: string;
+  upsell_type: 'upsell' | 'cross_sell';
+  title: string;
+  description: string;
+  discount_percentage: number;
+  is_active: boolean;
+}
+
+function UpsellManager({ productSlug }: { productSlug: string }) {
+  const [upsells, setUpsells] = useState<UpsellItem[]>([]);
+  const [products, setProducts] = useState<{ id: string; name: string }[]>([]);
+  const [sourceId, setSourceId] = useState<string | null>(null);
+  const [savingUpsells, setSavingUpsells] = useState(false);
+  const [loaded, setLoaded] = useState(false);
+
+  useEffect(() => {
+    async function load() {
+      // Get source product
+      const { data: srcProduct } = await supabase
+        .from('products')
+        .select('id')
+        .eq('slug', productSlug)
+        .single();
+      if (!srcProduct) return;
+      setSourceId(srcProduct.id);
+
+      // Get all active products for picker
+      const { data: allProducts } = await supabase
+        .from('products')
+        .select('id, name')
+        .eq('status', 'active')
+        .neq('id', srcProduct.id)
+        .order('name');
+      setProducts(allProducts || []);
+
+      // Get existing upsells
+      const { data: existing } = await supabase
+        .from('upsells')
+        .select('*, target_product:products!upsells_target_product_id_fkey(name)')
+        .eq('source_product_id', srcProduct.id)
+        .order('sort_order');
+      if (existing) {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        setUpsells(existing.map((u: any) => ({
+          id: u.id,
+          target_product_id: u.target_product_id,
+          target_name: u.target_product?.name || 'Unknown',
+          upsell_type: u.upsell_type,
+          title: u.title || '',
+          description: u.description || '',
+          discount_percentage: u.discount_percentage || 0,
+          is_active: u.is_active,
+        })));
+      }
+      setLoaded(true);
+    }
+    load();
+  }, [productSlug]);
+
+  const addUpsell = (targetId: string) => {
+    const prod = products.find(p => p.id === targetId);
+    if (!prod || upsells.some(u => u.target_product_id === targetId)) return;
+    setUpsells([...upsells, {
+      target_product_id: targetId,
+      target_name: prod.name,
+      upsell_type: 'cross_sell',
+      title: '',
+      description: '',
+      discount_percentage: 0,
+      is_active: true,
+    }]);
+  };
+
+  const removeUpsell = (idx: number) => {
+    setUpsells(upsells.filter((_, i) => i !== idx));
+  };
+
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const updateUpsell = (idx: number, key: keyof UpsellItem, value: any) => {
+    const updated = [...upsells];
+    updated[idx] = { ...updated[idx], [key]: value };
+    setUpsells(updated);
+  };
+
+  const saveUpsells = async () => {
+    if (!sourceId) return;
+    setSavingUpsells(true);
+    try {
+      // Delete existing
+      await supabase.from('upsells').delete().eq('source_product_id', sourceId);
+      // Insert new
+      if (upsells.length > 0) {
+        const payloads = upsells.map((u, i) => ({
+          source_product_id: sourceId,
+          target_product_id: u.target_product_id,
+          upsell_type: u.upsell_type,
+          title: u.title || null,
+          description: u.description || null,
+          discount_percentage: u.discount_percentage,
+          is_active: u.is_active,
+          sort_order: i,
+        }));
+        await supabase.from('upsells').insert(payloads);
+      }
+    } catch (err) {
+      console.error('Failed to save upsells:', err);
+    } finally {
+      setSavingUpsells(false);
+    }
+  };
+
+  if (!loaded) return <div className="text-xs text-gray-400 py-2">Loading upsells...</div>;
+
+  return (
+    <div className="border-t border-gray-200 pt-4 mt-2">
+      <h4 className="text-[13px] font-semibold text-gray-700 mb-3">Manage Upsells</h4>
+
+      {/* Add upsell picker */}
+      <select
+        onChange={(e) => { if (e.target.value) { addUpsell(e.target.value); e.target.value = ''; } }}
+        className="w-full px-2.5 py-2 text-sm border border-gray-200 rounded-lg mb-3 bg-white"
+        defaultValue=""
+      >
+        <option value="" disabled>+ Add product...</option>
+        {products.filter(p => !upsells.some(u => u.target_product_id === p.id)).map(p => (
+          <option key={p.id} value={p.id}>{p.name}</option>
+        ))}
+      </select>
+
+      {/* Upsell list */}
+      {upsells.length === 0 ? (
+        <p className="text-xs text-gray-400 text-center py-4">No upsells added yet</p>
+      ) : (
+        <div className="space-y-3">
+          {upsells.map((u, idx) => (
+            <div key={idx} className="border border-gray-200 rounded-lg p-3 bg-gray-50">
+              <div className="flex items-center justify-between mb-2">
+                <span className="text-sm font-medium text-gray-800">{u.target_name}</span>
+                <button onClick={() => removeUpsell(idx)} className="text-red-400 hover:text-red-600">
+                  <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+                  </svg>
+                </button>
+              </div>
+              <div className="grid grid-cols-2 gap-2 mb-2">
+                <select
+                  value={u.upsell_type}
+                  onChange={(e) => updateUpsell(idx, 'upsell_type', e.target.value)}
+                  className="px-2 py-1.5 text-xs border border-gray-200 rounded bg-white"
+                >
+                  <option value="cross_sell">Cross-sell</option>
+                  <option value="upsell">Upsell</option>
+                </select>
+                <input
+                  type="number"
+                  value={u.discount_percentage}
+                  onChange={(e) => updateUpsell(idx, 'discount_percentage', Number(e.target.value))}
+                  placeholder="Discount %"
+                  min="0"
+                  max="100"
+                  className="px-2 py-1.5 text-xs border border-gray-200 rounded"
+                />
+              </div>
+              <input
+                type="text"
+                value={u.title}
+                onChange={(e) => updateUpsell(idx, 'title', e.target.value)}
+                placeholder="Custom title (optional)"
+                className="w-full px-2 py-1.5 text-xs border border-gray-200 rounded mb-1"
+              />
+            </div>
+          ))}
+        </div>
+      )}
+
+      <button
+        onClick={saveUpsells}
+        disabled={savingUpsells}
+        className="w-full mt-3 py-2 bg-gold text-deep-green rounded-lg text-xs font-semibold hover:bg-gold/90 transition-colors disabled:opacity-50"
+      >
+        {savingUpsells ? 'Saving...' : 'Save Upsells'}
+      </button>
+    </div>
+  );
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
    MAIN EDITOR COMPONENT
    ═══════════════════════════════════════════════════════════════════════════ */
 
@@ -258,7 +451,9 @@ export default function AdminStoreEditorPage() {
   // Multi-page support
   const [, setAllPages] = useState<Page[]>([]);
   const [activePageConfigIdx, setActivePageConfigIdx] = useState(0);
-  const activePageConfig: PageConfig = ALL_PAGE_CONFIGS[activePageConfigIdx];
+  const [productPages, setProductPages] = useState<PageConfig[]>([]);
+  const allConfigs = [...ALL_PAGE_CONFIGS, ...productPages];
+  const activePageConfig: PageConfig = allConfigs[activePageConfigIdx] || ALL_PAGE_CONFIGS[0];
   const activeSections: SectionSchema[] = activePageConfig.sections;
 
   // Data
@@ -342,8 +537,31 @@ export default function AdminStoreEditorPage() {
     }
   }, []);
 
+  // Fetch product list for product page editing
+  const fetchProductPages = useCallback(async () => {
+    try {
+      const { data } = await supabase
+        .from('products')
+        .select('id, name, slug')
+        .eq('status', 'active')
+        .order('name');
+      if (data) {
+        setProductPages(data.map(p => ({
+          label: `Product: ${p.name}`,
+          slug: `product-${p.slug}`,
+          previewPath: `/products/${p.slug}`,
+          indexKey: '_section_index',
+          sections: PRODUCT_PAGE_SECTIONS,
+        })));
+      }
+    } catch {
+      // Silently fail — products just won't appear in dropdown
+    }
+  }, []);
+
   useEffect(() => {
     fetchAllPages();
+    fetchProductPages();
     fetchPageSections(activePageConfig.slug);
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -357,7 +575,8 @@ export default function AdminStoreEditorPage() {
     setSelectedIndex(null);
     setEditValues({});
     setHasChanges(false);
-    fetchPageSections(ALL_PAGE_CONFIGS[configIdx].slug);
+    const configs = [...ALL_PAGE_CONFIGS, ...productPages];
+    fetchPageSections(configs[configIdx]?.slug || '/');
     setPreviewKey(k => k + 1);
   }
 
@@ -759,6 +978,11 @@ export default function AdminStoreEditorPage() {
                     </div>
                   );
                 })}
+
+                {/* Inline Upsell Manager for Product Pages */}
+                {selectedSchema.name === 'Upsells & Cross-sells' && activePageConfig.slug.startsWith('product-') && (
+                  <UpsellManager productSlug={activePageConfig.slug.replace('product-', '')} />
+                )}
               </div>
 
               {/* Settings footer */}
@@ -784,9 +1008,18 @@ export default function AdminStoreEditorPage() {
                   onChange={(e) => handlePageChange(Number(e.target.value))}
                   className="w-full px-2.5 py-2 text-sm font-medium text-gray-800 bg-gray-50 border border-gray-200 rounded-lg focus:ring-2 focus:ring-deep-green/20 focus:border-deep-green outline-none cursor-pointer"
                 >
-                  {ALL_PAGE_CONFIGS.map((cfg, idx) => (
-                    <option key={cfg.slug} value={idx}>{cfg.label}</option>
-                  ))}
+                  <optgroup label="Pages">
+                    {ALL_PAGE_CONFIGS.map((cfg, idx) => (
+                      <option key={cfg.slug} value={idx}>{cfg.label}</option>
+                    ))}
+                  </optgroup>
+                  {productPages.length > 0 && (
+                    <optgroup label="Product Pages">
+                      {productPages.map((cfg, idx) => (
+                        <option key={cfg.slug} value={ALL_PAGE_CONFIGS.length + idx}>{cfg.label.replace('Product: ', '')}</option>
+                      ))}
+                    </optgroup>
+                  )}
                 </select>
               </div>
               {/* Sections Header */}

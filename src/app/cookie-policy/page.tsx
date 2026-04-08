@@ -5,25 +5,25 @@ import Footer from "@/components/Footer";
 
 const cookieTableData = [
   {
-    name: "pure_session",
+    name: "jeko_session",
     purpose: "Maintains your active session while browsing our website so you stay logged in.",
     duration: "Session",
     type: "Essential",
   },
   {
-    name: "pure_cart",
+    name: "jeko_cart",
     purpose: "Stores the contents of your shopping cart so items are preserved as you navigate the site.",
     duration: "14 days",
     type: "Essential",
   },
   {
-    name: "pure_auth_token",
+    name: "jeko_auth_token",
     purpose: "Authenticates your identity after login and authorises access to your account area.",
     duration: "30 days",
     type: "Essential",
   },
   {
-    name: "pure_csrf_token",
+    name: "jeko_csrf_token",
     purpose: "Protects against cross-site request forgery attacks by validating form submissions.",
     duration: "Session",
     type: "Essential",
@@ -71,25 +71,25 @@ const cookieTableData = [
     type: "Analytics",
   },
   {
-    name: "pure_locale",
+    name: "jeko_locale",
     purpose: "Stores your preferred language and regional format settings for a localised experience.",
     duration: "12 months",
     type: "Functionality",
   },
   {
-    name: "pure_location",
+    name: "jeko_location",
     purpose: "Remembers your delivery postcode or region to display accurate shipping and pricing information.",
     duration: "30 days",
     type: "Functionality",
   },
   {
-    name: "pure_recently_viewed",
+    name: "jeko_recently_viewed",
     purpose: "Tracks products and recipes you have recently viewed to show relevant recommendations.",
     duration: "30 days",
     type: "Functionality",
   },
   {
-    name: "pure_dog_profile",
+    name: "jeko_dog_profile",
     purpose: "Stores your dog profile preferences (breed, age, dietary needs) for personalised content.",
     duration: "90 days",
     type: "Functionality",
@@ -262,13 +262,13 @@ export default function CookiePolicyPage() {
                   Without these cookies, services you have asked for &mdash;
                   like completing a purchase or accessing your account &mdash;
                   cannot be provided. Essential cookies include your session
-                  cookie (<strong>pure_session</strong>), which keeps you logged
+                  cookie (<strong>jeko_session</strong>), which keeps you logged
                   in as you navigate between pages; your cart cookie (
-                  <strong>pure_cart</strong>), which retains the items
+                  <strong>jeko_cart</strong>), which retains the items
                   you&apos;ve selected; your authentication token (
-                  <strong>pure_auth_token</strong>), which verifies your
+                  <strong>jeko_auth_token</strong>), which verifies your
                   identity; and our CSRF protection token (
-                  <strong>pure_csrf_token</strong>), which guards against
+                  <strong>jeko_csrf_token</strong>), which guards against
                   malicious form submissions. We also store your cookie consent
                   choice in a <strong>cookie_consent</strong> cookie so we
                   respect your preferences on future visits.
@@ -337,19 +337,19 @@ export default function CookiePolicyPage() {
                   services we have added to our pages.
                 </p>
                 <p className="text-deep-green/80 text-[16px] leading-relaxed mb-4">
-                  For example, the <strong>pure_locale</strong> cookie remembers
+                  For example, the <strong>jeko_locale</strong> cookie remembers
                   your preferred language and regional settings so content is
                   displayed in the correct format each time you return. The{" "}
-                  <strong>pure_location</strong> cookie stores your delivery
+                  <strong>jeko_location</strong> cookie stores your delivery
                   postcode so we can instantly show you accurate shipping costs
                   and delivery estimates without asking for it repeatedly.
                 </p>
                 <p className="text-deep-green/80 text-[16px] leading-relaxed mb-4">
-                  The <strong>pure_recently_viewed</strong> cookie keeps track
+                  The <strong>jeko_recently_viewed</strong> cookie keeps track
                   of the products and recipes you have browsed, allowing us to
                   show relevant &quot;recently viewed&quot; suggestions and
                   personalised recommendations. Similarly, the{" "}
-                  <strong>pure_dog_profile</strong> cookie stores your
+                  <strong>jeko_dog_profile</strong> cookie stores your
                   dog&apos;s breed, age, weight, and dietary requirements so
                   that our content and product suggestions are tailored to your
                   pet&apos;s specific needs.

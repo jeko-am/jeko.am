@@ -133,14 +133,6 @@ export default function AboutPageClient({ sections }: { sections: Record<string,
               />
               <div className="absolute inset-0 bg-black/20" />
             </div>
-            {/* Play button - centered */}
-            <div className="absolute inset-0 flex items-center justify-center z-10">
-              <div className="w-[72px] h-[72px] bg-white/90 rounded-full flex items-center justify-center cursor-pointer hover:bg-white transition-colors shadow-lg group">
-                <svg width="28" height="28" viewBox="0 0 24 24" fill="#274C46" className="ml-1">
-                  <path d="M8 5v14l11-7z" />
-                </svg>
-              </div>
-            </div>
           </section>
         </div>
 

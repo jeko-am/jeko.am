@@ -28,7 +28,7 @@ const steps = [
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export default function HowPlanWorks({ content }: { content?: any }) {
-  const heading = content?.heading ?? "How does a Jeko plan work?";
+  const heading = (content?.heading ?? "How does a Jeko plan work?").replace(/\bPure\b/gi, "Jeko");
   const step1Title = content?.step_1_title ?? "Tell us about your dog";
   const step1Description = content?.step_1_description ?? "Tell us about your dog";
   const step2Title = content?.step_2_title ?? "Choose your tailored recipes";
@@ -89,7 +89,7 @@ export default function HowPlanWorks({ content }: { content?: any }) {
         </svg>
       </div>
       <div className="max-w-container mx-auto px-6 relative z-10">
-        <h2 className="text-[36px] md:text-[40px] font-semibold text-white text-center font-rubik mb-12">
+        <h2 className="text-[36px] md:text-[40px] font-medium text-white text-center tracking-wide mb-12">
           {heading}
         </h2>
 
@@ -109,7 +109,7 @@ export default function HowPlanWorks({ content }: { content?: any }) {
                 />
               </div>
               <p className="text-gold font-medium text-[14px] mb-1">{step.step}</p>
-              <p className="text-white font-semibold text-[16px] leading-tight">
+              <p className="text-white font-medium text-[16px] leading-tight tracking-wide">
                 {step.title}
               </p>
             </div>

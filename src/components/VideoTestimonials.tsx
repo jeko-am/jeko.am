@@ -47,7 +47,7 @@ export default function VideoTestimonials({ content }: { content?: any }) {
     <section className="bg-off-white py-16 pb-12">
       <div className="max-w-container mx-auto px-6">
         <div className="text-center mb-10">
-          <h2 className="text-[36px] md:text-[40px] font-semibold text-deep-green font-rubik mb-3">
+          <h2 className="text-[36px] md:text-[40px] font-medium text-deep-green tracking-wide mb-3">
             {content?.heading || "Don't just take our word for it"}
           </h2>
           <p className="text-[18px] text-deep-green">

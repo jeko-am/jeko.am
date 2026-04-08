@@ -22,6 +22,19 @@ import EditorOverlay from "@/components/EditorOverlay";
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type SectionContent = Record<string, any>;
 
+/** Replace "Pure" with "Jeko" in all user-visible string values from DB content */
+function sanitizeBrand(content: SectionContent): SectionContent {
+  const out: SectionContent = {};
+  for (const [k, v] of Object.entries(content)) {
+    if (typeof v === "string" && !k.endsWith("_url") && !k.endsWith("_image") && k !== "image") {
+      out[k] = v.replace(/\bPure\b/g, "Jeko").replace(/\bPURE\b/g, "JEKO");
+    } else {
+      out[k] = v;
+    }
+  }
+  return out;
+}
+
 async function getSectionContents(): Promise<Map<number, SectionContent>> {
   noStore();
   const map = new Map<number, SectionContent>();
@@ -49,7 +62,7 @@ async function getSectionContents(): Promise<Map<number, SectionContent>> {
         .eq("page_id", firstPage[0].id);
       sections?.forEach((s) => {
         const idx = s.content?._homepage_index;
-        if (idx !== undefined && idx !== null) map.set(Number(idx), s.content);
+        if (idx !== undefined && idx !== null) map.set(Number(idx), sanitizeBrand(s.content));
       });
       return map;
     }
@@ -59,7 +72,7 @@ async function getSectionContents(): Promise<Map<number, SectionContent>> {
       .eq("page_id", pageId);
     sections?.forEach((s) => {
       const idx = s.content?._homepage_index;
-      if (idx !== undefined && idx !== null) map.set(Number(idx), s.content);
+      if (idx !== undefined && idx !== null) map.set(Number(idx), sanitizeBrand(s.content));
     });
   } catch {
     // Fallback to hardcoded defaults on error

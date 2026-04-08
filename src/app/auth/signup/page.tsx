@@ -8,27 +8,26 @@ import {
   DIET_PREFERENCES,
   ACTIVITY_LEVELS,
   TEMPERAMENTS,
-  WALK_PREFERENCES,
-  FAVORITE_ACTIVITIES,
 } from '@/lib/constants';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { FormEvent, useEffect, useMemo, useRef, useState } from 'react';
 
 /* ------------------------------------------------------------------ */
 /*  Quiz step definitions                                              */
 /* ------------------------------------------------------------------ */
 
-const TOTAL_STEPS = 10;
+const TOTAL_STEPS = 11;
 
 const STEP_TITLES = [
   'What type of pet do you have?',
   "What's your pet's name?",
   'What breed?',
   'Tell us more about',
-  'How active?',
+  'Personality',
   'What do they love?',
   'Social life',
+  'Looking for a match?',
   'Add a photo & bio',
   'Where are you located?',
   'Create your account',
@@ -42,6 +41,7 @@ const STEP_MESSAGES = [
   '🔥 Getting warmer!',
   '⭐ Almost done!',
   '🎉 You\'re crushing it!',
+  '💕 One more thing...',
   '✅ Getting close now!',
   '🏁 Last lap!',
   '🎊 Final step!',
@@ -94,13 +94,13 @@ function CameraIcon() {
 /* ------------------------------------------------------------------ */
 
 function QuizCard({
-  emoji,
+  icon,
   label,
   sublabel,
   selected,
   onClick,
 }: {
-  emoji: string;
+  icon: React.ReactNode;
   label: string;
   sublabel?: string;
   selected: boolean;
@@ -111,7 +111,7 @@ function QuizCard({
       type="button"
       onClick={onClick}
       className={`
-        relative flex flex-col items-center justify-center gap-2 p-5 rounded-2xl border-2
+        relative flex flex-col items-center justify-center gap-2.5 p-5 rounded-2xl border-2
         transition-all duration-200 cursor-pointer min-h-[100px]
         ${selected
           ? 'border-deep-green bg-deep-green/5 shadow-md scale-[1.02]'
@@ -119,7 +119,7 @@ function QuizCard({
         }
       `}
     >
-      <span className="text-3xl">{emoji}</span>
+      <div className={`${selected ? 'text-deep-green' : 'text-gray-400'} transition-colors`}>{icon}</div>
       <span className={`text-sm font-semibold ${selected ? 'text-deep-green' : 'text-gray-700'}`}>{label}</span>
       {sublabel && <span className="text-xs text-gray-400">{sublabel}</span>}
       {selected && (
@@ -134,8 +134,313 @@ function QuizCard({
 }
 
 /* ------------------------------------------------------------------ */
+/*  SVG icons for quiz cards                                           */
+/* ------------------------------------------------------------------ */
+
+const QIcon = {
+  dog: (
+    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M10 5.172C10 3.782 8.423 2.679 6.5 3c-2.823.47-4.113 6.006-4 7 .08.703 1.725 1.722 3.656 1 1.261-.472 1.855-1.53 1.844-3.063" />
+      <path d="M14 5.172C14 3.782 15.577 2.679 17.5 3c2.823.47 4.113 6.006 4 7-.08.703-1.725 1.722-3.656 1-1.261-.472-1.855-1.53-1.844-3.063" />
+      <path d="M12 12c-2.5 0-5 2-5 5 0 2 1.5 4 5 4s5-2 5-4c0-3-2.5-5-5-5z" />
+      <circle cx="10" cy="16" r="0.75" fill="currentColor" stroke="none" />
+      <circle cx="14" cy="16" r="0.75" fill="currentColor" stroke="none" />
+    </svg>
+  ),
+  cat: (
+    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M12 22c4.97 0 9-2.686 9-6v-1.5c0-2.5-1-4-2.5-5L20 3l-4 3h-8L4 3l1.5 6.5C4 10.5 3 12 3 14.5V16c0 3.314 4.03 6 9 6z" />
+      <circle cx="9.5" cy="14" r="0.75" fill="currentColor" stroke="none" />
+      <circle cx="14.5" cy="14" r="0.75" fill="currentColor" stroke="none" />
+      <path d="M10 17.5c.5.5 1.5 1 2 1s1.5-.5 2-1" />
+    </svg>
+  ),
+  paw: (
+    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+      <ellipse cx="8" cy="6.5" rx="2" ry="2.5" />
+      <ellipse cx="16" cy="6.5" rx="2" ry="2.5" />
+      <ellipse cx="5" cy="12" rx="1.8" ry="2.2" />
+      <ellipse cx="19" cy="12" rx="1.8" ry="2.2" />
+      <path d="M8 16.5C8 14.5 9.5 13 12 13s4 1.5 4 3.5S14.5 20 12 20s-4-1.5-4-3.5z" />
+    </svg>
+  ),
+  male: (
+    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+      <circle cx="10.5" cy="14.5" r="5.5" />
+      <path d="M15 9l5-5m0 0h-4.5M20 4v4.5" />
+    </svg>
+  ),
+  female: (
+    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+      <circle cx="12" cy="9" r="5.5" />
+      <path d="M12 14.5V21m-3-3h6" />
+    </svg>
+  ),
+  calm: (
+    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+      <circle cx="12" cy="12" r="9" />
+      <path d="M8 14.5c1 1.5 2.5 2 4 2s3-.5 4-2" />
+      <path d="M9 9h0M15 9h0" strokeWidth="2" />
+    </svg>
+  ),
+  playful: (
+    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+      <circle cx="12" cy="13" r="7" />
+      <path d="M9 6l-1.5-3M15 6l1.5-3" />
+      <circle cx="10" cy="12" r="0.75" fill="currentColor" stroke="none" />
+      <circle cx="14" cy="12" r="0.75" fill="currentColor" stroke="none" />
+      <path d="M9.5 15c.8 1 1.5 1.2 2.5 1.2s1.7-.2 2.5-1.2" />
+    </svg>
+  ),
+  energetic: (
+    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" />
+    </svg>
+  ),
+  shy: (
+    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+      <circle cx="12" cy="12" r="9" />
+      <path d="M8 15c1.5 1 3 1.5 4 1.5s2.5-.5 4-1.5" />
+      <path d="M9.5 10c-.2-.4-.8-.8-1.5-.8s-1.3.4-1.5.8" />
+      <path d="M17.5 10c-.2-.4-.8-.8-1.5-.8s-1.3.4-1.5.8" />
+    </svg>
+  ),
+  protective: (
+    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M12 3l7.794 3.897A1 1 0 0120.5 7.82v4.13c0 4.5-3.5 8.05-8.5 9.55-5-1.5-8.5-5.05-8.5-9.55V7.82a1 1 0 01.706-.923L12 3z" />
+      <path d="M9 12l2 2 4-4" />
+    </svg>
+  ),
+  friendly: (
+    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78L12 21.23l8.84-8.84a5.5 5.5 0 000-7.78z" />
+    </svg>
+  ),
+  yes: (
+    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M7 10v4a5 5 0 0010 0v-4" />
+      <path d="M12 14v4m-3 0h6" />
+      <circle cx="9" cy="10" r="0.75" fill="currentColor" stroke="none" />
+      <circle cx="15" cy="10" r="0.75" fill="currentColor" stroke="none" />
+      <path d="M4.5 7C5 4.5 7 3 9 3c1 0 2 .5 3 1.5C13 3.5 14 3 15 3c2 0 4 1.5 4.5 4" />
+      <path d="M10 17.5c.5.5 1.2.8 2 .8s1.5-.3 2-.8" />
+    </svg>
+  ),
+  no: (
+    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+      <circle cx="12" cy="12" r="9" />
+      <path d="M15 9l-6 6M9 9l6 6" />
+    </svg>
+  ),
+  heart: (
+    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78L12 21.23l8.84-8.84a5.5 5.5 0 000-7.78z" />
+    </svg>
+  ),
+  raw: (
+    /* Meat cut on bone — T-bone shape */
+    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M4.5 9.5C4.5 6 7 3.5 10.5 3.5c2.5 0 4.5 1 5.5 3l1 2c.5 1.5.5 3-.5 4.5-1.5 2-4 3-7 3C6 16 4.5 13 4.5 9.5z" />
+      <line x1="14" y1="16" x2="17" y2="21" />
+      <circle cx="17.5" cy="21.5" r="1" />
+    </svg>
+  ),
+  kibble: (
+    /* Bag of kibble with paw */
+    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M6 8h12l1 12H5L6 8z" />
+      <path d="M6 8l1-4h10l1 4" />
+      <path d="M9 4v-1M15 4v-1" />
+      <circle cx="10.5" cy="13" r="0.9" fill="currentColor" opacity="0.4" />
+      <circle cx="13.5" cy="13" r="0.9" fill="currentColor" opacity="0.4" />
+      <circle cx="12" cy="16" r="1.2" fill="currentColor" opacity="0.4" />
+    </svg>
+  ),
+  mixed: (
+    /* Fork and knife crossed */
+    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M7 3v5c0 1.7 1.3 3 3 3v9" />
+      <line x1="7" y1="3" x2="7" y2="8" />
+      <line x1="10" y1="3" x2="10" y2="8" />
+      <line x1="8.5" y1="3" x2="8.5" y2="8" />
+      <path d="M17 3c0 0-2 1-2 5s2 4 2 4v8" />
+    </svg>
+  ),
+  homemade: (
+    /* Cooking pot with steam */
+    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M6 12h12v6a3 3 0 01-3 3H9a3 3 0 01-3-3v-6z" />
+      <line x1="4" y1="12" x2="20" y2="12" />
+      <line x1="3" y1="15" x2="6" y2="15" />
+      <line x1="18" y1="15" x2="21" y2="15" />
+      <path d="M8 9c.5-1.5 1-3 1-3" />
+      <path d="M12 8c.5-2 1-4 1-4" />
+      <path d="M16 9c.5-1.5 1-3 1-3" />
+    </svg>
+  ),
+  plant: (
+    /* Leaf — Jeko natural brand */
+    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M12 21c-4 0-7-3-7-7 0-5 5-10 7-11 2 1 7 6 7 11 0 4-3 7-7 7z" />
+      <line x1="12" y1="10" x2="12" y2="21" />
+      <path d="M9 14l3-3 3 3" />
+    </svg>
+  ),
+  chicken: (
+    /* Drumstick — clear poultry leg shape */
+    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+      <ellipse cx="14" cy="7" rx="5" ry="4" />
+      <path d="M10 10l-3 5" />
+      <rect x="5.5" y="14.5" width="3" height="6" rx="1.5" transform="rotate(-30 7 17.5)" />
+    </svg>
+  ),
+  beef: (
+    /* Steak — thick cut of meat */
+    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M4 10c0-3 3.5-6 8-6s8 3 8 6-3.5 5-8 5-8-2-8-5z" />
+      <path d="M4 10c0 2 0 4 0 5 0 3 3.5 5 8 5s8-2 8-5c0-1 0-3 0-5" />
+      <ellipse cx="12" cy="10" rx="3" ry="2" />
+    </svg>
+  ),
+  lamb: (
+    /* Lamb chop — rack of ribs shape */
+    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M6 6c0-1.5 2.5-3 6-3s6 1.5 6 3c0 2-1 5-2 7l-1 3H9l-1-3c-1-2-2-5-2-7z" />
+      <line x1="9" y1="16" x2="8" y2="21" />
+      <line x1="15" y1="16" x2="16" y2="21" />
+      <line x1="10" y1="7" x2="10" y2="12" />
+      <line x1="14" y1="7" x2="14" y2="12" />
+    </svg>
+  ),
+  vegetables: (
+    /* Broccoli — clear tree shape */
+    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+      <circle cx="12" cy="7" r="3" />
+      <circle cx="8" cy="9" r="3" />
+      <circle cx="16" cy="9" r="3" />
+      <circle cx="9.5" cy="12" r="2.5" />
+      <circle cx="14.5" cy="12" r="2.5" />
+      <rect x="11" y="14" width="2" height="7" rx="1" />
+    </svg>
+  ),
+  low: (
+    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+      <circle cx="12" cy="12" r="9" />
+      <path d="M8 13h8" />
+      <circle cx="9" cy="10" r="0.75" fill="currentColor" stroke="none" />
+      <circle cx="15" cy="10" r="0.75" fill="currentColor" stroke="none" />
+    </svg>
+  ),
+  moderate: (
+    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M13 4v2l2 2-2 4h3l-4 8v-5H9l4-7V4z" />
+    </svg>
+  ),
+  high: (
+    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M22 12h-4l-3 9L9 3l-3 9H2" />
+    </svg>
+  ),
+  veryHigh: (
+    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 00-2.91-.09z" />
+      <path d="M12 15l-3-3a22 22 0 012-3.95A12.88 12.88 0 0122 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 01-4 2z" />
+      <path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0" />
+      <path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5" />
+    </svg>
+  ),
+};
+
+/* ------------------------------------------------------------------ */
 /*  Breed Autocomplete                                                 */
 /* ------------------------------------------------------------------ */
+
+function SearchableSelect({
+  value,
+  onChange,
+  options,
+  placeholder = 'Select...',
+  error,
+}: {
+  value: string;
+  onChange: (v: string) => void;
+  options: string[];
+  placeholder?: string;
+  error?: string;
+}) {
+  const [open, setOpen] = useState(false);
+  const [query, setQuery] = useState('');
+  const wrapperRef = useRef<HTMLDivElement>(null);
+
+  const filtered = useMemo(() => {
+    if (!query.trim()) return options;
+    const q = query.toLowerCase();
+    return options.filter((o) => o.toLowerCase().includes(q));
+  }, [query, options]);
+
+  useEffect(() => {
+    function handleClick(e: MouseEvent) {
+      if (wrapperRef.current && !wrapperRef.current.contains(e.target as Node)) {
+        setOpen(false);
+        setQuery('');
+      }
+    }
+    document.addEventListener('mousedown', handleClick);
+    return () => document.removeEventListener('mousedown', handleClick);
+  }, []);
+
+  return (
+    <div ref={wrapperRef} className="relative w-full">
+      <button
+        type="button"
+        onClick={() => { setOpen(!open); setQuery(''); }}
+        className={`w-full px-5 py-3.5 border-2 rounded-xl text-left text-gray-900 focus:outline-none focus:ring-2 focus:ring-deep-green focus:border-transparent transition-shadow bg-white flex items-center justify-between ${
+          error ? 'border-red-400' : 'border-gray-200'
+        }`}
+      >
+        <span className={value ? 'text-gray-900' : 'text-gray-400'}>{value || placeholder}</span>
+        <svg className={`w-5 h-5 text-gray-400 transition-transform ${open ? 'rotate-180' : ''}`} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+          <polyline points="6 9 12 15 18 9" />
+        </svg>
+      </button>
+      {open && (
+        <div className="absolute z-50 mt-1 w-full bg-white border border-gray-200 rounded-xl shadow-lg overflow-hidden">
+          {options.length > 6 && (
+            <div className="p-2 border-b border-gray-100">
+              <input
+                type="text"
+                value={query}
+                onChange={(e) => setQuery(e.target.value)}
+                placeholder="Search..."
+                autoFocus
+                className="w-full px-3 py-2 text-sm border border-gray-200 rounded-lg focus:outline-none focus:ring-1 focus:ring-deep-green"
+              />
+            </div>
+          )}
+          <ul className="max-h-48 overflow-y-auto">
+            {filtered.length === 0 && (
+              <li className="px-5 py-3 text-sm text-gray-400">No results</li>
+            )}
+            {filtered.map((opt) => (
+              <li key={opt}>
+                <button
+                  type="button"
+                  className={`w-full text-left px-5 py-2.5 text-sm transition-colors ${
+                    opt === value ? 'bg-deep-green/10 text-deep-green font-medium' : 'hover:bg-deep-green/5 text-gray-800'
+                  }`}
+                  onMouseDown={(e) => { e.preventDefault(); onChange(opt); setOpen(false); setQuery(''); }}
+                >
+                  {opt}
+                </button>
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
+      {error && <p className="text-red-500 text-xs mt-1">{error}</p>}
+    </div>
+  );
+}
 
 function BreedAutocomplete({
   value,
@@ -204,12 +509,14 @@ function BreedAutocomplete({
 /*  Main quiz signup page                                              */
 /* ------------------------------------------------------------------ */
 
-export default function SignupPage() {
-  const { signUp, user, loading: authLoading } = useAuth();
+function SignupPageInner() {
+  const { signUp, signInWithGoogle, user, loading: authLoading } = useAuth();
   const router = useRouter();
+  const searchParams = useSearchParams();
 
   /* ---------- quiz state ---------- */
   const [step, setStep] = useState(0);
+  const stepRef = useRef(0);
   const [direction, setDirection] = useState<'forward' | 'backward'>('forward');
   const [animating, setAnimating] = useState(false);
 
@@ -223,38 +530,230 @@ export default function SignupPage() {
   const [activityLevel, setActivityLevel] = useState('');
   const [temperament, setTemperament] = useState('');
   const [dietPreferences, setDietPreferences] = useState<string[]>([]);
-  const [favoriteActivity, setFavoriteActivity] = useState('');
-  const [walkPreference, setWalkPreference] = useState('');
   const [getsAlongWithDogs, setGetsAlongWithDogs] = useState<boolean | null>(null);
-  const [lookingForMate, setLookingForMate] = useState<boolean | null>(null);
-  const [preferredBreed, setPreferredBreed] = useState('');
-  const [sameBreedOnly, setSameBreedOnly] = useState(false);
-  const [preferredRadiusKm, setPreferredRadiusKm] = useState(25);
+  const [lookingForMatch, setLookingForMatch] = useState<boolean | null>(null);
+  const [lookingForPlaymates, setLookingForPlaymates] = useState(false);
+  const [lookingForMate, setLookingForMate] = useState(false);
+  const [lookingForWalkingBuddies, setLookingForWalkingBuddies] = useState(false);
+  const [preferredBreed] = useState('');
+  const [sameBreedOnly] = useState(false);
+  const [preferredRadiusKm] = useState(25);
   const [profilePhotoPreview, setProfilePhotoPreview] = useState('');
   const [uploadingPhoto, setUploadingPhoto] = useState(false);
   const [uploadedPhotoUrl, setUploadedPhotoUrl] = useState('');
   const [bio, setBio] = useState('');
   const [city, setCity] = useState('');
   const [state, setState] = useState('');
-  const [country] = useState('Armenia');
+  const [country, setCountry] = useState('Armenia');
 
-  // Armenian provinces and cities
-  const armenianProvinces: Record<string, string[]> = {
-    'Aragatsotn': ['Aragazavan', 'Aparan', 'Talin'],
-    'Ararat': ['Ararat', 'Vedi', 'Artashat'],
-    'Armavir': ['Armavir', 'Ashtarak', 'Nor Amberd'],
-    'Gegharkunik': ['Goris', 'Kapan', 'Martuni'],
-    'Lori': ['Vanadzor', 'Stepanavan', 'Alaverdi'],
-    'Kotayk': ['Abovyan', 'Hrazdan', 'Dilijan'],
-    'Shirak': ['Gyumri', 'Artik', 'Ashotsk'],
-    'Syunik': ['Syunik', 'Sisian', 'Goris'],
-    'Tavush': ['Ijevan', 'Berd', 'Noyemberyan'],
-    'Vayots Dzor': ['Yeghegnadzor', 'Vayk', 'Areni'],
-    'Yerevan': ['Central', 'North', 'South', 'East', 'West'],
+  // States/provinces per country (only countries that need a state field)
+  const countryStates: Record<string, string[]> = {
+    'United States': ['Alabama','Alaska','Arizona','Arkansas','California','Colorado','Connecticut','Delaware','Florida','Georgia','Hawaii','Idaho','Illinois','Indiana','Iowa','Kansas','Kentucky','Louisiana','Maine','Maryland','Massachusetts','Michigan','Minnesota','Mississippi','Missouri','Montana','Nebraska','Nevada','New Hampshire','New Jersey','New Mexico','New York','North Carolina','North Dakota','Ohio','Oklahoma','Oregon','Pennsylvania','Rhode Island','South Carolina','South Dakota','Tennessee','Texas','Utah','Vermont','Virginia','Washington','West Virginia','Wisconsin','Wyoming'],
+    'Canada': ['Alberta','British Columbia','Manitoba','New Brunswick','Newfoundland and Labrador','Nova Scotia','Ontario','Prince Edward Island','Quebec','Saskatchewan','Northwest Territories','Nunavut','Yukon'],
+    'Australia': ['New South Wales','Queensland','South Australia','Tasmania','Victoria','Western Australia','Australian Capital Territory','Northern Territory'],
+    'India': ['Andhra Pradesh','Arunachal Pradesh','Assam','Bihar','Chhattisgarh','Goa','Gujarat','Haryana','Himachal Pradesh','Jharkhand','Karnataka','Kerala','Madhya Pradesh','Maharashtra','Manipur','Meghalaya','Mizoram','Nagaland','Odisha','Punjab','Rajasthan','Sikkim','Tamil Nadu','Telangana','Tripura','Uttar Pradesh','Uttarakhand','West Bengal','Delhi'],
+    'Brazil': ['Acre','Alagoas','Amapa','Amazonas','Bahia','Ceara','Distrito Federal','Espirito Santo','Goias','Maranhao','Mato Grosso','Mato Grosso do Sul','Minas Gerais','Para','Paraiba','Parana','Pernambuco','Piaui','Rio de Janeiro','Rio Grande do Norte','Rio Grande do Sul','Rondonia','Roraima','Santa Catarina','Sao Paulo','Sergipe','Tocantins'],
+    'Mexico': ['Aguascalientes','Baja California','Baja California Sur','Campeche','Chiapas','Chihuahua','Coahuila','Colima','Durango','Guanajuato','Guerrero','Hidalgo','Jalisco','Mexico City','Mexico State','Michoacan','Morelos','Nayarit','Nuevo Leon','Oaxaca','Puebla','Queretaro','Quintana Roo','San Luis Potosi','Sinaloa','Sonora','Tabasco','Tamaulipas','Tlaxcala','Veracruz','Yucatan','Zacatecas'],
+    'United Kingdom': ['England','Scotland','Wales','Northern Ireland'],
+    'Russia': ['Moscow','Saint Petersburg','Novosibirsk Oblast','Sverdlovsk Oblast','Tatarstan','Krasnodar Krai','Chelyabinsk Oblast','Nizhny Novgorod Oblast','Samara Oblast','Rostov Oblast'],
+    'Germany': ['Baden-Wurttemberg','Bavaria','Berlin','Brandenburg','Bremen','Hamburg','Hesse','Lower Saxony','Mecklenburg-Vorpommern','North Rhine-Westphalia','Rhineland-Palatinate','Saarland','Saxony','Saxony-Anhalt','Schleswig-Holstein','Thuringia'],
+    'China': ['Beijing','Shanghai','Guangdong','Zhejiang','Jiangsu','Sichuan','Hubei','Hunan','Fujian','Shandong','Henan','Hebei','Liaoning','Shaanxi','Yunnan'],
+    'Argentina': ['Buenos Aires','Catamarca','Chaco','Chubut','Cordoba','Corrientes','Entre Rios','Formosa','Jujuy','La Pampa','La Rioja','Mendoza','Misiones','Neuquen','Rio Negro','Salta','San Juan','San Luis','Santa Cruz','Santa Fe','Santiago del Estero','Tierra del Fuego','Tucuman'],
+    'Italy': ['Abruzzo','Basilicata','Calabria','Campania','Emilia-Romagna','Friuli Venezia Giulia','Lazio','Liguria','Lombardy','Marche','Molise','Piedmont','Puglia','Sardinia','Sicily','Trentino-Alto Adige','Tuscany','Umbria','Veneto'],
+    'Spain': ['Andalusia','Aragon','Asturias','Balearic Islands','Basque Country','Canary Islands','Cantabria','Castile and Leon','Castile-La Mancha','Catalonia','Extremadura','Galicia','La Rioja','Madrid','Murcia','Navarre','Valencia'],
+    'Japan': ['Hokkaido','Aomori','Iwate','Miyagi','Akita','Tokyo','Osaka','Kyoto','Kanagawa','Aichi','Fukuoka','Hyogo','Saitama','Chiba','Hiroshima','Okinawa'],
   };
 
-  const [province, setProvince] = useState('Yerevan');
-  const [, setStateDropdown] = useState('Central');
+  // Cities per country (for countries without states) or per state
+  const countryCities: Record<string, string[]> = {
+    // Armenia cities (no state needed)
+    'Armenia': ['Yerevan','Gyumri','Vanadzor','Vagharshapat','Hrazdan','Abovyan','Kapan','Armavir','Artashat','Goris','Charentsavan','Gavar','Sevan','Artik','Ijevan','Masis','Ashtarak','Ararat','Sisian','Dilijan','Alaverdi','Stepanavan','Martuni','Berd','Yeghegnadzor','Tashir','Spitak','Noyemberyan','Meghri','Byureghavan','Aparan','Vedi','Jermuk','Vayk','Talin','Nor Hachn'],
+    // Georgia
+    'Georgia': ['Tbilisi','Batumi','Kutaisi','Rustavi','Zugdidi','Gori','Poti','Samtredia','Khashuri','Senaki','Telavi','Ozurgeti','Marneuli','Kaspi','Tskhinvali'],
+    // Iran
+    'Iran': ['Tehran','Isfahan','Mashhad','Karaj','Tabriz','Shiraz','Ahvaz','Qom','Kermanshah','Rasht','Kerman','Zahedan','Hamadan','Arak','Yazd'],
+    // Turkey
+    'Turkey': ['Istanbul','Ankara','Izmir','Bursa','Antalya','Adana','Gaziantep','Konya','Mersin','Diyarbakir','Kayseri','Eskisehir','Trabzon','Samsun','Denizli'],
+    // France
+    'France': ['Paris','Marseille','Lyon','Toulouse','Nice','Nantes','Strasbourg','Montpellier','Bordeaux','Lille','Rennes','Reims','Toulon','Saint-Etienne','Le Havre'],
+    // UAE
+    'United Arab Emirates': ['Dubai','Abu Dhabi','Sharjah','Ajman','Ras Al Khaimah','Fujairah','Umm Al Quwain','Al Ain'],
+    // Lebanon
+    'Lebanon': ['Beirut','Tripoli','Sidon','Tyre','Byblos','Jounieh','Zahle','Baalbek'],
+    // Netherlands
+    'Netherlands': ['Amsterdam','Rotterdam','The Hague','Utrecht','Eindhoven','Groningen','Tilburg','Almere','Breda','Nijmegen'],
+    // Belgium
+    'Belgium': ['Brussels','Antwerp','Ghent','Charleroi','Liege','Bruges','Namur','Leuven'],
+    // Switzerland
+    'Switzerland': ['Zurich','Geneva','Basel','Bern','Lausanne','Winterthur','Lucerne','St. Gallen'],
+    // Austria
+    'Austria': ['Vienna','Graz','Linz','Salzburg','Innsbruck','Klagenfurt'],
+    // Poland
+    'Poland': ['Warsaw','Krakow','Lodz','Wroclaw','Poznan','Gdansk','Szczecin','Bydgoszcz','Lublin','Katowice'],
+    // Sweden
+    'Sweden': ['Stockholm','Gothenburg','Malmo','Uppsala','Vasteras','Orebro','Linkoping','Helsingborg'],
+    // Norway
+    'Norway': ['Oslo','Bergen','Trondheim','Stavanger','Drammen','Fredrikstad','Kristiansand','Tromso'],
+    // Denmark
+    'Denmark': ['Copenhagen','Aarhus','Odense','Aalborg','Frederiksberg','Esbjerg'],
+    // Finland
+    'Finland': ['Helsinki','Espoo','Tampere','Vantaa','Oulu','Turku','Jyvaskyla','Lahti'],
+    // Czech Republic
+    'Czech Republic': ['Prague','Brno','Ostrava','Plzen','Liberec','Olomouc'],
+    // Greece
+    'Greece': ['Athens','Thessaloniki','Patras','Heraklion','Larissa','Volos','Ioannina','Kavala'],
+    // South Korea
+    'South Korea': ['Seoul','Busan','Incheon','Daegu','Daejeon','Gwangju','Suwon','Ulsan','Changwon','Goyang'],
+    // Singapore
+    'Singapore': ['Singapore'],
+    // Egypt
+    'Egypt': ['Cairo','Alexandria','Giza','Shubra El Kheima','Port Said','Suez','Luxor','Mansoura','Tanta','Aswan'],
+    // South Africa
+    'South Africa': ['Johannesburg','Cape Town','Durban','Pretoria','Port Elizabeth','Bloemfontein','Nelspruit','Polokwane','Kimberley','Pietermaritzburg'],
+    // Ukraine
+    'Ukraine': ['Kyiv','Kharkiv','Odesa','Dnipro','Lviv','Zaporizhzhia','Vinnytsia','Poltava','Chernihiv','Ivano-Frankivsk'],
+    // Azerbaijan
+    'Azerbaijan': ['Baku','Ganja','Sumgait','Mingachevir','Shirvan','Nakhchivan','Sheki','Lankaran'],
+    // New Zealand
+    'New Zealand': ['Auckland','Wellington','Christchurch','Hamilton','Tauranga','Dunedin','Napier','Palmerston North'],
+    // Philippines
+    'Philippines': ['Manila','Quezon City','Davao','Caloocan','Cebu City','Zamboanga','Antipolo','Pasig','Taguig','Makati'],
+    // Thailand
+    'Thailand': ['Bangkok','Chiang Mai','Pattaya','Phuket','Nakhon Ratchasima','Udon Thani','Khon Kaen','Hat Yai'],
+    // US states -> cities
+    'US-Alabama': ['Birmingham','Montgomery','Huntsville','Mobile','Tuscaloosa'],
+    'US-Alaska': ['Anchorage','Fairbanks','Juneau','Sitka','Ketchikan'],
+    'US-Arizona': ['Phoenix','Tucson','Mesa','Chandler','Scottsdale','Tempe'],
+    'US-Arkansas': ['Little Rock','Fort Smith','Fayetteville','Springdale','Jonesboro'],
+    'US-California': ['Los Angeles','San Francisco','San Diego','San Jose','Sacramento','Oakland','Fresno','Long Beach','Irvine','Santa Monica'],
+    'US-Colorado': ['Denver','Colorado Springs','Aurora','Fort Collins','Boulder','Lakewood'],
+    'US-Connecticut': ['Hartford','New Haven','Bridgeport','Stamford','Waterbury'],
+    'US-Delaware': ['Wilmington','Dover','Newark','Middletown','Smyrna'],
+    'US-Florida': ['Miami','Orlando','Tampa','Jacksonville','Fort Lauderdale','St. Petersburg','Tallahassee'],
+    'US-Georgia': ['Atlanta','Savannah','Augusta','Columbus','Macon','Athens'],
+    'US-Hawaii': ['Honolulu','Hilo','Kailua','Pearl City','Kapolei'],
+    'US-Idaho': ['Boise','Meridian','Nampa','Idaho Falls','Pocatello'],
+    'US-Illinois': ['Chicago','Aurora','Naperville','Rockford','Springfield','Peoria'],
+    'US-Indiana': ['Indianapolis','Fort Wayne','Evansville','South Bend','Carmel'],
+    'US-Iowa': ['Des Moines','Cedar Rapids','Davenport','Sioux City','Iowa City'],
+    'US-Kansas': ['Wichita','Overland Park','Kansas City','Olathe','Topeka'],
+    'US-Kentucky': ['Louisville','Lexington','Bowling Green','Owensboro','Covington'],
+    'US-Louisiana': ['New Orleans','Baton Rouge','Shreveport','Lafayette','Lake Charles'],
+    'US-Maine': ['Portland','Lewiston','Bangor','South Portland','Auburn'],
+    'US-Maryland': ['Baltimore','Columbia','Germantown','Silver Spring','Annapolis'],
+    'US-Massachusetts': ['Boston','Worcester','Springfield','Cambridge','Lowell'],
+    'US-Michigan': ['Detroit','Grand Rapids','Ann Arbor','Lansing','Flint','Kalamazoo'],
+    'US-Minnesota': ['Minneapolis','Saint Paul','Rochester','Duluth','Bloomington'],
+    'US-Mississippi': ['Jackson','Gulfport','Southaven','Hattiesburg','Biloxi'],
+    'US-Missouri': ['Kansas City','St. Louis','Springfield','Columbia','Independence'],
+    'US-Montana': ['Billings','Missoula','Great Falls','Bozeman','Helena'],
+    'US-Nebraska': ['Omaha','Lincoln','Bellevue','Grand Island','Kearney'],
+    'US-Nevada': ['Las Vegas','Henderson','Reno','North Las Vegas','Sparks'],
+    'US-New Hampshire': ['Manchester','Nashua','Concord','Dover','Rochester'],
+    'US-New Jersey': ['Newark','Jersey City','Paterson','Elizabeth','Edison','Trenton'],
+    'US-New Mexico': ['Albuquerque','Las Cruces','Rio Rancho','Santa Fe','Roswell'],
+    'US-New York': ['New York City','Buffalo','Rochester','Yonkers','Syracuse','Albany'],
+    'US-North Carolina': ['Charlotte','Raleigh','Greensboro','Durham','Winston-Salem'],
+    'US-North Dakota': ['Fargo','Bismarck','Grand Forks','Minot','West Fargo'],
+    'US-Ohio': ['Columbus','Cleveland','Cincinnati','Toledo','Akron','Dayton'],
+    'US-Oklahoma': ['Oklahoma City','Tulsa','Norman','Broken Arrow','Edmond'],
+    'US-Oregon': ['Portland','Salem','Eugene','Gresham','Hillsboro','Bend'],
+    'US-Pennsylvania': ['Philadelphia','Pittsburgh','Allentown','Erie','Reading','Harrisburg'],
+    'US-Rhode Island': ['Providence','Warwick','Cranston','Pawtucket','East Providence'],
+    'US-South Carolina': ['Charleston','Columbia','Greenville','Rock Hill','Mount Pleasant'],
+    'US-South Dakota': ['Sioux Falls','Rapid City','Aberdeen','Brookings','Watertown'],
+    'US-Tennessee': ['Nashville','Memphis','Knoxville','Chattanooga','Clarksville'],
+    'US-Texas': ['Houston','San Antonio','Dallas','Austin','Fort Worth','El Paso','Arlington'],
+    'US-Utah': ['Salt Lake City','West Valley City','Provo','West Jordan','Orem','Sandy'],
+    'US-Vermont': ['Burlington','South Burlington','Rutland','Essex Junction','Barre'],
+    'US-Virginia': ['Virginia Beach','Norfolk','Chesapeake','Richmond','Newport News','Alexandria'],
+    'US-Washington': ['Seattle','Spokane','Tacoma','Vancouver','Bellevue','Olympia'],
+    'US-West Virginia': ['Charleston','Huntington','Morgantown','Parkersburg','Wheeling'],
+    'US-Wisconsin': ['Milwaukee','Madison','Green Bay','Kenosha','Racine','Appleton'],
+    'US-Wyoming': ['Cheyenne','Casper','Laramie','Gillette','Rock Springs'],
+    // Canada provinces -> cities
+    'CA-Alberta': ['Calgary','Edmonton','Red Deer','Lethbridge','Medicine Hat'],
+    'CA-British Columbia': ['Vancouver','Victoria','Surrey','Burnaby','Kelowna','Kamloops'],
+    'CA-Manitoba': ['Winnipeg','Brandon','Steinbach','Thompson','Portage la Prairie'],
+    'CA-New Brunswick': ['Moncton','Saint John','Fredericton','Dieppe','Miramichi'],
+    'CA-Newfoundland and Labrador': ["St. John's",'Mount Pearl','Corner Brook','Conception Bay South'],
+    'CA-Nova Scotia': ['Halifax','Dartmouth','Sydney','Truro','New Glasgow'],
+    'CA-Ontario': ['Toronto','Ottawa','Mississauga','Hamilton','Brampton','London','Markham','Kitchener'],
+    'CA-Prince Edward Island': ['Charlottetown','Summerside','Stratford','Cornwall'],
+    'CA-Quebec': ['Montreal','Quebec City','Laval','Gatineau','Longueuil','Sherbrooke'],
+    'CA-Saskatchewan': ['Saskatoon','Regina','Prince Albert','Moose Jaw','Swift Current'],
+    'CA-Northwest Territories': ['Yellowknife','Hay River','Inuvik'],
+    'CA-Nunavut': ['Iqaluit','Rankin Inlet','Arviat'],
+    'CA-Yukon': ['Whitehorse','Dawson City','Watson Lake'],
+    // Australia states -> cities
+    'AU-New South Wales': ['Sydney','Newcastle','Wollongong','Central Coast','Coffs Harbour'],
+    'AU-Queensland': ['Brisbane','Gold Coast','Sunshine Coast','Townsville','Cairns','Toowoomba'],
+    'AU-South Australia': ['Adelaide','Mount Gambier','Whyalla','Murray Bridge'],
+    'AU-Tasmania': ['Hobart','Launceston','Devonport','Burnie'],
+    'AU-Victoria': ['Melbourne','Geelong','Ballarat','Bendigo','Shepparton'],
+    'AU-Western Australia': ['Perth','Mandurah','Bunbury','Geraldton','Kalgoorlie'],
+    'AU-Australian Capital Territory': ['Canberra'],
+    'AU-Northern Territory': ['Darwin','Alice Springs','Katherine'],
+    // UK regions -> cities
+    'UK-England': ['London','Manchester','Birmingham','Liverpool','Leeds','Bristol','Sheffield','Newcastle','Nottingham','Southampton','Oxford','Cambridge','Brighton','York'],
+    'UK-Scotland': ['Edinburgh','Glasgow','Aberdeen','Dundee','Inverness','Stirling'],
+    'UK-Wales': ['Cardiff','Swansea','Newport','Bangor','Wrexham'],
+    'UK-Northern Ireland': ['Belfast','Derry','Lisburn','Newry','Bangor'],
+    // Germany states -> cities
+    'DE-Baden-Wurttemberg': ['Stuttgart','Mannheim','Karlsruhe','Freiburg','Heidelberg'],
+    'DE-Bavaria': ['Munich','Nuremberg','Augsburg','Regensburg','Wurzburg'],
+    'DE-Berlin': ['Berlin'],
+    'DE-Brandenburg': ['Potsdam','Cottbus','Brandenburg an der Havel'],
+    'DE-Bremen': ['Bremen','Bremerhaven'],
+    'DE-Hamburg': ['Hamburg'],
+    'DE-Hesse': ['Frankfurt','Wiesbaden','Kassel','Darmstadt','Offenbach'],
+    'DE-Lower Saxony': ['Hanover','Braunschweig','Osnabruck','Oldenburg','Gottingen'],
+    'DE-Mecklenburg-Vorpommern': ['Rostock','Schwerin','Neubrandenburg'],
+    'DE-North Rhine-Westphalia': ['Cologne','Dusseldorf','Dortmund','Essen','Duisburg','Bonn'],
+    'DE-Rhineland-Palatinate': ['Mainz','Ludwigshafen','Koblenz','Trier'],
+    'DE-Saarland': ['Saarbrucken'],
+    'DE-Saxony': ['Dresden','Leipzig','Chemnitz'],
+    'DE-Saxony-Anhalt': ['Magdeburg','Halle'],
+    'DE-Schleswig-Holstein': ['Kiel','Lubeck','Flensburg'],
+    'DE-Thuringia': ['Erfurt','Jena','Weimar'],
+  };
+
+  // Helper to get the prefix for state-based city lookup
+  const statePrefix: Record<string, string> = {
+    'United States': 'US', 'Canada': 'CA', 'Australia': 'AU', 'United Kingdom': 'UK', 'Germany': 'DE',
+  };
+
+  // Get cities based on current country and state selection
+  const getAvailableCities = (): string[] => {
+    const prefix = statePrefix[country];
+    if (prefix && state) {
+      return countryCities[`${prefix}-${state}`] || [];
+    }
+    return countryCities[country] || [];
+  };
+
+  const worldCountries = [
+    'Afghanistan', 'Albania', 'Algeria', 'Andorra', 'Angola', 'Antigua and Barbuda', 'Argentina', 'Armenia', 'Australia', 'Austria',
+    'Azerbaijan', 'Bahamas', 'Bahrain', 'Bangladesh', 'Barbados', 'Belarus', 'Belgium', 'Belize', 'Benin', 'Bhutan',
+    'Bolivia', 'Bosnia and Herzegovina', 'Botswana', 'Brazil', 'Brunei', 'Bulgaria', 'Burkina Faso', 'Burundi', 'Cambodia', 'Cameroon',
+    'Canada', 'Cape Verde', 'Central African Republic', 'Chad', 'Chile', 'China', 'Colombia', 'Comoros', 'Congo', 'Costa Rica',
+    'Croatia', 'Cuba', 'Cyprus', 'Czech Republic', 'Denmark', 'Djibouti', 'Dominica', 'Dominican Republic', 'East Timor', 'Ecuador',
+    'Egypt', 'El Salvador', 'Equatorial Guinea', 'Eritrea', 'Estonia', 'Eswatini', 'Ethiopia', 'Fiji', 'Finland', 'France',
+    'Gabon', 'Gambia', 'Georgia', 'Germany', 'Ghana', 'Greece', 'Grenada', 'Guatemala', 'Guinea', 'Guinea-Bissau',
+    'Guyana', 'Haiti', 'Honduras', 'Hungary', 'Iceland', 'India', 'Indonesia', 'Iran', 'Iraq', 'Ireland',
+    'Israel', 'Italy', 'Ivory Coast', 'Jamaica', 'Japan', 'Jordan', 'Kazakhstan', 'Kenya', 'Kiribati', 'Kosovo',
+    'Kuwait', 'Kyrgyzstan', 'Laos', 'Latvia', 'Lebanon', 'Lesotho', 'Liberia', 'Libya', 'Liechtenstein', 'Lithuania',
+    'Luxembourg', 'Madagascar', 'Malawi', 'Malaysia', 'Maldives', 'Mali', 'Malta', 'Marshall Islands', 'Mauritania', 'Mauritius',
+    'Mexico', 'Micronesia', 'Moldova', 'Monaco', 'Mongolia', 'Montenegro', 'Morocco', 'Mozambique', 'Myanmar', 'Namibia',
+    'Nauru', 'Nepal', 'Netherlands', 'New Zealand', 'Nicaragua', 'Niger', 'Nigeria', 'North Korea', 'North Macedonia', 'Norway',
+    'Oman', 'Pakistan', 'Palau', 'Palestine', 'Panama', 'Papua New Guinea', 'Paraguay', 'Peru', 'Philippines', 'Poland',
+    'Portugal', 'Qatar', 'Romania', 'Russia', 'Rwanda', 'Saint Kitts and Nevis', 'Saint Lucia', 'Saint Vincent and the Grenadines', 'Samoa', 'San Marino',
+    'Sao Tome and Principe', 'Saudi Arabia', 'Senegal', 'Serbia', 'Seychelles', 'Sierra Leone', 'Singapore', 'Slovakia', 'Slovenia', 'Solomon Islands',
+    'Somalia', 'South Africa', 'South Korea', 'South Sudan', 'Spain', 'Sri Lanka', 'Sudan', 'Suriname', 'Sweden', 'Switzerland',
+    'Syria', 'Taiwan', 'Tajikistan', 'Tanzania', 'Thailand', 'Togo', 'Tonga', 'Trinidad and Tobago', 'Tunisia', 'Turkey',
+    'Turkmenistan', 'Tuvalu', 'Uganda', 'Ukraine', 'United Arab Emirates', 'United Kingdom', 'United States', 'Uruguay', 'Uzbekistan', 'Vanuatu',
+    'Vatican City', 'Venezuela', 'Vietnam', 'Yemen', 'Zambia', 'Zimbabwe',
+  ];
   const [fullName, setFullName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -262,6 +761,10 @@ export default function SignupPage() {
   const [age, setAge] = useState('');
   const [phone, setPhone] = useState('');
   const [showPassword, setShowPassword] = useState(false);
+  const [showEmailForm, setShowEmailForm] = useState(false);
+  const [googleLoading, setGoogleLoading] = useState(false);
+  const [completingOAuth, setCompletingOAuth] = useState(false);
+  const [loadingMessage, setLoadingMessage] = useState('');
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [shareContact, setShareContact] = useState(true);
 
@@ -269,12 +772,163 @@ export default function SignupPage() {
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [submitting, setSubmitting] = useState(false);
   const [submitError, setSubmitError] = useState('');
-  const fileInputRef = useRef<HTMLInputElement>(null);
 
-  /* ---------- redirect if already logged in ---------- */
+  /* ---------- redirect if already logged in (unless completing OAuth) ---------- */
   useEffect(() => {
-    if (!authLoading && user) router.push('/community');
-  }, [authLoading, user, router]);
+    if (!authLoading && user && !completingOAuth && searchParams.get('completing') !== '1') {
+      router.push('/community');
+    }
+  }, [authLoading, user, completingOAuth, router, searchParams]);
+
+  /* ---------- OAuth completion: save profiles from sessionStorage ---------- */
+  useEffect(() => {
+    if (searchParams.get('completing') !== '1') return;
+    if (authLoading) return;
+
+    const FUN_MESSAGES = [
+      '🌱 Planting your pet profile...',
+      '🐾 Sniffing out the best settings...',
+      '🦴 Fetching your data...',
+      '🥕 Mixing the perfect recipe...',
+      '🎾 Chasing down your preferences...',
+      '🐕 Teaching new tricks...',
+      '🌿 Growing your pet garden...',
+      '✨ Sprinkling some magic...',
+    ];
+
+    let msgIndex = 0;
+    setCompletingOAuth(true);
+    setLoadingMessage(FUN_MESSAGES[0]);
+    const msgInterval = setInterval(() => {
+      msgIndex = (msgIndex + 1) % FUN_MESSAGES.length;
+      setLoadingMessage(FUN_MESSAGES[msgIndex]);
+    }, 1500);
+
+    async function completeOAuthSignup() {
+      try {
+        // Wait for session to be ready
+        let userId: string | null = null;
+        let userEmail = '';
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        let metadata: Record<string, any> = {};
+
+        for (let i = 0; i < 20; i++) {
+          const { data: { session } } = await supabase.auth.getSession();
+          if (session?.user) {
+            userId = session.user.id;
+            userEmail = session.user.email || '';
+            metadata = session.user.user_metadata || {};
+            break;
+          }
+          await new Promise(r => setTimeout(r, 500));
+        }
+
+        if (!userId) {
+          clearInterval(msgInterval);
+          setLoadingMessage('Could not get session. Please try again.');
+          setTimeout(() => router.push('/auth/signup'), 2000);
+          return;
+        }
+
+        // Read quiz data from sessionStorage
+        const raw = sessionStorage.getItem('jeko-signup-quiz');
+        if (!raw) {
+          clearInterval(msgInterval);
+          router.push('/community');
+          return;
+        }
+
+        const quiz = JSON.parse(raw);
+        const displayName = generateDisplayName(quiz.fullName || metadata?.full_name || metadata?.name || 'User');
+        const emailAddr = userEmail || quiz.email || '';
+
+        // Save user profile
+        await supabase.from('user_profiles').upsert({
+          user_id: userId,
+          full_name: (quiz.fullName || metadata?.full_name || metadata?.name || '').trim(),
+          email: emailAddr.trim().toLowerCase(),
+          age: quiz.age ? parseInt(quiz.age) : null,
+          city: (quiz.city || '').trim(),
+          state: (quiz.state || '').trim(),
+          country: quiz.country || '',
+          phone: (quiz.phone || '').trim() || null,
+        }, { onConflict: 'user_id' });
+
+        // Save pet profile
+        await supabase.from('pet_profiles').upsert({
+          user_id: userId,
+          pet_name: (quiz.dogName || '').trim(),
+          breed: (quiz.breed || '').trim(),
+          pet_type: quiz.petType || 'Dog',
+          city: (quiz.city || '').trim(),
+          city_normalized: (quiz.city || '').trim().toLowerCase(),
+          breed_normalized: (quiz.breed || '').trim().toLowerCase(),
+          contact_email: emailAddr.trim().toLowerCase(),
+          contact_phone: (quiz.phone || '').trim() || null,
+          share_contact: quiz.shareContact ?? true,
+          display_name: displayName,
+          age_years: quiz.dogAge ? parseFloat(quiz.dogAge) : null,
+          dog_age_years: quiz.dogAge ? parseFloat(quiz.dogAge) : null,
+          weight_kg: quiz.weightKg ? parseFloat(quiz.weightKg) : null,
+          gender: quiz.gender || 'Unknown',
+          diet_preferences: quiz.dietPreferences?.length > 0 ? quiz.dietPreferences : null,
+          activity_level: quiz.activityLevel || null,
+          temperament: quiz.temperament || null,
+          looking_for_mate: quiz.lookingForMatch === true ? quiz.lookingForMate : false,
+          preferred_radius_km: quiz.lookingForMatch === true ? quiz.preferredRadiusKm : null,
+          preferred_breed: quiz.lookingForMatch === true ? quiz.preferredBreed || null : null,
+          same_breed_only: quiz.lookingForMatch === true ? quiz.sameBreedOnly : false,
+          gets_along_with_dogs: quiz.getsAlongWithDogs ?? true,
+          bio: (quiz.bio || '').trim() || null,
+          profile_photo_url: quiz.uploadedPhotoUrl || null,
+        }, { onConflict: 'user_id' });
+
+        sessionStorage.removeItem('jeko-signup-quiz');
+        clearInterval(msgInterval);
+        setLoadingMessage('🎉 Welcome to Jeko!');
+        setTimeout(() => router.push('/'), 1200);
+      } catch (err) {
+        console.error('OAuth completion error:', err);
+        clearInterval(msgInterval);
+        setLoadingMessage('Something went wrong. Redirecting...');
+        setTimeout(() => router.push('/'), 2000);
+      }
+    }
+
+    completeOAuthSignup();
+    return () => clearInterval(msgInterval);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [authLoading, searchParams]);
+
+  /* ---------- keep stepRef in sync ---------- */
+  useEffect(() => {
+    stepRef.current = step;
+  }, [step]);
+
+  /* ---------- sync step with browser history via hash ---------- */
+  useEffect(() => {
+    // Set initial hash
+    if (!window.location.hash) {
+      window.history.replaceState(null, '', '#step-0');
+    }
+
+    function handleHashChange() {
+      const match = window.location.hash.match(/^#step-(\d+)$/);
+      if (!match) return;
+      const targetStep = parseInt(match[1], 10);
+      const current = stepRef.current;
+      if (targetStep === current) return;
+      setDirection(targetStep < current ? 'backward' : 'forward');
+      setAnimating(true);
+      setTimeout(() => {
+        stepRef.current = targetStep;
+        setStep(targetStep);
+        setAnimating(false);
+      }, 300);
+    }
+    window.addEventListener('hashchange', handleHashChange);
+    return () => window.removeEventListener('hashchange', handleHashChange);
+  }, []);
 
   /* ---------- pet name for questions ---------- */
   const petName = dogName.trim() || 'your pet';
@@ -307,13 +961,23 @@ export default function SignupPage() {
     if (s === 0 && !petType) newErrors.petType = 'Please select your pet type';
     if (s === 1 && !dogName.trim()) newErrors.dogName = 'Please enter a name';
     if (s === 2 && !breed.trim()) newErrors.breed = 'Please select or type a breed';
-    // Steps 3-7 are optional
+    if (s === 3 && !gender && !dogAge && !weightKg) newErrors.gender = 'Please fill in at least one field or skip this step';
+    if (s === 4 && !temperament) newErrors.activityLevel = 'Please select a personality or skip this step';
+    if (s === 5 && dietPreferences.length === 0) newErrors.diet = 'Please select at least one diet option or skip this step';
+    if (s === 6 && getsAlongWithDogs === null) newErrors.social = 'Please answer the question or skip this step';
+    if (s === 7 && lookingForMatch === null) newErrors.match = 'Please select Yes or No';
+    if (s === 7 && lookingForMatch === true && !lookingForPlaymates && !lookingForMate && !lookingForWalkingBuddies) {
+      newErrors.match = 'Please select at least one option';
+    }
     if (s === 8) {
-      if (!city.trim()) newErrors.city = 'City is required';
-      if (!state.trim()) newErrors.state = 'State is required';
-      if (!country) newErrors.country = 'Please select a country';
+      if (!uploadedPhotoUrl && !uploadingPhoto) newErrors.profilePhoto = 'Please upload a photo of your pet';
     }
     if (s === 9) {
+      if (!country) newErrors.country = 'Please select a country';
+      if (!city.trim()) newErrors.city = 'City is required';
+      if (countryStates[country] && !state.trim()) newErrors.state = 'State / Province is required';
+    }
+    if (s === 10) {
       if (!fullName.trim()) newErrors.fullName = 'Full name is required';
       if (!email.trim()) newErrors.email = 'Email is required';
       else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) newErrors.email = 'Please enter a valid email';
@@ -330,26 +994,41 @@ export default function SignupPage() {
 
   /* ---------- navigation ---------- */
   function goNext() {
-    if (!validateStep(step)) return;
+    if (!validateStep(stepRef.current)) return;
+    const nextStep = Math.min(stepRef.current + 1, TOTAL_STEPS - 1);
+    stepRef.current = nextStep;
     setDirection('forward');
     setAnimating(true);
-    setTimeout(() => { setStep((s) => Math.min(s + 1, TOTAL_STEPS - 1)); setAnimating(false); }, 300);
+    window.location.hash = `step-${nextStep}`;
+    setTimeout(() => { setStep(nextStep); setAnimating(false); }, 300);
+  }
+
+  function skipStep() {
+    const nextStep = Math.min(stepRef.current + 1, TOTAL_STEPS - 1);
+    stepRef.current = nextStep;
+    setErrors({});
+    setDirection('forward');
+    setAnimating(true);
+    window.location.hash = `step-${nextStep}`;
+    setTimeout(() => { setStep(nextStep); setAnimating(false); }, 300);
   }
 
   function goBack() {
     setErrors({});
-    setDirection('backward');
-    setAnimating(true);
-    setTimeout(() => { setStep((s) => Math.max(s - 1, 0)); setAnimating(false); }, 300);
+    if (stepRef.current === 0) return;
+    window.history.back();
   }
 
   /* ---------- auto-advance on card selection for single-select steps ---------- */
   function selectAndAdvance(setter: (v: string) => void, value: string) {
     setter(value);
     setTimeout(() => {
+      const nextStep = Math.min(stepRef.current + 1, TOTAL_STEPS - 1);
+      stepRef.current = nextStep;
       setDirection('forward');
       setAnimating(true);
-      setTimeout(() => { setStep((s) => Math.min(s + 1, TOTAL_STEPS - 1)); setAnimating(false); }, 300);
+      window.location.hash = `step-${nextStep}`;
+      setTimeout(() => { setStep(nextStep); setAnimating(false); }, 300);
     }, 400);
   }
 
@@ -358,10 +1037,8 @@ export default function SignupPage() {
     setDietPreferences(prev => {
       if (prev.includes(diet)) {
         return prev.filter(d => d !== diet);
-      } else if (prev.length < 3) {
-        return [...prev, diet];
       }
-      return prev;
+      return [...prev, diet];
     });
   }
 
@@ -371,6 +1048,22 @@ export default function SignupPage() {
     if (parts.length === 0) return '';
     if (parts.length === 1) return parts[0];
     return `${parts[0]} ${parts[parts.length - 1][0]}.`;
+  }
+
+  /* ---------- Google OAuth signup ---------- */
+  async function handleGoogleSignup() {
+    setGoogleLoading(true);
+    // Save quiz data to sessionStorage so we can restore after OAuth redirect
+    const quizData = {
+      petType, dogName, breed, dogAge, weightKg, gender, activityLevel,
+      temperament, dietPreferences, getsAlongWithDogs, lookingForMatch,
+      lookingForPlaymates, lookingForMate, lookingForWalkingBuddies,
+      preferredBreed, sameBreedOnly, preferredRadiusKm,
+      profilePhotoPreview, uploadedPhotoUrl, bio,
+      city, state, country, fullName, age, phone, shareContact,
+    };
+    sessionStorage.setItem('jeko-signup-quiz', JSON.stringify(quizData));
+    await signInWithGoogle();
   }
 
   /* ---------- submit ---------- */
@@ -450,12 +1143,12 @@ export default function SignupPage() {
         diet_preferences: dietPreferences.length > 0 ? dietPreferences : null,
         activity_level: activityLevel || null,
         temperament: temperament || null,
-        looking_for_mate: lookingForMate ?? false,
-        preferred_radius_km: lookingForMate ? preferredRadiusKm : null,
-        preferred_breed: lookingForMate ? preferredBreed || null : null,
-        same_breed_only: lookingForMate ? sameBreedOnly : false,
-        favorite_activity: favoriteActivity || null,
-        walk_preference: walkPreference || null,
+        looking_for_mate: lookingForMatch === true ? lookingForMate : false,
+        preferred_radius_km: lookingForMatch === true ? preferredRadiusKm : null,
+        preferred_breed: lookingForMatch === true ? preferredBreed || null : null,
+        same_breed_only: lookingForMatch === true ? sameBreedOnly : false,
+        favorite_activity: null,
+        walk_preference: null,
         gets_along_with_dogs: getsAlongWithDogs ?? true,
         bio: bio.trim() || null,
         profile_photo_url: uploadedPhotoUrl || null,
@@ -483,11 +1176,41 @@ export default function SignupPage() {
     );
   }
 
+  /* ---------- OAuth completing screen ---------- */
+  if (completingOAuth) {
+    return (
+      <div className="min-h-screen bg-off-white flex flex-col items-center justify-center px-5">
+        <div className="text-center max-w-sm">
+          <div className="w-20 h-20 mx-auto mb-6 relative">
+            <div className="w-20 h-20 border-4 border-gold border-t-deep-green rounded-full animate-spin" />
+            <div className="absolute inset-0 flex items-center justify-center">
+              <span className="text-2xl">🐾</span>
+            </div>
+          </div>
+          <p className="text-deep-green text-xl font-semibold mb-3 transition-all duration-500">
+            {loadingMessage}
+          </p>
+          <p className="text-deep-green/40 text-sm">
+            Setting up your perfect pet experience...
+          </p>
+          <div className="mt-8 flex justify-center gap-1.5">
+            {[0, 1, 2].map(i => (
+              <div
+                key={i}
+                className="w-2.5 h-2.5 bg-gold rounded-full animate-bounce"
+                style={{ animationDelay: `${i * 0.15}s` }}
+              />
+            ))}
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   /* ================================================================ */
   /*  Render                                                          */
   /* ================================================================ */
 
-  const progress = ((step + 1) / TOTAL_STEPS) * 100;
   const slideClass = animating
     ? direction === 'forward' ? 'opacity-0 translate-x-12' : 'opacity-0 -translate-x-12'
     : 'opacity-100 translate-x-0';
@@ -524,19 +1247,34 @@ export default function SignupPage() {
             )}
           </div>
         </div>
-        {/* Progress bar */}
-        <div className="h-1 bg-deep-green/50">
-          <div
-            className="h-full bg-gold transition-all duration-500 ease-out"
-            style={{ width: `${progress}%` }}
-          />
-        </div>
       </header>
 
       {/* -------- Main quiz area -------- */}
       <main className="flex-1 flex flex-col">
         <form onSubmit={handleSubmit} noValidate className="flex-1 flex flex-col">
-          <div className={`flex-1 flex flex-col items-center justify-center px-5 py-8 transition-all duration-300 ease-in-out ${slideClass}`}>
+          <div className={`flex-1 flex flex-col items-center justify-center px-5 pt-2 pb-8 transition-all duration-300 ease-in-out ${slideClass}`}>
+
+            {/* Step count */}
+            <div className="w-full max-w-md mb-2 text-center">
+              <span className="text-deep-green/70 text-sm font-medium">
+                Step {step + 1} of {TOTAL_STEPS}
+              </span>
+            </div>
+
+            {/* Segmented progress bar */}
+            <div className="w-full max-w-md mb-8">
+              <div className="flex gap-1">
+                {Array.from({ length: TOTAL_STEPS }).map((_, i) => (
+                  <div key={i} className="flex-1 h-1.5 rounded-full bg-deep-green/15 overflow-hidden">
+                    <div
+                      className={`h-full rounded-full transition-all duration-500 ease-out ${
+                        i <= step ? 'bg-gold w-full' : 'w-0'
+                      }`}
+                    />
+                  </div>
+                ))}
+              </div>
+            </div>
 
             {/* Motivational message */}
             <p className="text-deep-green text-2xl font-semibold mb-6">
@@ -562,11 +1300,11 @@ export default function SignupPage() {
                 <p className="text-deep-green/50 text-sm mb-8">Let&apos;s get started with the basics</p>
                 <div className="grid grid-cols-3 gap-4">
                   {PET_TYPES.map((pt) => {
-                    const emojis: Record<string, string> = { Dog: '🐕', Cat: '🐱', Other: '🐾' };
+                    const icons: Record<string, React.ReactNode> = { Dog: QIcon.dog, Cat: QIcon.cat, Other: QIcon.paw };
                     return (
                       <QuizCard
                         key={pt}
-                        emoji={emojis[pt] || '🐾'}
+                        icon={icons[pt] || QIcon.paw}
                         label={pt}
                         selected={petType === pt}
                         onClick={() => selectAndAdvance(setPetType, pt)}
@@ -658,15 +1396,14 @@ export default function SignupPage() {
 
                 {/* Gender */}
                 <p className="text-sm font-medium text-deep-green mb-3">Gender</p>
-                <div className="grid grid-cols-3 gap-3 max-w-sm mx-auto mb-8">
+                <div className="grid grid-cols-2 gap-3 max-w-xs mx-auto mb-8">
                   {[
-                    { value: 'Male', emoji: '♂️', label: 'Boy' },
-                    { value: 'Female', emoji: '♀️', label: 'Girl' },
-                    { value: 'Unknown', emoji: '🤷', label: 'Not sure' },
+                    { value: 'Male', icon: QIcon.male, label: 'Boy' },
+                    { value: 'Female', icon: QIcon.female, label: 'Girl' },
                   ].map((g) => (
                     <QuizCard
                       key={g.value}
-                      emoji={g.emoji}
+                      icon={g.icon}
                       label={g.label}
                       selected={gender === g.value}
                       onClick={() => setGender(g.value)}
@@ -704,6 +1441,7 @@ export default function SignupPage() {
                   </div>
                 </div>
 
+                {errors.gender && <p className="text-red-500 text-sm mt-4">{errors.gender}</p>}
                 <button
                   type="button"
                   onClick={goNext}
@@ -711,13 +1449,13 @@ export default function SignupPage() {
                 >
                   Continue
                 </button>
-                <button type="button" onClick={goNext} className="block mx-auto mt-3 text-deep-green/40 text-sm hover:text-deep-green/60 transition-colors">
+                <button type="button" onClick={skipStep} className="block mx-auto mt-3 text-deep-green/40 text-sm hover:text-deep-green/60 transition-colors">
                   Skip this step
                 </button>
               </div>
             )}
 
-            {/* ============ STEP 4: ACTIVITY & TEMPERAMENT ============ */}
+            {/* ============ STEP 4: PERSONALITY ============ */}
             {step === 4 && (
               <div className="w-full max-w-lg text-center">
                 <h1 className="text-2xl sm:text-3xl font-rubik font-bold text-deep-green mb-2">
@@ -725,32 +1463,16 @@ export default function SignupPage() {
                 </h1>
                 <p className="text-deep-green/50 text-sm mb-6">Pick what fits best</p>
 
-                <p className="text-sm font-medium text-deep-green mb-3">Activity Level</p>
-                <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-8">
-                  {ACTIVITY_LEVELS.map((level) => {
-                    const emojis: Record<string, string> = { Low: '🐌', Moderate: '🚶', High: '🏃', 'Very High': '🚀' };
-                    return (
-                      <QuizCard
-                        key={level}
-                        emoji={emojis[level] || '🐕'}
-                        label={level}
-                        selected={activityLevel === level}
-                        onClick={() => setActivityLevel(level)}
-                      />
-                    );
-                  })}
-                </div>
-
                 <p className="text-sm font-medium text-deep-green mb-3">Personality</p>
                 <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 mb-8">
                   {TEMPERAMENTS.map((t) => {
-                    const emojis: Record<string, string> = {
-                      Calm: '😌', Playful: '🎾', Energetic: '⚡', Shy: '🙈', Protective: '🛡️', Friendly: '🤗',
+                    const icons: Record<string, React.ReactNode> = {
+                      Calm: QIcon.calm, Playful: QIcon.playful, Energetic: QIcon.energetic, Shy: QIcon.shy, Protective: QIcon.protective, Friendly: QIcon.friendly,
                     };
                     return (
                       <QuizCard
                         key={t}
-                        emoji={emojis[t] || '🐕'}
+                        icon={icons[t] || QIcon.paw}
                         label={t}
                         selected={temperament === t}
                         onClick={() => setTemperament(t)}
@@ -759,6 +1481,7 @@ export default function SignupPage() {
                   })}
                 </div>
 
+                {errors.activityLevel && <p className="text-red-500 text-sm mt-4">{errors.activityLevel}</p>}
                 <button
                   type="button"
                   onClick={goNext}
@@ -766,7 +1489,7 @@ export default function SignupPage() {
                 >
                   Continue
                 </button>
-                <button type="button" onClick={goNext} className="block mx-auto mt-3 text-deep-green/40 text-sm hover:text-deep-green/60 transition-colors">
+                <button type="button" onClick={skipStep} className="block mx-auto mt-3 text-deep-green/40 text-sm hover:text-deep-green/60 transition-colors">
                   Skip this step
                 </button>
               </div>
@@ -780,21 +1503,17 @@ export default function SignupPage() {
                 </h1>
                 <p className="text-deep-green/50 text-sm mb-6">Help us find the perfect matches</p>
 
-                <div className="flex items-center justify-center gap-2 mb-3">
-                  <p className="text-sm font-medium text-deep-green">Diet</p>
-                  <span className="text-xs font-semibold bg-gold/20 text-gold px-2.5 py-1 rounded-full">
-                    {dietPreferences.length}/3
-                  </span>
-                </div>
+                <p className="text-sm font-medium text-deep-green mb-3">Diet</p>
                 <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 mb-8">
                   {DIET_PREFERENCES.map((d) => {
-                    const emojis: Record<string, string> = {
-                      Raw: '🥩', Kibble: '🍖', Mixed: '🍽️', Homemade: '👨‍🍳', 'Jeko': '🌿',
+                    const icons: Record<string, React.ReactNode> = {
+                      Raw: QIcon.raw, Kibble: QIcon.kibble, Mixed: QIcon.mixed, Homemade: QIcon.homemade, 'Jeko': QIcon.plant,
+                      Chicken: QIcon.chicken, Beef: QIcon.beef, Lamb: QIcon.lamb, Vegetables: QIcon.vegetables,
                     };
                     return (
                       <QuizCard
                         key={d}
-                        emoji={emojis[d] || '🍽️'}
+                        icon={icons[d] || QIcon.mixed}
                         label={d}
                         selected={dietPreferences.includes(d)}
                         onClick={() => toggleDietPreference(d)}
@@ -803,29 +1522,7 @@ export default function SignupPage() {
                   })}
                 </div>
 
-                <p className="text-sm font-medium text-deep-green mb-3">Favorite Activity</p>
-                <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 mb-8">
-                  {FAVORITE_ACTIVITIES.map((f) => {
-                    const emojis: Record<string, string> = {
-                      Fetch: '🎾', Swimming: '🏊', Hiking: '🥾', Cuddling: '🤗', Agility: '🏅', Running: '🏃',
-                      'Playing with other dogs': '🐕‍🦺', 'Chasing squirrels': '🐿️', Napping: '😴', 'Car rides': '🚗',
-                    };
-                    return (
-                      <QuizCard key={f} emoji={emojis[f] || '🐕'} label={f} selected={favoriteActivity === f} onClick={() => setFavoriteActivity(f)} />
-                    );
-                  })}
-                </div>
-
-                <p className="text-sm font-medium text-deep-green mb-3">Walk Preference</p>
-                <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-6">
-                  {WALK_PREFERENCES.map((w) => {
-                    const emojis: Record<string, string> = { Morning: '🌅', Evening: '🌆', Both: '☀️', Anytime: '🕐' };
-                    return (
-                      <QuizCard key={w} emoji={emojis[w] || '🚶'} label={w} selected={walkPreference === w} onClick={() => setWalkPreference(w)} />
-                    );
-                  })}
-                </div>
-
+                {errors.diet && <p className="text-red-500 text-sm mt-4">{errors.diet}</p>}
                 <button
                   type="button"
                   onClick={goNext}
@@ -833,7 +1530,7 @@ export default function SignupPage() {
                 >
                   Continue
                 </button>
-                <button type="button" onClick={goNext} className="block mx-auto mt-3 text-deep-green/40 text-sm hover:text-deep-green/60 transition-colors">
+                <button type="button" onClick={skipStep} className="block mx-auto mt-3 text-deep-green/40 text-sm hover:text-deep-green/60 transition-colors">
                   Skip this step
                 </button>
               </div>
@@ -849,67 +1546,11 @@ export default function SignupPage() {
 
                 <p className="text-sm font-medium text-deep-green mb-3">Gets along with other dogs?</p>
                 <div className="grid grid-cols-2 gap-4 max-w-xs mx-auto mb-8">
-                  <QuizCard emoji="🤝" label="Yes!" selected={getsAlongWithDogs === true} onClick={() => setGetsAlongWithDogs(true)} />
-                  <QuizCard emoji="😬" label="Not really" selected={getsAlongWithDogs === false} onClick={() => setGetsAlongWithDogs(false)} />
+                  <QuizCard icon={QIcon.yes} label="Yes!" selected={getsAlongWithDogs === true} onClick={() => setGetsAlongWithDogs(true)} />
+                  <QuizCard icon={QIcon.no} label="Not really" selected={getsAlongWithDogs === false} onClick={() => setGetsAlongWithDogs(false)} />
                 </div>
 
-                <p className="text-sm font-medium text-deep-green mb-3">Looking for a match?</p>
-                <div className="grid grid-cols-2 gap-4 max-w-xs mx-auto mb-6">
-                  <QuizCard emoji="💕" label="Yes!" selected={lookingForMate === true} onClick={() => setLookingForMate(true)} />
-                  <QuizCard emoji="🙅" label="No thanks" selected={lookingForMate === false} onClick={() => setLookingForMate(false)} />
-                </div>
-
-                {lookingForMate && (
-                  <div className="bg-white border-2 border-deep-green/10 rounded-2xl p-5 max-w-sm mx-auto mb-6 text-left space-y-4">
-                    <p className="text-sm font-semibold text-deep-green text-center">Match Preferences</p>
-                    <label className="flex items-center cursor-pointer hover:bg-gray-50 p-2 rounded transition-colors">
-                      <input
-                        type="checkbox"
-                        checked={sameBreedOnly}
-                        onChange={(e) => {
-                          setSameBreedOnly(e.target.checked);
-                          if (e.target.checked && breed.trim()) {
-                            setPreferredBreed(breed.trim());
-                          } else if (!e.target.checked) {
-                            setPreferredBreed('');
-                          }
-                        }}
-                        className="w-4 h-4 text-gold focus:ring-gold border-gray-300 rounded cursor-pointer"
-                      />
-                      <span className="ml-2.5 text-sm font-medium text-deep-green">Same breed only</span>
-                    </label>
-                    {!sameBreedOnly && (
-                      <div>
-                        <label className="block text-xs font-medium text-gray-600 mb-1.5">Preferred Breed (optional)</label>
-                        <BreedAutocomplete value={preferredBreed} onChange={setPreferredBreed} placeholder="Any breed..." />
-                      </div>
-                    )}
-                    {sameBreedOnly && (
-                      <div className="bg-gold/10 border border-gold/30 rounded-lg p-3">
-                        <p className="text-xs font-medium text-gold">✓ Matching with {breed || 'same'} breed only</p>
-                      </div>
-                    )}
-                    <div>
-                      <label className="block text-xs font-medium text-gray-600 mb-1.5">
-                        Search Radius: <span className="text-gold font-semibold">{preferredRadiusKm} km</span>
-                      </label>
-                      <input
-                        type="range"
-                        min={5}
-                        max={100}
-                        step={5}
-                        value={preferredRadiusKm}
-                        onChange={(e) => setPreferredRadiusKm(parseInt(e.target.value))}
-                        className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-deep-green"
-                      />
-                      <div className="flex justify-between text-xs text-gray-400 mt-1">
-                        <span>5 km</span>
-                        <span>100 km</span>
-                      </div>
-                    </div>
-                  </div>
-                )}
-
+                {errors.social && <p className="text-red-500 text-sm mt-4">{errors.social}</p>}
                 <button
                   type="button"
                   onClick={goNext}
@@ -917,22 +1558,120 @@ export default function SignupPage() {
                 >
                   Continue
                 </button>
-                <button type="button" onClick={goNext} className="block mx-auto mt-3 text-deep-green/40 text-sm hover:text-deep-green/60 transition-colors">
+                <button type="button" onClick={skipStep} className="block mx-auto mt-3 text-deep-green/40 text-sm hover:text-deep-green/60 transition-colors">
                   Skip this step
                 </button>
               </div>
             )}
 
-            {/* ============ STEP 7: PHOTO & BIO ============ */}
+            {/* ============ STEP 7: LOOKING FOR A MATCH? ============ */}
             {step === 7 && (
+              <div className="w-full max-w-lg text-center">
+                <h1 className="text-2xl sm:text-3xl font-rubik font-bold text-deep-green mb-2">
+                  Looking for a match?
+                </h1>
+                <p className="text-deep-green/50 text-sm mb-8">Would you like {petName} to appear in matches with other pets?</p>
+
+                <div className="grid grid-cols-2 gap-4 max-w-xs mx-auto mb-8">
+                  <QuizCard icon={QIcon.heart} label="Yes!" selected={lookingForMatch === true} onClick={() => setLookingForMatch(true)} />
+                  <QuizCard icon={QIcon.no} label="No thanks" selected={lookingForMatch === false} onClick={() => { setLookingForMatch(false); setLookingForPlaymates(false); setLookingForMate(false); setLookingForWalkingBuddies(false); }} />
+                </div>
+
+                {lookingForMatch === true && (
+                  <div className="space-y-6">
+                    <div>
+                      <p className="text-sm font-medium text-deep-green mb-4">What are you looking for?</p>
+                      <div className="space-y-3 max-w-sm mx-auto">
+                        <label className={`flex items-center gap-3 p-4 rounded-2xl border-2 cursor-pointer transition-all duration-200 ${lookingForPlaymates ? 'border-gold bg-gold/10' : 'border-gray-200 bg-white hover:border-gray-300'}`}>
+                          <input type="checkbox" checked={lookingForPlaymates} onChange={(e) => { setLookingForPlaymates(e.target.checked); if (!e.target.checked) setActivityLevel(''); }} className="w-5 h-5 text-gold focus:ring-gold border-gray-300 rounded cursor-pointer" />
+                          <span className={`${lookingForPlaymates ? 'text-deep-green' : 'text-gray-400'} transition-colors`}>{QIcon.paw}</span>
+                          <span className="text-sm font-medium text-deep-green">Playmates for my pet</span>
+                        </label>
+                        <label className={`flex items-center gap-3 p-4 rounded-2xl border-2 cursor-pointer transition-all duration-200 ${lookingForMate ? 'border-gold bg-gold/10' : 'border-gray-200 bg-white hover:border-gray-300'}`}>
+                          <input type="checkbox" checked={lookingForMate} onChange={(e) => setLookingForMate(e.target.checked)} className="w-5 h-5 text-gold focus:ring-gold border-gray-300 rounded cursor-pointer" />
+                          <span className={`${lookingForMate ? 'text-deep-green' : 'text-gray-400'} transition-colors`}>{QIcon.heart}</span>
+                          <span className="text-sm font-medium text-deep-green">A mate for my pet</span>
+                        </label>
+                        <label className={`flex items-center gap-3 p-4 rounded-2xl border-2 cursor-pointer transition-all duration-200 ${lookingForWalkingBuddies ? 'border-gold bg-gold/10' : 'border-gray-200 bg-white hover:border-gray-300'}`}>
+                          <input type="checkbox" checked={lookingForWalkingBuddies} onChange={(e) => setLookingForWalkingBuddies(e.target.checked)} className="w-5 h-5 text-gold focus:ring-gold border-gray-300 rounded cursor-pointer" />
+                          <span className={`${lookingForWalkingBuddies ? 'text-deep-green' : 'text-gray-400'} transition-colors`}>{QIcon.moderate}</span>
+                          <span className="text-sm font-medium text-deep-green">Walking buddies</span>
+                        </label>
+                      </div>
+                    </div>
+
+                    {/* Activity level — only shown when Playmates is checked */}
+                    {lookingForPlaymates && (
+                      <div>
+                        <p className="text-sm font-medium text-deep-green mb-3">What activity level suits {petName}?</p>
+                        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 max-w-md mx-auto">
+                          {ACTIVITY_LEVELS.map((level) => {
+                            const icons: Record<string, React.ReactNode> = { Low: QIcon.low, Moderate: QIcon.moderate, High: QIcon.high, 'Very High': QIcon.veryHigh };
+                            return (
+                              <QuizCard
+                                key={level}
+                                icon={icons[level] || QIcon.paw}
+                                label={level}
+                                selected={activityLevel === level}
+                                onClick={() => setActivityLevel(level)}
+                              />
+                            );
+                          })}
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                )}
+
+                {lookingForMatch === false && (
+                  <p className="text-sm text-deep-green/40 mb-4">{petName} won&apos;t appear in match results. You can change this later in settings.</p>
+                )}
+
+                {errors.match && <p className="text-red-500 text-sm mt-4">{errors.match}</p>}
+                <button
+                  type="button"
+                  onClick={goNext}
+                  className="mt-6 bg-gold hover:bg-yellow-500 text-deep-green font-semibold py-3.5 px-10 rounded-2xl transition-all duration-200 shadow-sm hover:shadow-md text-lg"
+                >
+                  Continue
+                </button>
+                <button type="button" onClick={() => { setLookingForMatch(false); setLookingForPlaymates(false); setLookingForMate(false); setLookingForWalkingBuddies(false); skipStep(); }} className="block mx-auto mt-3 text-deep-green/40 text-sm hover:text-deep-green/60 transition-colors">
+                  Skip this step
+                </button>
+              </div>
+            )}
+
+            {/* ============ STEP 8: PHOTO & BIO ============ */}
+            {step === 8 && (
               <div className="w-full max-w-md text-center">
                 <h1 className="text-2xl sm:text-3xl font-rubik font-bold text-deep-green mb-2">
                   Show off {petName}!
                 </h1>
                 <p className="text-deep-green/50 text-sm mb-8">Add a photo and tell us what makes them special</p>
 
-                {/* Photo upload */}
-                <button type="button" onClick={() => fileInputRef.current?.click()} className="relative group mx-auto block mb-3">
+                {/* Photo upload — opens native file picker on click */}
+                <div
+                  role="button"
+                  tabIndex={0}
+                  data-mount-time={Date.now()}
+                  onClick={(e) => {
+                    // Ignore clicks within 600ms of mount to prevent ghost triggers during step transitions
+                    const mountTime = parseInt(e.currentTarget.getAttribute('data-mount-time') || '0');
+                    if (Date.now() - mountTime < 600) return;
+                    const input = document.createElement('input');
+                    input.type = 'file';
+                    input.accept = 'image/jpeg,image/png,image/webp,image/gif';
+                    input.onchange = (ev) => {
+                      const file = (ev.target as HTMLInputElement).files?.[0];
+                      if (file) {
+                        handlePhotoSelect({ target: { files: [file] } } as unknown as React.ChangeEvent<HTMLInputElement>);
+                      }
+                    };
+                    input.click();
+                  }}
+                  onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') e.currentTarget.click(); }}
+                  className="relative group mx-auto flex justify-center mb-3 cursor-pointer w-fit"
+                >
                   <div className={`w-36 h-36 rounded-full border-3 border-dashed flex items-center justify-center overflow-hidden transition-all duration-200 ${
                     profilePhotoPreview ? 'border-deep-green border-solid' : 'border-gray-300 hover:border-gold group-hover:border-gold'
                   }`}>
@@ -957,11 +1696,10 @@ export default function SignupPage() {
                       </svg>
                     </div>
                   )}
-                </button>
+                </div>
                 {/* Photo guidance */}
-                <p className="text-xs text-deep-green/50 mb-1">📸 Please upload a clear photo of your pet — pets only, no humans!</p>
+                <p className="text-xs text-deep-green/50 mb-1">📸 Please upload a clear photo of your pet — pets only, no humans! <span className="text-red-400">*Required</span></p>
                 <p className="text-xs text-gray-400 mb-5">Best size: at least 400×400px · JPG, PNG or WebP · max 5MB</p>
-                <input ref={fileInputRef} type="file" accept="image/jpeg,image/png,image/webp,image/gif" className="hidden" onChange={handlePhotoSelect} />
                 {errors.profilePhoto && <p className="text-red-500 text-xs mb-4">{errors.profilePhoto}</p>}
 
                 {/* Bio */}
@@ -978,18 +1716,16 @@ export default function SignupPage() {
                 <button
                   type="button"
                   onClick={goNext}
-                  className="bg-gold hover:bg-yellow-500 text-deep-green font-semibold py-3.5 px-10 rounded-2xl transition-all duration-200 shadow-sm hover:shadow-md text-lg"
+                  disabled={uploadingPhoto}
+                  className="bg-gold hover:bg-yellow-500 text-deep-green font-semibold py-3.5 px-10 rounded-2xl transition-all duration-200 shadow-sm hover:shadow-md text-lg disabled:opacity-40 disabled:cursor-not-allowed"
                 >
                   Continue
-                </button>
-                <button type="button" onClick={goNext} className="block mx-auto mt-3 text-deep-green/40 text-sm hover:text-deep-green/60 transition-colors">
-                  Skip this step
                 </button>
               </div>
             )}
 
-            {/* ============ STEP 8: LOCATION ============ */}
-            {step === 8 && (
+            {/* ============ STEP 9: LOCATION ============ */}
+            {step === 9 && (
               <div className="w-full max-w-md text-center">
                 <h1 className="text-2xl sm:text-3xl font-rubik font-bold text-deep-green mb-2">
                   Where are you located?
@@ -997,51 +1733,42 @@ export default function SignupPage() {
                 <p className="text-deep-green/50 text-sm mb-8">Connect with nearby pet owners and local events</p>
 
                 <div className="space-y-4 text-left">
-                  {/* Country - Always Armenia */}
+                  {/* Country Dropdown */}
                   <div>
                     <label className="block text-sm font-medium text-deep-green mb-1.5">Country <span className="text-red-400">*</span></label>
-                    <div className="w-full px-5 py-3.5 border-2 border-deep-green bg-deep-green/5 rounded-xl text-gray-900 focus:outline-none focus:ring-2 focus:ring-deep-green focus:border-transparent transition-shadow font-semibold flex items-center">
-                      🇦🇲 {country}
-                    </div>
+                    <SearchableSelect
+                      value={country}
+                      onChange={(v) => { setCountry(v); setState(''); setCity(''); }}
+                      options={worldCountries}
+                      placeholder="Select country"
+                      error={errors.country}
+                    />
                   </div>
 
-                  {/* Province/State Dropdown */}
-                  <div>
-                    <label className="block text-sm font-medium text-deep-green mb-1.5">Province / Region <span className="text-red-400">*</span></label>
-                    <select
-                      value={province}
-                      onChange={(e) => {
-                        setProvince(e.target.value);
-                        setState(e.target.value);
-                        setStateDropdown(armenianProvinces[e.target.value]?.[0] || '');
-                        setCity(armenianProvinces[e.target.value]?.[0] || '');
-                      }}
-                      className={`w-full px-5 py-3.5 border-2 rounded-xl text-gray-900 focus:outline-none focus:ring-2 focus:ring-deep-green focus:border-transparent transition-shadow appearance-none bg-white bg-[url('data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2224%22%20height%3D%2224%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22%239CA3AF%22%20stroke-width%3D%222%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpolyline%20points%3D%226%209%2012%2015%2018%209%22%3E%3C%2Fpolyline%3E%3C%2Fsvg%3E')] bg-[length:20px] bg-[right_12px_center] bg-no-repeat pr-10 ${
-                        errors.state ? 'border-red-400' : 'border-gray-200'
-                      }`}
-                    >
-                      {Object.keys(armenianProvinces).map((prov) => (
-                        <option key={prov} value={prov}>{prov}</option>
-                      ))}
-                    </select>
-                    {errors.state && <p className="text-red-500 text-xs mt-1">{errors.state}</p>}
-                  </div>
+                  {/* State/Province - only for countries that need it */}
+                  {countryStates[country] && (
+                    <div>
+                      <label className="block text-sm font-medium text-deep-green mb-1.5">State / Province <span className="text-red-400">*</span></label>
+                      <SearchableSelect
+                        value={state}
+                        onChange={(v) => { setState(v); setCity(''); }}
+                        options={countryStates[country]}
+                        placeholder="Select state / province"
+                        error={errors.state}
+                      />
+                    </div>
+                  )}
 
                   {/* City Dropdown */}
                   <div>
                     <label className="block text-sm font-medium text-deep-green mb-1.5">City <span className="text-red-400">*</span></label>
-                    <select
+                    <SearchableSelect
                       value={city}
-                      onChange={(e) => setCity(e.target.value)}
-                      className={`w-full px-5 py-3.5 border-2 rounded-xl text-gray-900 focus:outline-none focus:ring-2 focus:ring-deep-green focus:border-transparent transition-shadow appearance-none bg-white bg-[url('data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2224%22%20height%3D%2224%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22%239CA3AF%22%20stroke-width%3D%222%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpolyline%20points%3D%226%209%2012%2015%2018%209%22%3E%3C%2Fpolyline%3E%3C%2Fsvg%3E')] bg-[length:20px] bg-[right_12px_center] bg-no-repeat pr-10 ${
-                        errors.city ? 'border-red-400' : 'border-gray-200'
-                      }`}
-                    >
-                      {armenianProvinces[province]?.map((cityOption) => (
-                        <option key={cityOption} value={cityOption}>{cityOption}</option>
-                      ))}
-                    </select>
-                    {errors.city && <p className="text-red-500 text-xs mt-1">{errors.city}</p>}
+                      onChange={setCity}
+                      options={getAvailableCities()}
+                      placeholder="Select city"
+                      error={errors.city}
+                    />
                   </div>
                 </div>
 
@@ -1055,14 +1782,56 @@ export default function SignupPage() {
               </div>
             )}
 
-            {/* ============ STEP 9: ACCOUNT CREATION ============ */}
-            {step === 9 && (
+            {/* ============ STEP 10: ACCOUNT CREATION ============ */}
+            {step === 10 && (
               <div className="w-full max-w-md text-center">
                 <h1 className="text-2xl sm:text-3xl font-rubik font-bold text-deep-green mb-2">
                   Almost there! Create your account
                 </h1>
-                <p className="text-deep-green/50 text-sm mb-8">Last step to join the pack</p>
+                <p className="text-deep-green/50 text-sm mb-6">Last step to join the pack</p>
 
+                {/* Google OAuth — primary option */}
+                <button
+                  type="button"
+                  onClick={handleGoogleSignup}
+                  disabled={googleLoading || submitting}
+                  className="w-full flex items-center justify-center gap-3 py-3.5 px-6 border-2 border-gray-200 rounded-2xl text-gray-700 font-semibold hover:bg-gray-50 hover:border-gray-300 transition-all disabled:opacity-50 disabled:cursor-not-allowed mb-4"
+                >
+                  {googleLoading ? (
+                    <div className="w-5 h-5 border-2 border-gray-400 border-t-transparent rounded-full animate-spin" />
+                  ) : (
+                    <svg className="w-5 h-5" viewBox="0 0 24 24">
+                      <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 01-2.2 3.32v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.1z" fill="#4285F4"/>
+                      <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>
+                      <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/>
+                      <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/>
+                    </svg>
+                  )}
+                  Continue with Google
+                </button>
+
+                {/* Divider */}
+                {!showEmailForm ? (
+                  <button
+                    type="button"
+                    onClick={() => setShowEmailForm(true)}
+                    className="text-sm text-deep-green/50 hover:text-deep-green transition-colors mb-6"
+                  >
+                    or sign up with email instead
+                  </button>
+                ) : (
+                  <div className="relative mb-6">
+                    <div className="absolute inset-0 flex items-center">
+                      <div className="w-full border-t border-gray-200" />
+                    </div>
+                    <div className="relative flex justify-center text-xs">
+                      <span className="bg-off-white px-3 text-gray-400">or sign up with email</span>
+                    </div>
+                  </div>
+                )}
+
+                {/* Email/password form — shown when user clicks "sign up with email" */}
+                {showEmailForm && (
                 <div className="space-y-4 text-left">
                   <div>
                     <label className="block text-sm font-medium text-deep-green mb-1.5">Full Name <span className="text-red-400">*</span></label>
@@ -1175,25 +1944,26 @@ export default function SignupPage() {
                       <p className="text-xs text-gray-400 mt-0.5">Other pet owners can see your info to arrange meetups</p>
                     </div>
                   </label>
-                </div>
 
-                <button
-                  type="submit"
-                  disabled={submitting || uploadingPhoto}
-                  className="mt-8 bg-deep-green hover:bg-deep-green/90 text-white font-semibold py-4 px-12 rounded-2xl transition-all duration-200 shadow-sm hover:shadow-md text-lg disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 mx-auto min-w-[220px]"
-                >
-                  {submitting ? (
-                    <>
-                      <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-                      Creating Account...
-                    </>
-                  ) : (
-                    <>
-                      Join the Pack
-                      <PawIcon />
-                    </>
-                  )}
-                </button>
+                  <button
+                    type="submit"
+                    disabled={submitting || uploadingPhoto}
+                    className="mt-6 w-full bg-deep-green hover:bg-deep-green/90 text-white font-semibold py-4 px-12 rounded-2xl transition-all duration-200 shadow-sm hover:shadow-md text-lg disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                  >
+                    {submitting ? (
+                      <>
+                        <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                        Creating Account...
+                      </>
+                    ) : (
+                      <>
+                        Join the Pack
+                        <PawIcon />
+                      </>
+                    )}
+                  </button>
+                </div>
+                )}
 
                 <p className="text-center text-deep-green/30 text-xs mt-6">
                   By creating an account you agree to our Terms of Service and Privacy Policy.
@@ -1205,5 +1975,14 @@ export default function SignupPage() {
         </form>
       </main>
     </div>
+  );
+}
+
+import { Suspense } from 'react';
+export default function SignupPage() {
+  return (
+    <Suspense fallback={<div className="min-h-screen bg-off-white flex items-center justify-center"><div className="w-10 h-10 border-4 border-gold border-t-transparent rounded-full animate-spin" /></div>}>
+      <SignupPageInner />
+    </Suspense>
   );
 }

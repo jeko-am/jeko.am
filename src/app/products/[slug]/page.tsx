@@ -55,6 +55,19 @@ interface Upsell {
   target_product: Product;
 }
 
+interface Variant {
+  id: string;
+  product_id: string;
+  option_type: string;
+  name: string;
+  price: number;
+  compare_at_price: number | null;
+  sku: string | null;
+  inventory_count: number;
+  sort_order: number;
+  is_active: boolean;
+}
+
 function formatPrice(value: number): string {
   return new Intl.NumberFormat('en-GB', { style: 'currency', currency: 'GBP' }).format(value);
 }
@@ -67,7 +80,7 @@ function Accordion({ title, children, defaultOpen = false }: { title: string; ch
   return (
     <div className="border-b border-deep-green/10">
       <button onClick={() => setOpen(!open)} className="w-full flex items-center justify-between py-5 text-left group">
-        <h2 className="text-lg font-semibold text-deep-green">{title}</h2>
+        <h2 className="text-lg font-medium text-deep-green tracking-wide">{title}</h2>
         <svg className={`w-5 h-5 text-deep-green/50 transition-transform duration-200 ${open ? 'rotate-45' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
         </svg>
@@ -86,14 +99,11 @@ function VetCard({ vet }: { vet: { name: string; role: string; text: string; pro
   return (
     <div className="min-w-[340px] max-w-[340px] bg-beige-light rounded-2xl p-6 snap-start flex flex-col">
       <div className="mb-3">
-        <h4 className="font-bold text-deep-green text-base">{vet.name}</h4>
+        <h4 className="font-medium text-deep-green text-base tracking-wide">{vet.name}</h4>
         <span className="text-sm text-deep-green/50">{vet.role}</span>
       </div>
       <p className="text-sm text-deep-green/70 leading-relaxed flex-1 mb-4">{vet.text}</p>
-      <Link href={`/products/${vet.productSlug}`} className="flex items-center gap-3 mt-auto pt-4 border-t border-deep-green/10">
-        <div className="w-10 h-10 rounded-lg bg-white overflow-hidden flex-shrink-0">
-          <img src={`https://images.unsplash.com/photo-1589924691995-400dc9ecc119?w=80&h=80&fit=crop`} alt="" className="w-full h-full object-cover" />
-        </div>
+      <Link href={`/products/${vet.productSlug}`} className="flex items-center mt-auto pt-4 border-t border-deep-green/10">
         <span className="text-xs font-medium text-deep-green line-clamp-2">{vet.product}</span>
       </Link>
     </div>
@@ -107,7 +117,7 @@ function ReviewCard({ review }: { review: { name: string; date: string; rating: 
   return (
     <div className="border border-deep-green/10 rounded-xl p-5">
       <div className="flex items-center gap-2 mb-1">
-        <span className="font-semibold text-deep-green text-sm">{review.name}</span>
+        <span className="font-medium text-deep-green text-sm tracking-wide">{review.name}</span>
         {review.verified && (
           <span className="inline-flex items-center gap-1 text-xs text-gold">
             <svg className="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M6.267 3.455a3.066 3.066 0 001.745-.723 3.066 3.066 0 013.976 0 3.066 3.066 0 001.745.723 3.066 3.066 0 012.812 2.812c.051.643.304 1.254.723 1.745a3.066 3.066 0 010 3.976 3.066 3.066 0 00-.723 1.745 3.066 3.066 0 01-2.812 2.812 3.066 3.066 0 00-1.745.723 3.066 3.066 0 01-3.976 0 3.066 3.066 0 00-1.745-.723 3.066 3.066 0 01-2.812-2.812 3.066 3.066 0 00-.723-1.745 3.066 3.066 0 010-3.976 3.066 3.066 0 00.723-1.745 3.066 3.066 0 012.812-2.812zm7.44 5.252a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" /></svg>
@@ -144,6 +154,10 @@ export default function ProductDetailPage() {
   const [quantity, setQuantity] = useState(1);
   const [imgErrors, setImgErrors] = useState<Set<number>>(new Set());
   const [isAddingToCart, setIsAddingToCart] = useState(false);
+  const [variants, setVariants] = useState<Variant[]>([]);
+  const [selectedVariant, setSelectedVariant] = useState<Variant | null>(null);
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const [customSections, setCustomSections] = useState<Map<number, Record<string, any>>>(new Map());
   const vetScrollRef = useRef<HTMLDivElement>(null);
   const { addItem } = useCart();
 
@@ -163,28 +177,39 @@ export default function ProductDetailPage() {
           .limit(4);
         if (rel) setRelated(rel as Product[]);
         
-        // Fetch featured bundles
-        const { data: bundleData } = await supabase
-          .from('bundles')
-          .select(`
-            *,
-            bundle_products (
-              quantity,
-              product:products (*)
-            )
-          `)
-          .eq('is_active', true)
-          .order('sort_order', { ascending: true });
-        if (bundleData) {
-          const bundlesWithProducts = bundleData.map(bundle => ({
-            ...bundle,
-            products: bundle.bundle_products?.map((bp: { product: Product; quantity: number }) => ({
-              product_id: bp.product.id,
-              quantity: bp.quantity,
-              product: bp.product
-            })) || []
-          }));
-          setBundles(bundlesWithProducts as Bundle[]);
+        // Fetch bundles that contain this product
+        const { data: productBundleLinks } = await supabase
+          .from('bundle_products')
+          .select('bundle_id')
+          .eq('product_id', data.id);
+        const bundleIds = (productBundleLinks || []).map(l => l.bundle_id);
+        if (bundleIds.length > 0) {
+          const { data: bundleData } = await supabase
+            .from('bundles')
+            .select(`
+              *,
+              bundle_products (
+                quantity,
+                sort_order,
+                product:products (*)
+              )
+            `)
+            .in('id', bundleIds)
+            .eq('is_active', true)
+            .order('sort_order', { ascending: true });
+          if (bundleData) {
+            const bundlesWithProducts = bundleData.map(bundle => ({
+              ...bundle,
+              products: (bundle.bundle_products || [])
+                .sort((a: { sort_order?: number }, b: { sort_order?: number }) => (a.sort_order ?? 0) - (b.sort_order ?? 0))
+                .map((bp: { product: Product; quantity: number }) => ({
+                  product_id: bp.product.id,
+                  quantity: bp.quantity,
+                  product: bp.product
+                }))
+            }));
+            setBundles(bundlesWithProducts as Bundle[]);
+          }
         }
         
         // Fetch upsells for this product
@@ -204,20 +229,60 @@ export default function ProductDetailPage() {
           }));
           setUpsells(upsellsWithProducts as Upsell[]);
         }
+
+        // Fetch variants
+        const { data: variantData } = await supabase
+          .from('product_variants')
+          .select('*')
+          .eq('product_id', data.id)
+          .eq('is_active', true)
+          .order('sort_order');
+        if (variantData && variantData.length > 0) {
+          setVariants(variantData as Variant[]);
+        }
+
+        // Fetch custom page sections for this product
+        const productPageSlug = `product-${data.slug}`;
+        const { data: pages } = await supabase.from('pages').select('id').or(`slug.eq.${productPageSlug},slug.eq./${productPageSlug}`).limit(1);
+        if (pages?.[0]) {
+          const { data: secs } = await supabase.from('page_sections').select('content, is_visible').eq('page_id', pages[0].id);
+          if (secs) {
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            const map = new Map<number, Record<string, any>>();
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            secs.forEach((s: any) => {
+              if (s.is_visible !== false) {
+                const idx = s.content?._section_index;
+                if (idx !== undefined && idx !== null) map.set(Number(idx), s.content);
+              }
+            });
+            setCustomSections(map);
+          }
+        }
       }
       setLoading(false);
     }
     if (slug) fetchProduct();
   }, [slug]);
 
-  const hasDiscount = product?.compare_at_price && product.compare_at_price > product.price;
+  const displayPrice = selectedVariant ? selectedVariant.price : (product?.price ?? 0);
+  const displayCompareAt = selectedVariant ? selectedVariant.compare_at_price : (product?.compare_at_price ?? null);
+  const hasDiscount = displayCompareAt && displayCompareAt > displayPrice;
+
+  // Group variants by option_type
+  const variantGroups = variants.reduce<Record<string, Variant[]>>((acc, v) => {
+    if (!acc[v.option_type]) acc[v.option_type] = [];
+    acc[v.option_type].push(v);
+    return acc;
+  }, {});
 
   const getImageUrl = (idx: number) => {
     if (product?.images?.[idx] && !imgErrors.has(idx)) return product.images[idx];
-    return `https://images.unsplash.com/photo-1589924691995-400dc9ecc119?w=600&h=600&fit=crop`;
+    return '';
   };
 
-  const images = product?.images?.length ? product.images : [`https://images.unsplash.com/photo-1589924691995-400dc9ecc119?w=600&h=600&fit=crop`];
+  const images = product?.images?.length ? product.images : [];
+  const hasImages = images.length > 0;
 
   /* Loading state */
   if (loading) {
@@ -266,19 +331,32 @@ export default function ProductDetailPage() {
               {/* --- Gallery --- */}
               <div>
                 <div className="relative aspect-square rounded-2xl overflow-hidden bg-beige-light mb-4 group">
-                  <img src={getImageUrl(selectedImage)} alt={product.name} className="w-full h-full object-cover" onError={() => setImgErrors(p => new Set(p).add(selectedImage))} />
-                  {images.length > 1 && (
+                  {hasImages ? (
                     <>
-                      <button onClick={() => setSelectedImage((selectedImage - 1 + images.length) % images.length)} className="absolute left-3 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-white/80 backdrop-blur shadow flex items-center justify-center hover:bg-white transition opacity-0 group-hover:opacity-100">
-                        <svg className="w-5 h-5 text-deep-green" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" /></svg>
-                      </button>
-                      <button onClick={() => setSelectedImage((selectedImage + 1) % images.length)} className="absolute right-3 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-white/80 backdrop-blur shadow flex items-center justify-center hover:bg-white transition opacity-0 group-hover:opacity-100">
-                        <svg className="w-5 h-5 text-deep-green" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" /></svg>
-                      </button>
+                      <img src={getImageUrl(selectedImage)} alt={product.name} className="w-full h-full object-cover" onError={() => setImgErrors(p => new Set(p).add(selectedImage))} />
+                      {images.length > 1 && (
+                        <>
+                          <button onClick={() => setSelectedImage((selectedImage - 1 + images.length) % images.length)} className="absolute left-3 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-white/80 backdrop-blur shadow flex items-center justify-center hover:bg-white transition opacity-0 group-hover:opacity-100">
+                            <svg className="w-5 h-5 text-deep-green" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" /></svg>
+                          </button>
+                          <button onClick={() => setSelectedImage((selectedImage + 1) % images.length)} className="absolute right-3 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-white/80 backdrop-blur shadow flex items-center justify-center hover:bg-white transition opacity-0 group-hover:opacity-100">
+                            <svg className="w-5 h-5 text-deep-green" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" /></svg>
+                          </button>
+                        </>
+                      )}
                     </>
+                  ) : (
+                    <div className="w-full h-full flex flex-col items-center justify-center text-deep-green/20">
+                      <svg className="w-24 h-24 mb-3" fill="none" stroke="currentColor" strokeWidth={1} viewBox="0 0 24 24">
+                        <rect x="3" y="3" width="18" height="18" rx="2" strokeDasharray="4 2" />
+                        <path d="M3 16l5-5 4 4 3-3 6 6" />
+                        <circle cx="15.5" cy="8.5" r="1.5" />
+                      </svg>
+                      <span className="text-sm font-medium">No image available</span>
+                    </div>
                   )}
                 </div>
-                {images.length > 1 && (
+                {hasImages && images.length > 1 && (
                   <div className="flex gap-3 overflow-x-auto pb-2">
                     {images.map((_, i) => (
                       <button key={i} onClick={() => setSelectedImage(i)} className={`flex-shrink-0 w-20 h-20 rounded-xl overflow-hidden border-2 transition-all ${selectedImage === i ? 'border-deep-green shadow-md' : 'border-transparent opacity-60 hover:opacity-100'}`}>
@@ -291,40 +369,79 @@ export default function ProductDetailPage() {
 
               {/* --- Product Info --- */}
               <div>
-                <h1 className="text-3xl md:text-4xl font-bold text-deep-green mb-4 leading-tight">{product.name}</h1>
+                <h1 className="text-3xl md:text-4xl font-medium text-deep-green mb-4 leading-snug tracking-wide">{product.name}</h1>
 
                 {/* Price */}
                 <div className="mb-2">
-                  <span className="text-2xl font-bold text-deep-green">{formatPrice(product.price)}</span>
-                  {hasDiscount && <span className="text-base text-deep-green/40 line-through ml-2">{formatPrice(product.compare_at_price!)}</span>}
+                  <span className="text-2xl font-bold text-deep-green">{formatPrice(displayPrice)}</span>
+                  {hasDiscount && <span className="text-base text-deep-green/40 line-through ml-2">{formatPrice(displayCompareAt!)}</span>}
                 </div>
                 <p className="text-sm text-deep-green/50 mb-5">Shipping calculated at checkout.</p>
 
                 {/* Description */}
                 {product.short_description && (
                   <div className="mb-6">
-                    <p className="font-semibold text-deep-green mb-1">Premium nutrition — nothing hidden.</p>
+                    <p className="font-medium text-deep-green mb-1 tracking-wide">Premium nutrition — nothing hidden.</p>
                     <p className="text-deep-green/70 text-sm leading-relaxed">{product.short_description}</p>
+                  </div>
+                )}
+
+                {/* --- Variant Selector --- */}
+                {Object.keys(variantGroups).length > 0 && (
+                  <div className="mb-6">
+                    {Object.entries(variantGroups).map(([type, opts]) => (
+                      <div key={type} className="mb-4">
+                        <h3 className="text-sm font-semibold text-deep-green mb-2">{type}</h3>
+                        <div className="flex flex-wrap gap-2">
+                          {opts.map((v) => (
+                            <button
+                              key={v.id}
+                              onClick={() => setSelectedVariant(selectedVariant?.id === v.id ? null : v)}
+                              className={`px-4 py-2 rounded-full text-sm font-medium border-2 transition-all ${
+                                selectedVariant?.id === v.id
+                                  ? 'border-deep-green bg-deep-green text-white'
+                                  : 'border-deep-green/20 text-deep-green hover:border-deep-green/40'
+                              }`}
+                            >
+                              {v.name}
+                              {v.price !== product.price && (
+                                <span className="ml-1 text-xs opacity-70">
+                                  ({formatPrice(v.price)})
+                                </span>
+                              )}
+                            </button>
+                          ))}
+                        </div>
+                      </div>
+                    ))}
                   </div>
                 )}
 
                 {/* --- Bundles --- */}
                 {bundles.length > 0 && (
                   <div className="mb-6">
-                    <h3 className="font-semibold text-deep-green mb-3">Value Bundles</h3>
+                    <h3 className="font-medium text-deep-green mb-3 tracking-wide">Value Bundles</h3>
                     <div className="space-y-3">
                       {bundles.slice(0, 2).map((bundle) => (
                         <div key={bundle.id} className="border border-deep-green/10 rounded-xl p-4 hover:border-gold/30 transition-colors">
                           <div className="flex items-start gap-4">
                             <div className="w-16 h-16 rounded-lg overflow-hidden flex-shrink-0 bg-beige-light">
-                              <img 
-                                src={bundle.image_url || `https://images.unsplash.com/photo-1583337130417-3346a1be7dee?w=80&h=80&fit=crop`} 
-                                alt={bundle.name} 
-                                className="w-full h-full object-cover"
-                              />
+                              {(() => {
+                                const imgSrc = bundle.image_url || bundle.products?.[0]?.product?.images?.[0];
+                                return imgSrc ? (
+                                  <img src={imgSrc} alt={bundle.name} className="w-full h-full object-cover" />
+                                ) : (
+                                  <div className="w-full h-full flex items-center justify-center text-deep-green/20">
+                                    <svg className="w-6 h-6" fill="none" stroke="currentColor" strokeWidth={1} viewBox="0 0 24 24">
+                                      <rect x="3" y="3" width="18" height="18" rx="2" strokeDasharray="4 2" />
+                                      <path d="M3 16l5-5 4 4 3-3 6 6" />
+                                    </svg>
+                                  </div>
+                                );
+                              })()}
                             </div>
                             <div className="flex-1 min-w-0">
-                              <h4 className="font-semibold text-deep-green text-sm mb-1">{bundle.name}</h4>
+                              <h4 className="font-medium text-deep-green text-sm mb-1 tracking-wide">{bundle.name}</h4>
                               <p className="text-xs text-deep-green/60 mb-2 line-clamp-2">{bundle.description}</p>
                               <div className="flex items-center justify-between">
                                 <div>
@@ -351,7 +468,7 @@ export default function ProductDetailPage() {
                                           slug: bp.product.slug,
                                           price: bp.product.price,
                                           compare_at_price: bp.product.compare_at_price,
-                                          image: bp.product.images?.[0] || `https://images.unsplash.com/photo-1589924691995-400dc9ecc119?w=600&h=600&fit=crop`,
+                                          image: bp.product.images?.[0] || '',
                                           short_description: bp.product.short_description,
                                         });
                                       }
@@ -381,16 +498,18 @@ export default function ProductDetailPage() {
                     onClick={() => {
                       if (!product || isAddingToCart) return;
                       setIsAddingToCart(true);
-                      const imageUrl = product.images?.[0] || `https://images.unsplash.com/photo-1589924691995-400dc9ecc119?w=600&h=600&fit=crop`;
+                      const imageUrl = product.images?.[0] || '';
                       for (let i = 0; i < quantity; i++) {
                         addItem({
                           id: product.id,
-                          name: product.name,
+                          name: selectedVariant ? `${product.name} — ${selectedVariant.name}` : product.name,
                           slug: product.slug,
-                          price: product.price,
-                          compare_at_price: product.compare_at_price,
+                          price: displayPrice,
+                          compare_at_price: displayCompareAt,
                           image: imageUrl,
                           short_description: product.short_description,
+                          variant_id: selectedVariant?.id ?? null,
+                          variant_name: selectedVariant ? `${selectedVariant.option_type}: ${selectedVariant.name}` : null,
                         });
                       }
                       setTimeout(() => {
@@ -437,7 +556,7 @@ export default function ProductDetailPage() {
                                 />
                               </div>
                               <div className="flex-1 min-w-0">
-                                <h4 className="font-semibold text-deep-green text-sm mb-1">{title}</h4>
+                                <h4 className="font-medium text-deep-green text-sm mb-1 tracking-wide">{title}</h4>
                                 <p className="text-xs text-deep-green/60 mb-2 line-clamp-2">{description}</p>
                                 <div className="flex items-center justify-between">
                                   <div>
@@ -485,28 +604,78 @@ export default function ProductDetailPage() {
                   </div>
                 </div>
 
+                {/* Custom: Feature Highlights (section index 1) */}
+                {customSections.get(1)?.features_heading && (
+                  <div className="mb-6 pt-4 border-t border-deep-green/10">
+                    <h3 className="font-semibold text-deep-green mb-3">{customSections.get(1)?.features_heading}</h3>
+                    <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                      {[1, 2, 3].map(n => {
+                        const sec = customSections.get(1);
+                        const title = sec?.[`feature_${n}_title`];
+                        const desc = sec?.[`feature_${n}_description`];
+                        if (!title) return null;
+                        return (
+                          <div key={n} className="bg-beige-light rounded-xl p-4">
+                            <h4 className="font-medium text-deep-green text-sm mb-1">{String(title)}</h4>
+                            {desc && <p className="text-xs text-deep-green/60">{String(desc)}</p>}
+                          </div>
+                        );
+                      })}
+                    </div>
+                  </div>
+                )}
+
                 {/* Accordions */}
-                <Accordion title="Ingredients & Nutrition" defaultOpen>
-                  {product.description ? (
+                <Accordion title={String(customSections.get(3)?.ingredients_heading || "Ingredients & Nutrition")} defaultOpen>
+                  {customSections.get(3)?.ingredients_list ? (
+                    <div>
+                      <div dangerouslySetInnerHTML={{ __html: String(customSections.get(3)!.ingredients_list).replace(/\n/g, '<br/>') }} />
+                      {customSections.get(3)?.nutrition_info && (
+                        <div className="mt-4 pt-3 border-t border-deep-green/10">
+                          <h4 className="font-semibold text-deep-green text-sm mb-2">{String(customSections.get(3)?.nutrition_heading || 'Nutritional Information')}</h4>
+                          <div dangerouslySetInnerHTML={{ __html: String(customSections.get(3)!.nutrition_info).replace(/\n/g, '<br/>') }} />
+                        </div>
+                      )}
+                    </div>
+                  ) : product.description ? (
                     <div dangerouslySetInnerHTML={{ __html: product.description.replace(/\n/g, '<br/>') }} />
                   ) : (
                     <p>Made with natural, human-grade ingredients carefully selected by veterinary nutritionists.</p>
                   )}
                 </Accordion>
-                <Accordion title="Feeding Guide">
-                  <p className="mb-2">Serve based on your dog&apos;s weight:</p>
-                  <ul className="space-y-1">
-                    <li><strong>Small dogs (up to 10kg):</strong> 100-200g per day</li>
-                    <li><strong>Medium dogs (10-25kg):</strong> 200-400g per day</li>
-                    <li><strong>Large dogs (25kg+):</strong> 400-600g per day</li>
-                  </ul>
-                  <p className="mt-2">Always ensure fresh water is available. Transition gradually over 7-10 days.</p>
+                <Accordion title={String(customSections.get(4)?.feeding_heading || "Feeding Guide")}>
+                  {customSections.get(4)?.feeding_body ? (
+                    <div dangerouslySetInnerHTML={{ __html: String(customSections.get(4)!.feeding_body).replace(/\n/g, '<br/>') }} />
+                  ) : (
+                    <>
+                      <p className="mb-2">Serve based on your dog&apos;s weight:</p>
+                      <ul className="space-y-1">
+                        <li><strong>Small dogs (up to 10kg):</strong> 100-200g per day</li>
+                        <li><strong>Medium dogs (10-25kg):</strong> 200-400g per day</li>
+                        <li><strong>Large dogs (25kg+):</strong> 400-600g per day</li>
+                      </ul>
+                      <p className="mt-2">Always ensure fresh water is available. Transition gradually over 7-10 days.</p>
+                    </>
+                  )}
                 </Accordion>
                 <Accordion title="Shipping & Returns">
                   <p><strong>Free UK delivery</strong> on all orders. Orders placed before 2pm are dispatched same day.</p>
                   <p className="mt-2">Standard delivery: 2-3 working days. Express delivery available at checkout.</p>
                   <p className="mt-2">Not happy? Full refund within 30 days — no questions asked.</p>
                 </Accordion>
+
+                {/* Custom: Product FAQ (section index 6) */}
+                {customSections.get(6)?.faq_1_q && (
+                  <div className="mt-2">
+                    <h3 className="text-lg font-semibold text-deep-green mb-3 pt-4">{String(customSections.get(6)?.faq_heading || 'FAQ')}</h3>
+                    {[1, 2, 3, 4].map(n => {
+                      const q = customSections.get(6)?.[`faq_${n}_q`];
+                      const a = customSections.get(6)?.[`faq_${n}_a`];
+                      if (!q) return null;
+                      return <Accordion key={n} title={String(q)}><p>{String(a || '')}</p></Accordion>;
+                    })}
+                  </div>
+                )}
               </div>
             </div>
           </div>

@@ -1,7 +1,7 @@
 'use client';
 
 import { supabase } from '@/lib/supabase';
-import { useEffect, useState, useCallback, useMemo } from 'react';
+import { useEffect, useState, useCallback, useMemo, useRef } from 'react';
 
 // ---------------------------------------------------------------------------
 // Types
@@ -46,6 +46,21 @@ interface Toast {
   type: 'success' | 'error';
   message: string;
 }
+
+interface ProductVariant {
+  id?: string;
+  product_id?: string;
+  option_type: string;
+  name: string;
+  price: number;
+  compare_at_price: number | null;
+  sku: string;
+  inventory_count: number;
+  sort_order: number;
+  is_active: boolean;
+}
+
+const VARIANT_OPTION_TYPES = ['Size', 'Weight', 'Flavour', 'Colour', 'Other'];
 
 // ---------------------------------------------------------------------------
 // Constants
@@ -173,6 +188,12 @@ export default function AdminProductsPage() {
   const [uploading, setUploading] = useState(false);
   const [dragOver, setDragOver] = useState(false);
 
+  // File input ref
+  const fileInputRef = useRef<HTMLInputElement>(null);
+
+  // Variant state
+  const [variants, setVariants] = useState<ProductVariant[]>([]);
+
   // Delete confirmation
   const [deleteTarget, setDeleteTarget] = useState<Product | null>(null);
   const [deleting, setDeleting] = useState(false);
@@ -267,11 +288,12 @@ export default function AdminProductsPage() {
   const openCreateForm = () => {
     setEditingId(null);
     setForm({ ...EMPTY_FORM });
+    setVariants([]);
     setSlugManuallyEdited(false);
     setShowForm(true);
   };
 
-  const openEditForm = (product: Product) => {
+  const openEditForm = async (product: Product) => {
     setEditingId(product.id);
     setForm({
       name: product.name,
@@ -293,6 +315,18 @@ export default function AdminProductsPage() {
     });
     setSlugManuallyEdited(true);
     setShowForm(true);
+
+    // Fetch variants for this product
+    try {
+      const { data } = await supabase
+        .from('product_variants')
+        .select('*')
+        .eq('product_id', product.id)
+        .order('sort_order');
+      setVariants((data as ProductVariant[]) || []);
+    } catch {
+      setVariants([]);
+    }
   };
 
   const closeForm = () => {
@@ -397,14 +431,37 @@ export default function AdminProductsPage() {
         updated_at: new Date().toISOString(),
       };
 
+      let productId = editingId;
+
       if (editingId) {
         const { error } = await supabase.from('products').update(payload).eq('id', editingId);
         if (error) throw error;
         addToast('success', 'Product updated successfully.');
       } else {
-        const { error } = await supabase.from('products').insert([payload]);
+        const { data: inserted, error } = await supabase.from('products').insert([payload]).select('id').single();
         if (error) throw error;
+        productId = inserted.id;
         addToast('success', 'Product created successfully.');
+      }
+
+      // Save variants
+      if (productId && variants.length > 0) {
+        await supabase.from('product_variants').delete().eq('product_id', productId);
+        const variantPayloads = variants.map((v, i) => ({
+          product_id: productId,
+          option_type: v.option_type,
+          name: v.name,
+          price: v.price || 0,
+          compare_at_price: v.compare_at_price || null,
+          sku: v.sku || null,
+          inventory_count: v.inventory_count || 0,
+          sort_order: i,
+          is_active: v.is_active,
+        }));
+        const { error: vErr } = await supabase.from('product_variants').insert(variantPayloads);
+        if (vErr) console.warn('Failed to save variants:', vErr);
+      } else if (productId && variants.length === 0 && editingId) {
+        await supabase.from('product_variants').delete().eq('product_id', productId);
       }
 
       closeForm();
@@ -925,6 +982,15 @@ export default function AdminProductsPage() {
               <fieldset className="border border-gray-200 rounded-lg p-4">
                 <legend className="text-sm font-semibold text-gray-700 px-2">Product Images</legend>
 
+                <input
+                  ref={fileInputRef}
+                  type="file"
+                  accept="image/jpeg,image/png,image/webp,image/gif,image/svg+xml"
+                  multiple
+                  className="hidden"
+                  onChange={(e) => { handleImageUpload(e.target.files); e.target.value = ''; }}
+                />
+
                 {/* Drag & Drop Zone */}
                 <div
                   onDragOver={(e) => { e.preventDefault(); setDragOver(true); }}
@@ -935,16 +1001,8 @@ export default function AdminProductsPage() {
                       ? 'border-deep-green bg-deep-green/5'
                       : 'border-gray-300 hover:border-gray-400'
                   } ${uploading ? 'pointer-events-none opacity-60' : ''}`}
-                  onClick={() => document.getElementById('product-image-input')?.click()}
+                  onClick={() => fileInputRef.current?.click()}
                 >
-                  <input
-                    id="product-image-input"
-                    type="file"
-                    accept="image/jpeg,image/png,image/webp,image/gif,image/svg+xml"
-                    multiple
-                    className="hidden"
-                    onChange={(e) => handleImageUpload(e.target.files)}
-                  />
                   {uploading ? (
                     <div className="flex flex-col items-center gap-2">
                       <svg className="w-8 h-8 text-deep-green animate-spin" viewBox="0 0 24 24" fill="none">
@@ -998,6 +1056,104 @@ export default function AdminProductsPage() {
                     ))}
                   </div>
                 )}
+              </fieldset>
+
+              {/* Variants */}
+              <fieldset className="border border-gray-200 rounded-lg p-4">
+                <legend className="text-sm font-semibold text-gray-700 px-2">Variants</legend>
+                <p className="text-xs text-gray-500 mb-3">Add size, weight, flavour, or colour options for this product.</p>
+
+                {variants.length > 0 && (
+                  <div className="space-y-3 mb-4">
+                    {variants.map((v, idx) => (
+                      <div key={idx} className="flex items-start gap-2 p-3 bg-gray-50 rounded-lg border border-gray-200">
+                        <div className="flex-1 grid grid-cols-2 gap-2">
+                          <div>
+                            <label className="block text-[11px] font-medium text-gray-500 mb-0.5">Type</label>
+                            <select
+                              value={v.option_type}
+                              onChange={(e) => {
+                                const updated = [...variants];
+                                updated[idx] = { ...updated[idx], option_type: e.target.value };
+                                setVariants(updated);
+                              }}
+                              className="w-full px-2 py-1.5 border border-gray-300 rounded text-sm focus:outline-none focus:ring-1 focus:ring-deep-green/30 bg-white"
+                            >
+                              {VARIANT_OPTION_TYPES.map((t) => (
+                                <option key={t} value={t}>{t}</option>
+                              ))}
+                            </select>
+                          </div>
+                          <div>
+                            <label className="block text-[11px] font-medium text-gray-500 mb-0.5">Name</label>
+                            <input
+                              type="text"
+                              value={v.name}
+                              onChange={(e) => {
+                                const updated = [...variants];
+                                updated[idx] = { ...updated[idx], name: e.target.value };
+                                setVariants(updated);
+                              }}
+                              placeholder="e.g. 2kg, Large, Salmon"
+                              className="w-full px-2 py-1.5 border border-gray-300 rounded text-sm focus:outline-none focus:ring-1 focus:ring-deep-green/30"
+                            />
+                          </div>
+                          <div>
+                            <label className="block text-[11px] font-medium text-gray-500 mb-0.5">Price (GBP)</label>
+                            <input
+                              type="number"
+                              step="0.01"
+                              min="0"
+                              value={v.price}
+                              onChange={(e) => {
+                                const updated = [...variants];
+                                updated[idx] = { ...updated[idx], price: parseFloat(e.target.value) || 0 };
+                                setVariants(updated);
+                              }}
+                              placeholder="0.00"
+                              className="w-full px-2 py-1.5 border border-gray-300 rounded text-sm focus:outline-none focus:ring-1 focus:ring-deep-green/30"
+                            />
+                          </div>
+                          <div>
+                            <label className="block text-[11px] font-medium text-gray-500 mb-0.5">SKU</label>
+                            <input
+                              type="text"
+                              value={v.sku}
+                              onChange={(e) => {
+                                const updated = [...variants];
+                                updated[idx] = { ...updated[idx], sku: e.target.value };
+                                setVariants(updated);
+                              }}
+                              placeholder="Optional"
+                              className="w-full px-2 py-1.5 border border-gray-300 rounded text-sm focus:outline-none focus:ring-1 focus:ring-deep-green/30"
+                            />
+                          </div>
+                        </div>
+                        <button
+                          type="button"
+                          onClick={() => setVariants(variants.filter((_, i) => i !== idx))}
+                          className="mt-5 w-7 h-7 flex items-center justify-center text-red-500 hover:bg-red-50 rounded transition-colors flex-shrink-0"
+                          title="Remove variant"
+                        >
+                          <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                            <path strokeLinecap="round" strokeLinejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                          </svg>
+                        </button>
+                      </div>
+                    ))}
+                  </div>
+                )}
+
+                <button
+                  type="button"
+                  onClick={() => setVariants([...variants, { option_type: 'Size', name: '', price: form.price, compare_at_price: null, sku: '', inventory_count: 0, sort_order: variants.length, is_active: true }])}
+                  className="w-full py-2 border-2 border-dashed border-gray-300 rounded-lg text-sm text-gray-600 hover:border-deep-green hover:text-deep-green transition-colors flex items-center justify-center gap-1.5"
+                >
+                  <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M12 4v16m8-8H4" />
+                  </svg>
+                  Add Variant
+                </button>
               </fieldset>
             </div>
 

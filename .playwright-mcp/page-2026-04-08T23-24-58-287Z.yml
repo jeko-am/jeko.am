@@ -1,0 +1,41 @@
+- generic [ref=e1]:
+  - generic [ref=e2]:
+    - banner [ref=e4]:
+      - generic [ref=e5]:
+        - link "JEKO" [ref=e6] [cursor=pointer]:
+          - /url: /
+          - generic [ref=e7]:
+            - generic [ref=e8]: JEKO
+            - img [ref=e9]
+        - generic [ref=e15]:
+          - paragraph [ref=e16]:
+            - text: Already have an account?
+            - link "Log in" [ref=e17] [cursor=pointer]:
+              - /url: /login
+          - button [ref=e18] [cursor=pointer]:
+            - img [ref=e19]
+    - main [ref=e21]:
+      - generic [ref=e23]:
+        - generic [ref=e25]: Step 8 of 11
+        - paragraph [ref=e47]: 💕 One more thing...
+        - generic [ref=e48]:
+          - heading "Looking for a match?" [level=1] [ref=e49]
+          - paragraph [ref=e50]: Would you like Buddy to appear in matches with other pets?
+          - generic [ref=e51]:
+            - button "Yes!" [ref=e52] [cursor=pointer]:
+              - img [ref=e54]
+              - generic [ref=e56]: Yes!
+            - button "No thanks" [active] [ref=e57] [cursor=pointer]:
+              - img [ref=e59]
+              - generic [ref=e62]: No thanks
+              - img [ref=e93]
+          - paragraph [ref=e95]: Buddy won't appear in match results. You can change this later in settings.
+          - button "Continue" [ref=e63] [cursor=pointer]
+          - button "Skip this step" [ref=e64] [cursor=pointer]
+  - generic [ref=e65]:
+    - generic [ref=e66]:
+      - paragraph [ref=e67]: Bow Wow! 🐾
+      - paragraph [ref=e68]: Find a friend for your pup!
+    - button "Find pet matches" [ref=e70] [cursor=pointer]:
+      - img [ref=e71]
+  - alert [ref=e91]

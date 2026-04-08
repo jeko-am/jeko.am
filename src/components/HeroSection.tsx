@@ -9,7 +9,7 @@ export default function HeroSection({ content }: { content?: Record<string, any>
   const subheading = content?.subheading || "Enjoy fresh food without the fuss, from only 89p a day";
   const buttonText = content?.button_text || "Get started today";
   const buttonUrl = "/auth/signup";
-  const bgImage = content?.background_image || "https://www.datocms-assets.com/55536/1758880069-hertestdesktop.png?auto=format&fit=crop&h=800&w=1920";
+  const bgImage = content?.background_image || "https://images.unsplash.com/photo-1587300003388-59208cc962cb?auto=format&fit=crop&h=800&w=1920";
   const trustpilotLabel = content?.trustpilot_label || "Excellent";
   const trustpilotScoreText = content?.trustpilot_score_text || "4.6 out of 5";
   const trustpilotScore = parseFloat(content?.trustpilot_score || "4.6");
@@ -24,7 +24,7 @@ export default function HeroSection({ content }: { content?: Record<string, any>
       <div className="absolute inset-0">
         <Image
           src={bgImage}
-          alt="Happy dog eating fresh food from a bowl with product packages"
+          alt="Happy golden retriever dog enjoying fresh food"
           fill
           className="object-cover object-center"
           priority

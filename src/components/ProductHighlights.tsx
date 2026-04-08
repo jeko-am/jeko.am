@@ -45,7 +45,7 @@ export default function ProductHighlights({ content }: { content?: any }) {
           <span className="inline-block bg-gold/20 text-deep-green text-sm font-semibold px-4 py-1.5 rounded-full mb-4">
             Our Products
           </span>
-          <h2 className="text-3xl md:text-4xl font-bold text-deep-green mb-3">
+          <h2 className="text-3xl md:text-4xl font-medium text-deep-green mb-3 tracking-wide">
             {content?.heading || 'Handpicked for Your Pup'}
           </h2>
           <p className="text-deep-green/60 max-w-lg mx-auto">

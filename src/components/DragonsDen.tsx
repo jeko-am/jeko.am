@@ -39,7 +39,7 @@ export default function DragonsDen({ content }: { content?: any }) {
         {/* Text Right Side - ~57% */}
         <div className="w-full md:w-[57%] bg-deep-green flex items-center">
           <div className="px-8 md:px-16 lg:px-24 py-12">
-            <h2 className="text-[32px] md:text-[40px] font-semibold text-white font-rubik leading-tight mb-6">
+            <h2 className="text-[32px] md:text-[40px] font-medium text-white tracking-wide leading-tight mb-6">
               {content?.heading || "Dog food so good we ate it on Dragons\u2019 Den"}
             </h2>
             <p className="text-off-white text-[18px] leading-relaxed mb-8">

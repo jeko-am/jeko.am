@@ -25,9 +25,9 @@ interface TopProduct {
 interface RecentReview {
   id: string;
   rating: number;
-  comment: string;
-  customer_name: string;
-  product_name: string;
+  comment: string;       // mapped from body
+  customer_name: string; // mapped from author_name
+  product_name: string;  // mapped from products.name join
   created_at: string;
 }
 
@@ -204,15 +204,15 @@ export default function AdminAnalyticsPage() {
       // Top products
       const { data: orderItems, error: itemsErr } = await supabase
         .from('order_items')
-        .select('product_id, quantity, price, products(name, image_url)')
+        .select('product_id, quantity, unit_price, products(name, images)')
         .gte('created_at', startStr)
         .lte('created_at', endStr);
 
       if (itemsErr) {
-        // Fallback: try without date filter on order_items (join through orders)
+        // Fallback: try without date filter on order_items
         const { data: allItems, error: allItemsErr } = await supabase
           .from('order_items')
-          .select('product_id, quantity, price, products(name, image_url)');
+          .select('product_id, quantity, unit_price, products(name, images)');
         if (allItemsErr) throw allItemsErr;
         processTopProducts(allItems || []);
       } else {
@@ -222,25 +222,35 @@ export default function AdminAnalyticsPage() {
       // Recent reviews
       const { data: reviews, error: reviewsErr } = await supabase
         .from('reviews')
-        .select('id, rating, comment, customer_name, product_name, created_at')
+        .select('id, rating, body, author_name, product_id, products(name), created_at')
         .order('created_at', { ascending: false })
         .limit(5);
       if (reviewsErr) throw reviewsErr;
-      setRecentReviews(reviews || []);
+      /* eslint-disable @typescript-eslint/no-explicit-any */
+      setRecentReviews((reviews || []).map((r: any) => ({
+        id: r.id,
+        rating: r.rating,
+        comment: r.body || '',
+        customer_name: r.author_name || 'Anonymous',
+        product_name: (r.products as any)?.name || '',
+        created_at: r.created_at,
+      })));
+      /* eslint-enable @typescript-eslint/no-explicit-any */
 
       // Subscriber growth (last 6 months)
       const sixMonthsAgo = new Date();
       sixMonthsAgo.setMonth(sixMonthsAgo.getMonth() - 6);
       const { data: subscribers, error: subsErr } = await supabase
         .from('email_subscribers')
-        .select('id, created_at')
-        .gte('created_at', sixMonthsAgo.toISOString())
-        .order('created_at', { ascending: true });
+        .select('id, subscribed_at')
+        .gte('subscribed_at', sixMonthsAgo.toISOString())
+        .order('subscribed_at', { ascending: true });
       if (subsErr) throw subsErr;
 
       const monthMap = new Map<string, number>();
-      (subscribers || []).forEach(s => {
-        const month = new Date(s.created_at).toLocaleDateString('en-GB', { month: 'short', year: '2-digit' });
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      (subscribers || []).forEach((s: any) => {
+        const month = new Date(s.subscribed_at).toLocaleDateString('en-GB', { month: 'short', year: '2-digit' });
         monthMap.set(month, (monthMap.get(month) || 0) + 1);
       });
       setSubscriberGrowth(Array.from(monthMap.entries()).map(([month, count]) => ({ month, count })));
@@ -259,7 +269,7 @@ export default function AdminAnalyticsPage() {
       const pid = item.product_id;
       const existing = productMap.get(pid);
       const qty = parseInt(String(item.quantity)) || 1;
-      const price = parseFloat(String(item.price)) || 0;
+      const price = parseFloat(String(item.unit_price)) || 0;
       const productData = item.products as any;
       if (existing) {
         existing.total_quantity += qty;
@@ -270,7 +280,7 @@ export default function AdminAnalyticsPage() {
           name: productData?.name || 'Unknown Product',
           total_quantity: qty,
           total_revenue: price * qty,
-          image_url: productData?.image_url,
+          image_url: Array.isArray(productData?.images) ? productData.images[0] : undefined,
         });
       }
     });
@@ -458,8 +468,14 @@ export default function AdminAnalyticsPage() {
         <div className="bg-white rounded-xl border border-gray-200 p-5">
           <h3 className="text-sm font-semibold text-gray-800 mb-4">Orders Over Time</h3>
           {dailyOrders.length === 0 ? (
-            <div className="flex items-center justify-center h-48 text-sm text-gray-400">
-              No order data for this period
+            <div className="flex flex-col items-center justify-center h-48 text-center">
+              <div className="w-12 h-12 bg-gray-100 rounded-full flex items-center justify-center mb-3">
+                <svg className="w-6 h-6 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M3 13.125C3 12.504 3.504 12 4.125 12h2.25c.621 0 1.125.504 1.125 1.125v6.75C7.5 20.496 6.996 21 6.375 21h-2.25A1.125 1.125 0 013 19.875v-6.75zM9.75 8.625c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125v11.25c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V8.625zM16.5 4.125c0-.621.504-1.125 1.125-1.125h2.25C20.496 3 21 3.504 21 4.125v15.75c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V4.125z" />
+                </svg>
+              </div>
+              <p className="text-sm font-medium text-gray-600">No order data</p>
+              <p className="text-xs text-gray-400 mt-1">No orders found for this period</p>
             </div>
           ) : (
             <div className="space-y-0">
@@ -490,8 +506,14 @@ export default function AdminAnalyticsPage() {
         <div className="bg-white rounded-xl border border-gray-200 p-5">
           <h3 className="text-sm font-semibold text-gray-800 mb-4">Subscriber Growth (Last 6 Months)</h3>
           {subscriberGrowth.length === 0 ? (
-            <div className="flex items-center justify-center h-48 text-sm text-gray-400">
-              No subscriber data available
+            <div className="flex flex-col items-center justify-center h-48 text-center">
+              <div className="w-12 h-12 bg-gray-100 rounded-full flex items-center justify-center mb-3">
+                <svg className="w-6 h-6 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M15 19.128a9.38 9.38 0 002.625.372 9.337 9.337 0 004.121-.952 4.125 4.125 0 00-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 018.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0111.964-3.07M12 6.375a3.375 3.375 0 11-6.75 0 3.375 3.375 0 016.75 0zm8.25 2.25a2.625 2.625 0 11-5.25 0 2.625 2.625 0 015.25 0z" />
+                </svg>
+              </div>
+              <p className="text-sm font-medium text-gray-600">No subscribers yet</p>
+              <p className="text-xs text-gray-400 mt-1">Subscriber data will appear here</p>
             </div>
           ) : (
             <div className="space-y-0">
@@ -527,8 +549,14 @@ export default function AdminAnalyticsPage() {
             <h3 className="text-sm font-semibold text-gray-800">Top Products</h3>
           </div>
           {topProducts.length === 0 ? (
-            <div className="flex items-center justify-center h-40 text-sm text-gray-400">
-              No product data available
+            <div className="flex flex-col items-center justify-center h-40 text-center">
+              <div className="w-12 h-12 bg-gray-100 rounded-full flex items-center justify-center mb-3">
+                <svg className="w-6 h-6 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
+                </svg>
+              </div>
+              <p className="text-sm font-medium text-gray-600">No product sales</p>
+              <p className="text-xs text-gray-400 mt-1">Product data will appear once orders are placed</p>
             </div>
           ) : (
             <div className="divide-y divide-gray-50">
@@ -565,8 +593,14 @@ export default function AdminAnalyticsPage() {
             <h3 className="text-sm font-semibold text-gray-800">Recent Reviews</h3>
           </div>
           {recentReviews.length === 0 ? (
-            <div className="flex items-center justify-center h-40 text-sm text-gray-400">
-              No reviews yet
+            <div className="flex flex-col items-center justify-center h-40 text-center">
+              <div className="w-12 h-12 bg-gray-100 rounded-full flex items-center justify-center mb-3">
+                <svg className="w-6 h-6 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M11.48 3.499a.562.562 0 011.04 0l2.125 5.111a.563.563 0 00.475.345l5.518.442c.499.04.701.663.321.988l-4.204 3.602a.563.563 0 00-.182.557l1.285 5.385a.562.562 0 01-.84.61l-4.725-2.885a.563.563 0 00-.586 0L6.982 20.54a.562.562 0 01-.84-.61l1.285-5.386a.562.562 0 00-.182-.557l-4.204-3.602a.563.563 0 01.321-.988l5.518-.442a.563.563 0 00.475-.345L11.48 3.5z" />
+                </svg>
+              </div>
+              <p className="text-sm font-medium text-gray-600">No reviews yet</p>
+              <p className="text-xs text-gray-400 mt-1">Customer reviews will appear here</p>
             </div>
           ) : (
             <div className="divide-y divide-gray-50">

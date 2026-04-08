@@ -1,20 +1,37 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter, usePathname } from "next/navigation";
 
 export default function DogChatbot() {
   const router = useRouter();
+  const pathname = usePathname();
   const [visible, setVisible] = useState(false);
   const [bubbleVisible, setBubbleVisible] = useState(false);
+  const [isAdminRoute, setIsAdminRoute] = useState(false);
 
   useEffect(() => {
+    // Check if current path is an admin route
+    if (pathname?.startsWith('/admin')) {
+      setIsAdminRoute(true);
+      return;
+    }
+    setIsAdminRoute(false);
+  }, [pathname]);
+
+  useEffect(() => {
+    // Don't show animations if on admin route
+    if (isAdminRoute) return;
+    
     // Appear after a short delay
     const t1 = setTimeout(() => setVisible(true), 1200);
     // Show speech bubble after dog appears
     const t2 = setTimeout(() => setBubbleVisible(true), 2200);
     return () => { clearTimeout(t1); clearTimeout(t2); };
-  }, []);
+  }, [isAdminRoute]);
+
+  // Don't render on admin routes
+  if (isAdminRoute) return null;
 
   return (
     <div

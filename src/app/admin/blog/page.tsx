@@ -9,14 +9,14 @@ interface BlogPost {
   id: string;
   title: string;
   slug: string;
-  content: string;
+  body: string;
   excerpt: string | null;
   featured_image: string | null;
   author_id: string | null;
   status: 'draft' | 'published' | 'archived';
   tags: string[] | null;
-  meta_title: string | null;
-  meta_description: string | null;
+  seo_title: string | null;
+  seo_description: string | null;
   published_at: string | null;
   created_at: string;
   updated_at: string;
@@ -25,25 +25,25 @@ interface BlogPost {
 interface BlogPostFormData {
   title: string;
   slug: string;
-  content: string;
+  body: string;
   excerpt: string;
   featured_image: string;
   status: 'draft' | 'published' | 'archived';
   tags: string[];
-  meta_title: string;
-  meta_description: string;
+  seo_title: string;
+  seo_description: string;
 }
 
 const emptyForm: BlogPostFormData = {
   title: '',
   slug: '',
-  content: '',
+  body: '',
   excerpt: '',
   featured_image: '',
   status: 'draft',
   tags: [],
-  meta_title: '',
-  meta_description: '',
+  seo_title: '',
+  seo_description: '',
 };
 
 // ─── Helpers ──────────────────────────────────────────────────────────────────
@@ -148,13 +148,13 @@ export default function BlogPage() {
     setForm({
       title: post.title,
       slug: post.slug,
-      content: post.content,
+      body: post.body || '',
       excerpt: post.excerpt || '',
       featured_image: post.featured_image || '',
       status: post.status,
       tags: post.tags || [],
-      meta_title: post.meta_title || '',
-      meta_description: post.meta_description || '',
+      seo_title: post.seo_title || '',
+      seo_description: post.seo_description || '',
     });
     setTagsInput((post.tags || []).join(', '));
     setSlugManuallyEdited(true); // Don't overwrite existing slug on edit
@@ -190,13 +190,13 @@ export default function BlogPage() {
     const payload: Record<string, unknown> = {
       title: form.title,
       slug: form.slug,
-      content: form.content,
+      body: form.body,
       excerpt: form.excerpt || null,
       featured_image: form.featured_image || null,
       status: form.status,
       tags: form.tags.length > 0 ? form.tags : null,
-      meta_title: form.meta_title || null,
-      meta_description: form.meta_description || null,
+      seo_title: form.seo_title || null,
+      seo_description: form.seo_description || null,
     };
 
     // Set published_at when status changes to published
@@ -553,13 +553,13 @@ export default function BlogPage() {
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">Content</label>
                 <textarea
-                  value={form.content}
-                  onChange={(e) => setForm({ ...form, content: e.target.value })}
+                  value={form.body}
+                  onChange={(e) => setForm({ ...form, body: e.target.value })}
                   rows={12}
                   placeholder="Write your blog post content here..."
                   className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-deep-green/20 focus:border-deep-green outline-none resize-y font-mono leading-relaxed"
                 />
-                <p className="text-xs text-gray-400 mt-1">{form.content.length} characters</p>
+                <p className="text-xs text-gray-400 mt-1">{form.body.length} characters</p>
               </div>
 
               {/* Excerpt */}
@@ -650,38 +650,38 @@ export default function BlogPage() {
                     <label className="block text-sm font-medium text-gray-700 mb-1">Meta Title</label>
                     <input
                       type="text"
-                      value={form.meta_title}
-                      onChange={(e) => setForm({ ...form, meta_title: e.target.value })}
+                      value={form.seo_title}
+                      onChange={(e) => setForm({ ...form, seo_title: e.target.value })}
                       placeholder={form.title || 'Meta title for search engines'}
                       className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-deep-green/20 focus:border-deep-green outline-none"
                     />
-                    <p className="text-xs text-gray-400 mt-1">{form.meta_title.length}/60 characters</p>
+                    <p className="text-xs text-gray-400 mt-1">{form.seo_title.length}/60 characters</p>
                   </div>
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-1">Meta Description</label>
                     <textarea
-                      value={form.meta_description}
-                      onChange={(e) => setForm({ ...form, meta_description: e.target.value })}
+                      value={form.seo_description}
+                      onChange={(e) => setForm({ ...form, seo_description: e.target.value })}
                       rows={2}
                       placeholder={form.excerpt || 'Description for search engine results...'}
                       className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-deep-green/20 focus:border-deep-green outline-none resize-y"
                     />
-                    <p className="text-xs text-gray-400 mt-1">{form.meta_description.length}/160 characters</p>
+                    <p className="text-xs text-gray-400 mt-1">{form.seo_description.length}/160 characters</p>
                   </div>
                 </div>
 
                 {/* SEO Preview */}
-                {(form.meta_title || form.title) && (
+                {(form.seo_title || form.title) && (
                   <div className="mt-4 p-4 bg-gray-50 rounded-lg border border-gray-200">
                     <p className="text-xs text-gray-400 mb-2 uppercase tracking-wider font-medium">Search Preview</p>
                     <p className="text-blue-700 text-base font-medium leading-tight truncate">
-                      {form.meta_title || form.title}
+                      {form.seo_title || form.title}
                     </p>
                     <p className="text-emerald-700 text-xs mt-0.5 truncate">
                       jeko.am/blog/{form.slug || '...'}
                     </p>
                     <p className="text-gray-600 text-xs mt-1 line-clamp-2">
-                      {form.meta_description || form.excerpt || 'No description set.'}
+                      {form.seo_description || form.excerpt || 'No description set.'}
                     </p>
                   </div>
                 )}

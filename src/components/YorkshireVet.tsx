@@ -28,10 +28,10 @@ export default function YorkshireVet({ content }: { content?: any }) {
           </div>
 
           <div className="px-12 md:px-16 lg:px-24 py-12 relative z-10">
-            <h2 className="text-[32px] md:text-[40px] font-semibold text-deep-green font-rubik leading-tight mb-2">
+            <h2 className="text-[32px] md:text-[40px] font-medium text-deep-green tracking-wide leading-tight mb-2">
               {content?.heading || <>Backed by The<br />Yorkshire Vet</>}
             </h2>
-            <p className="text-[#6B8E3A] text-[32px] md:text-[38px] font-semibold font-rubik mb-6">
+            <p className="text-[#6B8E3A] text-[32px] md:text-[38px] font-medium tracking-wide mb-6">
               {content?.author || "Julian Norton"}
             </p>
             <p className="text-deep-green text-[18px] leading-relaxed max-w-md italic">

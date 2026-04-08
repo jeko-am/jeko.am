@@ -11,6 +11,8 @@ export interface CartItem {
   image: string;
   quantity: number;
   short_description: string | null;
+  variant_id?: string | null;
+  variant_name?: string | null;
 }
 
 interface CartContextType {
@@ -22,8 +24,8 @@ interface CartContextType {
   openCart: () => void;
   closeCart: () => void;
   addItem: (item: Omit<CartItem, 'quantity'>) => void;
-  removeItem: (id: string) => void;
-  updateQuantity: (id: string, quantity: number) => void;
+  removeItem: (id: string, variantId?: string | null) => void;
+  updateQuantity: (id: string, quantity: number, variantId?: string | null) => void;
   clearCart: () => void;
 }
 
@@ -114,35 +116,41 @@ export function CartProvider({ children }: { children: ReactNode }) {
 
   const addItem = (newItem: Omit<CartItem, 'quantity'>) => {
     setItems(prevItems => {
-      const existingItem = prevItems.find(item => item.id === newItem.id);
-      
+      const existingItem = prevItems.find(item =>
+        item.id === newItem.id && (item.variant_id ?? null) === (newItem.variant_id ?? null)
+      );
+
       if (existingItem) {
         return prevItems.map(item =>
-          item.id === newItem.id
+          item.id === newItem.id && (item.variant_id ?? null) === (newItem.variant_id ?? null)
             ? { ...item, quantity: item.quantity + 1 }
             : item
         );
       }
-      
+
       return [...prevItems, { ...newItem, quantity: 1 }];
     });
-    
+
     openCart();
   };
 
-  const removeItem = (id: string) => {
-    setItems(prevItems => prevItems.filter(item => item.id !== id));
+  const removeItem = (id: string, variantId?: string | null) => {
+    setItems(prevItems => prevItems.filter(item =>
+      !(item.id === id && (item.variant_id ?? null) === (variantId ?? null))
+    ));
   };
 
-  const updateQuantity = (id: string, quantity: number) => {
+  const updateQuantity = (id: string, quantity: number, variantId?: string | null) => {
     if (quantity <= 0) {
-      removeItem(id);
+      removeItem(id, variantId);
       return;
     }
-    
+
     setItems(prevItems =>
       prevItems.map(item =>
-        item.id === id ? { ...item, quantity } : item
+        item.id === id && (item.variant_id ?? null) === (variantId ?? null)
+          ? { ...item, quantity }
+          : item
       )
     );
   };

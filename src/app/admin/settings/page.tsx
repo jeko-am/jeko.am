@@ -5,20 +5,6 @@ import { useEffect, useState, useCallback } from 'react';
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
-interface SiteSetting {
-  id: string;
-  key: string;
-  value: unknown;
-  updated_at: string;
-}
-
-interface ThemeSetting {
-  id: string;
-  key: string;
-  value: unknown;
-  updated_at: string;
-}
-
 interface ShippingZone {
   id: string;
   name: string;
@@ -65,54 +51,24 @@ interface MenuItem {
   sort_order: number;
 }
 
-type TabId = 'general' | 'theme' | 'shipping' | 'analytics' | 'menus';
+type TabId = 'shipping' | 'analytics' | 'menus';
 
 const TABS: { id: TabId; label: string; icon: string }[] = [
-  { id: 'general', label: 'General', icon: 'M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.066 2.573c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.573 1.066c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.066-2.573c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z' },
-  { id: 'theme', label: 'Theme', icon: 'M4.098 19.902a3.75 3.75 0 005.304 0l6.401-6.402M6.75 21A3.75 3.75 0 013 17.25V4.125C3 3.504 3.504 3 4.125 3h5.25c.621 0 1.125.504 1.125 1.125v4.072M6.75 21a3.75 3.75 0 003.75-3.75V8.197M6.75 21h13.125c.621 0 1.125-.504 1.125-1.125v-5.25c0-.621-.504-1.125-1.125-1.125h-4.072M10.5 8.197l2.88-2.88c.438-.439 1.15-.439 1.59 0l3.712 3.713c.44.44.44 1.152 0 1.59l-2.879 2.88M6.75 17.25h.008v.008H6.75v-.008z' },
   { id: 'shipping', label: 'Shipping', icon: 'M8.25 18.75a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m3 0h6m-9 0H3.375a1.125 1.125 0 01-1.125-1.125V14.25m17.25 4.5a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m3 0h1.125c.621 0 1.129-.504 1.09-1.124a17.902 17.902 0 00-3.213-9.193 2.056 2.056 0 00-1.58-.86H14.25M16.5 18.75h-2.25m0-11.177v-.958c0-.568-.422-1.048-.987-1.106a48.554 48.554 0 00-10.026 0 1.106 1.106 0 00-.987 1.106v7.635m12-6.677v6.677m0 4.5v-4.5m0 0h-12' },
-  { id: 'analytics', label: 'Analytics', icon: 'M3 13.125C3 12.504 3.504 12 4.125 12h2.25c.621 0 1.125.504 1.125 1.125v6.75C7.5 20.496 6.996 21 6.375 21h-2.25A1.125 1.125 0 013 19.875v-6.75zM9.75 8.625c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125v11.25c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V8.625zM16.5 4.125c0-.621.504-1.125 1.125-1.125h2.25C20.496 3 21 3.504 21 4.125v15.75c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V4.125z' },
+  { id: 'analytics', label: 'Pixels & Tags', icon: 'M3 13.125C3 12.504 3.504 12 4.125 12h2.25c.621 0 1.125.504 1.125 1.125v6.75C7.5 20.496 6.996 21 6.375 21h-2.25A1.125 1.125 0 013 19.875v-6.75zM9.75 8.625c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125v11.25c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V8.625zM16.5 4.125c0-.621.504-1.125 1.125-1.125h2.25C20.496 3 21 3.504 21 4.125v15.75c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V4.125z' },
   { id: 'menus', label: 'Menus', icon: 'M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5' },
 ];
 
 const PIXEL_TYPES = ['Google Analytics', 'Facebook Pixel', 'Google Tag Manager', 'TikTok Pixel', 'Hotjar', 'Custom'];
 const MENU_LOCATIONS = ['header', 'footer', 'sidebar', 'mobile'];
 
-const GENERAL_FIELDS = [
-  { key: 'store_name', label: 'Store Name', type: 'text' },
-  { key: 'tagline', label: 'Tagline', type: 'text' },
-  { key: 'email', label: 'Contact Email', type: 'email' },
-  { key: 'phone', label: 'Phone Number', type: 'tel' },
-  { key: 'address', label: 'Address', type: 'textarea' },
-  { key: 'logo_url', label: 'Logo URL', type: 'url' },
-  { key: 'favicon_url', label: 'Favicon URL', type: 'url' },
-];
-
-const THEME_FIELDS = [
-  { key: 'primary_color', label: 'Primary Color', type: 'color' },
-  { key: 'secondary_color', label: 'Secondary Color', type: 'color' },
-  { key: 'accent_color', label: 'Accent Color', type: 'color' },
-  { key: 'font_family', label: 'Font Family', type: 'text' },
-  { key: 'header_style', label: 'Header Style', type: 'select', options: ['default', 'transparent', 'sticky', 'centered'] },
-  { key: 'footer_style', label: 'Footer Style', type: 'select', options: ['default', 'minimal', 'expanded', 'centered'] },
-];
 
 // ─── Component ────────────────────────────────────────────────────────────────
 
 export default function AdminSettingsPage() {
-  const [activeTab, setActiveTab] = useState<TabId>('general');
+  const [activeTab, setActiveTab] = useState<TabId>('shipping');
   const [error, setError] = useState<string | null>(null);
   const [successMsg, setSuccessMsg] = useState<string | null>(null);
-
-  // General
-  const [generalSettings, setGeneralSettings] = useState<Record<string, string>>({});
-  const [generalLoading, setGeneralLoading] = useState(true);
-  const [generalSaving, setGeneralSaving] = useState(false);
-
-  // Theme
-  const [themeSettings, setThemeSettings] = useState<Record<string, string>>({});
-  const [themeLoading, setThemeLoading] = useState(true);
-  const [themeSaving, setThemeSaving] = useState(false);
 
   // Shipping
   const [shippingZones, setShippingZones] = useState<ShippingZone[]>([]);
@@ -157,76 +113,6 @@ export default function AdminSettingsPage() {
   }, [successMsg]);
 
   // ─── General Settings ─────────────────────────────────────────────────────
-
-  const fetchGeneralSettings = useCallback(async () => {
-    setGeneralLoading(true);
-    try {
-      const { data, error: err } = await supabase.from('site_settings').select('*');
-      if (err) throw err;
-      const map: Record<string, string> = {};
-      (data as SiteSetting[] || []).forEach(s => { map[s.key] = String(s.value ?? ''); });
-      setGeneralSettings(map);
-    } catch (err: unknown) {
-      setError(err instanceof Error ? err.message : 'Failed to load general settings');
-    } finally {
-      setGeneralLoading(false);
-    }
-  }, []);
-
-  const saveGeneralSettings = async () => {
-    setGeneralSaving(true);
-    setError(null);
-    try {
-      for (const field of GENERAL_FIELDS) {
-        const value = generalSettings[field.key] || '';
-        const { error: err } = await supabase
-          .from('site_settings')
-          .upsert({ key: field.key, value, updated_at: new Date().toISOString() }, { onConflict: 'key' });
-        if (err) throw err;
-      }
-      setSuccessMsg('General settings saved successfully');
-    } catch (err: unknown) {
-      setError(err instanceof Error ? err.message : 'Failed to save general settings');
-    } finally {
-      setGeneralSaving(false);
-    }
-  };
-
-  // ─── Theme Settings ───────────────────────────────────────────────────────
-
-  const fetchThemeSettings = useCallback(async () => {
-    setThemeLoading(true);
-    try {
-      const { data, error: err } = await supabase.from('theme_settings').select('*');
-      if (err) throw err;
-      const map: Record<string, string> = {};
-      (data as ThemeSetting[] || []).forEach(s => { map[s.key] = String(s.value ?? ''); });
-      setThemeSettings(map);
-    } catch (err: unknown) {
-      setError(err instanceof Error ? err.message : 'Failed to load theme settings');
-    } finally {
-      setThemeLoading(false);
-    }
-  }, []);
-
-  const saveThemeSettings = async () => {
-    setThemeSaving(true);
-    setError(null);
-    try {
-      for (const field of THEME_FIELDS) {
-        const value = themeSettings[field.key] || '';
-        const { error: err } = await supabase
-          .from('theme_settings')
-          .upsert({ key: field.key, value, updated_at: new Date().toISOString() }, { onConflict: 'key' });
-        if (err) throw err;
-      }
-      setSuccessMsg('Theme settings saved successfully');
-    } catch (err: unknown) {
-      setError(err instanceof Error ? err.message : 'Failed to save theme settings');
-    } finally {
-      setThemeSaving(false);
-    }
-  };
 
   // ─── Shipping ─────────────────────────────────────────────────────────────
 
@@ -486,13 +372,11 @@ export default function AdminSettingsPage() {
     setError(null);
     setSuccessMsg(null);
     switch (activeTab) {
-      case 'general': fetchGeneralSettings(); break;
-      case 'theme': fetchThemeSettings(); break;
       case 'shipping': fetchShipping(); break;
       case 'analytics': fetchPixels(); break;
       case 'menus': fetchMenus(); break;
     }
-  }, [activeTab, fetchGeneralSettings, fetchThemeSettings, fetchShipping, fetchPixels, fetchMenus]);
+  }, [activeTab, fetchShipping, fetchPixels, fetchMenus]);
 
   // ─── Render Helpers ────────────────────────────────────────────────────────
 
@@ -509,117 +393,8 @@ export default function AdminSettingsPage() {
     </div>
   );
 
-  const SaveButton = ({ onClick, saving, label = 'Save Changes' }: { onClick: () => void; saving: boolean; label?: string }) => (
-    <button
-      onClick={onClick}
-      disabled={saving}
-      className="px-5 py-2 text-sm font-medium text-white bg-deep-green rounded-lg hover:bg-deep-green/90 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
-    >
-      {saving && <div className="w-3.5 h-3.5 border-2 border-white border-t-transparent rounded-full animate-spin" />}
-      {label}
-    </button>
-  );
 
   // ─── Tab Content Renderers ────────────────────────────────────────────────
-
-  const renderGeneral = () => {
-    if (generalLoading) return <LoadingBlock />;
-    return (
-      <div className="space-y-5">
-        {GENERAL_FIELDS.map(field => (
-          <div key={field.key}>
-            <label className="block text-sm font-medium text-gray-700 mb-1.5">{field.label}</label>
-            {field.type === 'textarea' ? (
-              <textarea
-                value={generalSettings[field.key] || ''}
-                onChange={(e) => setGeneralSettings(s => ({ ...s, [field.key]: e.target.value }))}
-                rows={3}
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-deep-green/20 focus:border-deep-green outline-none transition-all resize-y"
-              />
-            ) : (
-              <input
-                type={field.type}
-                value={generalSettings[field.key] || ''}
-                onChange={(e) => setGeneralSettings(s => ({ ...s, [field.key]: e.target.value }))}
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-deep-green/20 focus:border-deep-green outline-none transition-all"
-              />
-            )}
-          </div>
-        ))}
-        <div className="pt-4 border-t border-gray-200 flex justify-end">
-          <SaveButton onClick={saveGeneralSettings} saving={generalSaving} />
-        </div>
-      </div>
-    );
-  };
-
-  const renderTheme = () => {
-    if (themeLoading) return <LoadingBlock />;
-    return (
-      <div className="space-y-5">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-          {THEME_FIELDS.map(field => (
-            <div key={field.key}>
-              <label className="block text-sm font-medium text-gray-700 mb-1.5">{field.label}</label>
-              {field.type === 'color' ? (
-                <div className="flex items-center gap-3">
-                  <input
-                    type="color"
-                    value={themeSettings[field.key] || '#000000'}
-                    onChange={(e) => setThemeSettings(s => ({ ...s, [field.key]: e.target.value }))}
-                    className="w-10 h-10 rounded-lg border border-gray-300 cursor-pointer p-0.5"
-                  />
-                  <input
-                    type="text"
-                    value={themeSettings[field.key] || ''}
-                    onChange={(e) => setThemeSettings(s => ({ ...s, [field.key]: e.target.value }))}
-                    className="flex-1 px-3 py-2 border border-gray-300 rounded-lg text-sm font-mono focus:ring-2 focus:ring-deep-green/20 focus:border-deep-green outline-none"
-                    placeholder="#000000"
-                  />
-                </div>
-              ) : field.type === 'select' ? (
-                <select
-                  value={themeSettings[field.key] || ''}
-                  onChange={(e) => setThemeSettings(s => ({ ...s, [field.key]: e.target.value }))}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm bg-white focus:ring-2 focus:ring-deep-green/20 focus:border-deep-green outline-none"
-                >
-                  <option value="">Select...</option>
-                  {field.options?.map(o => <option key={o} value={o}>{o}</option>)}
-                </select>
-              ) : (
-                <input
-                  type="text"
-                  value={themeSettings[field.key] || ''}
-                  onChange={(e) => setThemeSettings(s => ({ ...s, [field.key]: e.target.value }))}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-deep-green/20 focus:border-deep-green outline-none"
-                />
-              )}
-            </div>
-          ))}
-        </div>
-
-        {/* Preview */}
-        <div className="p-4 rounded-xl border border-gray-200 bg-gray-50">
-          <h4 className="text-sm font-semibold text-gray-700 mb-3">Color Preview</h4>
-          <div className="flex gap-3">
-            {['primary_color', 'secondary_color', 'accent_color'].map(key => (
-              <div key={key} className="flex flex-col items-center gap-1">
-                <div
-                  className="w-16 h-16 rounded-xl border-2 border-white shadow"
-                  style={{ backgroundColor: themeSettings[key] || '#ccc' }}
-                />
-                <span className="text-xs text-gray-500">{key.replace('_color', '')}</span>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        <div className="pt-4 border-t border-gray-200 flex justify-end">
-          <SaveButton onClick={saveThemeSettings} saving={themeSaving} />
-        </div>
-      </div>
-    );
-  };
 
   const renderShipping = () => {
     if (shippingLoading) return <LoadingBlock />;
@@ -781,45 +556,79 @@ export default function AdminSettingsPage() {
     );
   };
 
+  const PIXEL_PLACEHOLDERS: Record<string, { id: string; head: string }> = {
+    'Google Analytics': { id: 'G-XXXXXXXXXX', head: '<!-- GA4 tag is auto-injected from the Measurement ID -->' },
+    'Facebook Pixel': { id: '123456789012345', head: "<!-- Facebook Pixel Code -->\n<script>\n!function(f,b,e,v,n,t,s){...}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');\nfbq('init', 'YOUR_PIXEL_ID');\nfbq('track', 'PageView');\n</script>" },
+    'Google Tag Manager': { id: 'GTM-XXXXXXX', head: "<!-- Google Tag Manager -->\n<script>(function(w,d,s,l,i){...})(window,document,'script','dataLayer','GTM-XXXXXXX');</script>" },
+    'TikTok Pixel': { id: 'XXXXXXXXXX', head: "<!-- TikTok Pixel Code -->\n<script>!function(w,d,t){...}(window,document,'ttq');\nttq.load('YOUR_PIXEL_ID');\nttq.page();\n</script>" },
+    'Hotjar': { id: '1234567', head: "<!-- Hotjar Tracking Code -->\n<script>(function(h,o,t,j,a,r){...})(window,document,'https://static.hotjar.com/c/hotjar-','.js?sv=');</script>" },
+    'Custom': { id: '', head: '<script>...</script>' },
+  };
+
   const renderAnalytics = () => {
     if (analyticsLoading) return <LoadingBlock />;
+    const currentPlaceholder = PIXEL_PLACEHOLDERS[pixelForm.type] || PIXEL_PLACEHOLDERS['Custom'];
     return (
       <div className="space-y-4">
-        <div className="flex items-center justify-between mb-2">
-          <p className="text-sm text-gray-500">Manage tracking pixels and analytics scripts</p>
-          <button
-            onClick={() => { setEditingPixel(null); setPixelForm({ name: '', type: 'Google Analytics', pixel_id: '', script_head: '', script_body: '', is_active: true }); setShowPixelForm(true); }}
-            className="px-3 py-1.5 text-xs font-medium bg-deep-green text-white rounded-lg hover:bg-deep-green/90 transition-colors"
-          >
-            + Add Pixel
-          </button>
+        {/* Quick-add buttons */}
+        <div className="p-4 bg-gradient-to-r from-deep-green/5 to-gold/5 rounded-xl border border-deep-green/10">
+          <h3 className="text-sm font-semibold text-deep-green mb-2">Add a tracking pixel or tag</h3>
+          <p className="text-xs text-gray-500 mb-3">Click a service below to add it, or use &quot;Custom&quot; for any other tracking script.</p>
+          <div className="flex flex-wrap gap-2">
+            {PIXEL_TYPES.map(type => (
+              <button
+                key={type}
+                onClick={() => {
+                  setEditingPixel(null);
+                  setPixelForm({ name: type, type, pixel_id: '', script_head: '', script_body: '', is_active: true });
+                  setShowPixelForm(true);
+                }}
+                className="px-3 py-1.5 text-xs font-medium border border-deep-green/20 text-deep-green rounded-lg hover:bg-deep-green hover:text-white transition-colors"
+              >
+                + {type}
+              </button>
+            ))}
+          </div>
         </div>
 
         {showPixelForm && (
           <div className="p-4 bg-gray-50 rounded-xl border border-gray-200 space-y-3">
-            <div className="grid grid-cols-3 gap-3">
+            <div className="flex items-center gap-2 mb-1">
+              <span className="text-sm font-semibold text-gray-800">{editingPixel ? 'Edit' : 'Add'} {pixelForm.type}</span>
+            </div>
+            <div className="grid grid-cols-2 gap-3">
               <div>
-                <label className="block text-xs font-medium text-gray-600 mb-1">Name</label>
-                <input type="text" value={pixelForm.name} onChange={e => setPixelForm(f => ({ ...f, name: e.target.value }))} className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-deep-green/20 focus:border-deep-green outline-none" placeholder="My GA4" />
+                <label className="block text-xs font-medium text-gray-600 mb-1">Display Name</label>
+                <input type="text" value={pixelForm.name} onChange={e => setPixelForm(f => ({ ...f, name: e.target.value }))} className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-deep-green/20 focus:border-deep-green outline-none" placeholder={pixelForm.type} />
               </div>
               <div>
                 <label className="block text-xs font-medium text-gray-600 mb-1">Type</label>
-                <select value={pixelForm.type} onChange={e => setPixelForm(f => ({ ...f, type: e.target.value }))} className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm bg-white focus:ring-2 focus:ring-deep-green/20 focus:border-deep-green outline-none">
+                <select value={pixelForm.type} onChange={e => setPixelForm(f => ({ ...f, type: e.target.value, name: f.name || e.target.value }))} className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm bg-white focus:ring-2 focus:ring-deep-green/20 focus:border-deep-green outline-none">
                   {PIXEL_TYPES.map(t => <option key={t} value={t}>{t}</option>)}
                 </select>
               </div>
-              <div>
-                <label className="block text-xs font-medium text-gray-600 mb-1">Pixel / Tracking ID</label>
-                <input type="text" value={pixelForm.pixel_id} onChange={e => setPixelForm(f => ({ ...f, pixel_id: e.target.value }))} className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm font-mono focus:ring-2 focus:ring-deep-green/20 focus:border-deep-green outline-none" placeholder="G-XXXXXXXXXX" />
-              </div>
             </div>
             <div>
-              <label className="block text-xs font-medium text-gray-600 mb-1">Head Script</label>
-              <textarea value={pixelForm.script_head} onChange={e => setPixelForm(f => ({ ...f, script_head: e.target.value }))} rows={3} className="w-full px-3 py-2 border border-gray-300 rounded-lg text-xs font-mono focus:ring-2 focus:ring-deep-green/20 focus:border-deep-green outline-none resize-y" placeholder="<script>...</script>" />
+              <label className="block text-xs font-medium text-gray-600 mb-1">
+                {pixelForm.type === 'Google Analytics' ? 'Measurement ID' : pixelForm.type === 'Google Tag Manager' ? 'Container ID' : pixelForm.type === 'Facebook Pixel' ? 'Pixel ID' : pixelForm.type === 'TikTok Pixel' ? 'Pixel ID' : pixelForm.type === 'Hotjar' ? 'Site ID' : 'Tracking ID'}
+              </label>
+              <input type="text" value={pixelForm.pixel_id} onChange={e => setPixelForm(f => ({ ...f, pixel_id: e.target.value }))} className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm font-mono focus:ring-2 focus:ring-deep-green/20 focus:border-deep-green outline-none" placeholder={currentPlaceholder.id} />
+              <p className="text-[11px] text-gray-400 mt-1">
+                {pixelForm.type === 'Google Analytics' && 'Find this in Google Analytics > Admin > Data Streams > Measurement ID'}
+                {pixelForm.type === 'Facebook Pixel' && 'Find this in Meta Events Manager > Data Sources > Your Pixel ID'}
+                {pixelForm.type === 'Google Tag Manager' && 'Find this in GTM > Admin > Container ID (starts with GTM-)'}
+                {pixelForm.type === 'TikTok Pixel' && 'Find this in TikTok Ads Manager > Events > Manage > Pixel ID'}
+                {pixelForm.type === 'Hotjar' && 'Find this in Hotjar > Settings > Sites & Organizations > Site ID'}
+                {pixelForm.type === 'Custom' && 'Enter any identifier for your reference'}
+              </p>
             </div>
             <div>
-              <label className="block text-xs font-medium text-gray-600 mb-1">Body Script</label>
-              <textarea value={pixelForm.script_body} onChange={e => setPixelForm(f => ({ ...f, script_body: e.target.value }))} rows={3} className="w-full px-3 py-2 border border-gray-300 rounded-lg text-xs font-mono focus:ring-2 focus:ring-deep-green/20 focus:border-deep-green outline-none resize-y" placeholder="<noscript>...</noscript>" />
+              <label className="block text-xs font-medium text-gray-600 mb-1">Head Script <span className="text-gray-400 font-normal">(optional — paste full script tag)</span></label>
+              <textarea value={pixelForm.script_head} onChange={e => setPixelForm(f => ({ ...f, script_head: e.target.value }))} rows={3} className="w-full px-3 py-2 border border-gray-300 rounded-lg text-xs font-mono focus:ring-2 focus:ring-deep-green/20 focus:border-deep-green outline-none resize-y" placeholder={currentPlaceholder.head} />
+            </div>
+            <div>
+              <label className="block text-xs font-medium text-gray-600 mb-1">Body Script <span className="text-gray-400 font-normal">(optional — e.g. noscript fallback)</span></label>
+              <textarea value={pixelForm.script_body} onChange={e => setPixelForm(f => ({ ...f, script_body: e.target.value }))} rows={2} className="w-full px-3 py-2 border border-gray-300 rounded-lg text-xs font-mono focus:ring-2 focus:ring-deep-green/20 focus:border-deep-green outline-none resize-y" placeholder="<noscript>...</noscript>" />
             </div>
             <div className="flex items-center gap-2">
               <input type="checkbox" id="pixel-active" checked={pixelForm.is_active} onChange={e => setPixelForm(f => ({ ...f, is_active: e.target.checked }))} className="rounded border-gray-300 text-deep-green focus:ring-deep-green" />
@@ -832,6 +641,7 @@ export default function AdminSettingsPage() {
           </div>
         )}
 
+        {/* Active pixels list */}
         <div className="space-y-2">
           {pixels.map(pixel => (
             <div key={pixel.id} className={`p-4 rounded-lg border transition-colors ${pixel.is_active ? 'bg-white border-gray-200' : 'bg-gray-50 border-gray-200 opacity-70'}`}>
@@ -1074,8 +884,6 @@ export default function AdminSettingsPage() {
         </div>
 
         <div className="p-6">
-          {activeTab === 'general' && renderGeneral()}
-          {activeTab === 'theme' && renderTheme()}
           {activeTab === 'shipping' && renderShipping()}
           {activeTab === 'analytics' && renderAnalytics()}
           {activeTab === 'menus' && renderMenus()}

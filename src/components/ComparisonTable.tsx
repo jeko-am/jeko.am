@@ -27,8 +27,8 @@ const CrossIcon = () => (
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export default function ComparisonTable({ content }: { content?: any }) {
-  const heading = content?.heading ?? "How Jeko compares";
-  const col1Header = content?.col_1_header ?? "JEKO";
+  const heading = (content?.heading ?? "How Jeko compares").replace(/\bPure\b/gi, "Jeko");
+  const col1Header = (content?.col_1_header ?? "JEKO").replace(/\bPURE\b/gi, "JEKO").replace(/\bPure\b/g, "Jeko");
   const col2Header = content?.col_2_header ?? "Dry & wet";
   const col3Header = content?.col_3_header ?? "Raw & fresh";
 
@@ -92,7 +92,7 @@ export default function ComparisonTable({ content }: { content?: any }) {
       </div>
 
       <div className="max-w-container mx-auto px-6">
-        <h2 className="text-[36px] md:text-[40px] font-semibold text-white text-center font-rubik mb-10">
+        <h2 className="text-[36px] md:text-[40px] font-medium text-white text-center tracking-wide mb-10">
           {heading}
         </h2>
 
