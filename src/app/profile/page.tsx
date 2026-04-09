@@ -76,6 +76,8 @@ export default function ProfilePage() {
   const [petLookingForMate, setPetLookingForMate] = useState(false);
   const [petCity, setPetCity] = useState("");
   const [petDietPreference, setPetDietPreference] = useState<string[]>([]);
+  const [petDisabilities, setPetDisabilities] = useState<string[]>([]);
+  const [petAllergies, setPetAllergies] = useState<string[]>([]);
 
   // Image upload states
   const [uploadingAvatar] = useState(false);
@@ -139,6 +141,14 @@ export default function ProfilePage() {
         } else {
           setPetDietPreference([]);
         }
+        const rawDisabilities = petData.disabilities;
+        if (Array.isArray(rawDisabilities)) {
+          setPetDisabilities(rawDisabilities);
+        } else { setPetDisabilities([]); }
+        const rawAllergies = petData.allergies;
+        if (Array.isArray(rawAllergies)) {
+          setPetAllergies(rawAllergies);
+        } else { setPetAllergies([]); }
       }
     } catch (error) {
       console.error("Error fetching profiles:", error);
@@ -178,13 +188,13 @@ export default function ProfilePage() {
     try {
       await supabase
         .from("user_profiles")
-        .upsert({
-          user_id: user.id,
+        .update({
           display_name: displayName,
           bio,
           city,
           country,
-        });
+        })
+        .eq("user_id", user.id);
 
       setUserProfile(prev => prev ? {
         ...prev,
@@ -207,10 +217,10 @@ export default function ProfilePage() {
     try {
       await supabase
         .from("pet_profiles")
-        .upsert({
-          user_id: user.id,
+        .update({
           pet_name: petName,
           breed: petBreed,
+          breed_normalized: petBreed.trim().toLowerCase(),
           dog_age_years: petAge ? parseInt(petAge) : null,
           weight_kg: petWeight ? parseFloat(petWeight) : null,
           gender: petGender,
@@ -222,9 +232,12 @@ export default function ProfilePage() {
           gets_along_with_dogs: petGetsAlongWithDogs,
           looking_for_mate: petLookingForMate,
           city: petCity,
-          city_normalized: petCity.toLowerCase(),
+          city_normalized: petCity.trim().toLowerCase(),
           diet_preference: petDietPreference.length > 0 ? petDietPreference : null,
-        });
+          disabilities: petDisabilities.length > 0 && !petDisabilities.includes('None') ? petDisabilities : null,
+          allergies: petAllergies.length > 0 && !petAllergies.includes('None') ? petAllergies : null,
+        })
+        .eq("user_id", user.id);
 
       setPetProfile(prev => prev ? {
         ...prev,
@@ -300,18 +313,14 @@ export default function ProfilePage() {
                       if (url) {
                         await supabase
                           .from("user_profiles")
-                          .upsert({
-                            user_id: user!.id,
-                            avatar_url: url,
-                          });
+                          .update({ avatar_url: url })
+                          .eq("user_id", user!.id);
                         setUserProfile(prev => prev ? { ...prev, avatar_url: url } : null);
                       } else {
                         await supabase
                           .from("user_profiles")
-                          .upsert({
-                            user_id: user!.id,
-                            avatar_url: null,
-                          });
+                          .update({ avatar_url: null })
+                          .eq("user_id", user!.id);
                         setUserProfile(prev => prev ? { ...prev, avatar_url: null } : null);
                       }
                     }}
@@ -400,18 +409,14 @@ export default function ProfilePage() {
                       if (url) {
                         await supabase
                           .from("pet_profiles")
-                          .upsert({
-                            user_id: user!.id,
-                            profile_photo_url: url,
-                          });
+                          .update({ profile_photo_url: url })
+                          .eq("user_id", user!.id);
                         setPetProfile(prev => prev ? { ...prev, profile_photo_url: url } : null);
                       } else {
                         await supabase
                           .from("pet_profiles")
-                          .upsert({
-                            user_id: user!.id,
-                            profile_photo_url: null,
-                          });
+                          .update({ profile_photo_url: null })
+                          .eq("user_id", user!.id);
                         setPetProfile(prev => prev ? { ...prev, profile_photo_url: null } : null);
                       }
                     }}
@@ -567,6 +572,55 @@ export default function ProfilePage() {
                           }`}
                         >
                           {diet}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">Disabilities</label>
+                    <div className="flex flex-wrap gap-2">
+                      {['None', 'Blind', 'Deaf', 'Mobility Issues', 'Amputee', 'Epilepsy', 'Anxiety', 'Other'].map(item => (
+                        <button
+                          key={item}
+                          type="button"
+                          onClick={() => setPetDisabilities(prev => {
+                            if (item === 'None') return ['None'];
+                            const without = prev.filter(d => d !== 'None');
+                            return without.includes(item) ? without.filter(d => d !== item) : [...without, item];
+                          })}
+                          className={`px-3 py-1.5 rounded-full text-sm font-medium border transition-all ${
+                            petDisabilities.includes(item)
+                              ? 'bg-gold/20 border-gold text-deep-green'
+                              : 'bg-white border-gray-200 text-gray-500 hover:border-gray-300'
+                          }`}
+                        >
+                          {item}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">Allergies</label>
+                    <div className="flex flex-wrap gap-2">
+                      {['None', 'Chicken', 'Beef', 'Grain', 'Dairy', 'Eggs', 'Soy', 'Fish', 'Pollen', 'Dust', 'Flea', 'Other'].map(item => (
+                        <button
+                          key={item}
+                          type="button"
+                          onClick={() => setPetAllergies(prev => {
+                            if (item === 'None') return ['None'];
+                            const without = prev.filter(a => a !== 'None');
+                            return without.includes(item) ? without.filter(a => a !== item) : [...without, item];
+                          })}
+                          className={`px-3 py-1.5 rounded-full text-sm font-medium border transition-all ${
+                            petAllergies.includes(item)
+                              ? 'bg-gold/20 border-gold text-deep-green'
+                              : 'bg-white border-gray-200 text-gray-500 hover:border-gray-300'
+                          }`}
+                        >
+                          {item}
                         </button>
                       ))}
                     </div>

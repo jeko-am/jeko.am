@@ -39,13 +39,7 @@ export async function uploadToCloudinary(
       formData.append('public_id', customPublicId);
     }
     
-    // Add transformation parameters for optimization
-    formData.append('quality', 'auto');
-    formData.append('fetch_format', 'auto');
-    
-    // Add responsive parameters
-    formData.append('responsive', 'true');
-    formData.append('auto_tagging', 'true');
+    // Note: quality/format transformations are applied via URL, not upload params
 
     // Upload to Cloudinary
     const cloudName = process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME;
