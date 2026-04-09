@@ -1,0 +1,160 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e2]:
+    - banner [ref=e3]:
+      - generic [ref=e5]:
+        - link "JEKO" [ref=e6] [cursor=pointer]:
+          - /url: /
+          - generic [ref=e7]: JEKO
+        - navigation [ref=e8]:
+          - link "About" [ref=e10] [cursor=pointer]:
+            - /url: /about
+            - text: About
+            - img [ref=e11]
+          - link "Community" [ref=e14] [cursor=pointer]:
+            - /url: /community
+            - text: Community
+            - img [ref=e15]
+          - link "Shop" [ref=e18] [cursor=pointer]:
+            - /url: /products
+          - link "Reviews" [ref=e20] [cursor=pointer]:
+            - /url: /reviews
+          - link "Health & breeds" [ref=e22] [cursor=pointer]:
+            - /url: /benefits
+            - text: Health & breeds
+            - img [ref=e23]
+        - generic [ref=e25]:
+          - button "Shopping cart" [ref=e26] [cursor=pointer]:
+            - img [ref=e27]
+          - link "Help" [ref=e31] [cursor=pointer]:
+            - /url: /contact
+          - generic [ref=e32]:
+            - link "Profile" [ref=e33] [cursor=pointer]:
+              - /url: /profile
+              - img [ref=e34]
+              - text: Profile
+            - button "Logout" [ref=e36] [cursor=pointer]:
+              - img [ref=e37]
+              - text: Logout
+    - main [ref=e39]:
+      - generic [ref=e40]:
+        - generic [ref=e41]:
+          - heading "My Profile" [level=1] [ref=e42]
+          - paragraph [ref=e43]: Manage your personal information and pet profile
+        - generic [ref=e45]:
+          - button "Your Profile" [ref=e46] [cursor=pointer]
+          - button "Pet Profile" [ref=e47] [cursor=pointer]
+          - button "Swipe Photos" [ref=e48] [cursor=pointer]
+          - button "Match Preferences" [ref=e49] [cursor=pointer]
+        - generic [ref=e51]:
+          - generic [ref=e52]:
+            - generic [ref=e56] [cursor=pointer]:
+              - img [ref=e57]
+              - text: Add Photo
+            - generic [ref=e59]:
+              - heading "Profile Photo" [level=3] [ref=e60]
+              - paragraph [ref=e61]: Upload a photo to help others recognize you
+          - generic [ref=e62]:
+            - generic [ref=e63]:
+              - generic [ref=e64]: Display Name
+              - textbox [ref=e65]: Full Test User
+            - generic [ref=e66]:
+              - generic [ref=e67]: Email
+              - textbox [disabled] [ref=e68]: fulltest@purepet.dev
+            - generic [ref=e69]:
+              - generic [ref=e70]: City
+              - textbox [ref=e71]: Yerevan
+            - generic [ref=e72]:
+              - generic [ref=e73]: Country
+              - textbox [ref=e74]: Armenia
+          - generic [ref=e75]:
+            - generic [ref=e76]: Bio
+            - textbox "Tell us about yourself..." [ref=e77]
+          - button "Save Profile" [ref=e79] [cursor=pointer]
+    - contentinfo [ref=e80]:
+      - generic [ref=e81]:
+        - generic [ref=e82]:
+          - generic [ref=e83]:
+            - heading "Join our VIP list" [level=4] [ref=e84]
+            - paragraph [ref=e85]: Be the first to hear about new product launches, exclusive competitions and helpful dog content.
+            - generic [ref=e86]:
+              - textbox "Enter your email address" [ref=e87]
+              - button "Sign up" [ref=e88] [cursor=pointer]
+            - heading "Follow us on social media" [level=4] [ref=e89]
+            - generic [ref=e90]:
+              - link "Instagram" [ref=e91] [cursor=pointer]:
+                - /url: https://www.instagram.com/purepetfood
+                - img "Instagram" [ref=e92]
+              - link "Facebook" [ref=e93] [cursor=pointer]:
+                - /url: https://www.facebook.com/purepetfood
+                - img "Facebook" [ref=e94]
+              - link [ref=e95] [cursor=pointer]:
+                - /url: https://www.tiktok.com/@purepetfood
+                - img [ref=e96]
+          - generic [ref=e98]:
+            - generic [ref=e99]:
+              - heading "Jeko" [level=4] [ref=e100]
+              - list [ref=e101]:
+                - listitem [ref=e102]:
+                  - link "Our story" [ref=e103] [cursor=pointer]:
+                    - /url: /about
+                - listitem [ref=e104]:
+                  - link "Reviews" [ref=e105] [cursor=pointer]:
+                    - /url: /reviews
+                - listitem [ref=e106]:
+                  - link "Recipes" [ref=e107] [cursor=pointer]:
+                    - /url: /recipes
+                - listitem [ref=e108]:
+                  - link "Beyond the bowl" [ref=e109] [cursor=pointer]:
+                    - /url: /beyond-the-bowl
+                - listitem [ref=e110]:
+                  - link "Shop" [ref=e111] [cursor=pointer]:
+                    - /url: /products
+                - listitem [ref=e112]:
+                  - link "Community" [ref=e113] [cursor=pointer]:
+                    - /url: /community
+            - generic [ref=e114]:
+              - heading "Help" [level=4] [ref=e115]
+              - list [ref=e116]:
+                - listitem [ref=e117]:
+                  - link "My account" [ref=e118] [cursor=pointer]:
+                    - /url: /profile
+                - listitem [ref=e119]:
+                  - link "Contact us" [ref=e120] [cursor=pointer]:
+                    - /url: /contact
+                - listitem [ref=e121]:
+                  - link "Delivery information" [ref=e122] [cursor=pointer]:
+                    - /url: /delivery-information
+                - listitem [ref=e123]:
+                  - link "Returns" [ref=e124] [cursor=pointer]:
+                    - /url: /returns
+                - listitem [ref=e125]:
+                  - link "Sitemap" [ref=e126] [cursor=pointer]:
+                    - /url: /sitemap-page
+            - generic [ref=e127]:
+              - heading "Information" [level=4] [ref=e128]
+              - list [ref=e129]:
+                - listitem [ref=e130]:
+                  - link "Privacy policy" [ref=e131] [cursor=pointer]:
+                    - /url: /privacy-policy
+                - listitem [ref=e132]:
+                  - link "Terms & conditions" [ref=e133] [cursor=pointer]:
+                    - /url: /terms-of-use
+                - listitem [ref=e134]:
+                  - link "Jeko policies" [ref=e135] [cursor=pointer]:
+                    - /url: /pure-policies
+                - listitem [ref=e136]:
+                  - link "Site security" [ref=e137] [cursor=pointer]:
+                    - /url: /site-security
+                - listitem [ref=e138]:
+                  - link "Cookie policy" [ref=e139] [cursor=pointer]:
+                    - /url: /cookie-policy
+        - generic [ref=e140]:
+          - generic [ref=e142]: JEKO
+          - paragraph [ref=e143]: © Jeko 2020-2026
+  - generic [ref=e144]:
+    - generic [ref=e145]:
+      - paragraph [ref=e146]: Bow Wow! 🐾
+      - paragraph [ref=e147]: Find a friend for your pup!
+    - button "Find pet matches" [ref=e149] [cursor=pointer]:
+      - img [ref=e150]
+  - alert [ref=e170]

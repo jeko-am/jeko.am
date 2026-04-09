@@ -117,7 +117,7 @@ function MatchModal({ myPet, theirPet, onMessage, onKeepSwiping }: {
       <div className="absolute inset-0 bg-black/70 backdrop-blur-md" onClick={onKeepSwiping}/>
       <ConfettiOverlay/>
       <div className="relative z-10 bg-white rounded-3xl p-8 max-w-md w-full text-center shadow-2xl" style={{animation:"fade-in-up 0.5s ease-out"}}>
-        <h2 className="font-bold text-3xl text-emerald-500 mb-2" style={{animation:"pulse-match 1.5s ease-in-out infinite"}}>
+        <h2 className="font-medium text-3xl text-emerald-500 mb-2 tracking-wide" style={{animation:"pulse-match 1.5s ease-in-out infinite"}}>
           It&apos;s a Match! 🎉
         </h2>
         <p className="text-gray-500 mb-6">You and {theirPet.pet_name} like each other!</p>
@@ -128,7 +128,7 @@ function MatchModal({ myPet, theirPet, onMessage, onKeepSwiping }: {
                 <Image src={(myPet.profile_photo_url||myPet.avatar_url)!} alt={myPet.pet_name||"My pet"} width={96} height={96} className="w-full h-full object-cover" unoptimized/>
               ) : (<div className="w-full h-full flex items-center justify-center"><PawIcon size={40}/></div>)}
             </div>
-            <span className="text-sm font-semibold text-gray-700 mt-2">{myPet?.pet_name||"Your pet"}</span>
+            <span className="text-sm font-medium text-gray-700 mt-2 tracking-wide">{myPet?.pet_name||"Your pet"}</span>
           </div>
           <div className="text-3xl" style={{animation:"pulse-match 1s ease-in-out infinite"}}>❤️</div>
           <div className="flex flex-col items-center">
@@ -137,14 +137,14 @@ function MatchModal({ myPet, theirPet, onMessage, onKeepSwiping }: {
                 <Image src={(theirPet.profile_photo_url||theirPet.avatar_url)!} alt={theirPet.pet_name||"Their pet"} width={96} height={96} className="w-full h-full object-cover" unoptimized/>
               ) : (<div className="w-full h-full flex items-center justify-center"><PawIcon size={40}/></div>)}
             </div>
-            <span className="text-sm font-semibold text-gray-700 mt-2">{theirPet.pet_name}</span>
+            <span className="text-sm font-medium text-gray-700 mt-2 tracking-wide">{theirPet.pet_name}</span>
           </div>
         </div>
         <div className="flex flex-col gap-3">
-          <button onClick={onMessage} className="w-full bg-emerald-500 text-white font-bold text-lg py-3 rounded-xl hover:bg-emerald-600 transition-colors shadow-md">
+          <button onClick={onMessage} className="w-full bg-emerald-500 text-white font-medium text-lg py-3 rounded-xl hover:bg-emerald-600 transition-colors shadow-md tracking-wide">
             Send a Message
           </button>
-          <button onClick={onKeepSwiping} className="w-full bg-gray-100 text-gray-700 font-semibold text-lg py-3 rounded-xl hover:bg-gray-200 transition-colors">
+          <button onClick={onKeepSwiping} className="w-full bg-gray-100 text-gray-700 font-medium text-lg py-3 rounded-xl hover:bg-gray-200 transition-colors tracking-wide">
             Keep Swiping
           </button>
         </div>
@@ -262,7 +262,7 @@ const SwipeCard = memo(function SwipeCard({ candidate, isTop, onSwipe, onLove: _
           <div className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-white via-white/60 to-transparent z-10"/>
         </div>
         <div className="px-5 pt-1 pb-1">
-          <h3 className="font-bold text-xl sm:text-2xl text-gray-900 text-center">{candidate.pet_name||candidate.breed}</h3>
+          <h3 className="font-medium text-xl sm:text-2xl text-gray-900 text-center tracking-wide">{candidate.pet_name||candidate.breed}</h3>
           <p className="text-gray-400 text-sm text-center">{candidate.breed}</p>
           <div className="flex items-center justify-center gap-4 mt-1 text-gray-500 text-sm flex-wrap">
             <span className="inline-flex items-center gap-1">
@@ -309,12 +309,37 @@ function NotLoggedInCTA() {
     <div className="flex-1 flex items-center justify-center px-4 py-12">
       <div className="bg-white rounded-3xl shadow-xl p-8 max-w-md w-full text-center">
         <div className="w-20 h-20 mx-auto mb-6 bg-emerald-100 rounded-full flex items-center justify-center text-4xl">🐾</div>
-        <h2 className="font-bold text-2xl sm:text-3xl text-gray-900 mb-4">Find Playmates for Your Pup</h2>
+        <h2 className="font-medium text-2xl sm:text-3xl text-gray-900 mb-4 tracking-wide">Find Playmates for Your Pup</h2>
         <p className="text-gray-500 mb-8 leading-relaxed">Swipe through local pets, match with compatible playmates, and set up the perfect date!</p>
         <div className="flex flex-col sm:flex-row gap-3">
-          <Link href="/auth/login" className="flex-1 bg-emerald-500 text-white font-bold text-lg py-3 rounded-xl hover:bg-emerald-600 transition-colors text-center">Log In</Link>
-          <Link href="/auth/signup" className="flex-1 bg-gray-900 text-white font-bold text-lg py-3 rounded-xl hover:bg-gray-800 transition-colors text-center">Sign Up</Link>
+          <Link href="/auth/login" className="flex-1 bg-emerald-500 text-white font-medium text-lg py-3 rounded-xl hover:bg-emerald-600 transition-colors text-center tracking-wide">Log In</Link>
+          <Link href="/auth/signup" className="flex-1 bg-gray-900 text-white font-medium text-lg py-3 rounded-xl hover:bg-gray-800 transition-colors text-center tracking-wide">Sign Up</Link>
         </div>
+      </div>
+    </div>
+  );
+}
+
+function NotEnoughPhotosCTA({ photoCount }: { photoCount: number }) {
+  return (
+    <div className="flex-1 flex items-center justify-center px-4 py-12">
+      <div className="bg-white rounded-3xl shadow-xl p-8 max-w-md w-full text-center">
+        <div className="w-20 h-20 mx-auto mb-6 bg-amber-100 rounded-full flex items-center justify-center text-4xl">📸</div>
+        <h2 className="font-medium text-2xl sm:text-3xl text-gray-900 mb-3 tracking-wide">Add More Photos First</h2>
+        <p className="text-gray-500 mb-4 leading-relaxed">
+          You need at least <strong>4 swipe photos</strong> before you can start matching. This helps other pet owners see your pet from multiple angles!
+        </p>
+        <div className="flex items-center justify-center gap-2 mb-8">
+          {Array.from({ length: 4 }).map((_, i) => (
+            <div key={i} className={`w-10 h-10 rounded-full flex items-center justify-center text-lg font-medium border-2 ${i < photoCount ? "bg-emerald-100 border-emerald-400 text-emerald-600" : "bg-gray-100 border-gray-300 text-gray-400"}`}>
+              {i < photoCount ? "✓" : i + 1}
+            </div>
+          ))}
+        </div>
+        <p className="text-sm text-gray-400 mb-6">{photoCount}/4 photos added</p>
+        <Link href="/profile" className="inline-block w-full bg-emerald-500 text-white font-medium text-lg py-3 rounded-xl hover:bg-emerald-600 transition-colors tracking-wide">
+          Upload Photos in Profile →
+        </Link>
       </div>
     </div>
   );
@@ -325,9 +350,9 @@ function NoPetProfileCTA() {
     <div className="flex-1 flex items-center justify-center px-4 py-12">
       <div className="bg-white rounded-3xl shadow-xl p-8 max-w-md w-full text-center">
         <div className="w-20 h-20 mx-auto mb-6 bg-amber-100 rounded-full flex items-center justify-center text-4xl">🐶</div>
-        <h2 className="font-bold text-2xl sm:text-3xl text-gray-900 mb-4">Complete Your Pet Profile</h2>
+        <h2 className="font-medium text-2xl sm:text-3xl text-gray-900 mb-4 tracking-wide">Complete Your Pet Profile</h2>
         <p className="text-gray-500 mb-8 leading-relaxed">Before swiping, add photos and details about your pet. Go to your profile to upload swipe photos!</p>
-        <Link href="/profile" className="inline-block bg-emerald-500 text-white font-bold text-lg px-8 py-3 rounded-xl hover:bg-emerald-600 transition-colors">Set Up Profile</Link>
+        <Link href="/profile" className="inline-block bg-emerald-500 text-white font-medium text-lg px-8 py-3 rounded-xl hover:bg-emerald-600 transition-colors tracking-wide">Set Up Profile</Link>
       </div>
     </div>
   );
@@ -338,9 +363,9 @@ function EmptyState() {
     <div className="flex-1 flex items-center justify-center px-4 py-12">
       <div className="bg-white rounded-3xl shadow-xl p-8 max-w-md w-full text-center">
         <div className="w-20 h-20 mx-auto mb-6 bg-gray-100 rounded-full flex items-center justify-center text-4xl">🐾</div>
-        <h2 className="font-bold text-2xl sm:text-3xl text-gray-900 mb-4">No More Pets Nearby!</h2>
+        <h2 className="font-medium text-2xl sm:text-3xl text-gray-900 mb-4 tracking-wide">No More Pets Nearby!</h2>
         <p className="text-gray-500 mb-8 leading-relaxed">You&apos;ve seen all available pets. Check back later for new friends!</p>
-        <Link href="/community" className="inline-block bg-emerald-500 text-white font-bold text-lg px-8 py-3 rounded-xl hover:bg-emerald-600 transition-colors">Explore Community</Link>
+        <Link href="/community" className="inline-block bg-emerald-500 text-white font-medium text-lg px-8 py-3 rounded-xl hover:bg-emerald-600 transition-colors tracking-wide">Explore Community</Link>
       </div>
     </div>
   );
@@ -350,6 +375,7 @@ export default function SwipePage() {
   const { user, loading: authLoading } = useAuth();
   const [myPetProfile, setMyPetProfile] = useState<PetCandidate|null>(null);
   const [hasProfile, setHasProfile] = useState<boolean|null>(null);
+  const [photoCount, setPhotoCount] = useState<number|null>(null);
   const [candidates, setCandidates] = useState<PetCandidate[]>([]);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [loadingCandidates, setLoadingCandidates] = useState(true);
@@ -364,8 +390,16 @@ export default function SwipePage() {
     if(!user) return;
     (async()=>{
       const {data}=await supabase.from("pet_profiles").select("*").eq("user_id",user.id).limit(1).maybeSingle();
-      if(data){setMyPetProfile(data as PetCandidate);setHasProfile(true);}
-      else{setHasProfile(false);}
+      if(data){
+        setMyPetProfile(data as PetCandidate);
+        setHasProfile(true);
+        // Check swipe photo count
+        const {count}=await supabase.from("pet_photos").select("*",{count:"exact",head:true}).eq("user_id",user.id);
+        setPhotoCount(count??0);
+      } else {
+        setHasProfile(false);
+        setPhotoCount(0);
+      }
     })();
   },[user]);
 
@@ -385,17 +419,61 @@ export default function SwipePage() {
     loadingMoreRef.current=true;
     if(!append) setLoadingCandidates(true);
     try{
-      const {data:swipedRows}=await supabase.from("swipe_actions").select("swiped_id").eq("swiper_id",user.id);
-      const swipedIds=(swipedRows||[]).map(r=>r.swiped_id);
-      swipedIds.push(user.id);
-      const allCandidates:PetCandidate[]=[];
-      const {data:pass1}=await supabase.from("pet_profiles").select("*").not("user_id","in",`(${swipedIds.join(",")})`).eq("looking_for_mate",true).limit(BATCH_SIZE*2);
-      if(pass1) allCandidates.push(...(pass1 as PetCandidate[]));
-      if(allCandidates.length<BATCH_SIZE){
-        const excludeIds=[...swipedIds,...allCandidates.map(c=>c.user_id)];
-        const {data:pass2}=await supabase.from("pet_profiles").select("*").not("user_id","in",`(${excludeIds.join(",")})`).limit(BATCH_SIZE);
-        if(pass2) allCandidates.push(...(pass2 as PetCandidate[]));
+      // Fetch user's matching preferences
+      const {data:prefs}=await supabase.from("matching_preferences").select("*").eq("user_id",user.id).maybeSingle();
+
+      // Build exclude set based on preferences
+      const {data:swipedRows}=await supabase.from("swipe_actions").select("swiped_id,action").eq("swiper_id",user.id);
+      const excludeSet=new Set<string>([user.id]);
+      for(const row of swipedRows||[]){
+        const exSeen=prefs?.exclude_already_seen??true;
+        const exLiked=prefs?.exclude_already_liked??false;
+        const exDisliked=prefs?.exclude_already_disliked??true;
+        if(exSeen||(exLiked&&row.action==="like")||(exDisliked&&row.action==="pass")){
+          excludeSet.add(row.swiped_id);
+        }
       }
+      const excludedIds=Array.from(excludeSet);
+
+      // Build candidate query with preference filters
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      let query:any=supabase.from("pet_profiles").select("*").not("user_id","in",`(${excludedIds.join(",")})`);
+
+      // "What are you looking for?" — if ONLY mate is selected, filter to looking_for_mate=true
+      const wantsPlaymates=prefs?.looking_for_playmates??true;
+      const wantsMate=prefs?.looking_for_mate??false;
+      const wantsWalking=prefs?.looking_for_walking_buddies??false;
+      if(wantsMate && !wantsPlaymates && !wantsWalking){
+        query=query.eq("looking_for_mate",true);
+      }
+
+      // Gender filter
+      if((prefs?.preferred_genders||[]).length>0){
+        query=query.in("gender",prefs!.preferred_genders);
+      }
+
+      // Age range filter (only apply if non-default)
+      const ageMin=prefs?.preferred_age_min??0;
+      const ageMax=prefs?.preferred_age_max??20;
+      if(ageMin>0) query=query.gte("dog_age_years",ageMin);
+      if(ageMax<20) query=query.lte("dog_age_years",ageMax);
+
+      // Weight range filter (only apply if non-default)
+      const wMin=prefs?.preferred_weight_min??0;
+      const wMax=prefs?.preferred_weight_max??100;
+      if(wMin>0) query=query.gte("weight_kg",wMin);
+      if(wMax<100) query=query.lte("weight_kg",wMax);
+
+      const {data:fetched}=await query.limit(BATCH_SIZE*3);
+      let allCandidates:PetCandidate[]=(fetched||[]) as PetCandidate[];
+
+      // Breed filter client-side (array match)
+      if((prefs?.preferred_breeds||[]).length>0){
+        const preferredNorm=prefs!.preferred_breeds!.map((b:string)=>b.toLowerCase());
+        allCandidates=allCandidates.filter(c=>!c.breed_normalized||preferredNorm.includes(c.breed_normalized));
+      }
+
+      // Sort: same city first, then same breed, then random
       const myCity=myPetProfile?.city_normalized||"";
       const myBreed=myPetProfile?.breed_normalized||"";
       allCandidates.sort((a,b)=>{
@@ -407,6 +485,7 @@ export default function SwipePage() {
         if(ab2!==bb2) return ab2-bb2;
         return Math.random()-0.5;
       });
+
       const batch=allCandidates.slice(0,BATCH_SIZE);
       if(batch.length>0){
         const userIds=batch.map(c=>c.user_id);
@@ -477,7 +556,7 @@ export default function SwipePage() {
       <div className="min-h-screen flex flex-col bg-gray-50 pt-[64px] lg:pt-[80px]">
         <Header/>
 
-        {!authLoading && user && hasProfile===true && (
+        {!authLoading && user && hasProfile===true && photoCount!==null && photoCount>=4 && (
           <div className="sticky top-[64px] lg:top-[80px] z-30 bg-white/90 backdrop-blur-md border-b border-gray-100 shadow-sm">
             <div className="max-w-lg mx-auto flex items-center justify-between px-4 py-3">
               <Link href="/profile" className="flex items-center gap-2 text-gray-600 hover:text-gray-900 transition-colors">
@@ -487,9 +566,9 @@ export default function SwipePage() {
                 <span className="text-sm font-medium">Profile</span>
               </Link>
               <div className="flex items-center gap-3 text-sm">
-                <span className="flex items-center gap-1 text-gray-500"><span>❤️</span><span className="font-semibold text-gray-700">{likesToday}</span></span>
+                <span className="flex items-center gap-1 text-gray-500"><span>❤️</span><span className="font-medium text-gray-700 tracking-wide">{likesToday}</span></span>
                 <span className="w-px h-4 bg-gray-200"/>
-                <span className="flex items-center gap-1 text-gray-500"><span>🎯</span><span className="font-semibold text-gray-700">{matchCount}</span></span>
+                <span className="flex items-center gap-1 text-gray-500"><span>🎯</span><span className="font-medium text-gray-700 tracking-wide">{matchCount}</span></span>
               </div>
               <Link href="/matches" className="relative flex items-center gap-2 text-gray-600 hover:text-gray-900 transition-colors">
                 <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
@@ -497,7 +576,7 @@ export default function SwipePage() {
                 </svg>
                 <span className="text-sm font-medium">Matches</span>
                 {matchCount>0 && (
-                  <span className="absolute -top-1 -right-2 w-5 h-5 bg-red-500 text-white text-[10px] font-bold rounded-full flex items-center justify-center">{matchCount>9?"9+":matchCount}</span>
+                  <span className="absolute -top-1 -right-2 w-5 h-5 bg-red-500 text-white text-[10px] font-medium rounded-full flex items-center justify-center tracking-wide">{matchCount>9?"9+":matchCount}</span>
                 )}
               </Link>
             </div>
@@ -512,13 +591,14 @@ export default function SwipePage() {
 
         {!authLoading && !user && <NotLoggedInCTA/>}
         {!authLoading && user && hasProfile===false && <NoPetProfileCTA/>}
-        {!authLoading && user && hasProfile===null && (
+        {!authLoading && user && hasProfile===true && photoCount!==null && photoCount<4 && <NotEnoughPhotosCTA photoCount={photoCount}/>}
+        {!authLoading && user && (hasProfile===null || (hasProfile===true && photoCount===null)) && (
           <div className="flex-1 flex items-center justify-center">
             <div className="w-10 h-10 border-4 border-emerald-400 border-t-transparent rounded-full animate-spin"/>
           </div>
         )}
 
-        {!authLoading && user && hasProfile===true && (
+        {!authLoading && user && hasProfile===true && photoCount!==null && photoCount>=4 && (
           <div className="flex-1 flex flex-col items-center justify-center px-4 py-4 sm:py-6">
             {loadingCandidates && candidates.length===0 && (
               <div className="flex-1 flex items-center justify-center">

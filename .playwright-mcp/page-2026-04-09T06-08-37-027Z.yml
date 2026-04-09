@@ -1,0 +1,145 @@
+- generic [active] [ref=e1]:
+  - banner [ref=e497]:
+    - generic [ref=e499]:
+      - link "JEKO" [ref=e500] [cursor=pointer]:
+        - /url: /
+        - generic [ref=e501]: JEKO
+      - navigation [ref=e502]:
+        - link "About" [ref=e504] [cursor=pointer]:
+          - /url: /about
+          - text: About
+          - img [ref=e505]
+        - link "Community" [ref=e508] [cursor=pointer]:
+          - /url: /community
+          - text: Community
+          - img [ref=e509]
+        - link "Shop" [ref=e512] [cursor=pointer]:
+          - /url: /products
+        - link "Reviews" [ref=e514] [cursor=pointer]:
+          - /url: /reviews
+        - link "Health & breeds" [ref=e516] [cursor=pointer]:
+          - /url: /benefits
+          - text: Health & breeds
+          - img [ref=e517]
+      - generic [ref=e519]:
+        - button "Shopping cart" [ref=e520] [cursor=pointer]:
+          - img [ref=e521]
+        - link "Help" [ref=e525] [cursor=pointer]:
+          - /url: /contact
+        - generic [ref=e526]:
+          - link "Profile" [ref=e527] [cursor=pointer]:
+            - /url: /profile
+            - img [ref=e528]
+            - text: Profile
+          - button "Logout" [ref=e530] [cursor=pointer]:
+            - img [ref=e531]
+            - text: Logout
+  - main [ref=e533]:
+    - generic [ref=e534]:
+      - generic [ref=e535]:
+        - heading "Community" [level=1] [ref=e536]
+        - paragraph [ref=e537]: Share moments, connect with fellow pet parents, and celebrate your furry friends.
+      - generic [ref=e539]:
+        - generic [ref=e540]:
+          - generic [ref=e541]:
+            - generic [ref=e542]: A
+            - paragraph [ref=e545]: Anonymous
+          - textbox "Share something about your pet..." [ref=e546]
+          - generic [ref=e548]: 0/500
+        - generic [ref=e549]:
+          - generic [ref=e551] [cursor=pointer]:
+            - img [ref=e552]
+            - text: Add photo
+          - button "Post" [disabled] [ref=e556]
+      - generic [ref=e558]:
+        - button "All Posts" [ref=e559] [cursor=pointer]: All Posts
+        - button "Following" [ref=e561] [cursor=pointer]
+        - button "Trending" [ref=e562] [cursor=pointer]
+  - contentinfo [ref=e634]:
+    - generic [ref=e635]:
+      - generic [ref=e636]:
+        - generic [ref=e637]:
+          - heading "Join our VIP list" [level=4] [ref=e638]
+          - paragraph [ref=e639]: Be the first to hear about new product launches, exclusive competitions and helpful dog content.
+          - generic [ref=e640]:
+            - textbox "Enter your email address" [ref=e641]
+            - button "Sign up" [ref=e642] [cursor=pointer]
+          - heading "Follow us on social media" [level=4] [ref=e643]
+          - generic [ref=e644]:
+            - link "Instagram" [ref=e645] [cursor=pointer]:
+              - /url: https://www.instagram.com/purepetfood
+              - img "Instagram" [ref=e646]
+            - link "Facebook" [ref=e647] [cursor=pointer]:
+              - /url: https://www.facebook.com/purepetfood
+              - img "Facebook" [ref=e648]
+            - link [ref=e649] [cursor=pointer]:
+              - /url: https://www.tiktok.com/@purepetfood
+              - img [ref=e650]
+        - generic [ref=e652]:
+          - generic [ref=e653]:
+            - heading "Jeko" [level=4] [ref=e654]
+            - list [ref=e655]:
+              - listitem [ref=e656]:
+                - link "Our story" [ref=e657] [cursor=pointer]:
+                  - /url: /about
+              - listitem [ref=e658]:
+                - link "Reviews" [ref=e659] [cursor=pointer]:
+                  - /url: /reviews
+              - listitem [ref=e660]:
+                - link "Recipes" [ref=e661] [cursor=pointer]:
+                  - /url: /recipes
+              - listitem [ref=e662]:
+                - link "Beyond the bowl" [ref=e663] [cursor=pointer]:
+                  - /url: /beyond-the-bowl
+              - listitem [ref=e664]:
+                - link "Shop" [ref=e665] [cursor=pointer]:
+                  - /url: /products
+              - listitem [ref=e666]:
+                - link "Community" [ref=e667] [cursor=pointer]:
+                  - /url: /community
+          - generic [ref=e668]:
+            - heading "Help" [level=4] [ref=e669]
+            - list [ref=e670]:
+              - listitem [ref=e671]:
+                - link "My account" [ref=e672] [cursor=pointer]:
+                  - /url: /profile
+              - listitem [ref=e673]:
+                - link "Contact us" [ref=e674] [cursor=pointer]:
+                  - /url: /contact
+              - listitem [ref=e675]:
+                - link "Delivery information" [ref=e676] [cursor=pointer]:
+                  - /url: /delivery-information
+              - listitem [ref=e677]:
+                - link "Returns" [ref=e678] [cursor=pointer]:
+                  - /url: /returns
+              - listitem [ref=e679]:
+                - link "Sitemap" [ref=e680] [cursor=pointer]:
+                  - /url: /sitemap-page
+          - generic [ref=e681]:
+            - heading "Information" [level=4] [ref=e682]
+            - list [ref=e683]:
+              - listitem [ref=e684]:
+                - link "Privacy policy" [ref=e685] [cursor=pointer]:
+                  - /url: /privacy-policy
+              - listitem [ref=e686]:
+                - link "Terms & conditions" [ref=e687] [cursor=pointer]:
+                  - /url: /terms-of-use
+              - listitem [ref=e688]:
+                - link "Jeko policies" [ref=e689] [cursor=pointer]:
+                  - /url: /pure-policies
+              - listitem [ref=e690]:
+                - link "Site security" [ref=e691] [cursor=pointer]:
+                  - /url: /site-security
+              - listitem [ref=e692]:
+                - link "Cookie policy" [ref=e693] [cursor=pointer]:
+                  - /url: /cookie-policy
+      - generic [ref=e694]:
+        - generic [ref=e696]: JEKO
+        - paragraph [ref=e697]: © Jeko 2020-2026
+  - generic [ref=e47]:
+    - generic [ref=e48]:
+      - paragraph [ref=e49]: Bow Wow! 🐾
+      - paragraph [ref=e50]: Find a friend for your pup!
+    - button "Find pet matches" [ref=e52] [cursor=pointer]:
+      - img [ref=e53]
+  - alert [ref=e73]

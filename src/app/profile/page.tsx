@@ -16,6 +16,7 @@ import MatchingPreferences from "@/components/MatchingPreferences";
 interface UserProfile {
   id: string;
   email: string;
+  full_name: string | null;
   display_name: string | null;
   bio: string | null;
   city: string | null;
@@ -29,7 +30,7 @@ interface PetProfile {
   user_id: string;
   pet_name: string;
   breed: string | null;
-  age_years: number | null;
+  dog_age_years: number | null;
   weight_kg: number | null;
   gender: string | null;
   bio: string | null;
@@ -46,7 +47,7 @@ interface PetProfile {
 /* ─── Profile Page Component ─────────────────────────────────────────────── */
 
 export default function ProfilePage() {
-  const { user } = useAuth();
+  const { user, loading: authLoading } = useAuth();
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [activeTab, setActiveTab] = useState<"profile" | "pet" | "gallery" | "preferences">("profile");
@@ -81,10 +82,13 @@ export default function ProfilePage() {
   const [uploadingPetPhoto] = useState(false);
 
   useEffect(() => {
+    if (authLoading) return;
     if (user) {
       fetchProfiles();
+    } else {
+      setLoading(false);
     }
-  }, [user]);
+  }, [user, authLoading]);
 
   const fetchProfiles = async () => {
     try {
@@ -99,7 +103,7 @@ export default function ProfilePage() {
 
       if (userData) {
         setUserProfile(userData);
-        setDisplayName(userData.display_name || "");
+        setDisplayName(userData.display_name || userData.full_name || "");
         setBio(userData.bio || "");
         setCity(userData.city || "");
         setCountry(userData.country || "");
@@ -255,12 +259,12 @@ export default function ProfilePage() {
   return (
     <div className="min-h-screen bg-gray-50">
       <Header />
-      
-      <main className="max-w-4xl mx-auto px-4 py-8">
+
+      <main className="max-w-4xl mx-auto px-4 sm:px-6 pt-24 lg:pt-28 pb-16">
         <div className="bg-white rounded-xl shadow-sm border border-gray-200">
           {/* Header */}
           <div className="border-b border-gray-200 p-6">
-            <h1 className="text-2xl font-bold text-gray-900">My Profile</h1>
+            <h1 className="text-2xl font-medium text-gray-900 tracking-wide">My Profile</h1>
             <p className="text-gray-600 mt-1">Manage your personal information and pet profile</p>
           </div>
 
@@ -284,12 +288,13 @@ export default function ProfilePage() {
           </div>
 
           {/* Tab Content */}
-          <div className="p-6">
+          <div className="p-6 sm:p-8">
             {activeTab === "profile" && (
               <div className="space-y-6">
                 {/* Avatar Section */}
-                <div className="flex items-center space-x-6">
+                <div className="flex items-center gap-6 pb-2">
                   <ImageUpload
+                    inputId="avatar-upload"
                     currentImage={userProfile?.avatar_url}
                     onImageChange={async (url) => {
                       if (url) {
@@ -316,7 +321,7 @@ export default function ProfilePage() {
                     alt="Profile"
                   />
                   <div>
-                    <h3 className="text-lg font-medium text-gray-900">Profile Photo</h3>
+                    <h3 className="text-lg font-medium text-gray-900 tracking-wide">Profile Photo</h3>
                     <p className="text-sm text-gray-500">Upload a photo to help others recognize you</p>
                   </div>
                 </div>
@@ -387,8 +392,9 @@ export default function ProfilePage() {
             {activeTab === "pet" && (
               <div className="space-y-6">
                 {/* Pet Photo */}
-                <div className="flex items-center space-x-6">
+                <div className="flex items-center gap-6 pb-2">
                   <ImageUpload
+                    inputId="pet-photo-upload"
                     currentImage={petProfile?.profile_photo_url}
                     onImageChange={async (url) => {
                       if (url) {
@@ -415,7 +421,7 @@ export default function ProfilePage() {
                     alt="Pet"
                   />
                   <div>
-                    <h3 className="text-lg font-medium text-gray-900">Pet Photo</h3>
+                    <h3 className="text-lg font-medium text-gray-900 tracking-wide">Pet Photo</h3>
                     <p className="text-sm text-gray-500">Add a photo of your furry friend</p>
                   </div>
                 </div>
@@ -614,7 +620,7 @@ export default function ProfilePage() {
             {activeTab === "gallery" && (
               <div className="space-y-4">
                 <div className="bg-emerald-50 border border-emerald-200 rounded-xl p-4">
-                  <h3 className="font-semibold text-emerald-800 mb-1">Swipe Card Photos</h3>
+                  <h3 className="font-medium text-emerald-800 mb-1 tracking-wide">Swipe Card Photos</h3>
                   <p className="text-sm text-emerald-600">Upload up to 6 photos that will appear on your pet&apos;s swipe card. The primary photo shows first.</p>
                 </div>
                 <PetPhotoGallery
@@ -626,7 +632,7 @@ export default function ProfilePage() {
             {activeTab === "preferences" && (
               <div className="space-y-4">
                 <div className="bg-amber-50 border border-amber-200 rounded-xl p-4">
-                  <h3 className="font-semibold text-amber-800 mb-1">Matching Preferences</h3>
+                  <h3 className="font-medium text-amber-800 mb-1 tracking-wide">Matching Preferences</h3>
                   <p className="text-sm text-amber-600">Set your preferences to find the best matches. These filters help us show you more relevant pets.</p>
                 </div>
                 <MatchingPreferences

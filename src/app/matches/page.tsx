@@ -119,7 +119,7 @@ function AuthModal() {
           <div className="w-16 h-16 mx-auto mb-4 bg-gold/20 rounded-full flex items-center justify-center text-4xl">
             🐾
           </div>
-          <h2 className="font-rubik font-bold text-2xl text-deep-green mb-2">
+          <h2 className="font-medium text-2xl text-deep-green mb-2 tracking-wide">
             {mode === "login" ? "Log in to see matches" : "Sign up to get started"}
           </h2>
           <p className="text-deep-green/50 text-[15px]">
@@ -133,7 +133,7 @@ function AuthModal() {
         <div className="flex bg-off-white rounded-xl p-1 mb-6">
           <button
             onClick={() => { setMode("login"); setError(""); setSuccess(""); }}
-            className={`flex-1 py-2.5 rounded-lg text-sm font-rubik font-semibold transition-colors ${
+            className={`flex-1 py-2.5 rounded-lg text-sm font-medium transition-colors tracking-wide ${
               mode === "login"
                 ? "bg-white text-deep-green shadow-sm"
                 : "text-deep-green/50 hover:text-deep-green/70"
@@ -143,7 +143,7 @@ function AuthModal() {
           </button>
           <button
             onClick={() => { setMode("signup"); setError(""); setSuccess(""); }}
-            className={`flex-1 py-2.5 rounded-lg text-sm font-rubik font-semibold transition-colors ${
+            className={`flex-1 py-2.5 rounded-lg text-sm font-medium transition-colors tracking-wide ${
               mode === "signup"
                 ? "bg-white text-deep-green shadow-sm"
                 : "text-deep-green/50 hover:text-deep-green/70"
@@ -211,7 +211,7 @@ function AuthModal() {
           <button
             type="submit"
             disabled={loading}
-            className="w-full bg-gold text-deep-green font-rubik font-bold text-[16px] py-3.5 rounded-xl hover:bg-[#d99500] transition-colors disabled:opacity-50"
+            className="w-full bg-gold text-deep-green font-medium text-[16px] py-3.5 rounded-xl hover:bg-[#d99500] transition-colors disabled:opacity-50 tracking-wide"
           >
             {loading
               ? "Please wait..."
@@ -234,7 +234,7 @@ function EmptyState() {
         <div className="w-20 h-20 mx-auto mb-6 bg-off-white rounded-full flex items-center justify-center text-5xl">
           💔
         </div>
-        <h2 className="font-rubik font-bold text-2xl text-deep-green mb-4">
+        <h2 className="font-medium text-2xl text-deep-green mb-4 tracking-wide">
           No Matches Yet
         </h2>
         <p className="text-deep-green/60 mb-8 leading-relaxed">
@@ -243,7 +243,7 @@ function EmptyState() {
         </p>
         <Link
           href="/swipe"
-          className="inline-block bg-gold text-deep-green font-rubik font-bold text-lg px-8 py-3 rounded-xl hover:bg-[#d99500] transition-colors"
+          className="inline-block bg-gold text-deep-green font-medium text-lg px-8 py-3 rounded-xl hover:bg-[#d99500] transition-colors tracking-wide"
         >
           Start Swiping
         </Link>
@@ -273,14 +273,14 @@ function MatchCard({ match }: { match: MatchWithProfile }) {
         ) : (
           <div className="absolute inset-0 flex items-center justify-center">
             <div className="w-20 h-20 rounded-full bg-deep-green/10 flex items-center justify-center">
-              <span className="text-3xl font-rubik font-bold text-deep-green/40">
+              <span className="text-3xl font-medium text-deep-green/40 tracking-wide">
                 {petInitial(pet)}
               </span>
             </div>
           </div>
         )}
         {/* Match badge */}
-        <div className="absolute top-3 right-3 bg-white/90 backdrop-blur-sm rounded-full px-3 py-1 text-xs font-semibold text-deep-green flex items-center gap-1">
+        <div className="absolute top-3 right-3 bg-white/90 backdrop-blur-sm rounded-full px-3 py-1 text-xs font-medium text-deep-green flex items-center gap-1 tracking-wide">
           <span className="text-sm">🎉</span> Matched
         </div>
       </div>
@@ -289,7 +289,7 @@ function MatchCard({ match }: { match: MatchWithProfile }) {
       <div className="p-4">
         <div className="flex items-start justify-between mb-2">
           <div>
-            <h3 className="font-rubik font-bold text-lg text-deep-green">
+            <h3 className="font-medium text-lg text-deep-green tracking-wide">
               {pet?.pet_name || "Unknown"}
             </h3>
             <p className="text-sm text-deep-green/50">
@@ -331,7 +331,7 @@ function MatchCard({ match }: { match: MatchWithProfile }) {
           </span>
           <Link
             href={`/messages${match.conversation_id ? `?chat=${match.conversation_id}` : ""}`}
-            className="bg-gold text-deep-green font-rubik font-bold text-sm px-5 py-2 rounded-xl hover:bg-[#d99500] transition-colors flex items-center gap-1.5"
+            className="bg-gold text-deep-green font-medium text-sm px-5 py-2 rounded-xl hover:bg-[#d99500] transition-colors flex items-center gap-1.5 tracking-wide"
           >
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
               <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
@@ -450,7 +450,7 @@ export default function MatchesPage() {
                 >
                   Looking for a partner for your pet?
                 </h1>
-                <p className="text-white/80 text-lg md:text-xl font-rubik leading-relaxed mb-8">
+                <p className="text-white/80 text-lg md:text-xl font-medium leading-relaxed mb-8 tracking-wide">
                   Come join the community — connect with thousands of pet owners, find playmates, and make lifelong friendships for you and your furry friend.
                 </p>
                 <div className="flex flex-wrap justify-center gap-6 mb-8">
@@ -462,7 +462,7 @@ export default function MatchesPage() {
                   ].map((f) => (
                     <div key={f.label} className="flex items-center gap-2 bg-white/10 rounded-full px-5 py-2.5">
                       <span className="text-xl">{f.icon}</span>
-                      <span className="font-rubik font-semibold text-white text-[15px]">{f.label}</span>
+                      <span className="font-medium text-white text-[15px] tracking-wide">{f.label}</span>
                     </div>
                   ))}
                 </div>
@@ -476,7 +476,7 @@ export default function MatchesPage() {
           <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
             {/* Header */}
             <div className="mb-8 text-center">
-              <h1 className="font-rubik font-bold text-3xl md:text-4xl text-deep-green">
+              <h1 className="font-medium text-3xl md:text-4xl text-deep-green tracking-wide">
                 Your Matches
               </h1>
               <p className="text-deep-green/50 mt-2">
@@ -496,7 +496,7 @@ export default function MatchesPage() {
             <div className="text-center mt-10">
               <Link
                 href="/swipe"
-                className="inline-flex items-center gap-2 text-deep-green/60 hover:text-deep-green font-rubik font-medium transition-colors"
+                className="inline-flex items-center gap-2 text-deep-green/60 hover:text-deep-green font-medium transition-colors tracking-wide"
               >
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                   <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />

@@ -1,0 +1,3 @@
+[      77ms] [ERROR] Failed to load resource: the server responded with a status of 406 () @ https://dzhtpnskezkrtfinntbi.supabase.co/rest/v1/user_profiles?select=*&user_id=eq.a6d0eafb-10d8-46bb-9297-28cc0d8aa50d:0
+[     765ms] [INFO] %cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold @ webpack-internal:///(app-pages-browser)/./node_modules/next/dist/compiled/react-dom/cjs/react-dom.development.js:38559
+[    1663ms] [ERROR] Failed to load resource: the server responded with a status of 406 () @ https://dzhtpnskezkrtfinntbi.supabase.co/rest/v1/user_profiles?select=*&user_id=eq.a6d0eafb-10d8-46bb-9297-28cc0d8aa50d:0

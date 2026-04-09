@@ -1,0 +1,8 @@
+[     868ms] [INFO] %cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold @ webpack-internal:///(app-pages-browser)/./node_modules/next/dist/compiled/react-dom/cjs/react-dom.development.js:38559
+[  115362ms] [LOG] [Fast Refresh] rebuilding @ webpack-internal:///(app-pages-browser)/./node_modules/next/dist/client/components/react-dev-overlay/app/hot-reloader-client.js:186
+[  115393ms] [ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ http://localhost:55800/_next/static/webpack/83b66124b3a4ec13.webpack.hot-update.json:0
+[  116254ms] [INFO] %cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold @ webpack-internal:///(app-pages-browser)/./node_modules/next/dist/compiled/react-dom/cjs/react-dom.development.js:38559
+[  124113ms] [ERROR] Failed to load resource: the server responded with a status of 406 () @ https://dzhtpnskezkrtfinntbi.supabase.co/rest/v1/matching_preferences?select=*&user_id=eq.9700c85c-3b93-4ec6-8d29-c4874b7b7581&pet_profile_id=eq.34:0
+[  124522ms] [ERROR] Failed to load resource: the server responded with a status of 406 () @ https://dzhtpnskezkrtfinntbi.supabase.co/rest/v1/matching_preferences?select=*&user_id=eq.9700c85c-3b93-4ec6-8d29-c4874b7b7581&pet_profile_id=eq.34:0
+[  153886ms] [LOG] [Fast Refresh] rebuilding @ webpack-internal:///(app-pages-browser)/./node_modules/next/dist/client/components/react-dev-overlay/app/hot-reloader-client.js:186
+[  154270ms] [LOG] [Fast Refresh] done in 385ms @ webpack-internal:///(app-pages-browser)/./node_modules/next/dist/client/components/react-dev-overlay/app/hot-reloader-client.js:43

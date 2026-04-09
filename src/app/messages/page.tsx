@@ -138,7 +138,7 @@ function Avatar({
 
   return (
     <div
-      className="rounded-full flex-shrink-0 bg-deep-green flex items-center justify-center text-white font-rubik font-semibold"
+      className="rounded-full flex-shrink-0 bg-deep-green flex items-center justify-center text-white font-medium tracking-wide"
       style={{ width: size, height: size, fontSize: size * 0.4 }}
     >
       {getInitial(name)}
@@ -168,7 +168,7 @@ function LoginCTA() {
               <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
             </svg>
           </div>
-          <h2 className="font-rubik font-bold text-2xl text-deep-green mb-3">
+          <h2 className="font-medium text-2xl text-deep-green mb-3 tracking-wide">
             Sign in to view messages
           </h2>
           <p className="text-deep-green/60 mb-8 text-[15px] leading-relaxed">
@@ -177,7 +177,7 @@ function LoginCTA() {
           </p>
           <Link
             href="/auth/login"
-            className="inline-block bg-gold text-deep-green font-rubik font-semibold px-8 py-3 rounded-lg hover:bg-[#d99500] transition-colors text-[16px]"
+            className="inline-block bg-gold text-deep-green font-medium px-8 py-3 rounded-lg hover:bg-[#d99500] transition-colors text-[16px] tracking-wide"
           >
             Log in
           </Link>
@@ -225,7 +225,7 @@ function DesktopConversationItem({
       <div className="flex-1 min-w-0">
         <div className="flex items-center justify-between gap-2">
           <div className="flex items-center gap-2 min-w-0">
-            <span className="font-rubik font-semibold text-deep-green text-[15px] truncate">
+            <span className="font-medium text-deep-green text-[15px] truncate tracking-wide">
               {name}
             </span>
             {breed && (
@@ -243,7 +243,7 @@ function DesktopConversationItem({
             {convo.last_message_preview || "No messages yet"}
           </p>
           {convo.unreadCount > 0 && (
-            <span className="flex-shrink-0 bg-gold text-deep-green text-[11px] font-bold w-5 h-5 rounded-full flex items-center justify-center">
+            <span className="flex-shrink-0 bg-gold text-deep-green text-[11px] font-medium w-5 h-5 rounded-full flex items-center justify-center tracking-wide">
               {convo.unreadCount}
             </span>
           )}
@@ -273,7 +273,7 @@ function MobileConversationItem({
       <Avatar profile={profile} size={48} />
       <div className="flex-1 min-w-0">
         <div className="flex items-center justify-between gap-2">
-          <span className="font-rubik font-bold text-deep-green text-[15px] truncate">
+          <span className="font-medium text-deep-green text-[15px] truncate tracking-wide">
             {name}
           </span>
           <span className="text-[11px] text-deep-green/40 flex-shrink-0 whitespace-nowrap">
@@ -285,7 +285,7 @@ function MobileConversationItem({
             {convo.last_message_preview || "No messages yet"}
           </p>
           {convo.unreadCount > 0 && (
-            <span className="flex-shrink-0 bg-gold text-deep-green text-[11px] font-bold min-w-[20px] h-5 px-1.5 rounded-full flex items-center justify-center">
+            <span className="flex-shrink-0 bg-gold text-deep-green text-[11px] font-medium min-w-[20px] h-5 px-1.5 rounded-full flex items-center justify-center tracking-wide">
               {convo.unreadCount}
             </span>
           )}
@@ -678,7 +678,7 @@ function DesktopChatView({
       <div className="flex-shrink-0 bg-white border-b border-deep-green/10 px-6 py-4 flex items-center gap-4">
         <Avatar profile={profile} size={42} />
         <div className="min-w-0">
-          <h3 className="font-rubik font-semibold text-deep-green text-[16px] truncate">
+          <h3 className="font-medium text-deep-green text-[16px] truncate tracking-wide">
             {name}
           </h3>
           {profile?.breed && (
@@ -1081,7 +1081,7 @@ function MobileChatView({
         </button>
         <Avatar profile={profile} size={36} />
         <div className="flex-1 min-w-0">
-          <h3 className="font-rubik font-bold text-deep-green text-[15px] truncate">
+          <h3 className="font-medium text-deep-green text-[15px] truncate tracking-wide">
             {name}
           </h3>
           {profile?.breed && (
@@ -1417,18 +1417,18 @@ export default function MessagesPage() {
   /* ═══════════════════════════════════════════════════════════════════ */
 
   return (
-    <div className="min-h-screen bg-off-white flex flex-col font-rubik">
+    <div className="min-h-screen bg-off-white flex flex-col">
       <Header />
 
       <div className="flex-1 pt-[80px] pb-6 lg:pb-12 px-4 sm:px-6 lg:px-12">
         <div className="max-w-[1400px] mx-auto h-full">
           {/* Page Title - desktop only */}
           <div className="hidden lg:flex items-center gap-3 mb-6 mt-2">
-            <h1 className="font-rubik font-bold text-deep-green text-2xl">
+            <h1 className="font-medium text-deep-green text-2xl tracking-wide">
               Messages
             </h1>
             {totalUnread > 0 && (
-              <span className="bg-gold text-deep-green text-[12px] font-bold min-w-[22px] h-[22px] px-2 rounded-full flex items-center justify-center">
+              <span className="bg-gold text-deep-green text-[12px] font-medium min-w-[22px] h-[22px] px-2 rounded-full flex items-center justify-center tracking-wide">
                 {totalUnread}
               </span>
             )}
@@ -1469,7 +1469,7 @@ export default function MessagesPage() {
                     </p>
                     <Link
                       href="/swipe"
-                      className="inline-block bg-gold text-deep-green font-rubik font-semibold px-6 py-2.5 rounded-lg hover:bg-[#d99500] transition-colors text-[14px]"
+                      className="inline-block bg-gold text-deep-green font-medium px-6 py-2.5 rounded-lg hover:bg-[#d99500] transition-colors text-[14px] tracking-wide"
                     >
                       Find matches
                     </Link>
@@ -1515,7 +1515,7 @@ export default function MessagesPage() {
                         <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z" />
                       </svg>
                     </div>
-                    <p className="text-deep-green/40 text-[17px] font-rubik font-medium mb-2">
+                    <p className="text-deep-green/40 text-[17px] font-medium mb-2 tracking-wide">
                       Select a conversation
                     </p>
                     <p className="text-deep-green/30 text-[14px]">
@@ -1536,11 +1536,11 @@ export default function MessagesPage() {
                 <div className="flex-shrink-0 bg-white border-b border-deep-green/5 px-5 pt-4 pb-3">
                   <div className="flex items-center justify-between mb-4">
                     <div className="flex items-center gap-2.5">
-                      <h1 className="font-rubik font-bold text-deep-green text-[22px]">
+                      <h1 className="font-medium text-deep-green text-[22px] tracking-wide">
                         Messages
                       </h1>
                       {totalUnread > 0 && (
-                        <span className="bg-gold text-deep-green text-[12px] font-bold min-w-[22px] h-[22px] px-1.5 rounded-full flex items-center justify-center">
+                        <span className="bg-gold text-deep-green text-[12px] font-medium min-w-[22px] h-[22px] px-1.5 rounded-full flex items-center justify-center tracking-wide">
                           {totalUnread}
                         </span>
                       )}
@@ -1568,7 +1568,7 @@ export default function MessagesPage() {
                     <input
                       type="text"
                       placeholder="Search conversations..."
-                      className="w-full bg-off-white/60 border border-deep-green/8 rounded-xl pl-9 pr-4 py-2.5 text-[14px] text-deep-green placeholder-deep-green/30 outline-none focus:border-deep-green/15 transition-colors font-rubik"
+                      className="w-full bg-off-white/60 border border-deep-green/8 rounded-xl pl-9 pr-4 py-2.5 text-[14px] text-deep-green placeholder-deep-green/30 outline-none focus:border-deep-green/15 transition-colors"
                       readOnly
                     />
                   </div>
@@ -1604,7 +1604,7 @@ export default function MessagesPage() {
                         </p>
                         <Link
                           href="/swipe"
-                          className="inline-block bg-gold text-deep-green font-rubik font-semibold px-6 py-2.5 rounded-lg hover:bg-[#d99500] transition-colors text-[14px]"
+                          className="inline-block bg-gold text-deep-green font-medium px-6 py-2.5 rounded-lg hover:bg-[#d99500] transition-colors text-[14px] tracking-wide"
                         >
                           Find matches
                         </Link>

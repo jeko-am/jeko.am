@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useAuth } from "@/lib/auth";
 import { supabase } from "@/lib/supabase";
 import type { MatchingPreferences as MatchPrefsType } from "@/lib/matching-types";
@@ -50,7 +50,7 @@ export default function MatchingPreferences({ petProfileId, onPreferencesChange 
   }>({
     temperaments: ['Friendly', 'Energetic', 'Calm', 'Playful', 'Protective', 'Shy'],
     activityLevels: ['Low', 'Moderate', 'High', 'Very High'],
-    genders: ['Male', 'Female', 'Unknown'],
+    genders: ['Male', 'Female'],
     walkPreferences: ['Short walks', 'Long hikes', 'Off-lead runs', 'City strolls'],
     favoriteActivities: ['Fetch', 'Swimming', 'Agility', 'Socialising', 'Tug of war', 'Frisbee'],
   });
@@ -74,9 +74,22 @@ export default function MatchingPreferences({ petProfileId, onPreferencesChange 
     exclude_already_disliked: true,
   });
 
+  const [breedSearch, setBreedSearch] = useState("");
+  const [breedDropdownOpen, setBreedDropdownOpen] = useState(false);
+  const breedInputRef = useRef<HTMLInputElement>(null);
+
+  const filteredBreeds = breedSearch.trim().length > 0
+    ? COMMON_BREEDS.filter(b =>
+        b.toLowerCase().includes(breedSearch.toLowerCase()) &&
+        !(preferences.preferred_breeds || []).includes(b)
+      ).slice(0, 8)
+    : [];
+
   useEffect(() => {
     if (user && petProfileId) {
       fetchPreferences();
+    } else {
+      setLoading(false);
     }
   }, [user, petProfileId]);
 
@@ -124,7 +137,7 @@ export default function MatchingPreferences({ petProfileId, onPreferencesChange 
         .select("*")
         .eq("user_id", user?.id)
         .eq("pet_profile_id", petProfileId)
-        .single();
+        .maybeSingle();
 
       if (data) {
         setPreferences(data);
@@ -188,7 +201,7 @@ export default function MatchingPreferences({ petProfileId, onPreferencesChange 
     <div className="space-y-6">
       {/* Header */}
       <div>
-        <h3 className="text-lg font-semibold text-gray-900">Matching Preferences</h3>
+        <h3 className="text-lg font-medium text-gray-900 tracking-wide">Matching Preferences</h3>
         <p className="text-sm text-gray-600 mt-1">
           Set your preferences to find better matches for your pet
         </p>
@@ -276,18 +289,52 @@ export default function MatchingPreferences({ petProfileId, onPreferencesChange 
           {/* Breeds */}
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-2">Preferred Breeds</label>
-            <div className="grid grid-cols-2 gap-2 max-h-32 overflow-y-auto">
-              {COMMON_BREEDS.map(breed => (
-                <label key={breed} className="flex items-center text-sm">
-                  <input
-                    type="checkbox"
-                    checked={(preferences.preferred_breeds || []).includes(breed)}
-                    onChange={() => toggleArrayItem("preferred_breeds", breed)}
-                    className="mr-2 h-4 w-4 text-gold focus:ring-gold border-gray-300 rounded"
-                  />
-                  {breed}
-                </label>
-              ))}
+            {/* Selected breed tags */}
+            {(preferences.preferred_breeds || []).length > 0 && (
+              <div className="flex flex-wrap gap-2 mb-2">
+                {(preferences.preferred_breeds || []).map(breed => (
+                  <span key={breed} className="inline-flex items-center gap-1 bg-gold/20 border border-gold text-deep-green text-sm px-2.5 py-1 rounded-full">
+                    {breed}
+                    <button
+                      type="button"
+                      onClick={() => toggleArrayItem("preferred_breeds", breed)}
+                      className="text-deep-green/60 hover:text-red-500 transition-colors"
+                    >
+                      ×
+                    </button>
+                  </span>
+                ))}
+              </div>
+            )}
+            {/* Search input */}
+            <div className="relative">
+              <input
+                ref={breedInputRef}
+                type="text"
+                value={breedSearch}
+                onChange={e => { setBreedSearch(e.target.value); setBreedDropdownOpen(true); }}
+                onFocus={() => setBreedDropdownOpen(true)}
+                onBlur={() => setTimeout(() => setBreedDropdownOpen(false), 150)}
+                placeholder="Type to search breeds..."
+                className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-gold focus:border-transparent"
+              />
+              {breedDropdownOpen && filteredBreeds.length > 0 && (
+                <ul className="absolute z-10 w-full bg-white border border-gray-200 rounded-lg shadow-lg mt-1 max-h-48 overflow-y-auto">
+                  {filteredBreeds.map(breed => (
+                    <li
+                      key={breed}
+                      onMouseDown={() => {
+                        toggleArrayItem("preferred_breeds", breed);
+                        setBreedSearch("");
+                        breedInputRef.current?.focus();
+                      }}
+                      className="px-3 py-2 text-sm cursor-pointer hover:bg-gold/10 hover:text-deep-green"
+                    >
+                      {breed}
+                    </li>
+                  ))}
+                </ul>
+              )}
             </div>
           </div>
 

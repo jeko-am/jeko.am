@@ -110,7 +110,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         .select("role")
         .eq("user_id", userId)
         .eq("is_active", true)
-        .single();
+        .maybeSingle();
       setIsAdmin(!!data && ["super_admin", "admin", "editor"].includes(data.role));
     } catch {
       setIsAdmin(false);

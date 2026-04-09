@@ -10,6 +10,7 @@ interface ImageUploadProps {
   size?: "sm" | "md" | "lg";
   alt?: string;
   showPlaceholder?: boolean;
+  inputId?: string;
 }
 
 export default function ImageUpload({
@@ -20,7 +21,8 @@ export default function ImageUpload({
   className = "",
   size = "md",
   alt = "Upload",
-  showPlaceholder = true
+  showPlaceholder = true,
+  inputId = "file-input"
 }: ImageUploadProps) {
   const [dragActive, setDragActive] = useState(false);
 
@@ -100,7 +102,7 @@ export default function ImageUpload({
         onDrop={handleDrop}
         onDragOver={handleDragOver}
         onDragLeave={handleDragLeave}
-        onClick={() => document.getElementById('file-input')?.click()}
+        onClick={() => document.getElementById(inputId)?.click()}
       >
         {currentImage ? (
           <div className="relative w-full h-full">
@@ -150,7 +152,7 @@ export default function ImageUpload({
       </div>
       
       <input
-        id="file-input"
+        id={inputId}
         type="file"
         accept="image/*"
         onChange={handleFileInput}

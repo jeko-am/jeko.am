@@ -1,0 +1,32 @@
+- generic [ref=e1]:
+  - generic [ref=e2]:
+    - banner [ref=e4]:
+      - generic [ref=e5]:
+        - link "JEKO" [ref=e6] [cursor=pointer]:
+          - /url: /
+          - generic [ref=e7]:
+            - generic [ref=e8]: JEKO
+            - img [ref=e9]
+        - generic [ref=e15]:
+          - paragraph [ref=e16]:
+            - text: Already have an account?
+            - link "Log in" [ref=e17] [cursor=pointer]:
+              - /url: /login
+          - button [ref=e95] [cursor=pointer]:
+            - img [ref=e96]
+    - main [ref=e18]:
+      - generic [ref=e20]:
+        - generic [ref=e22]: Step 2 of 11
+        - paragraph [ref=e37]: ✨ Great start!
+        - generic [ref=e99]:
+          - heading "What's your dog's name?" [level=1] [ref=e100]
+          - paragraph [ref=e101]: We'll use this to personalise the experience
+          - textbox "e.g. Buddy, Luna, Max..." [active] [ref=e102]
+          - button "Continue" [ref=e103] [cursor=pointer]
+  - generic [ref=e68]:
+    - generic [ref=e69]:
+      - paragraph [ref=e70]: Bow Wow! 🐾
+      - paragraph [ref=e71]: Find a friend for your pup!
+    - button "Find pet matches" [ref=e73] [cursor=pointer]:
+      - img [ref=e74]
+  - alert [ref=e94]

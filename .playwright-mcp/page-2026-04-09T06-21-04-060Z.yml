@@ -1,0 +1,280 @@
+- generic [ref=e1]:
+  - generic [ref=e2]:
+    - banner [ref=e3]:
+      - generic [ref=e5]:
+        - link "JEKO" [ref=e6] [cursor=pointer]:
+          - /url: /
+          - generic [ref=e7]: JEKO
+        - navigation [ref=e8]:
+          - link "About" [ref=e10] [cursor=pointer]:
+            - /url: /about
+            - text: About
+            - img [ref=e11]
+          - link "Community" [ref=e14] [cursor=pointer]:
+            - /url: /community
+            - text: Community
+            - img [ref=e15]
+          - link "Shop" [ref=e18] [cursor=pointer]:
+            - /url: /products
+          - link "Reviews" [ref=e20] [cursor=pointer]:
+            - /url: /reviews
+          - link "Health & breeds" [ref=e22] [cursor=pointer]:
+            - /url: /benefits
+            - text: Health & breeds
+            - img [ref=e23]
+        - generic [ref=e25]:
+          - button "Shopping cart" [ref=e26] [cursor=pointer]:
+            - img [ref=e27]
+          - link "Help" [ref=e31] [cursor=pointer]:
+            - /url: /contact
+          - generic [ref=e32]:
+            - link "Profile" [ref=e33] [cursor=pointer]:
+              - /url: /profile
+              - img [ref=e34]
+              - text: Profile
+            - button "Logout" [ref=e36] [cursor=pointer]:
+              - img [ref=e37]
+              - text: Logout
+    - main [ref=e39]:
+      - generic [ref=e40]:
+        - generic [ref=e41]:
+          - heading "My Profile" [level=1] [ref=e42]
+          - paragraph [ref=e43]: Manage your personal information and pet profile
+        - generic [ref=e45]:
+          - button "Your Profile" [ref=e46] [cursor=pointer]
+          - button "Pet Profile" [ref=e47] [cursor=pointer]
+          - button "Swipe Photos" [ref=e48] [cursor=pointer]
+          - button "Match Preferences" [active] [ref=e49] [cursor=pointer]
+        - generic [ref=e171]:
+          - generic [ref=e172]:
+            - heading "Matching Preferences" [level=3] [ref=e173]
+            - paragraph [ref=e174]: Set your preferences to find the best matches. These filters help us show you more relevant pets.
+          - generic [ref=e175]:
+            - generic [ref=e176]:
+              - heading "Matching Preferences" [level=3] [ref=e177]
+              - paragraph [ref=e178]: Set your preferences to find better matches for your pet
+            - generic [ref=e179]:
+              - heading "📍 Location Preferences" [level=4] [ref=e180]
+              - generic [ref=e182]:
+                - checkbox "Accept pets from any city" [checked] [ref=e183]
+                - generic [ref=e184]: Accept pets from any city
+            - generic [ref=e185]:
+              - heading "🐕 Pet Preferences" [level=4] [ref=e186]
+              - generic [ref=e187]:
+                - generic [ref=e188]:
+                  - generic [ref=e189]: Gender Preference
+                  - generic [ref=e190]:
+                    - generic [ref=e191]:
+                      - checkbox "Male" [ref=e192]
+                      - generic [ref=e193]: Male
+                    - generic [ref=e194]:
+                      - checkbox "Female" [ref=e195]
+                      - generic [ref=e196]: Female
+                - generic [ref=e197]:
+                  - generic [ref=e198]: Preferred Breeds
+                  - textbox "Type to search breeds..." [ref=e200]
+                - generic [ref=e201]:
+                  - generic [ref=e202]: Age Range (years)
+                  - generic [ref=e203]:
+                    - combobox [ref=e204]:
+                      - option "0 yr" [selected]
+                      - option "1 yr"
+                      - option "2 yr"
+                      - option "3 yr"
+                      - option "4 yr"
+                      - option "5 yr"
+                      - option "6 yr"
+                      - option "7 yr"
+                      - option "8 yr"
+                      - option "9 yr"
+                      - option "10 yr"
+                      - option "11 yr"
+                      - option "12 yr"
+                      - option "13 yr"
+                      - option "14 yr"
+                      - option "15 yr"
+                      - option "16 yr"
+                      - option "17 yr"
+                      - option "18 yr"
+                      - option "19 yr"
+                      - option "20 yr"
+                    - generic [ref=e205]: to
+                    - combobox [ref=e206]:
+                      - option "0 yr"
+                      - option "1 yr"
+                      - option "2 yr"
+                      - option "3 yr"
+                      - option "4 yr"
+                      - option "5 yr"
+                      - option "6 yr"
+                      - option "7 yr"
+                      - option "8 yr"
+                      - option "9 yr"
+                      - option "10 yr"
+                      - option "11 yr"
+                      - option "12 yr"
+                      - option "13 yr"
+                      - option "14 yr"
+                      - option "15 yr"
+                      - option "16 yr"
+                      - option "17 yr"
+                      - option "18 yr"
+                      - option "19 yr"
+                      - option "20 yr" [selected]
+                - generic [ref=e207]:
+                  - generic [ref=e208]: Weight Range (kg)
+                  - generic [ref=e209]:
+                    - combobox [ref=e210]:
+                      - option "0 kg" [selected]
+                      - option "1 kg"
+                      - option "2 kg"
+                      - option "3 kg"
+                      - option "4 kg"
+                      - option "5 kg"
+                      - option "7 kg"
+                      - option "10 kg"
+                      - option "15 kg"
+                      - option "20 kg"
+                      - option "25 kg"
+                      - option "30 kg"
+                      - option "40 kg"
+                      - option "50 kg"
+                      - option "60 kg"
+                      - option "70 kg"
+                      - option "80 kg"
+                      - option "90 kg"
+                      - option "100 kg"
+                    - generic [ref=e211]: to
+                    - combobox [ref=e212]:
+                      - option "0 kg"
+                      - option "1 kg"
+                      - option "2 kg"
+                      - option "3 kg"
+                      - option "4 kg"
+                      - option "5 kg"
+                      - option "7 kg"
+                      - option "10 kg"
+                      - option "15 kg"
+                      - option "20 kg"
+                      - option "25 kg"
+                      - option "30 kg"
+                      - option "40 kg"
+                      - option "50 kg"
+                      - option "60 kg"
+                      - option "70 kg"
+                      - option "80 kg"
+                      - option "90 kg"
+                      - option "100 kg" [selected]
+            - generic [ref=e213]:
+              - heading "🎯 What are you looking for?" [level=4] [ref=e214]
+              - generic [ref=e215]:
+                - generic [ref=e216]:
+                  - checkbox "Playmates for my pet" [checked] [ref=e217]
+                  - generic [ref=e218]: Playmates for my pet
+                - generic [ref=e219]:
+                  - checkbox "A mate for my pet" [ref=e220]
+                  - generic [ref=e221]: A mate for my pet
+                - generic [ref=e222]:
+                  - checkbox "Walking buddies" [ref=e223]
+                  - generic [ref=e224]: Walking buddies
+            - generic [ref=e225]:
+              - heading "⚙️ Filter Settings" [level=4] [ref=e226]
+              - generic [ref=e227]:
+                - generic [ref=e228]:
+                  - checkbox "Hide pets I've already seen" [checked] [ref=e229]
+                  - generic [ref=e230]: Hide pets I've already seen
+                - generic [ref=e231]:
+                  - checkbox "Hide pets I've already liked" [ref=e232]
+                  - generic [ref=e233]: Hide pets I've already liked
+                - generic [ref=e234]:
+                  - checkbox "Hide pets I've already disliked" [checked] [ref=e235]
+                  - generic [ref=e236]: Hide pets I've already disliked
+            - button "Save Preferences" [ref=e238] [cursor=pointer]
+    - contentinfo [ref=e80]:
+      - generic [ref=e81]:
+        - generic [ref=e82]:
+          - generic [ref=e83]:
+            - heading "Join our VIP list" [level=4] [ref=e84]
+            - paragraph [ref=e85]: Be the first to hear about new product launches, exclusive competitions and helpful dog content.
+            - generic [ref=e86]:
+              - textbox "Enter your email address" [ref=e87]
+              - button "Sign up" [ref=e88] [cursor=pointer]
+            - heading "Follow us on social media" [level=4] [ref=e89]
+            - generic [ref=e90]:
+              - link "Instagram" [ref=e91] [cursor=pointer]:
+                - /url: https://www.instagram.com/purepetfood
+                - img "Instagram" [ref=e92]
+              - link "Facebook" [ref=e93] [cursor=pointer]:
+                - /url: https://www.facebook.com/purepetfood
+                - img "Facebook" [ref=e94]
+              - link [ref=e95] [cursor=pointer]:
+                - /url: https://www.tiktok.com/@purepetfood
+                - img [ref=e96]
+          - generic [ref=e98]:
+            - generic [ref=e99]:
+              - heading "Jeko" [level=4] [ref=e100]
+              - list [ref=e101]:
+                - listitem [ref=e102]:
+                  - link "Our story" [ref=e103] [cursor=pointer]:
+                    - /url: /about
+                - listitem [ref=e104]:
+                  - link "Reviews" [ref=e105] [cursor=pointer]:
+                    - /url: /reviews
+                - listitem [ref=e106]:
+                  - link "Recipes" [ref=e107] [cursor=pointer]:
+                    - /url: /recipes
+                - listitem [ref=e108]:
+                  - link "Beyond the bowl" [ref=e109] [cursor=pointer]:
+                    - /url: /beyond-the-bowl
+                - listitem [ref=e110]:
+                  - link "Shop" [ref=e111] [cursor=pointer]:
+                    - /url: /products
+                - listitem [ref=e112]:
+                  - link "Community" [ref=e113] [cursor=pointer]:
+                    - /url: /community
+            - generic [ref=e114]:
+              - heading "Help" [level=4] [ref=e115]
+              - list [ref=e116]:
+                - listitem [ref=e117]:
+                  - link "My account" [ref=e118] [cursor=pointer]:
+                    - /url: /profile
+                - listitem [ref=e119]:
+                  - link "Contact us" [ref=e120] [cursor=pointer]:
+                    - /url: /contact
+                - listitem [ref=e121]:
+                  - link "Delivery information" [ref=e122] [cursor=pointer]:
+                    - /url: /delivery-information
+                - listitem [ref=e123]:
+                  - link "Returns" [ref=e124] [cursor=pointer]:
+                    - /url: /returns
+                - listitem [ref=e125]:
+                  - link "Sitemap" [ref=e126] [cursor=pointer]:
+                    - /url: /sitemap-page
+            - generic [ref=e127]:
+              - heading "Information" [level=4] [ref=e128]
+              - list [ref=e129]:
+                - listitem [ref=e130]:
+                  - link "Privacy policy" [ref=e131] [cursor=pointer]:
+                    - /url: /privacy-policy
+                - listitem [ref=e132]:
+                  - link "Terms & conditions" [ref=e133] [cursor=pointer]:
+                    - /url: /terms-of-use
+                - listitem [ref=e134]:
+                  - link "Jeko policies" [ref=e135] [cursor=pointer]:
+                    - /url: /pure-policies
+                - listitem [ref=e136]:
+                  - link "Site security" [ref=e137] [cursor=pointer]:
+                    - /url: /site-security
+                - listitem [ref=e138]:
+                  - link "Cookie policy" [ref=e139] [cursor=pointer]:
+                    - /url: /cookie-policy
+        - generic [ref=e140]:
+          - generic [ref=e142]: JEKO
+          - paragraph [ref=e143]: © Jeko 2020-2026
+  - generic [ref=e144]:
+    - generic [ref=e145]:
+      - paragraph [ref=e146]: Bow Wow! 🐾
+      - paragraph [ref=e147]: Find a friend for your pup!
+    - button "Find pet matches" [ref=e149] [cursor=pointer]:
+      - img [ref=e150]
+  - alert [ref=e170]

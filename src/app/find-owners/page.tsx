@@ -154,7 +154,7 @@ function LoginCTA() {
             </svg>
           </div>
         </div>
-        <h2 className="font-rubik font-bold text-2xl text-deep-green mb-3">
+        <h2 className="font-medium text-2xl text-deep-green mb-3 tracking-wide">
           Find Pet Owners Near You
         </h2>
         <p className="text-deep-green/70 text-[15px] leading-relaxed mb-8">
@@ -163,7 +163,7 @@ function LoginCTA() {
         </p>
         <Link
           href="/auth/login"
-          className="inline-block bg-gold text-deep-green font-rubik font-semibold text-[16px] px-8 py-3 rounded-lg hover:bg-[#d99500] transition-colors"
+          className="inline-block bg-gold text-deep-green font-medium text-[16px] px-8 py-3 rounded-lg hover:bg-[#d99500] transition-colors tracking-wide"
         >
           Log in to get started
         </Link>
@@ -293,7 +293,7 @@ function ProfilePrompt({
               <path d="M7.5 16.5C7.5 14 9.5 12.5 12 12.5C14.5 12.5 16.5 14 16.5 16.5C16.5 19 14.5 21 12 21C9.5 21 7.5 19 7.5 16.5Z" />
             </svg>
           </div>
-          <h2 className="font-rubik font-bold text-xl text-deep-green">
+          <h2 className="font-medium text-xl text-deep-green tracking-wide">
             {existingProfile ? "Update Your Pet Profile" : "Set Up Your Pet Profile"}
           </h2>
           <p className="text-deep-green/60 text-[14px] mt-2">
@@ -430,7 +430,7 @@ function ProfilePrompt({
           <button
             type="submit"
             disabled={saving}
-            className="w-full bg-gold text-deep-green font-rubik font-semibold text-[16px] px-6 py-3 rounded-lg hover:bg-[#d99500] transition-colors disabled:opacity-60 disabled:cursor-not-allowed"
+            className="w-full bg-gold text-deep-green font-medium text-[16px] px-6 py-3 rounded-lg hover:bg-[#d99500] transition-colors disabled:opacity-60 disabled:cursor-not-allowed tracking-wide"
           >
             {saving ? "Saving..." : existingProfile ? "Update Profile" : "Create Profile"}
           </button>
@@ -460,12 +460,12 @@ function MatchCard({
       {/* Header row */}
       <div className="flex items-center gap-3 mb-3">
         <div className="w-10 h-10 rounded-full bg-deep-green/10 flex items-center justify-center flex-shrink-0">
-          <span className="text-deep-green font-rubik font-bold text-[15px]">
+          <span className="text-deep-green font-medium text-[15px] tracking-wide">
             {profile.display_name.charAt(0).toUpperCase()}
           </span>
         </div>
         <div className="min-w-0">
-          <h3 className="font-rubik font-semibold text-deep-green text-[15px] truncate">
+          <h3 className="font-medium text-deep-green text-[15px] truncate tracking-wide">
             {profile.display_name}
           </h3>
           <p className="text-deep-green/50 text-[13px] flex items-center gap-1">
@@ -494,7 +494,7 @@ function MatchCard({
         <button
           onClick={onConnect}
           disabled={connecting}
-          className="w-full bg-deep-green text-white font-rubik font-medium text-[14px] py-2.5 rounded-lg hover:bg-deep-green/90 transition-colors disabled:opacity-60 disabled:cursor-not-allowed"
+          className="w-full bg-deep-green text-white font-medium text-[14px] py-2.5 rounded-lg hover:bg-deep-green/90 transition-colors disabled:opacity-60 disabled:cursor-not-allowed tracking-wide"
         >
           {connecting ? "Sending..." : "Connect"}
         </button>
@@ -502,7 +502,7 @@ function MatchCard({
       {connectionStatus === "sent" && (
         <button
           disabled
-          className="w-full bg-gray-100 text-deep-green/40 font-rubik font-medium text-[14px] py-2.5 rounded-lg cursor-not-allowed"
+          className="w-full bg-gray-100 text-deep-green/40 font-medium text-[14px] py-2.5 rounded-lg cursor-not-allowed tracking-wide"
         >
           Request Sent
         </button>
@@ -511,13 +511,13 @@ function MatchCard({
         <button
           onClick={onAccept}
           disabled={connecting}
-          className="w-full bg-gold text-deep-green font-rubik font-semibold text-[14px] py-2.5 rounded-lg hover:bg-[#d99500] transition-colors disabled:opacity-60 disabled:cursor-not-allowed"
+          className="w-full bg-gold text-deep-green font-medium text-[14px] py-2.5 rounded-lg hover:bg-[#d99500] transition-colors disabled:opacity-60 disabled:cursor-not-allowed tracking-wide"
         >
           {connecting ? "Accepting..." : "Accept Request"}
         </button>
       )}
       {connectionStatus === "matched" && (
-        <div className="w-full text-center text-deep-green font-rubik font-semibold text-[14px] py-2.5">
+        <div className="w-full text-center text-deep-green font-medium text-[14px] py-2.5 tracking-wide">
           Connected &#10003;
         </div>
       )}
@@ -539,12 +539,12 @@ function ConnectionCard({
       {/* Header row */}
       <div className="flex items-center gap-3 mb-3">
         <div className="w-10 h-10 rounded-full bg-gold/20 flex items-center justify-center flex-shrink-0">
-          <span className="text-deep-green font-rubik font-bold text-[15px]">
+          <span className="text-deep-green font-medium text-[15px] tracking-wide">
             {profile.display_name.charAt(0).toUpperCase()}
           </span>
         </div>
         <div className="min-w-0">
-          <h3 className="font-rubik font-semibold text-deep-green text-[15px] truncate">
+          <h3 className="font-medium text-deep-green text-[15px] truncate tracking-wide">
             {profile.display_name}
           </h3>
           <p className="text-deep-green/50 text-[13px] flex items-center gap-1">
@@ -890,7 +890,7 @@ function MatchPage({ user }: { user: NonNullable<ReturnType<typeof useAuth>["use
       <div>
         {/* Page header */}
         <div className="text-center mb-3">
-          <h1 className="font-rubik font-bold text-3xl text-deep-green mb-3">
+          <h1 className="font-medium text-3xl text-deep-green mb-3 tracking-wide">
             Breed Match
           </h1>
           <p className="text-deep-green/60 text-[15px] leading-relaxed">
@@ -943,7 +943,7 @@ function MatchPage({ user }: { user: NonNullable<ReturnType<typeof useAuth>["use
                     <path d="m21 21-4.3-4.3" />
                   </svg>
                 </div>
-                <h3 className="font-rubik font-semibold text-deep-green text-lg mb-2">
+                <h3 className="font-medium text-deep-green text-lg mb-2 tracking-wide">
                   No matches found in your area
                 </h3>
                 <p className="text-deep-green/50 text-[14px] max-w-sm mx-auto">
@@ -986,7 +986,7 @@ function MatchPage({ user }: { user: NonNullable<ReturnType<typeof useAuth>["use
                     <path d="M16 3.13a4 4 0 0 1 0 7.75" />
                   </svg>
                 </div>
-                <h3 className="font-rubik font-semibold text-deep-green text-lg mb-2">
+                <h3 className="font-medium text-deep-green text-lg mb-2 tracking-wide">
                   No connections yet
                 </h3>
                 <p className="text-deep-green/50 text-[14px] max-w-sm mx-auto">
@@ -995,7 +995,7 @@ function MatchPage({ user }: { user: NonNullable<ReturnType<typeof useAuth>["use
                 </p>
                 <button
                   onClick={() => setActiveTab("nearby")}
-                  className="mt-6 bg-gold text-deep-green font-rubik font-semibold text-[14px] px-6 py-2.5 rounded-lg hover:bg-[#d99500] transition-colors"
+                  className="mt-6 bg-gold text-deep-green font-medium text-[14px] px-6 py-2.5 rounded-lg hover:bg-[#d99500] transition-colors tracking-wide"
                 >
                   Find owners nearby
                 </button>

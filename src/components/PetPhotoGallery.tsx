@@ -217,7 +217,7 @@ export default function PetPhotoGallery({
     <div className="space-y-4">
       {/* Header */}
       <div>
-        <h3 className="text-lg font-semibold text-gray-900">Photo Gallery</h3>
+        <h3 className="text-lg font-medium text-gray-900 tracking-wide">Photo Gallery</h3>
         <p className="text-sm text-gray-600 mt-1">
           Add up to {maxPhotos} photos for your pet&apos;s swipe card. The first photo will be the primary image.
         </p>

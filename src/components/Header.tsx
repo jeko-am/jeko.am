@@ -277,12 +277,14 @@ export default function Header({ content }: { content?: any }) {
                 )}
               </>
             )}
-            <Link
-              href={ctaUrl}
-              className="bg-gold text-deep-green text-[18px] font-rubik font-semibold px-6 py-2.5 rounded-lg hover:bg-[#d99500] transition-colors whitespace-nowrap"
-            >
-              {ctaText}
-            </Link>
+            {!user && (
+              <Link
+                href={ctaUrl}
+                className="bg-gold text-deep-green text-[18px] font-rubik font-semibold px-6 py-2.5 rounded-lg hover:bg-[#d99500] transition-colors whitespace-nowrap"
+              >
+                {ctaText}
+              </Link>
+            )}
           </div>
 
           {/* Mobile Hamburger Button */}
@@ -409,13 +411,15 @@ export default function Header({ content }: { content?: any }) {
               </Link>
             )}
 
-            <Link
-              href={ctaUrl}
-              className="bg-gold text-deep-green text-[18px] font-rubik font-semibold px-6 py-3 rounded-lg hover:bg-[#d99500] transition-colors text-center mt-4"
-              onClick={() => setMobileMenuOpen(false)}
-            >
-              {ctaText}
-            </Link>
+            {!user && (
+              <Link
+                href={ctaUrl}
+                className="bg-gold text-deep-green text-[18px] font-rubik font-semibold px-6 py-3 rounded-lg hover:bg-[#d99500] transition-colors text-center mt-4"
+                onClick={() => setMobileMenuOpen(false)}
+              >
+                {ctaText}
+              </Link>
+            )}
           </nav>
         </div>
       )}
