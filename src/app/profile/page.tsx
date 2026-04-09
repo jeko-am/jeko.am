@@ -73,6 +73,8 @@ export default function ProfilePage() {
   const [petFavoriteActivity, setPetFavoriteActivity] = useState("");
   const [petGetsAlongWithDogs, setPetGetsAlongWithDogs] = useState(true);
   const [petLookingForMate, setPetLookingForMate] = useState(false);
+  const [petCity, setPetCity] = useState("");
+  const [petDietPreference, setPetDietPreference] = useState<string[]>([]);
 
   // Image upload states
   const [uploadingAvatar] = useState(false);
@@ -108,13 +110,13 @@ export default function ProfilePage() {
         .from("pet_profiles")
         .select("*")
         .eq("user_id", user?.id)
-        .single();
+        .maybeSingle();
 
       if (petData) {
         setPetProfile(petData);
         setPetName(petData.pet_name || "");
         setPetBreed(petData.breed || "");
-        setPetAge(petData.age_years?.toString() || "");
+        setPetAge(petData.dog_age_years?.toString() || "");
         setPetWeight(petData.weight_kg?.toString() || "");
         setPetGender(petData.gender || "");
         setPetBio(petData.bio || "");
@@ -124,6 +126,15 @@ export default function ProfilePage() {
         setPetFavoriteActivity(petData.favorite_activity || "");
         setPetGetsAlongWithDogs(petData.gets_along_with_dogs ?? true);
         setPetLookingForMate(petData.looking_for_mate ?? false);
+        setPetCity(petData.city || "");
+        const rawDiet = petData.diet_preference;
+        if (Array.isArray(rawDiet)) {
+          setPetDietPreference(rawDiet);
+        } else if (typeof rawDiet === 'string') {
+          try { setPetDietPreference(JSON.parse(rawDiet)); } catch { setPetDietPreference([]); }
+        } else {
+          setPetDietPreference([]);
+        }
       }
     } catch (error) {
       console.error("Error fetching profiles:", error);
@@ -196,7 +207,6 @@ export default function ProfilePage() {
           user_id: user.id,
           pet_name: petName,
           breed: petBreed,
-          age_years: petAge ? parseInt(petAge) : null,
           dog_age_years: petAge ? parseInt(petAge) : null,
           weight_kg: petWeight ? parseFloat(petWeight) : null,
           gender: petGender,
@@ -207,13 +217,16 @@ export default function ProfilePage() {
           favorite_activity: petFavoriteActivity,
           gets_along_with_dogs: petGetsAlongWithDogs,
           looking_for_mate: petLookingForMate,
+          city: petCity,
+          city_normalized: petCity.toLowerCase(),
+          diet_preference: petDietPreference.length > 0 ? petDietPreference : null,
         });
 
       setPetProfile(prev => prev ? {
         ...prev,
         pet_name: petName,
         breed: petBreed,
-        age_years: petAge ? parseInt(petAge) : null,
+        dog_age_years: petAge ? parseInt(petAge) : null,
         weight_kg: petWeight ? parseFloat(petWeight) : null,
         gender: petGender,
         bio: petBio,
@@ -428,6 +441,16 @@ export default function ProfilePage() {
                     />
                   </div>
                   <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">City</label>
+                    <input
+                      type="text"
+                      value={petCity}
+                      onChange={(e) => setPetCity(e.target.value)}
+                      placeholder="e.g. Yerevan"
+                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-gold focus:border-transparent"
+                    />
+                  </div>
+                  <div>
                     <label className="block text-sm font-medium text-gray-700 mb-1">Age (years)</label>
                     <input
                       type="number"
@@ -521,6 +544,27 @@ export default function ProfilePage() {
                       <option value="Car rides">Car rides</option>
                     </select>
                   </div>
+                  <div className="md:col-span-2">
+                    <label className="block text-sm font-medium text-gray-700 mb-2">Diet Preference</label>
+                    <div className="flex flex-wrap gap-2">
+                      {['Raw', 'Kibble', 'Mixed', 'Homemade', 'Natural', 'Chicken', 'Beef', 'Lamb', 'Vegetables'].map(diet => (
+                        <button
+                          key={diet}
+                          type="button"
+                          onClick={() => setPetDietPreference(prev =>
+                            prev.includes(diet) ? prev.filter(d => d !== diet) : [...prev, diet]
+                          )}
+                          className={`px-3 py-1.5 rounded-full text-sm font-medium border transition-all ${
+                            petDietPreference.includes(diet)
+                              ? 'bg-gold/20 border-gold text-deep-green'
+                              : 'bg-white border-gray-200 text-gray-500 hover:border-gray-300'
+                          }`}
+                        >
+                          {diet}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
                 </div>
 
                 <div>
@@ -551,7 +595,7 @@ export default function ProfilePage() {
                       onChange={(e) => setPetLookingForMate(e.target.checked)}
                       className="mr-2 h-4 w-4 text-gold focus:ring-gold border-gray-300 rounded"
                     />
-                    <span className="text-sm text-gray-700">Looking for a match for my pet</span>
+                    <span className="text-sm text-gray-700">Looking for a mate for my pet</span>
                   </label>
                 </div>
 

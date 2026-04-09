@@ -528,6 +528,9 @@ function SignupPageInner() {
   const [weightKg, setWeightKg] = useState('');
   const [gender, setGender] = useState('');
   const [activityLevel, setActivityLevel] = useState('');
+  // walkPreference & favoriteActivity: saved to DB from profile page, not collected in signup
+  const [walkPreference] = useState('');
+  const [favoriteActivity] = useState('');
   const [temperament, setTemperament] = useState('');
   const [dietPreferences, setDietPreferences] = useState<string[]>([]);
   const [getsAlongWithDogs, setGetsAlongWithDogs] = useState<boolean | null>(null);
@@ -535,8 +538,8 @@ function SignupPageInner() {
   const [lookingForPlaymates, setLookingForPlaymates] = useState(false);
   const [lookingForMate, setLookingForMate] = useState(false);
   const [lookingForWalkingBuddies, setLookingForWalkingBuddies] = useState(false);
-  const [preferredBreed] = useState('');
-  const [sameBreedOnly] = useState(false);
+  const [preferredBreed, setPreferredBreed] = useState('');
+  const [sameBreedOnly, setSameBreedOnly] = useState(false);
   const [preferredRadiusKm] = useState(25);
   const [profilePhotoPreview, setProfilePhotoPreview] = useState('');
   const [uploadingPhoto, setUploadingPhoto] = useState(false);
@@ -867,17 +870,17 @@ function SignupPageInner() {
           contact_phone: (quiz.phone || '').trim() || null,
           share_contact: quiz.shareContact ?? true,
           display_name: displayName,
-          age_years: quiz.dogAge ? parseFloat(quiz.dogAge) : null,
           dog_age_years: quiz.dogAge ? parseFloat(quiz.dogAge) : null,
           weight_kg: quiz.weightKg ? parseFloat(quiz.weightKg) : null,
           gender: quiz.gender || 'Unknown',
-          diet_preferences: quiz.dietPreferences?.length > 0 ? quiz.dietPreferences : null,
+          diet_preference: quiz.dietPreferences?.length > 0 ? quiz.dietPreferences : null,
           activity_level: quiz.activityLevel || null,
+          walk_preference: quiz.walkPreference || null,
+          favorite_activity: quiz.favoriteActivity || null,
           temperament: quiz.temperament || null,
           looking_for_mate: quiz.lookingForMatch === true ? quiz.lookingForMate : false,
           preferred_radius_km: quiz.lookingForMatch === true ? quiz.preferredRadiusKm : null,
           preferred_breed: quiz.lookingForMatch === true ? quiz.preferredBreed || null : null,
-          same_breed_only: quiz.lookingForMatch === true ? quiz.sameBreedOnly : false,
           gets_along_with_dogs: quiz.getsAlongWithDogs ?? true,
           bio: (quiz.bio || '').trim() || null,
           profile_photo_url: quiz.uploadedPhotoUrl || null,
@@ -961,7 +964,11 @@ function SignupPageInner() {
     if (s === 0 && !petType) newErrors.petType = 'Please select your pet type';
     if (s === 1 && !dogName.trim()) newErrors.dogName = 'Please enter a name';
     if (s === 2 && !breed.trim()) newErrors.breed = 'Please select or type a breed';
-    if (s === 3 && !gender && !dogAge && !weightKg) newErrors.gender = 'Please fill in at least one field or skip this step';
+    if (s === 3) {
+      if (!gender) newErrors.gender = 'Please select a gender';
+      if (!dogAge) newErrors.dogAge = 'Please enter your pet\'s age';
+      if (!weightKg) newErrors.weightKg = 'Please enter your pet\'s weight';
+    }
     if (s === 4 && !temperament) newErrors.activityLevel = 'Please select a personality or skip this step';
     if (s === 5 && dietPreferences.length === 0) newErrors.diet = 'Please select at least one diet option or skip this step';
     if (s === 6 && getsAlongWithDogs === null) newErrors.social = 'Please answer the question or skip this step';
@@ -1003,15 +1010,6 @@ function SignupPageInner() {
     setTimeout(() => { setStep(nextStep); setAnimating(false); }, 300);
   }
 
-  function skipStep() {
-    const nextStep = Math.min(stepRef.current + 1, TOTAL_STEPS - 1);
-    stepRef.current = nextStep;
-    setErrors({});
-    setDirection('forward');
-    setAnimating(true);
-    window.location.hash = `step-${nextStep}`;
-    setTimeout(() => { setStep(nextStep); setAnimating(false); }, 300);
-  }
 
   function goBack() {
     setErrors({});
@@ -1056,6 +1054,7 @@ function SignupPageInner() {
     // Save quiz data to sessionStorage so we can restore after OAuth redirect
     const quizData = {
       petType, dogName, breed, dogAge, weightKg, gender, activityLevel,
+      walkPreference, favoriteActivity,
       temperament, dietPreferences, getsAlongWithDogs, lookingForMatch,
       lookingForPlaymates, lookingForMate, lookingForWalkingBuddies,
       preferredBreed, sameBreedOnly, preferredRadiusKm,
@@ -1136,19 +1135,17 @@ function SignupPageInner() {
         contact_phone: phone.trim() || null,
         share_contact: shareContact,
         display_name: displayName,
-        age_years: dogAge ? parseFloat(dogAge) : null,
         dog_age_years: dogAge ? parseFloat(dogAge) : null,
         weight_kg: weightKg ? parseFloat(weightKg) : null,
         gender: gender || 'Unknown',
-        diet_preferences: dietPreferences.length > 0 ? dietPreferences : null,
+        diet_preference: dietPreferences.length > 0 ? dietPreferences : null,
         activity_level: activityLevel || null,
         temperament: temperament || null,
         looking_for_mate: lookingForMatch === true ? lookingForMate : false,
         preferred_radius_km: lookingForMatch === true ? preferredRadiusKm : null,
         preferred_breed: lookingForMatch === true ? preferredBreed || null : null,
-        same_breed_only: lookingForMatch === true ? sameBreedOnly : false,
-        favorite_activity: null,
-        walk_preference: null,
+        favorite_activity: favoriteActivity || null,
+        walk_preference: walkPreference || null,
         gets_along_with_dogs: getsAlongWithDogs ?? true,
         bio: bio.trim() || null,
         profile_photo_url: uploadedPhotoUrl || null,
@@ -1392,7 +1389,7 @@ function SignupPageInner() {
                 <h1 className="text-2xl sm:text-3xl font-rubik font-bold text-deep-green mb-2">
                   Tell us more about {petName}
                 </h1>
-                <p className="text-deep-green/50 text-sm mb-8">All fields are optional</p>
+                <p className="text-deep-green/50 text-sm mb-8">Help us personalise {petName}&apos;s experience</p>
 
                 {/* Gender */}
                 <p className="text-sm font-medium text-deep-green mb-3">Gender</p>
@@ -1411,10 +1408,12 @@ function SignupPageInner() {
                   ))}
                 </div>
 
+                {errors.gender && <p className="text-red-500 text-sm mt-2">{errors.gender}</p>}
+
                 {/* Age & Weight */}
-                <div className="grid grid-cols-2 gap-4 max-w-sm mx-auto">
+                <div className="grid grid-cols-2 gap-4 max-w-sm mx-auto mt-6">
                   <div>
-                    <label className="block text-sm font-medium text-deep-green mb-2">Age (years)</label>
+                    <label className="block text-sm font-medium text-deep-green mb-2">Age (years) <span className="text-red-400">*</span></label>
                     <input
                       type="number"
                       min={0}
@@ -1423,11 +1422,12 @@ function SignupPageInner() {
                       value={dogAge}
                       onChange={(e) => setDogAge(e.target.value)}
                       placeholder="e.g. 3"
-                      className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl text-center text-gray-900 placeholder:text-gray-300 focus:outline-none focus:ring-2 focus:ring-deep-green focus:border-transparent"
+                      className={`w-full px-4 py-3 border-2 rounded-xl text-center text-gray-900 placeholder:text-gray-300 focus:outline-none focus:ring-2 focus:ring-deep-green focus:border-transparent ${errors.dogAge ? 'border-red-400' : 'border-gray-200'}`}
                     />
+                    {errors.dogAge && <p className="text-red-500 text-xs mt-1">{errors.dogAge}</p>}
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-deep-green mb-2">Weight (kg)</label>
+                    <label className="block text-sm font-medium text-deep-green mb-2">Weight (kg) <span className="text-red-400">*</span></label>
                     <input
                       type="number"
                       min={0}
@@ -1436,21 +1436,18 @@ function SignupPageInner() {
                       value={weightKg}
                       onChange={(e) => setWeightKg(e.target.value)}
                       placeholder="e.g. 12"
-                      className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl text-center text-gray-900 placeholder:text-gray-300 focus:outline-none focus:ring-2 focus:ring-deep-green focus:border-transparent"
+                      className={`w-full px-4 py-3 border-2 rounded-xl text-center text-gray-900 placeholder:text-gray-300 focus:outline-none focus:ring-2 focus:ring-deep-green focus:border-transparent ${errors.weightKg ? 'border-red-400' : 'border-gray-200'}`}
                     />
+                    {errors.weightKg && <p className="text-red-500 text-xs mt-1">{errors.weightKg}</p>}
                   </div>
                 </div>
 
-                {errors.gender && <p className="text-red-500 text-sm mt-4">{errors.gender}</p>}
                 <button
                   type="button"
                   onClick={goNext}
                   className="mt-8 bg-gold hover:bg-yellow-500 text-deep-green font-semibold py-3.5 px-10 rounded-2xl transition-all duration-200 shadow-sm hover:shadow-md text-lg"
                 >
                   Continue
-                </button>
-                <button type="button" onClick={skipStep} className="block mx-auto mt-3 text-deep-green/40 text-sm hover:text-deep-green/60 transition-colors">
-                  Skip this step
                 </button>
               </div>
             )}
@@ -1488,9 +1485,6 @@ function SignupPageInner() {
                   className="bg-gold hover:bg-yellow-500 text-deep-green font-semibold py-3.5 px-10 rounded-2xl transition-all duration-200 shadow-sm hover:shadow-md text-lg"
                 >
                   Continue
-                </button>
-                <button type="button" onClick={skipStep} className="block mx-auto mt-3 text-deep-green/40 text-sm hover:text-deep-green/60 transition-colors">
-                  Skip this step
                 </button>
               </div>
             )}
@@ -1530,9 +1524,6 @@ function SignupPageInner() {
                 >
                   Continue
                 </button>
-                <button type="button" onClick={skipStep} className="block mx-auto mt-3 text-deep-green/40 text-sm hover:text-deep-green/60 transition-colors">
-                  Skip this step
-                </button>
               </div>
             )}
 
@@ -1557,9 +1548,6 @@ function SignupPageInner() {
                   className="bg-gold hover:bg-yellow-500 text-deep-green font-semibold py-3.5 px-10 rounded-2xl transition-all duration-200 shadow-sm hover:shadow-md text-lg"
                 >
                   Continue
-                </button>
-                <button type="button" onClick={skipStep} className="block mx-auto mt-3 text-deep-green/40 text-sm hover:text-deep-green/60 transition-colors">
-                  Skip this step
                 </button>
               </div>
             )}
@@ -1620,6 +1608,46 @@ function SignupPageInner() {
                         </div>
                       </div>
                     )}
+
+                    {/* Breed preference */}
+                    <div>
+                      <p className="text-sm font-medium text-deep-green mb-3">Breed preference</p>
+
+                      {/* Same breed toggle */}
+                      <label className={`flex items-center gap-3 p-4 rounded-2xl border-2 cursor-pointer transition-all duration-200 max-w-sm mx-auto mb-4 ${
+                        sameBreedOnly ? 'border-gold bg-gold/10' : 'border-gray-200 bg-white hover:border-gray-300'
+                      }`}>
+                        <input
+                          type="checkbox"
+                          checked={sameBreedOnly}
+                          onChange={(e) => {
+                            setSameBreedOnly(e.target.checked);
+                            if (e.target.checked) {
+                              setPreferredBreed(breed); // auto-set to their own breed
+                            } else {
+                              setPreferredBreed('');
+                            }
+                          }}
+                          className="w-5 h-5 text-gold focus:ring-gold border-gray-300 rounded cursor-pointer"
+                        />
+                        <div className="text-left">
+                          <span className="text-sm font-medium text-deep-green">Same breed only</span>
+                          {breed && <span className="text-xs text-deep-green/50 ml-1">({breed})</span>}
+                        </div>
+                      </label>
+
+                      {/* Other breed picker — shown when same breed is NOT checked */}
+                      {!sameBreedOnly && (
+                        <div className="max-w-sm mx-auto">
+                          <p className="text-xs text-deep-green/50 mb-2">Or choose a preferred breed to match with:</p>
+                          <BreedAutocomplete
+                            value={preferredBreed}
+                            onChange={setPreferredBreed}
+                            placeholder="Any breed (optional)"
+                          />
+                        </div>
+                      )}
+                    </div>
                   </div>
                 )}
 
@@ -1634,9 +1662,6 @@ function SignupPageInner() {
                   className="mt-6 bg-gold hover:bg-yellow-500 text-deep-green font-semibold py-3.5 px-10 rounded-2xl transition-all duration-200 shadow-sm hover:shadow-md text-lg"
                 >
                   Continue
-                </button>
-                <button type="button" onClick={() => { setLookingForMatch(false); setLookingForPlaymates(false); setLookingForMate(false); setLookingForWalkingBuddies(false); skipStep(); }} className="block mx-auto mt-3 text-deep-green/40 text-sm hover:text-deep-green/60 transition-colors">
-                  Skip this step
                 </button>
               </div>
             )}
@@ -1699,7 +1724,34 @@ function SignupPageInner() {
                 </div>
                 {/* Photo guidance */}
                 <p className="text-xs text-deep-green/50 mb-1">📸 Please upload a clear photo of your pet — pets only, no humans! <span className="text-red-400">*Required</span></p>
-                <p className="text-xs text-gray-400 mb-5">Best size: at least 400×400px · JPG, PNG or WebP · max 5MB</p>
+                <p className="text-xs text-gray-400 mb-3">Best size: at least 400×400px · JPG, PNG or WebP · max 5MB</p>
+
+                {/* URL input for photo (alternative to file upload) */}
+                <div className="max-w-sm mx-auto mb-5">
+                  <p className="text-xs text-deep-green/40 mb-1.5">Or paste an image URL:</p>
+                  <input
+                    type="url"
+                    placeholder="https://example.com/my-pet.jpg"
+                    className="w-full px-4 py-2.5 border-2 border-gray-200 rounded-xl text-sm text-gray-900 placeholder:text-gray-300 focus:outline-none focus:ring-2 focus:ring-deep-green focus:border-transparent"
+                    onBlur={(e) => {
+                      const url = e.target.value.trim();
+                      if (url && (url.startsWith('http://') || url.startsWith('https://'))) {
+                        setProfilePhotoPreview(url);
+                        setUploadedPhotoUrl(url);
+                      }
+                    }}
+                    onKeyDown={(e) => {
+                      if (e.key === 'Enter') {
+                        e.preventDefault();
+                        const url = (e.target as HTMLInputElement).value.trim();
+                        if (url && (url.startsWith('http://') || url.startsWith('https://'))) {
+                          setProfilePhotoPreview(url);
+                          setUploadedPhotoUrl(url);
+                        }
+                      }
+                    }}
+                  />
+                </div>
                 {errors.profilePhoto && <p className="text-red-500 text-xs mb-4">{errors.profilePhoto}</p>}
 
                 {/* Bio */}

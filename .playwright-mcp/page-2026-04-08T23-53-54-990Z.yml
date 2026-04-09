@@ -1,0 +1,69 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e2]:
+    - banner [ref=e4]:
+      - generic [ref=e5]:
+        - link "JEKO" [ref=e6] [cursor=pointer]:
+          - /url: /
+          - generic [ref=e7]:
+            - generic [ref=e8]: JEKO
+            - img [ref=e9]
+        - generic [ref=e15]:
+          - paragraph [ref=e16]:
+            - text: Already have an account?
+            - link "Log in" [ref=e17] [cursor=pointer]:
+              - /url: /login
+          - button [ref=e18] [cursor=pointer]:
+            - img [ref=e19]
+    - main [ref=e21]:
+      - generic [ref=e23]:
+        - generic [ref=e25]: Step 11 of 11
+        - paragraph [ref=e45]: 🎊 Final step!
+        - generic [ref=e267]:
+          - heading "Almost there! Create your account" [level=1] [ref=e268]
+          - paragraph [ref=e269]: Last step to join the pack
+          - button "Continue with Google" [ref=e270] [cursor=pointer]:
+            - img [ref=e271]
+            - text: Continue with Google
+          - generic [ref=e282]: or sign up with email
+          - generic [ref=e283]:
+            - generic [ref=e284]:
+              - generic [ref=e285]: Full Name *
+              - textbox "Sarah Miller" [ref=e286]
+            - generic [ref=e287]:
+              - generic [ref=e288]: Email *
+              - textbox "sarah@example.com" [ref=e289]
+            - generic [ref=e290]:
+              - generic [ref=e291]: Password *
+              - generic [ref=e292]:
+                - textbox "Min. 6 characters" [ref=e293]
+                - button [ref=e294] [cursor=pointer]:
+                  - img [ref=e295]
+            - generic [ref=e298]:
+              - generic [ref=e299]: Confirm Password *
+              - generic [ref=e300]:
+                - textbox "Re-enter your password" [ref=e301]
+                - button [ref=e302] [cursor=pointer]:
+                  - img [ref=e303]
+            - generic [ref=e306]:
+              - generic [ref=e307]:
+                - generic [ref=e308]: Age (optional)
+                - spinbutton [ref=e309]
+              - generic [ref=e310]:
+                - generic [ref=e311]: Phone (optional)
+                - textbox "+44 7700..." [ref=e312]
+            - generic [ref=e313] [cursor=pointer]:
+              - checkbox "Share pet info with matches Other pet owners can see your info to arrange meetups" [checked] [ref=e314]
+              - generic [ref=e315]:
+                - paragraph [ref=e316]: Share pet info with matches
+                - paragraph [ref=e317]: Other pet owners can see your info to arrange meetups
+            - button "Join the Pack" [ref=e318] [cursor=pointer]:
+              - text: Join the Pack
+              - img [ref=e319]
+          - paragraph [ref=e277]: By creating an account you agree to our Terms of Service and Privacy Policy.
+  - generic [ref=e121]:
+    - generic [ref=e122]:
+      - paragraph [ref=e123]: Bow Wow! 🐾
+      - paragraph [ref=e124]: Find a friend for your pup!
+    - button "Find pet matches" [ref=e126] [cursor=pointer]:
+      - img [ref=e127]
+  - alert [ref=e147]
