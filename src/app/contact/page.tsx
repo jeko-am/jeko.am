@@ -4,6 +4,7 @@ import { useState } from "react";
 import Link from "next/link";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import { supabase } from "@/lib/supabase";
 
 export default function ContactPage() {
   const [formData, setFormData] = useState({
@@ -15,6 +16,8 @@ export default function ContactPage() {
     message: "",
   });
   const [submitted, setSubmitted] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
@@ -22,9 +25,32 @@ export default function ContactPage() {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setSubmitted(true);
+    setSubmitting(true);
+    setError(null);
+
+    try {
+      const { error: insertError } = await supabase
+        .from("contact_messages")
+        .insert({
+          name: formData.fullName,
+          email: formData.email,
+          phone: formData.phone || null,
+          subject: formData.subject,
+          message: formData.orderNumber
+            ? `[Order: ${formData.orderNumber}]\n\n${formData.message}`
+            : formData.message,
+          status: "new",
+        });
+
+      if (insertError) throw insertError;
+      setSubmitted(true);
+    } catch {
+      setError("Failed to send message. Please try again.");
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   const inputClasses =
@@ -243,12 +269,19 @@ export default function ContactPage() {
                           />
                         </div>
 
+                        {error && (
+                          <div className="bg-red-50 border border-red-200 text-red-700 rounded-xl px-4 py-3 text-sm">
+                            {error}
+                          </div>
+                        )}
+
                         {/* Submit Button */}
                         <button
                           type="submit"
-                          className="w-full bg-gold text-deep-green font-bold rounded-xl hover:bg-yellow-400 transition-colors py-3.5 text-lg mt-2"
+                          disabled={submitting}
+                          className="w-full bg-gold text-deep-green font-bold rounded-xl hover:bg-yellow-400 transition-colors py-3.5 text-lg mt-2 disabled:opacity-60 disabled:cursor-not-allowed"
                         >
-                          Send Message
+                          {submitting ? "Sending..." : "Send Message"}
                         </button>
                       </form>
                     </>
