@@ -1,0 +1,34 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e2]:
+    - banner [ref=e4]:
+      - generic [ref=e5]:
+        - link "JEKO" [ref=e6] [cursor=pointer]:
+          - /url: /
+          - generic [ref=e7]:
+            - generic [ref=e8]: JEKO
+            - img [ref=e9]
+        - generic [ref=e15]:
+          - paragraph [ref=e16]:
+            - text: Already have an account?
+            - link "Log in" [ref=e17] [cursor=pointer]:
+              - /url: /login
+          - button [ref=e94] [cursor=pointer]:
+            - img [ref=e95]
+    - main [ref=e18]:
+      - generic [ref=e20]:
+        - paragraph [ref=e36]: 🎊 Final step!
+        - generic [ref=e659]:
+          - heading "Almost there! Create your account" [level=1] [ref=e660]
+          - paragraph [ref=e661]: Last step to join the pack
+          - button "Continue with Google" [ref=e662] [cursor=pointer]:
+            - img [ref=e663]
+            - text: Continue with Google
+          - button "or sign up with email instead" [ref=e668] [cursor=pointer]
+          - paragraph [ref=e669]: By creating an account you agree to our Terms of Service and Privacy Policy.
+  - generic [ref=e67]:
+    - generic [ref=e68]:
+      - paragraph [ref=e69]: Bow Wow! 🐾
+      - paragraph [ref=e70]: Find a friend for your pup!
+    - button "Find pet matches" [ref=e72] [cursor=pointer]:
+      - img [ref=e73]
+  - alert [ref=e93]

@@ -1,0 +1,9 @@
+[     692ms] [INFO] %cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold @ webpack-internal:///(app-pages-browser)/./node_modules/next/dist/compiled/react-dom/cjs/react-dom.development.js:38559
+[  186413ms] [ERROR] Failed to load resource: the server responded with a status of 400 (Bad Request) @ https://api.cloudinary.com/v1_1/dppatx2f4/image/upload:0
+[  186414ms] [ERROR] Error uploading to Cloudinary: Error: Cloudinary upload failed: Upload preset must be whitelisted for unsigned uploads
+    at uploadToCloudinary (webpack-internal:///(app-pages-browser)/./src/lib/cloudinary.ts:38:19)
+    at async eval (webpack-internal:///(app-pages-browser)/./src/components/PetPhotoGallery.tsx:61:32)
+    at async Promise.all (index 0)
+    at async uploadPhotos (webpack-internal:///(app-pages-browser)/./src/components/PetPhotoGallery.tsx:81:29) @ webpack-internal:///(app-pages-browser)/./node_modules/next/dist/client/app-index.js:32
+[  189206ms] [LOG] [Fast Refresh] rebuilding @ webpack-internal:///(app-pages-browser)/./node_modules/next/dist/client/components/react-dev-overlay/app/hot-reloader-client.js:186
+[  189499ms] [LOG] [Fast Refresh] done in 293ms @ webpack-internal:///(app-pages-browser)/./node_modules/next/dist/client/components/react-dev-overlay/app/hot-reloader-client.js:43

@@ -17,6 +17,10 @@ export const FAVORITE_ACTIVITIES = [
   "Playing with other dogs", "Chasing squirrels", "Napping", "Car rides",
 ] as const;
 
+export const DISABILITIES = ["None", "Blind", "Deaf", "Mobility Issues", "Amputee", "Epilepsy", "Anxiety", "Other"] as const;
+
+export const ALLERGIES = ["None", "Chicken", "Beef", "Grain", "Dairy", "Eggs", "Soy", "Fish", "Pollen", "Dust", "Flea", "Other"] as const;
+
 export const COUNTRIES = [
   "United Kingdom", "United States", "Canada", "Australia", "Ireland",
   "Germany", "France", "Netherlands", "Spain", "Italy", "Sweden", "Norway",

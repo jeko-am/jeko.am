@@ -1,0 +1,50 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e2]:
+    - banner [ref=e5]:
+      - generic [ref=e6]:
+        - link "JEKO" [ref=e7] [cursor=pointer]:
+          - /url: /
+          - generic [ref=e8]:
+            - generic [ref=e9]: JEKO
+            - img [ref=e10]
+        - generic [ref=e16]:
+          - paragraph [ref=e17]:
+            - text: Already have an account?
+            - link "Log in" [ref=e18] [cursor=pointer]:
+              - /url: /login
+          - button [ref=e94] [cursor=pointer]:
+            - img [ref=e95]
+    - main [ref=e19]:
+      - generic [ref=e21]:
+        - paragraph [ref=e37]: 🔥 Getting warmer!
+        - generic [ref=e147]:
+          - heading "How would you describe TestBuddy?" [level=1] [ref=e148]
+          - paragraph [ref=e149]: Pick what fits best
+          - paragraph [ref=e150]: Personality
+          - generic [ref=e151]:
+            - button "Calm" [ref=e152] [cursor=pointer]:
+              - img [ref=e154]
+              - generic [ref=e157]: Calm
+            - button "Playful" [ref=e158] [cursor=pointer]:
+              - img [ref=e160]
+              - generic [ref=e166]: Playful
+            - button "Energetic" [ref=e167] [cursor=pointer]:
+              - img [ref=e169]
+              - generic [ref=e171]: Energetic
+            - button "Shy" [ref=e172] [cursor=pointer]:
+              - img [ref=e174]
+              - generic [ref=e179]: Shy
+            - button "Protective" [ref=e180] [cursor=pointer]:
+              - img [ref=e182]
+              - generic [ref=e185]: Protective
+            - button "Friendly" [ref=e186] [cursor=pointer]:
+              - img [ref=e188]
+              - generic [ref=e190]: Friendly
+          - button "Continue" [ref=e191] [cursor=pointer]
+  - generic [ref=e68]:
+    - generic [ref=e69]:
+      - paragraph [ref=e70]: Bow Wow! 🐾
+      - paragraph [ref=e71]: Find a friend for your pup!
+    - button "Find pet matches" [ref=e73] [cursor=pointer]:
+      - img [ref=e74]
+  - alert [ref=e4]

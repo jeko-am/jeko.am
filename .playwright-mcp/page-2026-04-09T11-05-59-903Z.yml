@@ -1,0 +1,50 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e3]:
+    - generic [ref=e4]:
+      - progressbar [ref=e6]
+      - main [ref=e14]:
+        - generic [ref=e15]:
+          - generic [ref=e18]:
+            - img [ref=e20]
+            - generic [ref=e25]: Sign in with Google
+          - generic [ref=e26]:
+            - heading "Choose an account" [level=1] [ref=e27]
+            - generic [ref=e29]:
+              - text: to continue to
+              - button "dzhtpnskezkrtfinntbi.supabase.co" [ref=e30] [cursor=pointer]
+        - list [ref=e41]:
+          - listitem [ref=e42]:
+            - link "ojasvy dixit ojasvy34@gmail.com Signed out" [ref=e43] [cursor=pointer]:
+              - generic [ref=e45]:
+                - generic [ref=e47]:
+                  - generic [ref=e48]: ojasvy dixit
+                  - generic [ref=e49]: ojasvy34@gmail.com
+                - generic [ref=e50]: Signed out
+          - listitem [ref=e51]:
+            - link "Shipio logistics shipiologistics@gmail.com" [ref=e52] [cursor=pointer]:
+              - generic [ref=e56]:
+                - generic [ref=e57]: Shipio logistics
+                - generic [ref=e58]: shipiologistics@gmail.com
+          - listitem [ref=e59]:
+            - link "Use another account" [ref=e60] [cursor=pointer]:
+              - generic [ref=e61]:
+                - img [ref=e63]
+                - generic [ref=e66]: Use another account
+    - contentinfo [ref=e71]:
+      - combobox "Change language English (United Kingdom)" [ref=e75] [cursor=pointer]:
+        - generic:
+          - generic: English (United Kingdom)
+        - generic:
+          - img
+      - list [ref=e77]:
+        - listitem [ref=e78]:
+          - link "Help" [ref=e79] [cursor=pointer]:
+            - /url: https://support.google.com/accounts?hl=en-GB&p=account_iph
+        - listitem [ref=e80]:
+          - link "Privacy" [ref=e81] [cursor=pointer]:
+            - /url: https://accounts.google.com/TOS?loc=IN&hl=en-GB&privacy=true
+        - listitem [ref=e82]:
+          - link "Terms" [ref=e83] [cursor=pointer]:
+            - /url: https://accounts.google.com/TOS?loc=IN&hl=en-GB
+  - iframe [ref=e84]:
+    

@@ -1,0 +1,41 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e2]:
+    - banner [ref=e4]:
+      - generic [ref=e5]:
+        - link "JEKO" [ref=e6] [cursor=pointer]:
+          - /url: /
+          - generic [ref=e7]:
+            - generic [ref=e8]: JEKO
+            - img [ref=e9]
+        - generic [ref=e15]:
+          - paragraph [ref=e16]:
+            - text: Already have an account?
+            - link "Log in" [ref=e17] [cursor=pointer]:
+              - /url: /login
+          - button [ref=e94] [cursor=pointer]:
+            - img [ref=e95]
+    - main [ref=e18]:
+      - generic [ref=e20]:
+        - paragraph [ref=e36]: ✅ Getting close now!
+        - generic [ref=e538]:
+          - heading "Show off TestBuddy!" [level=1] [ref=e539]
+          - paragraph [ref=e540]: Add a photo and tell us what makes them special
+          - button "Tap to add photo" [ref=e541] [cursor=pointer]:
+            - generic [ref=e543]:
+              - img [ref=e544]
+              - generic [ref=e547]: Tap to add photo
+          - paragraph [ref=e548]: 📸 Please upload a clear photo of your pet — pets only, no humans! *Required
+          - paragraph [ref=e549]: "Best size: at least 400×400px · JPG, PNG or WebP · max 5MB"
+          - generic [ref=e550]:
+            - paragraph [ref=e551]: "Or paste an image URL:"
+            - textbox "https://example.com/my-pet.jpg" [ref=e552]
+          - textbox "Anything special about TestBuddy you think Jeko should know?" [ref=e553]
+          - paragraph [ref=e554]: 0/500
+          - button "Continue" [ref=e555] [cursor=pointer]
+  - generic [ref=e67]:
+    - generic [ref=e68]:
+      - paragraph [ref=e69]: Bow Wow! 🐾
+      - paragraph [ref=e70]: Find a friend for your pup!
+    - button "Find pet matches" [ref=e72] [cursor=pointer]:
+      - img [ref=e73]
+  - alert [ref=e93]

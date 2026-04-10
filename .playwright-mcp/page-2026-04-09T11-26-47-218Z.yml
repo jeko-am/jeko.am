@@ -1,0 +1,36 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e2]:
+    - banner [ref=e4]:
+      - generic [ref=e5]:
+        - link "JEKO" [ref=e6] [cursor=pointer]:
+          - /url: /
+          - generic [ref=e7]:
+            - generic [ref=e8]: JEKO
+            - img [ref=e9]
+        - paragraph [ref=e16]:
+          - text: Already have an account?
+          - link "Log in" [ref=e17] [cursor=pointer]:
+            - /url: /login
+    - main [ref=e18]:
+      - generic [ref=e20]:
+        - paragraph [ref=e36]: 🚀 Let's get started!
+        - generic [ref=e37]:
+          - heading "What type of pet do you have?" [level=1] [ref=e38]
+          - paragraph [ref=e39]: Let's get started with the basics
+          - generic [ref=e40]:
+            - button "Dog" [ref=e41] [cursor=pointer]:
+              - img [ref=e43]
+              - generic [ref=e49]: Dog
+            - button "Cat" [ref=e50] [cursor=pointer]:
+              - img [ref=e52]
+              - generic [ref=e57]: Cat
+            - button "Other" [ref=e58] [cursor=pointer]:
+              - img [ref=e60]
+              - generic [ref=e66]: Other
+  - generic [ref=e67]:
+    - generic [ref=e68]:
+      - paragraph [ref=e69]: Bow Wow! 🐾
+      - paragraph [ref=e70]: Find a friend for your pup!
+    - button "Find pet matches" [ref=e72] [cursor=pointer]:
+      - img [ref=e73]
+  - alert [ref=e93]

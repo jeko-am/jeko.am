@@ -1,0 +1,41 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e2]:
+    - banner [ref=e5]:
+      - generic [ref=e6]:
+        - link "JEKO" [ref=e7] [cursor=pointer]:
+          - /url: /
+          - generic [ref=e8]:
+            - generic [ref=e9]: JEKO
+            - img [ref=e10]
+        - generic [ref=e16]:
+          - paragraph [ref=e17]:
+            - text: Already have an account?
+            - link "Log in" [ref=e18] [cursor=pointer]:
+              - /url: /login
+          - button [ref=e94] [cursor=pointer]:
+            - img [ref=e95]
+    - main [ref=e19]:
+      - generic [ref=e21]:
+        - paragraph [ref=e37]: 🏁 Last lap!
+        - generic [ref=e563]:
+          - heading "Where are you located?" [level=1] [ref=e564]
+          - paragraph [ref=e565]: Connect with nearby pet owners and local events
+          - generic [ref=e566]:
+            - generic [ref=e567]:
+              - generic [ref=e568]: Country *
+              - button "Armenia" [ref=e570] [cursor=pointer]:
+                - generic [ref=e571]: Armenia
+                - img [ref=e572]
+            - generic [ref=e574]:
+              - generic [ref=e575]: City *
+              - button "Select city" [ref=e577] [cursor=pointer]:
+                - generic [ref=e578]: Select city
+                - img [ref=e579]
+          - button "Continue" [ref=e581] [cursor=pointer]
+  - generic [ref=e68]:
+    - generic [ref=e69]:
+      - paragraph [ref=e70]: Bow Wow! 🐾
+      - paragraph [ref=e71]: Find a friend for your pup!
+    - button "Find pet matches" [ref=e73] [cursor=pointer]:
+      - img [ref=e74]
+  - alert [ref=e4]

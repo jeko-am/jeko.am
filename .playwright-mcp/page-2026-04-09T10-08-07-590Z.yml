@@ -1,0 +1,59 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e2]:
+    - banner [ref=e4]:
+      - generic [ref=e5]:
+        - link "JEKO" [ref=e6] [cursor=pointer]:
+          - /url: /
+          - generic [ref=e7]:
+            - generic [ref=e8]: JEKO
+            - img [ref=e9]
+        - generic [ref=e15]:
+          - paragraph [ref=e16]:
+            - text: Already have an account?
+            - link "Log in" [ref=e17] [cursor=pointer]:
+              - /url: /login
+          - button [disabled] [ref=e94]:
+            - img [ref=e95]
+    - main [ref=e18]:
+      - generic [ref=e20]:
+        - paragraph [ref=e36]: ⭐ Almost done!
+        - generic [ref=e268]:
+          - heading "What does Buddy love?" [level=1] [ref=e269]
+          - paragraph [ref=e270]: Help us find the perfect matches
+          - paragraph [ref=e271]: Diet
+          - generic [ref=e272]:
+            - button "Raw" [ref=e273] [cursor=pointer]:
+              - img [ref=e275]
+              - generic [ref=e279]: Raw
+            - button "Kibble" [ref=e280] [cursor=pointer]:
+              - img [ref=e282]
+              - generic [ref=e289]: Kibble
+            - button "Mixed" [ref=e290] [cursor=pointer]:
+              - img [ref=e292]
+              - generic [ref=e295]: Mixed
+            - button "Homemade" [ref=e296] [cursor=pointer]:
+              - img [ref=e298]
+              - generic [ref=e303]: Homemade
+            - button "Natural" [ref=e304] [cursor=pointer]:
+              - img [ref=e306]
+              - generic [ref=e309]: Natural
+            - button "Chicken" [ref=e310] [cursor=pointer]:
+              - img [ref=e312]
+              - generic [ref=e316]: Chicken
+            - button "Beef" [ref=e317] [cursor=pointer]:
+              - img [ref=e319]
+              - generic [ref=e323]: Beef
+            - button "Lamb" [ref=e324] [cursor=pointer]:
+              - img [ref=e326]
+              - generic [ref=e330]: Lamb
+            - button "Vegetables" [ref=e331] [cursor=pointer]:
+              - img [ref=e333]
+              - generic [ref=e340]: Vegetables
+          - button "Continue" [ref=e341] [cursor=pointer]
+  - generic [ref=e67]:
+    - generic [ref=e68]:
+      - paragraph [ref=e69]: Bow Wow! 🐾
+      - paragraph [ref=e70]: Find a friend for your pup!
+    - button "Find pet matches" [ref=e72] [cursor=pointer]:
+      - img [ref=e73]
+  - alert [ref=e93]

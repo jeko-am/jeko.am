@@ -1,0 +1,39 @@
+- generic [ref=e1]:
+  - generic [ref=e2]:
+    - banner [ref=e4]:
+      - generic [ref=e5]:
+        - link "JEKO" [ref=e6] [cursor=pointer]:
+          - /url: /
+          - generic [ref=e7]:
+            - generic [ref=e8]: JEKO
+            - img [ref=e9]
+        - generic [ref=e15]:
+          - paragraph [ref=e16]:
+            - text: Already have an account?
+            - link "Log in" [ref=e17] [cursor=pointer]:
+              - /url: /login
+          - button [ref=e94] [cursor=pointer]:
+            - img [ref=e95]
+    - main [ref=e18]:
+      - generic [ref=e20]:
+        - paragraph [ref=e36]: 🎉 You're crushing it!
+        - generic [ref=e428]:
+          - heading "TestBuddy's social life" [level=1] [ref=e429]
+          - paragraph [ref=e430]: Help us understand their social preferences
+          - paragraph [ref=e431]: Gets along with other dogs?
+          - generic [ref=e432]:
+            - button "Yes!" [active] [ref=e433] [cursor=pointer]:
+              - img [ref=e435]
+              - generic [ref=e442]: Yes!
+              - img [ref=e451]
+            - button "Not really" [ref=e443] [cursor=pointer]:
+              - img [ref=e445]
+              - generic [ref=e448]: Not really
+          - button "Continue" [ref=e449] [cursor=pointer]
+  - generic [ref=e67]:
+    - generic [ref=e68]:
+      - paragraph [ref=e69]: Bow Wow! 🐾
+      - paragraph [ref=e70]: Find a friend for your pup!
+    - button "Find pet matches" [ref=e72] [cursor=pointer]:
+      - img [ref=e73]
+  - alert [ref=e93]

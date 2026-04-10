@@ -1,0 +1,251 @@
+- generic [ref=e1]:
+  - generic [ref=e2]:
+    - banner [ref=e4]:
+      - generic [ref=e6]:
+        - link "JEKO" [ref=e7] [cursor=pointer]:
+          - /url: /
+          - generic [ref=e8]: JEKO
+        - navigation [ref=e9]:
+          - link "About" [ref=e11] [cursor=pointer]:
+            - /url: /about
+            - text: About
+            - img [ref=e12]
+          - link "Community" [ref=e15] [cursor=pointer]:
+            - /url: /community
+            - text: Community
+            - img [ref=e16]
+          - link "Shop" [ref=e19] [cursor=pointer]:
+            - /url: /products
+          - link "Reviews" [ref=e21] [cursor=pointer]:
+            - /url: /reviews
+          - link "Health & breeds" [ref=e23] [cursor=pointer]:
+            - /url: /benefits
+            - text: Health & breeds
+            - img [ref=e24]
+        - generic [ref=e26]:
+          - button "Shopping cart" [ref=e27] [cursor=pointer]:
+            - img [ref=e28]
+          - link "Help" [ref=e165] [cursor=pointer]:
+            - /url: /contact
+          - link "Login" [ref=e166] [cursor=pointer]:
+            - /url: /login
+          - link "Sign up" [ref=e32] [cursor=pointer]:
+            - /url: /auth/signup
+    - main [ref=e33]:
+      - generic [ref=e34]:
+        - generic [ref=e35]:
+          - heading "My Profile" [level=1] [ref=e36]
+          - paragraph [ref=e37]: Manage your personal information and pet profile
+        - generic [ref=e39]:
+          - button "Your Profile" [ref=e40] [cursor=pointer]
+          - button "Pet Profile" [active] [ref=e41] [cursor=pointer]
+          - button "Swipe Photos" [ref=e42] [cursor=pointer]
+          - button "Match Preferences" [ref=e43] [cursor=pointer]
+        - generic [ref=e167]:
+          - generic [ref=e168]:
+            - generic [ref=e172] [cursor=pointer]:
+              - img [ref=e173]
+              - text: Add Photo
+            - generic [ref=e175]:
+              - heading "Pet Photo" [level=3] [ref=e176]
+              - paragraph [ref=e177]: Add a photo of your furry friend
+          - generic [ref=e178]:
+            - generic [ref=e179]:
+              - generic [ref=e180]: Pet Name
+              - textbox [ref=e181]
+            - generic [ref=e182]:
+              - generic [ref=e183]: Breed
+              - textbox [ref=e184]
+            - generic [ref=e185]:
+              - generic [ref=e186]: City
+              - textbox "e.g. Yerevan" [ref=e187]
+            - generic [ref=e188]:
+              - generic [ref=e189]: Age (years)
+              - spinbutton [ref=e190]
+            - generic [ref=e191]:
+              - generic [ref=e192]: Weight (kg)
+              - spinbutton [ref=e193]
+            - generic [ref=e194]:
+              - generic [ref=e195]: Gender
+              - combobox [ref=e196]:
+                - option "Select gender" [selected]
+                - option "Male"
+                - option "Female"
+            - generic [ref=e197]:
+              - generic [ref=e198]: Temperament
+              - combobox [ref=e199]:
+                - option "Select temperament" [selected]
+                - option "Calm"
+                - option "Playful"
+                - option "Energetic"
+                - option "Shy"
+                - option "Protective"
+                - option "Friendly"
+            - generic [ref=e200]:
+              - generic [ref=e201]: Activity Level
+              - combobox [ref=e202]:
+                - option "Select level" [selected]
+                - option "Low"
+                - option "Moderate"
+                - option "High"
+                - option "Very High"
+            - generic [ref=e203]:
+              - generic [ref=e204]: Walk Preference
+              - combobox [ref=e205]:
+                - option "Select preference" [selected]
+                - option "Morning"
+                - option "Evening"
+                - option "Both"
+                - option "Anytime"
+            - generic [ref=e206]:
+              - generic [ref=e207]: Favorite Activity
+              - combobox [ref=e208]:
+                - option "Select activity" [selected]
+                - option "Fetch"
+                - option "Swimming"
+                - option "Hiking"
+                - option "Cuddling"
+                - option "Agility"
+                - option "Running"
+                - option "Playing with other dogs"
+                - option "Chasing squirrels"
+                - option "Napping"
+                - option "Car rides"
+            - generic [ref=e209]:
+              - generic [ref=e210]: Diet Preference
+              - generic [ref=e211]:
+                - button "Raw" [ref=e212] [cursor=pointer]
+                - button "Kibble" [ref=e213] [cursor=pointer]
+                - button "Mixed" [ref=e214] [cursor=pointer]
+                - button "Homemade" [ref=e215] [cursor=pointer]
+                - button "Natural" [ref=e216] [cursor=pointer]
+                - button "Chicken" [ref=e217] [cursor=pointer]
+                - button "Beef" [ref=e218] [cursor=pointer]
+                - button "Lamb" [ref=e219] [cursor=pointer]
+                - button "Vegetables" [ref=e220] [cursor=pointer]
+          - generic [ref=e221]:
+            - generic [ref=e222]:
+              - generic [ref=e223]: Disabilities
+              - generic [ref=e224]:
+                - button "None" [ref=e225] [cursor=pointer]
+                - button "Blind" [ref=e226] [cursor=pointer]
+                - button "Deaf" [ref=e227] [cursor=pointer]
+                - button "Mobility Issues" [ref=e228] [cursor=pointer]
+                - button "Amputee" [ref=e229] [cursor=pointer]
+                - button "Epilepsy" [ref=e230] [cursor=pointer]
+                - button "Anxiety" [ref=e231] [cursor=pointer]
+                - button "Other" [ref=e232] [cursor=pointer]
+            - generic [ref=e233]:
+              - generic [ref=e234]: Allergies
+              - generic [ref=e235]:
+                - button "None" [ref=e236] [cursor=pointer]
+                - button "Chicken" [ref=e237] [cursor=pointer]
+                - button "Beef" [ref=e238] [cursor=pointer]
+                - button "Grain" [ref=e239] [cursor=pointer]
+                - button "Dairy" [ref=e240] [cursor=pointer]
+                - button "Eggs" [ref=e241] [cursor=pointer]
+                - button "Soy" [ref=e242] [cursor=pointer]
+                - button "Fish" [ref=e243] [cursor=pointer]
+                - button "Pollen" [ref=e244] [cursor=pointer]
+                - button "Dust" [ref=e245] [cursor=pointer]
+                - button "Flea" [ref=e246] [cursor=pointer]
+                - button "Other" [ref=e247] [cursor=pointer]
+          - generic [ref=e248]:
+            - generic [ref=e249]: Pet Bio
+            - textbox "Tell us about your pet..." [ref=e250]
+          - generic [ref=e251]:
+            - generic [ref=e252]:
+              - checkbox "My pet gets along with other dogs" [checked] [ref=e253]
+              - generic [ref=e254]: My pet gets along with other dogs
+            - generic [ref=e255]:
+              - checkbox "Looking for a mate for my pet" [ref=e256]
+              - generic [ref=e257]: Looking for a mate for my pet
+          - button "Save Pet Profile" [ref=e259] [cursor=pointer]
+    - contentinfo [ref=e74]:
+      - generic [ref=e75]:
+        - generic [ref=e76]:
+          - generic [ref=e77]:
+            - heading "Join our VIP list" [level=4] [ref=e78]
+            - paragraph [ref=e79]: Be the first to hear about new product launches, exclusive competitions and helpful dog content.
+            - generic [ref=e80]:
+              - textbox "Enter your email address" [ref=e81]
+              - button "Sign up" [ref=e82] [cursor=pointer]
+            - heading "Follow us on social media" [level=4] [ref=e83]
+            - generic [ref=e84]:
+              - link "Instagram" [ref=e85] [cursor=pointer]:
+                - /url: https://www.instagram.com/purepetfood
+                - img "Instagram" [ref=e86]
+              - link "Facebook" [ref=e87] [cursor=pointer]:
+                - /url: https://www.facebook.com/purepetfood
+                - img "Facebook" [ref=e88]
+              - link [ref=e89] [cursor=pointer]:
+                - /url: https://www.tiktok.com/@purepetfood
+                - img [ref=e90]
+          - generic [ref=e92]:
+            - generic [ref=e93]:
+              - heading "Jeko" [level=4] [ref=e94]
+              - list [ref=e95]:
+                - listitem [ref=e96]:
+                  - link "Our story" [ref=e97] [cursor=pointer]:
+                    - /url: /about
+                - listitem [ref=e98]:
+                  - link "Reviews" [ref=e99] [cursor=pointer]:
+                    - /url: /reviews
+                - listitem [ref=e100]:
+                  - link "Recipes" [ref=e101] [cursor=pointer]:
+                    - /url: /recipes
+                - listitem [ref=e102]:
+                  - link "Beyond the bowl" [ref=e103] [cursor=pointer]:
+                    - /url: /beyond-the-bowl
+                - listitem [ref=e104]:
+                  - link "Shop" [ref=e105] [cursor=pointer]:
+                    - /url: /products
+                - listitem [ref=e106]:
+                  - link "Community" [ref=e107] [cursor=pointer]:
+                    - /url: /community
+            - generic [ref=e108]:
+              - heading "Help" [level=4] [ref=e109]
+              - list [ref=e110]:
+                - listitem [ref=e111]:
+                  - link "My account" [ref=e112] [cursor=pointer]:
+                    - /url: /profile
+                - listitem [ref=e113]:
+                  - link "Contact us" [ref=e114] [cursor=pointer]:
+                    - /url: /contact
+                - listitem [ref=e115]:
+                  - link "Delivery information" [ref=e116] [cursor=pointer]:
+                    - /url: /delivery-information
+                - listitem [ref=e117]:
+                  - link "Returns" [ref=e118] [cursor=pointer]:
+                    - /url: /returns
+                - listitem [ref=e119]:
+                  - link "Sitemap" [ref=e120] [cursor=pointer]:
+                    - /url: /sitemap-page
+            - generic [ref=e121]:
+              - heading "Information" [level=4] [ref=e122]
+              - list [ref=e123]:
+                - listitem [ref=e124]:
+                  - link "Privacy policy" [ref=e125] [cursor=pointer]:
+                    - /url: /privacy-policy
+                - listitem [ref=e126]:
+                  - link "Terms & conditions" [ref=e127] [cursor=pointer]:
+                    - /url: /terms-of-use
+                - listitem [ref=e128]:
+                  - link "Jeko policies" [ref=e129] [cursor=pointer]:
+                    - /url: /pure-policies
+                - listitem [ref=e130]:
+                  - link "Site security" [ref=e131] [cursor=pointer]:
+                    - /url: /site-security
+                - listitem [ref=e132]:
+                  - link "Cookie policy" [ref=e133] [cursor=pointer]:
+                    - /url: /cookie-policy
+        - generic [ref=e134]:
+          - generic [ref=e136]: JEKO
+          - paragraph [ref=e137]: © Jeko 2020-2026
+  - generic [ref=e138]:
+    - generic [ref=e139]:
+      - paragraph [ref=e140]: Bow Wow! 🐾
+      - paragraph [ref=e141]: Find a friend for your pup!
+    - button "Find pet matches" [ref=e143] [cursor=pointer]:
+      - img [ref=e144]
+  - alert [ref=e164]

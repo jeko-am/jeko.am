@@ -1,0 +1,51 @@
+- generic [ref=e1]:
+  - generic [ref=e2]:
+    - banner [ref=e4]:
+      - generic [ref=e5]:
+        - link "JEKO" [ref=e6] [cursor=pointer]:
+          - /url: /
+          - generic [ref=e7]:
+            - generic [ref=e8]: JEKO
+            - img [ref=e9]
+        - generic [ref=e15]:
+          - paragraph [ref=e16]:
+            - text: Already have an account?
+            - link "Log in" [ref=e17] [cursor=pointer]:
+              - /url: /login
+          - button [ref=e94] [cursor=pointer]:
+            - img [ref=e95]
+    - main [ref=e18]:
+      - generic [ref=e20]:
+        - paragraph [ref=e36]: 🔥 Getting warmer!
+        - generic [ref=e147]:
+          - heading "How would you describe TestBuddy?" [level=1] [ref=e148]
+          - paragraph [ref=e149]: Pick what fits best
+          - paragraph [ref=e150]: Personality
+          - generic [ref=e151]:
+            - button "Calm" [ref=e152] [cursor=pointer]:
+              - img [ref=e154]
+              - generic [ref=e157]: Calm
+            - button "Playful" [active] [ref=e158] [cursor=pointer]:
+              - img [ref=e160]
+              - generic [ref=e166]: Playful
+              - img [ref=e193]
+            - button "Energetic" [ref=e167] [cursor=pointer]:
+              - img [ref=e169]
+              - generic [ref=e171]: Energetic
+            - button "Shy" [ref=e172] [cursor=pointer]:
+              - img [ref=e174]
+              - generic [ref=e179]: Shy
+            - button "Protective" [ref=e180] [cursor=pointer]:
+              - img [ref=e182]
+              - generic [ref=e185]: Protective
+            - button "Friendly" [ref=e186] [cursor=pointer]:
+              - img [ref=e188]
+              - generic [ref=e190]: Friendly
+          - button "Continue" [ref=e191] [cursor=pointer]
+  - generic [ref=e67]:
+    - generic [ref=e68]:
+      - paragraph [ref=e69]: Bow Wow! 🐾
+      - paragraph [ref=e70]: Find a friend for your pup!
+    - button "Find pet matches" [ref=e72] [cursor=pointer]:
+      - img [ref=e73]
+  - alert [ref=e93]

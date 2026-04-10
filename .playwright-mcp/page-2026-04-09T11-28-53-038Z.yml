@@ -1,0 +1,64 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e2]:
+    - banner [ref=e4]:
+      - generic [ref=e5]:
+        - link "JEKO" [ref=e6] [cursor=pointer]:
+          - /url: /
+          - generic [ref=e7]:
+            - generic [ref=e8]: JEKO
+            - img [ref=e9]
+        - generic [ref=e15]:
+          - paragraph [ref=e16]:
+            - text: Already have an account?
+            - link "Log in" [ref=e17] [cursor=pointer]:
+              - /url: /login
+          - button [ref=e94] [cursor=pointer]:
+            - img [ref=e95]
+    - main [ref=e18]:
+      - generic [ref=e20]:
+        - paragraph [ref=e36]: 💕 One more thing...
+        - generic [ref=e451]:
+          - heading "Looking for a match?" [level=1] [ref=e452]
+          - paragraph [ref=e453]: Would you like TestBuddy to appear in matches with other pets?
+          - generic [ref=e454]:
+            - button "Yes!" [ref=e455] [cursor=pointer]:
+              - img [ref=e457]
+              - generic [ref=e459]: Yes!
+              - img [ref=e468]
+            - button "No thanks" [ref=e460] [cursor=pointer]:
+              - img [ref=e462]
+              - generic [ref=e465]: No thanks
+          - generic [ref=e470]:
+            - generic [ref=e471]:
+              - paragraph [ref=e472]: What are you looking for?
+              - generic [ref=e473]:
+                - generic [ref=e474] [cursor=pointer]:
+                  - checkbox "Playmates for my pet" [ref=e475]
+                  - img [ref=e477]
+                  - generic [ref=e483]: Playmates for my pet
+                - generic [ref=e484] [cursor=pointer]:
+                  - checkbox "A mate for my pet" [ref=e485]
+                  - img [ref=e487]
+                  - generic [ref=e489]: A mate for my pet
+                - generic [ref=e490] [cursor=pointer]:
+                  - checkbox "Walking buddies" [ref=e491]
+                  - img [ref=e493]
+                  - generic [ref=e495]: Walking buddies
+            - generic [ref=e496]:
+              - paragraph [ref=e497]: Breed preference
+              - generic [ref=e498] [cursor=pointer]:
+                - checkbox "Same breed only(Golden Retriever)" [ref=e499]
+                - generic [ref=e500]:
+                  - text: Same breed only
+                  - generic [ref=e501]: (Golden Retriever)
+              - generic [ref=e502]:
+                - paragraph [ref=e503]: "Or choose a preferred breed to match with:"
+                - textbox "Any breed (optional)" [ref=e505]
+          - button "Continue" [ref=e466] [cursor=pointer]
+  - generic [ref=e67]:
+    - generic [ref=e68]:
+      - paragraph [ref=e69]: Bow Wow! 🐾
+      - paragraph [ref=e70]: Find a friend for your pup!
+    - button "Find pet matches" [ref=e72] [cursor=pointer]:
+      - img [ref=e73]
+  - alert [ref=e93]

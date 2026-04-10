@@ -30,6 +30,7 @@ interface PetCandidate {
   gets_along_with_dogs: boolean | null;
   looking_for_mate: boolean | null;
   owner_name?: string | null;
+  photos?: string[];
 }
 
 const BATCH_SIZE = 10;
@@ -161,7 +162,17 @@ const SwipeCard = memo(function SwipeCard({ candidate, isTop, onSwipe, onLove: _
   const [dragState, setDragState] = useState({isDragging:false, startX:0, currentX:0, dx:0});
   const [flyDirection, setFlyDirection] = useState<"left"|"right"|null>(null);
   const animatingRef = useRef(false);
-  const photoUrl = candidate.profile_photo_url||candidate.avatar_url;
+  const [photoIndex, setPhotoIndex] = useState(0);
+
+  // Build photos array: gallery photos first, then fallback to profile photo
+  const allPhotos = (() => {
+    const photos: string[] = [];
+    if (candidate.photos && candidate.photos.length > 0) photos.push(...candidate.photos);
+    else if (candidate.profile_photo_url) photos.push(candidate.profile_photo_url);
+    else if (candidate.avatar_url) photos.push(candidate.avatar_url);
+    return photos;
+  })();
+  const photoUrl = allPhotos[photoIndex] || null;
   const sizeLabel = candidate.weight_kg ? (candidate.weight_kg<10?"Small":candidate.weight_kg<25?"Medium":"Large") : null;
   const distanceLabel = candidate.city||"Nearby";
 
@@ -253,10 +264,21 @@ const SwipeCard = memo(function SwipeCard({ candidate, isTop, onSwipe, onLove: _
               <div className="text-center"><PawIcon size={80}/><p className="text-gray-400 text-sm mt-2">No photo yet</p></div>
             </div>
           )}
+          {/* Tap zones for photo navigation */}
+          {allPhotos.length > 1 && isTop && (
+            <>
+              <button className="absolute top-0 left-0 w-1/3 h-2/3 z-20" aria-label="Previous photo"
+                onClick={(e)=>{e.stopPropagation();setPhotoIndex(i=>Math.max(0,i-1));}} />
+              <button className="absolute top-0 right-0 w-1/3 h-2/3 z-20" aria-label="Next photo"
+                onClick={(e)=>{e.stopPropagation();setPhotoIndex(i=>Math.min(allPhotos.length-1,i+1));}} />
+            </>
+          )}
           <div className="absolute bottom-4 left-0 right-0 flex justify-center gap-1.5 z-20">
-            <div className="w-6 h-2 rounded-full bg-white shadow"/>
-            <div className="w-2 h-2 rounded-full bg-white/50"/>
-            <div className="w-2 h-2 rounded-full bg-white/50"/>
+            {allPhotos.length > 0 ? allPhotos.map((_, i) => (
+              <div key={i} className={`h-2 rounded-full shadow transition-all ${i === photoIndex ? 'w-6 bg-white' : 'w-2 bg-white/50'}`} />
+            )) : (
+              <div className="w-6 h-2 rounded-full bg-white/50 shadow"/>
+            )}
             <div className="w-2 h-2 rounded-full bg-white/50"/>
           </div>
           <div className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-white via-white/60 to-transparent z-10"/>
@@ -493,6 +515,16 @@ export default function SwipePage() {
         if(profiles){
           const nameMap=new Map(profiles.map(p=>[p.user_id,p.full_name]));
           batch.forEach(c=>{c.owner_name=nameMap.get(c.user_id)||null;});
+        }
+        // Fetch gallery photos for each candidate
+        const {data:allPhotos}=await supabase.from("pet_photos").select("user_id, photo_url, photo_order").in("user_id",userIds).order("photo_order",{ascending:true});
+        if(allPhotos){
+          const photoMap=new Map<string,string[]>();
+          for(const p of allPhotos){
+            if(!photoMap.has(p.user_id)) photoMap.set(p.user_id,[]);
+            photoMap.get(p.user_id)!.push(p.photo_url);
+          }
+          batch.forEach(c=>{c.photos=photoMap.get(c.user_id)||[];});
         }
       }
       if(batch.length===0) setAllExhausted(true);
