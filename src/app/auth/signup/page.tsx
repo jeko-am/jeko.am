@@ -1716,12 +1716,12 @@ function SignupPageInner() {
                     )}
 
                     {/* Breed preference */}
-                    <div>
-                      <p className="text-sm font-medium text-deep-green mb-3">Breed preference</p>
+                    <div className="bg-white/80 border-2 border-deep-green/20 rounded-2xl p-5 max-w-sm mx-auto">
+                      <p className="text-sm font-semibold text-deep-green mb-4">Breed preference</p>
 
                       {/* Same breed toggle */}
-                      <label className={`flex items-center gap-3 p-4 rounded-2xl border-2 cursor-pointer transition-all duration-200 max-w-sm mx-auto mb-4 ${
-                        sameBreedOnly ? 'border-gold bg-gold/10' : 'border-gray-200 bg-white hover:border-gray-300'
+                      <label className={`flex items-center gap-3 p-4 rounded-xl border-2 cursor-pointer transition-all duration-200 mb-4 ${
+                        sameBreedOnly ? 'border-gold bg-gold/15 shadow-sm' : 'border-deep-green/30 bg-white hover:border-gold/60 hover:bg-gold/5'
                       }`}>
                         <input
                           type="checkbox"
@@ -1734,18 +1734,18 @@ function SignupPageInner() {
                               setPreferredBreed('');
                             }
                           }}
-                          className="w-5 h-5 text-gold focus:ring-gold border-gray-300 rounded cursor-pointer"
+                          className="w-5 h-5 text-gold focus:ring-gold border-deep-green/40 rounded cursor-pointer"
                         />
                         <div className="text-left">
-                          <span className="text-sm font-medium text-deep-green">Same breed only</span>
-                          {breed && <span className="text-xs text-deep-green/50 ml-1">({breed})</span>}
+                          <span className="text-sm font-semibold text-deep-green">Same breed only</span>
+                          {breed && <span className="text-xs font-medium text-deep-green/70 ml-1">({breed})</span>}
                         </div>
                       </label>
 
                       {/* Other breed picker — shown when same breed is NOT checked */}
                       {!sameBreedOnly && (
-                        <div className="max-w-sm mx-auto">
-                          <p className="text-xs text-deep-green/50 mb-2">Or choose a preferred breed to match with:</p>
+                        <div>
+                          <p className="text-xs font-medium text-deep-green/70 mb-2">Or choose a preferred breed to match with:</p>
                           <BreedAutocomplete
                             value={preferredBreed}
                             onChange={setPreferredBreed}
