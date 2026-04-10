@@ -731,6 +731,7 @@ function SignupPageInner() {
   const [profilePhotoPreview, setProfilePhotoPreview] = useState('');
   const [uploadingPhoto, setUploadingPhoto] = useState(false);
   const [uploadedPhotoUrl, setUploadedPhotoUrl] = useState('');
+  const uploadPromiseRef = useRef<Promise<string | null> | null>(null);
   const [bio, setBio] = useState('');
   const [city, setCity] = useState('');
   const [state, setState] = useState('');
@@ -1008,19 +1009,25 @@ function SignupPageInner() {
     if (!file) return;
     setProfilePhotoPreview(URL.createObjectURL(file));
     setUploadingPhoto(true);
-    try {
-      const formData = new FormData();
-      formData.append('file', file);
-      const res = await fetch('/api/upload', { method: 'POST', body: formData });
-      const data = await res.json();
-      if (!res.ok) throw new Error(data.error || 'Upload failed');
-      setUploadedPhotoUrl(data.url);
-    } catch (err) {
-      setErrors((prev) => ({ ...prev, profilePhoto: err instanceof Error ? err.message : 'Photo upload failed' }));
-      setUploadedPhotoUrl('');
-    } finally {
-      setUploadingPhoto(false);
-    }
+    setErrors((prev) => { const { profilePhoto, ...rest } = prev; return rest; });
+    const promise = (async (): Promise<string | null> => {
+      try {
+        const formData = new FormData();
+        formData.append('file', file);
+        const res = await fetch('/api/upload', { method: 'POST', body: formData });
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.error || 'Upload failed');
+        setUploadedPhotoUrl(data.url);
+        return data.url;
+      } catch (err) {
+        setErrors((prev) => ({ ...prev, profilePhoto: err instanceof Error ? err.message : 'Photo upload failed' }));
+        setUploadedPhotoUrl('');
+        return null;
+      } finally {
+        setUploadingPhoto(false);
+      }
+    })();
+    uploadPromiseRef.current = promise;
   }
 
   /* ---------- step validation ---------- */
@@ -1044,7 +1051,7 @@ function SignupPageInner() {
       newErrors.match = 'Please select at least one option';
     }
     if (s === 9) {
-      if (!uploadedPhotoUrl && !uploadingPhoto) newErrors.profilePhoto = 'Please upload a photo of your pet';
+      if (!uploadedPhotoUrl && !uploadingPhoto && !profilePhotoPreview) newErrors.profilePhoto = 'Please upload a photo of your pet';
     }
     if (s === 10) {
       if (!country) newErrors.country = 'Please select a country';
@@ -1161,6 +1168,10 @@ function SignupPageInner() {
     setSubmitError('');
 
     try {
+      // Wait for any in-progress photo upload to finish
+      if (uploadPromiseRef.current) {
+        await uploadPromiseRef.current;
+      }
       const { error: signUpError } = await signUp(email, password, { full_name: fullName });
       if (signUpError) {
         setSubmitError(signUpError.message || 'Signup failed. Please try again.');
@@ -1880,7 +1891,6 @@ function SignupPageInner() {
                 <button
                   type="button"
                   onClick={goNext}
-                  disabled={uploadingPhoto}
                   className="bg-gold hover:bg-yellow-500 text-deep-green font-semibold py-3.5 px-10 rounded-2xl transition-all duration-200 shadow-sm hover:shadow-md text-lg disabled:opacity-40 disabled:cursor-not-allowed"
                 >
                   Continue
@@ -2111,7 +2121,7 @@ function SignupPageInner() {
 
                   <button
                     type="submit"
-                    disabled={submitting || uploadingPhoto}
+                    disabled={submitting}
                     className="mt-6 w-full bg-deep-green hover:bg-deep-green/90 text-white font-semibold py-4 px-12 rounded-2xl transition-all duration-200 shadow-sm hover:shadow-md text-lg disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
                   >
                     {submitting ? (

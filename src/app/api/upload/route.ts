@@ -9,6 +9,12 @@ cloudinary.config({
 
 export async function POST(request: NextRequest) {
   try {
+    // Verify Cloudinary is configured
+    if (!process.env.CLOUDINARY_CLOUD_NAME || !process.env.CLOUDINARY_API_KEY || !process.env.CLOUDINARY_API_SECRET) {
+      console.error('Missing Cloudinary environment variables');
+      return NextResponse.json({ error: 'Image upload is not configured. Please set CLOUDINARY environment variables.' }, { status: 500 });
+    }
+
     const formData = await request.formData();
     const file = formData.get('file') as File | null;
 
@@ -37,11 +43,17 @@ export async function POST(request: NextRequest) {
           folder: 'pure-pet-products',
           resource_type: 'image',
         },
-        (error, result) => {
-          if (error || !result) {
+        (error, uploadResult) => {
+          if (error || !uploadResult) {
             reject(error || new Error('Upload failed'));
           } else {
-            resolve(result);
+            // Extract only serializable fields to avoid circular reference issues
+            resolve({
+              secure_url: uploadResult.secure_url,
+              public_id: uploadResult.public_id,
+              format: uploadResult.format,
+              bytes: uploadResult.bytes,
+            });
           }
         }
       ).end(buffer);
@@ -55,7 +67,8 @@ export async function POST(request: NextRequest) {
       type: file.type,
     });
   } catch (error) {
-    console.error('Upload error:', error);
-    return NextResponse.json({ error: 'Upload failed' }, { status: 500 });
+    const message = error instanceof Error ? error.message : 'Upload failed';
+    console.error('Upload error:', message, error);
+    return NextResponse.json({ error: message }, { status: 500 });
   }
 }
