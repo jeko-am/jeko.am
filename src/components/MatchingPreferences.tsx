@@ -340,53 +340,77 @@ export default function MatchingPreferences({ petProfileId, onPreferencesChange 
 
           {/* Age Range */}
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">Age Range (years)</label>
-            <div className="flex items-center gap-2">
-              <select
+            <label className="block text-sm font-medium text-gray-700 mb-1">
+              Age Range: <span className="text-gold font-semibold">{preferences.preferred_age_min} – {preferences.preferred_age_max} years</span>
+            </label>
+            <div className="flex items-center gap-3 mt-2">
+              <span className="text-xs text-gray-400 w-6 text-right">{preferences.preferred_age_min}</span>
+              <input
+                type="range"
+                min={0}
+                max={20}
                 value={preferences.preferred_age_min}
-                onChange={(e) => updatePreference("preferred_age_min", parseInt(e.target.value))}
-                className="w-24 px-2 py-1.5 border border-gray-300 rounded-lg text-sm bg-white focus:outline-none focus:ring-2 focus:ring-gold"
-              >
-                {Array.from({ length: 21 }, (_, i) => (
-                  <option key={i} value={i}>{i} yr</option>
-                ))}
-              </select>
-              <span className="text-gray-400 text-sm">to</span>
-              <select
+                onChange={(e) => {
+                  const v = parseInt(e.target.value);
+                  updatePreference("preferred_age_min", Math.min(v, (preferences.preferred_age_max ?? 20)));
+                }}
+                className="flex-1 accent-gold"
+              />
+              <span className="text-xs text-gray-400">min</span>
+            </div>
+            <div className="flex items-center gap-3 mt-1">
+              <span className="text-xs text-gray-400 w-6 text-right">{preferences.preferred_age_max}</span>
+              <input
+                type="range"
+                min={0}
+                max={20}
                 value={preferences.preferred_age_max}
-                onChange={(e) => updatePreference("preferred_age_max", parseInt(e.target.value))}
-                className="w-24 px-2 py-1.5 border border-gray-300 rounded-lg text-sm bg-white focus:outline-none focus:ring-2 focus:ring-gold"
-              >
-                {Array.from({ length: 21 }, (_, i) => (
-                  <option key={i} value={i}>{i} yr</option>
-                ))}
-              </select>
+                onChange={(e) => {
+                  const v = parseInt(e.target.value);
+                  updatePreference("preferred_age_max", Math.max(v, (preferences.preferred_age_min ?? 0)));
+                }}
+                className="flex-1 accent-gold"
+              />
+              <span className="text-xs text-gray-400">max</span>
             </div>
           </div>
 
           {/* Weight Range */}
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">Weight Range (kg)</label>
-            <div className="flex items-center gap-2">
-              <select
+            <label className="block text-sm font-medium text-gray-700 mb-1">
+              Weight Range: <span className="text-gold font-semibold">{preferences.preferred_weight_min} – {preferences.preferred_weight_max} kg</span>
+            </label>
+            <div className="flex items-center gap-3 mt-2">
+              <span className="text-xs text-gray-400 w-6 text-right">{preferences.preferred_weight_min}</span>
+              <input
+                type="range"
+                min={0}
+                max={100}
+                step={1}
                 value={preferences.preferred_weight_min}
-                onChange={(e) => updatePreference("preferred_weight_min", parseInt(e.target.value))}
-                className="w-24 px-2 py-1.5 border border-gray-300 rounded-lg text-sm bg-white focus:outline-none focus:ring-2 focus:ring-gold"
-              >
-                {[0,1,2,3,4,5,7,10,15,20,25,30,40,50,60,70,80,90,100].map(w => (
-                  <option key={w} value={w}>{w} kg</option>
-                ))}
-              </select>
-              <span className="text-gray-400 text-sm">to</span>
-              <select
+                onChange={(e) => {
+                  const v = parseInt(e.target.value);
+                  updatePreference("preferred_weight_min", Math.min(v, (preferences.preferred_weight_max ?? 100)));
+                }}
+                className="flex-1 accent-gold"
+              />
+              <span className="text-xs text-gray-400">min</span>
+            </div>
+            <div className="flex items-center gap-3 mt-1">
+              <span className="text-xs text-gray-400 w-6 text-right">{preferences.preferred_weight_max}</span>
+              <input
+                type="range"
+                min={0}
+                max={100}
+                step={1}
                 value={preferences.preferred_weight_max}
-                onChange={(e) => updatePreference("preferred_weight_max", parseInt(e.target.value))}
-                className="w-24 px-2 py-1.5 border border-gray-300 rounded-lg text-sm bg-white focus:outline-none focus:ring-2 focus:ring-gold"
-              >
-                {[0,1,2,3,4,5,7,10,15,20,25,30,40,50,60,70,80,90,100].map(w => (
-                  <option key={w} value={w}>{w} kg</option>
-                ))}
-              </select>
+                onChange={(e) => {
+                  const v = parseInt(e.target.value);
+                  updatePreference("preferred_weight_max", Math.max(v, (preferences.preferred_weight_min ?? 0)));
+                }}
+                className="flex-1 accent-gold"
+              />
+              <span className="text-xs text-gray-400">max</span>
             </div>
           </div>
         </div>
