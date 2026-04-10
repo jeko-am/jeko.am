@@ -1401,30 +1401,36 @@ function SignupPageInner() {
                 <h1 className="text-2xl sm:text-3xl font-rubik font-bold text-deep-green mb-2">
                   What breed is {petName}?
                 </h1>
-                <p className="text-deep-green/50 text-sm mb-8">Search or pick from popular breeds</p>
-                <BreedAutocomplete
-                  value={breed}
-                  onChange={setBreed}
-                  placeholder="Start typing a breed..."
-                  error={errors.breed}
-                />
-                {/* Popular breeds quick-pick */}
-                <div className="mt-6 flex flex-wrap justify-center gap-2">
-                  {['Labrador Retriever', 'Golden Retriever', 'French Bulldog', 'German Shepherd', 'Poodle', 'Beagle'].map((b) => (
-                    <button
-                      key={b}
-                      type="button"
-                      onClick={() => setBreed(b)}
-                      className={`px-3 py-1.5 rounded-full text-xs font-medium transition-all duration-200 ${
-                        breed === b
-                          ? 'bg-deep-green text-white'
-                          : 'bg-white border border-gray-200 text-gray-600 hover:border-deep-green/40'
-                      }`}
-                    >
-                      {b}
-                    </button>
-                  ))}
+                <p className="text-deep-green/50 text-sm mb-6">Search or pick from popular breeds</p>
+
+                <div className="bg-white/80 border-2 border-deep-green/20 rounded-2xl p-5 max-w-md mx-auto">
+                  <p className="text-sm font-semibold text-deep-green mb-3">Select breed</p>
+                  <BreedAutocomplete
+                    value={breed}
+                    onChange={setBreed}
+                    placeholder="Start typing a breed..."
+                    error={errors.breed}
+                  />
+                  {/* Popular breeds quick-pick */}
+                  <p className="text-xs font-medium text-deep-green/70 mt-4 mb-2">Popular breeds</p>
+                  <div className="flex flex-wrap justify-center gap-2">
+                    {['Labrador Retriever', 'Golden Retriever', 'French Bulldog', 'German Shepherd', 'Poodle', 'Beagle'].map((b) => (
+                      <button
+                        key={b}
+                        type="button"
+                        onClick={() => setBreed(b)}
+                        className={`px-3 py-1.5 rounded-full text-xs font-medium transition-all duration-200 ${
+                          breed === b
+                            ? 'bg-deep-green text-white shadow-sm'
+                            : 'bg-white border border-deep-green/20 text-deep-green/80 hover:border-gold/60 hover:bg-gold/5'
+                        }`}
+                      >
+                        {b}
+                      </button>
+                    ))}
+                  </div>
                 </div>
+
                 <button
                   type="button"
                   onClick={goNext}
