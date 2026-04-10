@@ -8,6 +8,8 @@ import {
   DIET_PREFERENCES,
   ACTIVITY_LEVELS,
   TEMPERAMENTS,
+  DISABILITIES,
+  ALLERGIES,
 } from '@/lib/constants';
 import Link from 'next/link';
 import { useRouter, useSearchParams } from 'next/navigation';
@@ -17,7 +19,7 @@ import { FormEvent, useEffect, useMemo, useRef, useState } from 'react';
 /*  Quiz step definitions                                              */
 /* ------------------------------------------------------------------ */
 
-const TOTAL_STEPS = 11;
+const TOTAL_STEPS = 12;
 
 const STEP_TITLES = [
   'What type of pet do you have?',
@@ -25,6 +27,7 @@ const STEP_TITLES = [
   'What breed?',
   'Tell us more about',
   'Personality',
+  'Health & special needs',
   'What do they love?',
   'Social life',
   'Looking for a match?',
@@ -39,6 +42,7 @@ const STEP_MESSAGES = [
   '🎯 You\'re on a roll!',
   '💪 Halfway there!',
   '🔥 Getting warmer!',
+  '🏥 Important info!',
   '⭐ Almost done!',
   '🎉 You\'re crushing it!',
   '💕 One more thing...',
@@ -349,6 +353,127 @@ const QIcon = {
       <path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5" />
     </svg>
   ),
+  /* Disability & allergy icons */
+  none: (
+    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M22 11.08V12a10 10 0 11-5.93-9.14" />
+      <path d="M22 4L12 14.01l-3-3" />
+    </svg>
+  ),
+  blind: (
+    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M17.94 17.94A10.07 10.07 0 0112 20c-7 0-11-8-11-8a18.45 18.45 0 015.06-5.94" />
+      <path d="M9.9 4.24A9.12 9.12 0 0112 4c7 0 11 8 11 8a18.5 18.5 0 01-2.16 3.19" />
+      <line x1="1" y1="1" x2="23" y2="23" />
+    </svg>
+  ),
+  deaf: (
+    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M18 8a6 6 0 00-9.33-5" />
+      <path d="M2 2l20 20" />
+      <path d="M6 8v1a6 6 0 006 6h0" />
+      <path d="M17 14a3 3 0 01-3 3" />
+      <path d="M9 21h6" />
+    </svg>
+  ),
+  mobility: (
+    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+      <circle cx="12" cy="4" r="2" />
+      <path d="M15 22v-4h-2l-1-4-4 1v4" />
+      <path d="M9.5 10l3.5-1 2 4" />
+      <path d="M6 14l3-1" />
+    </svg>
+  ),
+  amputee: (
+    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M18 20a6 6 0 00-12 0" />
+      <circle cx="12" cy="10" r="4" />
+      <path d="M8 14v6" />
+    </svg>
+  ),
+  epilepsy: (
+    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" />
+    </svg>
+  ),
+  anxiety: (
+    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+      <circle cx="12" cy="12" r="9" />
+      <path d="M8 15s1.5-2 4-2 4 2 4 2" />
+      <line x1="9" y1="9" x2="9.01" y2="9" strokeWidth="2" />
+      <line x1="15" y1="9" x2="15.01" y2="9" strokeWidth="2" />
+    </svg>
+  ),
+  other: (
+    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+      <circle cx="12" cy="12" r="10" />
+      <path d="M9.09 9a3 3 0 015.83 1c0 2-3 3-3 3" />
+      <line x1="12" y1="17" x2="12.01" y2="17" />
+    </svg>
+  ),
+  allergyNone: (
+    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M22 11.08V12a10 10 0 11-5.93-9.14" />
+      <path d="M22 4L12 14.01l-3-3" />
+    </svg>
+  ),
+  grain: (
+    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M12 21v-9" />
+      <path d="M8 8c0 0 0 4 4 4s4-4 4-4" />
+      <path d="M6 5c0 0 1 3 3 3" />
+      <path d="M15 8c2 0 3-3 3-3" />
+      <path d="M10 4c0 0 0 2 2 2s2-2 2-2" />
+    </svg>
+  ),
+  dairy: (
+    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M8 2h8l1 5H7l1-5z" />
+      <path d="M7 7h10v3a8 8 0 01-1 4l-1 2v4H9v-4L8 14a8 8 0 01-1-4V7z" />
+    </svg>
+  ),
+  eggs: (
+    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M12 22c4.418 0 8-4.03 8-9S16.418 2 12 2 4 6.03 4 13s3.582 9 8 9z" />
+      <circle cx="12" cy="14" r="3" />
+    </svg>
+  ),
+  soy: (
+    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+      <ellipse cx="9" cy="12" rx="3" ry="4" />
+      <ellipse cx="15" cy="12" rx="3" ry="4" />
+      <path d="M12 8V3" />
+      <path d="M10 5l2-2 2 2" />
+    </svg>
+  ),
+  fish: (
+    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M6.5 12c3-6 10-6 14-2-4 4-11 4-14-2 0 0 3 6 0 12" />
+      <circle cx="16" cy="10" r="0.75" fill="currentColor" stroke="none" />
+    </svg>
+  ),
+  pollen: (
+    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+      <circle cx="12" cy="12" r="3" />
+      <path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83" />
+    </svg>
+  ),
+  dust: (
+    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+      <circle cx="8" cy="8" r="1.5" />
+      <circle cx="16" cy="10" r="1" />
+      <circle cx="12" cy="16" r="2" />
+      <circle cx="6" cy="14" r="1" />
+      <circle cx="18" cy="16" r="1.5" />
+    </svg>
+  ),
+  flea: (
+    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+      <ellipse cx="12" cy="14" rx="4" ry="6" />
+      <circle cx="12" cy="6" r="3" />
+      <path d="M5 10l3 2M19 10l-3 2M5 18l3-1M19 18l-3-1" />
+    </svg>
+  ),
 };
 
 /* ------------------------------------------------------------------ */
@@ -445,7 +570,6 @@ function SearchableSelect({
 function BreedAutocomplete({
   value,
   onChange,
-  placeholder,
   error,
 }: {
   value: string;
@@ -454,16 +578,16 @@ function BreedAutocomplete({
   error?: string;
 }) {
   const [open, setOpen] = useState(false);
-  const [query, setQuery] = useState(value);
+  const [search, setSearch] = useState('');
   const wrapperRef = useRef<HTMLDivElement>(null);
+  const searchInputRef = useRef<HTMLInputElement>(null);
+  const listRef = useRef<HTMLUListElement>(null);
 
   const filtered = useMemo(() => {
-    if (!query.trim()) return COMMON_BREEDS;
-    const q = query.toLowerCase();
+    if (!search.trim()) return COMMON_BREEDS;
+    const q = search.toLowerCase();
     return COMMON_BREEDS.filter((b) => b.toLowerCase().includes(q));
-  }, [query]);
-
-  useEffect(() => { setQuery(value); }, [value]);
+  }, [search]);
 
   useEffect(() => {
     function handleClick(e: MouseEvent) {
@@ -473,32 +597,93 @@ function BreedAutocomplete({
     return () => document.removeEventListener('mousedown', handleClick);
   }, []);
 
+  useEffect(() => {
+    if (open && searchInputRef.current) {
+      searchInputRef.current.focus();
+    }
+  }, [open]);
+
+  // Scroll selected breed into view when dropdown opens
+  useEffect(() => {
+    if (open && value && listRef.current) {
+      const selected = listRef.current.querySelector('[data-selected="true"]');
+      if (selected) selected.scrollIntoView({ block: 'nearest' });
+    }
+  }, [open, value]);
+
   return (
     <div ref={wrapperRef} className="relative w-full max-w-md mx-auto">
-      <input
-        type="text"
-        value={query}
-        placeholder={placeholder ?? 'Start typing a breed...'}
-        onChange={(e) => { setQuery(e.target.value); onChange(e.target.value); setOpen(true); }}
-        onFocus={() => setOpen(true)}
-        className={`w-full px-5 py-4 border-2 rounded-2xl text-lg text-gray-900 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-deep-green focus:border-transparent transition-shadow text-center ${
-          error ? 'border-red-400 ring-1 ring-red-400' : 'border-gray-200'
-        }`}
-      />
-      {open && filtered.length > 0 && (
-        <ul className="absolute z-50 mt-2 max-h-48 w-full overflow-y-auto rounded-2xl bg-white border border-gray-200 shadow-lg">
-          {filtered.map((breed) => (
-            <li key={breed}>
-              <button
-                type="button"
-                className="w-full text-left px-5 py-3 text-sm hover:bg-deep-green/5 transition-colors text-gray-800"
-                onMouseDown={(e) => { e.preventDefault(); setQuery(breed); onChange(breed); setOpen(false); }}
-              >
-                {breed}
-              </button>
-            </li>
-          ))}
-        </ul>
+      {/* Trigger button */}
+      <button
+        type="button"
+        onClick={() => { setOpen(!open); setSearch(''); }}
+        className={`w-full px-5 py-4 border-2 rounded-2xl text-lg text-center transition-shadow flex items-center justify-between ${
+          error ? 'border-red-400 ring-1 ring-red-400' : open ? 'border-deep-green ring-2 ring-deep-green' : 'border-gray-200'
+        } ${value ? 'text-gray-900' : 'text-gray-400'}`}
+      >
+        <span className="flex-1">{value || 'Select a breed...'}</span>
+        <svg className={`w-5 h-5 text-gray-400 transition-transform ${open ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+        </svg>
+      </button>
+
+      {/* Dropdown */}
+      {open && (
+        <div className="absolute z-50 mt-2 w-full rounded-2xl bg-white border border-gray-200 shadow-xl overflow-hidden">
+          {/* Search input */}
+          <div className="p-3 border-b border-gray-100">
+            <div className="relative">
+              <svg className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+              </svg>
+              <input
+                ref={searchInputRef}
+                type="text"
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+                placeholder="Search breeds..."
+                className="w-full pl-9 pr-4 py-2.5 text-sm border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-deep-green focus:border-transparent"
+              />
+              {search && (
+                <button
+                  type="button"
+                  onMouseDown={(e) => { e.preventDefault(); setSearch(''); }}
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600"
+                >
+                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                  </svg>
+                </button>
+              )}
+            </div>
+          </div>
+          {/* Results list */}
+          <ul ref={listRef} className="max-h-56 overflow-y-auto overscroll-contain">
+            {filtered.length > 0 ? filtered.map((breed) => (
+              <li key={breed}>
+                <button
+                  type="button"
+                  data-selected={value === breed}
+                  className={`w-full text-left px-5 py-3 text-sm transition-colors flex items-center justify-between ${
+                    value === breed
+                      ? 'bg-deep-green/10 text-deep-green font-medium'
+                      : 'text-gray-800 hover:bg-deep-green/5'
+                  }`}
+                  onMouseDown={(e) => { e.preventDefault(); onChange(breed); setOpen(false); setSearch(''); }}
+                >
+                  {breed}
+                  {value === breed && (
+                    <svg className="w-4 h-4 text-deep-green" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                    </svg>
+                  )}
+                </button>
+              </li>
+            )) : (
+              <li className="px-5 py-4 text-sm text-gray-400 text-center">No breeds found</li>
+            )}
+          </ul>
+        </div>
       )}
       {error && <p className="text-red-500 text-xs mt-2 text-center">{error}</p>}
     </div>
@@ -532,6 +717,8 @@ function SignupPageInner() {
   const [walkPreference] = useState('');
   const [favoriteActivity] = useState('');
   const [temperament, setTemperament] = useState('');
+  const [disabilities, setDisabilities] = useState<string[]>([]);
+  const [allergies, setAllergies] = useState<string[]>([]);
   const [dietPreferences, setDietPreferences] = useState<string[]>([]);
   const [getsAlongWithDogs, setGetsAlongWithDogs] = useState<boolean | null>(null);
   const [lookingForMatch, setLookingForMatch] = useState<boolean | null>(null);
@@ -766,8 +953,7 @@ function SignupPageInner() {
   const [showPassword, setShowPassword] = useState(false);
   const [showEmailForm, setShowEmailForm] = useState(false);
   const [googleLoading, setGoogleLoading] = useState(false);
-  const [completingOAuth, setCompletingOAuth] = useState(false);
-  const [loadingMessage, setLoadingMessage] = useState('');
+  const [completingOAuth] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [shareContact, setShareContact] = useState(true);
 
@@ -782,126 +968,6 @@ function SignupPageInner() {
       router.push('/community');
     }
   }, [authLoading, user, completingOAuth, router, searchParams]);
-
-  /* ---------- OAuth completion: save profiles from sessionStorage ---------- */
-  useEffect(() => {
-    if (searchParams.get('completing') !== '1') return;
-    if (authLoading) return;
-
-    const FUN_MESSAGES = [
-      '🌱 Planting your pet profile...',
-      '🐾 Sniffing out the best settings...',
-      '🦴 Fetching your data...',
-      '🥕 Mixing the perfect recipe...',
-      '🎾 Chasing down your preferences...',
-      '🐕 Teaching new tricks...',
-      '🌿 Growing your pet garden...',
-      '✨ Sprinkling some magic...',
-    ];
-
-    let msgIndex = 0;
-    setCompletingOAuth(true);
-    setLoadingMessage(FUN_MESSAGES[0]);
-    const msgInterval = setInterval(() => {
-      msgIndex = (msgIndex + 1) % FUN_MESSAGES.length;
-      setLoadingMessage(FUN_MESSAGES[msgIndex]);
-    }, 1500);
-
-    async function completeOAuthSignup() {
-      try {
-        // Wait for session to be ready
-        let userId: string | null = null;
-        let userEmail = '';
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        let metadata: Record<string, any> = {};
-
-        for (let i = 0; i < 20; i++) {
-          const { data: { session } } = await supabase.auth.getSession();
-          if (session?.user) {
-            userId = session.user.id;
-            userEmail = session.user.email || '';
-            metadata = session.user.user_metadata || {};
-            break;
-          }
-          await new Promise(r => setTimeout(r, 500));
-        }
-
-        if (!userId) {
-          clearInterval(msgInterval);
-          setLoadingMessage('Could not get session. Please try again.');
-          setTimeout(() => router.push('/auth/signup'), 2000);
-          return;
-        }
-
-        // Read quiz data from sessionStorage
-        const raw = sessionStorage.getItem('jeko-signup-quiz');
-        if (!raw) {
-          clearInterval(msgInterval);
-          router.push('/community');
-          return;
-        }
-
-        const quiz = JSON.parse(raw);
-        const displayName = generateDisplayName(quiz.fullName || metadata?.full_name || metadata?.name || 'User');
-        const emailAddr = userEmail || quiz.email || '';
-
-        // Save user profile
-        await supabase.from('user_profiles').upsert({
-          user_id: userId,
-          full_name: (quiz.fullName || metadata?.full_name || metadata?.name || '').trim(),
-          email: emailAddr.trim().toLowerCase(),
-          age: quiz.age ? parseInt(quiz.age) : null,
-          city: (quiz.city || '').trim(),
-          state: (quiz.state || '').trim(),
-          country: quiz.country || '',
-          phone: (quiz.phone || '').trim() || null,
-        }, { onConflict: 'user_id' });
-
-        // Save pet profile
-        await supabase.from('pet_profiles').upsert({
-          user_id: userId,
-          pet_name: (quiz.dogName || '').trim(),
-          breed: (quiz.breed || '').trim(),
-          pet_type: quiz.petType || 'Dog',
-          city: (quiz.city || '').trim(),
-          city_normalized: (quiz.city || '').trim().toLowerCase(),
-          breed_normalized: (quiz.breed || '').trim().toLowerCase(),
-          contact_email: emailAddr.trim().toLowerCase(),
-          contact_phone: (quiz.phone || '').trim() || null,
-          share_contact: quiz.shareContact ?? true,
-          display_name: displayName,
-          dog_age_years: quiz.dogAge ? parseFloat(quiz.dogAge) : null,
-          weight_kg: quiz.weightKg ? parseFloat(quiz.weightKg) : null,
-          gender: quiz.gender || 'Unknown',
-          diet_preference: quiz.dietPreferences?.length > 0 ? quiz.dietPreferences : null,
-          activity_level: quiz.activityLevel || null,
-          walk_preference: quiz.walkPreference || null,
-          favorite_activity: quiz.favoriteActivity || null,
-          temperament: quiz.temperament || null,
-          looking_for_mate: quiz.lookingForMatch === true ? quiz.lookingForMate : false,
-          preferred_radius_km: quiz.lookingForMatch === true ? quiz.preferredRadiusKm : null,
-          preferred_breed: quiz.lookingForMatch === true ? quiz.preferredBreed || null : null,
-          gets_along_with_dogs: quiz.getsAlongWithDogs ?? true,
-          bio: (quiz.bio || '').trim() || null,
-          profile_photo_url: quiz.uploadedPhotoUrl || null,
-        }, { onConflict: 'user_id' });
-
-        sessionStorage.removeItem('jeko-signup-quiz');
-        clearInterval(msgInterval);
-        setLoadingMessage('🎉 Welcome to Jeko!');
-        setTimeout(() => router.push('/'), 1200);
-      } catch (err) {
-        console.error('OAuth completion error:', err);
-        clearInterval(msgInterval);
-        setLoadingMessage('Something went wrong. Redirecting...');
-        setTimeout(() => router.push('/'), 2000);
-      }
-    }
-
-    completeOAuthSignup();
-    return () => clearInterval(msgInterval);
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [authLoading, searchParams]);
 
   /* ---------- keep stepRef in sync ---------- */
   useEffect(() => {
@@ -970,21 +1036,22 @@ function SignupPageInner() {
       if (!weightKg) newErrors.weightKg = 'Please enter your pet\'s weight';
     }
     if (s === 4 && !temperament) newErrors.activityLevel = 'Please select a personality or skip this step';
-    if (s === 5 && dietPreferences.length === 0) newErrors.diet = 'Please select at least one diet option or skip this step';
-    if (s === 6 && getsAlongWithDogs === null) newErrors.social = 'Please answer the question or skip this step';
-    if (s === 7 && lookingForMatch === null) newErrors.match = 'Please select Yes or No';
-    if (s === 7 && lookingForMatch === true && !lookingForPlaymates && !lookingForMate && !lookingForWalkingBuddies) {
+    // Step 5: disabilities & allergies — no required validation, user can skip
+    if (s === 6 && dietPreferences.length === 0) newErrors.diet = 'Please select at least one diet option or skip this step';
+    if (s === 7 && getsAlongWithDogs === null) newErrors.social = 'Please answer the question or skip this step';
+    if (s === 8 && lookingForMatch === null) newErrors.match = 'Please select Yes or No';
+    if (s === 8 && lookingForMatch === true && !lookingForPlaymates && !lookingForMate && !lookingForWalkingBuddies) {
       newErrors.match = 'Please select at least one option';
     }
-    if (s === 8) {
+    if (s === 9) {
       if (!uploadedPhotoUrl && !uploadingPhoto) newErrors.profilePhoto = 'Please upload a photo of your pet';
     }
-    if (s === 9) {
+    if (s === 10) {
       if (!country) newErrors.country = 'Please select a country';
       if (!city.trim()) newErrors.city = 'City is required';
       if (countryStates[country] && !state.trim()) newErrors.state = 'State / Province is required';
     }
-    if (s === 10) {
+    if (s === 11) {
       if (!fullName.trim()) newErrors.fullName = 'Full name is required';
       if (!email.trim()) newErrors.email = 'Email is required';
       else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) newErrors.email = 'Please enter a valid email';
@@ -1030,6 +1097,26 @@ function SignupPageInner() {
     }, 400);
   }
 
+  /* ---------- toggle disabilities ---------- */
+  function toggleDisability(item: string) {
+    setDisabilities(prev => {
+      if (item === 'None') return ['None'];
+      const without = prev.filter(d => d !== 'None');
+      if (without.includes(item)) return without.filter(d => d !== item);
+      return [...without, item];
+    });
+  }
+
+  /* ---------- toggle allergies ---------- */
+  function toggleAllergy(item: string) {
+    setAllergies(prev => {
+      if (item === 'None') return ['None'];
+      const without = prev.filter(a => a !== 'None');
+      if (without.includes(item)) return without.filter(a => a !== item);
+      return [...without, item];
+    });
+  }
+
   /* ---------- toggle diet preference (max 3) ---------- */
   function toggleDietPreference(diet: string) {
     setDietPreferences(prev => {
@@ -1055,7 +1142,7 @@ function SignupPageInner() {
     const quizData = {
       petType, dogName, breed, dogAge, weightKg, gender, activityLevel,
       walkPreference, favoriteActivity,
-      temperament, dietPreferences, getsAlongWithDogs, lookingForMatch,
+      temperament, disabilities, allergies, dietPreferences, getsAlongWithDogs, lookingForMatch,
       lookingForPlaymates, lookingForMate, lookingForWalkingBuddies,
       preferredBreed, sameBreedOnly, preferredRadiusKm,
       profilePhotoPreview, uploadedPhotoUrl, bio,
@@ -1139,6 +1226,8 @@ function SignupPageInner() {
         weight_kg: weightKg ? parseFloat(weightKg) : null,
         gender: gender || 'Unknown',
         diet_preference: dietPreferences.length > 0 ? dietPreferences : null,
+        disabilities: disabilities.length > 0 && !disabilities.includes('None') ? disabilities : null,
+        allergies: allergies.length > 0 && !allergies.includes('None') ? allergies : null,
         activity_level: activityLevel || null,
         temperament: temperament || null,
         looking_for_mate: lookingForMatch === true ? lookingForMate : false,
@@ -1169,37 +1258,6 @@ function SignupPageInner() {
     return (
       <div className="min-h-screen bg-off-white flex items-center justify-center">
         <div className="w-10 h-10 border-4 border-gold border-t-transparent rounded-full animate-spin" />
-      </div>
-    );
-  }
-
-  /* ---------- OAuth completing screen ---------- */
-  if (completingOAuth) {
-    return (
-      <div className="min-h-screen bg-off-white flex flex-col items-center justify-center px-5">
-        <div className="text-center max-w-sm">
-          <div className="w-20 h-20 mx-auto mb-6 relative">
-            <div className="w-20 h-20 border-4 border-gold border-t-deep-green rounded-full animate-spin" />
-            <div className="absolute inset-0 flex items-center justify-center">
-              <span className="text-2xl">🐾</span>
-            </div>
-          </div>
-          <p className="text-deep-green text-xl font-semibold mb-3 transition-all duration-500">
-            {loadingMessage}
-          </p>
-          <p className="text-deep-green/40 text-sm">
-            Setting up your perfect pet experience...
-          </p>
-          <div className="mt-8 flex justify-center gap-1.5">
-            {[0, 1, 2].map(i => (
-              <div
-                key={i}
-                className="w-2.5 h-2.5 bg-gold rounded-full animate-bounce"
-                style={{ animationDelay: `${i * 0.15}s` }}
-              />
-            ))}
-          </div>
-        </div>
       </div>
     );
   }
@@ -1250,13 +1308,6 @@ function SignupPageInner() {
       <main className="flex-1 flex flex-col">
         <form onSubmit={handleSubmit} noValidate className="flex-1 flex flex-col">
           <div className={`flex-1 flex flex-col items-center justify-center px-5 pt-2 pb-8 transition-all duration-300 ease-in-out ${slideClass}`}>
-
-            {/* Step count */}
-            <div className="w-full max-w-md mb-2 text-center">
-              <span className="text-deep-green/70 text-sm font-medium">
-                Step {step + 1} of {TOTAL_STEPS}
-              </span>
-            </div>
 
             {/* Segmented progress bar */}
             <div className="w-full max-w-md mb-8">
@@ -1323,15 +1374,17 @@ function SignupPageInner() {
                 <input
                   type="text"
                   value={dogName}
-                  onChange={(e) => setDogName(e.target.value)}
+                  onChange={(e) => { if (e.target.value.length <= 30) setDogName(e.target.value); }}
                   onKeyDown={(e) => { if (e.key === 'Enter') { e.preventDefault(); goNext(); } }}
                   placeholder="e.g. Buddy, Luna, Max..."
+                  maxLength={30}
                   autoFocus
                   className={`w-full px-6 py-4 border-2 rounded-2xl text-xl text-center text-gray-900 placeholder:text-gray-300 focus:outline-none focus:ring-2 focus:ring-deep-green focus:border-transparent transition-shadow ${
                     errors.dogName ? 'border-red-400' : 'border-gray-200'
                   }`}
                 />
-                {errors.dogName && <p className="text-red-500 text-sm mt-3">{errors.dogName}</p>}
+                <p className="text-gray-400 text-xs mt-2">{dogName.length}/30</p>
+                {errors.dogName && <p className="text-red-500 text-sm mt-1">{errors.dogName}</p>}
                 <button
                   type="button"
                   onClick={goNext}
@@ -1415,12 +1468,10 @@ function SignupPageInner() {
                   <div>
                     <label className="block text-sm font-medium text-deep-green mb-2">Age (years) <span className="text-red-400">*</span></label>
                     <input
-                      type="number"
-                      min={0}
-                      max={30}
-                      step="0.5"
+                      type="text"
+                      inputMode="decimal"
                       value={dogAge}
-                      onChange={(e) => setDogAge(e.target.value)}
+                      onChange={(e) => { const v = e.target.value; if (v === '' || /^\d{0,2}(\.\d{0,1})?$/.test(v)) setDogAge(v); }}
                       placeholder="e.g. 3"
                       className={`w-full px-4 py-3 border-2 rounded-xl text-center text-gray-900 placeholder:text-gray-300 focus:outline-none focus:ring-2 focus:ring-deep-green focus:border-transparent ${errors.dogAge ? 'border-red-400' : 'border-gray-200'}`}
                     />
@@ -1429,12 +1480,10 @@ function SignupPageInner() {
                   <div>
                     <label className="block text-sm font-medium text-deep-green mb-2">Weight (kg) <span className="text-red-400">*</span></label>
                     <input
-                      type="number"
-                      min={0}
-                      max={150}
-                      step="0.1"
+                      type="text"
+                      inputMode="decimal"
                       value={weightKg}
-                      onChange={(e) => setWeightKg(e.target.value)}
+                      onChange={(e) => { const v = e.target.value; if (v === '' || /^\d{0,3}(\.\d{0,1})?$/.test(v)) setWeightKg(v); }}
                       placeholder="e.g. 12"
                       className={`w-full px-4 py-3 border-2 rounded-xl text-center text-gray-900 placeholder:text-gray-300 focus:outline-none focus:ring-2 focus:ring-deep-green focus:border-transparent ${errors.weightKg ? 'border-red-400' : 'border-gray-200'}`}
                     />
@@ -1489,8 +1538,65 @@ function SignupPageInner() {
               </div>
             )}
 
-            {/* ============ STEP 5: DIET & WALKS & ACTIVITIES ============ */}
+            {/* ============ STEP 5: DISABILITIES & ALLERGIES ============ */}
             {step === 5 && (
+              <div className="w-full max-w-lg text-center">
+                <h1 className="text-2xl sm:text-3xl font-rubik font-bold text-deep-green mb-2">
+                  {petName}&apos;s health & special needs
+                </h1>
+                <p className="text-deep-green/50 text-sm mb-6">Help us understand any special considerations</p>
+
+                <p className="text-sm font-medium text-deep-green mb-3">Any disabilities?</p>
+                <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-8">
+                  {DISABILITIES.map((d) => {
+                    const icons: Record<string, React.ReactNode> = {
+                      None: QIcon.none, Blind: QIcon.blind, Deaf: QIcon.deaf, 'Mobility Issues': QIcon.mobility,
+                      Amputee: QIcon.amputee, Epilepsy: QIcon.epilepsy, Anxiety: QIcon.anxiety, Other: QIcon.other,
+                    };
+                    return (
+                      <QuizCard
+                        key={d}
+                        icon={icons[d] || QIcon.other}
+                        label={d}
+                        selected={disabilities.includes(d)}
+                        onClick={() => toggleDisability(d)}
+                      />
+                    );
+                  })}
+                </div>
+
+                <p className="text-sm font-medium text-deep-green mb-3">Any allergies?</p>
+                <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-8">
+                  {ALLERGIES.map((a) => {
+                    const icons: Record<string, React.ReactNode> = {
+                      None: QIcon.allergyNone, Chicken: QIcon.chicken, Beef: QIcon.beef, Grain: QIcon.grain,
+                      Dairy: QIcon.dairy, Eggs: QIcon.eggs, Soy: QIcon.soy, Fish: QIcon.fish,
+                      Pollen: QIcon.pollen, Dust: QIcon.dust, Flea: QIcon.flea, Other: QIcon.other,
+                    };
+                    return (
+                      <QuizCard
+                        key={a}
+                        icon={icons[a] || QIcon.other}
+                        label={a}
+                        selected={allergies.includes(a)}
+                        onClick={() => toggleAllergy(a)}
+                      />
+                    );
+                  })}
+                </div>
+
+                <button
+                  type="button"
+                  onClick={goNext}
+                  className="bg-gold hover:bg-yellow-500 text-deep-green font-semibold py-3.5 px-10 rounded-2xl transition-all duration-200 shadow-sm hover:shadow-md text-lg"
+                >
+                  Continue
+                </button>
+              </div>
+            )}
+
+            {/* ============ STEP 6: DIET & WALKS & ACTIVITIES ============ */}
+            {step === 6 && (
               <div className="w-full max-w-lg text-center">
                 <h1 className="text-2xl sm:text-3xl font-rubik font-bold text-deep-green mb-2">
                   What does {petName} love?
@@ -1527,8 +1633,8 @@ function SignupPageInner() {
               </div>
             )}
 
-            {/* ============ STEP 6: SOCIAL ============ */}
-            {step === 6 && (
+            {/* ============ STEP 7: SOCIAL ============ */}
+            {step === 7 && (
               <div className="w-full max-w-lg text-center">
                 <h1 className="text-2xl sm:text-3xl font-rubik font-bold text-deep-green mb-2">
                   {petName}&apos;s social life
@@ -1552,8 +1658,8 @@ function SignupPageInner() {
               </div>
             )}
 
-            {/* ============ STEP 7: LOOKING FOR A MATCH? ============ */}
-            {step === 7 && (
+            {/* ============ STEP 8: LOOKING FOR A MATCH? ============ */}
+            {step === 8 && (
               <div className="w-full max-w-lg text-center">
                 <h1 className="text-2xl sm:text-3xl font-rubik font-bold text-deep-green mb-2">
                   Looking for a match?
@@ -1666,8 +1772,8 @@ function SignupPageInner() {
               </div>
             )}
 
-            {/* ============ STEP 8: PHOTO & BIO ============ */}
-            {step === 8 && (
+            {/* ============ STEP 9: PHOTO & BIO ============ */}
+            {step === 9 && (
               <div className="w-full max-w-md text-center">
                 <h1 className="text-2xl sm:text-3xl font-rubik font-bold text-deep-green mb-2">
                   Show off {petName}!
@@ -1776,8 +1882,8 @@ function SignupPageInner() {
               </div>
             )}
 
-            {/* ============ STEP 9: LOCATION ============ */}
-            {step === 9 && (
+            {/* ============ STEP 10: LOCATION ============ */}
+            {step === 10 && (
               <div className="w-full max-w-md text-center">
                 <h1 className="text-2xl sm:text-3xl font-rubik font-bold text-deep-green mb-2">
                   Where are you located?
@@ -1834,8 +1940,8 @@ function SignupPageInner() {
               </div>
             )}
 
-            {/* ============ STEP 10: ACCOUNT CREATION ============ */}
-            {step === 10 && (
+            {/* ============ STEP 11: ACCOUNT CREATION ============ */}
+            {step === 11 && (
               <div className="w-full max-w-md text-center">
                 <h1 className="text-2xl sm:text-3xl font-rubik font-bold text-deep-green mb-2">
                   Almost there! Create your account
