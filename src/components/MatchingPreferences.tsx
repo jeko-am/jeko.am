@@ -341,76 +341,39 @@ export default function MatchingPreferences({ petProfileId, onPreferencesChange 
           {/* Age Range */}
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">
-              Age Range: <span className="text-gold font-semibold">{preferences.preferred_age_min} – {preferences.preferred_age_max} years</span>
+              Max Age: <span className="text-gold font-semibold">{preferences.preferred_age_max} years</span>
             </label>
             <div className="flex items-center gap-3 mt-2">
-              <span className="text-xs text-gray-400 w-6 text-right">{preferences.preferred_age_min}</span>
-              <input
-                type="range"
-                min={0}
-                max={20}
-                value={preferences.preferred_age_min}
-                onChange={(e) => {
-                  const v = parseInt(e.target.value);
-                  updatePreference("preferred_age_min", Math.min(v, (preferences.preferred_age_max ?? 20)));
-                }}
-                className="flex-1 accent-gold"
-              />
-              <span className="text-xs text-gray-400">min</span>
-            </div>
-            <div className="flex items-center gap-3 mt-1">
-              <span className="text-xs text-gray-400 w-6 text-right">{preferences.preferred_age_max}</span>
+              <span className="text-xs text-gray-400">0</span>
               <input
                 type="range"
                 min={0}
                 max={20}
                 value={preferences.preferred_age_max}
-                onChange={(e) => {
-                  const v = parseInt(e.target.value);
-                  updatePreference("preferred_age_max", Math.max(v, (preferences.preferred_age_min ?? 0)));
-                }}
+                onChange={(e) => updatePreference("preferred_age_max", parseInt(e.target.value))}
                 className="flex-1 accent-gold"
               />
-              <span className="text-xs text-gray-400">max</span>
+              <span className="text-xs text-gray-400">20</span>
             </div>
           </div>
 
           {/* Weight Range */}
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">
-              Weight Range: <span className="text-gold font-semibold">{preferences.preferred_weight_min} – {preferences.preferred_weight_max} kg</span>
+              Max Weight: <span className="text-gold font-semibold">{preferences.preferred_weight_max} kg</span>
             </label>
             <div className="flex items-center gap-3 mt-2">
-              <span className="text-xs text-gray-400 w-6 text-right">{preferences.preferred_weight_min}</span>
+              <span className="text-xs text-gray-400">0</span>
               <input
                 type="range"
                 min={0}
                 max={100}
-                step={1}
-                value={preferences.preferred_weight_min}
-                onChange={(e) => {
-                  const v = parseInt(e.target.value);
-                  updatePreference("preferred_weight_min", Math.min(v, (preferences.preferred_weight_max ?? 100)));
-                }}
-                className="flex-1 accent-gold"
-              />
-              <span className="text-xs text-gray-400">min</span>
-            </div>
-            <div className="flex items-center gap-3 mt-1">
-              <span className="text-xs text-gray-400 w-6 text-right">{preferences.preferred_weight_max}</span>
-              <input
-                type="range"
-                min={0}
-                max={100}
-                step={1}
+                step={5}
                 value={preferences.preferred_weight_max}
-                onChange={(e) => {
-                  const v = parseInt(e.target.value);
-                  updatePreference("preferred_weight_max", Math.max(v, (preferences.preferred_weight_min ?? 0)));
-                }}
+                onChange={(e) => updatePreference("preferred_weight_max", parseInt(e.target.value))}
                 className="flex-1 accent-gold"
               />
-              <span className="text-xs text-gray-400">max</span>
+              <span className="text-xs text-gray-400">100</span>
             </div>
           </div>
         </div>
