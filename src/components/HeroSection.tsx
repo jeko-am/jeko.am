@@ -8,7 +8,7 @@ export default function HeroSection({ content }: { content?: Record<string, any>
   const headingHighlight = content?.heading_highlight || "natural dog food";
   const subheading = content?.subheading || "Enjoy fresh food without the fuss, from only 89p a day";
   const buttonText = content?.button_text || "Get started today";
-  const buttonUrl = "/auth/signup";
+  const buttonUrl = content?.button_url || "/auth/signup";
   const bgImage = content?.background_image || "https://images.unsplash.com/photo-1587300003388-59208cc962cb?auto=format&fit=crop&h=800&w=1920";
   const trustpilotLabel = content?.trustpilot_label || "Excellent";
   const trustpilotScoreText = content?.trustpilot_score_text || "4.6 out of 5";

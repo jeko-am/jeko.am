@@ -118,11 +118,13 @@ const HOMEPAGE_SECTIONS: SectionSchema[] = [
       { key: 'heading', label: 'Heading', type: 'text' },
       { key: 'description', label: 'Description', type: 'textarea' },
       { key: 'image', label: 'Section Image', type: 'image' },
+      { key: 'button_text', label: 'Button Text', type: 'text', placeholder: 'Get started' },
+      { key: 'button_url', label: 'Button URL', type: 'url', placeholder: '/auth/signup' },
     ],
     defaultContent: {
       heading: 'What is Jeko pet food?',
       description: 'A natural, healthy dog food designed to take the stress out of meal times.\n\nSimply add water and stir to quickly rehydrate the food and create a healthy, nutritious meal your pup will love.',
-      image: '',
+      image: '', button_text: 'Get started', button_url: '/auth/signup',
     },
   },
   {
@@ -209,12 +211,15 @@ const HOMEPAGE_SECTIONS: SectionSchema[] = [
       { key: 'step_2_description', label: 'Step 2 Description', type: 'textarea' },
       { key: 'step_3_title', label: 'Step 3 Title', type: 'text' },
       { key: 'step_3_description', label: 'Step 3 Description', type: 'textarea' },
+      { key: 'button_text', label: 'Button Text', type: 'text', placeholder: 'Create a tailored plan today' },
+      { key: 'button_url', label: 'Button URL', type: 'url', placeholder: '/auth/signup' },
     ],
     defaultContent: {
       heading: 'How does a Jeko plan work?',
       step_1_title: 'Tell us about your dog', step_1_description: 'Tell us about your dog',
       step_2_title: 'Choose your tailored recipes', step_2_description: 'Choose your tailored recipes',
       step_3_title: 'Delivered to your door for free', step_3_description: 'Delivered to your door for free',
+      button_text: 'Create a tailored plan today', button_url: '/auth/signup',
     },
   },
   {
@@ -295,8 +300,10 @@ const HOMEPAGE_SECTIONS: SectionSchema[] = [
     fields: [
       { key: 'heading', label: 'Heading', type: 'text' },
       { key: 'subheading', label: 'Subheading', type: 'text' },
+      { key: 'button_text', label: 'Button Text', type: 'text', placeholder: 'Get started with 25% off' },
+      { key: 'button_url', label: 'Button URL', type: 'url', placeholder: '/auth/signup' },
     ],
-    defaultContent: { heading: 'Frequently Asked Questions', subheading: 'Everything else you need to know about Jeko' },
+    defaultContent: { heading: 'Frequently Asked Questions', subheading: 'Everything else you need to know about Jeko', button_text: 'Get started with 25% off', button_url: '/auth/signup' },
   },
   {
     name: 'Footer', icon: ICON_PATHS.footer, color: 'bg-gray-800',

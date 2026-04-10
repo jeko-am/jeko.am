@@ -35,6 +35,8 @@ export default function HowPlanWorks({ content }: { content?: any }) {
   const step2Description = content?.step_2_description ?? "Choose your tailored recipes";
   const step3Title = content?.step_3_title ?? "Delivered to your door for free";
   const step3Description = content?.step_3_description ?? "Delivered to your door for free";
+  const buttonText = content?.button_text ?? "Create a tailored plan today";
+  const buttonUrl = content?.button_url ?? "/auth/signup";
 
   const dynamicSteps = [
     {
@@ -118,10 +120,10 @@ export default function HowPlanWorks({ content }: { content?: any }) {
 
         <div className="text-center">
           <Link
-            href="/auth/signup"
+            href={buttonUrl}
             className="inline-block bg-gold text-deep-green px-8 py-3.5 rounded-[5px] font-semibold text-[18px] hover:bg-[#d99500] transition-colors duration-300"
           >
-            Create a tailored plan today
+            {buttonText}
           </Link>
         </div>
       </div>

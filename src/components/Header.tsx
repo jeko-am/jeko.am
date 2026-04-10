@@ -127,11 +127,11 @@ export default function Header({ content }: { content?: any }) {
     }
   };
 
-  const logoText = "JEKO";
-  const ctaText = "Sign up";
-  const ctaUrl = "/auth/signup";
+  const logoText = content?.logo_text ?? "JEKO";
+  const ctaText = content?.cta_text ?? "Sign up";
+  const ctaUrl = content?.cta_url ?? "/auth/signup";
   const helpUrl = content?.help_url ?? "/contact";
-  const loginUrl = "/login"; // Customer login page
+  const loginUrl = content?.login_url ?? "/login";
 
   const navItems = content
     ? [

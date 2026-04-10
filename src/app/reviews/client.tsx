@@ -206,7 +206,7 @@ export default function ReviewsPageClient({ sections }: ReviewsPageClientProps) 
                   {sections[0]?.subheading ?? "Investing in your pet's diet can have a transformational impact on their health and happiness."}
                 </p>
                 <Link
-                  href="/auth/signup"
+                  href={sections[0]?.button_url ?? "/auth/signup"}
                   className="inline-block bg-gold text-deep-green px-8 py-3.5 rounded-[5px] font-bold text-[16px] hover:bg-[#d99500] transition-colors"
                 >
                   {sections[0]?.button_text ?? "Create a tailored plan"}

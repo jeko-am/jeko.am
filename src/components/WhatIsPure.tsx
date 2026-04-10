@@ -8,6 +8,8 @@ export default function WhatIsPure({ content }: { content?: Record<string, any> 
   const heading = content?.heading || "What is Jeko pet food?";
   const description = content?.description || "A natural, healthy dog food designed to take the stress out of meal times.\n\nSimply add water and stir to quickly rehydrate the food and create a healthy, nutritious meal your pup will love.";
   const image = content?.image || "https://www.datocms-assets.com/55536/1689943504-healthy-dog-food-subscription.jpg?auto=format&fit=crop&h=600&w=1000";
+  const buttonText = content?.button_text || "Get started";
+  const buttonUrl = content?.button_url || "/auth/signup";
 
   const paragraphs = description.split("\n\n");
 
@@ -50,10 +52,10 @@ export default function WhatIsPure({ content }: { content?: Record<string, any> 
               ))}
             </div>
             <Link
-              href="/auth/signup"
+              href={buttonUrl}
               className="inline-block border-2 border-deep-green text-deep-green px-7 py-3 rounded-[5px] font-semibold text-[18px] hover:bg-deep-green hover:text-white transition-all duration-300"
             >
-              Get started
+              {buttonText}
             </Link>
           </div>
         </div>

@@ -93,10 +93,10 @@ export default function FAQSection({ content }: { content?: any }) {
 
             <div className="mt-8">
               <Link
-                href="/auth/signup"
+                href={content?.button_url || "/auth/signup"}
                 className="btn-gold inline-block font-semibold text-[18px] transition-colors duration-300"
               >
-                Get started with 25% off
+                {content?.button_text || "Get started with 25% off"}
               </Link>
             </div>
           </div>
