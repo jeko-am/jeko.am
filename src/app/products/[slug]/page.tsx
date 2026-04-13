@@ -489,7 +489,19 @@ export default function ProductDetailPage() {
 
               {/* --- Product Info --- */}
               <div>
-                <h1 className="text-3xl md:text-4xl font-medium text-deep-green mb-4 leading-snug tracking-wide">{product.name}</h1>
+                <h1 className="text-3xl md:text-4xl font-medium text-deep-green mb-2 leading-snug tracking-wide">{product.name}</h1>
+
+                {/* Rating summary */}
+                <a href="#reviews" className="flex items-center gap-2 mb-4 group">
+                  <div className="flex gap-0.5">
+                    {Array.from({ length: 5 }).map((_, i) => (
+                      <svg key={i} className={`w-4.5 h-4.5 ${i < Math.round(displayRating) ? 'text-gold' : 'text-deep-green/15'}`} fill="currentColor" viewBox="0 0 20 20">
+                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                      </svg>
+                    ))}
+                  </div>
+                  <span className="text-sm text-deep-green/60 group-hover:text-deep-green transition">{displayReviewCount} Reviews</span>
+                </a>
 
                 {/* Price */}
                 <div className="mb-2">
@@ -862,109 +874,6 @@ export default function ProductDetailPage() {
         </section>
 
         {/* ============================================================ */}
-        {/* SECTION 4 — Customer Reviews                                 */}
-        {/* ============================================================ */}
-        <section className="bg-white py-16" id="reviews">
-          <div className="max-w-[1200px] mx-auto px-4">
-            <h2 className="text-3xl md:text-4xl font-bold text-deep-green text-center mb-10 italic">Customer Reviews</h2>
-            <div className="flex items-center justify-between mb-6">
-              <div className="flex items-center gap-3">
-                <div className="flex">{Array.from({ length: 5 }).map((_, i) => <svg key={i} className={`w-6 h-6 ${i < Math.round(displayRating) ? 'text-gold' : 'text-deep-green/15'}`} fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" /></svg>)}</div>
-                <span className="text-deep-green font-medium">{displayReviewCount} Reviews</span>
-              </div>
-              <button onClick={() => { setShowReviewForm(!showReviewForm); setReviewSuccess(false); }} className="btn-outline text-sm py-2 px-4">
-                {showReviewForm ? 'Cancel' : 'Write a review'}
-              </button>
-            </div>
-
-            {/* Success message */}
-            {reviewSuccess && (
-              <div className="bg-green-50 border border-green-200 rounded-xl p-4 mb-6 text-center">
-                <p className="text-green-800 font-medium text-sm">Thank you for your review! It will appear once approved.</p>
-              </div>
-            )}
-
-            {/* Review Form */}
-            {showReviewForm && (
-              <div className="bg-beige-light rounded-2xl p-6 mb-8 border border-deep-green/10">
-                <h3 className="text-lg font-semibold text-deep-green mb-4">Write a Review</h3>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-                  <div>
-                    <label className="block text-sm font-medium text-deep-green mb-1">Your Name *</label>
-                    <input value={reviewForm.name} onChange={e => setReviewForm({ ...reviewForm, name: e.target.value })} className="w-full px-3 py-2.5 border border-deep-green/15 rounded-lg text-sm bg-white focus:ring-2 focus:ring-gold/30 focus:border-gold outline-none" placeholder="John D." />
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium text-deep-green mb-1">Email <span className="text-deep-green/40">(optional)</span></label>
-                    <input type="email" value={reviewForm.email} onChange={e => setReviewForm({ ...reviewForm, email: e.target.value })} className="w-full px-3 py-2.5 border border-deep-green/15 rounded-lg text-sm bg-white focus:ring-2 focus:ring-gold/30 focus:border-gold outline-none" placeholder="john@example.com" />
-                  </div>
-                </div>
-
-                {/* Star rating */}
-                <div className="mb-4">
-                  <label className="block text-sm font-medium text-deep-green mb-2">Rating *</label>
-                  <div className="flex gap-1">
-                    {[1, 2, 3, 4, 5].map(star => (
-                      <button key={star} type="button" onClick={() => setReviewForm({ ...reviewForm, rating: star })}>
-                        <svg className={`w-8 h-8 ${star <= reviewForm.rating ? 'text-gold' : 'text-deep-green/15'} hover:text-gold/70 transition cursor-pointer`} fill="currentColor" viewBox="0 0 20 20">
-                          <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                        </svg>
-                      </button>
-                    ))}
-                  </div>
-                </div>
-
-                <div className="mb-4">
-                  <label className="block text-sm font-medium text-deep-green mb-1">Title <span className="text-deep-green/40">(optional)</span></label>
-                  <input value={reviewForm.title} onChange={e => setReviewForm({ ...reviewForm, title: e.target.value })} className="w-full px-3 py-2.5 border border-deep-green/15 rounded-lg text-sm bg-white focus:ring-2 focus:ring-gold/30 focus:border-gold outline-none" placeholder="e.g. My dog loves it!" />
-                </div>
-
-                <div className="mb-4">
-                  <label className="block text-sm font-medium text-deep-green mb-1">Your Review *</label>
-                  <textarea value={reviewForm.text} onChange={e => setReviewForm({ ...reviewForm, text: e.target.value })} rows={4} className="w-full px-3 py-2.5 border border-deep-green/15 rounded-lg text-sm bg-white resize-none focus:ring-2 focus:ring-gold/30 focus:border-gold outline-none" placeholder="Tell us about your experience..." />
-                </div>
-
-                {/* Image upload */}
-                <div className="mb-5">
-                  <label className="block text-sm font-medium text-deep-green mb-2">Add Photos <span className="text-deep-green/40">(up to 5)</span></label>
-                  <div className="flex items-center gap-3 flex-wrap">
-                    {reviewImages.map((img, i) => (
-                      <div key={i} className="relative w-16 h-16 rounded-lg overflow-hidden border border-deep-green/10 group">
-                        <img src={img} alt="" className="w-full h-full object-cover" />
-                        <button onClick={() => setReviewImages(prev => prev.filter((_, idx) => idx !== i))} className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition flex items-center justify-center">
-                          <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" /></svg>
-                        </button>
-                      </div>
-                    ))}
-                    {reviewImages.length < 5 && (
-                      <button onClick={() => reviewFileRef.current?.click()} disabled={reviewUploading} className="w-16 h-16 rounded-lg border-2 border-dashed border-deep-green/20 hover:border-deep-green/40 flex items-center justify-center transition disabled:opacity-50">
-                        {reviewUploading ? (
-                          <div className="w-5 h-5 border-2 border-deep-green/20 border-t-deep-green rounded-full animate-spin" />
-                        ) : (
-                          <svg className="w-6 h-6 text-deep-green/30" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 4v16m8-8H4" /></svg>
-                        )}
-                      </button>
-                    )}
-                    <input ref={reviewFileRef} type="file" accept="image/*" multiple className="hidden" onChange={handleReviewImageUpload} />
-                  </div>
-                </div>
-
-                <button onClick={submitReview} disabled={reviewSubmitting || !reviewForm.name.trim() || !reviewForm.text.trim()} className="bg-deep-green text-white font-semibold py-3 px-8 rounded-full hover:bg-deep-green/90 transition text-sm disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2">
-                  {reviewSubmitting ? (
-                    <><div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" /> Submitting...</>
-                  ) : (
-                    'Submit Review'
-                  )}
-                </button>
-              </div>
-            )}
-
-            <div className="space-y-4">
-              {reviews.map((r, i) => <ReviewCard key={i} review={r} />)}
-            </div>
-          </div>
-        </section>
-
-        {/* ============================================================ */}
         {/* SECTION 5 — "Learn The Science" CTA                         */}
         {/* ============================================================ */}
         <section className="relative overflow-hidden bg-off-white">
@@ -1129,7 +1038,110 @@ export default function ProductDetailPage() {
         </section>
 
         {/* ============================================================ */}
-        {/* SECTION 11 — Related Products                                */}
+        {/* Customer Reviews                                              */}
+        {/* ============================================================ */}
+        <section className="bg-white py-16" id="reviews">
+          <div className="max-w-[1200px] mx-auto px-4">
+            <h2 className="text-3xl md:text-4xl font-bold text-deep-green text-center mb-10 italic">Customer Reviews</h2>
+            <div className="flex items-center justify-between mb-6">
+              <div className="flex items-center gap-3">
+                <div className="flex">{Array.from({ length: 5 }).map((_, i) => <svg key={i} className={`w-6 h-6 ${i < Math.round(displayRating) ? 'text-gold' : 'text-deep-green/15'}`} fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" /></svg>)}</div>
+                <span className="text-deep-green font-medium">{displayReviewCount} Reviews</span>
+              </div>
+              <button onClick={() => { setShowReviewForm(!showReviewForm); setReviewSuccess(false); }} className="btn-outline text-sm py-2 px-4">
+                {showReviewForm ? 'Cancel' : 'Write a review'}
+              </button>
+            </div>
+
+            {/* Success message */}
+            {reviewSuccess && (
+              <div className="bg-green-50 border border-green-200 rounded-xl p-4 mb-6 text-center">
+                <p className="text-green-800 font-medium text-sm">Thank you for your review! It will appear once approved.</p>
+              </div>
+            )}
+
+            {/* Review Form */}
+            {showReviewForm && (
+              <div className="bg-beige-light rounded-2xl p-6 mb-8 border border-deep-green/10">
+                <h3 className="text-lg font-semibold text-deep-green mb-4">Write a Review</h3>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                  <div>
+                    <label className="block text-sm font-medium text-deep-green mb-1">Your Name *</label>
+                    <input value={reviewForm.name} onChange={e => setReviewForm({ ...reviewForm, name: e.target.value })} className="w-full px-3 py-2.5 border border-deep-green/15 rounded-lg text-sm bg-white focus:ring-2 focus:ring-gold/30 focus:border-gold outline-none" placeholder="John D." />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-deep-green mb-1">Email <span className="text-deep-green/40">(optional)</span></label>
+                    <input type="email" value={reviewForm.email} onChange={e => setReviewForm({ ...reviewForm, email: e.target.value })} className="w-full px-3 py-2.5 border border-deep-green/15 rounded-lg text-sm bg-white focus:ring-2 focus:ring-gold/30 focus:border-gold outline-none" placeholder="john@example.com" />
+                  </div>
+                </div>
+
+                {/* Star rating */}
+                <div className="mb-4">
+                  <label className="block text-sm font-medium text-deep-green mb-2">Rating *</label>
+                  <div className="flex gap-1">
+                    {[1, 2, 3, 4, 5].map(star => (
+                      <button key={star} type="button" onClick={() => setReviewForm({ ...reviewForm, rating: star })}>
+                        <svg className={`w-8 h-8 ${star <= reviewForm.rating ? 'text-gold' : 'text-deep-green/15'} hover:text-gold/70 transition cursor-pointer`} fill="currentColor" viewBox="0 0 20 20">
+                          <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                        </svg>
+                      </button>
+                    ))}
+                  </div>
+                </div>
+
+                <div className="mb-4">
+                  <label className="block text-sm font-medium text-deep-green mb-1">Title <span className="text-deep-green/40">(optional)</span></label>
+                  <input value={reviewForm.title} onChange={e => setReviewForm({ ...reviewForm, title: e.target.value })} className="w-full px-3 py-2.5 border border-deep-green/15 rounded-lg text-sm bg-white focus:ring-2 focus:ring-gold/30 focus:border-gold outline-none" placeholder="e.g. My dog loves it!" />
+                </div>
+
+                <div className="mb-4">
+                  <label className="block text-sm font-medium text-deep-green mb-1">Your Review *</label>
+                  <textarea value={reviewForm.text} onChange={e => setReviewForm({ ...reviewForm, text: e.target.value })} rows={4} className="w-full px-3 py-2.5 border border-deep-green/15 rounded-lg text-sm bg-white resize-none focus:ring-2 focus:ring-gold/30 focus:border-gold outline-none" placeholder="Tell us about your experience..." />
+                </div>
+
+                {/* Image upload */}
+                <div className="mb-5">
+                  <label className="block text-sm font-medium text-deep-green mb-2">Add Photos <span className="text-deep-green/40">(up to 5)</span></label>
+                  <div className="flex items-center gap-3 flex-wrap">
+                    {reviewImages.map((img, i) => (
+                      <div key={i} className="relative w-16 h-16 rounded-lg overflow-hidden border border-deep-green/10 group">
+                        <img src={img} alt="" className="w-full h-full object-cover" />
+                        <button onClick={() => setReviewImages(prev => prev.filter((_, idx) => idx !== i))} className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition flex items-center justify-center">
+                          <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" /></svg>
+                        </button>
+                      </div>
+                    ))}
+                    {reviewImages.length < 5 && (
+                      <button onClick={() => reviewFileRef.current?.click()} disabled={reviewUploading} className="w-16 h-16 rounded-lg border-2 border-dashed border-deep-green/20 hover:border-deep-green/40 flex items-center justify-center transition disabled:opacity-50">
+                        {reviewUploading ? (
+                          <div className="w-5 h-5 border-2 border-deep-green/20 border-t-deep-green rounded-full animate-spin" />
+                        ) : (
+                          <svg className="w-6 h-6 text-deep-green/30" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 4v16m8-8H4" /></svg>
+                        )}
+                      </button>
+                    )}
+                    <input ref={reviewFileRef} type="file" accept="image/*" multiple className="hidden" onChange={handleReviewImageUpload} />
+                  </div>
+                </div>
+
+                <button onClick={submitReview} disabled={reviewSubmitting || !reviewForm.name.trim() || !reviewForm.text.trim()} className="bg-deep-green text-white font-semibold py-3 px-8 rounded-full hover:bg-deep-green/90 transition text-sm disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2">
+                  {reviewSubmitting ? (
+                    <><div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" /> Submitting...</>
+                  ) : (
+                    'Submit Review'
+                  )}
+                </button>
+              </div>
+            )}
+
+            <div className="space-y-4">
+              {reviews.map((r, i) => <ReviewCard key={i} review={r} />)}
+            </div>
+          </div>
+        </section>
+
+        {/* ============================================================ */}
+        {/* Related Products                                              */}
         {/* ============================================================ */}
         {related.length > 0 && (
           <section className="bg-off-white py-16">
