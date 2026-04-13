@@ -699,6 +699,28 @@ const REVIEWS_SECTIONS: SectionSchema[] = [
     defaultContent: { primary_text: '25% off your first box', secondary_text: '10% off your next box', link_url: '/auth/signup' },
   },
   {
+    name: 'Review Cards', icon: ICON_PATHS.star, color: 'bg-amber-500',
+    fields: [
+      ...Array.from({ length: 9 }, (_, i) => {
+        const n = i + 1;
+        return [
+          { key: `r${n}_name`, label: `Review ${n} — Name`, type: 'text' as const },
+          { key: `r${n}_rating`, label: `Review ${n} — Rating (1-5)`, type: 'number' as const },
+          { key: `r${n}_title`, label: `Review ${n} — Title`, type: 'text' as const },
+          { key: `r${n}_text`, label: `Review ${n} — Text`, type: 'textarea' as const },
+        ];
+      }).flat(),
+    ],
+    defaultContent: Object.fromEntries([
+      ...Array.from({ length: 9 }, (_, i) => {
+        const n = i + 1;
+        return [
+          [`r${n}_name`, ''], [`r${n}_rating`, 5], [`r${n}_title`, ''], [`r${n}_text`, ''],
+        ];
+      }).flat(),
+    ]),
+  },
+  {
     name: "Lulu's Story", icon: ICON_PATHS.heart, color: 'bg-emerald-500',
     fields: [
       { key: 'heading', label: 'Heading', type: 'text' },
@@ -745,8 +767,24 @@ const REVIEWS_SECTIONS: SectionSchema[] = [
     fields: [
       { key: 'heading', label: 'Heading', type: 'text' },
       { key: 'subtitle', label: 'Subtitle (Gold)', type: 'text' },
+      { key: 'categories', label: 'Category Tags (comma-separated)', type: 'textarea', placeholder: 'Fussy dogs, Colitis, Pancreatitis, ...' },
+      ...Array.from({ length: 4 }, (_, i) => {
+        const n = i + 1;
+        return [
+          { key: `t${n}_name`, label: `Testimonial ${n} — Name`, type: 'text' as const },
+          { key: `t${n}_text`, label: `Testimonial ${n} — Text`, type: 'textarea' as const },
+          { key: `t${n}_image`, label: `Testimonial ${n} — Image`, type: 'image' as const },
+        ];
+      }).flat(),
     ],
-    defaultContent: { heading: "We've helped", subtitle: "1000's of dogs" },
+    defaultContent: {
+      heading: "We've helped", subtitle: "1000's of dogs",
+      categories: 'Fussy dogs,Anal gland problems,Colitis,Happy healthy dogs,Pancreatitis,Oral health,Sensitive skin,Sensitive stomach,Kidney disease,Arthritis,Tear stains,Weight management',
+      t1_name: '', t1_text: '', t1_image: '',
+      t2_name: '', t2_text: '', t2_image: '',
+      t3_name: '', t3_text: '', t3_image: '',
+      t4_name: '', t4_text: '', t4_image: '',
+    },
   },
   {
     name: "Diesel's Story", icon: ICON_PATHS.heart, color: 'bg-deep-green',

@@ -175,6 +175,42 @@ interface ReviewsPageClientProps {
 export default function ReviewsPageClient({ sections }: ReviewsPageClientProps) {
   const [activeCategory, setActiveCategory] = useState("Fussy dogs");
 
+  // Build review cards from CMS (section index 2) with hardcoded fallbacks
+  const s2 = sections[2] || {};
+  const cmsReviews = Array.from({ length: 9 }, (_, i) => {
+    const n = i + 1;
+    const name = s2[`r${n}_name`] || reviews[i]?.name || '';
+    if (!name) return null;
+    return {
+      name,
+      initial: name.charAt(0).toUpperCase(),
+      rating: Number(s2[`r${n}_rating`]) || reviews[i]?.rating || 5,
+      title: s2[`r${n}_title`] || reviews[i]?.title || '',
+      text: s2[`r${n}_text`] || reviews[i]?.text || '',
+    };
+  }).filter(Boolean) as typeof reviews;
+
+  const displayReviews = cmsReviews.length > 0 ? cmsReviews : reviews;
+
+  // Build category testimonials from CMS (section index 6) with hardcoded fallbacks
+  const s6 = sections[6] || {};
+  const cmsCategories = s6.categories
+    ? String(s6.categories).split(',').map((c: string) => c.trim()).filter(Boolean)
+    : categories;
+
+  const cmsTestimonials = Array.from({ length: 4 }, (_, i) => {
+    const n = i + 1;
+    const name = s6[`t${n}_name`] || categoryTestimonials[i]?.name || '';
+    if (!name) return null;
+    return {
+      name,
+      image: s6[`t${n}_image`] || categoryTestimonials[i]?.image || '',
+      text: s6[`t${n}_text`] || categoryTestimonials[i]?.text || '',
+    };
+  }).filter(Boolean) as typeof categoryTestimonials;
+
+  const displayTestimonials = cmsTestimonials.length > 0 ? cmsTestimonials : categoryTestimonials;
+
   return (
     <>
       <EditorOverlay />
@@ -232,11 +268,12 @@ export default function ReviewsPageClient({ sections }: ReviewsPageClientProps) 
           </Link>
         </div>
 
-        {/* Reviews Grid — hardcoded, not editable */}
+        {/* Reviews Grid — editable via store editor */}
+        <div data-section-index={2} data-section-name="Review Cards">
         <section className="bg-off-white py-14">
           <div className="max-w-[1200px] mx-auto px-6">
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-              {reviews.map((review, index) => (
+              {displayReviews.map((review, index) => (
                 <div
                   key={index}
                   className="bg-white rounded-lg p-5 shadow-sm hover:shadow-md transition-shadow cursor-pointer border border-gray-100"
@@ -266,33 +303,34 @@ export default function ReviewsPageClient({ sections }: ReviewsPageClientProps) 
             </div>
           </div>
         </section>
+        </div>
 
         {/* Lulu Story Section */}
-        <div data-section-index={2} data-section-name="Lulu's Story">
+        <div data-section-index={3} data-section-name="Lulu's Story">
           <section className="relative overflow-hidden">
             <div className="flex flex-col md:flex-row min-h-[500px]">
               <div className="w-full md:w-[58%] bg-off-white flex items-center">
                 <div className="px-8 md:px-14 lg:px-20 py-12 max-w-[560px]">
                   <h2 className="text-[34px] md:text-[42px] font-bold text-deep-green font-rubik leading-[1.1] mb-1">
-                    {sections[2]?.heading ?? "Lulu is now"}
+                    {sections[3]?.heading ?? "Lulu is now"}
                   </h2>
                   <p className="text-gold text-[32px] md:text-[40px] font-bold font-rubik mb-6">
-                    {sections[2]?.subtitle ?? "a different dog"}
+                    {sections[3]?.subtitle ?? "a different dog"}
                   </p>
                   <div className="space-y-4">
                     <p className="text-deep-green/90 text-[15px] leading-[1.7]">
-                      {sections[2]?.text_1 ?? "We rescued Lulu from the Pro Dogs Direct charity, who were great. She came to us with a whole host of stomach and digestive issues. They were so bad that euthanasia was discussed twice by our vets."}
+                      {sections[3]?.text_1 ?? "We rescued Lulu from the Pro Dogs Direct charity, who were great. She came to us with a whole host of stomach and digestive issues. They were so bad that euthanasia was discussed twice by our vets."}
                     </p>
                     <p className="text-deep-green/90 text-[15px] leading-[1.7]">
-                      {sections[2]?.text_2 ?? "We tried tablets, gels, and prescription kibble diets, and by this point, we were at our wits end. We found Jeko after seeing a review online, within just 2 days her issues had eased, and now 3 months on she\u2019s a different dog. Thank you so much for saving our dog\u2019s life!"}
+                      {sections[3]?.text_2 ?? "We tried tablets, gels, and prescription kibble diets, and by this point, we were at our wits end. We found Jeko after seeing a review online, within just 2 days her issues had eased, and now 3 months on she\u2019s a different dog. Thank you so much for saving our dog\u2019s life!"}
                     </p>
                   </div>
                 </div>
               </div>
               <div className="w-full md:w-[42%] relative min-h-[350px] md:min-h-[500px]">
                 <StoryMedia
-                  src={sections[2]?.image || "https://www.datocms-assets.com/55536/1647940616-800x800-review-lloyd-peter-lulu.jpg?auto=format&fit=crop&h=600&w=1000"}
-                  videoUrl={sections[2]?.video_url || undefined}
+                  src={sections[3]?.image || "https://www.datocms-assets.com/55536/1647940616-800x800-review-lloyd-peter-lulu.jpg?auto=format&fit=crop&h=600&w=1000"}
+                  videoUrl={sections[3]?.video_url || undefined}
                   alt="Lulu the rescue dog"
                 />
                 {/* Vertical zigzag on left edge - off-white teeth pointing RIGHT into image */}
@@ -311,15 +349,15 @@ export default function ReviewsPageClient({ sections }: ReviewsPageClientProps) 
         </div>
 
         {/* Backed by Vets Section */}
-        <div data-section-index={3} data-section-name="Backed by Vets">
+        <div data-section-index={4} data-section-name="Backed by Vets">
           <section className="bg-deep-green py-16 relative overflow-hidden">
             <div className="max-w-[1100px] mx-auto px-6">
               <div className="text-center mb-12">
                 <h2 className="text-[32px] md:text-[40px] font-bold text-white font-rubik mb-1">
-                  {sections[3]?.heading ?? "Backed by vets"}
+                  {sections[4]?.heading ?? "Backed by vets"}
                 </h2>
                 <p className="text-gold text-[26px] md:text-[34px] font-bold font-rubik">
-                  {sections[3]?.subtitle ?? "Formulated by nutritionists"}
+                  {sections[4]?.subtitle ?? "Formulated by nutritionists"}
                 </p>
               </div>
 
@@ -328,8 +366,8 @@ export default function ReviewsPageClient({ sections }: ReviewsPageClientProps) 
                 <div className="bg-white/10 backdrop-blur-sm rounded-xl p-6 flex flex-col md:flex-row gap-5 items-start">
                   <div className="w-[120px] h-[120px] relative rounded-full overflow-hidden flex-shrink-0 border-2 border-white/20">
                     <Image
-                      src={sections[3]?.vet_1_image || "https://www.datocms-assets.com/55536/1639653590-editorial-process-and-review-julian.jpg?auto=format&fit=crop&h=800&w=800"}
-                      alt={sections[3]?.vet_1_name ?? "Dr Julian Norton"}
+                      src={sections[4]?.vet_1_image || "https://www.datocms-assets.com/55536/1639653590-editorial-process-and-review-julian.jpg?auto=format&fit=crop&h=800&w=800"}
+                      alt={sections[4]?.vet_1_name ?? "Dr Julian Norton"}
                       fill
                       unoptimized
                       className="object-cover"
@@ -337,10 +375,10 @@ export default function ReviewsPageClient({ sections }: ReviewsPageClientProps) 
                   </div>
                   <div className="flex-1">
                     <p className="text-white/90 text-[14px] leading-[1.7] mb-3 italic">
-                      &ldquo;{sections[3]?.vet_1_quote ?? "I\u2019ve been a vet for over 30 years and for about the last 5 years I\u2019ve been suggesting Jeko to my patients. I\u2019ve found it to be incredibly helpful and some of the dogs have responded dramatically well."}&rdquo;
+                      &ldquo;{sections[4]?.vet_1_quote ?? "I\u2019ve been a vet for over 30 years and for about the last 5 years I\u2019ve been suggesting Jeko to my patients. I\u2019ve found it to be incredibly helpful and some of the dogs have responded dramatically well."}&rdquo;
                     </p>
                     <p className="text-white font-bold text-[13px]">
-                      {sections[3]?.vet_1_name ?? "Dr Julian Norton MA VetMB GPcertSAP MRCVS, Partner"}
+                      {sections[4]?.vet_1_name ?? "Dr Julian Norton MA VetMB GPcertSAP MRCVS, Partner"}
                     </p>
                   </div>
                 </div>
@@ -349,8 +387,8 @@ export default function ReviewsPageClient({ sections }: ReviewsPageClientProps) 
                 <div className="bg-white/10 backdrop-blur-sm rounded-xl p-6 flex flex-col md:flex-row gap-5 items-start">
                   <div className="w-[120px] h-[120px] relative rounded-full overflow-hidden flex-shrink-0 border-2 border-white/20">
                     <Image
-                      src={sections[3]?.vet_2_image || "https://www.datocms-assets.com/55536/1647942964-brendan-600x600.jpg?auto=format&fit=crop&h=800&w=800"}
-                      alt={sections[3]?.vet_2_name ?? "Dr Brendan Clark"}
+                      src={sections[4]?.vet_2_image || "https://www.datocms-assets.com/55536/1647942964-brendan-600x600.jpg?auto=format&fit=crop&h=800&w=800"}
+                      alt={sections[4]?.vet_2_name ?? "Dr Brendan Clark"}
                       fill
                       unoptimized
                       className="object-cover"
@@ -358,10 +396,10 @@ export default function ReviewsPageClient({ sections }: ReviewsPageClientProps) 
                   </div>
                   <div className="flex-1">
                     <p className="text-white/90 text-[14px] leading-[1.7] mb-3 italic">
-                      &ldquo;{sections[3]?.vet_2_quote ?? "When owners are asked what makes a healthy pet food, they often mention ingredients. But what is often not considered is how the food is processed, and this is possibly the most significant factor when choosing a dog food."}&rdquo;
+                      &ldquo;{sections[4]?.vet_2_quote ?? "When owners are asked what makes a healthy pet food, they often mention ingredients. But what is often not considered is how the food is processed, and this is possibly the most significant factor when choosing a dog food."}&rdquo;
                     </p>
                     <p className="text-white font-bold text-[13px]">
-                      {sections[3]?.vet_2_name ?? "Dr Brendan Clark MRCVS"}
+                      {sections[4]?.vet_2_name ?? "Dr Brendan Clark MRCVS"}
                     </p>
                   </div>
                 </div>
@@ -371,13 +409,13 @@ export default function ReviewsPageClient({ sections }: ReviewsPageClientProps) 
         </div>
 
         {/* Meet Nelly & Polly */}
-        <div data-section-index={4} data-section-name="Nelly & Polly">
+        <div data-section-index={5} data-section-name="Nelly & Polly">
           <section className="relative overflow-hidden">
             <div className="flex flex-col md:flex-row min-h-[480px]">
               <div className="w-full md:w-[42%] relative min-h-[350px] md:min-h-[480px]">
                 <StoryMedia
-                  src={sections[4]?.image || "https://www.datocms-assets.com/55536/1647612430-800x800-review-polly.jpg?auto=format&fit=crop&h=600&w=1000"}
-                  videoUrl={sections[4]?.video_url || undefined}
+                  src={sections[5]?.image || "https://www.datocms-assets.com/55536/1647612430-800x800-review-polly.jpg?auto=format&fit=crop&h=600&w=1000"}
+                  videoUrl={sections[5]?.video_url || undefined}
                   alt="Nelly the dog"
                 />
                 {/* Vertical zigzag on right edge - off-white teeth pointing LEFT into image */}
@@ -394,17 +432,17 @@ export default function ReviewsPageClient({ sections }: ReviewsPageClientProps) 
               <div className="w-full md:w-[58%] bg-off-white flex items-center">
                 <div className="px-8 md:px-14 lg:px-20 py-12 max-w-[560px]">
                   <h2 className="text-[34px] md:text-[42px] font-bold text-deep-green font-rubik leading-[1.1] mb-6">
-                    {sections[4]?.heading ?? "Meet Nelly & Polly"}
+                    {sections[5]?.heading ?? "Meet Nelly & Polly"}
                   </h2>
                   <div className="space-y-4">
                     <p className="text-deep-green/90 text-[15px] leading-[1.7]">
-                      {sections[4]?.text_1 ?? "I rescued Nelly two years ago. She came to me with alopecia; she would itch so much that she had scabs and whiteheads covering her whole body."}
+                      {sections[5]?.text_1 ?? "I rescued Nelly two years ago. She came to me with alopecia; she would itch so much that she had scabs and whiteheads covering her whole body."}
                     </p>
                     <p className="text-deep-green/90 text-[15px] leading-[1.7]">
-                      {sections[4]?.text_2 ?? "I couldn\u2019t even stroke her, which was heart-breaking."}
+                      {sections[5]?.text_2 ?? "I couldn\u2019t even stroke her, which was heart-breaking."}
                     </p>
                     <p className="text-deep-green/90 text-[15px] leading-[1.7]">
-                      {sections[4]?.text_3 ?? "We switched from brown biscuits to Jeko, and after just a week she completely stopped itching, and her skin cleared up. Thank you Jeko for giving Nelly her life back."}
+                      {sections[5]?.text_3 ?? "We switched from brown biscuits to Jeko, and after just a week she completely stopped itching, and her skin cleared up. Thank you Jeko for giving Nelly her life back."}
                     </p>
                   </div>
                 </div>
@@ -414,21 +452,21 @@ export default function ReviewsPageClient({ sections }: ReviewsPageClientProps) 
         </div>
 
         {/* We've helped 1000's of dogs */}
-        <div data-section-index={5} data-section-name="We've Helped">
+        <div data-section-index={6} data-section-name="We've Helped">
           <section className="bg-off-white py-16">
             <div className="max-w-[1100px] mx-auto px-6">
               <div className="text-center mb-8">
                 <h2 className="text-[32px] md:text-[40px] font-bold text-deep-green font-rubik mb-0">
-                  {sections[5]?.heading ?? "We've helped"}
+                  {sections[6]?.heading ?? "We've helped"}
                 </h2>
                 <p className="text-gold text-[30px] md:text-[38px] font-bold font-rubik">
-                  {sections[5]?.subtitle ?? "1000's of dogs"}
+                  {sections[6]?.subtitle ?? "1000's of dogs"}
                 </p>
               </div>
 
               {/* Category Tags — hardcoded, not editable */}
               <div className="flex flex-wrap justify-center gap-2 mb-10">
-                {categories.map((cat) => (
+                {cmsCategories.map((cat) => (
                   <button
                     key={cat}
                     onClick={() => setActiveCategory(cat)}
@@ -445,7 +483,7 @@ export default function ReviewsPageClient({ sections }: ReviewsPageClientProps) 
 
               {/* Testimonial Cards — hardcoded, not editable */}
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
-                {categoryTestimonials.map((item, i) => (
+                {displayTestimonials.map((item, i) => (
                   <div
                     key={i}
                     className="bg-white rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-shadow border border-gray-100"
@@ -478,28 +516,28 @@ export default function ReviewsPageClient({ sections }: ReviewsPageClientProps) 
         </div>
 
         {/* Diesel Story */}
-        <div data-section-index={6} data-section-name="Diesel's Story">
+        <div data-section-index={7} data-section-name="Diesel's Story">
           <section className="relative overflow-hidden">
             <div className="flex flex-col md:flex-row min-h-[500px]">
               <div className="w-full md:w-[58%] bg-deep-green flex items-center">
                 <div className="px-8 md:px-14 lg:px-20 py-12 max-w-[560px]">
                   <h2 className="text-[34px] md:text-[42px] font-bold text-white font-rubik leading-[1.1] mb-6">
-                    {sections[6]?.heading ?? "Diesel's much healthier"}
+                    {sections[7]?.heading ?? "Diesel's much healthier"}
                   </h2>
                   <div className="space-y-4">
                     <p className="text-white/85 text-[15px] leading-[1.7]">
-                      {sections[6]?.text_1 ?? "This is Diesel. For the first two years, he was a happy and healthy pup, it wasn\u2019t until just after his 2nd birthday that he started to develop skin, stomach and bladder problems."}
+                      {sections[7]?.text_1 ?? "This is Diesel. For the first two years, he was a happy and healthy pup, it wasn\u2019t until just after his 2nd birthday that he started to develop skin, stomach and bladder problems."}
                     </p>
                     <p className="text-white/85 text-[15px] leading-[1.7]">
-                      {sections[6]?.text_2 ?? "We switched to Jeko as it\u2019s nutritious and doesn\u2019t have any of the nasty stuff in it. We\u2019ve realised by investing in Diesel\u2019s health we can give him a healthy, happy life."}
+                      {sections[7]?.text_2 ?? "We switched to Jeko as it\u2019s nutritious and doesn\u2019t have any of the nasty stuff in it. We\u2019ve realised by investing in Diesel\u2019s health we can give him a healthy, happy life."}
                     </p>
                   </div>
                 </div>
               </div>
               <div className="w-full md:w-[42%] relative min-h-[350px] md:min-h-[500px]">
                 <StoryMedia
-                  src={sections[6]?.image || "https://www.datocms-assets.com/55536/1673543479-healthy-dog-food.jpg?auto=format&fit=crop&h=600&w=1000"}
-                  videoUrl={sections[6]?.video_url || undefined}
+                  src={sections[7]?.image || "https://www.datocms-assets.com/55536/1673543479-healthy-dog-food.jpg?auto=format&fit=crop&h=600&w=1000"}
+                  videoUrl={sections[7]?.video_url || undefined}
                   alt="Diesel the dog"
                 />
                 {/* Vertical zigzag on left edge - deep-green teeth pointing RIGHT into image */}
@@ -518,33 +556,33 @@ export default function ReviewsPageClient({ sections }: ReviewsPageClientProps) 
         </div>
 
         {/* Stats Section */}
-        <div data-section-index={7} data-section-name="Stats">
+        <div data-section-index={8} data-section-name="Stats">
           <section className="bg-off-white py-16">
             <div className="max-w-[1200px] mx-auto px-6 text-center">
               <h2 className="text-[34px] md:text-[40px] font-bold text-deep-green font-rubik mb-2">
-                {sections[7]?.heading ?? "We've delivered"}
+                {sections[8]?.heading ?? "We've delivered"}
               </h2>
               <div className="text-[52px] md:text-[72px] font-bold text-gold font-rubik mb-3 leading-[1]">
-                {sections[7]?.number ?? "92,871,751"}
+                {sections[8]?.number ?? "92,871,751"}
               </div>
               <p className="text-[16px] text-deep-green/80 max-w-lg mx-auto mb-12">
-                {sections[7]?.description ?? "meals and changed the lives of thousands of pets for the better"}
+                {sections[8]?.description ?? "meals and changed the lives of thousands of pets for the better"}
               </p>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-3xl mx-auto">
                 <div className="bg-beige-light rounded-xl p-6 flex items-center gap-5">
                   <span className="text-[44px] md:text-[52px] font-bold text-gold font-rubik shrink-0 leading-[1]">
-                    {sections[7]?.stat_1_value ?? "94%"}
+                    {sections[8]?.stat_1_value ?? "94%"}
                   </span>
                   <p className="text-left text-[15px] font-semibold text-deep-green leading-snug">
-                    {sections[7]?.stat_1_label ?? "of customers have seen an improvement in their dog's ailment"}
+                    {sections[8]?.stat_1_label ?? "of customers have seen an improvement in their dog's ailment"}
                   </p>
                 </div>
                 <div className="bg-beige-light rounded-xl p-6 flex items-center gap-5">
                   <span className="text-[44px] md:text-[52px] font-bold text-gold font-rubik shrink-0 leading-[1]">
-                    {sections[7]?.stat_2_value ?? "91%"}
+                    {sections[8]?.stat_2_value ?? "91%"}
                   </span>
                   <p className="text-left text-[15px] font-semibold text-deep-green leading-snug">
-                    {sections[7]?.stat_2_label ?? "of customers have seen overall health improvements since switching to Jeko"}
+                    {sections[8]?.stat_2_label ?? "of customers have seen overall health improvements since switching to Jeko"}
                   </p>
                 </div>
               </div>
