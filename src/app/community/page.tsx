@@ -232,6 +232,7 @@ function ChatBubbleIcon({ size = 28 }: { size?: number }) {
 
 function PostCreator({
   userId,
+  userEmail,
   petProfile,
   isAdmin,
   onPostCreated,
@@ -239,6 +240,7 @@ function PostCreator({
   onClose,
 }: {
   userId: string;
+  userEmail?: string;
   petProfile: PetProfile | null;
   isAdmin: boolean;
   onPostCreated: (post: Post) => void;
@@ -252,7 +254,7 @@ function PostCreator({
   const [error, setError] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
-  const authorName = petProfile?.display_name || user?.email?.split('@')[0] || "Guest";
+  const authorName = petProfile?.display_name || userEmail?.split('@')[0] || "Guest";
   const avatarUrl = petProfile?.avatar_url || petProfile?.profile_photo_url || null;
 
   function handleFileSelect(e: React.ChangeEvent<HTMLInputElement>) {
@@ -538,12 +540,12 @@ function CommentThread({
 
     try {
       const { data: profile } = await supabase
-        .from("pet_profiles")
-        .select("display_name")
+        .from("user_profiles")
+        .select("display_name, full_name, email")
         .eq("user_id", userId)
         .single();
 
-      const authorName = profile?.display_name || "Anonymous";
+      const authorName = profile?.display_name || profile?.full_name || profile?.email?.split('@')[0] || "Guest";
 
       const { data: newComment, error: insertError } = await supabase
         .from("post_comments")
@@ -1542,6 +1544,7 @@ function PostCreatorSheet({
   open,
   onClose,
   userId,
+  userEmail,
   petProfile,
   isAdmin,
   onPostCreated,
@@ -1549,6 +1552,7 @@ function PostCreatorSheet({
   open: boolean;
   onClose: () => void;
   userId: string;
+  userEmail?: string;
   petProfile: PetProfile | null;
   isAdmin: boolean;
   onPostCreated: (post: Post) => void;
@@ -1566,6 +1570,7 @@ function PostCreatorSheet({
       <div className="relative mt-auto bg-white rounded-t-2xl max-h-[90vh] flex flex-col animate-slide-up">
         <PostCreator
           userId={userId}
+          userEmail={userEmail}
           petProfile={petProfile}
           isAdmin={isAdmin}
           onPostCreated={onPostCreated}
@@ -2066,6 +2071,7 @@ export default function FeedPage() {
               <div className="hidden lg:block max-w-[640px] mx-auto">
                 <PostCreator
                   userId={user.id}
+                  userEmail={user.email}
                   petProfile={petProfile}
                   isAdmin={isAdmin}
                   onPostCreated={handlePostCreated}
@@ -2201,6 +2207,7 @@ export default function FeedPage() {
           open={showCreateSheet}
           onClose={() => setShowCreateSheet(false)}
           userId={user.id}
+          userEmail={user.email}
           petProfile={petProfile}
           isAdmin={isAdmin}
           onPostCreated={handlePostCreated}
