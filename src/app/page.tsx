@@ -86,7 +86,9 @@ export default async function Home() {
 
   return (
     <>
-      <MatchingModal />
+      <div data-section-index="15" data-section-name="Popup Modal">
+        <MatchingModal content={sectionData.get(15)} />
+      </div>
       <EditorOverlay />
       <div data-section-index="0" data-section-name="Header">
         <Header content={sectionData.get(0)} />

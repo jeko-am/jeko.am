@@ -3,18 +3,27 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 
-export default function MatchingModal() {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export default function MatchingModal({ content }: { content?: Record<string, any> }) {
   const [isOpen, setIsOpen] = useState(false);
   const [isMounted, setIsMounted] = useState(false);
+
+  const enabled = content?.enabled !== false;
+  const heading = content?.heading || 'Find the Perfect Match';
+  const description = content?.description || 'Connect with pet lovers in your area and find the perfect companion for your furry friend.';
+  const image = content?.image || '/WhatsApp Image 2026-04-11 at 09.54.12.jpeg';
+  const ctaText = content?.cta_text || 'Start Matching';
+  const ctaUrl = content?.cta_url || '/auth/signup';
+  const closeText = content?.close_text || 'Close';
 
   useEffect(() => {
     setIsMounted(true);
     // Check if user has dismissed this modal before
     const isDismissed = localStorage.getItem('matchingModal_dismissed');
-    if (!isDismissed) {
+    if (!isDismissed && enabled) {
       setIsOpen(true);
     }
-  }, []);
+  }, [enabled]);
 
   const handleClose = () => {
     setIsOpen(false);
@@ -46,8 +55,8 @@ export default function MatchingModal() {
           {/* Image Section - 1:1 Square */}
           <div className="w-full md:w-1/2 aspect-square md:aspect-auto bg-off-white overflow-hidden flex-shrink-0">
             <img
-              src="/WhatsApp Image 2026-04-11 at 09.54.12.jpeg"
-              alt="Pets matching"
+              src={image}
+              alt={heading}
               className="w-full h-full object-cover"
             />
           </div>
@@ -78,27 +87,27 @@ export default function MatchingModal() {
             {/* Text Content */}
             <div className="flex-1 flex flex-col justify-center">
               <h2 className="text-base sm:text-2xl font-bold text-deep-green mb-1 sm:mb-3 font-rubik">
-                Find the Perfect Match
+                {heading}
               </h2>
               <p className="text-deep-green/60 text-[11px] sm:text-sm leading-tight sm:leading-relaxed mb-2 sm:mb-4">
-                Connect with pet lovers in your area and find the perfect companion for your furry friend.
+                {description}
               </p>
             </div>
 
             {/* Buttons */}
             <div className="flex flex-col gap-1 sm:gap-2">
               <Link
-                href="/auth/signup"
+                href={ctaUrl}
                 onClick={handleClose}
                 className="w-full bg-gold hover:bg-yellow-500 text-deep-green font-bold py-1.5 sm:py-3 px-3 sm:px-4 rounded-lg sm:rounded-2xl transition-all duration-200 shadow-sm hover:shadow-md text-center text-xs sm:text-base"
               >
-                Start Matching
+                {ctaText}
               </Link>
               <button
                 onClick={handleClose}
                 className="w-full text-deep-green font-semibold py-1 sm:py-2 px-3 sm:px-4 rounded-lg sm:rounded-2xl transition-colors duration-200 text-[11px] sm:text-sm hover:bg-gray-100"
               >
-                Close
+                {closeText}
               </button>
             </div>
           </div>

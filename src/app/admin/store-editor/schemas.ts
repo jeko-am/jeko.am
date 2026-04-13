@@ -329,6 +329,28 @@ const HOMEPAGE_SECTIONS: SectionSchema[] = [
       copyright_text: '© Jeko Ltd 2020-2026', logo_image: '',
     },
   },
+  // ── 15 ── Popup Modal
+  {
+    name: 'Popup Modal', icon: ICON_PATHS.banner, color: 'bg-pink-500',
+    fields: [
+      { key: 'enabled', label: 'Enable Popup', type: 'toggle' },
+      { key: 'heading', label: 'Heading', type: 'text' },
+      { key: 'description', label: 'Description', type: 'textarea' },
+      { key: 'image', label: 'Popup Image', type: 'image' },
+      { key: 'cta_text', label: 'CTA Button Text', type: 'text' },
+      { key: 'cta_url', label: 'CTA Button URL', type: 'url' },
+      { key: 'close_text', label: 'Close Button Text', type: 'text' },
+    ],
+    defaultContent: {
+      enabled: true,
+      heading: 'Find the Perfect Match',
+      description: 'Connect with pet lovers in your area and find the perfect companion for your furry friend.',
+      image: '/WhatsApp Image 2026-04-11 at 09.54.12.jpeg',
+      cta_text: 'Start Matching',
+      cta_url: '/auth/signup',
+      close_text: 'Close',
+    },
+  },
 ];
 
 /* ═══════════════════════════════════════════════════════════════════════════
