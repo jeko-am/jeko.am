@@ -36,7 +36,7 @@ export default function DogChatbot() {
   return (
     <div
       data-chatbot
-      className="fixed bottom-24 lg:bottom-8 right-4 lg:right-8 z-50 flex flex-col items-end gap-2"
+      className="fixed bottom-24 lg:bottom-8 right-4 lg:right-8 z-30 flex flex-col items-end gap-2"
       style={{
         opacity: visible ? 1 : 0,
         transform: visible ? 'translateY(0)' : 'translateY(60px)',

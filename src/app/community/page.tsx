@@ -252,7 +252,7 @@ function PostCreator({
   const [error, setError] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
-  const authorName = petProfile?.display_name || "Anonymous";
+  const authorName = petProfile?.display_name || user?.email?.split('@')[0] || "Guest";
   const avatarUrl = petProfile?.avatar_url || petProfile?.profile_photo_url || null;
 
   function handleFileSelect(e: React.ChangeEvent<HTMLInputElement>) {

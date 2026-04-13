@@ -21,22 +21,12 @@ export default function MatchingModal() {
     localStorage.setItem('matchingModal_dismissed', 'true');
   };
 
-  // Hide chatbot when modal is open
+  // Prevent scrolling when modal is open
   useEffect(() => {
     if (isOpen) {
       document.body.style.overflow = 'hidden';
-      // Hide DogChatbot by adding a data attribute to body
-      const chatbotElement = document.querySelector('[data-chatbot]');
-      if (chatbotElement) {
-        (chatbotElement as HTMLElement).style.display = 'none';
-      }
     } else {
       document.body.style.overflow = 'unset';
-      // Show DogChatbot again
-      const chatbotElement = document.querySelector('[data-chatbot]');
-      if (chatbotElement) {
-        (chatbotElement as HTMLElement).style.display = '';
-      }
     }
   }, [isOpen]);
 

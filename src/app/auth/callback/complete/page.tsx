@@ -102,15 +102,16 @@ function OAuthCompleteInner() {
         }
 
         const quiz = JSON.parse(raw);
-        const displayName = generateDisplayName(
-          quiz.fullName || (metadata?.full_name as string) || (metadata?.name as string) || 'User'
-        );
         const email = userEmail || quiz.email || '';
+        const emailUsername = email.split('@')[0] || '';
+        const displayName = generateDisplayName(
+          quiz.fullName || (metadata?.full_name as string) || (metadata?.name as string) || emailUsername || 'User'
+        );
 
         // Save user profile
         await supabase.from('user_profiles').upsert({
           user_id: userId,
-          full_name: (quiz.fullName || (metadata?.full_name as string) || (metadata?.name as string) || '').trim(),
+          full_name: (quiz.fullName || (metadata?.full_name as string) || (metadata?.name as string) || emailUsername || '').trim(),
           email: email.trim().toLowerCase(),
           display_name: displayName,
           age: quiz.age ? parseInt(quiz.age) : null,
