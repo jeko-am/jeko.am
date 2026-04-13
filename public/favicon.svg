@@ -1,20 +1,17 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256">
-  <!-- Background -->
-  <rect width="256" height="256" fill="#F5EFE1" rx="0"/>
-
   <!-- Paw Print -->
   <!-- Main pad (center) -->
-  <circle cx="128" cy="160" r="28" fill="#FFD700"/>
+  <circle cx="128" cy="160" r="28" fill="#D4AF37"/>
 
   <!-- Top left toe -->
-  <circle cx="85" cy="100" r="18" fill="#FFD700"/>
+  <circle cx="85" cy="100" r="18" fill="#D4AF37"/>
 
   <!-- Top right toe -->
-  <circle cx="171" cy="100" r="18" fill="#FFD700"/>
+  <circle cx="171" cy="100" r="18" fill="#D4AF37"/>
 
   <!-- Left toe -->
-  <circle cx="50" cy="145" r="18" fill="#FFD700"/>
+  <circle cx="50" cy="145" r="18" fill="#D4AF37"/>
 
   <!-- Right toe -->
-  <circle cx="206" cy="145" r="18" fill="#FFD700"/>
+  <circle cx="206" cy="145" r="18" fill="#D4AF37"/>
 </svg>
