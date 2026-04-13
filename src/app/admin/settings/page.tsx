@@ -51,12 +51,13 @@ interface MenuItem {
   sort_order: number;
 }
 
-type TabId = 'shipping' | 'analytics' | 'menus';
+type TabId = 'shipping' | 'analytics' | 'menus' | 'subscribers';
 
 const TABS: { id: TabId; label: string; icon: string }[] = [
   { id: 'shipping', label: 'Shipping', icon: 'M8.25 18.75a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m3 0h6m-9 0H3.375a1.125 1.125 0 01-1.125-1.125V14.25m17.25 4.5a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m3 0h1.125c.621 0 1.129-.504 1.09-1.124a17.902 17.902 0 00-3.213-9.193 2.056 2.056 0 00-1.58-.86H14.25M16.5 18.75h-2.25m0-11.177v-.958c0-.568-.422-1.048-.987-1.106a48.554 48.554 0 00-10.026 0 1.106 1.106 0 00-.987 1.106v7.635m12-6.677v6.677m0 4.5v-4.5m0 0h-12' },
   { id: 'analytics', label: 'Pixels & Tags', icon: 'M3 13.125C3 12.504 3.504 12 4.125 12h2.25c.621 0 1.125.504 1.125 1.125v6.75C7.5 20.496 6.996 21 6.375 21h-2.25A1.125 1.125 0 013 19.875v-6.75zM9.75 8.625c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125v11.25c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V8.625zM16.5 4.125c0-.621.504-1.125 1.125-1.125h2.25C20.496 3 21 3.504 21 4.125v15.75c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V4.125z' },
   { id: 'menus', label: 'Menus', icon: 'M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5' },
+  { id: 'subscribers', label: 'Subscribers', icon: 'M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75' },
 ];
 
 const PIXEL_TYPES = ['Google Analytics', 'Facebook Pixel', 'Google Tag Manager', 'TikTok Pixel', 'Hotjar', 'Custom'];
@@ -102,6 +103,10 @@ export default function AdminSettingsPage() {
   const [editingMenuItem, setEditingMenuItem] = useState<MenuItem | null>(null);
   const [menuItemForm, setMenuItemForm] = useState({ label: '', url: '', parent_id: '', sort_order: 0 });
   const [showMenuItemForm, setShowMenuItemForm] = useState(false);
+
+  // Subscribers
+  const [subscribers, setSubscribers] = useState<{ id: string; email: string; source: string | null; is_subscribed: boolean; subscribed_at: string }[]>([]);
+  const [subscribersLoading, setSubscribersLoading] = useState(true);
 
   // ─── Auto-clear success ────────────────────────────────────────────────────
 
@@ -279,6 +284,19 @@ export default function AdminSettingsPage() {
     }
   }, []);
 
+  const fetchSubscribers = useCallback(async () => {
+    setSubscribersLoading(true);
+    try {
+      const { data, error: err } = await supabase.from('email_subscribers').select('id, email, source, is_subscribed, subscribed_at').order('subscribed_at', { ascending: false });
+      if (err) throw err;
+      setSubscribers(data || []);
+    } catch (err: unknown) {
+      setError(err instanceof Error ? err.message : 'Failed to load subscribers');
+    } finally {
+      setSubscribersLoading(false);
+    }
+  }, []);
+
   const fetchMenuItems = useCallback(async (menuId: string) => {
     try {
       const { data, error: err } = await supabase.from('menu_items').select('*').eq('menu_id', menuId).order('sort_order');
@@ -375,8 +393,9 @@ export default function AdminSettingsPage() {
       case 'shipping': fetchShipping(); break;
       case 'analytics': fetchPixels(); break;
       case 'menus': fetchMenus(); break;
+      case 'subscribers': fetchSubscribers(); break;
     }
-  }, [activeTab, fetchShipping, fetchPixels, fetchMenus]);
+  }, [activeTab, fetchShipping, fetchPixels, fetchMenus, fetchSubscribers]);
 
   // ─── Render Helpers ────────────────────────────────────────────────────────
 
@@ -887,6 +906,46 @@ export default function AdminSettingsPage() {
           {activeTab === 'shipping' && renderShipping()}
           {activeTab === 'analytics' && renderAnalytics()}
           {activeTab === 'menus' && renderMenus()}
+          {activeTab === 'subscribers' && (
+            subscribersLoading ? <LoadingBlock /> : (
+              <div className="space-y-4">
+                <div className="flex items-center justify-between">
+                  <h3 className="text-sm font-semibold text-gray-800">Newsletter Subscribers</h3>
+                  <span className="text-xs text-gray-500">{subscribers.length} total</span>
+                </div>
+                {subscribers.length === 0 ? (
+                  <p className="text-sm text-gray-500 py-8 text-center">No subscribers yet.</p>
+                ) : (
+                  <div className="bg-white border border-gray-200 rounded-xl overflow-hidden">
+                    <table className="w-full">
+                      <thead>
+                        <tr className="bg-gray-50 border-b border-gray-200">
+                          <th className="text-left px-4 py-3 text-xs font-semibold text-gray-500 uppercase">Email</th>
+                          <th className="text-left px-4 py-3 text-xs font-semibold text-gray-500 uppercase">Source</th>
+                          <th className="text-left px-4 py-3 text-xs font-semibold text-gray-500 uppercase">Status</th>
+                          <th className="text-left px-4 py-3 text-xs font-semibold text-gray-500 uppercase">Subscribed</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {subscribers.map(sub => (
+                          <tr key={sub.id} className="border-b border-gray-100 last:border-0">
+                            <td className="px-4 py-3 text-sm text-gray-900">{sub.email}</td>
+                            <td className="px-4 py-3 text-xs text-gray-500">{sub.source || 'website'}</td>
+                            <td className="px-4 py-3">
+                              <span className={`inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium ${sub.is_subscribed ? 'bg-emerald-50 text-emerald-700' : 'bg-gray-100 text-gray-500'}`}>
+                                {sub.is_subscribed ? 'Active' : 'Unsubscribed'}
+                              </span>
+                            </td>
+                            <td className="px-4 py-3 text-xs text-gray-500">{new Date(sub.subscribed_at).toLocaleDateString()}</td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                )}
+              </div>
+            )
+          )}
         </div>
       </div>
     </div>
