@@ -492,7 +492,7 @@ export default function ProductDetailPage() {
                 <h1 className="text-3xl md:text-4xl font-medium text-deep-green mb-2 leading-snug tracking-wide">{product.name}</h1>
 
                 {/* Rating summary */}
-                <a href="#reviews" className="flex items-center gap-2 mb-4 group">
+                <a href="#reviews" onClick={(e) => { e.preventDefault(); document.getElementById('reviews')?.scrollIntoView({ behavior: 'smooth' }); }} className="flex items-center gap-2 mb-4 group cursor-pointer">
                   <div className="flex gap-0.5">
                     {Array.from({ length: 5 }).map((_, i) => (
                       <svg key={i} className={`w-4.5 h-4.5 ${i < Math.round(displayRating) ? 'text-gold' : 'text-deep-green/15'}`} fill="currentColor" viewBox="0 0 20 20">

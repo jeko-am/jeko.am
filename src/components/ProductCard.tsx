@@ -1,8 +1,9 @@
 'use client';
 
 import Link from 'next/link';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useCart } from '@/lib/cart-context';
+import { supabase } from '@/lib/supabase';
 
 interface Product {
   id: string;
@@ -13,6 +14,8 @@ interface Product {
   compare_at_price: number | null;
   images: string[] | null;
   status: string;
+  review_rating_override?: number | null;
+  review_count_override?: number | null;
 }
 
 function formatPrice(value: number): string {
@@ -22,7 +25,25 @@ function formatPrice(value: number): string {
 export default function ProductCard({ product }: { product: Product }) {
   const [imgError, setImgError] = useState(false);
   const [isAdding, setIsAdding] = useState(false);
+  const [reviewStats, setReviewStats] = useState<{ avg: number; count: number } | null>(null);
   const { addItem } = useCart();
+
+  useEffect(() => {
+    async function fetchReviewStats() {
+      const { data } = await supabase
+        .from('product_reviews')
+        .select('rating')
+        .eq('product_id', product.id)
+        .eq('status', 'approved');
+      if (data && data.length > 0) {
+        const avg = data.reduce((s, r) => s + r.rating, 0) / data.length;
+        setReviewStats({ avg, count: data.length });
+      } else {
+        setReviewStats({ avg: 0, count: 0 });
+      }
+    }
+    fetchReviewStats();
+  }, [product.id]);
   const hasDiscount = product.compare_at_price && product.compare_at_price > product.price;
   const discountPercent = hasDiscount
     ? Math.round(((product.compare_at_price! - product.price) / product.compare_at_price!) * 100)
@@ -99,15 +120,20 @@ export default function ProductCard({ product }: { product: Product }) {
               <span className="text-sm text-deep-green/40 line-through">{formatPrice(product.compare_at_price!)}</span>
             )}
           </div>
-          {/* Star rating placeholder */}
-          <div className="flex items-center gap-1 mt-2">
-            {[1, 2, 3, 4, 5].map((star) => (
-              <svg key={star} className="w-4 h-4 text-gold" fill="currentColor" viewBox="0 0 20 20">
-                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-              </svg>
-            ))}
-            <span className="text-xs text-deep-green/50 ml-1">(4.9)</span>
-          </div>
+          {/* Star rating - dynamic from reviews */}
+          {reviewStats && reviewStats.count > 0 && (
+            <div className="flex items-center gap-1 mt-2">
+              {[1, 2, 3, 4, 5].map((star) => {
+                const displayRating = product.review_rating_override ?? reviewStats.avg;
+                return (
+                  <svg key={star} className={`w-4 h-4 ${star <= Math.round(displayRating) ? 'text-gold' : 'text-deep-green/15'}`} fill="currentColor" viewBox="0 0 20 20">
+                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                  </svg>
+                );
+              })}
+              <span className="text-xs text-deep-green/50 ml-1">({product.review_count_override ?? reviewStats.count})</span>
+            </div>
+          )}
           
           {/* Add to Cart Button */}
           <button
