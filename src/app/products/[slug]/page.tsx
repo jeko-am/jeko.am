@@ -878,27 +878,8 @@ export default function ProductDetailPage() {
         {/* ============================================================ */}
         <section className="relative overflow-hidden bg-off-white">
           <div className="flex flex-col md:flex-row min-h-[480px]">
-            {/* Image Left Side - ~43% with vertical zigzag right edge */}
-            <div className="w-full md:w-[43%] relative min-h-[300px] md:min-h-[480px]">
-              <img 
-                src="https://images.unsplash.com/photo-1532094349884-543bc11b234d?w=800&h=600&fit=crop" 
-                alt="Science lab research" 
-                className="w-full h-full object-cover"
-              />
-              {/* Vertical zigzag on right edge - off-white teeth pointing LEFT into image */}
-              <div
-                className="hidden md:block absolute right-0 top-0 h-full z-10"
-                style={{
-                  width: '12px',
-                  backgroundImage: "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 24'%3E%3Cpath d='M12,0 L0,12 L12,24 Z' fill='%23EAE5DC'/%3E%3C/svg%3E\")",
-                  backgroundSize: '12px 24px',
-                  backgroundRepeat: 'repeat-y',
-                }}
-              />
-            </div>
-
-            {/* Text Right Side - ~57% */}
-            <div className="w-full md:w-[57%] flex items-center">
+            {/* Text Left Side - ~57% */}
+            <div className="w-full md:w-[57%] flex items-center order-2 md:order-1">
               <div className="px-8 md:px-16 lg:px-24 py-12">
                 <h2 className="text-[32px] md:text-[40px] font-semibold text-deep-green font-rubik leading-tight mb-4">
                   Learn The Science Behind Jeko
@@ -908,6 +889,25 @@ export default function ProductDetailPage() {
                 </p>
                 <Link href="/benefits" className="btn-gold inline-block">Learn More</Link>
               </div>
+            </div>
+
+            {/* Image Right Side - ~43% with vertical zigzag left edge */}
+            <div className="w-full md:w-[43%] relative min-h-[300px] md:min-h-[480px] order-1 md:order-2">
+              <img
+                src="https://images.unsplash.com/photo-1532094349884-543bc11b234d?w=800&h=600&fit=crop"
+                alt="Science lab research"
+                className="w-full h-full object-cover"
+              />
+              {/* Vertical zigzag on left edge - off-white teeth pointing RIGHT into image */}
+              <div
+                className="hidden md:block absolute left-0 top-0 h-full z-10"
+                style={{
+                  width: '12px',
+                  backgroundImage: "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 24'%3E%3Cpath d='M0,0 L12,12 L0,24 Z' fill='%23EAE5DC'/%3E%3C/svg%3E\")",
+                  backgroundSize: '12px 24px',
+                  backgroundRepeat: 'repeat-y',
+                }}
+              />
             </div>
           </div>
         </section>
@@ -937,9 +937,9 @@ export default function ProductDetailPage() {
           <div className="flex flex-col md:flex-row min-h-[480px]">
             {/* Image Left Side - ~43% with vertical zigzag right edge */}
             <div className="w-full md:w-[43%] relative min-h-[300px] md:min-h-[480px]">
-              <img 
-                src="https://images.unsplash.com/photo-1587300003388-59208cc962cb?w=800&h=600&fit=crop" 
-                alt="Happy dog lifestyle" 
+              <img
+                src="https://images.unsplash.com/photo-1587300003388-59208cc962cb?w=800&h=600&fit=crop"
+                alt="Happy dog lifestyle"
                 className="w-full h-full object-cover"
               />
               {/* Vertical zigzag on right edge - off-white teeth pointing LEFT into image */}
