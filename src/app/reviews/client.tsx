@@ -536,7 +536,7 @@ export default function ReviewsPageClient({ sections }: ReviewsPageClientProps) 
               </div>
               <div className="w-full md:w-[42%] relative min-h-[350px] md:min-h-[500px]">
                 <StoryMedia
-                  src={sections[7]?.image || "https://www.datocms-assets.com/55536/1673543479-healthy-dog-food.jpg?auto=format&fit=crop&h=600&w=1000"}
+                  src={sections[7]?.image || "https://www.datocms-assets.com/55536/1647612430-800x800-review-polly.jpg?auto=format&fit=crop&h=600&w=1000"}
                   videoUrl={sections[7]?.video_url || undefined}
                   alt="Diesel the dog"
                 />
