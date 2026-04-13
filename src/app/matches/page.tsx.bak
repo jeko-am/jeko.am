@@ -58,108 +58,6 @@ function petInitial(pet: MatchWithProfile["otherPet"]): string {
   return pet?.pet_name?.charAt(0).toUpperCase() || "?";
 }
 
-/* ─── Auth Modal ─────────────────────────────────────────────────────── */
-
-function AuthModal() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
-  const [loading, setLoading] = useState(false);
-  const [success, setSuccess] = useState("");
-
-  const handleSubmit = async (e: FormEvent) => {
-    e.preventDefault();
-    setError("");
-    setSuccess("");
-    setLoading(true);
-
-    if (password.length < 6) {
-      setError("Password must be at least 6 characters");
-      setLoading(false);
-      return;
-    }
-
-    const { error: authError } = await supabase.auth.signInWithPassword({
-      email,
-      password,
-    });
-    if (authError) {
-      setError(authError.message);
-    }
-
-    setLoading(false);
-  };
-
-  return (
-    <div className="flex-1 flex items-center justify-center px-4 py-12">
-      <div className="bg-white rounded-2xl shadow-xl p-8 max-w-md w-full">
-        {/* Header */}
-        <div className="text-center mb-6">
-          <div className="w-16 h-16 mx-auto mb-4 bg-gold/20 rounded-full flex items-center justify-center text-4xl">
-            🐾
-          </div>
-          <h2 className="font-medium text-2xl text-deep-green mb-2 tracking-wide">
-            Log in to see matches
-          </h2>
-          <p className="text-deep-green/50 text-[15px]">
-            Welcome back! Enter your details below.
-          </p>
-        </div>
-
-
-        {/* Form */}
-        <form onSubmit={handleSubmit} className="space-y-4">
-          <div>
-            <label className="block text-deep-green/70 text-sm font-medium mb-1.5">
-              Email
-            </label>
-            <input
-              type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              required
-              placeholder="you@example.com"
-              className="w-full px-4 py-3 rounded-xl border border-deep-green/15 text-deep-green text-[15px] placeholder-deep-green/30 outline-none focus:border-gold transition-colors bg-off-white/40"
-            />
-          </div>
-          <div>
-            <label className="block text-deep-green/70 text-sm font-medium mb-1.5">
-              Password
-            </label>
-            <input
-              type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              required
-              placeholder="••••••••"
-              className="w-full px-4 py-3 rounded-xl border border-deep-green/15 text-deep-green text-[15px] placeholder-deep-green/30 outline-none focus:border-gold transition-colors bg-off-white/40"
-            />
-          </div>
-
-          {error && (
-            <p className="text-red-500 text-sm text-center bg-red-50 rounded-lg py-2 px-3">
-              {error}
-            </p>
-          )}
-          {success && (
-            <p className="text-green-600 text-sm text-center bg-green-50 rounded-lg py-2 px-3">
-              {success}
-            </p>
-          )}
-
-          <button
-            type="submit"
-            disabled={loading}
-            className="w-full bg-gold text-deep-green font-medium text-[16px] py-3.5 rounded-xl hover:bg-[#d99500] transition-colors disabled:opacity-50 tracking-wide"
-          >
-            {loading ? "Please wait..." : "Log In"}
-          </button>
-        </form>
-      </div>
-    </div>
-  );
-}
-
 /* ─── Empty State ────────────────────────────────────────────────────── */
 
 function EmptyState() {
@@ -352,7 +250,7 @@ export default function MatchesPage() {
     return (
       <div className="min-h-screen bg-off-white flex flex-col">
         <Header />
-        <div className="flex-1 flex items-center justify-center">
+        <div className="flex-1 flex items-center justify-center pt-[80px]">
           <div className="w-10 h-10 border-4 border-gold border-t-transparent rounded-full animate-spin" />
         </div>
         <Footer />
@@ -366,7 +264,7 @@ export default function MatchesPage() {
     <div className="min-h-screen bg-off-white flex flex-col">
       <Header />
 
-      <div className="flex-1">
+      <div className="flex-1 pt-[80px] lg:pt-[80px]">
         {!user ? (
           <>
             {/* Community promo banner */}

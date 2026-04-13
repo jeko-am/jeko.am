@@ -1,0 +1,7 @@
+[    8506ms] [ERROR] Failed to load resource: the server responded with a status of 400 () @ https://dzhtpnskezkrtfinntbi.supabase.co/auth/v1/token?grant_type=refresh_token:0
+[    8508ms] [ERROR] AuthApiError: Invalid Refresh Token: Refresh Token Not Found
+    at tW (https://jeko-am.vercel.app/_next/static/chunks/3053-58d8f42c29266b21.js?dpl=dpl_3AQwUeVEvQ35FamXPe7ipEFRiBX3:24:43473)
+    at async tV (https://jeko-am.vercel.app/_next/static/chunks/3053-58d8f42c29266b21.js?dpl=dpl_3AQwUeVEvQ35FamXPe7ipEFRiBX3:24:44472)
+    at async tH (https://jeko-am.vercel.app/_next/static/chunks/3053-58d8f42c29266b21.js?dpl=dpl_3AQwUeVEvQ35FamXPe7ipEFRiBX3:24:44128)
+    at async r (https://jeko-am.vercel.app/_next/static/chunks/3053-58d8f42c29266b21.js?dpl=dpl_3AQwUeVEvQ35FamXPe7ipEFRiBX3:37:25653)
+    at async https://jeko-am.vercel.app/_next/static/chunks/3053-58d8f42c29266b21.js?dpl=dpl_3AQwUeVEvQ35FamXPe7ipEFRiBX3:37:25899 @ https://jeko-am.vercel.app/_next/static/chunks/2117-bea982b2ae1cfdf4.js?dpl=dpl_3AQwUeVEvQ35FamXPe7ipEFRiBX3:0

@@ -10,10 +10,10 @@
         "-y",
         "@supabase/mcp-server-supabase@latest",
         "--access-token",
-        "sbp_ef0059ad23b5cbb907cb103b90aea1692c5f3c6b"
+        "sbp_8b37c83916797cb39cc0b9f45fd0fdf61863f997"
       ],
       "env": {
-        "SUPABASE_ACCESS_TOKEN": "sbp_ef0059ad23b5cbb907cb103b90aea1692c5f3c6b"
+        "SUPABASE_ACCESS_TOKEN": "sbp_8b37c83916797cb39cc0b9f45fd0fdf61863f997"
       }
     }
   }

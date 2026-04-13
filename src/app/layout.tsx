@@ -4,7 +4,7 @@ import { AuthProvider } from "@/lib/auth";
 import { CartProvider } from "@/lib/cart-context";
 import MobileNavWrapper from "@/components/MobileNavWrapper";
 import SideCart from "@/components/SideCart";
-import DogChatbot from "@/components/DogChatbot";
+import ConditionalDogChatbot from "@/components/ConditionalDogChatbot";
 import TrackingScripts from "@/components/TrackingScripts";
 import GTMNoScript from "@/components/GTMNoScript";
 
@@ -33,7 +33,7 @@ export default function RootLayout({
             {children}
             <MobileNavWrapper />
             <SideCart />
-            <DogChatbot />
+            <ConditionalDogChatbot />
           </CartProvider>
         </AuthProvider>
       </body>

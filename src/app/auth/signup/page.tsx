@@ -3,10 +3,9 @@
 import { useAuth } from '@/lib/auth';
 import { supabase } from '@/lib/supabase';
 import {
-  COMMON_BREEDS,
+  getBreedsByPetType,
   PET_TYPES,
   DIET_PREFERENCES,
-  ACTIVITY_LEVELS,
   TEMPERAMENTS,
   DISABILITIES,
   ALLERGIES,
@@ -19,17 +18,14 @@ import { FormEvent, useEffect, useMemo, useRef, useState } from 'react';
 /*  Quiz step definitions                                              */
 /* ------------------------------------------------------------------ */
 
-const TOTAL_STEPS = 12;
+const TOTAL_STEPS = 9;
 
 const STEP_TITLES = [
   'What type of pet do you have?',
-  "What's your pet's name?",
   'What breed?',
-  'Tell us more about',
   'Personality',
   'Health & special needs',
   'What do they love?',
-  'Social life',
   'Looking for a match?',
   'Add a photo & bio',
   'Where are you located?',
@@ -42,9 +38,6 @@ const STEP_MESSAGES = [
   '🎯 You\'re on a roll!',
   '💪 Halfway there!',
   '🔥 Getting warmer!',
-  '🏥 Important info!',
-  '⭐ Almost done!',
-  '🎉 You\'re crushing it!',
   '💕 One more thing...',
   '✅ Getting close now!',
   '🏁 Last lap!',
@@ -571,11 +564,13 @@ function BreedAutocomplete({
   value,
   onChange,
   error,
+  petType = 'Dog',
 }: {
   value: string;
   onChange: (v: string) => void;
   placeholder?: string;
   error?: string;
+  petType?: string;
 }) {
   const [open, setOpen] = useState(false);
   const [search, setSearch] = useState('');
@@ -584,10 +579,11 @@ function BreedAutocomplete({
   const listRef = useRef<HTMLUListElement>(null);
 
   const filtered = useMemo(() => {
-    if (!search.trim()) return COMMON_BREEDS;
+    const breeds = getBreedsByPetType(petType);
+    if (!search.trim()) return breeds;
     const q = search.toLowerCase();
-    return COMMON_BREEDS.filter((b) => b.toLowerCase().includes(q));
-  }, [search]);
+    return breeds.filter((b) => b.toLowerCase().includes(q));
+  }, [search, petType]);
 
   useEffect(() => {
     function handleClick(e: MouseEvent) {
@@ -712,7 +708,8 @@ function SignupPageInner() {
   const [dogAge, setDogAge] = useState('');
   const [weightKg, setWeightKg] = useState('');
   const [gender, setGender] = useState('');
-  const [activityLevel, setActivityLevel] = useState('');
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [activityLevel, setActivityLevel] = useState(''); // Moved to preferences (editable after login)
   // walkPreference & favoriteActivity: saved to DB from profile page, not collected in signup
   const [walkPreference] = useState('');
   const [favoriteActivity] = useState('');
@@ -720,13 +717,16 @@ function SignupPageInner() {
   const [disabilities, setDisabilities] = useState<string[]>([]);
   const [allergies, setAllergies] = useState<string[]>([]);
   const [dietPreferences, setDietPreferences] = useState<string[]>([]);
-  const [getsAlongWithDogs, setGetsAlongWithDogs] = useState<boolean | null>(null);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [getsAlongWithDogs, setGetsAlongWithDogs] = useState<boolean | null>(null); // Moved to preferences (editable after login)
   const [lookingForMatch, setLookingForMatch] = useState<boolean | null>(null);
   const [lookingForPlaymates, setLookingForPlaymates] = useState(false);
   const [lookingForMate, setLookingForMate] = useState(false);
   const [lookingForWalkingBuddies, setLookingForWalkingBuddies] = useState(false);
-  const [preferredBreed, setPreferredBreed] = useState('');
-  const [sameBreedOnly, setSameBreedOnly] = useState(false);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [preferredBreed, setPreferredBreed] = useState(''); // Moved to preferences (editable after login)
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [sameBreedOnly, setSameBreedOnly] = useState(false); // Moved to preferences (editable after login)
   const [preferredRadiusKm] = useState(25);
   const [profilePhotoPreview, setProfilePhotoPreview] = useState('');
   const [uploadingPhoto, setUploadingPhoto] = useState(false);
@@ -1009,6 +1009,7 @@ function SignupPageInner() {
     if (!file) return;
     setProfilePhotoPreview(URL.createObjectURL(file));
     setUploadingPhoto(true);
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     setErrors((prev) => { const { profilePhoto, ...rest } = prev; return rest; });
     const promise = (async (): Promise<string | null> => {
       try {
@@ -1034,31 +1035,31 @@ function SignupPageInner() {
   function validateStep(s: number): boolean {
     const newErrors: Record<string, string> = {};
 
-    if (s === 0 && !petType) newErrors.petType = 'Please select your pet type';
-    if (s === 1 && !dogName.trim()) newErrors.dogName = 'Please enter a name';
-    if (s === 2 && !breed.trim()) newErrors.breed = 'Please select or type a breed';
-    if (s === 3) {
+    // Step 0: Pet type & name
+    if (s === 0) {
+      if (!petType) newErrors.petType = 'Please select your pet type';
+      if (!dogName.trim()) newErrors.dogName = 'Please enter a name';
+    }
+    // Step 1: Breed & details
+    if (s === 1) {
+      if (!breed.trim()) newErrors.breed = 'Please select or type a breed';
       if (!gender) newErrors.gender = 'Please select a gender';
       if (!dogAge) newErrors.dogAge = 'Please enter your pet\'s age';
       if (!weightKg) newErrors.weightKg = 'Please enter your pet\'s weight';
     }
-    if (s === 4 && !temperament) newErrors.activityLevel = 'Please select a personality or skip this step';
-    // Step 5: disabilities & allergies — no required validation, user can skip
-    if (s === 6 && dietPreferences.length === 0) newErrors.diet = 'Please select at least one diet option or skip this step';
-    if (s === 7 && getsAlongWithDogs === null) newErrors.social = 'Please answer the question or skip this step';
-    if (s === 8 && lookingForMatch === null) newErrors.match = 'Please select Yes or No';
-    if (s === 8 && lookingForMatch === true && !lookingForPlaymates && !lookingForMate && !lookingForWalkingBuddies) {
-      newErrors.match = 'Please select at least one option';
-    }
-    if (s === 9) {
+    if (s === 2 && !temperament) newErrors.activityLevel = 'Please select a personality or skip this step';
+    // Step 3: disabilities & allergies — no required validation, user can skip
+    if (s === 4 && dietPreferences.length === 0) newErrors.diet = 'Please select at least one diet option or skip this step';
+    if (s === 5 && lookingForMatch === null) newErrors.match = 'Please select Yes or No';
+    if (s === 6) {
       if (!uploadedPhotoUrl && !uploadingPhoto && !profilePhotoPreview) newErrors.profilePhoto = 'Please upload a photo of your pet';
     }
-    if (s === 10) {
+    if (s === 7) {
       if (!country) newErrors.country = 'Please select a country';
       if (!city.trim()) newErrors.city = 'City is required';
       if (countryStates[country] && !state.trim()) newErrors.state = 'State / Province is required';
     }
-    if (s === 11) {
+    if (s === 8) {
       if (!fullName.trim()) newErrors.fullName = 'Full name is required';
       if (!email.trim()) newErrors.email = 'Email is required';
       else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) newErrors.email = 'Please enter a valid email';
@@ -1089,19 +1090,6 @@ function SignupPageInner() {
     setErrors({});
     if (stepRef.current === 0) return;
     window.history.back();
-  }
-
-  /* ---------- auto-advance on card selection for single-select steps ---------- */
-  function selectAndAdvance(setter: (v: string) => void, value: string) {
-    setter(value);
-    setTimeout(() => {
-      const nextStep = Math.min(stepRef.current + 1, TOTAL_STEPS - 1);
-      stepRef.current = nextStep;
-      setDirection('forward');
-      setAnimating(true);
-      window.location.hash = `step-${nextStep}`;
-      setTimeout(() => { setStep(nextStep); setAnimating(false); }, 300);
-    }, 400);
   }
 
   /* ---------- toggle disabilities ---------- */
@@ -1287,10 +1275,19 @@ function SignupPageInner() {
       <header className="bg-deep-green sticky top-0 z-50">
         <div className="max-w-3xl mx-auto px-5 h-[56px] flex items-center justify-between">
           <Link href="/" className="flex-shrink-0">
-            <div className="bg-gold text-deep-green rounded-lg px-2.5 py-1 flex items-center gap-0.5 font-rubik font-bold text-[18px] tracking-wide select-none hover:bg-yellow-400 transition-colors">
-              <span>JEKO</span>
-              <PawIcon />
-            </div>
+            <span
+              style={{
+                fontFamily: "'TR Frankfurter', 'Rubik', sans-serif",
+                color: '#F2A900',
+                transform: 'rotate(-6deg)',
+                display: 'inline-block',
+                fontSize: '28px',
+                fontWeight: 700,
+                lineHeight: 1,
+              }}
+            >
+              JEKO
+            </span>
           </Link>
           <div className="flex items-center gap-4">
             <p className="text-white/60 text-xs sm:text-sm hidden sm:block">
@@ -1353,11 +1350,13 @@ function SignupPageInner() {
             {/* ============ STEP 0: PET TYPE ============ */}
             {step === 0 && (
               <div className="w-full max-w-lg text-center">
-                <h1 className="text-2xl sm:text-3xl font-rubik font-bold text-deep-green mb-2">
+                <h1 className="text-2xl sm:text-3xl font-rubik font-bold text-deep-green mb-6">
                   {STEP_TITLES[0]}
                 </h1>
                 <p className="text-deep-green/50 text-sm mb-8">Let&apos;s get started with the basics</p>
-                <div className="grid grid-cols-3 gap-4">
+
+                {/* Pet Type Selection */}
+                <div className="grid grid-cols-3 gap-4 mb-8">
                   {PET_TYPES.map((pt) => {
                     const icons: Record<string, React.ReactNode> = { Dog: QIcon.dog, Cat: QIcon.cat, Other: QIcon.paw };
                     return (
@@ -1366,40 +1365,39 @@ function SignupPageInner() {
                         icon={icons[pt] || QIcon.paw}
                         label={pt}
                         selected={petType === pt}
-                        onClick={() => selectAndAdvance(setPetType, pt)}
+                        onClick={() => setPetType(pt)}
                       />
                     );
                   })}
                 </div>
-                {errors.petType && <p className="text-red-500 text-sm mt-4">{errors.petType}</p>}
-              </div>
-            )}
+                {errors.petType && <p className="text-red-500 text-sm mt-2">{errors.petType}</p>}
 
-            {/* ============ STEP 1: PET NAME ============ */}
-            {step === 1 && (
-              <div className="w-full max-w-md text-center">
-                <h1 className="text-2xl sm:text-3xl font-rubik font-bold text-deep-green mb-2">
-                  What&apos;s your {petType.toLowerCase() || 'pet'}&apos;s name?
-                </h1>
-                <p className="text-deep-green/50 text-sm mb-8">We&apos;ll use this to personalise the experience</p>
-                <input
-                  type="text"
-                  value={dogName}
-                  onChange={(e) => { if (e.target.value.length <= 30) setDogName(e.target.value); }}
-                  onKeyDown={(e) => { if (e.key === 'Enter') { e.preventDefault(); goNext(); } }}
-                  placeholder="e.g. Buddy, Luna, Max..."
-                  maxLength={30}
-                  autoFocus
-                  className={`w-full px-6 py-4 border-2 rounded-2xl text-xl text-center text-gray-900 placeholder:text-gray-300 focus:outline-none focus:ring-2 focus:ring-deep-green focus:border-transparent transition-shadow ${
-                    errors.dogName ? 'border-red-400' : 'border-gray-200'
-                  }`}
-                />
-                <p className="text-gray-400 text-xs mt-2">{dogName.length}/30</p>
-                {errors.dogName && <p className="text-red-500 text-sm mt-1">{errors.dogName}</p>}
+                {/* Pet Name Input */}
+                {petType && (
+                  <div className="mt-8 max-w-md mx-auto">
+                    <label className="block text-sm font-medium text-deep-green mb-3">What&apos;s your {petType.toLowerCase()}&apos;s name?</label>
+                    <input
+                      type="text"
+                      value={dogName}
+                      onChange={(e) => { if (e.target.value.length <= 30) setDogName(e.target.value); }}
+                      onKeyDown={(e) => { if (e.key === 'Enter') { e.preventDefault(); goNext(); } }}
+                      placeholder="e.g. Buddy, Luna, Max..."
+                      maxLength={30}
+                      autoFocus
+                      className={`w-full px-6 py-4 border-2 rounded-2xl text-lg text-center text-gray-900 placeholder:text-gray-300 focus:outline-none focus:ring-2 focus:ring-deep-green focus:border-transparent transition-shadow ${
+                        errors.dogName ? 'border-red-400' : 'border-gray-200'
+                      }`}
+                    />
+                    <p className="text-gray-400 text-xs mt-2">{dogName.length}/30</p>
+                    {errors.dogName && <p className="text-red-500 text-sm mt-1">{errors.dogName}</p>}
+                  </div>
+                )}
+
                 <button
                   type="button"
                   onClick={goNext}
-                  className="mt-6 bg-gold hover:bg-yellow-500 text-deep-green font-semibold py-3.5 px-10 rounded-2xl transition-all duration-200 shadow-sm hover:shadow-md text-lg"
+                  disabled={!petType || !dogName.trim()}
+                  className="mt-8 bg-gold hover:bg-yellow-500 text-deep-green font-semibold py-3.5 px-10 rounded-2xl transition-all duration-200 shadow-sm hover:shadow-md text-lg disabled:opacity-40 disabled:cursor-not-allowed"
                 >
                   Continue
                 </button>
@@ -1407,20 +1405,22 @@ function SignupPageInner() {
             )}
 
             {/* ============ STEP 2: BREED ============ */}
-            {step === 2 && (
+            {step === 1 && (
               <div className="w-full max-w-lg text-center">
                 <h1 className="text-2xl sm:text-3xl font-rubik font-bold text-deep-green mb-2">
-                  What breed is {petName}?
+                  Tell us more about {petName}
                 </h1>
-                <p className="text-deep-green/50 text-sm mb-6">Search or pick from popular breeds</p>
+                <p className="text-deep-green/50 text-sm mb-8">Breed, gender, age & weight</p>
 
-                <div className="bg-white/80 border-2 border-deep-green/20 rounded-2xl p-5 max-w-md mx-auto">
-                  <p className="text-sm font-semibold text-deep-green mb-3">Select breed</p>
+                {/* Breed */}
+                <div className="bg-white/80 border-2 border-deep-green/20 rounded-2xl p-5 max-w-md mx-auto mb-6">
+                  <p className="text-sm font-semibold text-deep-green mb-3">What breed is {petName}?</p>
                   <BreedAutocomplete
                     value={breed}
                     onChange={setBreed}
                     placeholder="Start typing a breed..."
                     error={errors.breed}
+                    petType={petType}
                   />
                   {/* Popular breeds quick-pick */}
                   <p className="text-xs font-medium text-deep-green/70 mt-4 mb-2">Popular breeds</p>
@@ -1442,28 +1442,9 @@ function SignupPageInner() {
                   </div>
                 </div>
 
-                <button
-                  type="button"
-                  onClick={goNext}
-                  disabled={!breed.trim()}
-                  className="mt-8 bg-gold hover:bg-yellow-500 text-deep-green font-semibold py-3.5 px-10 rounded-2xl transition-all duration-200 shadow-sm hover:shadow-md text-lg disabled:opacity-40 disabled:cursor-not-allowed"
-                >
-                  Continue
-                </button>
-              </div>
-            )}
-
-            {/* ============ STEP 3: AGE / WEIGHT / GENDER ============ */}
-            {step === 3 && (
-              <div className="w-full max-w-lg text-center">
-                <h1 className="text-2xl sm:text-3xl font-rubik font-bold text-deep-green mb-2">
-                  Tell us more about {petName}
-                </h1>
-                <p className="text-deep-green/50 text-sm mb-8">Help us personalise {petName}&apos;s experience</p>
-
                 {/* Gender */}
                 <p className="text-sm font-medium text-deep-green mb-3">Gender</p>
-                <div className="grid grid-cols-2 gap-3 max-w-xs mx-auto mb-8">
+                <div className="grid grid-cols-2 gap-3 max-w-xs mx-auto mb-6">
                   {[
                     { value: 'Male', icon: QIcon.male, label: 'Boy' },
                     { value: 'Female', icon: QIcon.female, label: 'Girl' },
@@ -1477,11 +1458,10 @@ function SignupPageInner() {
                     />
                   ))}
                 </div>
-
                 {errors.gender && <p className="text-red-500 text-sm mt-2">{errors.gender}</p>}
 
                 {/* Age & Weight */}
-                <div className="grid grid-cols-2 gap-4 max-w-sm mx-auto mt-6">
+                <div className="grid grid-cols-2 gap-4 max-w-sm mx-auto">
                   <div>
                     <label className="block text-sm font-medium text-deep-green mb-2">Age (years) <span className="text-red-400">*</span></label>
                     <input
@@ -1511,15 +1491,16 @@ function SignupPageInner() {
                 <button
                   type="button"
                   onClick={goNext}
-                  className="mt-8 bg-gold hover:bg-yellow-500 text-deep-green font-semibold py-3.5 px-10 rounded-2xl transition-all duration-200 shadow-sm hover:shadow-md text-lg"
+                  disabled={!breed.trim()}
+                  className="mt-8 bg-gold hover:bg-yellow-500 text-deep-green font-semibold py-3.5 px-10 rounded-2xl transition-all duration-200 shadow-sm hover:shadow-md text-lg disabled:opacity-40 disabled:cursor-not-allowed"
                 >
                   Continue
                 </button>
               </div>
             )}
 
-            {/* ============ STEP 4: PERSONALITY ============ */}
-            {step === 4 && (
+            {/* ============ STEP 2: PERSONALITY ============ */}
+            {step === 2 && (
               <div className="w-full max-w-lg text-center">
                 <h1 className="text-2xl sm:text-3xl font-rubik font-bold text-deep-green mb-2">
                   How would you describe {petName}?
@@ -1556,7 +1537,7 @@ function SignupPageInner() {
             )}
 
             {/* ============ STEP 5: DISABILITIES & ALLERGIES ============ */}
-            {step === 5 && (
+            {step === 3 && (
               <div className="w-full max-w-lg text-center">
                 <h1 className="text-2xl sm:text-3xl font-rubik font-bold text-deep-green mb-2">
                   {petName}&apos;s health & special needs
@@ -1613,7 +1594,7 @@ function SignupPageInner() {
             )}
 
             {/* ============ STEP 6: DIET & WALKS & ACTIVITIES ============ */}
-            {step === 6 && (
+            {step === 4 && (
               <div className="w-full max-w-lg text-center">
                 <h1 className="text-2xl sm:text-3xl font-rubik font-bold text-deep-green mb-2">
                   What does {petName} love?
@@ -1651,138 +1632,38 @@ function SignupPageInner() {
             )}
 
             {/* ============ STEP 7: SOCIAL ============ */}
-            {step === 7 && (
-              <div className="w-full max-w-lg text-center">
-                <h1 className="text-2xl sm:text-3xl font-rubik font-bold text-deep-green mb-2">
-                  {petName}&apos;s social life
-                </h1>
-                <p className="text-deep-green/50 text-sm mb-8">Help us understand their social preferences</p>
-
-                <p className="text-sm font-medium text-deep-green mb-3">Gets along with other dogs?</p>
-                <div className="grid grid-cols-2 gap-4 max-w-xs mx-auto mb-8">
-                  <QuizCard icon={QIcon.yes} label="Yes!" selected={getsAlongWithDogs === true} onClick={() => setGetsAlongWithDogs(true)} />
-                  <QuizCard icon={QIcon.no} label="Not really" selected={getsAlongWithDogs === false} onClick={() => setGetsAlongWithDogs(false)} />
-                </div>
-
-                {errors.social && <p className="text-red-500 text-sm mt-4">{errors.social}</p>}
-                <button
-                  type="button"
-                  onClick={goNext}
-                  className="bg-gold hover:bg-yellow-500 text-deep-green font-semibold py-3.5 px-10 rounded-2xl transition-all duration-200 shadow-sm hover:shadow-md text-lg"
-                >
-                  Continue
-                </button>
-              </div>
-            )}
-
-            {/* ============ STEP 8: LOOKING FOR A MATCH? ============ */}
-            {step === 8 && (
+            {/* ============ STEP 5: LOOKING FOR A MATCH? ============ */}
+            {step === 5 && (
               <div className="w-full max-w-lg text-center">
                 <h1 className="text-2xl sm:text-3xl font-rubik font-bold text-deep-green mb-2">
                   Looking for a match?
                 </h1>
-                <p className="text-deep-green/50 text-sm mb-8">Would you like {petName} to appear in matches with other pets?</p>
+                <p className="text-deep-green/50 text-sm mb-6">Would you like {petName} to appear in matches with other pets?</p>
+
+                {/* Illustration */}
+                <div className="mb-8 flex justify-center">
+                  <img
+                    src="/WhatsApp_Image_2026-04-11_at_09.54.12-removebg-preview.png"
+                    alt="Pets looking for a match"
+                    className="w-32 h-32 object-contain"
+                  />
+                </div>
 
                 <div className="grid grid-cols-2 gap-4 max-w-xs mx-auto mb-8">
                   <QuizCard icon={QIcon.heart} label="Yes!" selected={lookingForMatch === true} onClick={() => setLookingForMatch(true)} />
                   <QuizCard icon={QIcon.no} label="No thanks" selected={lookingForMatch === false} onClick={() => { setLookingForMatch(false); setLookingForPlaymates(false); setLookingForMate(false); setLookingForWalkingBuddies(false); }} />
                 </div>
 
-                {lookingForMatch === true && (
-                  <div className="space-y-6">
-                    <div>
-                      <p className="text-sm font-medium text-deep-green mb-4">What are you looking for?</p>
-                      <div className="space-y-3 max-w-sm mx-auto">
-                        <label className={`flex items-center gap-3 p-4 rounded-2xl border-2 cursor-pointer transition-all duration-200 ${lookingForPlaymates ? 'border-gold bg-gold/10' : 'border-gray-200 bg-white hover:border-gray-300'}`}>
-                          <input type="checkbox" checked={lookingForPlaymates} onChange={(e) => { setLookingForPlaymates(e.target.checked); if (!e.target.checked) setActivityLevel(''); }} className="w-5 h-5 text-gold focus:ring-gold border-gray-300 rounded cursor-pointer" />
-                          <span className={`${lookingForPlaymates ? 'text-deep-green' : 'text-gray-400'} transition-colors`}>{QIcon.paw}</span>
-                          <span className="text-sm font-medium text-deep-green">Playmates for my pet</span>
-                        </label>
-                        <label className={`flex items-center gap-3 p-4 rounded-2xl border-2 cursor-pointer transition-all duration-200 ${lookingForMate ? 'border-gold bg-gold/10' : 'border-gray-200 bg-white hover:border-gray-300'}`}>
-                          <input type="checkbox" checked={lookingForMate} onChange={(e) => setLookingForMate(e.target.checked)} className="w-5 h-5 text-gold focus:ring-gold border-gray-300 rounded cursor-pointer" />
-                          <span className={`${lookingForMate ? 'text-deep-green' : 'text-gray-400'} transition-colors`}>{QIcon.heart}</span>
-                          <span className="text-sm font-medium text-deep-green">A mate for my pet</span>
-                        </label>
-                        <label className={`flex items-center gap-3 p-4 rounded-2xl border-2 cursor-pointer transition-all duration-200 ${lookingForWalkingBuddies ? 'border-gold bg-gold/10' : 'border-gray-200 bg-white hover:border-gray-300'}`}>
-                          <input type="checkbox" checked={lookingForWalkingBuddies} onChange={(e) => setLookingForWalkingBuddies(e.target.checked)} className="w-5 h-5 text-gold focus:ring-gold border-gray-300 rounded cursor-pointer" />
-                          <span className={`${lookingForWalkingBuddies ? 'text-deep-green' : 'text-gray-400'} transition-colors`}>{QIcon.moderate}</span>
-                          <span className="text-sm font-medium text-deep-green">Walking buddies</span>
-                        </label>
-                      </div>
-                    </div>
-
-                    {/* Activity level — only shown when Playmates is checked */}
-                    {lookingForPlaymates && (
-                      <div>
-                        <p className="text-sm font-medium text-deep-green mb-3">What activity level suits {petName}?</p>
-                        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 max-w-md mx-auto">
-                          {ACTIVITY_LEVELS.map((level) => {
-                            const icons: Record<string, React.ReactNode> = { Low: QIcon.low, Moderate: QIcon.moderate, High: QIcon.high, 'Very High': QIcon.veryHigh };
-                            return (
-                              <QuizCard
-                                key={level}
-                                icon={icons[level] || QIcon.paw}
-                                label={level}
-                                selected={activityLevel === level}
-                                onClick={() => setActivityLevel(level)}
-                              />
-                            );
-                          })}
-                        </div>
-                      </div>
-                    )}
-
-                    {/* Breed preference */}
-                    <div className="bg-white/80 border-2 border-deep-green/20 rounded-2xl p-5 max-w-sm mx-auto">
-                      <p className="text-sm font-semibold text-deep-green mb-4">Breed preference</p>
-
-                      {/* Same breed toggle */}
-                      <label className={`flex items-center gap-3 p-4 rounded-xl border-2 cursor-pointer transition-all duration-200 mb-4 ${
-                        sameBreedOnly ? 'border-gold bg-gold/15 shadow-sm' : 'border-deep-green/30 bg-white hover:border-gold/60 hover:bg-gold/5'
-                      }`}>
-                        <input
-                          type="checkbox"
-                          checked={sameBreedOnly}
-                          onChange={(e) => {
-                            setSameBreedOnly(e.target.checked);
-                            if (e.target.checked) {
-                              setPreferredBreed(breed); // auto-set to their own breed
-                            } else {
-                              setPreferredBreed('');
-                            }
-                          }}
-                          className="w-5 h-5 text-gold focus:ring-gold border-deep-green/40 rounded cursor-pointer"
-                        />
-                        <div className="text-left">
-                          <span className="text-sm font-semibold text-deep-green">Same breed only</span>
-                          {breed && <span className="text-xs font-medium text-deep-green/70 ml-1">({breed})</span>}
-                        </div>
-                      </label>
-
-                      {/* Other breed picker — shown when same breed is NOT checked */}
-                      {!sameBreedOnly && (
-                        <div>
-                          <p className="text-xs font-medium text-deep-green/70 mb-2">Or choose a preferred breed to match with:</p>
-                          <BreedAutocomplete
-                            value={preferredBreed}
-                            onChange={setPreferredBreed}
-                            placeholder="Any breed (optional)"
-                          />
-                        </div>
-                      )}
-                    </div>
-                  </div>
-                )}
-
                 {lookingForMatch === false && (
-                  <p className="text-sm text-deep-green/40 mb-4">{petName} won&apos;t appear in match results. You can change this later in settings.</p>
+                  <p className="text-sm text-deep-green/40 mb-6">{petName} won&apos;t appear in match results. You can change this and customize match preferences later.</p>
                 )}
 
                 {errors.match && <p className="text-red-500 text-sm mt-4">{errors.match}</p>}
                 <button
                   type="button"
                   onClick={goNext}
-                  className="mt-6 bg-gold hover:bg-yellow-500 text-deep-green font-semibold py-3.5 px-10 rounded-2xl transition-all duration-200 shadow-sm hover:shadow-md text-lg"
+                  disabled={lookingForMatch === null}
+                  className="mt-6 bg-gold hover:bg-yellow-500 text-deep-green font-semibold py-3.5 px-10 rounded-2xl transition-all duration-200 shadow-sm hover:shadow-md text-lg disabled:opacity-40 disabled:cursor-not-allowed"
                 >
                   Continue
                 </button>
@@ -1790,7 +1671,7 @@ function SignupPageInner() {
             )}
 
             {/* ============ STEP 9: PHOTO & BIO ============ */}
-            {step === 9 && (
+            {step === 6 && (
               <div className="w-full max-w-md text-center">
                 <h1 className="text-2xl sm:text-3xl font-rubik font-bold text-deep-green mb-2">
                   Show off {petName}!
@@ -1899,7 +1780,7 @@ function SignupPageInner() {
             )}
 
             {/* ============ STEP 10: LOCATION ============ */}
-            {step === 10 && (
+            {step === 7 && (
               <div className="w-full max-w-md text-center">
                 <h1 className="text-2xl sm:text-3xl font-rubik font-bold text-deep-green mb-2">
                   Where are you located?
@@ -1957,7 +1838,7 @@ function SignupPageInner() {
             )}
 
             {/* ============ STEP 11: ACCOUNT CREATION ============ */}
-            {step === 11 && (
+            {step === 8 && (
               <div className="w-full max-w-md text-center">
                 <h1 className="text-2xl sm:text-3xl font-rubik font-bold text-deep-green mb-2">
                   Almost there! Create your account

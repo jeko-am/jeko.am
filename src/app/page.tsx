@@ -18,6 +18,7 @@ import DragonsDen from "@/components/DragonsDen";
 import FAQSection from "@/components/FAQSection";
 import Footer from "@/components/Footer";
 import EditorOverlay from "@/components/EditorOverlay";
+import MatchingModal from "@/components/MatchingModal";
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type SectionContent = Record<string, any>;
@@ -85,6 +86,7 @@ export default async function Home() {
 
   return (
     <>
+      <MatchingModal />
       <EditorOverlay />
       <div data-section-index="0" data-section-name="Header">
         <Header content={sectionData.get(0)} />

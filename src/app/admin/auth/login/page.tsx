@@ -5,11 +5,11 @@ import { useAuth } from '@/lib/auth';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { FormEvent, Suspense, useEffect, useState } from 'react';
 
-function LoginForm() {
-  const { signIn, user, loading } = useAuth();
+function AdminLoginForm() {
+  const { signIn, user, isAdmin, loading } = useAuth();
   const router = useRouter();
   const searchParams = useSearchParams();
-  const redirect = searchParams.get('redirect') || '/profile';
+  const redirect = searchParams.get('redirect') || '/admin/dashboard';
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -17,12 +17,12 @@ function LoginForm() {
   const [submitting, setSubmitting] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
 
-  // Redirect if already authenticated as user
+  // Redirect if already authenticated as admin
   useEffect(() => {
-    if (!loading && user) {
+    if (!loading && user && isAdmin) {
       router.push(redirect);
     }
-  }, [user, loading, router, redirect]);
+  }, [user, isAdmin, loading, router, redirect]);
 
   async function handleSubmit(e: FormEvent) {
     e.preventDefault();
@@ -75,13 +75,13 @@ function LoginForm() {
     );
   }
 
-  // If user is logged in, show redirect state (useEffect will handle)
-  if (user) {
+  // If user is logged in and is admin, show redirect state (useEffect will handle)
+  if (user && isAdmin) {
     return (
       <div className="min-h-screen bg-deep-green flex items-center justify-center">
         <div className="flex flex-col items-center gap-3">
           <div className="w-10 h-10 border-4 border-gold border-t-transparent rounded-full animate-spin" />
-          <p className="text-sm text-white/60">Redirecting...</p>
+          <p className="text-sm text-white/60">Redirecting to dashboard...</p>
         </div>
       </div>
     );
@@ -113,8 +113,8 @@ function LoginForm() {
       <div className="w-full max-w-md">
         {/* Logo / Brand */}
         <div className="text-center mb-8">
-          <h1 className="text-xl font-bold text-white">Welcome back!</h1>
-          <p className="text-white/50 text-xs mt-1">Sign in to your Jeko account</p>
+          <h1 className="text-2xl font-bold text-white">Sign in to Admin</h1>
+          <p className="text-white/50 text-sm mt-1">Jeko Admin Panel</p>
         </div>
 
         {/* Login Card */}
@@ -205,7 +205,7 @@ function LoginForm() {
 
         {/* Footer */}
         <p className="text-center text-white/30 text-xs mt-6">
-          Jeko Pet Matching &middot; Secure login
+          Jeko Admin &middot; Authorized personnel only
         </p>
       </div>
       </div>
@@ -213,7 +213,7 @@ function LoginForm() {
   );
 }
 
-export default function LoginPage() {
+export default function AdminLoginPage() {
   return (
     <Suspense
       fallback={
@@ -222,7 +222,7 @@ export default function LoginPage() {
         </div>
       }
     >
-      <LoginForm />
+      <AdminLoginForm />
     </Suspense>
   );
 }

@@ -4,8 +4,8 @@ import { usePathname } from "next/navigation";
 import BottomNavBar from "./BottomNavBar";
 import { useIsMobile } from "@/lib/useIsMobile";
 
-// Pages where we DON'T show the bottom nav (admin, auth, signup flow)
-const EXCLUDED_PATHS = ["/admin", "/auth"];
+// Pages where we DON'T show the bottom nav (admin dashboard only)
+const EXCLUDED_PATHS = ["/admin"];
 
 export default function MobileNavWrapper() {
   const { isMobile, isLoaded } = useIsMobile();

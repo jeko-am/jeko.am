@@ -1,0 +1,46 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e2]:
+    - banner [ref=e3]:
+      - link "JEKO" [ref=e5] [cursor=pointer]:
+        - /url: /
+        - generic [ref=e6]: JEKO
+    - main [ref=e7]:
+      - generic [ref=e9]:
+        - paragraph [ref=e22]: 🚀 Let's get started!
+        - generic [ref=e23]:
+          - heading "What type of pet do you have?" [level=1] [ref=e24]
+          - paragraph [ref=e25]: Let's get started with the basics
+          - generic [ref=e26]:
+            - button "Dog" [ref=e27] [cursor=pointer]:
+              - img [ref=e29]
+              - generic [ref=e35]: Dog
+            - button "Cat" [ref=e36] [cursor=pointer]:
+              - img [ref=e38]
+              - generic [ref=e43]: Cat
+            - button "Other" [ref=e44] [cursor=pointer]:
+              - img [ref=e46]
+              - generic [ref=e52]: Other
+          - button "Continue" [disabled] [ref=e53]
+  - alert [ref=e54]
+  - navigation [ref=e55]:
+    - generic [ref=e56]:
+      - link "Home" [ref=e57] [cursor=pointer]:
+        - /url: /
+        - img [ref=e58]
+        - generic [ref=e61]: Home
+      - link "Swipe" [ref=e62] [cursor=pointer]:
+        - /url: /swipe
+        - img [ref=e63]
+        - generic [ref=e65]: Swipe
+      - link "Matches" [ref=e66] [cursor=pointer]:
+        - /url: /matches
+        - img [ref=e67]
+        - generic [ref=e72]: Matches
+      - link "Chat" [ref=e73] [cursor=pointer]:
+        - /url: /messages
+        - img [ref=e74]
+        - generic [ref=e76]: Chat
+      - link "Profile" [ref=e77] [cursor=pointer]:
+        - /url: /auth/login
+        - img [ref=e78]
+        - generic [ref=e81]: Profile

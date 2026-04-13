@@ -1,0 +1,25 @@
+- generic [active] [ref=e1]:
+  - paragraph [ref=e5]: Checking session...
+  - alert [ref=e6]
+  - navigation [ref=e7]:
+    - generic [ref=e8]:
+      - link "Home" [ref=e9] [cursor=pointer]:
+        - /url: /
+        - img [ref=e10]
+        - generic [ref=e13]: Home
+      - link "Swipe" [ref=e14] [cursor=pointer]:
+        - /url: /swipe
+        - img [ref=e15]
+        - generic [ref=e17]: Swipe
+      - link "Matches" [ref=e18] [cursor=pointer]:
+        - /url: /matches
+        - img [ref=e19]
+        - generic [ref=e24]: Matches
+      - link "Chat" [ref=e25] [cursor=pointer]:
+        - /url: /messages
+        - img [ref=e26]
+        - generic [ref=e28]: Chat
+      - link "Profile" [ref=e29] [cursor=pointer]:
+        - /url: /auth/login
+        - img [ref=e30]
+        - generic [ref=e33]: Profile

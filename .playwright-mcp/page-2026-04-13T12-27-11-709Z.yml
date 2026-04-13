@@ -1,0 +1,49 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e2]:
+    - link "JEKO" [ref=e5] [cursor=pointer]:
+      - /url: /
+      - generic [ref=e6]:
+        - generic [ref=e7]: JEKO
+        - img [ref=e8]
+    - generic [ref=e15]:
+      - generic [ref=e16]:
+        - generic [ref=e18]: JK
+        - heading "Welcome back!" [level=1] [ref=e19]
+        - paragraph [ref=e20]: Sign in to your Jeko account
+      - generic [ref=e22]:
+        - generic [ref=e23]:
+          - generic [ref=e24]: Email address
+          - textbox "Email address" [ref=e25]:
+            - /placeholder: admin@jeko.am
+        - generic [ref=e26]:
+          - generic [ref=e27]: Password
+          - generic [ref=e28]:
+            - textbox "Password" [ref=e29]:
+              - /placeholder: Enter your password
+            - button [ref=e30] [cursor=pointer]:
+              - img [ref=e31]
+        - button "Sign In" [ref=e34] [cursor=pointer]
+      - paragraph [ref=e35]: Jeko Pet Matching · Secure login
+  - alert [ref=e36]
+  - navigation [ref=e37]:
+    - generic [ref=e38]:
+      - link "Home" [ref=e39] [cursor=pointer]:
+        - /url: /
+        - img [ref=e40]
+        - generic [ref=e43]: Home
+      - link "Swipe" [ref=e44] [cursor=pointer]:
+        - /url: /swipe
+        - img [ref=e45]
+        - generic [ref=e47]: Swipe
+      - link "Matches" [ref=e48] [cursor=pointer]:
+        - /url: /matches
+        - img [ref=e49]
+        - generic [ref=e54]: Matches
+      - link "Chat" [ref=e55] [cursor=pointer]:
+        - /url: /messages
+        - img [ref=e56]
+        - generic [ref=e58]: Chat
+      - link "Profile" [ref=e59] [cursor=pointer]:
+        - /url: /auth/login
+        - img [ref=e60]
+        - generic [ref=e63]: Profile

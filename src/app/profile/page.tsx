@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
 // import Image from "next/image";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
@@ -47,6 +48,7 @@ interface PetProfile {
 /* ─── Profile Page Component ─────────────────────────────────────────────── */
 
 export default function ProfilePage() {
+  const router = useRouter();
   const { user, loading: authLoading } = useAuth();
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
@@ -88,9 +90,10 @@ export default function ProfilePage() {
     if (user) {
       fetchProfiles();
     } else {
-      setLoading(false);
+      // Redirect to user login if not authenticated
+      router.push('/login');
     }
-  }, [user, authLoading]);
+  }, [user, authLoading, router]);
 
   const fetchProfiles = async () => {
     try {
