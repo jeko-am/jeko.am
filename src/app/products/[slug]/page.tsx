@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState, useRef } from 'react';
+import { useEffect, useState, useRef, useCallback } from 'react';
 import { useParams } from 'next/navigation';
 import Link from 'next/link';
 import { supabase } from '@/lib/supabase';
@@ -24,6 +24,20 @@ interface Product {
   weight_unit: string | null;
   status: string;
   category_id: string | null;
+  created_at: string;
+  review_rating_override?: number | null;
+  review_count_override?: number | null;
+}
+
+interface ProductReview {
+  id: string;
+  product_id: string;
+  reviewer_name: string;
+  rating: number;
+  title: string | null;
+  review_text: string;
+  images: string[];
+  is_verified: boolean;
   created_at: string;
 }
 
@@ -114,29 +128,47 @@ function VetCard({ vet }: { vet: { name: string; role: string; text: string; pro
 /* ------------------------------------------------------------------ */
 /* Review Card                                                        */
 /* ------------------------------------------------------------------ */
-function ReviewCard({ review }: { review: { name: string; date: string; rating: number; text: string; variant?: string; verified: boolean } }) {
+function ReviewCard({ review }: { review: { name: string; date: string; rating: number; text: string; title?: string; variant?: string; verified: boolean; images?: string[] }; }) {
+  const [lightbox, setLightbox] = useState<string | null>(null);
   return (
-    <div className="border border-deep-green/10 rounded-xl p-5">
-      <div className="flex items-center gap-2 mb-1">
-        <span className="font-medium text-deep-green text-sm tracking-wide">{review.name}</span>
-        {review.verified && (
-          <span className="inline-flex items-center gap-1 text-xs text-gold">
-            <svg className="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M6.267 3.455a3.066 3.066 0 001.745-.723 3.066 3.066 0 013.976 0 3.066 3.066 0 001.745.723 3.066 3.066 0 012.812 2.812c.051.643.304 1.254.723 1.745a3.066 3.066 0 010 3.976 3.066 3.066 0 00-.723 1.745 3.066 3.066 0 01-2.812 2.812 3.066 3.066 0 00-1.745.723 3.066 3.066 0 01-3.976 0 3.066 3.066 0 00-1.745-.723 3.066 3.066 0 01-2.812-2.812 3.066 3.066 0 00-.723-1.745 3.066 3.066 0 010-3.976 3.066 3.066 0 00.723-1.745 3.066 3.066 0 012.812-2.812zm7.44 5.252a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" /></svg>
-            Verified
-          </span>
+    <>
+      {lightbox && (
+        <div className="fixed inset-0 z-50 bg-black/80 flex items-center justify-center p-4" onClick={() => setLightbox(null)}>
+          <img src={lightbox} alt="Review" className="max-w-full max-h-[80vh] object-contain rounded-lg" />
+        </div>
+      )}
+      <div className="border border-deep-green/10 rounded-xl p-5">
+        <div className="flex items-center gap-2 mb-1">
+          <span className="font-medium text-deep-green text-sm tracking-wide">{review.name}</span>
+          {review.verified && (
+            <span className="inline-flex items-center gap-1 text-xs text-gold">
+              <svg className="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M6.267 3.455a3.066 3.066 0 001.745-.723 3.066 3.066 0 013.976 0 3.066 3.066 0 001.745.723 3.066 3.066 0 012.812 2.812c.051.643.304 1.254.723 1.745a3.066 3.066 0 010 3.976 3.066 3.066 0 00-.723 1.745 3.066 3.066 0 01-2.812 2.812 3.066 3.066 0 00-1.745.723 3.066 3.066 0 01-3.976 0 3.066 3.066 0 00-1.745-.723 3.066 3.066 0 01-2.812-2.812 3.066 3.066 0 00-.723-1.745 3.066 3.066 0 010-3.976 3.066 3.066 0 00.723-1.745 3.066 3.066 0 012.812-2.812zm7.44 5.252a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" /></svg>
+              Verified
+            </span>
+          )}
+        </div>
+        <div className="text-xs text-deep-green/40 mb-2">{review.date}</div>
+        <div className="flex gap-0.5 mb-2">
+          {Array.from({ length: 5 }).map((_, i) => (
+            <svg key={i} className={`w-4 h-4 ${i < review.rating ? 'text-gold' : 'text-deep-green/15'}`} fill="currentColor" viewBox="0 0 20 20">
+              <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+            </svg>
+          ))}
+        </div>
+        {review.title && <p className="text-sm font-medium text-deep-green mb-1">{review.title}</p>}
+        <p className="text-sm text-deep-green/70">{review.text}</p>
+        {review.images && review.images.length > 0 && (
+          <div className="flex gap-2 mt-3">
+            {review.images.map((img, i) => (
+              <button key={i} onClick={() => setLightbox(img)} className="w-16 h-16 rounded-lg overflow-hidden border border-deep-green/10 hover:border-deep-green/30 transition flex-shrink-0">
+                <img src={img} alt={`Review image ${i + 1}`} className="w-full h-full object-cover" />
+              </button>
+            ))}
+          </div>
         )}
+        {review.variant && <p className="text-xs text-deep-green/40 mt-2">Item type: {review.variant}</p>}
       </div>
-      <div className="text-xs text-deep-green/40 mb-2">{review.date}</div>
-      <div className="flex gap-0.5 mb-2">
-        {Array.from({ length: 5 }).map((_, i) => (
-          <svg key={i} className={`w-4 h-4 ${i < review.rating ? 'text-gold' : 'text-deep-green/15'}`} fill="currentColor" viewBox="0 0 20 20">
-            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-          </svg>
-        ))}
-      </div>
-      <p className="text-sm text-deep-green/70">{review.text}</p>
-      {review.variant && <p className="text-xs text-deep-green/40 mt-2">Item type: {review.variant}</p>}
-    </div>
+    </>
   );
 }
 
@@ -161,6 +193,67 @@ export default function ProductDetailPage() {
   const [customSections, setCustomSections] = useState<Map<number, Record<string, any>>>(new Map());
   const vetScrollRef = useRef<HTMLDivElement>(null);
   const { addItem } = useCart();
+
+  // Reviews state
+  const [productReviews, setProductReviews] = useState<ProductReview[]>([]);
+  const [showReviewForm, setShowReviewForm] = useState(false);
+  const [reviewForm, setReviewForm] = useState({ name: '', email: '', rating: 5, title: '', text: '' });
+  const [reviewImages, setReviewImages] = useState<string[]>([]);
+  const [reviewUploading, setReviewUploading] = useState(false);
+  const [reviewSubmitting, setReviewSubmitting] = useState(false);
+  const [reviewSuccess, setReviewSuccess] = useState(false);
+  const reviewFileRef = useRef<HTMLInputElement>(null);
+
+  const fetchReviews = useCallback(async (productId: string) => {
+    const { data } = await supabase
+      .from('product_reviews')
+      .select('*')
+      .eq('product_id', productId)
+      .eq('status', 'approved')
+      .order('created_at', { ascending: false });
+    if (data) setProductReviews(data as ProductReview[]);
+  }, []);
+
+  const handleReviewImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const files = e.target.files;
+    if (!files || files.length === 0) return;
+    setReviewUploading(true);
+    const uploaded: string[] = [];
+    for (let i = 0; i < Math.min(files.length, 3); i++) {
+      const formData = new FormData();
+      formData.append('file', files[i]);
+      try {
+        const res = await fetch('/api/upload', { method: 'POST', body: formData });
+        const json = await res.json();
+        if (json.url) uploaded.push(json.url);
+      } catch { /* skip failed uploads */ }
+    }
+    setReviewImages(prev => [...prev, ...uploaded].slice(0, 5));
+    setReviewUploading(false);
+    if (reviewFileRef.current) reviewFileRef.current.value = '';
+  };
+
+  const submitReview = async () => {
+    if (!product || !reviewForm.name.trim() || !reviewForm.text.trim()) return;
+    setReviewSubmitting(true);
+    const { error } = await supabase.from('product_reviews').insert({
+      product_id: product.id,
+      reviewer_name: reviewForm.name.trim(),
+      reviewer_email: reviewForm.email.trim() || null,
+      rating: reviewForm.rating,
+      title: reviewForm.title.trim() || null,
+      review_text: reviewForm.text.trim(),
+      images: reviewImages,
+      status: 'pending',
+      is_verified: false,
+    });
+    setReviewSubmitting(false);
+    if (error) { alert('Failed to submit review. Please try again.'); return; }
+    setReviewSuccess(true);
+    setShowReviewForm(false);
+    setReviewForm({ name: '', email: '', rating: 5, title: '', text: '' });
+    setReviewImages([]);
+  };
 
   useEffect(() => {
     async function fetchProduct() {
@@ -243,6 +336,9 @@ export default function ProductDetailPage() {
           setVariants(variantData as Variant[]);
         }
 
+        // Fetch approved reviews
+        fetchReviews(data.id);
+
         // Fetch custom page sections for this product
         const productPageSlug = `product-${data.slug}`;
         const { data: pages } = await supabase.from('pages').select('id').or(`slug.eq.${productPageSlug},slug.eq./${productPageSlug}`).limit(1);
@@ -265,7 +361,8 @@ export default function ProductDetailPage() {
       setLoading(false);
     }
     if (slug) fetchProduct();
-  }, [slug]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [slug, fetchReviews]);
 
   const displayPrice = selectedVariant ? selectedVariant.price : (product?.price ?? 0);
   const displayCompareAt = selectedVariant ? selectedVariant.compare_at_price : (product?.compare_at_price ?? null);
@@ -300,13 +397,34 @@ export default function ProductDetailPage() {
     );
   }
 
-  const reviews = [
+  // Build display reviews: use dynamic from DB, fallback to hardcoded if none yet
+  const fallbackReviews = [
     { name: 'Russell M.', date: '21/03/2026', rating: 5, text: 'My dog absolutely devours this! Great quality and you can tell the ingredients are fresh. Very fine product!', variant: product.name, verified: true },
     { name: 'Trang H.', date: '20/03/2026', rating: 5, text: 'Quick delivery. My fussy eater actually finished the whole bowl. Will definitely order again.', variant: product.name, verified: true },
     { name: 'Kelly W.', date: '02/03/2026', rating: 5, text: 'I love finding a quality dog food that my pup actually enjoys. His coat is shinier and he has more energy since we switched.', variant: product.name, verified: true },
     { name: 'Susan S.', date: '28/02/2026', rating: 4, text: 'Doesn\'t upset my dog\'s sensitive stomach and the only food he can eat while on an elimination diet.', variant: product.name, verified: true },
     { name: 'S S.', date: '26/02/2026', rating: 5, text: 'Fast delivery and very delicious - my dog cleaned the bowl in seconds. Smooth texture, great product.', variant: product.name, verified: true },
   ];
+
+  const dynamicReviews = productReviews.map(r => ({
+    name: r.reviewer_name,
+    date: new Date(r.created_at).toLocaleDateString('en-GB', { day: '2-digit', month: '2-digit', year: 'numeric' }),
+    rating: r.rating,
+    title: r.title || undefined,
+    text: r.review_text,
+    variant: product.name,
+    verified: r.is_verified,
+    images: r.images,
+  }));
+
+  const reviews = dynamicReviews.length > 0 ? dynamicReviews : fallbackReviews;
+
+  // Rating display: use admin override or calculated from dynamic reviews
+  const calcAvgRating = dynamicReviews.length > 0
+    ? dynamicReviews.reduce((s, r) => s + r.rating, 0) / dynamicReviews.length
+    : 4.8;
+  const displayRating = product.review_rating_override ?? calcAvgRating;
+  const displayReviewCount = product.review_count_override ?? (dynamicReviews.length > 0 ? dynamicReviews.length : 130);
 
   const vets = [
     { name: 'Dr. Sarah Wilson, BVSc', role: 'Veterinary Nutritionist', text: 'As a veterinary nutritionist, I emphasize the importance of choosing food that supports a dog\'s overall balance. This is why I trust and confidently recommend Jeko to my patients. Their commitment to natural ingredients and rigorous quality testing provides a clean, supportive feeding experience.', product: product.name, productSlug: product.slug },
@@ -746,16 +864,100 @@ export default function ProductDetailPage() {
         {/* ============================================================ */}
         {/* SECTION 4 — Customer Reviews                                 */}
         {/* ============================================================ */}
-        <section className="bg-white py-16">
+        <section className="bg-white py-16" id="reviews">
           <div className="max-w-[1200px] mx-auto px-4">
             <h2 className="text-3xl md:text-4xl font-bold text-deep-green text-center mb-10 italic">Customer Reviews</h2>
             <div className="flex items-center justify-between mb-6">
               <div className="flex items-center gap-3">
-                <div className="flex">{Array.from({ length: 5 }).map((_, i) => <svg key={i} className="w-6 h-6 text-gold" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" /></svg>)}</div>
-                <span className="text-deep-green font-medium">130 Reviews</span>
+                <div className="flex">{Array.from({ length: 5 }).map((_, i) => <svg key={i} className={`w-6 h-6 ${i < Math.round(displayRating) ? 'text-gold' : 'text-deep-green/15'}`} fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" /></svg>)}</div>
+                <span className="text-deep-green font-medium">{displayReviewCount} Reviews</span>
               </div>
-              <button className="btn-outline text-sm py-2 px-4">Write a review</button>
+              <button onClick={() => { setShowReviewForm(!showReviewForm); setReviewSuccess(false); }} className="btn-outline text-sm py-2 px-4">
+                {showReviewForm ? 'Cancel' : 'Write a review'}
+              </button>
             </div>
+
+            {/* Success message */}
+            {reviewSuccess && (
+              <div className="bg-green-50 border border-green-200 rounded-xl p-4 mb-6 text-center">
+                <p className="text-green-800 font-medium text-sm">Thank you for your review! It will appear once approved.</p>
+              </div>
+            )}
+
+            {/* Review Form */}
+            {showReviewForm && (
+              <div className="bg-beige-light rounded-2xl p-6 mb-8 border border-deep-green/10">
+                <h3 className="text-lg font-semibold text-deep-green mb-4">Write a Review</h3>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                  <div>
+                    <label className="block text-sm font-medium text-deep-green mb-1">Your Name *</label>
+                    <input value={reviewForm.name} onChange={e => setReviewForm({ ...reviewForm, name: e.target.value })} className="w-full px-3 py-2.5 border border-deep-green/15 rounded-lg text-sm bg-white focus:ring-2 focus:ring-gold/30 focus:border-gold outline-none" placeholder="John D." />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-deep-green mb-1">Email <span className="text-deep-green/40">(optional)</span></label>
+                    <input type="email" value={reviewForm.email} onChange={e => setReviewForm({ ...reviewForm, email: e.target.value })} className="w-full px-3 py-2.5 border border-deep-green/15 rounded-lg text-sm bg-white focus:ring-2 focus:ring-gold/30 focus:border-gold outline-none" placeholder="john@example.com" />
+                  </div>
+                </div>
+
+                {/* Star rating */}
+                <div className="mb-4">
+                  <label className="block text-sm font-medium text-deep-green mb-2">Rating *</label>
+                  <div className="flex gap-1">
+                    {[1, 2, 3, 4, 5].map(star => (
+                      <button key={star} type="button" onClick={() => setReviewForm({ ...reviewForm, rating: star })}>
+                        <svg className={`w-8 h-8 ${star <= reviewForm.rating ? 'text-gold' : 'text-deep-green/15'} hover:text-gold/70 transition cursor-pointer`} fill="currentColor" viewBox="0 0 20 20">
+                          <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                        </svg>
+                      </button>
+                    ))}
+                  </div>
+                </div>
+
+                <div className="mb-4">
+                  <label className="block text-sm font-medium text-deep-green mb-1">Title <span className="text-deep-green/40">(optional)</span></label>
+                  <input value={reviewForm.title} onChange={e => setReviewForm({ ...reviewForm, title: e.target.value })} className="w-full px-3 py-2.5 border border-deep-green/15 rounded-lg text-sm bg-white focus:ring-2 focus:ring-gold/30 focus:border-gold outline-none" placeholder="e.g. My dog loves it!" />
+                </div>
+
+                <div className="mb-4">
+                  <label className="block text-sm font-medium text-deep-green mb-1">Your Review *</label>
+                  <textarea value={reviewForm.text} onChange={e => setReviewForm({ ...reviewForm, text: e.target.value })} rows={4} className="w-full px-3 py-2.5 border border-deep-green/15 rounded-lg text-sm bg-white resize-none focus:ring-2 focus:ring-gold/30 focus:border-gold outline-none" placeholder="Tell us about your experience..." />
+                </div>
+
+                {/* Image upload */}
+                <div className="mb-5">
+                  <label className="block text-sm font-medium text-deep-green mb-2">Add Photos <span className="text-deep-green/40">(up to 5)</span></label>
+                  <div className="flex items-center gap-3 flex-wrap">
+                    {reviewImages.map((img, i) => (
+                      <div key={i} className="relative w-16 h-16 rounded-lg overflow-hidden border border-deep-green/10 group">
+                        <img src={img} alt="" className="w-full h-full object-cover" />
+                        <button onClick={() => setReviewImages(prev => prev.filter((_, idx) => idx !== i))} className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition flex items-center justify-center">
+                          <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" /></svg>
+                        </button>
+                      </div>
+                    ))}
+                    {reviewImages.length < 5 && (
+                      <button onClick={() => reviewFileRef.current?.click()} disabled={reviewUploading} className="w-16 h-16 rounded-lg border-2 border-dashed border-deep-green/20 hover:border-deep-green/40 flex items-center justify-center transition disabled:opacity-50">
+                        {reviewUploading ? (
+                          <div className="w-5 h-5 border-2 border-deep-green/20 border-t-deep-green rounded-full animate-spin" />
+                        ) : (
+                          <svg className="w-6 h-6 text-deep-green/30" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 4v16m8-8H4" /></svg>
+                        )}
+                      </button>
+                    )}
+                    <input ref={reviewFileRef} type="file" accept="image/*" multiple className="hidden" onChange={handleReviewImageUpload} />
+                  </div>
+                </div>
+
+                <button onClick={submitReview} disabled={reviewSubmitting || !reviewForm.name.trim() || !reviewForm.text.trim()} className="bg-deep-green text-white font-semibold py-3 px-8 rounded-full hover:bg-deep-green/90 transition text-sm disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2">
+                  {reviewSubmitting ? (
+                    <><div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" /> Submitting...</>
+                  ) : (
+                    'Submit Review'
+                  )}
+                </button>
+              </div>
+            )}
+
             <div className="space-y-4">
               {reviews.map((r, i) => <ReviewCard key={i} review={r} />)}
             </div>
