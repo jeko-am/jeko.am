@@ -1,11 +1,20 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256">
-  <defs>
-    <style>
-      .jeko-text { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Rubik', sans-serif; font-weight: bold; font-size: 180px; fill: #2B6D4F; }
-    </style>
-  </defs>
   <!-- Background -->
   <rect width="256" height="256" fill="#F5EFE1" rx="0"/>
-  <!-- JEKO text -->
-  <text x="128" y="190" text-anchor="middle" class="jeko-text">JEKO</text>
+
+  <!-- Paw Print -->
+  <!-- Main pad (center) -->
+  <circle cx="128" cy="160" r="28" fill="#FFD700"/>
+
+  <!-- Top left toe -->
+  <circle cx="85" cy="100" r="18" fill="#FFD700"/>
+
+  <!-- Top right toe -->
+  <circle cx="171" cy="100" r="18" fill="#FFD700"/>
+
+  <!-- Left toe -->
+  <circle cx="50" cy="145" r="18" fill="#FFD700"/>
+
+  <!-- Right toe -->
+  <circle cx="206" cy="145" r="18" fill="#FFD700"/>
 </svg>
