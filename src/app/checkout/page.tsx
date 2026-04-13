@@ -5,6 +5,7 @@ import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { createOrder, OrderData, calculateOrderTotals } from '@/lib/orders';
 import { useAuth } from '@/lib/auth';
+import { trackInitiateCheckout, trackPurchase } from '@/lib/tracking';
 
 interface CheckoutForm {
   email: string;
@@ -160,6 +161,12 @@ export default function CheckoutPage() {
       // Calculate order totals
       const { subtotal, shipping_amount, tax_amount, total } = calculateOrderTotals(items);
 
+      // Track checkout initiation
+      trackInitiateCheckout(
+        items.map(i => ({ id: i.id, name: i.name, price: i.price, quantity: i.quantity })),
+        total
+      );
+
       // Prepare order data
       const orderData: OrderData = {
         customer_email: formData.email,
@@ -187,6 +194,13 @@ export default function CheckoutPage() {
       // Set order number from database response
       setOrderNumber(`#${order.order_number}`);
       
+      // Track purchase
+      trackPurchase(
+        String(order.order_number),
+        items.map(i => ({ id: i.id, name: i.name, price: i.price, quantity: i.quantity })),
+        total
+      );
+
       // Clear cart and show success
       clearCart();
       setOrderComplete(true);

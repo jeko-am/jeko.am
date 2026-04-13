@@ -1,6 +1,7 @@
 'use client';
 
 import { createContext, useContext, useEffect, useState, ReactNode } from 'react';
+import { trackAddToCart } from './tracking';
 
 export interface CartItem {
   id: string;
@@ -131,6 +132,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
       return [...prevItems, { ...newItem, quantity: 1 }];
     });
 
+    trackAddToCart({ id: newItem.id, name: newItem.name, price: newItem.price, quantity: 1 });
     openCart();
   };
 

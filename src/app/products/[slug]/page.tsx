@@ -8,6 +8,7 @@ import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import ProductCard from '@/components/ProductCard';
 import { useCart } from '@/lib/cart-context';
+import { trackViewContent } from '@/lib/tracking';
 
 interface Product {
   id: string;
@@ -167,7 +168,8 @@ export default function ProductDetailPage() {
       const { data } = await supabase.from('products').select('*').eq('slug', slug).eq('status', 'active').single();
       if (data) {
         setProduct(data);
-        
+        trackViewContent({ id: data.id, name: data.name, price: data.price, quantity: 1 });
+
         // Fetch related products
         const { data: rel } = await supabase
           .from('products')

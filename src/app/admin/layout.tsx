@@ -57,7 +57,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
   if (!user || !isAdmin) return null;
 
   return (
-    <div className="flex min-h-screen bg-gray-100">
+    <div className="admin-panel flex min-h-screen bg-gray-100">
       {/* Mobile overlay */}
       {sidebarOpen && (
         <div className="fixed inset-0 bg-black/50 z-40 lg:hidden" onClick={() => setSidebarOpen(false)} />

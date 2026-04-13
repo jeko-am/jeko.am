@@ -67,6 +67,17 @@ h4, h5, h6 {
   color: var(--deep-green);
 }
 
+/* Admin panel: use Rubik for all headings instead of Frankfurter */
+.admin-panel h1,
+.admin-panel h2,
+.admin-panel h3,
+.admin-panel h4,
+.admin-panel h5,
+.admin-panel h6 {
+  font-family: 'Rubik', Helvetica, Arial, sans-serif;
+  font-weight: 600;
+}
+
 /* ===== Header Zigzag - Smooth scallops pointing DOWN ===== */
 .header-zigzag-bottom {
   position: relative;
