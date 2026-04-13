@@ -329,11 +329,21 @@ export default function AboutPageClient({ sections }: { sections: Record<string,
                   unoptimized
                   className="object-cover"
                 />
+                {/* Vertical zigzag on right edge - off-white teeth pointing LEFT into image */}
+                <div
+                  className="hidden md:block absolute right-0 top-0 h-full z-10"
+                  style={{
+                    width: '12px',
+                    backgroundImage: "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 24'%3E%3Cpath d='M12,0 L0,12 L12,24 Z' fill='%23EAE5DC'/%3E%3C/svg%3E\")",
+                    backgroundSize: '12px 24px',
+                    backgroundRepeat: 'repeat-y',
+                  }}
+                />
               </div>
               <div className="w-full md:w-[58%] bg-off-white flex items-center">
                 <div className="px-8 md:px-14 lg:px-20 py-12 md:py-16">
                   <h2 className="text-[28px] md:text-[36px] font-semibold text-deep-green font-rubik leading-tight mb-1">
-                    {s[7]?.heading ?? "Learn more"}
+                    {s[7]?.heading ?? "Match now"}
                   </h2>
                   <p className="text-gold text-[26px] md:text-[34px] font-semibold font-rubik mb-6">
                     {s[7]?.subtitle ?? "about Jeko"}
@@ -377,6 +387,16 @@ export default function AboutPageClient({ sections }: { sections: Record<string,
                   fill
                   unoptimized
                   className="object-cover"
+                />
+                {/* Vertical zigzag on left edge - purple teeth pointing RIGHT into image */}
+                <div
+                  className="hidden md:block absolute left-0 top-0 h-full z-10"
+                  style={{
+                    width: '12px',
+                    backgroundImage: "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 24'%3E%3Cpath d='M0,0 L12,12 L0,24 Z' fill='%235F295E'/%3E%3C/svg%3E\")",
+                    backgroundSize: '12px 24px',
+                    backgroundRepeat: 'repeat-y',
+                  }}
                 />
               </div>
             </div>

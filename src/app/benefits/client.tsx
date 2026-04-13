@@ -192,6 +192,28 @@ export default function BenefitsPageClient({ sections }: BenefitsPageClientProps
                     unoptimized
                     className="object-cover"
                   />
+                  {/* Vertical zigzag divider */}
+                  {section.imageLeft ? (
+                    <div
+                      className="hidden md:block absolute right-0 top-0 h-full z-10"
+                      style={{
+                        width: '12px',
+                        backgroundImage: "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 24'%3E%3Cpath d='M12,0 L0,12 L12,24 Z' fill='%23EAE5DC'/%3E%3C/svg%3E\")",
+                        backgroundSize: '12px 24px',
+                        backgroundRepeat: 'repeat-y',
+                      }}
+                    />
+                  ) : (
+                    <div
+                      className="hidden md:block absolute left-0 top-0 h-full z-10"
+                      style={{
+                        width: '12px',
+                        backgroundImage: "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 24'%3E%3Cpath d='M0,0 L12,12 L0,24 Z' fill='%23FFFFFF'/%3E%3C/svg%3E\")",
+                        backgroundSize: '12px 24px',
+                        backgroundRepeat: 'repeat-y',
+                      }}
+                    />
+                  )}
                 </div>
                 {/* Text side - larger */}
                 <div
@@ -347,6 +369,16 @@ export default function BenefitsPageClient({ sections }: BenefitsPageClientProps
                   fill
                   unoptimized
                   className="object-cover"
+                />
+                {/* Vertical zigzag on left edge - purple teeth pointing RIGHT into image */}
+                <div
+                  className="hidden md:block absolute left-0 top-0 h-full z-10"
+                  style={{
+                    width: '12px',
+                    backgroundImage: "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 24'%3E%3Cpath d='M0,0 L12,12 L0,24 Z' fill='%235F295E'/%3E%3C/svg%3E\")",
+                    backgroundSize: '12px 24px',
+                    backgroundRepeat: 'repeat-y',
+                  }}
                 />
               </div>
             </div>

@@ -295,6 +295,16 @@ export default function ReviewsPageClient({ sections }: ReviewsPageClientProps) 
                   videoUrl={sections[2]?.video_url || undefined}
                   alt="Lulu the rescue dog"
                 />
+                {/* Vertical zigzag on left edge - off-white teeth pointing RIGHT into image */}
+                <div
+                  className="hidden md:block absolute left-0 top-0 h-full z-10"
+                  style={{
+                    width: '12px',
+                    backgroundImage: "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 24'%3E%3Cpath d='M0,0 L12,12 L0,24 Z' fill='%23EAE5DC'/%3E%3C/svg%3E\")",
+                    backgroundSize: '12px 24px',
+                    backgroundRepeat: 'repeat-y',
+                  }}
+                />
               </div>
             </div>
           </section>
@@ -369,6 +379,16 @@ export default function ReviewsPageClient({ sections }: ReviewsPageClientProps) 
                   src={sections[4]?.image || "https://www.datocms-assets.com/55536/1647612430-800x800-review-polly.jpg?auto=format&fit=crop&h=600&w=1000"}
                   videoUrl={sections[4]?.video_url || undefined}
                   alt="Nelly the dog"
+                />
+                {/* Vertical zigzag on right edge - off-white teeth pointing LEFT into image */}
+                <div
+                  className="hidden md:block absolute right-0 top-0 h-full z-10"
+                  style={{
+                    width: '12px',
+                    backgroundImage: "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 24'%3E%3Cpath d='M12,0 L0,12 L12,24 Z' fill='%23EAE5DC'/%3E%3C/svg%3E\")",
+                    backgroundSize: '12px 24px',
+                    backgroundRepeat: 'repeat-y',
+                  }}
                 />
               </div>
               <div className="w-full md:w-[58%] bg-off-white flex items-center">
@@ -481,6 +501,16 @@ export default function ReviewsPageClient({ sections }: ReviewsPageClientProps) 
                   src={sections[6]?.image || "https://www.datocms-assets.com/55536/1673543479-healthy-dog-food.jpg?auto=format&fit=crop&h=600&w=1000"}
                   videoUrl={sections[6]?.video_url || undefined}
                   alt="Diesel the dog"
+                />
+                {/* Vertical zigzag on left edge - deep-green teeth pointing RIGHT into image */}
+                <div
+                  className="hidden md:block absolute left-0 top-0 h-full z-10"
+                  style={{
+                    width: '12px',
+                    backgroundImage: "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 24'%3E%3Cpath d='M0,0 L12,12 L0,24 Z' fill='%23274C46'/%3E%3C/svg%3E\")",
+                    backgroundSize: '12px 24px',
+                    backgroundRepeat: 'repeat-y',
+                  }}
                 />
               </div>
             </div>
