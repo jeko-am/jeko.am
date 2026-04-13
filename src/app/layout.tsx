@@ -11,6 +11,9 @@ import GTMNoScript from "@/components/GTMNoScript";
 export const metadata: Metadata = {
   title: "Jeko - Personalised Healthy Natural Pet Food",
   description: "The easiest way to feed healthy, natural pet food. Enjoy fresh food without the fuss.",
+  icons: {
+    icon: "/favicon.svg",
+  },
 };
 
 export default function RootLayout({
