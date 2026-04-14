@@ -20,6 +20,7 @@ const sitemapSections = [
       { label: "Our Story", href: "/about" },
       { label: "Reviews", href: "/reviews" },
       { label: "Community", href: "/community" },
+      { label: "Blog", href: "/blog" },
       { label: "Beyond the Bowl", href: "/beyond-the-bowl" },
     ],
   },

@@ -397,7 +397,6 @@ function EmptyState() {
 
 export default function SwipePage() {
   const { user, loading: authLoading } = useAuth();
-  const signupUrl = useSignupUrl();
   const [myPetProfile, setMyPetProfile] = useState<PetCandidate|null>(null);
   const [hasProfile, setHasProfile] = useState<boolean|null>(null);
   const [photoCount, setPhotoCount] = useState<number|null>(null);

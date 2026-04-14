@@ -22,6 +22,7 @@ const staticRoutes = [
   { url: '/pure-policies', priority: 0.3, changeFrequency: 'yearly' as const },
   { url: '/beyond-the-bowl', priority: 0.5, changeFrequency: 'weekly' as const },
   { url: '/community', priority: 0.5, changeFrequency: 'weekly' as const },
+  { url: '/blog', priority: 0.7, changeFrequency: 'daily' as const },
   { url: '/sitemap-page', priority: 0.2, changeFrequency: 'yearly' as const },
 ];
 
@@ -62,6 +63,32 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     console.error('Error fetching products for sitemap:', error);
   }
 
+  // Fetch published blog posts
+  let blogEntries: MetadataRoute.Sitemap = [];
+
+  try {
+    const supabase = createClient(
+      process.env.NEXT_PUBLIC_SUPABASE_URL!,
+      process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+    );
+
+    const { data: blogs } = await supabase
+      .from('blog_posts')
+      .select('slug, updated_at, published_at')
+      .eq('status', 'published');
+
+    if (blogs) {
+      blogEntries = blogs.map(blog => ({
+        url: `${baseUrl}/blog/${blog.slug}`,
+        lastModified: blog.updated_at ? new Date(blog.updated_at) : new Date(),
+        changeFrequency: 'weekly',
+        priority: 0.6,
+      }));
+    }
+  } catch (error) {
+    console.error('Error fetching blog posts for sitemap:', error);
+  }
+
   // Combine all entries
-  return [...staticEntries, ...productEntries];
+  return [...staticEntries, ...productEntries, ...blogEntries];
 }

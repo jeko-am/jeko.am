@@ -1024,7 +1024,6 @@ function MatchPage({ user }: { user: NonNullable<ReturnType<typeof useAuth>["use
 
 export default function FindOwnersPage() {
   const { user, loading } = useAuth();
-  const signupUrl = useSignupUrl();
 
   return (
     <>

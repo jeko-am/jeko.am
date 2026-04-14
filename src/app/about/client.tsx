@@ -5,7 +5,6 @@ import Link from "next/link";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import EditorOverlay from "@/components/EditorOverlay";
-import { useSignupUrl } from "@/lib/useSignupUrl";
 
 /* Decorative SVG components */
 function LeafShape({ className = "", fill = "#274C46", opacity = 0.2, style }: { className?: string; fill?: string; opacity?: number; style?: React.CSSProperties }) {
@@ -42,7 +41,6 @@ function PurpleDot({ className = "", size = 10, style }: { className?: string; s
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export default function AboutPageClient({ sections }: { sections: Record<string, any> }) {
-  const signupUrl = useSignupUrl();
   const s = sections; // shorthand
 
   const timeline = [

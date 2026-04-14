@@ -11,8 +11,9 @@ export default function ConditionalDogChatbot() {
   // Hide chatbot on auth pages, checkout page, and when side cart is open
   const isAuthPage = pathname.startsWith('/auth/') || pathname.startsWith('/admin/auth/');
   const isCheckoutPage = pathname.startsWith('/checkout');
+  const isSwipePage = pathname.startsWith('/swipe');
 
-  if (isAuthPage || isCheckoutPage || isCartOpen) {
+  if (isAuthPage || isCheckoutPage || isSwipePage || isCartOpen) {
     return null;
   }
 

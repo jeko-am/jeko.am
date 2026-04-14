@@ -1267,7 +1267,6 @@ function MobileChatView({
 
 export default function MessagesPage() {
   const { user, loading: authLoading } = useAuth();
-  const signupUrl = useSignupUrl();
   const [conversations, setConversations] = useState<ConversationWithProfile[]>(
     []
   );

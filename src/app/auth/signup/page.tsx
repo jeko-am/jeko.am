@@ -479,12 +479,14 @@ function SearchableSelect({
   options,
   placeholder = 'Select...',
   error,
+  allowFreeText = false,
 }: {
   value: string;
   onChange: (v: string) => void;
   options: string[];
   placeholder?: string;
   error?: string;
+  allowFreeText?: boolean;
 }) {
   const [open, setOpen] = useState(false);
   const [query, setQuery] = useState('');
@@ -499,13 +501,34 @@ function SearchableSelect({
   useEffect(() => {
     function handleClick(e: MouseEvent) {
       if (wrapperRef.current && !wrapperRef.current.contains(e.target as Node)) {
+        if (allowFreeText && query.trim() && !value) {
+          onChange(query.trim());
+        }
         setOpen(false);
         setQuery('');
       }
     }
     document.addEventListener('mousedown', handleClick);
     return () => document.removeEventListener('mousedown', handleClick);
-  }, []);
+  }, [allowFreeText, query, value, onChange]);
+
+  // Free text mode: show a text input when no options available
+  if (allowFreeText && options.length === 0) {
+    return (
+      <div className="w-full">
+        <input
+          type="text"
+          value={value}
+          onChange={(e) => onChange(e.target.value)}
+          placeholder={placeholder}
+          className={`w-full px-5 py-3.5 border-2 rounded-xl text-gray-900 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-deep-green focus:border-transparent transition-shadow bg-white ${
+            error ? 'border-red-400' : 'border-gray-200'
+          }`}
+        />
+        {error && <p className="text-red-500 text-xs mt-1">{error}</p>}
+      </div>
+    );
+  }
 
   return (
     <div ref={wrapperRef} className="relative w-full">
@@ -523,21 +546,40 @@ function SearchableSelect({
       </button>
       {open && (
         <div className="absolute z-50 mt-1 w-full bg-white border border-gray-200 rounded-xl shadow-lg overflow-hidden">
-          {options.length > 6 && (
+          {(options.length > 6 || allowFreeText) && (
             <div className="p-2 border-b border-gray-100">
               <input
                 type="text"
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
-                placeholder="Search..."
+                onKeyDown={(e) => {
+                  if (allowFreeText && e.key === 'Enter' && query.trim()) {
+                    e.preventDefault();
+                    onChange(query.trim());
+                    setOpen(false);
+                    setQuery('');
+                  }
+                }}
+                placeholder={allowFreeText ? "Search or type your own..." : "Search..."}
                 autoFocus
                 className="w-full px-3 py-2 text-sm border border-gray-200 rounded-lg focus:outline-none focus:ring-1 focus:ring-deep-green"
               />
             </div>
           )}
           <ul className="max-h-48 overflow-y-auto">
-            {filtered.length === 0 && (
+            {filtered.length === 0 && !allowFreeText && (
               <li className="px-5 py-3 text-sm text-gray-400">No results</li>
+            )}
+            {filtered.length === 0 && allowFreeText && query.trim() && (
+              <li>
+                <button
+                  type="button"
+                  className="w-full text-left px-5 py-2.5 text-sm text-deep-green hover:bg-deep-green/5 transition-colors"
+                  onMouseDown={(e) => { e.preventDefault(); onChange(query.trim()); setOpen(false); setQuery(''); }}
+                >
+                  Use &quot;{query.trim()}&quot;
+                </button>
+              </li>
             )}
             {filtered.map((opt) => (
               <li key={opt}>
@@ -737,6 +779,12 @@ function SignupPageInner() {
   const [state, setState] = useState('');
   const [country, setCountry] = useState('Armenia');
 
+  // Dynamic states/cities fetched from API
+  const [apiStates, setApiStates] = useState<string[]>([]);
+  const [apiCities, setApiCities] = useState<string[]>([]);
+  const [loadingStates, setLoadingStates] = useState(false);
+  const [loadingCities, setLoadingCities] = useState(false);
+
   // States/provinces per country (only countries that need a state field)
   const countryStates: Record<string, string[]> = {
     'United States': ['Alabama','Alaska','Arizona','Arkansas','California','Colorado','Connecticut','Delaware','Florida','Georgia','Hawaii','Idaho','Illinois','Indiana','Iowa','Kansas','Kentucky','Louisiana','Maine','Maryland','Massachusetts','Michigan','Minnesota','Mississippi','Missouri','Montana','Nebraska','Nevada','New Hampshire','New Jersey','New Mexico','New York','North Carolina','North Dakota','Ohio','Oklahoma','Oregon','Pennsylvania','Rhode Island','South Carolina','South Dakota','Tennessee','Texas','Utah','Vermont','Virginia','Washington','West Virginia','Wisconsin','Wyoming'],
@@ -907,15 +955,147 @@ function SignupPageInner() {
     'DE-Saxony-Anhalt': ['Magdeburg','Halle'],
     'DE-Schleswig-Holstein': ['Kiel','Lubeck','Flensburg'],
     'DE-Thuringia': ['Erfurt','Jena','Weimar'],
+
+    // India states -> cities
+    'IN-Andhra Pradesh': ['Visakhapatnam','Vijayawada','Guntur','Nellore','Kurnool','Tirupati','Rajahmundry','Kakinada','Anantapur','Kadapa'],
+    'IN-Arunachal Pradesh': ['Itanagar','Naharlagun','Tawang','Ziro','Pasighat'],
+    'IN-Assam': ['Guwahati','Silchar','Dibrugarh','Jorhat','Nagaon','Tinsukia','Tezpur'],
+    'IN-Bihar': ['Patna','Gaya','Bhagalpur','Muzaffarpur','Purnia','Darbhanga','Arrah','Begusarai'],
+    'IN-Chhattisgarh': ['Raipur','Bhilai','Bilaspur','Korba','Durg','Rajnandgaon'],
+    'IN-Goa': ['Panaji','Margao','Vasco da Gama','Mapusa','Ponda'],
+    'IN-Gujarat': ['Ahmedabad','Surat','Vadodara','Rajkot','Bhavnagar','Jamnagar','Gandhinagar','Junagadh','Anand','Navsari'],
+    'IN-Haryana': ['Gurugram','Faridabad','Panipat','Ambala','Karnal','Hisar','Rohtak','Sonipat'],
+    'IN-Himachal Pradesh': ['Shimla','Manali','Dharamshala','Solan','Mandi','Kullu'],
+    'IN-Jharkhand': ['Ranchi','Jamshedpur','Dhanbad','Bokaro','Hazaribagh','Deoghar'],
+    'IN-Karnataka': ['Bangalore','Mysore','Hubli','Mangalore','Belgaum','Gulbarga','Davangere','Shimoga','Tumkur','Udupi'],
+    'IN-Kerala': ['Thiruvananthapuram','Kochi','Kozhikode','Thrissur','Kollam','Palakkad','Alappuzha','Kannur','Kottayam'],
+    'IN-Madhya Pradesh': ['Bhopal','Indore','Jabalpur','Gwalior','Ujjain','Sagar','Rewa','Satna','Dewas'],
+    'IN-Maharashtra': ['Mumbai','Pune','Nagpur','Thane','Nashik','Aurangabad','Solapur','Kolhapur','Amravati','Navi Mumbai','Sangli','Jalgaon','Akola','Latur','Ahmednagar'],
+    'IN-Manipur': ['Imphal','Thoubal','Bishnupur','Churachandpur'],
+    'IN-Meghalaya': ['Shillong','Tura','Jowai','Nongpoh'],
+    'IN-Mizoram': ['Aizawl','Lunglei','Champhai','Serchhip'],
+    'IN-Nagaland': ['Kohima','Dimapur','Mokokchung','Tuensang'],
+    'IN-Odisha': ['Bhubaneswar','Cuttack','Rourkela','Berhampur','Sambalpur','Puri','Balasore'],
+    'IN-Punjab': ['Ludhiana','Amritsar','Jalandhar','Patiala','Bathinda','Mohali','Hoshiarpur','Pathankot'],
+    'IN-Rajasthan': ['Jaipur','Jodhpur','Udaipur','Kota','Bikaner','Ajmer','Bhilwara','Alwar','Sikar','Pushkar'],
+    'IN-Sikkim': ['Gangtok','Namchi','Pelling','Ravangla'],
+    'IN-Tamil Nadu': ['Chennai','Coimbatore','Madurai','Tiruchirappalli','Salem','Tirunelveli','Erode','Vellore','Thoothukudi','Thanjavur'],
+    'IN-Telangana': ['Hyderabad','Warangal','Nizamabad','Karimnagar','Khammam','Mahbubnagar','Secunderabad'],
+    'IN-Tripura': ['Agartala','Udaipur','Dharmanagar','Kailashahar'],
+    'IN-Uttar Pradesh': ['Lucknow','Kanpur','Agra','Varanasi','Meerut','Prayagraj','Ghaziabad','Noida','Bareilly','Aligarh','Moradabad','Gorakhpur'],
+    'IN-Uttarakhand': ['Dehradun','Haridwar','Rishikesh','Haldwani','Roorkee','Nainital','Mussoorie'],
+    'IN-West Bengal': ['Kolkata','Howrah','Asansol','Siliguri','Durgapur','Bardhaman','Malda','Kharagpur'],
+    'IN-Delhi': ['New Delhi','Delhi'],
+
+    // Brazil states -> cities
+    'BR-Sao Paulo': ['Sao Paulo','Campinas','Santos','Guarulhos','Osasco','Ribeirao Preto'],
+    'BR-Rio de Janeiro': ['Rio de Janeiro','Niteroi','Petropolis','Nova Iguacu'],
+    'BR-Minas Gerais': ['Belo Horizonte','Uberlandia','Juiz de Fora','Ouro Preto'],
+    'BR-Bahia': ['Salvador','Feira de Santana','Ilheus','Porto Seguro'],
+    'BR-Parana': ['Curitiba','Londrina','Maringa','Foz do Iguacu'],
+    'BR-Rio Grande do Sul': ['Porto Alegre','Caxias do Sul','Pelotas','Gramado'],
+    'BR-Distrito Federal': ['Brasilia'],
+    'BR-Ceara': ['Fortaleza','Juazeiro do Norte','Sobral'],
+    'BR-Pernambuco': ['Recife','Olinda','Caruaru','Petrolina'],
+    'BR-Amazonas': ['Manaus','Parintins'],
+    'BR-Para': ['Belem','Santarem','Maraba'],
+    'BR-Goias': ['Goiania','Anapolis','Aparecida de Goiania'],
+    'BR-Santa Catarina': ['Florianopolis','Joinville','Blumenau','Balneario Camboriu'],
+
+    // Mexico states -> cities
+    'MX-Mexico City': ['Mexico City'],
+    'MX-Jalisco': ['Guadalajara','Puerto Vallarta','Zapopan','Tlaquepaque'],
+    'MX-Nuevo Leon': ['Monterrey','San Pedro Garza Garcia','Apodaca'],
+    'MX-Puebla': ['Puebla','Cholula','Tehuacan'],
+    'MX-Quintana Roo': ['Cancun','Playa del Carmen','Tulum','Cozumel'],
+    'MX-Guanajuato': ['Leon','Guanajuato','San Miguel de Allende','Irapuato'],
+    'MX-Yucatan': ['Merida','Valladolid','Progreso'],
+    'MX-Baja California': ['Tijuana','Mexicali','Ensenada'],
+    'MX-Chihuahua': ['Chihuahua','Ciudad Juarez'],
+    'MX-Oaxaca': ['Oaxaca','Huatulco','Puerto Escondido'],
+    'MX-Veracruz': ['Veracruz','Xalapa','Coatzacoalcos'],
+
+    // Russia states -> cities
+    'RU-Moscow': ['Moscow'],
+    'RU-Saint Petersburg': ['Saint Petersburg'],
+    'RU-Novosibirsk Oblast': ['Novosibirsk'],
+    'RU-Sverdlovsk Oblast': ['Yekaterinburg','Nizhny Tagil'],
+    'RU-Tatarstan': ['Kazan','Naberezhnye Chelny'],
+    'RU-Krasnodar Krai': ['Krasnodar','Sochi','Novorossiysk'],
+    'RU-Nizhny Novgorod Oblast': ['Nizhny Novgorod'],
+    'RU-Samara Oblast': ['Samara','Tolyatti'],
+    'RU-Rostov Oblast': ['Rostov-on-Don','Taganrog'],
+
+    // China provinces -> cities
+    'CN-Beijing': ['Beijing'],
+    'CN-Shanghai': ['Shanghai'],
+    'CN-Guangdong': ['Guangzhou','Shenzhen','Dongguan','Foshan','Zhuhai'],
+    'CN-Zhejiang': ['Hangzhou','Ningbo','Wenzhou'],
+    'CN-Jiangsu': ['Nanjing','Suzhou','Wuxi'],
+    'CN-Sichuan': ['Chengdu','Mianyang','Leshan'],
+    'CN-Hubei': ['Wuhan','Yichang'],
+    'CN-Hunan': ['Changsha','Zhuzhou'],
+    'CN-Fujian': ['Fuzhou','Xiamen','Quanzhou'],
+    'CN-Shandong': ['Jinan','Qingdao','Yantai'],
+
+    // Argentina provinces -> cities
+    'AR-Buenos Aires': ['Buenos Aires','La Plata','Mar del Plata','Bahia Blanca'],
+    'AR-Cordoba': ['Cordoba','Villa Carlos Paz','Rio Cuarto'],
+    'AR-Santa Fe': ['Rosario','Santa Fe'],
+    'AR-Mendoza': ['Mendoza','San Rafael'],
+    'AR-Tucuman': ['San Miguel de Tucuman'],
+
+    // Italy regions -> cities
+    'IT-Lombardy': ['Milan','Bergamo','Brescia','Como','Monza'],
+    'IT-Lazio': ['Rome','Viterbo','Latina'],
+    'IT-Campania': ['Naples','Salerno','Caserta'],
+    'IT-Veneto': ['Venice','Verona','Padua','Vicenza'],
+    'IT-Emilia-Romagna': ['Bologna','Parma','Modena','Rimini'],
+    'IT-Tuscany': ['Florence','Pisa','Siena','Lucca','Arezzo'],
+    'IT-Piedmont': ['Turin','Novara','Alessandria'],
+    'IT-Sicily': ['Palermo','Catania','Messina','Syracuse'],
+    'IT-Puglia': ['Bari','Lecce','Taranto','Foggia'],
+    'IT-Sardinia': ['Cagliari','Sassari','Olbia'],
+
+    // Spain communities -> cities
+    'ES-Madrid': ['Madrid','Alcala de Henares','Getafe'],
+    'ES-Catalonia': ['Barcelona','Girona','Tarragona','Lleida'],
+    'ES-Andalusia': ['Seville','Malaga','Granada','Cordoba','Cadiz'],
+    'ES-Valencia': ['Valencia','Alicante','Castellon'],
+    'ES-Basque Country': ['Bilbao','San Sebastian','Vitoria-Gasteiz'],
+    'ES-Galicia': ['Santiago de Compostela','Vigo','A Coruna'],
+    'ES-Canary Islands': ['Las Palmas','Santa Cruz de Tenerife'],
+    'ES-Balearic Islands': ['Palma de Mallorca','Ibiza'],
+
+    // Japan prefectures -> cities
+    'JP-Tokyo': ['Tokyo','Shinjuku','Shibuya','Minato'],
+    'JP-Osaka': ['Osaka','Sakai','Higashiosaka'],
+    'JP-Kyoto': ['Kyoto','Uji'],
+    'JP-Hokkaido': ['Sapporo','Asahikawa','Hakodate'],
+    'JP-Kanagawa': ['Yokohama','Kawasaki','Sagamihara'],
+    'JP-Aichi': ['Nagoya','Toyota','Okazaki'],
+    'JP-Fukuoka': ['Fukuoka','Kitakyushu'],
+    'JP-Hyogo': ['Kobe','Himeji','Nishinomiya'],
+    'JP-Hiroshima': ['Hiroshima','Fukuyama'],
+    'JP-Okinawa': ['Naha','Okinawa City'],
   };
 
   // Helper to get the prefix for state-based city lookup
   const statePrefix: Record<string, string> = {
     'United States': 'US', 'Canada': 'CA', 'Australia': 'AU', 'United Kingdom': 'UK', 'Germany': 'DE',
+    'India': 'IN', 'Brazil': 'BR', 'Mexico': 'MX', 'Russia': 'RU', 'China': 'CN',
+    'Argentina': 'AR', 'Italy': 'IT', 'Spain': 'ES', 'Japan': 'JP',
   };
 
-  // Get cities based on current country and state selection
+  // Get states: prefer API data, fall back to hardcoded
+  const getStatesForCountry = (): string[] => {
+    if (apiStates.length > 0) return apiStates;
+    return countryStates[country] || [];
+  };
+
+  // Get cities: prefer API data, fall back to hardcoded
   const getAvailableCities = (): string[] => {
+    if (apiCities.length > 0) return apiCities;
     const prefix = statePrefix[country];
     if (prefix && state) {
       return countryCities[`${prefix}-${state}`] || [];
@@ -978,6 +1158,63 @@ function SignupPageInner() {
   useEffect(() => {
     stepRef.current = step;
   }, [step]);
+
+  /* ---------- fetch states from API when country changes ---------- */
+  useEffect(() => {
+    if (!country) return;
+    // If we already have hardcoded states, use those as initial and still try API
+    setApiStates([]);
+    setState('');
+    setCity('');
+    setApiCities([]);
+
+    let cancelled = false;
+    setLoadingStates(true);
+    fetch(`https://countriesnow.space/api/v0.1/countries/states/q?country=${encodeURIComponent(country)}`)
+      .then(r => r.json())
+      .then(data => {
+        if (!cancelled && !data.error && data.data?.states) {
+          const names = data.data.states.map((s: { name: string }) => s.name).sort();
+          if (names.length > 0) setApiStates(names);
+        }
+      })
+      .catch(() => {})
+      .finally(() => { if (!cancelled) setLoadingStates(false); });
+
+    return () => { cancelled = true; };
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [country]);
+
+  /* ---------- fetch cities from API when country+state changes ---------- */
+  useEffect(() => {
+    if (!country) return;
+    setApiCities([]);
+
+    // For countries without states, fetch cities by country
+    const hasStates = getStatesForCountry().length > 0;
+    if (hasStates && !state) return;
+
+    let cancelled = false;
+    setLoadingCities(true);
+
+    const url = hasStates && state
+      ? `https://countriesnow.space/api/v0.1/countries/state/cities/q?country=${encodeURIComponent(country)}&state=${encodeURIComponent(state)}`
+      : `https://countriesnow.space/api/v0.1/countries/cities/q?country=${encodeURIComponent(country)}`;
+
+    fetch(url)
+      .then(r => r.json())
+      .then(data => {
+        if (!cancelled && !data.error && data.data) {
+          const cities = Array.isArray(data.data) ? data.data : [];
+          if (cities.length > 0) setApiCities(cities.sort());
+        }
+      })
+      .catch(() => {})
+      .finally(() => { if (!cancelled) setLoadingCities(false); });
+
+    return () => { cancelled = true; };
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [country, state]);
 
   /* ---------- sync step with browser history via hash ---------- */
   useEffect(() => {
@@ -1061,7 +1298,7 @@ function SignupPageInner() {
     if (s === 7) {
       if (!country) newErrors.country = 'Please select a country';
       if (!city.trim()) newErrors.city = 'City is required';
-      if (countryStates[country] && !state.trim()) newErrors.state = 'State / Province is required';
+      if (getStatesForCountry().length > 0 && !state.trim()) newErrors.state = 'State / Province is required';
     }
     if (s === 8) {
       if (!fullName.trim()) newErrors.fullName = 'Full name is required';
@@ -1804,16 +2041,17 @@ function SignupPageInner() {
                     />
                   </div>
 
-                  {/* State/Province - only for countries that need it */}
-                  {countryStates[country] && (
+                  {/* State/Province - shown when states are available (hardcoded or API) */}
+                  {getStatesForCountry().length > 0 && (
                     <div>
                       <label className="block text-sm font-medium text-deep-green mb-1.5">State / Province <span className="text-red-400">*</span></label>
                       <SearchableSelect
                         value={state}
-                        onChange={(v) => { setState(v); setCity(''); }}
-                        options={countryStates[country]}
-                        placeholder="Select state / province"
+                        onChange={(v) => { setState(v); setCity(''); setApiCities([]); }}
+                        options={getStatesForCountry()}
+                        placeholder={loadingStates ? "Loading states..." : "Select state / province"}
                         error={errors.state}
+                        allowFreeText
                       />
                     </div>
                   )}
@@ -1825,8 +2063,9 @@ function SignupPageInner() {
                       value={city}
                       onChange={setCity}
                       options={getAvailableCities()}
-                      placeholder="Select city"
+                      placeholder={loadingCities ? "Loading cities..." : getAvailableCities().length > 0 ? "Select or type city" : "Type your city"}
                       error={errors.city}
+                      allowFreeText
                     />
                   </div>
                 </div>
