@@ -6,6 +6,7 @@ import Link from "next/link";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { useAuth } from "@/lib/auth";
+import { useSignupUrl } from "@/lib/useSignupUrl";
 import { supabase } from "@/lib/supabase";
 
 interface PetCandidate {
@@ -327,6 +328,7 @@ const SwipeCard = memo(function SwipeCard({ candidate, isTop, onSwipe, onLove: _
 });
 
 function NotLoggedInCTA() {
+  const signupUrl = useSignupUrl();
   return (
     <div className="flex-1 flex items-center justify-center px-4 py-12">
       <div className="bg-white rounded-3xl shadow-xl p-8 max-w-md w-full text-center">
@@ -335,7 +337,7 @@ function NotLoggedInCTA() {
         <p className="text-gray-500 mb-8 leading-relaxed">Swipe through local pets, match with compatible playmates, and set up the perfect date!</p>
         <div className="flex flex-col sm:flex-row gap-3">
           <Link href="/auth/login" className="flex-1 bg-emerald-500 text-white font-medium text-lg py-3 rounded-xl hover:bg-emerald-600 transition-colors text-center tracking-wide">Log In</Link>
-          <Link href="/auth/signup" className="flex-1 bg-gray-900 text-white font-medium text-lg py-3 rounded-xl hover:bg-gray-800 transition-colors text-center tracking-wide">Sign Up</Link>
+          <Link href={signupUrl} className="flex-1 bg-gray-900 text-white font-medium text-lg py-3 rounded-xl hover:bg-gray-800 transition-colors text-center tracking-wide">Sign Up</Link>
         </div>
       </div>
     </div>
@@ -395,6 +397,7 @@ function EmptyState() {
 
 export default function SwipePage() {
   const { user, loading: authLoading } = useAuth();
+  const signupUrl = useSignupUrl();
   const [myPetProfile, setMyPetProfile] = useState<PetCandidate|null>(null);
   const [hasProfile, setHasProfile] = useState<boolean|null>(null);
   const [photoCount, setPhotoCount] = useState<number|null>(null);

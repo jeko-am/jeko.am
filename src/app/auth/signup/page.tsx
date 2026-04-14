@@ -961,7 +961,11 @@ function SignupPageInner() {
   /* ---------- validation & submission ---------- */
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [submitting, setSubmitting] = useState(false);
-  const [submitError, setSubmitError] = useState('');
+  const [submitError, setSubmitError] = useState(
+    searchParams.get('error') === 'incomplete_signup'
+      ? 'Please complete the signup quiz before continuing.'
+      : ''
+  );
 
   /* ---------- redirect if already logged in (unless completing OAuth) ---------- */
   useEffect(() => {

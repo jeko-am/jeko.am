@@ -75,15 +75,18 @@ function OAuthCompleteInner() {
 
         /* ---- Step 3: Handle login vs signup ---- */
         if (next === 'login') {
-          const { data: profile } = await supabase
-            .from('user_profiles')
+          // Check pet_profiles (not user_profiles) because the DB trigger
+          // auto-creates a bare user_profiles row on every auth.users insert.
+          // A user who skipped signup will have user_profiles but no pet_profiles.
+          const { data: petProfile } = await supabase
+            .from('pet_profiles')
             .select('user_id')
             .eq('user_id', userId)
             .single();
 
           clearInterval(msgInterval);
 
-          if (!profile) {
+          if (!petProfile) {
             await supabase.auth.signOut();
             router.push('/login?error=not_signed_up');
             return;
@@ -95,9 +98,25 @@ function OAuthCompleteInner() {
         /* ---- Step 4: Save profiles from quiz data ---- */
         const raw = sessionStorage.getItem('jeko-signup-quiz');
         if (!raw) {
-          // No quiz data — maybe user already completed, just go home
+          // No quiz data in sessionStorage. Check if this user already
+          // completed signup before (has a pet_profiles row). If not,
+          // sign them out and send them to signup — they skipped the quiz.
+          const { data: existingPet } = await supabase
+            .from('pet_profiles')
+            .select('user_id')
+            .eq('user_id', userId)
+            .single();
+
           clearInterval(msgInterval);
-          router.push('/community');
+
+          if (existingPet) {
+            // Returning user who already completed signup — let them in
+            router.push('/community');
+          } else {
+            // New user who bypassed the quiz — sign out and redirect to signup
+            await supabase.auth.signOut();
+            router.push('/auth/signup?error=incomplete_signup');
+          }
           return;
         }
 

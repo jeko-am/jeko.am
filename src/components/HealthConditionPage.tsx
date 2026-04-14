@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import { useSignupUrl } from "@/lib/useSignupUrl";
 
 interface Symptom {
   icon: string;
@@ -58,6 +59,7 @@ export default function HealthConditionPage({
   faqs,
   accentColor = "#274C46",
 }: HealthConditionProps) {
+  const signupUrl = useSignupUrl();
   return (
     <>
       <Header />
@@ -91,7 +93,7 @@ export default function HealthConditionPage({
                 {heroDescription}
               </p>
               <Link
-                href="/auth/signup"
+                href={signupUrl}
                 className="inline-block bg-gold text-deep-green px-7 py-3 rounded-[5px] font-semibold text-[16px] hover:bg-[#d99500] transition-colors"
               >
                 Create your dog&apos;s plan
@@ -280,7 +282,7 @@ export default function HealthConditionPage({
                   trusted by thousands.
                 </p>
                 <Link
-                  href="/auth/signup"
+                  href="/products"
                   className="inline-block bg-gold text-deep-green px-7 py-3 rounded-[5px] font-semibold text-[16px] hover:bg-[#d99500] transition-colors"
                 >
                   Discover your dog&apos;s menu

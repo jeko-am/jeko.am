@@ -5,8 +5,10 @@ import Link from "next/link";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { supabase } from "@/lib/supabase";
+import { useSignupUrl } from "@/lib/useSignupUrl";
 
 export default function ContactPage() {
+  const signupUrl = useSignupUrl();
   const [formData, setFormData] = useState({
     fullName: "",
     email: "",
@@ -622,7 +624,7 @@ export default function ContactPage() {
                   </Link>
 
                   <Link
-                    href="/auth/signup"
+                    href={signupUrl}
                     className="flex items-center gap-3 p-3 rounded-xl hover:bg-off-white transition-colors group"
                   >
                     <div className="w-10 h-10 rounded-lg bg-gold/20 flex items-center justify-center group-hover:bg-gold/30 transition-colors">

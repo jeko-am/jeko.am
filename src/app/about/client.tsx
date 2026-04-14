@@ -5,6 +5,7 @@ import Link from "next/link";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import EditorOverlay from "@/components/EditorOverlay";
+import { useSignupUrl } from "@/lib/useSignupUrl";
 
 /* Decorative SVG components */
 function LeafShape({ className = "", fill = "#274C46", opacity = 0.2, style }: { className?: string; fill?: string; opacity?: number; style?: React.CSSProperties }) {
@@ -41,6 +42,7 @@ function PurpleDot({ className = "", size = 10, style }: { className?: string; s
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export default function AboutPageClient({ sections }: { sections: Record<string, any> }) {
+  const signupUrl = useSignupUrl();
   const s = sections; // shorthand
 
   const timeline = [
@@ -373,7 +375,7 @@ export default function AboutPageClient({ sections }: { sections: Record<string,
                     {s[8]?.description ?? "Proactively invest in your pet\u2019s health with a nutritious, vet-approved dog food that\u2019s trusted by thousands. Discover your dog\u2019s recipe today."}
                   </p>
                   <Link
-                    href={s[8]?.button_url ?? "/auth/signup"}
+                    href={s[8]?.button_url ?? "/products"}
                     className="inline-block bg-gold text-deep-green px-7 py-3 rounded-[5px] font-semibold text-[16px] hover:bg-[#d99500] transition-colors"
                   >
                     {s[8]?.button_text ?? "Discover your dog\u2019s menu"}

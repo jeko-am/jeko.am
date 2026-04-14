@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
+import { useSignupUrl } from '@/lib/useSignupUrl';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export default function MatchingModal({ content }: { content?: Record<string, any> }) {
@@ -13,7 +14,8 @@ export default function MatchingModal({ content }: { content?: Record<string, an
   const description = content?.description || 'Connect with pet lovers in your area and find the perfect companion for your furry friend.';
   const image = content?.image || '/WhatsApp Image 2026-04-11 at 09.54.12.jpeg';
   const ctaText = content?.cta_text || 'Start Matching';
-  const ctaUrl = content?.cta_url || '/auth/signup';
+  const signupUrl = useSignupUrl();
+  const ctaUrl = content?.cta_url || signupUrl;
   const closeText = content?.close_text || 'Close';
 
   useEffect(() => {

@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import Image from "next/image";
+import { useSignupUrl } from "@/lib/useSignupUrl";
 
 const steps = [
   {
@@ -36,7 +37,8 @@ export default function HowPlanWorks({ content }: { content?: any }) {
   const step3Title = content?.step_3_title ?? "Delivered to your door for free";
   const step3Description = content?.step_3_description ?? "Delivered to your door for free";
   const buttonText = content?.button_text ?? "Create a tailored plan today";
-  const buttonUrl = content?.button_url ?? "/auth/signup";
+  const signupUrl = useSignupUrl();
+  const buttonUrl = content?.button_url ?? signupUrl;
 
   const dynamicSteps = [
     {

@@ -6,6 +6,7 @@ import Link from "next/link";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import EditorOverlay from "@/components/EditorOverlay";
+import { useSignupUrl } from "@/lib/useSignupUrl";
 
 const recipes = [
   {
@@ -78,6 +79,7 @@ interface RecipesPageClientProps {
 }
 
 export default function RecipesPageClient({ sections }: RecipesPageClientProps) {
+  const signupUrl = useSignupUrl();
   const [activeFilter, setActiveFilter] = useState("general");
 
   const filteredRecipes = recipes.filter((r) => r.category === activeFilter);
@@ -182,7 +184,7 @@ export default function RecipesPageClient({ sections }: RecipesPageClientProps) 
         {/* Offer Banner */}
         <div data-section-index={1} data-section-name="Offer Banner">
           <Link
-            href={sections[1]?.link_url ?? "/auth/signup"}
+            href={sections[1]?.link_url ?? signupUrl}
             className="block w-full bg-[#E65A1E] hover:bg-[#D04E15] transition-colors duration-200 py-3 text-center text-white"
           >
             <p className="text-lg leading-snug">
@@ -335,7 +337,7 @@ export default function RecipesPageClient({ sections }: RecipesPageClientProps) 
                         {recipe.subtitle}
                       </p>
                       <Link
-                        href="/auth/signup"
+                        href={signupUrl}
                         className="text-deep-green text-[14px] font-medium underline underline-offset-2 decoration-deep-green/40 hover:decoration-deep-green transition-colors"
                       >
                         More info
@@ -437,7 +439,7 @@ export default function RecipesPageClient({ sections }: RecipesPageClientProps) 
                     {sections[8]?.description ?? "Proactively invest in your pet\u2019s health with a nutritious, vet-approved dog food that\u2019s trusted by thousands. Discover your dog\u2019s recipe today."}
                   </p>
                   <Link
-                    href={sections[8]?.button_url ?? "/auth/signup"}
+                    href={sections[8]?.button_url ?? "/products"}
                     className="inline-block bg-gold text-deep-green px-7 py-3 rounded-[5px] font-semibold text-[16px] hover:bg-[#d99500] transition-colors"
                   >
                     {sections[8]?.button_text ?? "Discover your dog\u2019s menu"}

@@ -8,6 +8,7 @@ import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import ProductCard from '@/components/ProductCard';
 import { useCart } from '@/lib/cart-context';
+import { useSignupUrl } from '@/lib/useSignupUrl';
 import { trackViewContent } from '@/lib/tracking';
 
 interface Product {
@@ -176,6 +177,7 @@ function ReviewCard({ review }: { review: { name: string; date: string; rating: 
 /* Main Page                                                          */
 /* ================================================================== */
 export default function ProductDetailPage() {
+  const signupUrl = useSignupUrl();
   const params = useParams();
   const slug = params.slug as string;
   const [product, setProduct] = useState<Product | null>(null);
@@ -967,7 +969,7 @@ export default function ProductDetailPage() {
                   <p>It&apos;s the kind they love, crave, and sprint to the bowl for every single time — for boundless energy, a shiny coat, and a happier, healthier life.</p>
                   <p>Jeko is for the devoted pet parents simply seeking more for their best friend.</p>
                 </div>
-                <Link href="/auth/signup" className="btn-gold mt-8 inline-block">Try Jeko</Link>
+                <Link href={signupUrl} className="btn-gold mt-8 inline-block">Try Jeko</Link>
               </div>
             </div>
           </div>

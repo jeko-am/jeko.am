@@ -2,9 +2,11 @@
 
 import Image from "next/image";
 import Link from "next/link";
+import { useSignupUrl } from "@/lib/useSignupUrl";
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export default function DragonsDen({ content }: { content?: any }) {
+  const signupUrl = useSignupUrl();
   return (
     <section className="relative overflow-hidden">
       <div className="flex flex-col md:flex-row min-h-[480px]">
@@ -46,7 +48,7 @@ export default function DragonsDen({ content }: { content?: any }) {
               {content?.description || "Jeko is complete nutrition from the inside out, and dogs totally love the taste! \u201cIt was possibly the best pitch I have seen in over 10 years of Dragons\u2019 Den\u201d - Duncan Bannatyne"}
             </p>
             <Link
-              href={content?.button_url || "/auth/signup"}
+              href={content?.button_url || signupUrl}
               className="btn-gold inline-block font-semibold text-[18px] transition-colors duration-300"
             >
               {content?.button_text || "Get started today"}

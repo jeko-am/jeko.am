@@ -5,6 +5,7 @@ import Link from "next/link";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { useAuth } from "@/lib/auth";
+import { useSignupUrl } from "@/lib/useSignupUrl";
 import { supabase } from "@/lib/supabase";
 
 /* ─── Types ─────────────────────────────────────────────────────────── */
@@ -140,6 +141,7 @@ function PetTypeIcon({ type }: { type: string }) {
 /* ─── Login CTA ─────────────────────────────────────────────────────── */
 
 function LoginCTA() {
+  const signupUrl = useSignupUrl();
   return (
     <div className="flex flex-col items-center justify-center text-center py-10 lg:py-16">
       <div className="bg-white shadow-sm border border-deep-green/10 w-full rounded-xl p-6 lg:rounded-2xl lg:p-10">
@@ -169,7 +171,7 @@ function LoginCTA() {
         </Link>
         <p className="mt-4 text-deep-green/50 text-[13px]">
           Don&apos;t have an account?{" "}
-          <Link href="/auth/signup" className="text-gold hover:underline font-medium">
+          <Link href={signupUrl} className="text-gold hover:underline font-medium">
             Sign up
           </Link>
         </p>
@@ -1022,6 +1024,7 @@ function MatchPage({ user }: { user: NonNullable<ReturnType<typeof useAuth>["use
 
 export default function FindOwnersPage() {
   const { user, loading } = useAuth();
+  const signupUrl = useSignupUrl();
 
   return (
     <>

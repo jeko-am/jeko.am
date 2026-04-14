@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import { useCart } from "@/lib/cart-context";
 import { useAuth } from "@/lib/auth";
+import { useSignupUrl } from "@/lib/useSignupUrl";
 
 const aboutDropdown = [
   { label: "Our story", href: "/about" },
@@ -129,7 +130,8 @@ export default function Header({ content }: { content?: any }) {
 
   const logoText = content?.logo_text ?? "JEKO";
   const ctaText = content?.cta_text ?? "Sign up";
-  const ctaUrl = content?.cta_url ?? "/auth/signup";
+  const signupUrl = useSignupUrl();
+  const ctaUrl = content?.cta_url ?? signupUrl;
   const helpUrl = content?.help_url ?? "/contact";
   const loginUrl = content?.login_url ?? "/login";
 

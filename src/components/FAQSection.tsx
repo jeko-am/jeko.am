@@ -3,6 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
+import { useSignupUrl } from "@/lib/useSignupUrl";
 
 const faqs = [
   { question: "Am I tied into a subscription?", answer: "Not at all! You can pause, change, or cancel your plan at any time. We believe in our food so much that we don't need to lock you in." },
@@ -17,6 +18,7 @@ const faqs = [
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export default function FAQSection({ content }: { content?: any }) {
   const [openIndex, setOpenIndex] = useState<number | null>(null);
+  const signupUrl = useSignupUrl();
 
   return (
     <section className="relative overflow-hidden">
@@ -93,7 +95,7 @@ export default function FAQSection({ content }: { content?: any }) {
 
             <div className="mt-8">
               <Link
-                href={content?.button_url || "/auth/signup"}
+                href={content?.button_url || signupUrl}
                 className="btn-gold inline-block font-semibold text-[18px] transition-colors duration-300"
               >
                 {content?.button_text || "Get started with 25% off"}

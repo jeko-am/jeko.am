@@ -3,6 +3,7 @@
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import Link from "next/link";
+import { useSignupUrl } from "@/lib/useSignupUrl";
 
 const deliveryOptions = [
   {
@@ -56,6 +57,7 @@ const deliveryOptions = [
 ];
 
 export default function ShippingPolicyPage() {
+  const signupUrl = useSignupUrl();
   return (
     <>
       <Header />
@@ -414,7 +416,7 @@ export default function ShippingPolicyPage() {
               {/* CTA */}
               <div className="text-center">
                 <Link
-                  href="/auth/signup"
+                  href={signupUrl}
                   className="inline-block bg-gold text-deep-green text-lg font-rubik font-semibold px-8 py-3.5 rounded-lg hover:bg-[#d99500] transition-colors"
                 >
                   Create Your Plan Today

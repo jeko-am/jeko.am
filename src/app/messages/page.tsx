@@ -13,6 +13,7 @@ import Link from "next/link";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { useAuth } from "@/lib/auth";
+import { useSignupUrl } from "@/lib/useSignupUrl";
 import { supabase } from "@/lib/supabase";
 
 /* ─── Types ──────────────────────────────────────────────────────────── */
@@ -149,6 +150,7 @@ function Avatar({
 /* ─── Login CTA ──────────────────────────────────────────────────────── */
 
 function LoginCTA() {
+  const signupUrl = useSignupUrl();
   return (
     <div className="min-h-screen bg-off-white">
       <Header />
@@ -184,7 +186,7 @@ function LoginCTA() {
           <p className="mt-4 text-deep-green/50 text-sm">
             Don&apos;t have an account?{" "}
             <Link
-              href="/auth/signup"
+              href={signupUrl}
               className="text-gold font-medium hover:underline"
             >
               Sign up
@@ -1265,6 +1267,7 @@ function MobileChatView({
 
 export default function MessagesPage() {
   const { user, loading: authLoading } = useAuth();
+  const signupUrl = useSignupUrl();
   const [conversations, setConversations] = useState<ConversationWithProfile[]>(
     []
   );

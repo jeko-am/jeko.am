@@ -5,6 +5,7 @@ import Link from "next/link";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import EditorOverlay from "@/components/EditorOverlay";
+import { useSignupUrl } from "@/lib/useSignupUrl";
 
 interface BenefitsPageClientProps {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -12,6 +13,7 @@ interface BenefitsPageClientProps {
 }
 
 export default function BenefitsPageClient({ sections }: BenefitsPageClientProps) {
+  const signupUrl = useSignupUrl();
   const contentSections = [
     {
       title: sections[2]?.title ?? "Jeko common sense",
@@ -98,7 +100,7 @@ export default function BenefitsPageClient({ sections }: BenefitsPageClientProps
                 </p>
                 <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
                   <Link
-                    href={sections[0]?.button_url ?? "/auth/signup"}
+                    href={sections[0]?.button_url ?? signupUrl}
                     className="inline-block bg-gold text-deep-green px-7 py-3 rounded-[5px] font-semibold text-[16px] hover:bg-[#d99500] transition-colors"
                   >
                     {sections[0]?.button_text ?? "Create a tailored plan"}
@@ -155,7 +157,7 @@ export default function BenefitsPageClient({ sections }: BenefitsPageClientProps
         {/* ========== Offer Banner ========== */}
         <div data-section-index="1" data-section-name="Offer Banner">
           <Link
-            href={sections[1]?.link_url ?? "/auth/signup"}
+            href={sections[1]?.link_url ?? signupUrl}
             className="block w-full bg-[#E65A1E] hover:bg-[#D04E15] transition-colors duration-200 py-3 text-center text-white"
           >
             <p className="text-[17px] leading-snug font-rubik">
@@ -355,7 +357,7 @@ export default function BenefitsPageClient({ sections }: BenefitsPageClientProps
                     {sections[8]?.description ?? "Proactively invest in your pet\u2019s health with a nutritious, vet-approved dog food subscription that\u2019s trusted by thousands. Discover your dog\u2019s recipe today with free dog food delivery."}
                   </p>
                   <Link
-                    href={sections[8]?.button_url ?? "/auth/signup"}
+                    href={sections[8]?.button_url ?? "/products"}
                     className="inline-block bg-gold text-deep-green px-7 py-3 rounded-[5px] font-semibold text-[16px] hover:bg-[#d99500] transition-colors"
                   >
                     {sections[8]?.button_text ?? "Discover your dog\u2019s menu"}

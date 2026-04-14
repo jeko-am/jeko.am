@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { useSignupUrl } from "@/lib/useSignupUrl";
 
 const Sparkle = () => (
   <svg
@@ -23,7 +24,8 @@ const Sparkle = () => (
 export default function OfferBanner({ content }: { content?: Record<string, any> }) {
   const primaryText = content?.primary_text || "25% off your first box";
   const secondaryText = content?.secondary_text || "10% off your next box";
-  const linkUrl = content?.link_url || "/auth/signup";
+  const signupUrl = useSignupUrl();
+  const linkUrl = content?.link_url || signupUrl;
   const bgColor = content?.background_color || "#5F295E";
 
   return (
