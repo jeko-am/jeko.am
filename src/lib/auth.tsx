@@ -26,6 +26,42 @@ const AuthContext = createContext<AuthContextType>({
   signOut: async () => {},
 });
 
+// Cache keys for localStorage — avoids re-querying Supabase on every refresh
+const CACHE_KEY_PROFILE = 'jeko-auth-profile-verified';
+const CACHE_KEY_ADMIN = 'jeko-auth-admin-role';
+
+function getCachedAuth(userId: string) {
+  try {
+    const profileRaw = localStorage.getItem(CACHE_KEY_PROFILE);
+    const adminRaw = localStorage.getItem(CACHE_KEY_ADMIN);
+    const profile = profileRaw ? JSON.parse(profileRaw) : null;
+    const admin = adminRaw ? JSON.parse(adminRaw) : null;
+    // Only trust cache if it's for the same user
+    if (profile?.userId === userId) {
+      return {
+        profileVerified: profile.verified as boolean,
+        isAdmin: admin?.userId === userId ? (admin.isAdmin as boolean) : false,
+      };
+    }
+  } catch { /* ignore corrupt cache */ }
+  return null;
+}
+
+function setCachedProfile(userId: string, verified: boolean) {
+  try { localStorage.setItem(CACHE_KEY_PROFILE, JSON.stringify({ userId, verified })); } catch {}
+}
+
+function setCachedAdmin(userId: string, isAdmin: boolean) {
+  try { localStorage.setItem(CACHE_KEY_ADMIN, JSON.stringify({ userId, isAdmin })); } catch {}
+}
+
+function clearAuthCache() {
+  try {
+    localStorage.removeItem(CACHE_KEY_PROFILE);
+    localStorage.removeItem(CACHE_KEY_ADMIN);
+  } catch {}
+}
+
 export function AuthProvider({ children }: { children: ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
   const [session, setSession] = useState<Session | null>(null);
@@ -36,66 +72,86 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     let mounted = true;
 
-    // Use onAuthStateChange exclusively — Supabase fires INITIAL_SESSION
-    // on subscribe, which reads from localStorage without acquiring the
-    // internal auth lock. Calling getSession() can deadlock the client
-    // on hard refresh, blocking all subsequent REST API calls.
     const { data: { subscription } } = supabase.auth.onAuthStateChange(async (event, session) => {
       if (!mounted) return;
 
       if (event === 'SIGNED_OUT' || !session?.user) {
+        clearAuthCache();
         setSession(null);
         setUser(null);
         setIsAdmin(false);
         adminCheckRef.current = null;
         setLoading(false);
-      } else {
-        // Verify the user completed signup (has a pet_profiles row).
-        // Skip on callback pages and USER_UPDATED events.
-        const isAuthPage = typeof window !== 'undefined' && (
-          window.location.pathname.startsWith('/auth/callback') ||
-          window.location.pathname.startsWith('/auth/signup')
-        );
-        if (!isAuthPage && event !== 'USER_UPDATED') {
-          const { data: petRow } = await supabase
-            .from('pet_profiles')
-            .select('user_id')
-            .eq('user_id', session.user.id)
-            .maybeSingle();
+        return;
+      }
 
-          if (!petRow) {
-            // Check if signup quiz data exists — if so, the user just
-            // completed the quiz and OAuth redirected here instead of
-            // to the callback page. Redirect them there to finish.
-            const hasQuizData = typeof sessionStorage !== 'undefined' && !!sessionStorage.getItem('jeko-signup-quiz');
-            if (hasQuizData) {
-              window.location.href = '/auth/callback/complete?next=signup';
-              return;
-            }
-            // No quiz data — incomplete signup. Sign them out.
-            await supabase.auth.signOut({ scope: 'local' }).catch(() => {});
-            setSession(null);
-            setUser(null);
-            setIsAdmin(false);
-            adminCheckRef.current = null;
-            setLoading(false);
-            if (typeof window !== 'undefined' && !window.location.pathname.startsWith('/login')) {
-              window.location.href = '/login?error=not_signed_up';
-            }
-            return;
-          }
-        }
+      const userId = session.user.id;
+      const cached = getCachedAuth(userId);
 
+      // ── Fast path: cached and verified → no Supabase queries needed ──
+      if (cached && cached.profileVerified) {
         setSession(session);
         setUser(session.user);
-        // Check admin in the background — don't block loading
-        checkAdmin(session.user.id).finally(() => {
+        setIsAdmin(cached.isAdmin);
+        adminCheckRef.current = userId;
+        setLoading(false);
+        return;
+      }
+
+      // ── Slow path: first login or cache miss → verify profile ──
+      const isAuthPage = typeof window !== 'undefined' && (
+        window.location.pathname.startsWith('/auth/callback') ||
+        window.location.pathname.startsWith('/auth/signup')
+      );
+
+      if (!isAuthPage && event !== 'USER_UPDATED') {
+        const { data: petRow } = await supabase
+          .from('pet_profiles')
+          .select('user_id')
+          .eq('user_id', userId)
+          .maybeSingle();
+
+        if (!petRow) {
+          // Quiz data in sessionStorage → redirect to finish signup
+          const hasQuizData = typeof sessionStorage !== 'undefined' && !!sessionStorage.getItem('jeko-signup-quiz');
+          if (hasQuizData) {
+            window.location.href = '/auth/callback/complete?next=signup';
+            return;
+          }
+          // No profile, no quiz → sign out
+          clearAuthCache();
+          await supabase.auth.signOut({ scope: 'local' }).catch(() => {});
+          setSession(null);
+          setUser(null);
+          setIsAdmin(false);
+          adminCheckRef.current = null;
+          setLoading(false);
+          if (typeof window !== 'undefined' && !window.location.pathname.startsWith('/login')) {
+            window.location.href = '/login?error=not_signed_up';
+          }
+          return;
+        }
+
+        // Profile exists — cache it so we never query again until logout
+        setCachedProfile(userId, true);
+      }
+
+      setSession(session);
+      setUser(session.user);
+
+      // Admin check — use cache or query once
+      if (cached && cached.profileVerified) {
+        setIsAdmin(cached.isAdmin);
+        adminCheckRef.current = userId;
+        if (mounted) setLoading(false);
+      } else {
+        checkAdmin(userId).finally(() => {
           if (mounted) setLoading(false);
         });
       }
     });
 
-    // Safety timeout — if onAuthStateChange never fires
+    // Safety timeout
     const timeout = setTimeout(() => {
       if (mounted) setLoading(false);
     }, 2000);
@@ -108,7 +164,6 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   }, []);
 
   async function checkAdmin(userId: string) {
-    // Skip if we already checked this user
     if (adminCheckRef.current === userId) return;
     adminCheckRef.current = userId;
     try {
@@ -118,7 +173,9 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         .eq("user_id", userId)
         .eq("is_active", true)
         .maybeSingle();
-      setIsAdmin(!!data && ["super_admin", "admin", "editor"].includes(data.role));
+      const admin = !!data && ["super_admin", "admin", "editor"].includes(data.role);
+      setIsAdmin(admin);
+      setCachedAdmin(userId, admin);
     } catch {
       setIsAdmin(false);
     }
@@ -144,7 +201,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   }
 
   async function signOut() {
-    // Clear state first so UI updates instantly
+    clearAuthCache();
     setUser(null);
     setSession(null);
     setIsAdmin(false);
