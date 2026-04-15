@@ -87,78 +87,87 @@ export default function ProfilePage() {
 
   useEffect(() => {
     if (authLoading) return;
-    if (user) {
-      fetchProfiles();
-    } else {
-      // Redirect to user login if not authenticated
+    if (!user) {
       router.push('/login');
+      return;
     }
-  }, [user, authLoading, router]);
 
-  const fetchProfiles = async () => {
-    try {
-      setLoading(true);
+    let cancelled = false;
+    const userId = user.id;
 
-      // Fetch user profile
-      const { data: userData } = await supabase
-        .from("user_profiles")
-        .select("*")
-        .eq("user_id", user?.id)
-        .single();
+    async function loadProfiles() {
+      try {
+        setLoading(true);
 
-      if (userData) {
-        setUserProfile(userData);
-        setDisplayName(userData.display_name || userData.full_name || "");
-        setBio(userData.bio || "");
-        setCity(userData.city || "");
-        setCountry(userData.country || "");
-      }
+        // Fetch user profile
+        const { data: userData } = await supabase
+          .from("user_profiles")
+          .select("*")
+          .eq("user_id", userId)
+          .single();
 
-      // Fetch pet profile
-      const { data: petData } = await supabase
-        .from("pet_profiles")
-        .select("*")
-        .eq("user_id", user?.id)
-        .maybeSingle();
+        if (cancelled) return;
 
-      if (petData) {
-        setPetProfile(petData);
-        setPetName(petData.pet_name || "");
-        setPetBreed(petData.breed || "");
-        setPetAge(petData.dog_age_years?.toString() || "");
-        setPetWeight(petData.weight_kg?.toString() || "");
-        setPetGender(petData.gender || "");
-        setPetBio(petData.bio || "");
-        setPetTemperament(petData.temperament || "");
-        setPetActivityLevel(petData.activity_level || "");
-        setPetWalkPreference(petData.walk_preference || "");
-        setPetFavoriteActivity(petData.favorite_activity || "");
-        setPetGetsAlongWithDogs(petData.gets_along_with_dogs ?? true);
-        setPetLookingForMate(petData.looking_for_mate ?? false);
-        setPetCity(petData.city || "");
-        const rawDiet = petData.diet_preference;
-        if (Array.isArray(rawDiet)) {
-          setPetDietPreference(rawDiet);
-        } else if (typeof rawDiet === 'string') {
-          try { setPetDietPreference(JSON.parse(rawDiet)); } catch { setPetDietPreference([]); }
-        } else {
-          setPetDietPreference([]);
+        if (userData) {
+          setUserProfile(userData);
+          setDisplayName(userData.display_name || userData.full_name || "");
+          setBio(userData.bio || "");
+          setCity(userData.city || "");
+          setCountry(userData.country || "");
         }
-        const rawDisabilities = petData.disabilities;
-        if (Array.isArray(rawDisabilities)) {
-          setPetDisabilities(rawDisabilities);
-        } else { setPetDisabilities([]); }
-        const rawAllergies = petData.allergies;
-        if (Array.isArray(rawAllergies)) {
-          setPetAllergies(rawAllergies);
-        } else { setPetAllergies([]); }
+
+        // Fetch pet profile
+        const { data: petData } = await supabase
+          .from("pet_profiles")
+          .select("*")
+          .eq("user_id", userId)
+          .maybeSingle();
+
+        if (cancelled) return;
+
+        if (petData) {
+          setPetProfile(petData);
+          setPetName(petData.pet_name || "");
+          setPetBreed(petData.breed || "");
+          setPetAge(petData.dog_age_years?.toString() || "");
+          setPetWeight(petData.weight_kg?.toString() || "");
+          setPetGender(petData.gender || "");
+          setPetBio(petData.bio || "");
+          setPetTemperament(petData.temperament || "");
+          setPetActivityLevel(petData.activity_level || "");
+          setPetWalkPreference(petData.walk_preference || "");
+          setPetFavoriteActivity(petData.favorite_activity || "");
+          setPetGetsAlongWithDogs(petData.gets_along_with_dogs ?? true);
+          setPetLookingForMate(petData.looking_for_mate ?? false);
+          setPetCity(petData.city || "");
+          const rawDiet = petData.diet_preference;
+          if (Array.isArray(rawDiet)) {
+            setPetDietPreference(rawDiet);
+          } else if (typeof rawDiet === 'string') {
+            try { setPetDietPreference(JSON.parse(rawDiet)); } catch { setPetDietPreference([]); }
+          } else {
+            setPetDietPreference([]);
+          }
+          const rawDisabilities = petData.disabilities;
+          if (Array.isArray(rawDisabilities)) {
+            setPetDisabilities(rawDisabilities);
+          } else { setPetDisabilities([]); }
+          const rawAllergies = petData.allergies;
+          if (Array.isArray(rawAllergies)) {
+            setPetAllergies(rawAllergies);
+          } else { setPetAllergies([]); }
+        }
+      } catch (error) {
+        console.error("Error fetching profiles:", error);
+      } finally {
+        if (!cancelled) setLoading(false);
       }
-    } catch (error) {
-      console.error("Error fetching profiles:", error);
-    } finally {
-      setLoading(false);
     }
-  };
+
+    loadProfiles();
+
+    return () => { cancelled = true; };
+  }, [user, authLoading, router]);
 
   const uploadImage = async (file: File, type: "avatar" | "pet") => {
     if (!user) return null;
