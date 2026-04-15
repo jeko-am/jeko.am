@@ -50,6 +50,32 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         adminCheckRef.current = null;
         setLoading(false);
       } else {
+        // Verify the user completed signup (has a pet_profiles row).
+        // Skip this check during the signup callback flow itself.
+        const isCallbackPage = typeof window !== 'undefined' && window.location.pathname.startsWith('/auth/callback');
+        if (!isCallbackPage && event !== 'USER_UPDATED') {
+          const { data: petRow } = await supabase
+            .from('pet_profiles')
+            .select('user_id')
+            .eq('user_id', session.user.id)
+            .maybeSingle();
+
+          if (!petRow) {
+            // User has no pet profile — incomplete signup. Sign them out.
+            await supabase.auth.signOut({ scope: 'local' }).catch(() => {});
+            setSession(null);
+            setUser(null);
+            setIsAdmin(false);
+            adminCheckRef.current = null;
+            setLoading(false);
+            // Redirect to login with error if not already there
+            if (typeof window !== 'undefined' && !window.location.pathname.startsWith('/auth/') && !window.location.pathname.startsWith('/login')) {
+              window.location.href = '/login?error=not_signed_up';
+            }
+            return;
+          }
+        }
+
         setSession(session);
         setUser(session.user);
         // Check admin in the background — don't block loading
