@@ -1,9 +1,9 @@
 'use client';
 
 import { useCart } from '@/lib/cart-context';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
+import { useRouter, usePathname } from 'next/navigation';
 
 function formatPrice(value: number): string {
   return new Intl.NumberFormat('en-GB', { style: 'currency', currency: 'GBP' }).format(value);
@@ -13,6 +13,14 @@ export default function SideCart() {
   const { items, isOpen, closeCart, totalItems, totalPrice, removeItem, updateQuantity } = useCart();
   const [isCheckingOut, setIsCheckingOut] = useState(false);
   const router = useRouter();
+  const pathname = usePathname();
+
+  // Reset checkout state when user navigates away from /checkout
+  useEffect(() => {
+    if (pathname !== '/checkout') {
+      setIsCheckingOut(false);
+    }
+  }, [pathname]);
 
   const handleCheckout = () => {
     setIsCheckingOut(true);

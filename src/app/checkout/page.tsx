@@ -2,6 +2,7 @@
 
 import { useCart } from '@/lib/cart-context';
 import { useState, useEffect } from 'react';
+import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { createOrder, OrderData, calculateOrderTotals } from '@/lib/orders';
 import { useAuth } from '@/lib/auth';
@@ -27,6 +28,7 @@ function formatPrice(value: number): string {
 export default function CheckoutPage() {
   const { items, totalPrice, clearCart, isHydrated } = useCart();
   const { user } = useAuth();
+  const router = useRouter();
   const [isGuest, setIsGuest] = useState(!user);
   const [isProcessing, setIsProcessing] = useState(false);
   const [orderComplete, setOrderComplete] = useState(false);
@@ -224,9 +226,9 @@ export default function CheckoutPage() {
       <div className="max-w-6xl mx-auto px-4">
         {/* Header */}
         <div className="mb-8">
-          <Link href="/cart" className="text-gold hover:text-gold/80 transition-colors mb-2 inline-block">
-            ← Back to Cart
-          </Link>
+          <button onClick={() => router.back()} className="text-gold hover:text-gold/80 transition-colors mb-2 inline-block">
+            ← Back
+          </button>
           <h1 className="text-3xl font-bold text-deep-green">Checkout</h1>
         </div>
 
