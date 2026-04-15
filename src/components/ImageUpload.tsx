@@ -25,10 +25,12 @@ export default function ImageUpload({
   inputId = "file-input"
 }: ImageUploadProps) {
   const [dragActive, setDragActive] = useState(false);
+  const [internalUploading, setInternalUploading] = useState(false);
+  const isUploading = uploading || internalUploading;
 
   const sizeClasses = {
     sm: "w-16 h-16",
-    md: "w-24 h-24", 
+    md: "w-24 h-24",
     lg: "w-32 h-32"
   };
 
@@ -44,11 +46,16 @@ export default function ImageUpload({
       return;
     }
 
-    const url = await onUpload(file);
-    if (url) {
-      onImageChange(url);
-    } else {
-      alert('Failed to upload image. Please try again.');
+    setInternalUploading(true);
+    try {
+      const url = await onUpload(file);
+      if (url) {
+        onImageChange(url);
+      } else {
+        alert('Failed to upload image. Please try again.');
+      }
+    } finally {
+      setInternalUploading(false);
     }
   };
 
@@ -130,7 +137,7 @@ export default function ImageUpload({
         ) : showPlaceholder ? (
           <div className="w-full h-full bg-gray-100 flex items-center justify-center">
             <div className="text-center">
-              {uploading ? (
+              {isUploading ? (
                 <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-gold mx-auto"></div>
               ) : (
                 <>
@@ -144,7 +151,7 @@ export default function ImageUpload({
           </div>
         ) : null}
         
-        {uploading && (
+        {isUploading && (
           <div className="absolute inset-0 bg-white/75 rounded-full flex items-center justify-center">
             <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-gold"></div>
           </div>
@@ -157,7 +164,7 @@ export default function ImageUpload({
         accept="image/*"
         onChange={handleFileInput}
         className="hidden"
-        disabled={uploading}
+        disabled={isUploading}
       />
     </div>
   );
