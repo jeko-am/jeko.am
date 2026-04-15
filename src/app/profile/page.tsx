@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 import { useRouter } from "next/navigation";
 // import Image from "next/image";
 import Header from "@/components/Header";
@@ -85,89 +85,100 @@ export default function ProfilePage() {
   const [uploadingAvatar] = useState(false);
   const [uploadingPetPhoto] = useState(false);
 
-  useEffect(() => {
-    if (authLoading) return;
-    if (!user) {
-      router.push('/login');
-      return;
-    }
+  // Track whether we've already started fetching to avoid duplicate calls
+  const fetchStartedRef = useRef(false);
 
-    let cancelled = false;
-    const userId = user.id;
+  const loadProfiles = useCallback(async (userId: string) => {
+    try {
+      setLoading(true);
 
-    async function loadProfiles() {
-      try {
-        setLoading(true);
+      // Fetch user profile
+      const { data: userData } = await supabase
+        .from("user_profiles")
+        .select("*")
+        .eq("user_id", userId)
+        .single();
 
-        // Fetch user profile
-        const { data: userData } = await supabase
-          .from("user_profiles")
-          .select("*")
-          .eq("user_id", userId)
-          .single();
-
-        if (cancelled) return;
-
-        if (userData) {
-          setUserProfile(userData);
-          setDisplayName(userData.display_name || userData.full_name || "");
-          setBio(userData.bio || "");
-          setCity(userData.city || "");
-          setCountry(userData.country || "");
-        }
-
-        // Fetch pet profile
-        const { data: petData } = await supabase
-          .from("pet_profiles")
-          .select("*")
-          .eq("user_id", userId)
-          .maybeSingle();
-
-        if (cancelled) return;
-
-        if (petData) {
-          setPetProfile(petData);
-          setPetName(petData.pet_name || "");
-          setPetBreed(petData.breed || "");
-          setPetAge(petData.dog_age_years?.toString() || "");
-          setPetWeight(petData.weight_kg?.toString() || "");
-          setPetGender(petData.gender || "");
-          setPetBio(petData.bio || "");
-          setPetTemperament(petData.temperament || "");
-          setPetActivityLevel(petData.activity_level || "");
-          setPetWalkPreference(petData.walk_preference || "");
-          setPetFavoriteActivity(petData.favorite_activity || "");
-          setPetGetsAlongWithDogs(petData.gets_along_with_dogs ?? true);
-          setPetLookingForMate(petData.looking_for_mate ?? false);
-          setPetCity(petData.city || "");
-          const rawDiet = petData.diet_preference;
-          if (Array.isArray(rawDiet)) {
-            setPetDietPreference(rawDiet);
-          } else if (typeof rawDiet === 'string') {
-            try { setPetDietPreference(JSON.parse(rawDiet)); } catch { setPetDietPreference([]); }
-          } else {
-            setPetDietPreference([]);
-          }
-          const rawDisabilities = petData.disabilities;
-          if (Array.isArray(rawDisabilities)) {
-            setPetDisabilities(rawDisabilities);
-          } else { setPetDisabilities([]); }
-          const rawAllergies = petData.allergies;
-          if (Array.isArray(rawAllergies)) {
-            setPetAllergies(rawAllergies);
-          } else { setPetAllergies([]); }
-        }
-      } catch (error) {
-        console.error("Error fetching profiles:", error);
-      } finally {
-        if (!cancelled) setLoading(false);
+      if (userData) {
+        setUserProfile(userData);
+        setDisplayName(userData.display_name || userData.full_name || "");
+        setBio(userData.bio || "");
+        setCity(userData.city || "");
+        setCountry(userData.country || "");
       }
+
+      // Fetch pet profile
+      const { data: petData } = await supabase
+        .from("pet_profiles")
+        .select("*")
+        .eq("user_id", userId)
+        .maybeSingle();
+
+      if (petData) {
+        setPetProfile(petData);
+        setPetName(petData.pet_name || "");
+        setPetBreed(petData.breed || "");
+        setPetAge(petData.dog_age_years?.toString() || "");
+        setPetWeight(petData.weight_kg?.toString() || "");
+        setPetGender(petData.gender || "");
+        setPetBio(petData.bio || "");
+        setPetTemperament(petData.temperament || "");
+        setPetActivityLevel(petData.activity_level || "");
+        setPetWalkPreference(petData.walk_preference || "");
+        setPetFavoriteActivity(petData.favorite_activity || "");
+        setPetGetsAlongWithDogs(petData.gets_along_with_dogs ?? true);
+        setPetLookingForMate(petData.looking_for_mate ?? false);
+        setPetCity(petData.city || "");
+        const rawDiet = petData.diet_preference;
+        if (Array.isArray(rawDiet)) {
+          setPetDietPreference(rawDiet);
+        } else if (typeof rawDiet === 'string') {
+          try { setPetDietPreference(JSON.parse(rawDiet)); } catch { setPetDietPreference([]); }
+        } else {
+          setPetDietPreference([]);
+        }
+        const rawDisabilities = petData.disabilities;
+        if (Array.isArray(rawDisabilities)) {
+          setPetDisabilities(rawDisabilities);
+        } else { setPetDisabilities([]); }
+        const rawAllergies = petData.allergies;
+        if (Array.isArray(rawAllergies)) {
+          setPetAllergies(rawAllergies);
+        } else { setPetAllergies([]); }
+      }
+    } catch (error) {
+      console.error("Error fetching profiles:", error);
+    } finally {
+      setLoading(false);
     }
+  }, []);
 
-    loadProfiles();
+  // Redirect unauthenticated users
+  useEffect(() => {
+    if (!authLoading && !user) {
+      router.push('/login');
+    }
+  }, [authLoading, user, router]);
 
-    return () => { cancelled = true; };
-  }, [user, authLoading, router]);
+  // Fetch profiles once auth is ready — uses ref to guarantee single execution
+  useEffect(() => {
+    if (authLoading || !user) return;
+    if (fetchStartedRef.current) return;
+    fetchStartedRef.current = true;
+    loadProfiles(user.id);
+  }, [authLoading, user, loadProfiles]);
+
+  // Safety net: if still loading after 3s and auth is done, force retry
+  useEffect(() => {
+    if (!loading || authLoading) return;
+    const timer = setTimeout(() => {
+      if (user && loading) {
+        fetchStartedRef.current = false;
+        loadProfiles(user.id);
+      }
+    }, 3000);
+    return () => clearTimeout(timer);
+  }, [loading, authLoading, user, loadProfiles]);
 
   const uploadImage = async (file: File, type: "avatar" | "pet") => {
     if (!user) return null;
