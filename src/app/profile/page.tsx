@@ -429,11 +429,20 @@ export default function ProfilePage() {
                     inputId="pet-photo-upload"
                     currentImage={petProfile?.profile_photo_url}
                     onImageChange={async (url) => {
+                      if (!petProfile) {
+                        alert("Please save your pet profile first before uploading a photo.");
+                        return;
+                      }
                       if (url) {
-                        await supabase
+                        const { error } = await supabase
                           .from("pet_profiles")
                           .update({ profile_photo_url: url })
                           .eq("user_id", user!.id);
+                        if (error) {
+                          console.error("Error updating pet photo:", error);
+                          alert("Failed to save pet photo. Please try again.");
+                          return;
+                        }
                         setPetProfile(prev => prev ? { ...prev, profile_photo_url: url } : null);
                       } else {
                         await supabase

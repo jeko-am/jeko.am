@@ -50,17 +50,17 @@ function OAuthCompleteInner() {
           }
         }
 
-        /* ---- Step 2: Get the session ---- */
+        /* ---- Step 2: Get the session via getUser (avoids getSession deadlock) ---- */
         let userId: string | null = null;
         let userEmail = '';
         let metadata: Record<string, unknown> = {};
 
         for (let i = 0; i < 20; i++) {
-          const { data: { session } } = await supabase.auth.getSession();
-          if (session?.user) {
-            userId = session.user.id;
-            userEmail = session.user.email || '';
-            metadata = session.user.user_metadata || {};
+          const { data: { user } } = await supabase.auth.getUser();
+          if (user) {
+            userId = user.id;
+            userEmail = user.email || '';
+            metadata = user.user_metadata || {};
             break;
           }
           await new Promise(r => setTimeout(r, 500));
@@ -178,8 +178,10 @@ function OAuthCompleteInner() {
       } catch (err) {
         console.error('OAuth completion error:', err);
         clearInterval(msgInterval);
+        // Sign out to prevent incomplete profiles from persisting
+        await supabase.auth.signOut().catch(() => {});
         setStatus('Something went wrong. Redirecting...');
-        setTimeout(() => router.push('/community'), 2000);
+        setTimeout(() => router.push('/auth/signup'), 2000);
       }
     }
 
