@@ -36,62 +36,33 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     let mounted = true;
 
-    // Simple timeout to prevent infinite loading
-    const timeout = setTimeout(() => {
-      if (mounted) {
-        setLoading(false);
-      }
-    }, 1000); // 1 second timeout
-
-    async function initializeAuth() {
-      try {
-        const { data: { session }, error } = await supabase.auth.getSession();
-        
-        if (mounted) {
-          if (error || !session) {
-            setSession(null);
-            setUser(null);
-            setIsAdmin(false);
-          } else {
-            setSession(session);
-            setUser(session.user);
-            await checkAdmin(session.user.id);
-          }
-          setLoading(false);
-        }
-      } catch {
-        if (mounted) {
-          setSession(null);
-          setUser(null);
-          setIsAdmin(false);
-          setLoading(false);
-        }
-      } finally {
-        clearTimeout(timeout);
-      }
-    }
-
-    initializeAuth();
-
+    // Use onAuthStateChange exclusively — Supabase fires INITIAL_SESSION
+    // on subscribe, which reads from localStorage without acquiring the
+    // internal auth lock. Calling getSession() can deadlock the client
+    // on hard refresh, blocking all subsequent REST API calls.
     const { data: { subscription } } = supabase.auth.onAuthStateChange(async (event, session) => {
       if (!mounted) return;
 
-      if (event === 'SIGNED_OUT') {
+      if (event === 'SIGNED_OUT' || !session?.user) {
         setSession(null);
         setUser(null);
         setIsAdmin(false);
         adminCheckRef.current = null;
-      } else if (session?.user) {
+        setLoading(false);
+      } else {
         setSession(session);
         setUser(session.user);
-        await checkAdmin(session.user.id);
-      } else {
-        setSession(null);
-        setUser(null);
-        setIsAdmin(false);
-        adminCheckRef.current = null;
+        // Check admin in the background — don't block loading
+        checkAdmin(session.user.id).finally(() => {
+          if (mounted) setLoading(false);
+        });
       }
     });
+
+    // Safety timeout — if onAuthStateChange never fires
+    const timeout = setTimeout(() => {
+      if (mounted) setLoading(false);
+    }, 2000);
 
     return () => {
       mounted = false;
