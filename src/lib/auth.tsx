@@ -51,9 +51,12 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         setLoading(false);
       } else {
         // Verify the user completed signup (has a pet_profiles row).
-        // Skip this check during the signup callback flow itself.
-        const isCallbackPage = typeof window !== 'undefined' && window.location.pathname.startsWith('/auth/callback');
-        if (!isCallbackPage && event !== 'USER_UPDATED') {
+        // Skip on callback pages and USER_UPDATED events.
+        const isAuthPage = typeof window !== 'undefined' && (
+          window.location.pathname.startsWith('/auth/callback') ||
+          window.location.pathname.startsWith('/auth/signup')
+        );
+        if (!isAuthPage && event !== 'USER_UPDATED') {
           const { data: petRow } = await supabase
             .from('pet_profiles')
             .select('user_id')
@@ -61,15 +64,22 @@ export function AuthProvider({ children }: { children: ReactNode }) {
             .maybeSingle();
 
           if (!petRow) {
-            // User has no pet profile — incomplete signup. Sign them out.
+            // Check if signup quiz data exists — if so, the user just
+            // completed the quiz and OAuth redirected here instead of
+            // to the callback page. Redirect them there to finish.
+            const hasQuizData = typeof sessionStorage !== 'undefined' && !!sessionStorage.getItem('jeko-signup-quiz');
+            if (hasQuizData) {
+              window.location.href = '/auth/callback/complete?next=signup';
+              return;
+            }
+            // No quiz data — incomplete signup. Sign them out.
             await supabase.auth.signOut({ scope: 'local' }).catch(() => {});
             setSession(null);
             setUser(null);
             setIsAdmin(false);
             adminCheckRef.current = null;
             setLoading(false);
-            // Redirect to login with error if not already there
-            if (typeof window !== 'undefined' && !window.location.pathname.startsWith('/auth/') && !window.location.pathname.startsWith('/login')) {
+            if (typeof window !== 'undefined' && !window.location.pathname.startsWith('/login')) {
               window.location.href = '/login?error=not_signed_up';
             }
             return;
