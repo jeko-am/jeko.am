@@ -62,12 +62,36 @@ function clearAuthCache() {
   } catch {}
 }
 
+// Read the Supabase session from localStorage synchronously to avoid
+// a flash of logged-out UI on hard refresh.
+function getInitialAuth(): { user: User | null; session: Session | null; isAdmin: boolean } {
+  if (typeof window === 'undefined') return { user: null, session: null, isAdmin: false };
+  try {
+    // Supabase stores the session under this key
+    const raw = localStorage.getItem('sb-dzhtpnskezkrtfinntbi-auth-token');
+    if (!raw) return { user: null, session: null, isAdmin: false };
+    const parsed = JSON.parse(raw);
+    if (!parsed?.user || !parsed?.access_token) return { user: null, session: null, isAdmin: false };
+    // Check if token is expired
+    if (parsed.expires_at && parsed.expires_at * 1000 < Date.now()) return { user: null, session: null, isAdmin: false };
+    const cached = getCachedAuth(parsed.user.id);
+    return {
+      user: parsed.user as User,
+      session: parsed as Session,
+      isAdmin: cached?.isAdmin ?? false,
+    };
+  } catch {
+    return { user: null, session: null, isAdmin: false };
+  }
+}
+
 export function AuthProvider({ children }: { children: ReactNode }) {
-  const [user, setUser] = useState<User | null>(null);
-  const [session, setSession] = useState<Session | null>(null);
-  const [isAdmin, setIsAdmin] = useState(false);
-  const [loading, setLoading] = useState(true);
-  const adminCheckRef = useRef<string | null>(null);
+  const initial = getInitialAuth();
+  const [user, setUser] = useState<User | null>(initial.user);
+  const [session, setSession] = useState<Session | null>(initial.session);
+  const [isAdmin, setIsAdmin] = useState(initial.isAdmin);
+  const [loading, setLoading] = useState(!initial.user);
+  const adminCheckRef = useRef<string | null>(initial.user?.id ?? null);
 
   useEffect(() => {
     let mounted = true;
