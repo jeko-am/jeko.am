@@ -115,7 +115,10 @@ export default function AdminSupportPage() {
       .update(updates)
       .eq('id', id);
 
-    if (!error) {
+    if (error) {
+      console.error('Error updating status:', error);
+      alert('Failed to update status: ' + error.message);
+    } else {
       setMessages((prev) =>
         prev.map((m) =>
           m.id === id ? { ...m, ...updates } as ContactMessage : m

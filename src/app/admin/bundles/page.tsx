@@ -155,35 +155,32 @@ export default function BundlesAdminPage() {
     };
   }, [products]);
 
-  // Handle image upload
+  // Handle image upload via Cloudinary
   async function handleImageUpload(e: React.ChangeEvent<HTMLInputElement>) {
     const file = e.target.files?.[0];
     if (!file) return;
 
     setUploadingImage(true);
-    
-    const fileExt = file.name.split('.').pop();
-    const fileName = `bundle-${Date.now()}.${fileExt}`;
-    const filePath = `bundles/${fileName}`;
 
-    // Upload to Supabase Storage
-    const { error: uploadError } = await supabase.storage
-      .from('images')
-      .upload(filePath, file);
+    try {
+      const formData = new FormData();
+      formData.append('file', file);
 
-    if (uploadError) {
-      alert('Error uploading image: ' + uploadError.message);
+      const res = await fetch('/api/upload', { method: 'POST', body: formData });
+      const data = await res.json();
+
+      if (!res.ok) {
+        alert('Error uploading image: ' + (data.error || 'Upload failed'));
+        setUploadingImage(false);
+        return;
+      }
+
+      setFormData(prev => ({ ...prev, image_url: data.url }));
+    } catch {
+      alert('Image upload failed. Please try again.');
+    } finally {
       setUploadingImage(false);
-      return;
     }
-
-    // Get public URL
-    const { data: urlData } = supabase.storage
-      .from('images')
-      .getPublicUrl(filePath);
-
-    setFormData(prev => ({ ...prev, image_url: urlData.publicUrl }));
-    setUploadingImage(false);
   }
 
   // Open modal for creating/editing

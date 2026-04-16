@@ -419,6 +419,7 @@ export default function AdminOrdersPage() {
           <input
             type="date"
             value={dateFrom}
+            max={new Date().toISOString().split('T')[0]}
             onChange={(e) => setDateFrom(e.target.value)}
             className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-deep-green/30 focus:border-deep-green"
           />
@@ -430,6 +431,7 @@ export default function AdminOrdersPage() {
           <input
             type="date"
             value={dateTo}
+            max={new Date().toISOString().split('T')[0]}
             onChange={(e) => setDateTo(e.target.value)}
             className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-deep-green/30 focus:border-deep-green"
           />
