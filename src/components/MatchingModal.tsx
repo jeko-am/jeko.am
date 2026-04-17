@@ -10,20 +10,22 @@ export default function MatchingModal({ content }: { content?: Record<string, an
   const [isMounted, setIsMounted] = useState(false);
 
   const enabled = content?.enabled !== false;
-  const heading = content?.heading || 'Find the Perfect Match';
-  const description = content?.description || 'Connect with pet lovers in your area and find the perfect companion for your furry friend.';
+  const heading = content?.heading || 'Register Your Pet & Save!';
+  const description = content?.description || 'Create a free account to unlock exclusive sales, personalised meal plans, and special care facilities for your furry friend.';
   const image = content?.image || '/WhatsApp Image 2026-04-11 at 09.54.12.jpeg';
-  const ctaText = content?.cta_text || 'Start Matching';
+  const ctaText = content?.cta_text || 'Register My Pet';
   const signupUrl = useSignupUrl();
   const ctaUrl = content?.cta_url || signupUrl;
-  const closeText = content?.close_text || 'Close';
+  const closeText = content?.close_text || 'Maybe later';
 
   useEffect(() => {
     setIsMounted(true);
     // Check if user has dismissed this modal before
     const isDismissed = localStorage.getItem('matchingModal_dismissed');
     if (!isDismissed && enabled) {
-      setIsOpen(true);
+      // Delay popup so visitors can explore the site first
+      const t = setTimeout(() => setIsOpen(true), 6000);
+      return () => clearTimeout(t);
     }
   }, [enabled]);
 
@@ -52,8 +54,8 @@ export default function MatchingModal({ content }: { content?: Record<string, an
       />
 
       {/* Modal */}
-      <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4">
-        <div className="bg-white rounded-xl sm:rounded-3xl shadow-2xl w-80 sm:w-auto sm:max-w-4xl md:aspect-[2/1] overflow-hidden flex flex-col md:flex-row max-h-[80vh] sm:max-h-[90vh] md:max-h-none">
+      <div className="fixed inset-0 z-50 flex items-center justify-center p-6 sm:p-4">
+        <div className="bg-white rounded-2xl sm:rounded-3xl shadow-2xl w-[85vw] max-w-[340px] sm:w-auto sm:max-w-4xl md:aspect-[2/1] overflow-hidden flex flex-col md:flex-row max-h-[75vh] sm:max-h-[90vh] md:max-h-none">
           {/* Image Section - 1:1 Square */}
           <div className="w-full md:w-1/2 aspect-square md:aspect-auto bg-off-white overflow-hidden flex-shrink-0">
             <img

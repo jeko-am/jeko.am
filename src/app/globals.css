@@ -223,3 +223,51 @@ h4, h5, h6 {
     text-wrap: balance;
   }
 }
+
+/* Hide Google Translate injected toolbar — we use our own custom switcher */
+.goog-te-banner-frame,
+.goog-te-menu-frame,
+#goog-gt-tt,
+.goog-te-balloon-frame {
+  display: none !important;
+}
+body {
+  top: 0 !important;
+}
+.skiptranslate {
+  display: none !important;
+}
+
+/* Tighten header nav when page is translated (Armenian text is ~40% longer) */
+/* Hiding Help frees ~90px; reduce font + gaps for the remaining ~90px needed */
+html.translated-ltr header nav.lg\:flex {
+  gap: 14px !important;
+}
+html.translated-ltr header nav a,
+html.translated-ltr header nav button {
+  font-size: 14px !important;
+  white-space: nowrap !important;
+}
+html.translated-ltr header .lg\:flex.items-center.gap-6 {
+  gap: 12px !important;
+}
+html.translated-ltr header .lg\:flex.items-center.gap-6 > a,
+html.translated-ltr header .lg\:flex.items-center.gap-6 > button,
+html.translated-ltr header .lg\:flex.items-center.gap-6 > div > a,
+html.translated-ltr header .lg\:flex.items-center.gap-6 > div > button {
+  font-size: 14px !important;
+  padding-left: 10px !important;
+  padding-right: 10px !important;
+  white-space: nowrap !important;
+}
+/* CTA button */
+html.translated-ltr header a[class*="bg-gold"] {
+  font-size: 14px !important;
+  padding-left: 14px !important;
+  padding-right: 14px !important;
+  white-space: nowrap !important;
+}
+/* Hide Help link in translated mode to free ~90px for longer Armenian words */
+html.translated-ltr header .lg\:flex.items-center.gap-6 > a[href*="contact"] {
+  display: none !important;
+}

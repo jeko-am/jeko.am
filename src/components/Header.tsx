@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useCart } from "@/lib/cart-context";
 import { useAuth } from "@/lib/auth";
 import { useSignupUrl } from "@/lib/useSignupUrl";
+import LanguageSwitcher from "@/components/LanguageSwitcher";
 
 const aboutDropdown = [
   { label: "Our story", href: "/about" },
@@ -160,9 +161,10 @@ export default function Header({ content }: { content?: any }) {
       <div className="bg-deep-green h-[64px] lg:h-[80px] header-zigzag-bottom">
         <div className="max-w-[1400px] mx-auto h-full px-5 lg:px-8 flex items-center justify-between">
           {/* Logo */}
-          <Link href="/" className="flex-shrink-0">
+          <Link href="/" className="flex-shrink-0" translate="no">
             <span
-              className="text-[36px] lg:text-[42px] leading-none select-none"
+              className="text-[36px] lg:text-[42px] leading-none select-none notranslate"
+              translate="no"
               style={{
                 fontFamily: "'TR Frankfurter', 'Rubik', sans-serif",
                 color: '#F2A900',
@@ -209,6 +211,8 @@ export default function Header({ content }: { content?: any }) {
 
           {/* Desktop Right Side */}
           <div className="hidden lg:flex items-center gap-6">
+            {/* Language Switcher */}
+            <LanguageSwitcher />
             {/* Cart Button */}
             <button
               onClick={openCart}
@@ -355,6 +359,10 @@ export default function Header({ content }: { content?: any }) {
             >
               Help
             </Link>
+
+            <div className="pt-2 pb-1">
+              <LanguageSwitcher />
+            </div>
             {user ? (
               <>
                 {isAdmin ? (
