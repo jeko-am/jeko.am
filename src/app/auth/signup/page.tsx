@@ -11,7 +11,6 @@ import {
   DISABILITIES,
   ALLERGIES,
 } from '@/lib/constants';
-import Link from 'next/link';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { FormEvent, useEffect, useMemo, useRef, useState } from 'react';
 
@@ -1327,12 +1326,6 @@ function SignupPageInner() {
     setTimeout(() => { setStep(nextStep); setAnimating(false); }, 300);
   }
 
-
-  function goBack() {
-    setErrors({});
-    if (stepRef.current === 0) return;
-    window.history.back();
-  }
 
   /* ---------- toggle disabilities ---------- */
   function toggleDisability(item: string) {
