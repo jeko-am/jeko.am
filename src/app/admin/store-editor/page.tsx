@@ -465,6 +465,14 @@ export default function AdminStoreEditorPage() {
   const [editValues, setEditValues] = useState<Record<string, unknown>>({});
   const [hasChanges, setHasChanges] = useState(false);
 
+  // All products for product_picker fields
+  const [allProducts, setAllProducts] = useState<{ id: string; name: string }[]>([]);
+  useEffect(() => {
+    supabase.from('products').select('id, name').eq('status', 'active').order('name').then(({ data }) => {
+      if (data) setAllProducts(data);
+    });
+  }, []);
+
   // Preview
   const [previewKey, setPreviewKey] = useState(0);
   const [previewDevice, setPreviewDevice] = useState<PreviewDevice>('desktop');
@@ -949,6 +957,55 @@ export default function AdminStoreEditorPage() {
                           rows={3}
                           className="w-full px-3 py-2 text-sm border border-gray-200 rounded-lg focus:ring-2 focus:ring-deep-green/20 focus:border-deep-green outline-none resize-y"
                         />
+                      </div>
+                    );
+                  }
+
+                  if (field.type === 'product_picker') {
+                    const selected: string[] = Array.isArray(value) ? (value as string[]) : [];
+                    const toggle = (id: string) => {
+                      const next = selected.includes(id)
+                        ? selected.filter(s => s !== id)
+                        : [...selected, id];
+                      updateField(field.key, next);
+                    };
+                    return (
+                      <div key={field.key}>
+                        <label className="block text-[13px] font-medium text-gray-700 mb-1.5">
+                          {field.label}
+                          <span className="ml-1 text-gray-400 font-normal">({selected.length} selected)</span>
+                        </label>
+                        <div className="border border-gray-200 rounded-lg overflow-hidden divide-y divide-gray-100">
+                          {allProducts.length === 0 && (
+                            <p className="px-3 py-2 text-xs text-gray-400">Loading products…</p>
+                          )}
+                          {allProducts.map(p => (
+                            <button
+                              key={p.id}
+                              type="button"
+                              onClick={() => toggle(p.id)}
+                              className={`w-full flex items-center gap-2 px-3 py-2 text-sm text-left transition-colors ${selected.includes(p.id) ? 'bg-deep-green/5' : 'hover:bg-gray-50'}`}
+                            >
+                              <span className={`w-4 h-4 rounded border flex-shrink-0 flex items-center justify-center transition-colors ${selected.includes(p.id) ? 'bg-deep-green border-deep-green' : 'border-gray-300'}`}>
+                                {selected.includes(p.id) && (
+                                  <svg className="w-2.5 h-2.5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
+                                    <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+                                  </svg>
+                                )}
+                              </span>
+                              <span className={selected.includes(p.id) ? 'font-medium text-deep-green' : 'text-gray-700'}>{p.name}</span>
+                            </button>
+                          ))}
+                        </div>
+                        {selected.length > 0 && (
+                          <button
+                            type="button"
+                            onClick={() => updateField(field.key, [])}
+                            className="mt-1.5 text-xs text-gray-400 hover:text-red-500 transition-colors"
+                          >
+                            Clear selection
+                          </button>
+                        )}
                       </div>
                     );
                   }

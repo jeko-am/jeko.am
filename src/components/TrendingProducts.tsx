@@ -23,17 +23,32 @@ export default function TrendingProducts({ content }: { content?: any }) {
 
   useEffect(() => {
     async function fetchProducts() {
-      const { data } = await supabase
+      const pickedIds: string[] = Array.isArray(content?.product_ids) ? content.product_ids : [];
+      let query = supabase
         .from('products')
         .select('id, name, slug, short_description, price, compare_at_price, images, status')
-        .eq('status', 'active')
-        .order('created_at', { ascending: true })
-        .limit(content?.max_products || 8);
+        .eq('status', 'active');
 
-      if (data) setProducts(data);
+      if (pickedIds.length > 0) {
+        query = query.in('id', pickedIds);
+      } else {
+        query = query.order('created_at', { ascending: true }).limit(content?.max_products || 8);
+      }
+
+      const { data } = await query;
+      if (data) {
+        // Preserve the admin-chosen order when specific IDs are selected
+        if (pickedIds.length > 0) {
+          const map = new Map(data.map(p => [p.id, p]));
+          setProducts(pickedIds.map(id => map.get(id)).filter(Boolean) as typeof data);
+        } else {
+          setProducts(data);
+        }
+      }
       setLoading(false);
     }
     fetchProducts();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const scroll = (direction: 'left' | 'right') => {

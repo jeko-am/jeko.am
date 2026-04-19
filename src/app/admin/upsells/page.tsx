@@ -4,10 +4,6 @@ import { supabase } from '@/lib/supabase';
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
 
-// ---------------------------------------------------------------------------
-// Types
-// ---------------------------------------------------------------------------
-
 interface Product {
   id: string;
   name: string;
@@ -43,9 +39,7 @@ type UpsellFormData = {
   sort_order: number;
 };
 
-// ---------------------------------------------------------------------------
-// Constants
-// ---------------------------------------------------------------------------
+type Toast = { type: 'success' | 'error'; message: string } | null;
 
 const EMPTY_FORM: UpsellFormData = {
   source_product_id: '',
@@ -58,17 +52,9 @@ const EMPTY_FORM: UpsellFormData = {
   sort_order: 0,
 };
 
-// ---------------------------------------------------------------------------
-// Helpers
-// ---------------------------------------------------------------------------
-
 function formatPrice(value: number): string {
   return new Intl.NumberFormat('en-GB', { style: 'currency', currency: 'GBP' }).format(value);
 }
-
-// ---------------------------------------------------------------------------
-// Main Component
-// ---------------------------------------------------------------------------
 
 export default function UpsellsAdminPage() {
   const [upsells, setUpsells] = useState<Upsell[]>([]);
@@ -78,43 +64,44 @@ export default function UpsellsAdminPage() {
   const [editingUpsell, setEditingUpsell] = useState<Upsell | null>(null);
   const [formData, setFormData] = useState<UpsellFormData>(EMPTY_FORM);
   const [filterProduct, setFilterProduct] = useState<string>('');
+  const [saving, setSaving] = useState(false);
+  const [formError, setFormError] = useState<string | null>(null);
+  const [toast, setToast] = useState<Toast>(null);
 
-  // Fetch upsells and products
+  function showToast(type: 'success' | 'error', message: string) {
+    setToast({ type, message });
+    setTimeout(() => setToast(null), 3500);
+  }
+
   useEffect(() => {
-    async function fetchData() {
-      setLoading(true);
-      
-      // Fetch upsells with their products
-      const { data: upsellData } = await supabase
-        .from('upsells')
-        .select(`
-          *,
-          source_product:products!source_product_id (id, name, slug, price, images, short_description),
-          target_product:products!target_product_id (id, name, slug, price, images, short_description)
-        `)
-        .order('sort_order', { ascending: true });
-      
-      if (upsellData) {
-        setUpsells(upsellData as Upsell[]);
-      }
-
-      // Fetch all active products
-      const { data: productData } = await supabase
-        .from('products')
-        .select('id, name, slug, price, images, short_description')
-        .eq('status', 'active')
-        .order('name');
-      
-      if (productData) setProducts(productData as Product[]);
-      
-      setLoading(false);
-    }
-    
     fetchData();
   }, []);
 
-  // Open modal for creating/editing
+  async function fetchData() {
+    setLoading(true);
+    const { data: upsellData } = await supabase
+      .from('upsells')
+      .select(`
+        *,
+        source_product:products!source_product_id (id, name, slug, price, images, short_description),
+        target_product:products!target_product_id (id, name, slug, price, images, short_description)
+      `)
+      .order('sort_order', { ascending: true });
+
+    if (upsellData) setUpsells(upsellData as Upsell[]);
+
+    const { data: productData } = await supabase
+      .from('products')
+      .select('id, name, slug, price, images, short_description')
+      .eq('status', 'active')
+      .order('name');
+
+    if (productData) setProducts(productData as Product[]);
+    setLoading(false);
+  }
+
   function openModal(upsell?: Upsell) {
+    setFormError(null);
     if (upsell) {
       setEditingUpsell(upsell);
       setFormData({
@@ -134,26 +121,40 @@ export default function UpsellsAdminPage() {
     setShowModal(true);
   }
 
-  // Close modal
   function closeModal() {
     setShowModal(false);
     setEditingUpsell(null);
     setFormData(EMPTY_FORM);
+    setFormError(null);
   }
 
-  // Save upsell
   async function saveUpsell() {
     if (!formData.source_product_id || !formData.target_product_id) {
-      alert('Please select both source and target products');
+      setFormError('Please select both source and target products.');
       return;
     }
-
     if (formData.source_product_id === formData.target_product_id) {
-      alert('Source and target products must be different');
+      setFormError('Source and target products must be different.');
       return;
     }
 
-    const upsellData = {
+    // Duplicate check
+    const isDuplicate = upsells.some(
+      u =>
+        u.source_product_id === formData.source_product_id &&
+        u.target_product_id === formData.target_product_id &&
+        u.upsell_type === formData.upsell_type &&
+        (!editingUpsell || u.id !== editingUpsell.id)
+    );
+    if (isDuplicate) {
+      setFormError('Duplicate entry — this source → target combination already exists for this type.');
+      return;
+    }
+
+    setSaving(true);
+    setFormError(null);
+
+    const payload = {
       source_product_id: formData.source_product_id,
       target_product_id: formData.target_product_id,
       upsell_type: formData.upsell_type,
@@ -165,41 +166,58 @@ export default function UpsellsAdminPage() {
     };
 
     if (editingUpsell) {
-      const { error } = await supabase
+      const { data, error } = await supabase
         .from('upsells')
-        .update(upsellData)
-        .eq('id', editingUpsell.id);
+        .update(payload)
+        .eq('id', editingUpsell.id)
+        .select(`
+          *,
+          source_product:products!source_product_id (id, name, slug, price, images, short_description),
+          target_product:products!target_product_id (id, name, slug, price, images, short_description)
+        `)
+        .single();
 
       if (error) {
-        alert('Error updating upsell: ' + error.message);
+        setFormError('Failed to update: ' + error.message);
+        setSaving(false);
         return;
       }
+      setUpsells(prev => prev.map(u => (u.id === editingUpsell.id ? (data as Upsell) : u)));
+      showToast('success', 'Upsell updated successfully.');
     } else {
-      const { error } = await supabase.from('upsells').insert(upsellData);
+      const { data, error } = await supabase
+        .from('upsells')
+        .insert(payload)
+        .select(`
+          *,
+          source_product:products!source_product_id (id, name, slug, price, images, short_description),
+          target_product:products!target_product_id (id, name, slug, price, images, short_description)
+        `)
+        .single();
+
       if (error) {
-        alert('Error creating upsell: ' + error.message);
+        setFormError('Failed to create: ' + error.message);
+        setSaving(false);
         return;
       }
+      setUpsells(prev => [...prev, data as Upsell].sort((a, b) => a.sort_order - b.sort_order));
+      showToast('success', 'Upsell created successfully.');
     }
 
+    setSaving(false);
     closeModal();
-    window.location.reload();
   }
 
-  // Delete upsell
   async function deleteUpsell(id: string) {
-    if (!confirm('Are you sure you want to delete this upsell?')) return;
-
     const { error } = await supabase.from('upsells').delete().eq('id', id);
     if (error) {
-      alert('Error deleting upsell: ' + error.message);
+      showToast('error', 'Failed to delete: ' + error.message);
       return;
     }
-
     setUpsells(prev => prev.filter(u => u.id !== id));
+    showToast('success', 'Upsell deleted.');
   }
 
-  // Filter upsells
   const filteredUpsells = upsells.filter(u => {
     if (!filterProduct) return true;
     return u.source_product_id === filterProduct;
@@ -220,6 +238,33 @@ export default function UpsellsAdminPage() {
 
   return (
     <div className="min-h-screen bg-off-white p-8">
+      {/* Toast */}
+      {toast && (
+        <div
+          className={`fixed top-6 right-6 z-50 flex items-center gap-3 px-4 py-3 rounded-xl shadow-lg text-sm font-medium transition-all ${
+            toast.type === 'success'
+              ? 'bg-emerald-50 border border-emerald-200 text-emerald-800'
+              : 'bg-red-50 border border-red-200 text-red-800'
+          }`}
+        >
+          {toast.type === 'success' ? (
+            <svg className="w-5 h-5 text-emerald-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+          ) : (
+            <svg className="w-5 h-5 text-red-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+          )}
+          {toast.message}
+          <button onClick={() => setToast(null)} className="ml-1 opacity-60 hover:opacity-100">
+            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </button>
+        </div>
+      )}
+
       <div className="max-w-7xl mx-auto">
         {/* Header */}
         <div className="flex items-center justify-between mb-8">
@@ -228,8 +273,8 @@ export default function UpsellsAdminPage() {
             <p className="text-deep-green/60 mt-1">Configure product recommendations and upgrades</p>
           </div>
           <div className="flex items-center gap-4">
-            <Link 
-              href="/admin/dashboard" 
+            <Link
+              href="/admin/dashboard"
               className="px-4 py-2 text-deep-green hover:text-deep-green/70 transition"
             >
               ← Back to Dashboard
@@ -276,8 +321,8 @@ export default function UpsellsAdminPage() {
                 <tr key={upsell.id} className={upsell.is_active ? '' : 'opacity-60'}>
                   <td className="px-6 py-4">
                     <div className="flex items-center gap-3">
-                      <img 
-                        src={upsell.source_product.images?.[0] || 'https://images.unsplash.com/photo-1589924691995-400dc9ecc119?w=80&h=80&fit=crop'} 
+                      <img
+                        src={upsell.source_product.images?.[0] || 'https://images.unsplash.com/photo-1589924691995-400dc9ecc119?w=80&h=80&fit=crop'}
                         alt={upsell.source_product.name}
                         className="w-10 h-10 object-cover rounded"
                       />
@@ -286,8 +331,8 @@ export default function UpsellsAdminPage() {
                   </td>
                   <td className="px-6 py-4">
                     <div className="flex items-center gap-3">
-                      <img 
-                        src={upsell.target_product.images?.[0] || 'https://images.unsplash.com/photo-1589924691995-400dc9ecc119?w=80&h=80&fit=crop'} 
+                      <img
+                        src={upsell.target_product.images?.[0] || 'https://images.unsplash.com/photo-1589924691995-400dc9ecc119?w=80&h=80&fit=crop'}
                         alt={upsell.target_product.name}
                         className="w-10 h-10 object-cover rounded"
                       />
@@ -299,8 +344,8 @@ export default function UpsellsAdminPage() {
                   </td>
                   <td className="px-6 py-4">
                     <span className={`text-xs px-2 py-1 rounded-full ${
-                      upsell.upsell_type === 'upsell' 
-                        ? 'bg-blue-100 text-blue-700' 
+                      upsell.upsell_type === 'upsell'
+                        ? 'bg-blue-100 text-blue-700'
                         : 'bg-green-100 text-green-700'
                     }`}>
                       {upsell.upsell_type === 'upsell' ? 'Upsell' : 'Cross-sell'}
@@ -310,7 +355,7 @@ export default function UpsellsAdminPage() {
                     {upsell.discount_percentage > 0 ? (
                       <span className="text-sm font-medium text-gold">{upsell.discount_percentage}% off</span>
                     ) : (
-                      <span className="text-sm text-gray-400">-</span>
+                      <span className="text-sm text-gray-400">—</span>
                     )}
                   </td>
                   <td className="px-6 py-4">
@@ -371,7 +416,6 @@ export default function UpsellsAdminPage() {
       {showModal && (
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center p-4 z-50">
           <div className="bg-white rounded-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
-            {/* Modal Header */}
             <div className="sticky top-0 bg-white border-b p-6 flex items-center justify-between">
               <h2 className="text-xl font-bold text-deep-green">
                 {editingUpsell ? 'Edit Upsell' : 'Create Upsell'}
@@ -387,13 +431,23 @@ export default function UpsellsAdminPage() {
             </div>
 
             <div className="p-6 space-y-6">
+              {/* Inline error */}
+              {formError && (
+                <div className="flex items-start gap-2 p-3 bg-red-50 border border-red-200 rounded-lg text-sm text-red-700">
+                  <svg className="w-4 h-4 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                  </svg>
+                  {formError}
+                </div>
+              )}
+
               {/* Product Selection */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
                   <label className="block text-sm font-medium text-deep-green mb-1">Source Product *</label>
                   <select
                     value={formData.source_product_id}
-                    onChange={e => setFormData(prev => ({ ...prev, source_product_id: e.target.value }))}
+                    onChange={e => { setFormError(null); setFormData(prev => ({ ...prev, source_product_id: e.target.value })); }}
                     className="w-full px-3 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-deep-green/20"
                   >
                     <option value="">Select product...</option>
@@ -407,7 +461,7 @@ export default function UpsellsAdminPage() {
                   <label className="block text-sm font-medium text-deep-green mb-1">Target Product *</label>
                   <select
                     value={formData.target_product_id}
-                    onChange={e => setFormData(prev => ({ ...prev, target_product_id: e.target.value }))}
+                    onChange={e => { setFormError(null); setFormData(prev => ({ ...prev, target_product_id: e.target.value })); }}
                     className="w-full px-3 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-deep-green/20"
                   >
                     <option value="">Select product...</option>
@@ -518,8 +572,8 @@ export default function UpsellsAdminPage() {
                       On <strong>{products.find(p => p.id === formData.source_product_id)?.name}</strong> page:
                     </p>
                     <div className="flex items-start gap-3 bg-white p-3 rounded-lg">
-                      <img 
-                        src={products.find(p => p.id === formData.target_product_id)?.images?.[0] || 'https://images.unsplash.com/photo-1589924691995-400dc9ecc119?w=80&h=80&fit=crop'} 
+                      <img
+                        src={products.find(p => p.id === formData.target_product_id)?.images?.[0] || 'https://images.unsplash.com/photo-1589924691995-400dc9ecc119?w=80&h=80&fit=crop'}
                         alt=""
                         className="w-12 h-12 object-cover rounded"
                       />
@@ -557,8 +611,10 @@ export default function UpsellsAdminPage() {
               </button>
               <button
                 onClick={saveUpsell}
-                className="px-6 py-2 bg-deep-green text-white rounded-lg hover:bg-deep-green/90 transition"
+                disabled={saving}
+                className="px-6 py-2 bg-deep-green text-white rounded-lg hover:bg-deep-green/90 transition disabled:opacity-50 flex items-center gap-2"
               >
+                {saving && <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />}
                 {editingUpsell ? 'Save Changes' : 'Create Upsell'}
               </button>
             </div>

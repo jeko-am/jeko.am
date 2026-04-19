@@ -4,6 +4,8 @@ import Link from 'next/link';
 import { useState, useEffect } from 'react';
 import { useCart } from '@/lib/cart-context';
 import { supabase } from '@/lib/supabase';
+import { useAuth } from '@/lib/auth';
+import { recordProductView } from '@/lib/product-history';
 
 interface Product {
   id: string;
@@ -27,6 +29,11 @@ export default function ProductCard({ product }: { product: Product }) {
   const [isAdding, setIsAdding] = useState(false);
   const [reviewStats, setReviewStats] = useState<{ avg: number; count: number } | null>(null);
   const { addItem } = useCart();
+  const { user } = useAuth();
+
+  function handleProductClick() {
+    if (user?.id) recordProductView(user.id, product.id);
+  }
 
   useEffect(() => {
     async function fetchReviewStats() {
@@ -72,7 +79,7 @@ export default function ProductCard({ product }: { product: Product }) {
   };
 
   return (
-    <Link href={`/products/${product.slug}`} className="group block h-full" data-testid="product-card">
+    <Link href={`/products/${product.slug}`} className="group block h-full" data-testid="product-card" onClick={handleProductClick}>
       <div className="bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 border-2 border-transparent hover:border-gold/30 h-full flex flex-col">
         {/* Image */}
         <div className="relative aspect-square overflow-hidden bg-beige-light">

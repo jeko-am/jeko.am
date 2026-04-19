@@ -2,6 +2,8 @@
 
 import { useEffect, useState } from 'react';
 import { supabase } from '@/lib/supabase';
+import { useAuth } from '@/lib/auth';
+import { getViewedProductIds } from '@/lib/product-history';
 import ProductCard from './ProductCard';
 
 interface Product {
@@ -19,12 +21,43 @@ interface Product {
 export default function ProductHighlights({ content }: { content?: any }) {
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
+  const [isPersonalized, setIsPersonalized] = useState(false);
+  const { user } = useAuth();
 
   useEffect(() => {
     async function fetchProducts() {
+      const select = 'id, name, slug, short_description, price, compare_at_price, images, status';
+
+      // For logged-in users, try to show recently viewed products first
+      if (user?.id) {
+        const viewedIds = getViewedProductIds(user.id);
+        if (viewedIds.length > 0) {
+          const { data } = await supabase
+            .from('products')
+            .select(select)
+            .eq('status', 'active')
+            .in('id', viewedIds.slice(0, 8));
+
+          if (data && data.length > 0) {
+            // Preserve the recency order from localStorage
+            const map = new Map(data.map(p => [p.id, p]));
+            const ordered = viewedIds
+              .map(id => map.get(id))
+              .filter(Boolean)
+              .slice(0, 4) as Product[];
+
+            setProducts(ordered);
+            setIsPersonalized(true);
+            setLoading(false);
+            return;
+          }
+        }
+      }
+
+      // Default: newest 4 active products
       const { data } = await supabase
         .from('products')
-        .select('id, name, slug, short_description, price, compare_at_price, images, status')
+        .select(select)
         .eq('status', 'active')
         .order('created_at', { ascending: false })
         .limit(4);
@@ -32,8 +65,10 @@ export default function ProductHighlights({ content }: { content?: any }) {
       if (data) setProducts(data);
       setLoading(false);
     }
+
     fetchProducts();
-  }, []);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [user?.id]);
 
   if (!loading && products.length === 0) return null;
 
@@ -43,13 +78,17 @@ export default function ProductHighlights({ content }: { content?: any }) {
         {/* Header */}
         <div className="text-center mb-12">
           <span className="inline-block bg-gold/20 text-deep-green text-sm font-semibold px-4 py-1.5 rounded-full mb-4">
-            Our Products
+            {isPersonalized ? 'Based on Your Browsing' : 'Our Products'}
           </span>
           <h2 className="text-3xl md:text-4xl font-medium text-deep-green mb-3 tracking-wide">
-            {content?.heading || 'Handpicked for Your Pup'}
+            {isPersonalized
+              ? 'Picked Just for You'
+              : (content?.heading || 'Handpicked for Your Pup')}
           </h2>
           <p className="text-deep-green/60 max-w-lg mx-auto">
-            {content?.subheading || 'Fresh, natural ingredients your dog will love. Every meal made with care.'}
+            {isPersonalized
+              ? 'Products you recently explored — pick up where you left off.'
+              : (content?.subheading || 'Fresh, natural ingredients your dog will love. Every meal made with care.')}
           </p>
         </div>
 

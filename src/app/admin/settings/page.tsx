@@ -8,7 +8,8 @@ import { useEffect, useState, useCallback } from 'react';
 interface ShippingZone {
   id: string;
   name: string;
-  regions: string[];
+  countries: string[];
+  is_active: boolean;
   created_at: string;
 }
 
@@ -16,12 +17,12 @@ interface ShippingRate {
   id: string;
   zone_id: string;
   name: string;
-  min_weight: number;
-  max_weight: number;
-  min_order_value: number;
-  max_order_value: number;
+  description: string | null;
+  min_order_amount: number;
+  max_order_amount: number | null;
   price: number;
-  is_free_above: number | null;
+  estimated_days_min: number | null;
+  estimated_days_max: number | null;
   is_active: boolean;
 }
 
@@ -77,10 +78,10 @@ export default function AdminSettingsPage() {
   const [shippingLoading, setShippingLoading] = useState(true);
   const [shippingSaving, setShippingSaving] = useState(false);
   const [editingZone, setEditingZone] = useState<ShippingZone | null>(null);
-  const [zoneForm, setZoneForm] = useState({ name: '', regions: '' });
+  const [zoneForm, setZoneForm] = useState({ name: '', countries: '' });
   const [showZoneForm, setShowZoneForm] = useState(false);
   const [editingRate, setEditingRate] = useState<ShippingRate | null>(null);
-  const [rateForm, setRateForm] = useState({ zone_id: '', name: '', min_weight: 0, max_weight: 0, min_order_value: 0, max_order_value: 0, price: 0, is_free_above: '', is_active: true });
+  const [rateForm, setRateForm] = useState({ zone_id: '', name: '', description: '', min_order_amount: 0, max_order_amount: '', price: 0, estimated_days_min: '', estimated_days_max: '', is_active: true });
   const [showRateForm, setShowRateForm] = useState(false);
 
   // Analytics
@@ -143,12 +144,12 @@ export default function AdminSettingsPage() {
     setShippingSaving(true);
     setError(null);
     try {
-      const regions = zoneForm.regions.split(',').map(r => r.trim()).filter(Boolean);
+      const countries = zoneForm.countries.split(',').map(r => r.trim()).filter(Boolean);
       if (editingZone) {
-        const { error: err } = await supabase.from('shipping_zones').update({ name: zoneForm.name, regions }).eq('id', editingZone.id);
+        const { error: err } = await supabase.from('shipping_zones').update({ name: zoneForm.name, countries }).eq('id', editingZone.id);
         if (err) throw err;
       } else {
-        const { error: err } = await supabase.from('shipping_zones').insert([{ name: zoneForm.name, regions }]);
+        const { error: err } = await supabase.from('shipping_zones').insert([{ name: zoneForm.name, countries }]);
         if (err) throw err;
       }
       setShowZoneForm(false);
@@ -179,8 +180,15 @@ export default function AdminSettingsPage() {
     setError(null);
     try {
       const payload = {
-        ...rateForm,
-        is_free_above: rateForm.is_free_above ? parseFloat(rateForm.is_free_above) : null,
+        zone_id: rateForm.zone_id,
+        name: rateForm.name,
+        description: rateForm.description || null,
+        min_order_amount: rateForm.min_order_amount,
+        max_order_amount: rateForm.max_order_amount ? parseFloat(rateForm.max_order_amount) : null,
+        price: rateForm.price,
+        estimated_days_min: rateForm.estimated_days_min ? parseInt(rateForm.estimated_days_min) : null,
+        estimated_days_max: rateForm.estimated_days_max ? parseInt(rateForm.estimated_days_max) : null,
+        is_active: rateForm.is_active,
       };
       if (editingRate) {
         const { error: err } = await supabase.from('shipping_rates').update(payload).eq('id', editingRate.id);
@@ -424,7 +432,7 @@ export default function AdminSettingsPage() {
           <div className="flex items-center justify-between mb-3">
             <h3 className="text-sm font-semibold text-gray-800">Shipping Zones</h3>
             <button
-              onClick={() => { setEditingZone(null); setZoneForm({ name: '', regions: '' }); setShowZoneForm(true); }}
+              onClick={() => { setEditingZone(null); setZoneForm({ name: '', countries: '' }); setShowZoneForm(true); }}
               className="px-3 py-1.5 text-xs font-medium bg-deep-green text-white rounded-lg hover:bg-deep-green/90 transition-colors"
             >
               + Add Zone
@@ -439,8 +447,8 @@ export default function AdminSettingsPage() {
                   <input type="text" value={zoneForm.name} onChange={e => setZoneForm(f => ({ ...f, name: e.target.value }))} className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-deep-green/20 focus:border-deep-green outline-none" placeholder="e.g. United Kingdom" />
                 </div>
                 <div>
-                  <label className="block text-xs font-medium text-gray-600 mb-1">Regions (comma-separated)</label>
-                  <input type="text" value={zoneForm.regions} onChange={e => setZoneForm(f => ({ ...f, regions: e.target.value }))} className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-deep-green/20 focus:border-deep-green outline-none" placeholder="England, Scotland, Wales" />
+                  <label className="block text-xs font-medium text-gray-600 mb-1">Countries (comma-separated)</label>
+                  <input type="text" value={zoneForm.countries} onChange={e => setZoneForm(f => ({ ...f, countries: e.target.value }))} className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-deep-green/20 focus:border-deep-green outline-none" placeholder="GB, IE, US" />
                 </div>
               </div>
               <div className="flex justify-end gap-2">
@@ -455,10 +463,10 @@ export default function AdminSettingsPage() {
               <div key={zone.id} className="p-3 bg-white rounded-lg border border-gray-200 flex items-center justify-between">
                 <div>
                   <span className="text-sm font-medium text-gray-900">{zone.name}</span>
-                  <span className="text-xs text-gray-500 ml-2">{(zone.regions || []).join(', ')}</span>
+                  <span className="text-xs text-gray-500 ml-2">{(zone.countries || []).join(', ')}</span>
                 </div>
                 <div className="flex items-center gap-1">
-                  <button onClick={() => { setEditingZone(zone); setZoneForm({ name: zone.name, regions: (zone.regions || []).join(', ') }); setShowZoneForm(true); }} className="p-1.5 text-gray-400 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-colors">
+                  <button onClick={() => { setEditingZone(zone); setZoneForm({ name: zone.name, countries: (zone.countries || []).join(', ') }); setShowZoneForm(true); }} className="p-1.5 text-gray-400 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-colors">
                     <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}><path strokeLinecap="round" strokeLinejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931z" /></svg>
                   </button>
                   <button onClick={() => deleteZone(zone.id)} className="p-1.5 text-gray-400 hover:text-red-600 hover:bg-red-50 rounded-lg transition-colors">
@@ -476,7 +484,7 @@ export default function AdminSettingsPage() {
           <div className="flex items-center justify-between mb-3">
             <h3 className="text-sm font-semibold text-gray-800">Shipping Rates</h3>
             <button
-              onClick={() => { setEditingRate(null); setRateForm({ zone_id: shippingZones[0]?.id || '', name: '', min_weight: 0, max_weight: 0, min_order_value: 0, max_order_value: 0, price: 0, is_free_above: '', is_active: true }); setShowRateForm(true); }}
+              onClick={() => { setEditingRate(null); setRateForm({ zone_id: shippingZones[0]?.id || '', name: '', description: '', min_order_amount: 0, max_order_amount: '', price: 0, estimated_days_min: '', estimated_days_max: '', is_active: true }); setShowRateForm(true); }}
               disabled={shippingZones.length === 0}
               className="px-3 py-1.5 text-xs font-medium bg-deep-green text-white rounded-lg hover:bg-deep-green/90 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
             >
@@ -498,22 +506,32 @@ export default function AdminSettingsPage() {
                   <input type="text" value={rateForm.name} onChange={e => setRateForm(f => ({ ...f, name: e.target.value }))} className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-deep-green/20 focus:border-deep-green outline-none" placeholder="Standard Delivery" />
                 </div>
               </div>
-              <div className="grid grid-cols-4 gap-3">
+              <div>
+                <label className="block text-xs font-medium text-gray-600 mb-1">Description (optional)</label>
+                <input type="text" value={rateForm.description} onChange={e => setRateForm(f => ({ ...f, description: e.target.value }))} className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-deep-green/20 focus:border-deep-green outline-none" placeholder="e.g. Standard delivery 3–5 days" />
+              </div>
+              <div className="grid grid-cols-2 gap-3">
                 <div>
-                  <label className="block text-xs font-medium text-gray-600 mb-1">Min Weight (kg)</label>
-                  <input type="number" step="0.1" value={rateForm.min_weight} onChange={e => setRateForm(f => ({ ...f, min_weight: parseFloat(e.target.value) || 0 }))} className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-deep-green/20 focus:border-deep-green outline-none" />
+                  <label className="block text-xs font-medium text-gray-600 mb-1">Min Order Amount (£)</label>
+                  <input type="number" step="0.01" min="0" value={rateForm.min_order_amount} onChange={e => setRateForm(f => ({ ...f, min_order_amount: parseFloat(e.target.value) || 0 }))} className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-deep-green/20 focus:border-deep-green outline-none" />
                 </div>
                 <div>
-                  <label className="block text-xs font-medium text-gray-600 mb-1">Max Weight (kg)</label>
-                  <input type="number" step="0.1" value={rateForm.max_weight} onChange={e => setRateForm(f => ({ ...f, max_weight: parseFloat(e.target.value) || 0 }))} className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-deep-green/20 focus:border-deep-green outline-none" />
+                  <label className="block text-xs font-medium text-gray-600 mb-1">Price (£)</label>
+                  <input type="number" step="0.01" min="0" value={rateForm.price} onChange={e => setRateForm(f => ({ ...f, price: parseFloat(e.target.value) || 0 }))} className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-deep-green/20 focus:border-deep-green outline-none" />
+                </div>
+              </div>
+              <div className="grid grid-cols-3 gap-3">
+                <div>
+                  <label className="block text-xs font-medium text-gray-600 mb-1">Max Order Amount (£, optional)</label>
+                  <input type="number" step="0.01" value={rateForm.max_order_amount} onChange={e => setRateForm(f => ({ ...f, max_order_amount: e.target.value }))} className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-deep-green/20 focus:border-deep-green outline-none" placeholder="No limit" />
                 </div>
                 <div>
-                  <label className="block text-xs font-medium text-gray-600 mb-1">Price</label>
-                  <input type="number" step="0.01" value={rateForm.price} onChange={e => setRateForm(f => ({ ...f, price: parseFloat(e.target.value) || 0 }))} className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-deep-green/20 focus:border-deep-green outline-none" />
+                  <label className="block text-xs font-medium text-gray-600 mb-1">Min Days (optional)</label>
+                  <input type="number" min="0" value={rateForm.estimated_days_min} onChange={e => setRateForm(f => ({ ...f, estimated_days_min: e.target.value }))} className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-deep-green/20 focus:border-deep-green outline-none" placeholder="e.g. 3" />
                 </div>
                 <div>
-                  <label className="block text-xs font-medium text-gray-600 mb-1">Free Above</label>
-                  <input type="number" step="0.01" value={rateForm.is_free_above} onChange={e => setRateForm(f => ({ ...f, is_free_above: e.target.value }))} className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-deep-green/20 focus:border-deep-green outline-none" placeholder="Optional" />
+                  <label className="block text-xs font-medium text-gray-600 mb-1">Max Days (optional)</label>
+                  <input type="number" min="0" value={rateForm.estimated_days_max} onChange={e => setRateForm(f => ({ ...f, estimated_days_max: e.target.value }))} className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-deep-green/20 focus:border-deep-green outline-none" placeholder="e.g. 5" />
                 </div>
               </div>
               <div className="flex items-center gap-2">
@@ -534,7 +552,8 @@ export default function AdminSettingsPage() {
                   <th className="text-left px-3 py-2 text-xs font-semibold text-gray-500 uppercase">Name</th>
                   <th className="text-left px-3 py-2 text-xs font-semibold text-gray-500 uppercase">Zone</th>
                   <th className="text-left px-3 py-2 text-xs font-semibold text-gray-500 uppercase">Price</th>
-                  <th className="text-left px-3 py-2 text-xs font-semibold text-gray-500 uppercase">Weight</th>
+                  <th className="text-left px-3 py-2 text-xs font-semibold text-gray-500 uppercase">Min Order</th>
+                  <th className="text-left px-3 py-2 text-xs font-semibold text-gray-500 uppercase">Delivery</th>
                   <th className="text-left px-3 py-2 text-xs font-semibold text-gray-500 uppercase">Status</th>
                   <th className="text-right px-3 py-2 text-xs font-semibold text-gray-500 uppercase">Actions</th>
                 </tr>
@@ -546,8 +565,9 @@ export default function AdminSettingsPage() {
                     <tr key={rate.id} className="hover:bg-gray-50/50">
                       <td className="px-3 py-2.5 text-sm font-medium text-gray-900">{rate.name}</td>
                       <td className="px-3 py-2.5 text-sm text-gray-600">{zone?.name || 'Unknown'}</td>
-                      <td className="px-3 py-2.5 text-sm text-gray-900 font-mono">{rate.price > 0 ? `£${rate.price.toFixed(2)}` : 'Free'}{rate.is_free_above ? ` (free above £${rate.is_free_above})` : ''}</td>
-                      <td className="px-3 py-2.5 text-xs text-gray-500">{rate.min_weight}–{rate.max_weight}kg</td>
+                      <td className="px-3 py-2.5 text-sm text-gray-900 font-mono">{rate.price > 0 ? `£${rate.price.toFixed(2)}` : 'Free'}</td>
+                      <td className="px-3 py-2.5 text-xs text-gray-500">{rate.min_order_amount > 0 ? `£${rate.min_order_amount.toFixed(2)}` : '—'}</td>
+                      <td className="px-3 py-2.5 text-xs text-gray-500">{rate.estimated_days_min && rate.estimated_days_max ? `${rate.estimated_days_min}–${rate.estimated_days_max} days` : rate.estimated_days_min ? `${rate.estimated_days_min}+ days` : '—'}</td>
                       <td className="px-3 py-2.5">
                         <span className={`inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium ${rate.is_active ? 'bg-emerald-50 text-emerald-700' : 'bg-gray-100 text-gray-500'}`}>
                           {rate.is_active ? 'Active' : 'Inactive'}
@@ -555,7 +575,7 @@ export default function AdminSettingsPage() {
                       </td>
                       <td className="px-3 py-2.5">
                         <div className="flex items-center justify-end gap-1">
-                          <button onClick={() => { setEditingRate(rate); setRateForm({ zone_id: rate.zone_id, name: rate.name, min_weight: rate.min_weight, max_weight: rate.max_weight, min_order_value: rate.min_order_value, max_order_value: rate.max_order_value, price: rate.price, is_free_above: rate.is_free_above?.toString() || '', is_active: rate.is_active }); setShowRateForm(true); }} className="p-1.5 text-gray-400 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-colors">
+                          <button onClick={() => { setEditingRate(rate); setRateForm({ zone_id: rate.zone_id, name: rate.name, description: rate.description || '', min_order_amount: rate.min_order_amount, max_order_amount: rate.max_order_amount?.toString() || '', price: rate.price, estimated_days_min: rate.estimated_days_min?.toString() || '', estimated_days_max: rate.estimated_days_max?.toString() || '', is_active: rate.is_active }); setShowRateForm(true); }} className="p-1.5 text-gray-400 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-colors">
                             <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}><path strokeLinecap="round" strokeLinejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931z" /></svg>
                           </button>
                           <button onClick={() => deleteRate(rate.id)} className="p-1.5 text-gray-400 hover:text-red-600 hover:bg-red-50 rounded-lg transition-colors">

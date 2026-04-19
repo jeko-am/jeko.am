@@ -1,4 +1,4 @@
-export type FieldType = 'text' | 'textarea' | 'image' | 'color' | 'url' | 'toggle' | 'number' | 'list';
+export type FieldType = 'text' | 'textarea' | 'image' | 'color' | 'url' | 'toggle' | 'number' | 'list' | 'product_picker';
 
 export interface FieldDef {
   key: string;
@@ -150,9 +150,10 @@ const HOMEPAGE_SECTIONS: SectionSchema[] = [
     name: 'Trending Products', icon: ICON_PATHS.grid, color: 'bg-orange-500',
     fields: [
       { key: 'heading', label: 'Heading', type: 'text' },
-      { key: 'max_products', label: 'Max Products', type: 'number' },
+      { key: 'product_ids', label: 'Featured Products', type: 'product_picker' },
+      { key: 'max_products', label: 'Max Products (if none selected above)', type: 'number' },
     ],
-    defaultContent: { heading: 'What Pet Parents Love', max_products: 8 },
+    defaultContent: { heading: 'What Pet Parents Love', product_ids: [], max_products: 8 },
   },
   {
     name: 'Video Testimonials', icon: ICON_PATHS.video, color: 'bg-red-500',

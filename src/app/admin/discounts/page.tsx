@@ -12,13 +12,12 @@ interface DiscountCode {
   value: number;
   min_order_amount: number | null;
   max_uses: number | null;
-  used_count: number;
+  uses_count: number;
   starts_at: string | null;
-  ends_at: string | null;
+  expires_at: string | null;
   is_active: boolean;
   applies_to: 'all' | 'specific_products' | 'specific_collections';
-  product_ids: string[] | null;
-  collection_ids: string[] | null;
+  applies_to_ids: string[];
   created_at: string;
   updated_at: string;
 }
@@ -26,17 +25,23 @@ interface DiscountCode {
 interface AutomatedDiscount {
   id: string;
   name: string;
-  type: 'buy_x_get_y' | 'bundle' | 'volume';
+  description: string | null;
+  type: 'percentage' | 'buy_x_get_y' | 'bundle' | 'free_shipping';
+  value: number | null;
   conditions: Record<string, unknown>;
-  discount_value: number;
-  discount_type: string;
-  is_active: boolean;
   priority: number;
+  min_order_amount: number;
+  min_quantity: number;
+  applies_to: 'all' | 'specific_products' | 'specific_collections';
+  applies_to_ids: string[];
+  starts_at: string | null;
+  expires_at: string | null;
+  is_active: boolean;
   created_at: string;
   updated_at: string;
 }
 
-type DiscountCodeFormData = Omit<DiscountCode, 'id' | 'used_count' | 'created_at' | 'updated_at'>;
+type DiscountCodeFormData = Omit<DiscountCode, 'id' | 'uses_count' | 'created_at' | 'updated_at'>;
 type AutoDiscountFormData = Omit<AutomatedDiscount, 'id' | 'created_at' | 'updated_at'>;
 
 const emptyCodeForm: DiscountCodeFormData = {
@@ -46,21 +51,26 @@ const emptyCodeForm: DiscountCodeFormData = {
   min_order_amount: null,
   max_uses: null,
   starts_at: null,
-  ends_at: null,
+  expires_at: null,
   is_active: true,
   applies_to: 'all',
-  product_ids: null,
-  collection_ids: null,
+  applies_to_ids: [],
 };
 
 const emptyAutoForm: AutoDiscountFormData = {
   name: '',
-  type: 'buy_x_get_y',
+  description: null,
+  type: 'percentage',
+  value: 10,
   conditions: {},
-  discount_value: 0,
-  discount_type: 'percentage',
-  is_active: true,
   priority: 0,
+  min_order_amount: 0,
+  min_quantity: 0,
+  applies_to: 'all',
+  applies_to_ids: [],
+  starts_at: null,
+  expires_at: null,
+  is_active: true,
 };
 
 // ─── Helpers ──────────────────────────────────────────────────────────────────
@@ -78,8 +88,8 @@ function getCodeStatus(code: DiscountCode): 'active' | 'expired' | 'scheduled' |
   if (!code.is_active) return 'inactive';
   const now = new Date();
   if (code.starts_at && new Date(code.starts_at) > now) return 'scheduled';
-  if (code.ends_at && new Date(code.ends_at) < now) return 'expired';
-  if (code.max_uses && code.used_count >= code.max_uses) return 'expired';
+  if (code.expires_at && new Date(code.expires_at) < now) return 'expired';
+  if (code.max_uses && code.uses_count >= code.max_uses) return 'expired';
   return 'active';
 }
 
@@ -140,8 +150,6 @@ export default function DiscountsPage() {
   const [autoSaving, setAutoSaving] = useState(false);
   const [deleteAutoId, setDeleteAutoId] = useState<string | null>(null);
 
-  const [conditionsJson, setConditionsJson] = useState('{}');
-  const [conditionsError, setConditionsError] = useState<string | null>(null);
 
   // ─── Data Fetching ────────────────────────────────────────────────────────
 
@@ -199,11 +207,10 @@ export default function DiscountsPage() {
       min_order_amount: code.min_order_amount,
       max_uses: code.max_uses,
       starts_at: code.starts_at,
-      ends_at: code.ends_at,
+      expires_at: code.expires_at,
       is_active: code.is_active,
       applies_to: code.applies_to,
-      product_ids: code.product_ids,
-      collection_ids: code.collection_ids,
+      applies_to_ids: code.applies_to_ids || [],
     });
     setCodeModalOpen(true);
   }
@@ -213,11 +220,16 @@ export default function DiscountsPage() {
     setCodesError(null);
 
     const payload = {
-      ...codeForm,
+      code: codeForm.code,
+      type: codeForm.type,
+      value: codeForm.value,
+      min_order_amount: codeForm.min_order_amount,
+      max_uses: codeForm.max_uses,
       starts_at: codeForm.starts_at || null,
-      ends_at: codeForm.ends_at || null,
-      product_ids: codeForm.applies_to === 'specific_products' ? codeForm.product_ids : null,
-      collection_ids: codeForm.applies_to === 'specific_collections' ? codeForm.collection_ids : null,
+      expires_at: codeForm.expires_at || null,
+      is_active: codeForm.is_active,
+      applies_to: codeForm.applies_to,
+      applies_to_ids: codeForm.applies_to === 'all' ? [] : codeForm.applies_to_ids,
     };
 
     if (editingCode) {
@@ -263,8 +275,6 @@ export default function DiscountsPage() {
   function openCreateAuto() {
     setEditingAuto(null);
     setAutoForm(emptyAutoForm);
-    setConditionsJson('{}');
-    setConditionsError(null);
     setAutoModalOpen(true);
   }
 
@@ -272,15 +282,19 @@ export default function DiscountsPage() {
     setEditingAuto(auto);
     setAutoForm({
       name: auto.name,
+      description: auto.description,
       type: auto.type,
+      value: auto.value,
       conditions: auto.conditions,
-      discount_value: auto.discount_value,
-      discount_type: auto.discount_type,
-      is_active: auto.is_active,
       priority: auto.priority,
+      min_order_amount: auto.min_order_amount,
+      min_quantity: auto.min_quantity,
+      applies_to: auto.applies_to,
+      applies_to_ids: auto.applies_to_ids || [],
+      starts_at: auto.starts_at,
+      expires_at: auto.expires_at,
+      is_active: auto.is_active,
     });
-    setConditionsJson(JSON.stringify(auto.conditions, null, 2));
-    setConditionsError(null);
     setAutoModalOpen(true);
   }
 
@@ -288,18 +302,20 @@ export default function DiscountsPage() {
     setAutoSaving(true);
     setAutosError(null);
 
-    let parsedConditions: Record<string, unknown>;
-    try {
-      parsedConditions = JSON.parse(conditionsJson);
-    } catch {
-      setConditionsError('Invalid JSON');
-      setAutoSaving(false);
-      return;
-    }
-
     const payload = {
-      ...autoForm,
-      conditions: parsedConditions,
+      name: autoForm.name,
+      description: autoForm.description || null,
+      type: autoForm.type,
+      value: autoForm.type === 'free_shipping' ? null : autoForm.value,
+      conditions: {},
+      priority: autoForm.priority,
+      min_order_amount: autoForm.min_order_amount,
+      min_quantity: autoForm.min_quantity,
+      applies_to: autoForm.applies_to,
+      applies_to_ids: autoForm.applies_to === 'all' ? [] : autoForm.applies_to_ids,
+      starts_at: autoForm.starts_at || null,
+      expires_at: autoForm.expires_at || null,
+      is_active: autoForm.is_active,
     };
 
     if (editingAuto) {
@@ -452,12 +468,12 @@ export default function DiscountsPage() {
                           <td className="px-4 py-3 text-gray-600 capitalize">{code.type.replace('_', ' ')}</td>
                           <td className="px-4 py-3 font-medium text-gray-900">{formatValue(code.type, code.value)}</td>
                           <td className="px-4 py-3 text-gray-600">
-                            {code.used_count}{code.max_uses ? ` / ${code.max_uses}` : ' / unlimited'}
+                            {code.uses_count}{code.max_uses ? ` / ${code.max_uses}` : ' / unlimited'}
                           </td>
                           <td className="px-4 py-3">{statusBadge(status)}</td>
                           <td className="px-4 py-3 text-gray-500 text-xs">
                             <div>{code.starts_at ? new Date(code.starts_at).toLocaleDateString() : 'No start'}</div>
-                            <div>{code.ends_at ? new Date(code.ends_at).toLocaleDateString() : 'No end'}</div>
+                            <div>{code.expires_at ? new Date(code.expires_at).toLocaleDateString() : 'No end'}</div>
                           </td>
                           <td className="px-4 py-3">
                             <div className="flex items-center justify-end gap-1">
@@ -548,7 +564,7 @@ export default function DiscountsPage() {
                         <td className="px-4 py-3 font-medium text-gray-900">{auto.name}</td>
                         <td className="px-4 py-3 text-gray-600 capitalize">{auto.type.replace(/_/g, ' ')}</td>
                         <td className="px-4 py-3 font-medium text-gray-900">
-                          {formatValue(auto.discount_type, auto.discount_value)}
+                          {auto.type === 'free_shipping' ? 'Free Shipping' : formatValue(auto.type, auto.value ?? 0)}
                         </td>
                         <td className="px-4 py-3">
                           {statusBadge(auto.is_active ? 'active' : 'inactive')}
@@ -693,11 +709,11 @@ export default function DiscountsPage() {
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Ends At</label>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">Expires At</label>
                   <input
                     type="datetime-local"
-                    value={toDatetimeLocal(codeForm.ends_at)}
-                    onChange={(e) => setCodeForm({ ...codeForm, ends_at: fromDatetimeLocal(e.target.value) })}
+                    value={toDatetimeLocal(codeForm.expires_at)}
+                    onChange={(e) => setCodeForm({ ...codeForm, expires_at: fromDatetimeLocal(e.target.value) })}
                     className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-deep-green/20 focus:border-deep-green outline-none"
                   />
                 </div>
@@ -717,42 +733,19 @@ export default function DiscountsPage() {
                 </select>
               </div>
 
-              {/* Product IDs */}
-              {codeForm.applies_to === 'specific_products' && (
+              {/* Applies To IDs */}
+              {codeForm.applies_to !== 'all' && (
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Product IDs (comma-separated UUIDs)</label>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                    {codeForm.applies_to === 'specific_products' ? 'Product IDs' : 'Collection IDs'} (comma-separated UUIDs)
+                  </label>
                   <input
                     type="text"
-                    value={(codeForm.product_ids || []).join(', ')}
+                    value={(codeForm.applies_to_ids || []).join(', ')}
                     onChange={(e) =>
                       setCodeForm({
                         ...codeForm,
-                        product_ids: e.target.value
-                          .split(',')
-                          .map((s) => s.trim())
-                          .filter(Boolean),
-                      })
-                    }
-                    placeholder="uuid1, uuid2, ..."
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-deep-green/20 focus:border-deep-green outline-none font-mono text-xs"
-                  />
-                </div>
-              )}
-
-              {/* Collection IDs */}
-              {codeForm.applies_to === 'specific_collections' && (
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Collection IDs (comma-separated UUIDs)</label>
-                  <input
-                    type="text"
-                    value={(codeForm.collection_ids || []).join(', ')}
-                    onChange={(e) =>
-                      setCodeForm({
-                        ...codeForm,
-                        collection_ids: e.target.value
-                          .split(',')
-                          .map((s) => s.trim())
-                          .filter(Boolean),
+                        applies_to_ids: e.target.value.split(',').map((s) => s.trim()).filter(Boolean),
                       })
                     }
                     placeholder="uuid1, uuid2, ..."
@@ -826,48 +819,88 @@ export default function DiscountsPage() {
                 />
               </div>
 
-              {/* Type & Discount Type */}
+              {/* Discount Type */}
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Discount Trigger</label>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">Discount Type</label>
                   <select
                     value={autoForm.type}
                     onChange={(e) => setAutoForm({ ...autoForm, type: e.target.value as AutomatedDiscount['type'] })}
                     className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-deep-green/20 focus:border-deep-green outline-none bg-white"
                   >
-                    <option value="buy_x_get_y">Buy X Get Y</option>
-                    <option value="bundle">Bundle</option>
-                    <option value="volume">Volume</option>
-                  </select>
-                </div>
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Discount Type</label>
-                  <select
-                    value={autoForm.discount_type}
-                    onChange={(e) => setAutoForm({ ...autoForm, discount_type: e.target.value })}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-deep-green/20 focus:border-deep-green outline-none bg-white"
-                  >
-                    <option value="percentage">Percentage</option>
-                    <option value="fixed_amount">Fixed Amount</option>
+                    <option value="percentage">Percentage Off</option>
                     <option value="free_shipping">Free Shipping</option>
+                    <option value="buy_x_get_y">Buy X Get Y</option>
+                    <option value="bundle">Bundle Deal</option>
                   </select>
+                  <p className="text-xs text-gray-400 mt-1">How the discount is applied</p>
                 </div>
-              </div>
-
-              {/* Value & Priority */}
-              <div className="grid grid-cols-2 gap-4">
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-1">
-                    Discount Value {autoForm.discount_type === 'percentage' ? '(%)' : autoForm.discount_type === 'fixed_amount' ? '(GBP)' : ''}
+                    {autoForm.type === 'percentage' ? 'Percentage (%)' : autoForm.type === 'free_shipping' ? 'Value' : 'Discount Value'}
                   </label>
                   <input
                     type="number"
-                    value={autoForm.discount_value}
-                    onChange={(e) => setAutoForm({ ...autoForm, discount_value: parseFloat(e.target.value) || 0 })}
-                    disabled={autoForm.discount_type === 'free_shipping'}
+                    value={autoForm.value ?? 0}
+                    onChange={(e) => setAutoForm({ ...autoForm, value: parseFloat(e.target.value) || 0 })}
+                    disabled={autoForm.type === 'free_shipping'}
                     min={0}
-                    step={autoForm.discount_type === 'percentage' ? 1 : 0.01}
+                    max={autoForm.type === 'percentage' ? 100 : undefined}
+                    step={autoForm.type === 'percentage' ? 1 : 0.01}
                     className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-deep-green/20 focus:border-deep-green outline-none disabled:bg-gray-100 disabled:text-gray-400"
+                  />
+                  {autoForm.type === 'free_shipping' && <p className="text-xs text-gray-400 mt-1">Not applicable for free shipping</p>}
+                </div>
+              </div>
+
+              {/* Trigger Conditions */}
+              <div className="border border-gray-200 rounded-lg p-4 space-y-4 bg-gray-50">
+                <p className="text-sm font-medium text-gray-700">Trigger Conditions <span className="text-xs font-normal text-gray-400">(discount applies when these are met)</span></p>
+                <div className="grid grid-cols-2 gap-4">
+                  <div>
+                    <label className="block text-xs font-medium text-gray-600 mb-1">Min Cart Value (£)</label>
+                    <input
+                      type="number"
+                      value={autoForm.min_order_amount}
+                      onChange={(e) => setAutoForm({ ...autoForm, min_order_amount: parseFloat(e.target.value) || 0 })}
+                      min={0}
+                      step={0.01}
+                      placeholder="0 = no minimum"
+                      className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm bg-white focus:ring-2 focus:ring-deep-green/20 focus:border-deep-green outline-none"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-xs font-medium text-gray-600 mb-1">Min Number of Products</label>
+                    <input
+                      type="number"
+                      value={autoForm.min_quantity}
+                      onChange={(e) => setAutoForm({ ...autoForm, min_quantity: parseInt(e.target.value) || 0 })}
+                      min={0}
+                      placeholder="0 = no minimum"
+                      className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm bg-white focus:ring-2 focus:ring-deep-green/20 focus:border-deep-green outline-none"
+                    />
+                  </div>
+                </div>
+              </div>
+
+              {/* Schedule & Priority */}
+              <div className="grid grid-cols-3 gap-4">
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">Starts At</label>
+                  <input
+                    type="datetime-local"
+                    value={toDatetimeLocal(autoForm.starts_at)}
+                    onChange={(e) => setAutoForm({ ...autoForm, starts_at: fromDatetimeLocal(e.target.value) })}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-deep-green/20 focus:border-deep-green outline-none"
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">Expires At</label>
+                  <input
+                    type="datetime-local"
+                    value={toDatetimeLocal(autoForm.expires_at)}
+                    onChange={(e) => setAutoForm({ ...autoForm, expires_at: fromDatetimeLocal(e.target.value) })}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-deep-green/20 focus:border-deep-green outline-none"
                   />
                 </div>
                 <div>
@@ -879,28 +912,8 @@ export default function DiscountsPage() {
                     min={0}
                     className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-deep-green/20 focus:border-deep-green outline-none"
                   />
-                  <p className="text-xs text-gray-400 mt-1">Lower number = higher priority</p>
+                  <p className="text-xs text-gray-400 mt-1">Lower = higher priority</p>
                 </div>
-              </div>
-
-              {/* Conditions (JSON) */}
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Conditions (JSON)</label>
-                <textarea
-                  value={conditionsJson}
-                  onChange={(e) => {
-                    setConditionsJson(e.target.value);
-                    setConditionsError(null);
-                  }}
-                  rows={6}
-                  placeholder='{"min_quantity": 3, "product_ids": ["..."]}'
-                  className={`w-full px-3 py-2 border rounded-lg text-sm font-mono focus:ring-2 focus:ring-deep-green/20 focus:border-deep-green outline-none resize-y ${
-                    conditionsError ? 'border-red-300' : 'border-gray-300'
-                  }`}
-                />
-                {conditionsError && (
-                  <p className="text-xs text-red-600 mt-1">{conditionsError}</p>
-                )}
               </div>
 
               {/* Active toggle */}
