@@ -1,0 +1,332 @@
+- generic [active] [ref=e1]:
+  - banner [ref=e2]:
+    - generic [ref=e4]:
+      - link "JEKO" [ref=e5] [cursor=pointer]:
+        - /url: /
+        - generic [ref=e6]: JEKO
+      - navigation [ref=e7]:
+        - link "About" [ref=e9] [cursor=pointer]:
+          - /url: /about
+          - text: About
+          - img [ref=e10]
+        - link "Community" [ref=e13] [cursor=pointer]:
+          - /url: /community
+          - text: Community
+          - img [ref=e14]
+        - link "Shop" [ref=e17] [cursor=pointer]:
+          - /url: /products
+        - link "Reviews" [ref=e19] [cursor=pointer]:
+          - /url: /reviews
+        - link "Health & breeds" [ref=e21] [cursor=pointer]:
+          - /url: /benefits
+          - text: Health & breeds
+          - img [ref=e22]
+      - generic [ref=e24]:
+        - button "Shopping cart" [ref=e25] [cursor=pointer]:
+          - img [ref=e26]
+        - link "Help" [ref=e30] [cursor=pointer]:
+          - /url: /contact
+        - link "Login" [ref=e31] [cursor=pointer]:
+          - /url: /login
+        - link "Sign up" [ref=e32] [cursor=pointer]:
+          - /url: /auth/signup
+  - main [ref=e33]:
+    - generic [ref=e35]:
+      - heading "Shipping & Delivery Policy" [level=1] [ref=e36]
+      - paragraph [ref=e37]: Everything you need to know about how we deliver fresh, natural dog food straight to your door across the United Kingdom.
+    - generic [ref=e39]:
+      - paragraph [ref=e40]: "Last updated: March 2026"
+      - generic [ref=e41]:
+        - heading "1. Delivery Overview" [level=2] [ref=e42]
+        - paragraph [ref=e43]: At Jeko, we are committed to delivering fresh, natural pet food to homes across the United Kingdom. Every order is carefully prepared in our Yorkshire kitchen using real, human-grade ingredients and dispatched to arrive in peak condition at your doorstep.
+        - paragraph [ref=e44]: Whether you are placing a one-off order or receiving regular subscription deliveries, we work with trusted courier partners to ensure your dog's meals arrive safely, on time, and at the right temperature. Our delivery service covers England, Wales, Scotland, and Northern Ireland, with some variations in timescales and charges depending on your location.
+        - paragraph [ref=e45]: We dispatch orders Monday to Friday (excluding bank holidays). Orders placed over the weekend will be processed on the next available working day to ensure maximum freshness upon arrival.
+      - generic [ref=e46]:
+        - heading "2. Delivery Options" [level=2] [ref=e47]
+        - paragraph [ref=e48]: "We offer a range of delivery options to suit your schedule and budget. Choose the service that works best for you and your pup:"
+        - generic [ref=e49]:
+          - generic [ref=e51]:
+            - img [ref=e53]
+            - generic [ref=e55]:
+              - heading "Standard Delivery" [level=3] [ref=e56]
+              - paragraph [ref=e57]: 3-5 business days
+              - paragraph [ref=e58]: Free on orders over £25
+              - paragraph [ref=e59]: £3.99 for orders under £25
+          - generic [ref=e61]:
+            - img [ref=e63]
+            - generic [ref=e65]:
+              - heading "Express Delivery" [level=3] [ref=e66]
+              - paragraph [ref=e67]: 1-2 business days
+              - paragraph [ref=e68]: £4.99
+              - paragraph [ref=e69]: On all orders
+          - generic [ref=e71]:
+            - img [ref=e73]
+            - generic [ref=e75]:
+              - heading "Next Day Delivery" [level=3] [ref=e76]
+              - paragraph [ref=e77]: Next working day
+              - paragraph [ref=e78]: £6.99
+              - paragraph [ref=e79]: Order before 2pm Mon-Fri
+          - generic [ref=e80]:
+            - generic [ref=e81]: Most Popular
+            - generic [ref=e82]:
+              - img [ref=e84]
+              - generic [ref=e86]:
+                - heading "Subscription Delivery" [level=3] [ref=e87]
+                - paragraph [ref=e88]: Flexible schedule
+                - paragraph [ref=e89]: Always FREE
+                - paragraph [ref=e90]: On every delivery, every time
+        - paragraph [ref=e91]: All delivery timescales quoted above are estimated and commence from the point of dispatch, not from when the order is placed. During peak periods, delivery times may be slightly longer than usual. We will always keep you informed of any delays.
+        - paragraph [ref=e92]:
+          - strong [ref=e93]: "Please note:"
+          - text: Next Day Delivery is available for orders placed before 2:00pm GMT/BST, Monday to Friday. Orders placed after 2:00pm on Friday will be dispatched the following Monday and delivered on Tuesday.
+      - generic [ref=e94]:
+        - heading "3. Subscription Deliveries" [level=2] [ref=e95]
+        - paragraph [ref=e96]: Our subscription service is the most convenient and cost-effective way to keep your dog fed with fresh, natural food. When you sign up for a Jeko plan, your deliveries are completely tailored to your dog's needs and your household schedule.
+        - paragraph [ref=e97]:
+          - strong [ref=e98]: "Delivery frequency options:"
+        - list [ref=e99]:
+          - listitem [ref=e100]:
+            - strong [ref=e101]: Every 2 weeks
+            - text: — ideal for small dogs or multi-dog households that go through food quickly
+          - listitem [ref=e102]:
+            - strong [ref=e103]: Every 4 weeks
+            - text: — our most popular option, perfect for most dogs
+          - listitem [ref=e104]:
+            - strong [ref=e105]: Every 6 weeks
+            - text: — great for larger orders or dogs with lower daily intake
+          - listitem [ref=e106]:
+            - strong [ref=e107]: Every 8 weeks
+            - text: — maximum flexibility for those who like to stock up
+        - paragraph [ref=e108]: All subscription deliveries ship completely free of charge, regardless of order value. You will receive a reminder email 3 days before each scheduled delivery so you always know when to expect your next box.
+        - paragraph [ref=e109]:
+          - strong [ref=e110]: "Pausing and skipping:"
+          - text: Life happens, and we understand that. You can pause your subscription at any time through your online account. Simply log in, navigate to your subscription settings, and choose to skip your next delivery or pause your plan for a set period. You can also adjust your delivery date, change your delivery frequency, or update your delivery address — all from your account dashboard. There are no penalties or fees for pausing or skipping deliveries.
+        - paragraph [ref=e111]:
+          - strong [ref=e112]: "Cancelling:"
+          - text: If you wish to cancel your subscription entirely, you can do so at any time via your account or by contacting our customer care team. Any order already dispatched at the time of cancellation will still be delivered.
+      - generic [ref=e113]:
+        - heading "4. Packaging & Freshness" [level=2] [ref=e114]
+        - paragraph [ref=e115]: We take great care to ensure your dog's food arrives in perfect condition. Freshness is at the heart of everything we do, and our packaging is designed to protect both your food and the environment.
+        - list [ref=e117]:
+          - listitem [ref=e118]:
+            - generic [ref=e119]: ✓
+            - generic [ref=e120]:
+              - strong [ref=e121]: "Insulated boxes:"
+              - text: All fresh food orders are packed in thermally insulated boxes to maintain the correct temperature during transit, even in warmer months.
+          - listitem [ref=e122]:
+            - generic [ref=e123]: ✓
+            - generic [ref=e124]:
+              - strong [ref=e125]: "Ice packs:"
+              - text: Non-toxic, food-safe ice packs are included with every fresh food delivery to keep meals chilled from our kitchen to your door.
+          - listitem [ref=e126]:
+            - generic [ref=e127]: ✓
+            - generic [ref=e128]:
+              - strong [ref=e129]: "Recyclable materials:"
+              - text: Our outer boxes are made from 100% recyclable cardboard. We are continually working to reduce our packaging footprint and move towards fully sustainable materials.
+          - listitem [ref=e130]:
+            - generic [ref=e131]: ✓
+            - generic [ref=e132]:
+              - strong [ref=e133]: "Eco-friendly liners:"
+              - text: Our insulated liners are made from recycled materials and can be recycled again after use. Simply separate the components and place them in your household recycling bin.
+          - listitem [ref=e134]:
+            - generic [ref=e135]: ✓
+            - generic [ref=e136]:
+              - strong [ref=e137]: "Air-dried food:"
+              - text: Our air-dried recipes are shipped in resealable, lightweight pouches that require no refrigeration, making them convenient to store and easy on the environment.
+        - paragraph [ref=e138]: Upon receiving your order, we recommend placing fresh food in the refrigerator within 2 hours. Unopened pouches of air-dried food can be stored in a cool, dry place for up to 12 months. Please check individual product labels for specific storage instructions.
+      - generic [ref=e139]:
+        - heading "5. Delivery Areas" [level=2] [ref=e140]
+        - paragraph [ref=e141]: "We currently deliver to addresses throughout the United Kingdom. Below is a summary of our coverage and any applicable surcharges:"
+        - table [ref=e143]:
+          - rowgroup [ref=e144]:
+            - row "Region Availability Additional Charges" [ref=e145]:
+              - columnheader "Region" [ref=e146]
+              - columnheader "Availability" [ref=e147]
+              - columnheader "Additional Charges" [ref=e148]
+          - rowgroup [ref=e149]:
+            - row "England & Wales All delivery options None" [ref=e150]:
+              - cell "England & Wales" [ref=e151]
+              - cell "All delivery options" [ref=e152]
+              - cell "None" [ref=e153]
+            - row "Scottish Mainland All delivery options None" [ref=e154]:
+              - cell "Scottish Mainland" [ref=e155]
+              - cell "All delivery options" [ref=e156]
+              - cell "None" [ref=e157]
+            - row "Scottish Highlands & Islands Standard & Express only £2.99 surcharge" [ref=e158]:
+              - cell "Scottish Highlands & Islands" [ref=e159]
+              - cell "Standard & Express only" [ref=e160]
+              - cell "£2.99 surcharge" [ref=e161]
+            - row "Northern Ireland Standard & Express only £3.99 surcharge" [ref=e162]:
+              - cell "Northern Ireland" [ref=e163]
+              - cell "Standard & Express only" [ref=e164]
+              - cell "£3.99 surcharge" [ref=e165]
+            - row "Channel Islands & Isle of Man Standard only £4.99 surcharge" [ref=e166]:
+              - cell "Channel Islands & Isle of Man" [ref=e167]
+              - cell "Standard only" [ref=e168]
+              - cell "£4.99 surcharge" [ref=e169]
+        - paragraph [ref=e170]:
+          - strong [ref=e171]: "International shipping:"
+          - text: Unfortunately, we do not currently offer international delivery. We are a UK-based company and our fresh food is prepared and shipped from our kitchen in Yorkshire. We are actively exploring options to expand our delivery reach in the future, so please check back for updates.
+        - paragraph [ref=e172]:
+          - strong [ref=e173]: "BFPO addresses:"
+          - text: We are unable to deliver to British Forces Post Office addresses at this time due to the perishable nature of our fresh food products.
+      - generic [ref=e174]:
+        - heading "6. Tracking Your Order" [level=2] [ref=e175]
+        - paragraph [ref=e176]: "We believe you should always know exactly where your order is. That is why we provide comprehensive tracking at every stage of the delivery process:"
+        - list [ref=e177]:
+          - listitem [ref=e178]:
+            - strong [ref=e179]: "Order confirmation:"
+            - text: You will receive an email immediately after placing your order, confirming the details and estimated delivery date.
+          - listitem [ref=e180]:
+            - strong [ref=e181]: "Dispatch notification:"
+            - text: Once your order leaves our kitchen, you will receive a dispatch email containing a unique tracking number and a link to track your parcel in real time.
+          - listitem [ref=e182]:
+            - strong [ref=e183]: "SMS updates:"
+            - text: If you have provided a mobile number, you will receive text message updates on the day of delivery, including an estimated delivery window.
+          - listitem [ref=e184]:
+            - strong [ref=e185]: "Real-time tracking:"
+            - text: Use the tracking link provided in your dispatch email to monitor your delivery in real time via our courier partner's website or app.
+          - listitem [ref=e186]:
+            - strong [ref=e187]: "Delivery confirmation:"
+            - text: You will receive a final notification once your parcel has been successfully delivered, including a photo of where it was left if applicable.
+        - paragraph [ref=e188]: You can also check the status of your order at any time by logging into your Jeko account and visiting the “My Orders” section.
+      - generic [ref=e189]:
+        - heading "7. Delivery Issues" [level=2] [ref=e190]
+        - paragraph [ref=e191]: "While we strive for a seamless delivery experience every time, we understand that issues can occasionally arise. Here is how we handle common delivery problems:"
+        - heading "Missed Delivery" [level=3] [ref=e192]
+        - paragraph [ref=e193]: If you are not home when our courier attempts delivery, they will leave a card with instructions on how to arrange redelivery or collect your parcel from a local depot. In most cases, the courier will attempt to leave your order in a safe place or with a neighbour (unless you have instructed otherwise). If you have specified safe place instructions in your account, the courier will follow them.
+        - heading "Damaged Goods" [level=3] [ref=e194]
+        - paragraph [ref=e195]: If your order arrives damaged, please contact our customer care team within 48 hours of delivery. We will ask you to provide photographs of the damage to help us investigate. In the vast majority of cases, we will arrange a full replacement or refund at no additional cost to you. We take damaged deliveries seriously and work closely with our courier partners to prevent recurrence.
+        - heading "Wrong Items" [level=3] [ref=e196]
+        - paragraph [ref=e197]: If you receive incorrect items, please get in touch with us as soon as possible. We will arrange for the correct items to be sent out to you promptly, and we will cover any costs associated with returning the incorrect items. You are under no obligation to return wrong items — in many cases, we will simply ask you to donate them to a local animal charity if the food is still sealed and safe.
+        - heading "Late Delivery" [level=3] [ref=e198]
+        - paragraph [ref=e199]: If your order has not arrived within the expected timeframe, please first check your tracking information for the latest status. Occasionally, delays can occur due to adverse weather conditions, courier operational issues, or high demand periods. If your order is significantly delayed (more than 2 working days beyond the expected delivery date), please contact our team and we will investigate and resolve the issue as quickly as possible. Where a paid delivery service has been significantly delayed, we will refund the delivery charge.
+      - generic [ref=e200]:
+        - heading "8. Failed Deliveries & Redelivery" [level=2] [ref=e201]
+        - paragraph [ref=e202]: If delivery cannot be completed after two attempts, your parcel will be held at the courier's local depot for up to 7 days. You can arrange collection or redelivery through the courier's website using the tracking number provided.
+        - paragraph [ref=e203]: If the parcel is not collected within 7 days, it will be returned to us. Please note that due to the perishable nature of our fresh food products, we may not be able to resend returned parcels if they have been out of the cold chain for an extended period. In such cases, we will contact you to arrange a fresh replacement order.
+        - paragraph [ref=e204]: If a delivery fails due to an incorrect or incomplete address provided at checkout, we may need to charge an additional delivery fee for re-dispatch. We strongly recommend double-checking your delivery address before completing your order. You can update your default delivery address at any time via your account settings.
+      - generic [ref=e205]:
+        - heading "9. Delivery to Alternative Addresses" [level=2] [ref=e206]
+        - paragraph [ref=e207]: "We want to make sure your order reaches you even when you are not available to receive it in person. Here are the options available:"
+        - heading "Safe Place Delivery" [level=3] [ref=e208]
+        - paragraph [ref=e209]: You can nominate a safe place for your delivery to be left if you are not at home. This could be a porch, garage, outbuilding, or any sheltered spot accessible to the courier. Simply add safe place instructions to your delivery preferences in your account settings or at checkout. Please note that once a parcel is left in your nominated safe place, responsibility for the delivery passes to you.
+        - heading "Neighbour Delivery" [level=3] [ref=e210]
+        - paragraph [ref=e211]:
+          - text: If you are not available, you can authorise the courier to leave your parcel with a neighbour. You can specify a preferred neighbour in your delivery instructions. The courier will leave a notification card to let you know where your parcel has been left. If you would prefer that your parcel is
+          - emphasis [ref=e212]: not
+          - text: left with a neighbour, you can indicate this in your delivery preferences.
+        - heading "Alternative Delivery Address" [level=3] [ref=e213]
+        - paragraph [ref=e214]: You can choose to have your order delivered to a different address, such as your workplace or a family member's home. Simply update the delivery address at checkout or in your subscription settings. For subscription customers, you can set a permanent alternative address or change the address on a per-delivery basis.
+      - generic [ref=e215]:
+        - heading "10. Bank Holidays & Peak Periods" [level=2] [ref=e216]
+        - paragraph [ref=e217]: Please be aware that our dispatch and delivery schedules are affected by UK bank holidays. We do not dispatch orders on bank holidays, and courier services may also be limited on these days. Orders placed on or just before a bank holiday may experience a delay of 1–2 additional working days.
+        - paragraph [ref=e218]: During peak periods — such as the Christmas and New Year season, Easter, and Black Friday/Cyber Monday — delivery times across all services may be extended due to higher volumes across the courier network. We recommend placing orders a few days earlier than usual during these periods to ensure timely arrival.
+        - paragraph [ref=e219]: For subscription customers, we automatically adjust dispatch dates around bank holidays and peak periods to ensure your delivery arrives as close to your regular schedule as possible. You will be notified by email if there are any changes to your expected delivery date.
+        - paragraph [ref=e220]:
+          - strong [ref=e221]: "Key dates to be aware of:"
+          - text: Christmas Eve to New Year's Day (limited courier operations), Easter weekend, early May bank holiday, late May bank holiday, and the August bank holiday.
+      - generic [ref=e222]:
+        - heading "11. Contact Our Delivery Team" [level=2] [ref=e223]
+        - paragraph [ref=e224]: "If you have any questions, concerns, or issues regarding your delivery, our friendly customer care team is here to help. You can reach us through any of the following channels:"
+        - list [ref=e226]:
+          - listitem [ref=e227]:
+            - generic [ref=e228]: ✉
+            - generic [ref=e229]:
+              - strong [ref=e230]: "Email:"
+              - text: delivery@jeko.am — we aim to respond within 24 hours
+          - listitem [ref=e231]:
+            - generic [ref=e232]: ☎
+            - generic [ref=e233]:
+              - strong [ref=e234]: "Phone:"
+              - text: 0800 083 6696 — Monday to Friday, 9:00am to 5:30pm GMT
+          - listitem [ref=e235]:
+            - generic [ref=e236]: 💬
+            - generic [ref=e237]:
+              - strong [ref=e238]: "Live chat:"
+              - text: Available on our website during business hours for instant support
+          - listitem [ref=e239]:
+            - generic [ref=e240]: 👤
+            - generic [ref=e241]:
+              - strong [ref=e242]: "Your account:"
+              - text: Log in and visit “Help & Support” to raise a delivery enquiry directly
+        - paragraph [ref=e243]: When contacting us about a delivery issue, please have your order number and tracking number to hand so we can assist you as quickly as possible.
+        - paragraph [ref=e244]: We are passionate about making sure every delivery experience is as smooth as the food inside the box. Thank you for choosing Jeko — we are glad to be part of your pet's journey to better health.
+        - link "Create Your Plan Today" [ref=e246] [cursor=pointer]:
+          - /url: /auth/signup
+  - contentinfo [ref=e247]:
+    - generic [ref=e248]:
+      - generic [ref=e249]:
+        - generic [ref=e250]:
+          - heading "Join our VIP list" [level=4] [ref=e251]
+          - paragraph [ref=e252]: Be the first to hear about new product launches, exclusive competitions and helpful dog content.
+          - generic [ref=e253]:
+            - textbox "Enter your email address" [ref=e254]
+            - button "Sign up" [ref=e255] [cursor=pointer]
+        - generic [ref=e256]:
+          - generic [ref=e257]:
+            - heading "Jeko" [level=4] [ref=e258]
+            - list [ref=e259]:
+              - listitem [ref=e260]:
+                - link "Our story" [ref=e261] [cursor=pointer]:
+                  - /url: /about
+              - listitem [ref=e262]:
+                - link "Reviews" [ref=e263] [cursor=pointer]:
+                  - /url: /reviews
+              - listitem [ref=e264]:
+                - link "Recipes" [ref=e265] [cursor=pointer]:
+                  - /url: /recipes
+              - listitem [ref=e266]:
+                - link "Beyond the bowl" [ref=e267] [cursor=pointer]:
+                  - /url: /beyond-the-bowl
+              - listitem [ref=e268]:
+                - link "Shop" [ref=e269] [cursor=pointer]:
+                  - /url: /products
+              - listitem [ref=e270]:
+                - link "Community" [ref=e271] [cursor=pointer]:
+                  - /url: /community
+          - generic [ref=e272]:
+            - heading "Help" [level=4] [ref=e273]
+            - list [ref=e274]:
+              - listitem [ref=e275]:
+                - link "My account" [ref=e276] [cursor=pointer]:
+                  - /url: /profile
+              - listitem [ref=e277]:
+                - link "Contact us" [ref=e278] [cursor=pointer]:
+                  - /url: /contact
+              - listitem [ref=e279]:
+                - link "Delivery information" [ref=e280] [cursor=pointer]:
+                  - /url: /delivery-information
+              - listitem [ref=e281]:
+                - link "Returns" [ref=e282] [cursor=pointer]:
+                  - /url: /returns
+              - listitem [ref=e283]:
+                - link "Sitemap" [ref=e284] [cursor=pointer]:
+                  - /url: /sitemap-page
+          - generic [ref=e285]:
+            - heading "Information" [level=4] [ref=e286]
+            - list [ref=e287]:
+              - listitem [ref=e288]:
+                - link "Privacy policy" [ref=e289] [cursor=pointer]:
+                  - /url: /privacy-policy
+              - listitem [ref=e290]:
+                - link "Terms & conditions" [ref=e291] [cursor=pointer]:
+                  - /url: /terms-of-use
+              - listitem [ref=e292]:
+                - link "Jeko policies" [ref=e293] [cursor=pointer]:
+                  - /url: /pure-policies
+              - listitem [ref=e294]:
+                - link "Site security" [ref=e295] [cursor=pointer]:
+                  - /url: /site-security
+              - listitem [ref=e296]:
+                - link "Cookie policy" [ref=e297] [cursor=pointer]:
+                  - /url: /cookie-policy
+      - generic [ref=e298]:
+        - generic [ref=e300]: JEKO
+        - paragraph [ref=e301]: © Jeko 2020-2026
+  - generic:
+    - generic:
+      - paragraph: Bow Wow! 🐾
+      - paragraph: Find a friend for your pup!
+    - button "Find pet matches":
+      - img

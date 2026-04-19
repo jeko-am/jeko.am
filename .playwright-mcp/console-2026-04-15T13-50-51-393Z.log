@@ -1,0 +1,22 @@
+[   35888ms] [ERROR] Failed to fetch RSC payload for https://www.jeko.am/benefits. Falling back to browser navigation. TypeError: Failed to fetch
+    at f (https://www.jeko.am/_next/static/chunks/2117-0feb011aa4946567.js?dpl=dpl_HMQaiuRN9urViaUzy11HhRHTqDY9:1:45815)
+    at https://www.jeko.am/_next/static/chunks/2117-0feb011aa4946567.js?dpl=dpl_HMQaiuRN9urViaUzy11HhRHTqDY9:1:59341
+    at Object.u [as task] (https://www.jeko.am/_next/static/chunks/2117-0feb011aa4946567.js?dpl=dpl_HMQaiuRN9urViaUzy11HhRHTqDY9:1:32160)
+    at c.s (https://www.jeko.am/_next/static/chunks/2117-0feb011aa4946567.js?dpl=dpl_HMQaiuRN9urViaUzy11HhRHTqDY9:1:32865)
+    at Object.u [as task] (https://www.jeko.am/_next/static/chunks/2117-0feb011aa4946567.js?dpl=dpl_HMQaiuRN9urViaUzy11HhRHTqDY9:1:32222) @ https://www.jeko.am/_next/static/chunks/2117-0feb011aa4946567.js?dpl=dpl_HMQaiuRN9urViaUzy11HhRHTqDY9:0
+[   35888ms] [ERROR] Failed to fetch RSC payload for https://www.jeko.am/help. Falling back to browser navigation. TypeError: Failed to fetch
+    at f (https://www.jeko.am/_next/static/chunks/2117-0feb011aa4946567.js?dpl=dpl_HMQaiuRN9urViaUzy11HhRHTqDY9:1:45815)
+    at https://www.jeko.am/_next/static/chunks/2117-0feb011aa4946567.js?dpl=dpl_HMQaiuRN9urViaUzy11HhRHTqDY9:1:59341
+    at Object.u [as task] (https://www.jeko.am/_next/static/chunks/2117-0feb011aa4946567.js?dpl=dpl_HMQaiuRN9urViaUzy11HhRHTqDY9:1:32160)
+    at c.s (https://www.jeko.am/_next/static/chunks/2117-0feb011aa4946567.js?dpl=dpl_HMQaiuRN9urViaUzy11HhRHTqDY9:1:32865)
+    at Object.u [as task] (https://www.jeko.am/_next/static/chunks/2117-0feb011aa4946567.js?dpl=dpl_HMQaiuRN9urViaUzy11HhRHTqDY9:1:32222) @ https://www.jeko.am/_next/static/chunks/2117-0feb011aa4946567.js?dpl=dpl_HMQaiuRN9urViaUzy11HhRHTqDY9:0
+[   35889ms] [ERROR] Failed to fetch RSC payload for https://www.jeko.am/login. Falling back to browser navigation. TypeError: Failed to fetch
+    at f (https://www.jeko.am/_next/static/chunks/2117-0feb011aa4946567.js?dpl=dpl_HMQaiuRN9urViaUzy11HhRHTqDY9:1:45815)
+    at https://www.jeko.am/_next/static/chunks/2117-0feb011aa4946567.js?dpl=dpl_HMQaiuRN9urViaUzy11HhRHTqDY9:1:59341
+    at Object.u [as task] (https://www.jeko.am/_next/static/chunks/2117-0feb011aa4946567.js?dpl=dpl_HMQaiuRN9urViaUzy11HhRHTqDY9:1:32160)
+    at c.s (https://www.jeko.am/_next/static/chunks/2117-0feb011aa4946567.js?dpl=dpl_HMQaiuRN9urViaUzy11HhRHTqDY9:1:32865)
+    at Object.u [as task] (https://www.jeko.am/_next/static/chunks/2117-0feb011aa4946567.js?dpl=dpl_HMQaiuRN9urViaUzy11HhRHTqDY9:1:32222) @ https://www.jeko.am/_next/static/chunks/2117-0feb011aa4946567.js?dpl=dpl_HMQaiuRN9urViaUzy11HhRHTqDY9:0
+[   39931ms] [ERROR] Failed to load resource: the server responded with a status of 404 () @ https://res.cloudinary.com/dppatx2f4/image/upload/v1776248910/pure-pet-products/ltqfzaccn6ks8pmeqqbu.jpg:0
+[   40023ms] [ERROR] Failed to load resource: the server responded with a status of 404 () @ https://res.cloudinary.com/dppatx2f4/image/upload/v1776251717/pure-pet-products/qbfel1eq5nkpmb4tteaq.jpg:0
+[   74574ms] [ERROR] Failed to load resource: the server responded with a status of 404 () @ https://res.cloudinary.com/dppatx2f4/image/upload/v1776251717/pure-pet-products/qbfel1eq5nkpmb4tteaq.jpg:0
+[   74574ms] [ERROR] Failed to load resource: the server responded with a status of 404 () @ https://res.cloudinary.com/dppatx2f4/image/upload/v1776248910/pure-pet-products/ltqfzaccn6ks8pmeqqbu.jpg:0

@@ -1,0 +1,247 @@
+- generic [ref=e1]:
+  - alert [ref=e6]
+  - generic [ref=e7]:
+    - complementary [ref=e8]:
+      - generic [ref=e9]:
+        - generic [ref=e11]: PP
+        - generic [ref=e12]:
+          - heading "Jeko" [level=1] [ref=e13]
+          - paragraph [ref=e14]: Admin Panel
+      - navigation [ref=e15]:
+        - link "Dashboard" [ref=e16] [cursor=pointer]:
+          - /url: /admin/dashboard
+          - img [ref=e17]
+          - text: Dashboard
+        - link "Store Editor" [ref=e19] [cursor=pointer]:
+          - /url: /admin/store-editor
+          - img [ref=e20]
+          - text: Store Editor
+        - link "Products" [ref=e22] [cursor=pointer]:
+          - /url: /admin/products
+          - img [ref=e23]
+          - text: Products
+        - link "Bundles" [ref=e25] [cursor=pointer]:
+          - /url: /admin/bundles
+          - img [ref=e26]
+          - text: Bundles
+        - link "Upsells" [ref=e28] [cursor=pointer]:
+          - /url: /admin/upsells
+          - img [ref=e29]
+          - text: Upsells
+        - link "Categories" [ref=e31] [cursor=pointer]:
+          - /url: /admin/categories
+          - img [ref=e32]
+          - text: Categories
+        - link "Orders" [active] [ref=e34] [cursor=pointer]:
+          - /url: /admin/orders
+          - img [ref=e35]
+          - text: Orders
+        - link "Customers" [ref=e37] [cursor=pointer]:
+          - /url: /admin/customers
+          - img [ref=e38]
+          - text: Customers
+        - link "Discounts" [ref=e40] [cursor=pointer]:
+          - /url: /admin/discounts
+          - img [ref=e41]
+          - text: Discounts
+        - link "Pages" [ref=e43] [cursor=pointer]:
+          - /url: /admin/pages
+          - img [ref=e44]
+          - text: Pages
+        - link "Blog" [ref=e46] [cursor=pointer]:
+          - /url: /admin/blog
+          - img [ref=e47]
+          - text: Blog
+        - link "Settings" [ref=e49] [cursor=pointer]:
+          - /url: /admin/settings
+          - img [ref=e50]
+          - text: Settings
+        - link "Analytics" [ref=e52] [cursor=pointer]:
+          - /url: /admin/analytics
+          - img [ref=e53]
+          - text: Analytics
+        - link "Support" [ref=e55] [cursor=pointer]:
+          - /url: /admin/support
+          - img [ref=e56]
+          - text: Support
+      - generic [ref=e58]:
+        - link "View Store" [ref=e59] [cursor=pointer]:
+          - /url: /
+          - img [ref=e60]
+          - text: View Store
+        - button "Sign Out" [ref=e62] [cursor=pointer]:
+          - img [ref=e63]
+          - text: Sign Out
+    - generic [ref=e65]:
+      - banner [ref=e66]:
+        - button [ref=e67] [cursor=pointer]:
+          - img [ref=e68]
+        - generic [ref=e70]:
+          - generic [ref=e71]: admin@purepet.test
+          - generic [ref=e72]: A
+      - main [ref=e73]:
+        - generic [ref=e240]:
+          - generic [ref=e241]:
+            - generic [ref=e242]:
+              - heading "Orders" [level=1] [ref=e243]
+              - paragraph [ref=e244]: Manage and track customer orders
+            - generic [ref=e245]:
+              - button "Export All (8)" [ref=e246] [cursor=pointer]:
+                - img [ref=e247]
+                - text: Export All (8)
+              - generic [ref=e249]: 8 orders total
+          - generic [ref=e250]:
+            - generic [ref=e251]:
+              - generic [ref=e252]: Search
+              - generic [ref=e253]:
+                - img [ref=e254]
+                - 'textbox "Order # or customer name..." [ref=e256]'
+            - generic [ref=e257]:
+              - generic [ref=e258]: Status
+              - combobox [ref=e259]:
+                - option "All Statuses" [selected]
+                - option "Pending"
+                - option "Processing"
+                - option "Shipped"
+                - option "Delivered"
+                - option "Cancelled"
+                - option "Refunded"
+            - generic [ref=e260]:
+              - generic [ref=e261]: From
+              - textbox [ref=e262]
+            - generic [ref=e263]:
+              - generic [ref=e264]: To
+              - textbox [ref=e265]
+          - table [ref=e268]:
+            - rowgroup [ref=e269]:
+              - 'row "Order # Customer Date Status Payment Total" [ref=e270]':
+                - columnheader [ref=e271]:
+                  - checkbox [ref=e272]
+                - 'columnheader "Order #" [ref=e273]'
+                - columnheader "Customer" [ref=e274]
+                - columnheader "Date" [ref=e275]
+                - columnheader "Status" [ref=e276]
+                - columnheader "Payment" [ref=e277]
+                - columnheader "Total" [ref=e278]
+                - columnheader [ref=e279]
+            - rowgroup [ref=e280]:
+              - row "31532573 mhhbs shbfjs kdkj@gmail.com 11 Apr 2026 Processing Paid £0.00" [ref=e281]:
+                - cell [ref=e282]:
+                  - checkbox [ref=e283]
+                - cell "31532573" [ref=e284] [cursor=pointer]
+                - cell "mhhbs shbfjs kdkj@gmail.com" [ref=e285] [cursor=pointer]:
+                  - generic [ref=e286]: mhhbs shbfjs
+                  - generic [ref=e287]: kdkj@gmail.com
+                - cell "11 Apr 2026" [ref=e288] [cursor=pointer]
+                - cell "Processing" [ref=e289] [cursor=pointer]:
+                  - generic [ref=e290]: Processing
+                - cell "Paid" [ref=e291] [cursor=pointer]:
+                  - generic [ref=e292]: Paid
+                - cell "£0.00" [ref=e293] [cursor=pointer]
+                - cell [ref=e294]:
+                  - img [ref=e295]
+              - row "54743483 Guest Tester guest1@test.com 26 Mar 2026 Processing Paid £16.99" [ref=e297]:
+                - cell [ref=e298]:
+                  - checkbox [ref=e299]
+                - cell "54743483" [ref=e300] [cursor=pointer]
+                - cell "Guest Tester guest1@test.com" [ref=e301] [cursor=pointer]:
+                  - generic [ref=e302]: Guest Tester
+                  - generic [ref=e303]: guest1@test.com
+                - cell "26 Mar 2026" [ref=e304] [cursor=pointer]
+                - cell "Processing" [ref=e305] [cursor=pointer]:
+                  - generic [ref=e306]: Processing
+                - cell "Paid" [ref=e307] [cursor=pointer]:
+                  - generic [ref=e308]: Paid
+                - cell "£16.99" [ref=e309] [cursor=pointer]
+                - cell [ref=e310]:
+                  - img [ref=e311]
+              - row "6300135 Guest Tester guest@test.com 26 Mar 2026 Processing Paid £50.97" [ref=e313]:
+                - cell [ref=e314]:
+                  - checkbox [ref=e315]
+                - cell "6300135" [ref=e316] [cursor=pointer]
+                - cell "Guest Tester guest@test.com" [ref=e317] [cursor=pointer]:
+                  - generic [ref=e318]: Guest Tester
+                  - generic [ref=e319]: guest@test.com
+                - cell "26 Mar 2026" [ref=e320] [cursor=pointer]
+                - cell "Processing" [ref=e321] [cursor=pointer]:
+                  - generic [ref=e322]: Processing
+                - cell "Paid" [ref=e323] [cursor=pointer]:
+                  - generic [ref=e324]: Paid
+                - cell "£50.97" [ref=e325] [cursor=pointer]
+                - cell [ref=e326]:
+                  - img [ref=e327]
+              - row "90932373 Guest Tester guest@test.com 26 Mar 2026 Pending Paid £50.97" [ref=e329]:
+                - cell [ref=e330]:
+                  - checkbox [ref=e331]
+                - cell "90932373" [ref=e332] [cursor=pointer]
+                - cell "Guest Tester guest@test.com" [ref=e333] [cursor=pointer]:
+                  - generic [ref=e334]: Guest Tester
+                  - generic [ref=e335]: guest@test.com
+                - cell "26 Mar 2026" [ref=e336] [cursor=pointer]
+                - cell "Pending" [ref=e337] [cursor=pointer]:
+                  - generic [ref=e338]: Pending
+                - cell "Paid" [ref=e339] [cursor=pointer]:
+                  - generic [ref=e340]: Paid
+                - cell "£50.97" [ref=e341] [cursor=pointer]
+                - cell [ref=e342]:
+                  - img [ref=e343]
+              - row "74200999 Guest Tester 26 Mar 2026 Pending Paid £50.97" [ref=e345]:
+                - cell [ref=e346]:
+                  - checkbox [ref=e347]
+                - cell "74200999" [ref=e348] [cursor=pointer]
+                - cell "Guest Tester" [ref=e349] [cursor=pointer]:
+                  - generic [ref=e350]: Guest Tester
+                - cell "26 Mar 2026" [ref=e351] [cursor=pointer]
+                - cell "Pending" [ref=e352] [cursor=pointer]:
+                  - generic [ref=e353]: Pending
+                - cell "Paid" [ref=e354] [cursor=pointer]:
+                  - generic [ref=e355]: Paid
+                - cell "£50.97" [ref=e356] [cursor=pointer]
+                - cell [ref=e357]:
+                  - img [ref=e358]
+              - row "8803666 Sarah Johnson sarah.johnson@test.com 26 Mar 2026 Processing Paid £59.97" [ref=e360]:
+                - cell [ref=e361]:
+                  - checkbox [ref=e362]
+                - cell "8803666" [ref=e363] [cursor=pointer]
+                - cell "Sarah Johnson sarah.johnson@test.com" [ref=e364] [cursor=pointer]:
+                  - generic [ref=e365]: Sarah Johnson
+                  - generic [ref=e366]: sarah.johnson@test.com
+                - cell "26 Mar 2026" [ref=e367] [cursor=pointer]
+                - cell "Processing" [ref=e368] [cursor=pointer]:
+                  - generic [ref=e369]: Processing
+                - cell "Paid" [ref=e370] [cursor=pointer]:
+                  - generic [ref=e371]: Paid
+                - cell "£59.97" [ref=e372] [cursor=pointer]
+                - cell [ref=e373]:
+                  - img [ref=e374]
+              - row "46716288 Fixed Customer fixed.test@example.com 24 Mar 2026 Delivered Paid £24.99" [ref=e376]:
+                - cell [ref=e377]:
+                  - checkbox [ref=e378]
+                - cell "46716288" [ref=e379] [cursor=pointer]
+                - cell "Fixed Customer fixed.test@example.com" [ref=e380] [cursor=pointer]:
+                  - generic [ref=e381]: Fixed Customer
+                  - generic [ref=e382]: fixed.test@example.com
+                - cell "24 Mar 2026" [ref=e383] [cursor=pointer]
+                - cell "Delivered" [ref=e384] [cursor=pointer]:
+                  - generic [ref=e385]: Delivered
+                - cell "Paid" [ref=e386] [cursor=pointer]:
+                  - generic [ref=e387]: Paid
+                - cell "£24.99" [ref=e388] [cursor=pointer]
+                - cell [ref=e389]:
+                  - img [ref=e390]
+              - row "52607740 Test Customer 24 Mar 2026 Delivered Paid £19.99" [ref=e392]:
+                - cell [ref=e393]:
+                  - checkbox [ref=e394]
+                - cell "52607740" [ref=e395] [cursor=pointer]
+                - cell "Test Customer" [ref=e396] [cursor=pointer]:
+                  - generic [ref=e397]: Test Customer
+                - cell "24 Mar 2026" [ref=e398] [cursor=pointer]
+                - cell "Delivered" [ref=e399] [cursor=pointer]:
+                  - generic [ref=e400]: Delivered
+                - cell "Paid" [ref=e401] [cursor=pointer]:
+                  - generic [ref=e402]: Paid
+                - cell "£19.99" [ref=e403] [cursor=pointer]
+                - cell [ref=e404]:
+                  - img [ref=e405]
+    - button [ref=e237] [cursor=pointer]:
+      - img [ref=e238]

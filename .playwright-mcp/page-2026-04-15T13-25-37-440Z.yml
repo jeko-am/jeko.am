@@ -1,0 +1,480 @@
+- generic [active] [ref=e1]:
+  - banner [ref=e2]:
+    - generic [ref=e4]:
+      - link "JEKO" [ref=e5] [cursor=pointer]:
+        - /url: /
+        - generic [ref=e6]: JEKO
+      - navigation [ref=e7]:
+        - link "About" [ref=e9] [cursor=pointer]:
+          - /url: /about
+          - text: About
+          - img [ref=e10]
+        - link "Community" [ref=e13] [cursor=pointer]:
+          - /url: /community
+          - text: Community
+          - img [ref=e14]
+        - link "Shop" [ref=e17] [cursor=pointer]:
+          - /url: /products
+        - link "Reviews" [ref=e19] [cursor=pointer]:
+          - /url: /reviews
+        - link "Health & breeds" [ref=e21] [cursor=pointer]:
+          - /url: /benefits
+          - text: Health & breeds
+          - img [ref=e22]
+      - generic [ref=e24]:
+        - button "Shopping cart" [ref=e25] [cursor=pointer]:
+          - img [ref=e26]
+          - generic [ref=e30]: "2"
+        - link "Help" [ref=e31] [cursor=pointer]:
+          - /url: /help
+        - generic [ref=e32]:
+          - link "Profile" [ref=e33] [cursor=pointer]:
+            - /url: /profile
+            - img [ref=e34]
+            - text: Profile
+          - button "Logout" [ref=e36] [cursor=pointer]:
+            - img [ref=e37]
+            - text: Logout
+  - main [ref=e39]:
+    - generic [ref=e41]:
+      - img "Happy golden retriever dog enjoying fresh food" [ref=e43]
+      - generic [ref=e46]:
+        - heading "The easiest way to feed healthy, natural dog food" [level=1] [ref=e47]:
+          - text: The easiest way to feed healthy,
+          - text: natural dog food
+        - paragraph [ref=e48]: Enjoy fresh food without the fuss, from only 89p a day
+        - link "Get started today" [ref=e50] [cursor=pointer]:
+          - /url: /auth/signup
+        - generic [ref=e51]:
+          - generic [ref=e52]:
+            - img [ref=e54]
+            - img [ref=e57]
+            - img [ref=e60]
+            - img [ref=e63]
+            - img [ref=e67]
+          - generic [ref=e69]:
+            - generic [ref=e70]: Excellent
+            - generic [ref=e71]: 4.6 out of 5
+            - img [ref=e72]
+            - generic [ref=e74]: Trustpilot
+    - link "25% off your first box+10% off your next box" [ref=e76] [cursor=pointer]:
+      - /url: /auth/signup
+      - generic [ref=e77]:
+        - img [ref=e78]
+        - paragraph [ref=e80]: 25% off your first box+10% off your next box
+        - img [ref=e81]
+    - generic [ref=e84]:
+      - generic [ref=e85]:
+        - generic [ref=e86]:
+          - img "Preparing Jeko pet food" [ref=e87]
+          - img [ref=e89]
+          - img [ref=e92]
+        - generic [ref=e95]:
+          - heading "What is Jeko dog food?" [level=2] [ref=e96]
+          - generic [ref=e97]:
+            - paragraph [ref=e98]: A natural, healthy dog food designed to take the stress out of meal times.
+            - paragraph [ref=e99]: Simply add water and stir to quickly rehydrate the food and create a healthy, nutritious meal your pup will love.
+          - link "Get started" [ref=e100] [cursor=pointer]:
+            - /url: /profile
+      - generic:
+        - img
+    - generic [ref=e102]:
+      - generic:
+        - img
+      - generic:
+        - img
+      - generic [ref=e104]:
+        - generic [ref=e105]:
+          - img "Store in the cupboard" [ref=e107]
+          - paragraph [ref=e108]: Store in the cupboard
+        - generic [ref=e109]:
+          - img "From only 89p per day" [ref=e111]
+          - paragraph [ref=e112]: From only 89p per day
+        - generic [ref=e113]:
+          - img "Just add water and serve" [ref=e115]
+          - paragraph [ref=e116]: Just add water and serve
+        - generic [ref=e117]:
+          - img "Ready in 10 seconds" [ref=e119]
+          - paragraph [ref=e120]: Ready in 10 seconds
+    - generic [ref=e123]:
+      - generic [ref=e124]:
+        - generic [ref=e125]: Our Products
+        - heading "Handpicked for Your Pup" [level=2] [ref=e126]
+        - paragraph [ref=e127]: Fresh, natural ingredients your dog will love. Every meal made with care.
+      - generic [ref=e128]:
+        - link "Beef + Rice + Veggies View Product Beef + Rice + Veggies Hearty beef with brown rice, spinach, peas & carrots — ~520 kcal. Best for energy and muscle support. £0.00 Add to Cart" [ref=e129] [cursor=pointer]:
+          - /url: /products/beef-rice-veggies
+          - generic [ref=e130]:
+            - generic [ref=e131]:
+              - img "Beef + Rice + Veggies" [ref=e132]
+              - generic [ref=e134]: View Product
+            - generic [ref=e135]:
+              - heading "Beef + Rice + Veggies" [level=3] [ref=e136]
+              - paragraph [ref=e137]: Hearty beef with brown rice, spinach, peas & carrots — ~520 kcal. Best for energy and muscle support.
+              - generic [ref=e139]: £0.00
+              - button "Add to Cart" [ref=e140]
+        - link "Chicken + Quinoa + Greens View Product Chicken + Quinoa + Greens Lean chicken with quinoa, zucchini & green beans — ~480 kcal. Best for lean protein and weight control. £0.00 Add to Cart" [ref=e141] [cursor=pointer]:
+          - /url: /products/chicken-quinoa-greens
+          - generic [ref=e142]:
+            - generic [ref=e143]:
+              - img "Chicken + Quinoa + Greens" [ref=e144]
+              - generic [ref=e146]: View Product
+            - generic [ref=e147]:
+              - heading "Chicken + Quinoa + Greens" [level=3] [ref=e148]
+              - paragraph [ref=e149]: Lean chicken with quinoa, zucchini & green beans — ~480 kcal. Best for lean protein and weight control.
+              - generic [ref=e151]: £0.00
+              - button "Add to Cart" [ref=e152]
+        - link "Tuna + Rice Bowl View Product Tuna + Rice Bowl Omega-rich tuna with brown rice, spinach, peas & carrots — ~430 kcal. Best for coat health and light digestion. £0.00 Add to Cart" [ref=e153] [cursor=pointer]:
+          - /url: /products/tuna-rice-bowl
+          - generic [ref=e154]:
+            - generic [ref=e155]:
+              - img "Tuna + Rice Bowl" [ref=e156]
+              - generic [ref=e158]: View Product
+            - generic [ref=e159]:
+              - heading "Tuna + Rice Bowl" [level=3] [ref=e160]
+              - paragraph [ref=e161]: Omega-rich tuna with brown rice, spinach, peas & carrots — ~430 kcal. Best for coat health and light digestion.
+              - generic [ref=e163]: £0.00
+              - button "Add to Cart" [ref=e164]
+        - link "Cod + Rice + Veggies View Product Cod + Rice + Veggies Mild cod with white rice, green beans & carrots — ~360 kcal. Best for sensitive stomachs and low-fat diets. £0.00 Add to Cart" [ref=e165] [cursor=pointer]:
+          - /url: /products/cod-rice-veggies
+          - generic [ref=e166]:
+            - generic [ref=e167]:
+              - img "Cod + Rice + Veggies" [ref=e168]
+              - generic [ref=e170]: View Product
+            - generic [ref=e171]:
+              - heading "Cod + Rice + Veggies" [level=3] [ref=e172]
+              - paragraph [ref=e173]: Mild cod with white rice, green beans & carrots — ~360 kcal. Best for sensitive stomachs and low-fat diets.
+              - generic [ref=e175]: £0.00
+              - button "Add to Cart" [ref=e176]
+      - link "Shop All Products" [ref=e178] [cursor=pointer]:
+        - /url: /products
+        - text: Shop All Products
+        - img [ref=e179]
+    - generic [ref=e183]:
+      - generic [ref=e184]:
+        - generic [ref=e185]:
+          - generic [ref=e186]: Trending Now
+          - heading "What Pet Parents Love" [level=2] [ref=e187]
+          - paragraph [ref=e188]: Our most popular picks, loved by thousands of happy dogs.
+        - generic [ref=e189]:
+          - button [ref=e190] [cursor=pointer]:
+            - img [ref=e191]
+          - button [ref=e193] [cursor=pointer]:
+            - img [ref=e194]
+      - generic [ref=e196]:
+        - link "Beef + Rice + Veggies View Product Beef + Rice + Veggies Hearty beef with brown rice, spinach, peas & carrots — ~520 kcal. Best for energy and muscle support. £0.00 Add to Cart" [ref=e198] [cursor=pointer]:
+          - /url: /products/beef-rice-veggies
+          - generic [ref=e199]:
+            - generic [ref=e200]:
+              - img "Beef + Rice + Veggies" [ref=e201]
+              - generic [ref=e203]: View Product
+            - generic [ref=e204]:
+              - heading "Beef + Rice + Veggies" [level=3] [ref=e205]
+              - paragraph [ref=e206]: Hearty beef with brown rice, spinach, peas & carrots — ~520 kcal. Best for energy and muscle support.
+              - generic [ref=e208]: £0.00
+              - button "Add to Cart" [ref=e209]
+        - link "Chicken + Quinoa + Greens View Product Chicken + Quinoa + Greens Lean chicken with quinoa, zucchini & green beans — ~480 kcal. Best for lean protein and weight control. £0.00 Add to Cart" [ref=e211] [cursor=pointer]:
+          - /url: /products/chicken-quinoa-greens
+          - generic [ref=e212]:
+            - generic [ref=e213]:
+              - img "Chicken + Quinoa + Greens" [ref=e214]
+              - generic [ref=e216]: View Product
+            - generic [ref=e217]:
+              - heading "Chicken + Quinoa + Greens" [level=3] [ref=e218]
+              - paragraph [ref=e219]: Lean chicken with quinoa, zucchini & green beans — ~480 kcal. Best for lean protein and weight control.
+              - generic [ref=e221]: £0.00
+              - button "Add to Cart" [ref=e222]
+        - link "Tuna + Rice Bowl View Product Tuna + Rice Bowl Omega-rich tuna with brown rice, spinach, peas & carrots — ~430 kcal. Best for coat health and light digestion. £0.00 Add to Cart" [ref=e224] [cursor=pointer]:
+          - /url: /products/tuna-rice-bowl
+          - generic [ref=e225]:
+            - generic [ref=e226]:
+              - img "Tuna + Rice Bowl" [ref=e227]
+              - generic [ref=e229]: View Product
+            - generic [ref=e230]:
+              - heading "Tuna + Rice Bowl" [level=3] [ref=e231]
+              - paragraph [ref=e232]: Omega-rich tuna with brown rice, spinach, peas & carrots — ~430 kcal. Best for coat health and light digestion.
+              - generic [ref=e234]: £0.00
+              - button "Add to Cart" [ref=e235]
+        - link "Cod + Rice + Veggies View Product Cod + Rice + Veggies Mild cod with white rice, green beans & carrots — ~360 kcal. Best for sensitive stomachs and low-fat diets. £0.00 Add to Cart" [ref=e237] [cursor=pointer]:
+          - /url: /products/cod-rice-veggies
+          - generic [ref=e238]:
+            - generic [ref=e239]:
+              - img "Cod + Rice + Veggies" [ref=e240]
+              - generic [ref=e242]: View Product
+            - generic [ref=e243]:
+              - heading "Cod + Rice + Veggies" [level=3] [ref=e244]
+              - paragraph [ref=e245]: Mild cod with white rice, green beans & carrots — ~360 kcal. Best for sensitive stomachs and low-fat diets.
+              - generic [ref=e247]: £0.00
+              - button "Add to Cart" [ref=e248]
+        - link "Chickpea + Quinoa Plant Mix View Product Chickpea + Quinoa Plant Mix Plant-based quinoa & chickpea mix with spinach, peas & flaxseed — ~510 kcal. Best for plant-based protein, fiber, and digestion. £0.00 Add to Cart" [ref=e250] [cursor=pointer]:
+          - /url: /products/chickpea-quinoa-plant-mix
+          - generic [ref=e251]:
+            - generic [ref=e252]:
+              - img "Chickpea + Quinoa Plant Mix" [ref=e253]
+              - generic [ref=e255]: View Product
+            - generic [ref=e256]:
+              - heading "Chickpea + Quinoa Plant Mix" [level=3] [ref=e257]
+              - paragraph [ref=e258]: Plant-based quinoa & chickpea mix with spinach, peas & flaxseed — ~510 kcal. Best for plant-based protein, fiber, and digestion.
+              - generic [ref=e260]: £0.00
+              - button "Add to Cart" [ref=e261]
+    - generic [ref=e264]:
+      - generic [ref=e265]:
+        - heading "Don't just take our word for it" [level=2] [ref=e266]
+        - paragraph [ref=e267]: Listen to what others have to say about it
+      - generic [ref=e268]:
+        - button "Scroll left" [ref=e269] [cursor=pointer]:
+          - img [ref=e270]
+        - generic [ref=e272]:
+          - generic [ref=e273] [cursor=pointer]:
+            - generic [ref=e274]:
+              - img [ref=e278]
+              - generic [ref=e280]: 0:55
+            - paragraph [ref=e281]: Jeko vs kibble & raw
+          - generic [ref=e282] [cursor=pointer]:
+            - generic [ref=e283]:
+              - img [ref=e287]
+              - generic [ref=e289]: 0:38
+            - paragraph [ref=e290]: Feeding Jeko really is simple!
+          - generic [ref=e291] [cursor=pointer]:
+            - generic [ref=e292]:
+              - img [ref=e296]
+              - generic [ref=e298]: 0:54
+            - paragraph [ref=e299]: We've done the research
+          - generic [ref=e300] [cursor=pointer]:
+            - generic [ref=e301]:
+              - img [ref=e305]
+              - generic [ref=e307]: 0:37
+            - paragraph [ref=e308]: Fully flexible to work around you
+          - generic [ref=e309] [cursor=pointer]:
+            - generic [ref=e310]:
+              - img [ref=e314]
+              - generic [ref=e316]: 0:38
+            - paragraph [ref=e317]: Rudy goes from fussy to foodie
+          - generic [ref=e318] [cursor=pointer]:
+            - generic [ref=e319]:
+              - img [ref=e323]
+              - generic [ref=e325]: 0:37
+            - paragraph [ref=e326]: Backed by The Yorkshire Vet
+        - button "Scroll right" [ref=e327] [cursor=pointer]:
+          - img [ref=e328]
+    - generic [ref=e331]:
+      - generic:
+        - img
+      - generic:
+        - img
+      - generic [ref=e332]:
+        - heading "How does a Jeko plan work?" [level=2] [ref=e333]
+        - generic [ref=e334]:
+          - generic [ref=e335]:
+            - img "Tell us about your dog" [ref=e337]
+            - paragraph [ref=e338]: Step 1
+            - paragraph [ref=e339]: Tell us about your dog
+          - generic [ref=e340]:
+            - img "Choose your tailored recipes" [ref=e342]
+            - paragraph [ref=e343]: Step 2
+            - paragraph [ref=e344]: Choose your tailored recipes
+          - generic [ref=e345]:
+            - img "Delivered to your door for free" [ref=e347]
+            - paragraph [ref=e348]: Step 3
+            - paragraph [ref=e349]: Delivered to your door for free
+          - generic [ref=e350]:
+            - img "Try it and transition to Jeko" [ref=e352]
+            - paragraph [ref=e353]: Step 4
+            - paragraph [ref=e354]: Try it and transition to Jeko
+        - link "Create a tailored plan today" [ref=e356] [cursor=pointer]:
+          - /url: /profile
+    - generic [ref=e358]:
+      - generic:
+        - img
+      - generic:
+        - img
+      - generic [ref=e359]:
+        - heading "We've delivered" [level=2] [ref=e360]
+        - generic [ref=e361]: "0"
+        - paragraph [ref=e362]: meals and changed the lives of tens of thousands of dogs for the better
+        - generic [ref=e363]:
+          - generic [ref=e364]:
+            - generic [ref=e365]: 94%
+            - paragraph [ref=e366]: of customers have seen an improvement in their dog's ailment
+          - generic [ref=e367]:
+            - generic [ref=e368]: 91%
+            - paragraph [ref=e369]: of customers have seen overall health improvements since switching to Jeko
+    - generic [ref=e371]:
+      - generic:
+        - img
+      - generic:
+        - img
+      - generic [ref=e372]:
+        - heading "How Jeko compares" [level=2] [ref=e373]
+        - generic [ref=e374]:
+          - generic [ref=e375]:
+            - generic [ref=e377]: JEKO
+            - generic [ref=e378]: Dry & wet
+            - generic [ref=e379]: Raw & fresh
+          - generic [ref=e380]:
+            - generic [ref=e382]: Cost
+            - generic [ref=e384]: ££
+            - generic [ref=e386]: £
+            - generic [ref=e388]: £££
+          - generic [ref=e389]:
+            - generic [ref=e391]: No/low processing
+            - img [ref=e393]
+            - img [ref=e398]
+            - img [ref=e404]
+          - generic [ref=e408]:
+            - generic [ref=e410]: High quality ingredients
+            - img [ref=e412]
+            - img [ref=e417]
+            - img [ref=e423]
+          - generic [ref=e427]:
+            - generic [ref=e429]: Easy to store
+            - img [ref=e431]
+            - img [ref=e436]
+            - img [ref=e441]
+          - generic [ref=e446]:
+            - generic [ref=e448]: No risk of harmful pathogens
+            - img [ref=e450]
+            - img [ref=e455]
+            - img [ref=e460]
+    - generic [ref=e467]:
+      - generic [ref=e468]:
+        - generic:
+          - img
+        - generic [ref=e469]:
+          - heading "Backed by The Yorkshire Vet" [level=2] [ref=e470]
+          - paragraph [ref=e471]: Julian Norton
+          - paragraph [ref=e472]: I've been a vet for almost 30 years. Recently I've suggested Jeko for some of my patients, often with great results.
+      - img "Julian Norton - The Yorkshire Vet with Jeko" [ref=e474]
+    - generic [ref=e478]:
+      - generic [ref=e479]:
+        - img "Jeko on Dragons Den" [ref=e480]
+        - generic:
+          - img
+      - generic [ref=e483]:
+        - heading "Dog food so good we ate it on Dragons' Den" [level=2] [ref=e484]
+        - paragraph [ref=e485]: Jeko is complete nutrition from the inside out, and dogs totally love the taste! "It was possibly the best pitch I have seen in over 10 years of Dragons' Den" - Duncan Bannatyne
+        - link "Get started today" [ref=e486] [cursor=pointer]:
+          - /url: /auth/signup
+    - generic [ref=e489]:
+      - generic [ref=e490]:
+        - generic:
+          - img
+        - generic [ref=e491]:
+          - heading "Frequently Asked Questions" [level=2] [ref=e492]
+          - paragraph [ref=e493]: Everything else you need to know about Jeko
+          - generic [ref=e494]:
+            - generic [ref=e495]:
+              - button "Am I tied into a subscription?" [ref=e496] [cursor=pointer]:
+                - heading "Am I tied into a subscription?" [level=4] [ref=e497]
+                - img [ref=e498]
+              - paragraph [ref=e500]: Not at all! You can pause, change, or cancel your plan at any time. We believe in our food so much that we don't need to lock you in.
+            - generic [ref=e501]:
+              - button "Is Jeko expensive compared to other foods?" [ref=e502] [cursor=pointer]:
+                - heading "Is Jeko expensive compared to other foods?" [level=4] [ref=e503]
+                - img [ref=e504]
+              - paragraph [ref=e506]: Jeko starts from only 89p per day. When you consider the health benefits, it's great value compared to vet bills and other premium foods.
+            - generic [ref=e507]:
+              - button "Do I pay for delivery?" [ref=e508] [cursor=pointer]:
+                - heading "Do I pay for delivery?" [level=4] [ref=e509]
+                - img [ref=e510]
+              - paragraph [ref=e512]: No! Delivery is completely free on all orders. We deliver right to your doorstep.
+            - generic [ref=e513]:
+              - button "What is the nutritional value, and is it good for my dog?" [ref=e514] [cursor=pointer]:
+                - heading "What is the nutritional value, and is it good for my dog?" [level=4] [ref=e515]
+                - img [ref=e516]
+              - paragraph [ref=e518]: Jeko is a complete, balanced meal developed with veterinary nutritionists. Every recipe meets FEDIAF guidelines for complete nutrition.
+            - generic [ref=e519]:
+              - button "What if my dog doesn’t like it?" [ref=e520] [cursor=pointer]:
+                - heading "What if my dog doesn’t like it?" [level=4] [ref=e521]
+                - img [ref=e522]
+              - paragraph [ref=e524]: We offer a full money-back guarantee. If your dog doesn't love Jeko, we'll refund your first box in full.
+            - generic [ref=e525]:
+              - button "Is Jeko suitable for my dogs health concern?" [ref=e526] [cursor=pointer]:
+                - heading "Is Jeko suitable for my dogs health concern?" [level=4] [ref=e527]
+                - img [ref=e528]
+              - paragraph [ref=e530]: Jeko is often recommended for dogs with health concerns. Our recipes are gentle and made with natural, high-quality ingredients.
+            - generic [ref=e531]:
+              - button "Is Jeko complete dog food?" [ref=e532] [cursor=pointer]:
+                - heading "Is Jeko complete dog food?" [level=4] [ref=e533]
+                - img [ref=e534]
+              - paragraph [ref=e536]: Yes! Every Jeko recipe is nutritionally complete and balanced, meeting all FEDIAF guidelines for adult dogs and puppies.
+          - link "Get started with 25% off" [ref=e538] [cursor=pointer]:
+            - /url: /profile
+      - img "Happy healthy dog" [ref=e540]
+  - contentinfo [ref=e542]:
+    - generic [ref=e543]:
+      - generic [ref=e544]:
+        - generic [ref=e545]:
+          - heading "Join our VIP list" [level=4] [ref=e546]
+          - paragraph [ref=e547]: Be the first to hear about new product launches, exclusive competitions and helpful dog content.
+          - generic [ref=e548]:
+            - textbox "Enter your email address" [ref=e549]
+            - button "Sign up" [ref=e550] [cursor=pointer]
+        - generic [ref=e551]:
+          - generic [ref=e552]:
+            - heading "Jeko" [level=4] [ref=e553]
+            - list [ref=e554]:
+              - listitem [ref=e555]:
+                - link "Our story" [ref=e556] [cursor=pointer]:
+                  - /url: /about
+              - listitem [ref=e557]:
+                - link "Reviews" [ref=e558] [cursor=pointer]:
+                  - /url: /reviews
+              - listitem [ref=e559]:
+                - link "Recipes" [ref=e560] [cursor=pointer]:
+                  - /url: /recipes
+              - listitem [ref=e561]:
+                - link "Beyond the bowl" [ref=e562] [cursor=pointer]:
+                  - /url: /beyond-the-bowl
+              - listitem [ref=e563]:
+                - link "Shop" [ref=e564] [cursor=pointer]:
+                  - /url: /products
+              - listitem [ref=e565]:
+                - link "Community" [ref=e566] [cursor=pointer]:
+                  - /url: /community
+          - generic [ref=e567]:
+            - heading "Help" [level=4] [ref=e568]
+            - list [ref=e569]:
+              - listitem [ref=e570]:
+                - link "My account" [ref=e571] [cursor=pointer]:
+                  - /url: /profile
+              - listitem [ref=e572]:
+                - link "Contact us" [ref=e573] [cursor=pointer]:
+                  - /url: /contact
+              - listitem [ref=e574]:
+                - link "Delivery information" [ref=e575] [cursor=pointer]:
+                  - /url: /delivery-information
+              - listitem [ref=e576]:
+                - link "Returns" [ref=e577] [cursor=pointer]:
+                  - /url: /returns
+              - listitem [ref=e578]:
+                - link "Sitemap" [ref=e579] [cursor=pointer]:
+                  - /url: /sitemap-page
+          - generic [ref=e580]:
+            - heading "Information" [level=4] [ref=e581]
+            - list [ref=e582]:
+              - listitem [ref=e583]:
+                - link "Privacy policy" [ref=e584] [cursor=pointer]:
+                  - /url: /privacy-policy
+              - listitem [ref=e585]:
+                - link "Terms & conditions" [ref=e586] [cursor=pointer]:
+                  - /url: /terms-of-use
+              - listitem [ref=e587]:
+                - link "Jeko policies" [ref=e588] [cursor=pointer]:
+                  - /url: /pure-policies
+              - listitem [ref=e589]:
+                - link "Site security" [ref=e590] [cursor=pointer]:
+                  - /url: /site-security
+              - listitem [ref=e591]:
+                - link "Cookie policy" [ref=e592] [cursor=pointer]:
+                  - /url: /cookie-policy
+      - generic [ref=e593]:
+        - generic [ref=e595]: JEKO
+        - paragraph [ref=e596]: © Jeko Pet Food Ltd 2020-2026
+  - generic:
+    - generic:
+      - paragraph: Bow Wow! 🐾
+      - paragraph: Find a friend for your pup!
+    - button "Find pet matches":
+      - img
+  - alert [ref=e597]

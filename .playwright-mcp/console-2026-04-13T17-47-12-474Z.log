@@ -1,0 +1,6 @@
+[     754ms] [ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ http://localhost:3001/_next/static/css/app/layout.css?v=1776102432854:0
+[     767ms] [ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ http://localhost:3001/_next/static/chunks/main-app.js?v=1776102432854:0
+[     768ms] [ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ http://localhost:3001/_next/static/chunks/app-pages-internals.js:0
+[     768ms] [ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ http://localhost:3001/_next/static/chunks/app/layout.js:0
+[   64335ms] [ERROR] Failed to load resource: the server responded with a status of 401 () @ https://dzhtpnskezkrtfinntbi.supabase.co/auth/v1/token?grant_type=password:0
+[   82644ms] [WARNING] GoTrueClient@sb-dzhtpnskezkrtfinntbi-auth-token:1 (2.103.0) 2026-04-13T17:48:35.117Z Multiple GoTrueClient instances detected in the same browser context. It is not an error, but this should be avoided as it may produce undefined behavior when used concurrently under the same storage key. @ https://cdn.jsdelivr.net/npm/@supabase/auth-js@2.103.0/+esm:6

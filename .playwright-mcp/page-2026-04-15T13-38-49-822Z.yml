@@ -1,0 +1,51 @@
+- generic [active] [ref=e1]:
+  - alert [ref=e2]
+  - generic [ref=e3]:
+    - banner [ref=e4]:
+      - generic [ref=e5]:
+        - link "JEKO" [ref=e6] [cursor=pointer]:
+          - /url: /
+          - generic [ref=e7]: JEKO
+        - generic [ref=e8]:
+          - paragraph [ref=e9]:
+            - text: Already have an account?
+            - link "Log in" [ref=e10] [cursor=pointer]:
+              - /url: /login
+          - button [ref=e65] [cursor=pointer]:
+            - img [ref=e66]
+    - main [ref=e11]:
+      - generic [ref=e13]:
+        - paragraph [ref=e26]: 🔥 Getting warmer!
+        - generic [ref=e311]:
+          - heading "What does Bruno love?" [level=1] [ref=e312]
+          - paragraph [ref=e313]: Help us find the perfect matches
+          - paragraph [ref=e314]: Diet
+          - generic [ref=e315]:
+            - button "Raw" [ref=e316] [cursor=pointer]:
+              - img [ref=e318]
+              - generic [ref=e322]: Raw
+            - button "Kibble" [ref=e323] [cursor=pointer]:
+              - img [ref=e325]
+              - generic [ref=e332]: Kibble
+            - button "Mixed" [ref=e333] [cursor=pointer]:
+              - img [ref=e335]
+              - generic [ref=e338]: Mixed
+            - button "Homemade" [ref=e339] [cursor=pointer]:
+              - img [ref=e341]
+              - generic [ref=e346]: Homemade
+            - button "Natural" [ref=e347] [cursor=pointer]:
+              - img [ref=e349]
+              - generic [ref=e352]: Natural
+            - button "Chicken" [ref=e353] [cursor=pointer]:
+              - img [ref=e355]
+              - generic [ref=e359]: Chicken
+            - button "Beef" [ref=e360] [cursor=pointer]:
+              - img [ref=e362]
+              - generic [ref=e366]: Beef
+            - button "Lamb" [ref=e367] [cursor=pointer]:
+              - img [ref=e369]
+              - generic [ref=e373]: Lamb
+            - button "Vegetables" [ref=e374] [cursor=pointer]:
+              - img [ref=e376]
+              - generic [ref=e383]: Vegetables
+          - button "Continue" [ref=e384] [cursor=pointer]

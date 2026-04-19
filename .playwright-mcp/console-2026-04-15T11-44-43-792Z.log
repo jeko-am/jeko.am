@@ -1,0 +1,2 @@
+[  394611ms] [ERROR] Failed to load resource: the server responded with a status of 404 () @ https://www.jeko.am/Users/admin/Desktop/claude%20code%20armen/pure-pet-clone/src/lib/supabase:0
+[  434617ms] [ERROR] Failed to load resource: the server responded with a status of 401 () @ https://dzhtpnskezkrtfinntbi.supabase.co/rest/v1/user_profiles?select=id&limit=1:0

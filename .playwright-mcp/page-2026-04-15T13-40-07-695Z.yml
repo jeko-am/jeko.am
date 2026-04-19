@@ -1,0 +1,434 @@
+- generic [ref=e1]:
+  - alert [ref=e2]
+  - generic [ref=e3]:
+    - banner [ref=e4]:
+      - generic [ref=e5]:
+        - link "JEKO" [ref=e6] [cursor=pointer]:
+          - /url: /
+          - generic [ref=e7]: JEKO
+        - generic [ref=e8]:
+          - paragraph [ref=e9]:
+            - text: Already have an account?
+            - link "Log in" [ref=e10] [cursor=pointer]:
+              - /url: /login
+          - button [ref=e65] [cursor=pointer]:
+            - img [ref=e66]
+    - main [ref=e11]:
+      - generic [ref=e13]:
+        - paragraph [ref=e26]: 🏁 Last lap!
+        - generic [ref=e435]:
+          - heading "Where are you located?" [level=1] [ref=e436]
+          - paragraph [ref=e437]: Connect with nearby pet owners and local events
+          - generic [ref=e438]:
+            - generic [ref=e439]:
+              - generic [ref=e440]: Country *
+              - generic [ref=e441]:
+                - button "Armenia" [ref=e442] [cursor=pointer]:
+                  - generic [ref=e443]: Armenia
+                  - img [ref=e444]
+                - generic [ref=e461]:
+                  - textbox "Search..." [active] [ref=e463]
+                  - list [ref=e464]:
+                    - listitem [ref=e465]:
+                      - button "Afghanistan" [ref=e466] [cursor=pointer]
+                    - listitem [ref=e467]:
+                      - button "Albania" [ref=e468] [cursor=pointer]
+                    - listitem [ref=e469]:
+                      - button "Algeria" [ref=e470] [cursor=pointer]
+                    - listitem [ref=e471]:
+                      - button "Andorra" [ref=e472] [cursor=pointer]
+                    - listitem [ref=e473]:
+                      - button "Angola" [ref=e474] [cursor=pointer]
+                    - listitem [ref=e475]:
+                      - button "Antigua and Barbuda" [ref=e476] [cursor=pointer]
+                    - listitem [ref=e477]:
+                      - button "Argentina" [ref=e478] [cursor=pointer]
+                    - listitem [ref=e479]:
+                      - button "Armenia" [ref=e480] [cursor=pointer]
+                    - listitem [ref=e481]:
+                      - button "Australia" [ref=e482] [cursor=pointer]
+                    - listitem [ref=e483]:
+                      - button "Austria" [ref=e484] [cursor=pointer]
+                    - listitem [ref=e485]:
+                      - button "Azerbaijan" [ref=e486] [cursor=pointer]
+                    - listitem [ref=e487]:
+                      - button "Bahamas" [ref=e488] [cursor=pointer]
+                    - listitem [ref=e489]:
+                      - button "Bahrain" [ref=e490] [cursor=pointer]
+                    - listitem [ref=e491]:
+                      - button "Bangladesh" [ref=e492] [cursor=pointer]
+                    - listitem [ref=e493]:
+                      - button "Barbados" [ref=e494] [cursor=pointer]
+                    - listitem [ref=e495]:
+                      - button "Belarus" [ref=e496] [cursor=pointer]
+                    - listitem [ref=e497]:
+                      - button "Belgium" [ref=e498] [cursor=pointer]
+                    - listitem [ref=e499]:
+                      - button "Belize" [ref=e500] [cursor=pointer]
+                    - listitem [ref=e501]:
+                      - button "Benin" [ref=e502] [cursor=pointer]
+                    - listitem [ref=e503]:
+                      - button "Bhutan" [ref=e504] [cursor=pointer]
+                    - listitem [ref=e505]:
+                      - button "Bolivia" [ref=e506] [cursor=pointer]
+                    - listitem [ref=e507]:
+                      - button "Bosnia and Herzegovina" [ref=e508] [cursor=pointer]
+                    - listitem [ref=e509]:
+                      - button "Botswana" [ref=e510] [cursor=pointer]
+                    - listitem [ref=e511]:
+                      - button "Brazil" [ref=e512] [cursor=pointer]
+                    - listitem [ref=e513]:
+                      - button "Brunei" [ref=e514] [cursor=pointer]
+                    - listitem [ref=e515]:
+                      - button "Bulgaria" [ref=e516] [cursor=pointer]
+                    - listitem [ref=e517]:
+                      - button "Burkina Faso" [ref=e518] [cursor=pointer]
+                    - listitem [ref=e519]:
+                      - button "Burundi" [ref=e520] [cursor=pointer]
+                    - listitem [ref=e521]:
+                      - button "Cambodia" [ref=e522] [cursor=pointer]
+                    - listitem [ref=e523]:
+                      - button "Cameroon" [ref=e524] [cursor=pointer]
+                    - listitem [ref=e525]:
+                      - button "Canada" [ref=e526] [cursor=pointer]
+                    - listitem [ref=e527]:
+                      - button "Cape Verde" [ref=e528] [cursor=pointer]
+                    - listitem [ref=e529]:
+                      - button "Central African Republic" [ref=e530] [cursor=pointer]
+                    - listitem [ref=e531]:
+                      - button "Chad" [ref=e532] [cursor=pointer]
+                    - listitem [ref=e533]:
+                      - button "Chile" [ref=e534] [cursor=pointer]
+                    - listitem [ref=e535]:
+                      - button "China" [ref=e536] [cursor=pointer]
+                    - listitem [ref=e537]:
+                      - button "Colombia" [ref=e538] [cursor=pointer]
+                    - listitem [ref=e539]:
+                      - button "Comoros" [ref=e540] [cursor=pointer]
+                    - listitem [ref=e541]:
+                      - button "Congo" [ref=e542] [cursor=pointer]
+                    - listitem [ref=e543]:
+                      - button "Costa Rica" [ref=e544] [cursor=pointer]
+                    - listitem [ref=e545]:
+                      - button "Croatia" [ref=e546] [cursor=pointer]
+                    - listitem [ref=e547]:
+                      - button "Cuba" [ref=e548] [cursor=pointer]
+                    - listitem [ref=e549]:
+                      - button "Cyprus" [ref=e550] [cursor=pointer]
+                    - listitem [ref=e551]:
+                      - button "Czech Republic" [ref=e552] [cursor=pointer]
+                    - listitem [ref=e553]:
+                      - button "Denmark" [ref=e554] [cursor=pointer]
+                    - listitem [ref=e555]:
+                      - button "Djibouti" [ref=e556] [cursor=pointer]
+                    - listitem [ref=e557]:
+                      - button "Dominica" [ref=e558] [cursor=pointer]
+                    - listitem [ref=e559]:
+                      - button "Dominican Republic" [ref=e560] [cursor=pointer]
+                    - listitem [ref=e561]:
+                      - button "East Timor" [ref=e562] [cursor=pointer]
+                    - listitem [ref=e563]:
+                      - button "Ecuador" [ref=e564] [cursor=pointer]
+                    - listitem [ref=e565]:
+                      - button "Egypt" [ref=e566] [cursor=pointer]
+                    - listitem [ref=e567]:
+                      - button "El Salvador" [ref=e568] [cursor=pointer]
+                    - listitem [ref=e569]:
+                      - button "Equatorial Guinea" [ref=e570] [cursor=pointer]
+                    - listitem [ref=e571]:
+                      - button "Eritrea" [ref=e572] [cursor=pointer]
+                    - listitem [ref=e573]:
+                      - button "Estonia" [ref=e574] [cursor=pointer]
+                    - listitem [ref=e575]:
+                      - button "Eswatini" [ref=e576] [cursor=pointer]
+                    - listitem [ref=e577]:
+                      - button "Ethiopia" [ref=e578] [cursor=pointer]
+                    - listitem [ref=e579]:
+                      - button "Fiji" [ref=e580] [cursor=pointer]
+                    - listitem [ref=e581]:
+                      - button "Finland" [ref=e582] [cursor=pointer]
+                    - listitem [ref=e583]:
+                      - button "France" [ref=e584] [cursor=pointer]
+                    - listitem [ref=e585]:
+                      - button "Gabon" [ref=e586] [cursor=pointer]
+                    - listitem [ref=e587]:
+                      - button "Gambia" [ref=e588] [cursor=pointer]
+                    - listitem [ref=e589]:
+                      - button "Georgia" [ref=e590] [cursor=pointer]
+                    - listitem [ref=e591]:
+                      - button "Germany" [ref=e592] [cursor=pointer]
+                    - listitem [ref=e593]:
+                      - button "Ghana" [ref=e594] [cursor=pointer]
+                    - listitem [ref=e595]:
+                      - button "Greece" [ref=e596] [cursor=pointer]
+                    - listitem [ref=e597]:
+                      - button "Grenada" [ref=e598] [cursor=pointer]
+                    - listitem [ref=e599]:
+                      - button "Guatemala" [ref=e600] [cursor=pointer]
+                    - listitem [ref=e601]:
+                      - button "Guinea" [ref=e602] [cursor=pointer]
+                    - listitem [ref=e603]:
+                      - button "Guinea-Bissau" [ref=e604] [cursor=pointer]
+                    - listitem [ref=e605]:
+                      - button "Guyana" [ref=e606] [cursor=pointer]
+                    - listitem [ref=e607]:
+                      - button "Haiti" [ref=e608] [cursor=pointer]
+                    - listitem [ref=e609]:
+                      - button "Honduras" [ref=e610] [cursor=pointer]
+                    - listitem [ref=e611]:
+                      - button "Hungary" [ref=e612] [cursor=pointer]
+                    - listitem [ref=e613]:
+                      - button "Iceland" [ref=e614] [cursor=pointer]
+                    - listitem [ref=e615]:
+                      - button "India" [ref=e616] [cursor=pointer]
+                    - listitem [ref=e617]:
+                      - button "Indonesia" [ref=e618] [cursor=pointer]
+                    - listitem [ref=e619]:
+                      - button "Iran" [ref=e620] [cursor=pointer]
+                    - listitem [ref=e621]:
+                      - button "Iraq" [ref=e622] [cursor=pointer]
+                    - listitem [ref=e623]:
+                      - button "Ireland" [ref=e624] [cursor=pointer]
+                    - listitem [ref=e625]:
+                      - button "Israel" [ref=e626] [cursor=pointer]
+                    - listitem [ref=e627]:
+                      - button "Italy" [ref=e628] [cursor=pointer]
+                    - listitem [ref=e629]:
+                      - button "Ivory Coast" [ref=e630] [cursor=pointer]
+                    - listitem [ref=e631]:
+                      - button "Jamaica" [ref=e632] [cursor=pointer]
+                    - listitem [ref=e633]:
+                      - button "Japan" [ref=e634] [cursor=pointer]
+                    - listitem [ref=e635]:
+                      - button "Jordan" [ref=e636] [cursor=pointer]
+                    - listitem [ref=e637]:
+                      - button "Kazakhstan" [ref=e638] [cursor=pointer]
+                    - listitem [ref=e639]:
+                      - button "Kenya" [ref=e640] [cursor=pointer]
+                    - listitem [ref=e641]:
+                      - button "Kiribati" [ref=e642] [cursor=pointer]
+                    - listitem [ref=e643]:
+                      - button "Kosovo" [ref=e644] [cursor=pointer]
+                    - listitem [ref=e645]:
+                      - button "Kuwait" [ref=e646] [cursor=pointer]
+                    - listitem [ref=e647]:
+                      - button "Kyrgyzstan" [ref=e648] [cursor=pointer]
+                    - listitem [ref=e649]:
+                      - button "Laos" [ref=e650] [cursor=pointer]
+                    - listitem [ref=e651]:
+                      - button "Latvia" [ref=e652] [cursor=pointer]
+                    - listitem [ref=e653]:
+                      - button "Lebanon" [ref=e654] [cursor=pointer]
+                    - listitem [ref=e655]:
+                      - button "Lesotho" [ref=e656] [cursor=pointer]
+                    - listitem [ref=e657]:
+                      - button "Liberia" [ref=e658] [cursor=pointer]
+                    - listitem [ref=e659]:
+                      - button "Libya" [ref=e660] [cursor=pointer]
+                    - listitem [ref=e661]:
+                      - button "Liechtenstein" [ref=e662] [cursor=pointer]
+                    - listitem [ref=e663]:
+                      - button "Lithuania" [ref=e664] [cursor=pointer]
+                    - listitem [ref=e665]:
+                      - button "Luxembourg" [ref=e666] [cursor=pointer]
+                    - listitem [ref=e667]:
+                      - button "Madagascar" [ref=e668] [cursor=pointer]
+                    - listitem [ref=e669]:
+                      - button "Malawi" [ref=e670] [cursor=pointer]
+                    - listitem [ref=e671]:
+                      - button "Malaysia" [ref=e672] [cursor=pointer]
+                    - listitem [ref=e673]:
+                      - button "Maldives" [ref=e674] [cursor=pointer]
+                    - listitem [ref=e675]:
+                      - button "Mali" [ref=e676] [cursor=pointer]
+                    - listitem [ref=e677]:
+                      - button "Malta" [ref=e678] [cursor=pointer]
+                    - listitem [ref=e679]:
+                      - button "Marshall Islands" [ref=e680] [cursor=pointer]
+                    - listitem [ref=e681]:
+                      - button "Mauritania" [ref=e682] [cursor=pointer]
+                    - listitem [ref=e683]:
+                      - button "Mauritius" [ref=e684] [cursor=pointer]
+                    - listitem [ref=e685]:
+                      - button "Mexico" [ref=e686] [cursor=pointer]
+                    - listitem [ref=e687]:
+                      - button "Micronesia" [ref=e688] [cursor=pointer]
+                    - listitem [ref=e689]:
+                      - button "Moldova" [ref=e690] [cursor=pointer]
+                    - listitem [ref=e691]:
+                      - button "Monaco" [ref=e692] [cursor=pointer]
+                    - listitem [ref=e693]:
+                      - button "Mongolia" [ref=e694] [cursor=pointer]
+                    - listitem [ref=e695]:
+                      - button "Montenegro" [ref=e696] [cursor=pointer]
+                    - listitem [ref=e697]:
+                      - button "Morocco" [ref=e698] [cursor=pointer]
+                    - listitem [ref=e699]:
+                      - button "Mozambique" [ref=e700] [cursor=pointer]
+                    - listitem [ref=e701]:
+                      - button "Myanmar" [ref=e702] [cursor=pointer]
+                    - listitem [ref=e703]:
+                      - button "Namibia" [ref=e704] [cursor=pointer]
+                    - listitem [ref=e705]:
+                      - button "Nauru" [ref=e706] [cursor=pointer]
+                    - listitem [ref=e707]:
+                      - button "Nepal" [ref=e708] [cursor=pointer]
+                    - listitem [ref=e709]:
+                      - button "Netherlands" [ref=e710] [cursor=pointer]
+                    - listitem [ref=e711]:
+                      - button "New Zealand" [ref=e712] [cursor=pointer]
+                    - listitem [ref=e713]:
+                      - button "Nicaragua" [ref=e714] [cursor=pointer]
+                    - listitem [ref=e715]:
+                      - button "Niger" [ref=e716] [cursor=pointer]
+                    - listitem [ref=e717]:
+                      - button "Nigeria" [ref=e718] [cursor=pointer]
+                    - listitem [ref=e719]:
+                      - button "North Korea" [ref=e720] [cursor=pointer]
+                    - listitem [ref=e721]:
+                      - button "North Macedonia" [ref=e722] [cursor=pointer]
+                    - listitem [ref=e723]:
+                      - button "Norway" [ref=e724] [cursor=pointer]
+                    - listitem [ref=e725]:
+                      - button "Oman" [ref=e726] [cursor=pointer]
+                    - listitem [ref=e727]:
+                      - button "Pakistan" [ref=e728] [cursor=pointer]
+                    - listitem [ref=e729]:
+                      - button "Palau" [ref=e730] [cursor=pointer]
+                    - listitem [ref=e731]:
+                      - button "Palestine" [ref=e732] [cursor=pointer]
+                    - listitem [ref=e733]:
+                      - button "Panama" [ref=e734] [cursor=pointer]
+                    - listitem [ref=e735]:
+                      - button "Papua New Guinea" [ref=e736] [cursor=pointer]
+                    - listitem [ref=e737]:
+                      - button "Paraguay" [ref=e738] [cursor=pointer]
+                    - listitem [ref=e739]:
+                      - button "Peru" [ref=e740] [cursor=pointer]
+                    - listitem [ref=e741]:
+                      - button "Philippines" [ref=e742] [cursor=pointer]
+                    - listitem [ref=e743]:
+                      - button "Poland" [ref=e744] [cursor=pointer]
+                    - listitem [ref=e745]:
+                      - button "Portugal" [ref=e746] [cursor=pointer]
+                    - listitem [ref=e747]:
+                      - button "Qatar" [ref=e748] [cursor=pointer]
+                    - listitem [ref=e749]:
+                      - button "Romania" [ref=e750] [cursor=pointer]
+                    - listitem [ref=e751]:
+                      - button "Russia" [ref=e752] [cursor=pointer]
+                    - listitem [ref=e753]:
+                      - button "Rwanda" [ref=e754] [cursor=pointer]
+                    - listitem [ref=e755]:
+                      - button "Saint Kitts and Nevis" [ref=e756] [cursor=pointer]
+                    - listitem [ref=e757]:
+                      - button "Saint Lucia" [ref=e758] [cursor=pointer]
+                    - listitem [ref=e759]:
+                      - button "Saint Vincent and the Grenadines" [ref=e760] [cursor=pointer]
+                    - listitem [ref=e761]:
+                      - button "Samoa" [ref=e762] [cursor=pointer]
+                    - listitem [ref=e763]:
+                      - button "San Marino" [ref=e764] [cursor=pointer]
+                    - listitem [ref=e765]:
+                      - button "Sao Tome and Principe" [ref=e766] [cursor=pointer]
+                    - listitem [ref=e767]:
+                      - button "Saudi Arabia" [ref=e768] [cursor=pointer]
+                    - listitem [ref=e769]:
+                      - button "Senegal" [ref=e770] [cursor=pointer]
+                    - listitem [ref=e771]:
+                      - button "Serbia" [ref=e772] [cursor=pointer]
+                    - listitem [ref=e773]:
+                      - button "Seychelles" [ref=e774] [cursor=pointer]
+                    - listitem [ref=e775]:
+                      - button "Sierra Leone" [ref=e776] [cursor=pointer]
+                    - listitem [ref=e777]:
+                      - button "Singapore" [ref=e778] [cursor=pointer]
+                    - listitem [ref=e779]:
+                      - button "Slovakia" [ref=e780] [cursor=pointer]
+                    - listitem [ref=e781]:
+                      - button "Slovenia" [ref=e782] [cursor=pointer]
+                    - listitem [ref=e783]:
+                      - button "Solomon Islands" [ref=e784] [cursor=pointer]
+                    - listitem [ref=e785]:
+                      - button "Somalia" [ref=e786] [cursor=pointer]
+                    - listitem [ref=e787]:
+                      - button "South Africa" [ref=e788] [cursor=pointer]
+                    - listitem [ref=e789]:
+                      - button "South Korea" [ref=e790] [cursor=pointer]
+                    - listitem [ref=e791]:
+                      - button "South Sudan" [ref=e792] [cursor=pointer]
+                    - listitem [ref=e793]:
+                      - button "Spain" [ref=e794] [cursor=pointer]
+                    - listitem [ref=e795]:
+                      - button "Sri Lanka" [ref=e796] [cursor=pointer]
+                    - listitem [ref=e797]:
+                      - button "Sudan" [ref=e798] [cursor=pointer]
+                    - listitem [ref=e799]:
+                      - button "Suriname" [ref=e800] [cursor=pointer]
+                    - listitem [ref=e801]:
+                      - button "Sweden" [ref=e802] [cursor=pointer]
+                    - listitem [ref=e803]:
+                      - button "Switzerland" [ref=e804] [cursor=pointer]
+                    - listitem [ref=e805]:
+                      - button "Syria" [ref=e806] [cursor=pointer]
+                    - listitem [ref=e807]:
+                      - button "Taiwan" [ref=e808] [cursor=pointer]
+                    - listitem [ref=e809]:
+                      - button "Tajikistan" [ref=e810] [cursor=pointer]
+                    - listitem [ref=e811]:
+                      - button "Tanzania" [ref=e812] [cursor=pointer]
+                    - listitem [ref=e813]:
+                      - button "Thailand" [ref=e814] [cursor=pointer]
+                    - listitem [ref=e815]:
+                      - button "Togo" [ref=e816] [cursor=pointer]
+                    - listitem [ref=e817]:
+                      - button "Tonga" [ref=e818] [cursor=pointer]
+                    - listitem [ref=e819]:
+                      - button "Trinidad and Tobago" [ref=e820] [cursor=pointer]
+                    - listitem [ref=e821]:
+                      - button "Tunisia" [ref=e822] [cursor=pointer]
+                    - listitem [ref=e823]:
+                      - button "Turkey" [ref=e824] [cursor=pointer]
+                    - listitem [ref=e825]:
+                      - button "Turkmenistan" [ref=e826] [cursor=pointer]
+                    - listitem [ref=e827]:
+                      - button "Tuvalu" [ref=e828] [cursor=pointer]
+                    - listitem [ref=e829]:
+                      - button "Uganda" [ref=e830] [cursor=pointer]
+                    - listitem [ref=e831]:
+                      - button "Ukraine" [ref=e832] [cursor=pointer]
+                    - listitem [ref=e833]:
+                      - button "United Arab Emirates" [ref=e834] [cursor=pointer]
+                    - listitem [ref=e835]:
+                      - button "United Kingdom" [ref=e836] [cursor=pointer]
+                    - listitem [ref=e837]:
+                      - button "United States" [ref=e838] [cursor=pointer]
+                    - listitem [ref=e839]:
+                      - button "Uruguay" [ref=e840] [cursor=pointer]
+                    - listitem [ref=e841]:
+                      - button "Uzbekistan" [ref=e842] [cursor=pointer]
+                    - listitem [ref=e843]:
+                      - button "Vanuatu" [ref=e844] [cursor=pointer]
+                    - listitem [ref=e845]:
+                      - button "Vatican City" [ref=e846] [cursor=pointer]
+                    - listitem [ref=e847]:
+                      - button "Venezuela" [ref=e848] [cursor=pointer]
+                    - listitem [ref=e849]:
+                      - button "Vietnam" [ref=e850] [cursor=pointer]
+                    - listitem [ref=e851]:
+                      - button "Yemen" [ref=e852] [cursor=pointer]
+                    - listitem [ref=e853]:
+                      - button "Zambia" [ref=e854] [cursor=pointer]
+                    - listitem [ref=e855]:
+                      - button "Zimbabwe" [ref=e856] [cursor=pointer]
+            - generic [ref=e446]:
+              - generic [ref=e447]: State / Province *
+              - button "Select state / province" [ref=e449] [cursor=pointer]:
+                - generic [ref=e450]: Select state / province
+                - img [ref=e451]
+            - generic [ref=e453]:
+              - generic [ref=e454]: City *
+              - button "Select or type city" [ref=e456] [cursor=pointer]:
+                - generic [ref=e457]: Select or type city
+                - img [ref=e458]
+          - button "Continue" [ref=e460] [cursor=pointer]

@@ -1,0 +1,427 @@
+- generic [ref=e1]:
+  - alert [ref=e2]
+  - generic [ref=e3]:
+    - banner [ref=e4]:
+      - generic [ref=e5]:
+        - link "JEKO" [ref=e6] [cursor=pointer]:
+          - /url: /
+          - generic [ref=e7]: JEKO
+        - generic [ref=e8]:
+          - paragraph [ref=e9]:
+            - text: Already have an account?
+            - link "Log in" [ref=e10] [cursor=pointer]:
+              - /url: /login
+          - button [ref=e65] [cursor=pointer]:
+            - img [ref=e66]
+    - main [ref=e11]:
+      - generic [ref=e13]:
+        - paragraph [ref=e26]: 🏁 Last lap!
+        - generic [ref=e435]:
+          - heading "Where are you located?" [level=1] [ref=e436]
+          - paragraph [ref=e437]: Connect with nearby pet owners and local events
+          - generic [ref=e438]:
+            - generic [ref=e439]:
+              - generic [ref=e440]: Country *
+              - button "India" [ref=e857] [cursor=pointer]:
+                - generic [ref=e443]: India
+                - img [ref=e444]
+            - generic [ref=e446]:
+              - generic [ref=e447]: State / Province *
+              - button "Rajasthan" [ref=e938] [cursor=pointer]:
+                - generic [ref=e450]: Rajasthan
+                - img [ref=e451]
+            - generic [ref=e453]:
+              - generic [ref=e454]: City *
+              - generic [ref=e455]:
+                - button "Select or type city" [ref=e939] [cursor=pointer]:
+                  - generic [ref=e940]: Select or type city
+                  - img [ref=e941]
+                - generic [ref=e944]:
+                  - textbox "Search or type your own..." [active] [ref=e946]: Jaipur
+                  - list [ref=e947]:
+                    - listitem [ref=e948]:
+                      - button "Abhaneri" [ref=e949] [cursor=pointer]
+                    - listitem [ref=e950]:
+                      - button "Ajmer" [ref=e951] [cursor=pointer]
+                    - listitem [ref=e952]:
+                      - button "Aklera" [ref=e953] [cursor=pointer]
+                    - listitem [ref=e954]:
+                      - button "Alwar" [ref=e955] [cursor=pointer]
+                    - listitem [ref=e956]:
+                      - button "Amet" [ref=e957] [cursor=pointer]
+                    - listitem [ref=e958]:
+                      - button "Anta" [ref=e959] [cursor=pointer]
+                    - listitem [ref=e960]:
+                      - button "Anūpgarh" [ref=e961] [cursor=pointer]
+                    - listitem [ref=e962]:
+                      - button "Bagar" [ref=e963] [cursor=pointer]
+                    - listitem [ref=e964]:
+                      - button "Bakāni" [ref=e965] [cursor=pointer]
+                    - listitem [ref=e966]:
+                      - button "Baran" [ref=e967] [cursor=pointer]
+                    - listitem [ref=e968]:
+                      - button "Bari Sādri" [ref=e969] [cursor=pointer]
+                    - listitem [ref=e970]:
+                      - button "Basi" [ref=e971] [cursor=pointer]
+                    - listitem [ref=e972]:
+                      - button "Basni" [ref=e973] [cursor=pointer]
+                    - listitem [ref=e974]:
+                      - button "Baswa" [ref=e975] [cursor=pointer]
+                    - listitem [ref=e976]:
+                      - button "Bayāna" [ref=e977] [cursor=pointer]
+                    - listitem [ref=e978]:
+                      - button "Begūn" [ref=e979] [cursor=pointer]
+                    - listitem [ref=e980]:
+                      - button "Behror" [ref=e981] [cursor=pointer]
+                    - listitem [ref=e982]:
+                      - button "Beāwar" [ref=e983] [cursor=pointer]
+                    - listitem [ref=e984]:
+                      - button "Bharatpur" [ref=e985] [cursor=pointer]
+                    - listitem [ref=e986]:
+                      - button "Bhasāwar" [ref=e987] [cursor=pointer]
+                    - listitem [ref=e988]:
+                      - button "Bhindār" [ref=e989] [cursor=pointer]
+                    - listitem [ref=e990]:
+                      - button "Bhiwadi" [ref=e991] [cursor=pointer]
+                    - listitem [ref=e992]:
+                      - button "Bhuma" [ref=e993] [cursor=pointer]
+                    - listitem [ref=e994]:
+                      - button "Bhādra" [ref=e995] [cursor=pointer]
+                    - listitem [ref=e996]:
+                      - button "Bhādāsar" [ref=e997] [cursor=pointer]
+                    - listitem [ref=e998]:
+                      - button "Bhīlwāra" [ref=e999] [cursor=pointer]
+                    - listitem [ref=e1000]:
+                      - button "Bhīnmāl" [ref=e1001] [cursor=pointer]
+                    - listitem [ref=e1002]:
+                      - button "Bilāra" [ref=e1003] [cursor=pointer]
+                    - listitem [ref=e1004]:
+                      - button "Bissāu" [ref=e1005] [cursor=pointer]
+                    - listitem [ref=e1006]:
+                      - button "Borkhera" [ref=e1007] [cursor=pointer]
+                    - listitem [ref=e1008]:
+                      - button "Bāli" [ref=e1009] [cursor=pointer]
+                    - listitem [ref=e1010]:
+                      - button "Bālotra" [ref=e1011] [cursor=pointer]
+                    - listitem [ref=e1012]:
+                      - button "Bāndīkūi" [ref=e1013] [cursor=pointer]
+                    - listitem [ref=e1014]:
+                      - button "Bānswāra" [ref=e1015] [cursor=pointer]
+                    - listitem [ref=e1016]:
+                      - button "Bāri" [ref=e1017] [cursor=pointer]
+                    - listitem [ref=e1018]:
+                      - button "Bārmer" [ref=e1019] [cursor=pointer]
+                    - listitem [ref=e1020]:
+                      - button "Bārān" [ref=e1021] [cursor=pointer]
+                    - listitem [ref=e1022]:
+                      - button "Bīkaner" [ref=e1023] [cursor=pointer]
+                    - listitem [ref=e1024]:
+                      - button "Bīkāner" [ref=e1025] [cursor=pointer]
+                    - listitem [ref=e1026]:
+                      - button "Būndi" [ref=e1027] [cursor=pointer]
+                    - listitem [ref=e1028]:
+                      - button "Chaksu" [ref=e1029] [cursor=pointer]
+                    - listitem [ref=e1030]:
+                      - button "Chechat" [ref=e1031] [cursor=pointer]
+                    - listitem [ref=e1032]:
+                      - button "Chhabra" [ref=e1033] [cursor=pointer]
+                    - listitem [ref=e1034]:
+                      - button "Chhoti Sādri" [ref=e1035] [cursor=pointer]
+                    - listitem [ref=e1036]:
+                      - button "Chhāpar" [ref=e1037] [cursor=pointer]
+                    - listitem [ref=e1038]:
+                      - button "Chidawa" [ref=e1039] [cursor=pointer]
+                    - listitem [ref=e1040]:
+                      - button "Chittaurgarh" [ref=e1041] [cursor=pointer]
+                    - listitem [ref=e1042]:
+                      - button "Chūru" [ref=e1043] [cursor=pointer]
+                    - listitem [ref=e1044]:
+                      - button "Dariba" [ref=e1045] [cursor=pointer]
+                    - listitem [ref=e1046]:
+                      - button "Dausa" [ref=e1047] [cursor=pointer]
+                    - listitem [ref=e1048]:
+                      - button "Deoli" [ref=e1049] [cursor=pointer]
+                    - listitem [ref=e1050]:
+                      - button "Deshnoke" [ref=e1051] [cursor=pointer]
+                    - listitem [ref=e1052]:
+                      - button "Devgarh" [ref=e1053] [cursor=pointer]
+                    - listitem [ref=e1054]:
+                      - button "Dhaulpur" [ref=e1055] [cursor=pointer]
+                    - listitem [ref=e1056]:
+                      - button "Dīdwāna" [ref=e1057] [cursor=pointer]
+                    - listitem [ref=e1058]:
+                      - button "Dīg" [ref=e1059] [cursor=pointer]
+                    - listitem [ref=e1060]:
+                      - button "Dūngarpur" [ref=e1061] [cursor=pointer]
+                    - listitem [ref=e1062]:
+                      - button "Fatehpur" [ref=e1063] [cursor=pointer]
+                    - listitem [ref=e1064]:
+                      - button "Galiākot" [ref=e1065] [cursor=pointer]
+                    - listitem [ref=e1066]:
+                      - button "Gangānagar" [ref=e1067] [cursor=pointer]
+                    - listitem [ref=e1068]:
+                      - button "Gangāpur" [ref=e1069] [cursor=pointer]
+                    - listitem [ref=e1070]:
+                      - button "Govindgarh" [ref=e1071] [cursor=pointer]
+                    - listitem [ref=e1072]:
+                      - button "Gulābpura" [ref=e1073] [cursor=pointer]
+                    - listitem [ref=e1074]:
+                      - button "Hanumangarh" [ref=e1075] [cursor=pointer]
+                    - listitem [ref=e1076]:
+                      - button "Hanumāngarh" [ref=e1077] [cursor=pointer]
+                    - listitem [ref=e1078]:
+                      - button "Hindaun" [ref=e1079] [cursor=pointer]
+                    - listitem [ref=e1080]:
+                      - button "Jahāzpur" [ref=e1081] [cursor=pointer]
+                    - listitem [ref=e1082]:
+                      - button "Jaipur" [ref=e1083] [cursor=pointer]
+                    - listitem [ref=e1084]:
+                      - button "Jaisalmer" [ref=e1085] [cursor=pointer]
+                    - listitem [ref=e1086]:
+                      - button "Jaitāran" [ref=e1087] [cursor=pointer]
+                    - listitem [ref=e1088]:
+                      - button "Jalor" [ref=e1089] [cursor=pointer]
+                    - listitem [ref=e1090]:
+                      - button "Jalore" [ref=e1091] [cursor=pointer]
+                    - listitem [ref=e1092]:
+                      - button "Jhunjhunūn" [ref=e1093] [cursor=pointer]
+                    - listitem [ref=e1094]:
+                      - button "Jhālrapātan" [ref=e1095] [cursor=pointer]
+                    - listitem [ref=e1096]:
+                      - button "Jhālāwār" [ref=e1097] [cursor=pointer]
+                    - listitem [ref=e1098]:
+                      - button "Jobner" [ref=e1099] [cursor=pointer]
+                    - listitem [ref=e1100]:
+                      - button "Jodhpur" [ref=e1101] [cursor=pointer]
+                    - listitem [ref=e1102]:
+                      - button "Karanpur" [ref=e1103] [cursor=pointer]
+                    - listitem [ref=e1104]:
+                      - button "Karauli" [ref=e1105] [cursor=pointer]
+                    - listitem [ref=e1106]:
+                      - button "Kekri" [ref=e1107] [cursor=pointer]
+                    - listitem [ref=e1108]:
+                      - button "Keshorai Pātan" [ref=e1109] [cursor=pointer]
+                    - listitem [ref=e1110]:
+                      - button "Khandela" [ref=e1111] [cursor=pointer]
+                    - listitem [ref=e1112]:
+                      - button "Khetri" [ref=e1113] [cursor=pointer]
+                    - listitem [ref=e1114]:
+                      - button "Khānpur" [ref=e1115] [cursor=pointer]
+                    - listitem [ref=e1116]:
+                      - button "Kishangarh" [ref=e1117] [cursor=pointer]
+                    - listitem [ref=e1118]:
+                      - button "Kota" [ref=e1119] [cursor=pointer]
+                    - listitem [ref=e1120]:
+                      - button "Kotputli" [ref=e1121] [cursor=pointer]
+                    - listitem [ref=e1122]:
+                      - button "Kuchera" [ref=e1123] [cursor=pointer]
+                    - listitem [ref=e1124]:
+                      - button "Kuchāman" [ref=e1125] [cursor=pointer]
+                    - listitem [ref=e1126]:
+                      - button "Kushālgarh" [ref=e1127] [cursor=pointer]
+                    - listitem [ref=e1128]:
+                      - button "Kāman" [ref=e1129] [cursor=pointer]
+                    - listitem [ref=e1130]:
+                      - button "Kānor" [ref=e1131] [cursor=pointer]
+                    - listitem [ref=e1132]:
+                      - button "Kāpren" [ref=e1133] [cursor=pointer]
+                    - listitem [ref=e1134]:
+                      - button "Kūmher" [ref=e1135] [cursor=pointer]
+                    - listitem [ref=e1136]:
+                      - button "Lachhmangarh Sīkar" [ref=e1137] [cursor=pointer]
+                    - listitem [ref=e1138]:
+                      - button "Losal" [ref=e1139] [cursor=pointer]
+                    - listitem [ref=e1140]:
+                      - button "Lādnūn" [ref=e1141] [cursor=pointer]
+                    - listitem [ref=e1142]:
+                      - button "Lākheri" [ref=e1143] [cursor=pointer]
+                    - listitem [ref=e1144]:
+                      - button "Lālsot" [ref=e1145] [cursor=pointer]
+                    - listitem [ref=e1146]:
+                      - button "Mahwah" [ref=e1147] [cursor=pointer]
+                    - listitem [ref=e1148]:
+                      - button "Makrāna" [ref=e1149] [cursor=pointer]
+                    - listitem [ref=e1150]:
+                      - button "Mandāwar" [ref=e1151] [cursor=pointer]
+                    - listitem [ref=e1152]:
+                      - button "Mangrol" [ref=e1153] [cursor=pointer]
+                    - listitem [ref=e1154]:
+                      - button "Manohar Thāna" [ref=e1155] [cursor=pointer]
+                    - listitem [ref=e1156]:
+                      - button "Manoharpur" [ref=e1157] [cursor=pointer]
+                    - listitem [ref=e1158]:
+                      - button "Meethari Marwar" [ref=e1159] [cursor=pointer]
+                    - listitem [ref=e1160]:
+                      - button "Merta" [ref=e1161] [cursor=pointer]
+                    - listitem [ref=e1162]:
+                      - button "Mālpura" [ref=e1163] [cursor=pointer]
+                    - listitem [ref=e1164]:
+                      - button "Māndal" [ref=e1165] [cursor=pointer]
+                    - listitem [ref=e1166]:
+                      - button "Māndalgarh" [ref=e1167] [cursor=pointer]
+                    - listitem [ref=e1168]:
+                      - button "Mūndwa" [ref=e1169] [cursor=pointer]
+                    - listitem [ref=e1170]:
+                      - button "Nagar" [ref=e1171] [cursor=pointer]
+                    - listitem [ref=e1172]:
+                      - button "Nainwa" [ref=e1173] [cursor=pointer]
+                    - listitem [ref=e1174]:
+                      - button "Napāsar" [ref=e1175] [cursor=pointer]
+                    - listitem [ref=e1176]:
+                      - button "Naraina" [ref=e1177] [cursor=pointer]
+                    - listitem [ref=e1178]:
+                      - button "Nasīrābād" [ref=e1179] [cursor=pointer]
+                    - listitem [ref=e1180]:
+                      - button "Nawalgarh" [ref=e1181] [cursor=pointer]
+                    - listitem [ref=e1182]:
+                      - button "Neem ka Thana" [ref=e1183] [cursor=pointer]
+                    - listitem [ref=e1184]:
+                      - button "Niwai" [ref=e1185] [cursor=pointer]
+                    - listitem [ref=e1186]:
+                      - button "Nohar" [ref=e1187] [cursor=pointer]
+                    - listitem [ref=e1188]:
+                      - button "Nokha" [ref=e1189] [cursor=pointer]
+                    - listitem [ref=e1190]:
+                      - button "Nādbai" [ref=e1191] [cursor=pointer]
+                    - listitem [ref=e1192]:
+                      - button "Nāgaur" [ref=e1193] [cursor=pointer]
+                    - listitem [ref=e1194]:
+                      - button "Nāthdwāra" [ref=e1195] [cursor=pointer]
+                    - listitem [ref=e1196]:
+                      - button "Nāwa" [ref=e1197] [cursor=pointer]
+                    - listitem [ref=e1198]:
+                      - button "Nīmbāhera" [ref=e1199] [cursor=pointer]
+                    - listitem [ref=e1200]:
+                      - button "Nīmāj" [ref=e1201] [cursor=pointer]
+                    - listitem [ref=e1202]:
+                      - button "Padampur" [ref=e1203] [cursor=pointer]
+                    - listitem [ref=e1204]:
+                      - button "Partāpur" [ref=e1205] [cursor=pointer]
+                    - listitem [ref=e1206]:
+                      - button "Parvatsar" [ref=e1207] [cursor=pointer]
+                    - listitem [ref=e1208]:
+                      - button "Phalodi" [ref=e1209] [cursor=pointer]
+                    - listitem [ref=e1210]:
+                      - button "Phulera" [ref=e1211] [cursor=pointer]
+                    - listitem [ref=e1212]:
+                      - button "Pilibangan" [ref=e1213] [cursor=pointer]
+                    - listitem [ref=e1214]:
+                      - button "Pilāni" [ref=e1215] [cursor=pointer]
+                    - listitem [ref=e1216]:
+                      - button "Pindwāra" [ref=e1217] [cursor=pointer]
+                    - listitem [ref=e1218]:
+                      - button "Pirāwa" [ref=e1219] [cursor=pointer]
+                    - listitem [ref=e1220]:
+                      - button "Pokaran" [ref=e1221] [cursor=pointer]
+                    - listitem [ref=e1222]:
+                      - button "Pratapgarh" [ref=e1223] [cursor=pointer]
+                    - listitem [ref=e1224]:
+                      - button "Pratāpgarh" [ref=e1225] [cursor=pointer]
+                    - listitem [ref=e1226]:
+                      - button "Pushkar" [ref=e1227] [cursor=pointer]
+                    - listitem [ref=e1228]:
+                      - button "Pāli" [ref=e1229] [cursor=pointer]
+                    - listitem [ref=e1230]:
+                      - button "Pīpār" [ref=e1231] [cursor=pointer]
+                    - listitem [ref=e1232]:
+                      - button "Raipur" [ref=e1233] [cursor=pointer]
+                    - listitem [ref=e1234]:
+                      - button "Rajsamand" [ref=e1235] [cursor=pointer]
+                    - listitem [ref=e1236]:
+                      - button "Ratangarh" [ref=e1237] [cursor=pointer]
+                    - listitem [ref=e1238]:
+                      - button "Rāisinghnagar" [ref=e1239] [cursor=pointer]
+                    - listitem [ref=e1240]:
+                      - button "Rājaldesar" [ref=e1241] [cursor=pointer]
+                    - listitem [ref=e1242]:
+                      - button "Rājgarh" [ref=e1243] [cursor=pointer]
+                    - listitem [ref=e1244]:
+                      - button "Rājsamand" [ref=e1245] [cursor=pointer]
+                    - listitem [ref=e1246]:
+                      - button "Rājākhera" [ref=e1247] [cursor=pointer]
+                    - listitem [ref=e1248]:
+                      - button "Rāmganj Mandi" [ref=e1249] [cursor=pointer]
+                    - listitem [ref=e1250]:
+                      - button "Rāmgarh" [ref=e1251] [cursor=pointer]
+                    - listitem [ref=e1252]:
+                      - button "Rāni" [ref=e1253] [cursor=pointer]
+                    - listitem [ref=e1254]:
+                      - button "Rāwatbhāta" [ref=e1255] [cursor=pointer]
+                    - listitem [ref=e1256]:
+                      - button "Rāwatsār" [ref=e1257] [cursor=pointer]
+                    - listitem [ref=e1258]:
+                      - button "Rīngas" [ref=e1259] [cursor=pointer]
+                    - listitem [ref=e1260]:
+                      - button "Samdari" [ref=e1261] [cursor=pointer]
+                    - listitem [ref=e1262]:
+                      - button "Sangariā" [ref=e1263] [cursor=pointer]
+                    - listitem [ref=e1264]:
+                      - button "Sangod" [ref=e1265] [cursor=pointer]
+                    - listitem [ref=e1266]:
+                      - button "Sardārshahr" [ref=e1267] [cursor=pointer]
+                    - listitem [ref=e1268]:
+                      - button "Sarwār" [ref=e1269] [cursor=pointer]
+                    - listitem [ref=e1270]:
+                      - button "Sawāi Mādhopur" [ref=e1271] [cursor=pointer]
+                    - listitem [ref=e1272]:
+                      - button "Sheoganj" [ref=e1273] [cursor=pointer]
+                    - listitem [ref=e1274]:
+                      - button "Shāhpura" [ref=e1275] [cursor=pointer]
+                    - listitem [ref=e1276]:
+                      - button "Sirohi" [ref=e1277] [cursor=pointer]
+                    - listitem [ref=e1278]:
+                      - button "Siwāna" [ref=e1279] [cursor=pointer]
+                    - listitem [ref=e1280]:
+                      - button "Sojat" [ref=e1281] [cursor=pointer]
+                    - listitem [ref=e1282]:
+                      - button "Sri Dūngargarh" [ref=e1283] [cursor=pointer]
+                    - listitem [ref=e1284]:
+                      - button "Sri Mādhopur" [ref=e1285] [cursor=pointer]
+                    - listitem [ref=e1286]:
+                      - button "Suket" [ref=e1287] [cursor=pointer]
+                    - listitem [ref=e1288]:
+                      - button "Sunel" [ref=e1289] [cursor=pointer]
+                    - listitem [ref=e1290]:
+                      - button "Sādri" [ref=e1291] [cursor=pointer]
+                    - listitem [ref=e1292]:
+                      - button "Sālūmbar" [ref=e1293] [cursor=pointer]
+                    - listitem [ref=e1294]:
+                      - button "Sāmbhar" [ref=e1295] [cursor=pointer]
+                    - listitem [ref=e1296]:
+                      - button "Sānchor" [ref=e1297] [cursor=pointer]
+                    - listitem [ref=e1298]:
+                      - button "Sīkar" [ref=e1299] [cursor=pointer]
+                    - listitem [ref=e1300]:
+                      - button "Sūjāngarh" [ref=e1301] [cursor=pointer]
+                    - listitem [ref=e1302]:
+                      - button "Sūrajgarh" [ref=e1303] [cursor=pointer]
+                    - listitem [ref=e1304]:
+                      - button "Sūratgarh" [ref=e1305] [cursor=pointer]
+                    - listitem [ref=e1306]:
+                      - button "Takhatgarh" [ref=e1307] [cursor=pointer]
+                    - listitem [ref=e1308]:
+                      - button "Tijāra" [ref=e1309] [cursor=pointer]
+                    - listitem [ref=e1310]:
+                      - button "Todabhim" [ref=e1311] [cursor=pointer]
+                    - listitem [ref=e1312]:
+                      - button "Todaraisingh" [ref=e1313] [cursor=pointer]
+                    - listitem [ref=e1314]:
+                      - button "Tonk" [ref=e1315] [cursor=pointer]
+                    - listitem [ref=e1316]:
+                      - button "Tārānagar" [ref=e1317] [cursor=pointer]
+                    - listitem [ref=e1318]:
+                      - button "Udaipur" [ref=e1319] [cursor=pointer]
+                    - listitem [ref=e1320]:
+                      - button "Udpura" [ref=e1321] [cursor=pointer]
+                    - listitem [ref=e1322]:
+                      - button "Uniāra" [ref=e1323] [cursor=pointer]
+                    - listitem [ref=e1324]:
+                      - button "Wer" [ref=e1325] [cursor=pointer]
+                    - listitem [ref=e1326]:
+                      - button "Ābu" [ref=e1327] [cursor=pointer]
+                    - listitem [ref=e1328]:
+                      - button "Ābu Road" [ref=e1329] [cursor=pointer]
+                    - listitem [ref=e1330]:
+                      - button "Āsind" [ref=e1331] [cursor=pointer]
+                - paragraph [ref=e943]: City is required
+          - button "Continue" [ref=e460] [cursor=pointer]

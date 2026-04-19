@@ -1,0 +1,9 @@
+- generic [active] [ref=e1]:
+  - paragraph [ref=e5]: Loading admin...
+  - generic:
+    - generic:
+      - paragraph: Bow Wow! 🐾
+      - paragraph: Find a friend for your pup!
+    - button "Find pet matches":
+      - img
+  - alert [ref=e6]

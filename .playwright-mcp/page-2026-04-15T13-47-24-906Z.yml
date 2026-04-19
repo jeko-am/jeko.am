@@ -1,0 +1,41 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e3]:
+    - generic [ref=e4]:
+      - generic [ref=e6]: PP
+      - heading "Welcome Back!" [level=1] [ref=e7]
+      - paragraph [ref=e8]: Sign in to your Jeko account
+    - generic [ref=e9]:
+      - generic [ref=e10]:
+        - img [ref=e11]
+        - generic [ref=e13]: No account found. Please sign up first.
+      - button "Continue with Google" [ref=e14] [cursor=pointer]:
+        - img [ref=e15]
+        - text: Continue with Google
+      - generic [ref=e24]: or sign in with email
+      - generic [ref=e25]:
+        - generic [ref=e26]:
+          - generic [ref=e27]: Email address
+          - textbox "Email address" [ref=e28]:
+            - /placeholder: your@email.com
+        - generic [ref=e29]:
+          - generic [ref=e30]: Password
+          - generic [ref=e31]:
+            - textbox "Password" [ref=e32]:
+              - /placeholder: Enter your password
+            - button [ref=e33] [cursor=pointer]:
+              - img [ref=e34]
+        - button "Sign In" [ref=e37] [cursor=pointer]
+      - link "Forgot your password?" [ref=e39] [cursor=pointer]:
+        - /url: /forgot-password
+    - paragraph [ref=e41]:
+      - text: Don't have an account?
+      - link "Sign up for free" [ref=e42] [cursor=pointer]:
+        - /url: /auth/signup
+    - paragraph [ref=e43]: Jeko · Happy pets, happy owners
+  - generic [ref=e44]:
+    - generic [ref=e45]:
+      - paragraph [ref=e46]: Bow Wow! 🐾
+      - paragraph [ref=e47]: Find a friend for your pup!
+    - button "Find pet matches" [ref=e49] [cursor=pointer]:
+      - img [ref=e50]
+  - alert [ref=e70]

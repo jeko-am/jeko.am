@@ -1,0 +1,385 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e4]:
+    - img "Find the Perfect Match" [ref=e6]
+    - generic [ref=e7]:
+      - button "Close modal" [ref=e8] [cursor=pointer]:
+        - img [ref=e9]
+      - generic [ref=e11]:
+        - heading "Find the Perfect Match" [level=2] [ref=e12]
+        - paragraph [ref=e13]: Connect with pet lovers in your area and find the perfect companion for your furry friend.
+      - generic [ref=e14]:
+        - link "Start Matching" [ref=e15] [cursor=pointer]:
+          - /url: /auth/signup
+        - button "Close" [ref=e16] [cursor=pointer]
+  - banner [ref=e17]:
+    - generic [ref=e19]:
+      - link "JEKO" [ref=e20] [cursor=pointer]:
+        - /url: /
+        - generic [ref=e21]: JEKO
+      - navigation [ref=e22]:
+        - link "About" [ref=e24] [cursor=pointer]:
+          - /url: /about
+          - text: About
+          - img [ref=e25]
+        - link "Community" [ref=e28] [cursor=pointer]:
+          - /url: /community
+          - text: Community
+          - img [ref=e29]
+        - link "Shop" [ref=e32] [cursor=pointer]:
+          - /url: /products
+        - link "Reviews" [ref=e34] [cursor=pointer]:
+          - /url: /reviews
+        - link "Health & breeds" [ref=e36] [cursor=pointer]:
+          - /url: /benefits
+          - text: Health & breeds
+          - img [ref=e37]
+      - generic [ref=e39]:
+        - button "Shopping cart" [ref=e40] [cursor=pointer]:
+          - img [ref=e41]
+        - link "Help" [ref=e45] [cursor=pointer]:
+          - /url: /help
+        - link "Login" [ref=e46] [cursor=pointer]:
+          - /url: /login
+        - link "Sign up" [ref=e47] [cursor=pointer]:
+          - /url: /auth/signup
+  - main [ref=e48]:
+    - generic [ref=e50]:
+      - img "Happy golden retriever dog enjoying fresh food" [ref=e52]
+      - generic [ref=e55]:
+        - heading "The easiest way to feed healthy, natural dog food" [level=1] [ref=e56]:
+          - text: The easiest way to feed healthy,
+          - text: natural dog food
+        - paragraph [ref=e57]: Enjoy fresh food without the fuss, from only 89p a day
+        - link "Get started today" [ref=e59] [cursor=pointer]:
+          - /url: /auth/signup
+        - generic [ref=e60]:
+          - generic [ref=e61]:
+            - img [ref=e63]
+            - img [ref=e66]
+            - img [ref=e69]
+            - img [ref=e72]
+            - img [ref=e76]
+          - generic [ref=e78]:
+            - generic [ref=e79]: Excellent
+            - generic [ref=e80]: 4.6 out of 5
+            - img [ref=e81]
+            - generic [ref=e83]: Trustpilot
+    - link "25% off your first box+10% off your next box" [ref=e85] [cursor=pointer]:
+      - /url: /auth/signup
+      - generic [ref=e86]:
+        - img [ref=e87]
+        - paragraph [ref=e89]: 25% off your first box+10% off your next box
+        - img [ref=e90]
+    - generic [ref=e93]:
+      - generic [ref=e94]:
+        - generic [ref=e95]:
+          - img "Preparing Jeko pet food" [ref=e96]
+          - img [ref=e98]
+          - img [ref=e101]
+        - generic [ref=e104]:
+          - heading "What is Jeko dog food?" [level=2] [ref=e105]
+          - generic [ref=e106]:
+            - paragraph [ref=e107]: A natural, healthy dog food designed to take the stress out of meal times.
+            - paragraph [ref=e108]: Simply add water and stir to quickly rehydrate the food and create a healthy, nutritious meal your pup will love.
+          - link "Get started" [ref=e109] [cursor=pointer]:
+            - /url: /auth/signup
+      - generic:
+        - img
+    - generic [ref=e111]:
+      - generic:
+        - img
+      - generic:
+        - img
+      - generic [ref=e113]:
+        - generic [ref=e114]:
+          - img "Store in the cupboard" [ref=e116]
+          - paragraph [ref=e117]: Store in the cupboard
+        - generic [ref=e118]:
+          - img "From only 89p per day" [ref=e120]
+          - paragraph [ref=e121]: From only 89p per day
+        - generic [ref=e122]:
+          - img "Just add water and serve" [ref=e124]
+          - paragraph [ref=e125]: Just add water and serve
+        - generic [ref=e126]:
+          - img "Ready in 10 seconds" [ref=e128]
+          - paragraph [ref=e129]: Ready in 10 seconds
+    - generic [ref=e132]:
+      - generic [ref=e133]:
+        - generic [ref=e134]: Our Products
+        - heading "Handpicked for Your Pup" [level=2] [ref=e135]
+        - paragraph [ref=e136]: Fresh, natural ingredients your dog will love. Every meal made with care.
+      - link "Shop All Products" [ref=e163] [cursor=pointer]:
+        - /url: /products
+        - text: Shop All Products
+        - img [ref=e164]
+    - generic [ref=e169]:
+      - generic [ref=e170]:
+        - generic [ref=e171]: Trending Now
+        - heading "What Pet Parents Love" [level=2] [ref=e172]
+        - paragraph [ref=e173]: Our most popular picks, loved by thousands of happy dogs.
+      - generic [ref=e174]:
+        - button [ref=e175] [cursor=pointer]:
+          - img [ref=e176]
+        - button [ref=e178] [cursor=pointer]:
+          - img [ref=e179]
+    - generic [ref=e204]:
+      - generic [ref=e205]:
+        - heading "Don't just take our word for it" [level=2] [ref=e206]
+        - paragraph [ref=e207]: Listen to what others have to say about it
+      - generic [ref=e208]:
+        - button "Scroll left" [ref=e209] [cursor=pointer]:
+          - img [ref=e210]
+        - generic [ref=e212]:
+          - generic [ref=e213] [cursor=pointer]:
+            - generic [ref=e214]:
+              - img [ref=e218]
+              - generic [ref=e220]: 0:55
+            - paragraph [ref=e221]: Jeko vs kibble & raw
+          - generic [ref=e222] [cursor=pointer]:
+            - generic [ref=e223]:
+              - img [ref=e227]
+              - generic [ref=e229]: 0:38
+            - paragraph [ref=e230]: Feeding Jeko really is simple!
+          - generic [ref=e231] [cursor=pointer]:
+            - generic [ref=e232]:
+              - img [ref=e236]
+              - generic [ref=e238]: 0:54
+            - paragraph [ref=e239]: We've done the research
+          - generic [ref=e240] [cursor=pointer]:
+            - generic [ref=e241]:
+              - img [ref=e245]
+              - generic [ref=e247]: 0:37
+            - paragraph [ref=e248]: Fully flexible to work around you
+          - generic [ref=e249] [cursor=pointer]:
+            - generic [ref=e250]:
+              - img [ref=e254]
+              - generic [ref=e256]: 0:38
+            - paragraph [ref=e257]: Rudy goes from fussy to foodie
+          - generic [ref=e258] [cursor=pointer]:
+            - generic [ref=e259]:
+              - img [ref=e263]
+              - generic [ref=e265]: 0:37
+            - paragraph [ref=e266]: Backed by The Yorkshire Vet
+        - button "Scroll right" [ref=e267] [cursor=pointer]:
+          - img [ref=e268]
+    - generic [ref=e271]:
+      - generic:
+        - img
+      - generic:
+        - img
+      - generic [ref=e272]:
+        - heading "How does a Jeko plan work?" [level=2] [ref=e273]
+        - generic [ref=e274]:
+          - generic [ref=e275]:
+            - img "Tell us about your dog" [ref=e277]
+            - paragraph [ref=e278]: Step 1
+            - paragraph [ref=e279]: Tell us about your dog
+          - generic [ref=e280]:
+            - img "Choose your tailored recipes" [ref=e282]
+            - paragraph [ref=e283]: Step 2
+            - paragraph [ref=e284]: Choose your tailored recipes
+          - generic [ref=e285]:
+            - img "Delivered to your door for free" [ref=e287]
+            - paragraph [ref=e288]: Step 3
+            - paragraph [ref=e289]: Delivered to your door for free
+          - generic [ref=e290]:
+            - img "Try it and transition to Jeko" [ref=e292]
+            - paragraph [ref=e293]: Step 4
+            - paragraph [ref=e294]: Try it and transition to Jeko
+        - link "Create a tailored plan today" [ref=e296] [cursor=pointer]:
+          - /url: /auth/signup
+    - generic [ref=e298]:
+      - generic:
+        - img
+      - generic:
+        - img
+      - generic [ref=e299]:
+        - heading "We've delivered" [level=2] [ref=e300]
+        - generic [ref=e301]: "0"
+        - paragraph [ref=e302]: meals and changed the lives of tens of thousands of dogs for the better
+        - generic [ref=e303]:
+          - generic [ref=e304]:
+            - generic [ref=e305]: 94%
+            - paragraph [ref=e306]: of customers have seen an improvement in their dog's ailment
+          - generic [ref=e307]:
+            - generic [ref=e308]: 91%
+            - paragraph [ref=e309]: of customers have seen overall health improvements since switching to Jeko
+    - generic [ref=e311]:
+      - generic:
+        - img
+      - generic:
+        - img
+      - generic [ref=e312]:
+        - heading "How Jeko compares" [level=2] [ref=e313]
+        - generic [ref=e314]:
+          - generic [ref=e315]:
+            - generic [ref=e317]: JEKO
+            - generic [ref=e318]: Dry & wet
+            - generic [ref=e319]: Raw & fresh
+          - generic [ref=e320]:
+            - generic [ref=e322]: Cost
+            - generic [ref=e324]: ££
+            - generic [ref=e326]: £
+            - generic [ref=e328]: £££
+          - generic [ref=e329]:
+            - generic [ref=e331]: No/low processing
+            - img [ref=e333]
+            - img [ref=e338]
+            - img [ref=e344]
+          - generic [ref=e348]:
+            - generic [ref=e350]: High quality ingredients
+            - img [ref=e352]
+            - img [ref=e357]
+            - img [ref=e363]
+          - generic [ref=e367]:
+            - generic [ref=e369]: Easy to store
+            - img [ref=e371]
+            - img [ref=e376]
+            - img [ref=e381]
+          - generic [ref=e386]:
+            - generic [ref=e388]: No risk of harmful pathogens
+            - img [ref=e390]
+            - img [ref=e395]
+            - img [ref=e400]
+    - generic [ref=e407]:
+      - generic [ref=e408]:
+        - generic:
+          - img
+        - generic [ref=e409]:
+          - heading "Backed by The Yorkshire Vet" [level=2] [ref=e410]
+          - paragraph [ref=e411]: Julian Norton
+          - paragraph [ref=e412]: I've been a vet for almost 30 years. Recently I've suggested Jeko for some of my patients, often with great results.
+      - img "Julian Norton - The Yorkshire Vet with Jeko" [ref=e414]
+    - generic [ref=e418]:
+      - generic [ref=e419]:
+        - img "Jeko on Dragons Den" [ref=e420]
+        - generic:
+          - img
+      - generic [ref=e423]:
+        - heading "Dog food so good we ate it on Dragons' Den" [level=2] [ref=e424]
+        - paragraph [ref=e425]: Jeko is complete nutrition from the inside out, and dogs totally love the taste! "It was possibly the best pitch I have seen in over 10 years of Dragons' Den" - Duncan Bannatyne
+        - link "Get started today" [ref=e426] [cursor=pointer]:
+          - /url: /auth/signup
+    - generic [ref=e429]:
+      - generic [ref=e430]:
+        - generic:
+          - img
+        - generic [ref=e431]:
+          - heading "Frequently Asked Questions" [level=2] [ref=e432]
+          - paragraph [ref=e433]: Everything else you need to know about Jeko
+          - generic [ref=e434]:
+            - generic [ref=e435]:
+              - button "Am I tied into a subscription?" [ref=e436] [cursor=pointer]:
+                - heading "Am I tied into a subscription?" [level=4] [ref=e437]
+                - img [ref=e438]
+              - paragraph [ref=e440]: Not at all! You can pause, change, or cancel your plan at any time. We believe in our food so much that we don't need to lock you in.
+            - generic [ref=e441]:
+              - button "Is Jeko expensive compared to other foods?" [ref=e442] [cursor=pointer]:
+                - heading "Is Jeko expensive compared to other foods?" [level=4] [ref=e443]
+                - img [ref=e444]
+              - paragraph [ref=e446]: Jeko starts from only 89p per day. When you consider the health benefits, it's great value compared to vet bills and other premium foods.
+            - generic [ref=e447]:
+              - button "Do I pay for delivery?" [ref=e448] [cursor=pointer]:
+                - heading "Do I pay for delivery?" [level=4] [ref=e449]
+                - img [ref=e450]
+              - paragraph [ref=e452]: No! Delivery is completely free on all orders. We deliver right to your doorstep.
+            - generic [ref=e453]:
+              - button "What is the nutritional value, and is it good for my dog?" [ref=e454] [cursor=pointer]:
+                - heading "What is the nutritional value, and is it good for my dog?" [level=4] [ref=e455]
+                - img [ref=e456]
+              - paragraph [ref=e458]: Jeko is a complete, balanced meal developed with veterinary nutritionists. Every recipe meets FEDIAF guidelines for complete nutrition.
+            - generic [ref=e459]:
+              - button "What if my dog doesn’t like it?" [ref=e460] [cursor=pointer]:
+                - heading "What if my dog doesn’t like it?" [level=4] [ref=e461]
+                - img [ref=e462]
+              - paragraph [ref=e464]: We offer a full money-back guarantee. If your dog doesn't love Jeko, we'll refund your first box in full.
+            - generic [ref=e465]:
+              - button "Is Jeko suitable for my dogs health concern?" [ref=e466] [cursor=pointer]:
+                - heading "Is Jeko suitable for my dogs health concern?" [level=4] [ref=e467]
+                - img [ref=e468]
+              - paragraph [ref=e470]: Jeko is often recommended for dogs with health concerns. Our recipes are gentle and made with natural, high-quality ingredients.
+            - generic [ref=e471]:
+              - button "Is Jeko complete dog food?" [ref=e472] [cursor=pointer]:
+                - heading "Is Jeko complete dog food?" [level=4] [ref=e473]
+                - img [ref=e474]
+              - paragraph [ref=e476]: Yes! Every Jeko recipe is nutritionally complete and balanced, meeting all FEDIAF guidelines for adult dogs and puppies.
+          - link "Get started with 25% off" [ref=e478] [cursor=pointer]:
+            - /url: /auth/signup
+      - img "Happy healthy dog" [ref=e480]
+  - contentinfo [ref=e482]:
+    - generic [ref=e483]:
+      - generic [ref=e484]:
+        - generic [ref=e485]:
+          - heading "Join our VIP list" [level=4] [ref=e486]
+          - paragraph [ref=e487]: Be the first to hear about new product launches, exclusive competitions and helpful dog content.
+          - generic [ref=e488]:
+            - textbox "Enter your email address" [ref=e489]
+            - button "Sign up" [ref=e490] [cursor=pointer]
+        - generic [ref=e491]:
+          - generic [ref=e492]:
+            - heading "Jeko" [level=4] [ref=e493]
+            - list [ref=e494]:
+              - listitem [ref=e495]:
+                - link "Our story" [ref=e496] [cursor=pointer]:
+                  - /url: /about
+              - listitem [ref=e497]:
+                - link "Reviews" [ref=e498] [cursor=pointer]:
+                  - /url: /reviews
+              - listitem [ref=e499]:
+                - link "Recipes" [ref=e500] [cursor=pointer]:
+                  - /url: /recipes
+              - listitem [ref=e501]:
+                - link "Beyond the bowl" [ref=e502] [cursor=pointer]:
+                  - /url: /beyond-the-bowl
+              - listitem [ref=e503]:
+                - link "Shop" [ref=e504] [cursor=pointer]:
+                  - /url: /products
+              - listitem [ref=e505]:
+                - link "Community" [ref=e506] [cursor=pointer]:
+                  - /url: /community
+          - generic [ref=e507]:
+            - heading "Help" [level=4] [ref=e508]
+            - list [ref=e509]:
+              - listitem [ref=e510]:
+                - link "My account" [ref=e511] [cursor=pointer]:
+                  - /url: /profile
+              - listitem [ref=e512]:
+                - link "Contact us" [ref=e513] [cursor=pointer]:
+                  - /url: /contact
+              - listitem [ref=e514]:
+                - link "Delivery information" [ref=e515] [cursor=pointer]:
+                  - /url: /delivery-information
+              - listitem [ref=e516]:
+                - link "Returns" [ref=e517] [cursor=pointer]:
+                  - /url: /returns
+              - listitem [ref=e518]:
+                - link "Sitemap" [ref=e519] [cursor=pointer]:
+                  - /url: /sitemap-page
+          - generic [ref=e520]:
+            - heading "Information" [level=4] [ref=e521]
+            - list [ref=e522]:
+              - listitem [ref=e523]:
+                - link "Privacy policy" [ref=e524] [cursor=pointer]:
+                  - /url: /privacy-policy
+              - listitem [ref=e525]:
+                - link "Terms & conditions" [ref=e526] [cursor=pointer]:
+                  - /url: /terms-of-use
+              - listitem [ref=e527]:
+                - link "Jeko policies" [ref=e528] [cursor=pointer]:
+                  - /url: /pure-policies
+              - listitem [ref=e529]:
+                - link "Site security" [ref=e530] [cursor=pointer]:
+                  - /url: /site-security
+              - listitem [ref=e531]:
+                - link "Cookie policy" [ref=e532] [cursor=pointer]:
+                  - /url: /cookie-policy
+      - generic [ref=e533]:
+        - generic [ref=e535]: JEKO
+        - paragraph [ref=e536]: © Jeko Pet Food Ltd 2020-2026
+  - generic:
+    - generic:
+      - paragraph: Bow Wow! 🐾
+      - paragraph: Find a friend for your pup!
+    - button "Find pet matches":
+      - img
+  - alert [ref=e537]

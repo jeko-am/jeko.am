@@ -1,0 +1,8 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e4]:
+    - generic [ref=e5]:
+      - paragraph [ref=e6]: Bow Wow! 🐾
+      - paragraph [ref=e7]: Find a friend for your pup!
+    - button "Find pet matches" [ref=e9] [cursor=pointer]:
+      - img [ref=e10]
+  - alert [ref=e30]

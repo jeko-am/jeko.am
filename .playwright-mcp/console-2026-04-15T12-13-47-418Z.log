@@ -1,0 +1,1 @@
+[   74494ms] [ERROR] Failed to load resource: the server responded with a status of 401 () @ https://dzhtpnskezkrtfinntbi.supabase.co/rest/v1/user_profiles?select=display_name&user_id=eq.45fa690c-e767-421e-ab60-e2a9a054e6d4&limit=1:0

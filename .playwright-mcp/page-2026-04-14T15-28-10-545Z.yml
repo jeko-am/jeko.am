@@ -1,0 +1,218 @@
+- generic [active] [ref=e1]:
+  - banner [ref=e2]:
+    - generic [ref=e4]:
+      - link "JEKO" [ref=e5] [cursor=pointer]:
+        - /url: /
+        - generic [ref=e6]: JEKO
+      - navigation [ref=e7]:
+        - link "About" [ref=e9] [cursor=pointer]:
+          - /url: /about
+          - text: About
+          - img [ref=e10]
+        - link "Community" [ref=e13] [cursor=pointer]:
+          - /url: /community
+          - text: Community
+          - img [ref=e14]
+        - link "Shop" [ref=e17] [cursor=pointer]:
+          - /url: /products
+        - link "Reviews" [ref=e19] [cursor=pointer]:
+          - /url: /reviews
+        - link "Health & breeds" [ref=e21] [cursor=pointer]:
+          - /url: /benefits
+          - text: Health & breeds
+          - img [ref=e22]
+      - button "Shopping cart" [ref=e25] [cursor=pointer]:
+        - img [ref=e26]
+        - generic [ref=e275]: "1"
+  - main [ref=e33]:
+    - generic [ref=e35]:
+      - heading "Shop Our Products" [level=1] [ref=e36]
+      - paragraph [ref=e37]: Everything your furry friend needs. Premium food, treats, and accessories made with love.
+    - generic [ref=e39]:
+      - generic [ref=e40]:
+        - generic [ref=e41]:
+          - img [ref=e42]
+          - textbox "Search products..." [ref=e44]
+        - generic [ref=e45]:
+          - button "All" [ref=e46] [cursor=pointer]
+          - button "Food" [ref=e161] [cursor=pointer]
+          - button "Sensitive" [ref=e162] [cursor=pointer]
+          - button "Renal" [ref=e163] [cursor=pointer]
+        - combobox [ref=e47] [cursor=pointer]:
+          - option "Newest" [selected]
+          - 'option "Price: Low to High"'
+          - 'option "Price: High to Low"'
+          - option "Name A-Z"
+      - paragraph [ref=e49]: 6 products found
+      - generic [ref=e50]:
+        - link "BEENS View Product BEENS This is for testing £25.00 Add to Cart" [ref=e164] [cursor=pointer]:
+          - /url: /products/beens
+          - generic [ref=e165]:
+            - generic [ref=e166]:
+              - img "BEENS" [ref=e167]
+              - generic [ref=e169]: View Product
+            - generic [ref=e170]:
+              - heading "BEENS" [level=3] [ref=e171]
+              - paragraph [ref=e172]: This is for testing
+              - generic [ref=e174]: £25.00
+              - button "Add to Cart" [ref=e175]
+        - link "Beef + Rice + Veggies View Product Beef + Rice + Veggies Hearty beef with brown rice, spinach, peas & carrots — ~520 kcal. Best for energy and muscle support. £0.00 (1) Add to Cart" [ref=e176] [cursor=pointer]:
+          - /url: /products/beef-rice-veggies
+          - generic [ref=e177]:
+            - generic [ref=e178]:
+              - img "Beef + Rice + Veggies" [ref=e179]
+              - generic [ref=e181]: View Product
+            - generic [ref=e182]:
+              - heading "Beef + Rice + Veggies" [level=3] [ref=e183]
+              - paragraph [ref=e184]: Hearty beef with brown rice, spinach, peas & carrots — ~520 kcal. Best for energy and muscle support.
+              - generic [ref=e186]: £0.00
+              - generic [ref=e187]:
+                - img [ref=e188]
+                - img [ref=e190]
+                - img [ref=e192]
+                - img [ref=e194]
+                - img [ref=e196]
+                - generic [ref=e198]: (1)
+              - button "Add to Cart" [ref=e199]
+        - link "Chicken + Quinoa + Greens View Product Chicken + Quinoa + Greens Lean chicken with quinoa, zucchini & green beans — ~480 kcal. Best for lean protein and weight control. £0.00 Add to Cart" [ref=e200] [cursor=pointer]:
+          - /url: /products/chicken-quinoa-greens
+          - generic [ref=e201]:
+            - generic [ref=e202]:
+              - img "Chicken + Quinoa + Greens" [ref=e203]
+              - generic [ref=e205]: View Product
+            - generic [ref=e206]:
+              - heading "Chicken + Quinoa + Greens" [level=3] [ref=e207]
+              - paragraph [ref=e208]: Lean chicken with quinoa, zucchini & green beans — ~480 kcal. Best for lean protein and weight control.
+              - generic [ref=e210]: £0.00
+              - button "Add to Cart" [ref=e211]
+        - link "Tuna + Rice Bowl View Product Tuna + Rice Bowl Omega-rich tuna with brown rice, spinach, peas & carrots — ~430 kcal. Best for coat health and light digestion. £0.00 Add to Cart" [ref=e212] [cursor=pointer]:
+          - /url: /products/tuna-rice-bowl
+          - generic [ref=e213]:
+            - generic [ref=e214]:
+              - img "Tuna + Rice Bowl" [ref=e215]
+              - generic [ref=e217]: View Product
+            - generic [ref=e218]:
+              - heading "Tuna + Rice Bowl" [level=3] [ref=e219]
+              - paragraph [ref=e220]: Omega-rich tuna with brown rice, spinach, peas & carrots — ~430 kcal. Best for coat health and light digestion.
+              - generic [ref=e222]: £0.00
+              - button "Add to Cart" [ref=e223]
+        - link "Cod + Rice + Veggies View Product Cod + Rice + Veggies Mild cod with white rice, green beans & carrots — ~360 kcal. Best for sensitive stomachs and low-fat diets. £0.00 Add to Cart" [ref=e224] [cursor=pointer]:
+          - /url: /products/cod-rice-veggies
+          - generic [ref=e225]:
+            - generic [ref=e226]:
+              - img "Cod + Rice + Veggies" [ref=e227]
+              - generic [ref=e229]: View Product
+            - generic [ref=e230]:
+              - heading "Cod + Rice + Veggies" [level=3] [ref=e231]
+              - paragraph [ref=e232]: Mild cod with white rice, green beans & carrots — ~360 kcal. Best for sensitive stomachs and low-fat diets.
+              - generic [ref=e234]: £0.00
+              - button "Add to Cart" [ref=e235]
+        - link "Chickpea + Quinoa Plant Mix View Product Chickpea + Quinoa Plant Mix Plant-based quinoa & chickpea mix with spinach, peas & flaxseed — ~510 kcal. Best for plant-based protein, fiber, and digestion. £0.00 Add to Cart" [ref=e236] [cursor=pointer]:
+          - /url: /products/chickpea-quinoa-plant-mix
+          - generic [ref=e237]:
+            - generic [ref=e238]:
+              - img "Chickpea + Quinoa Plant Mix" [ref=e239]
+              - generic [ref=e241]: View Product
+            - generic [ref=e242]:
+              - heading "Chickpea + Quinoa Plant Mix" [level=3] [ref=e243]
+              - paragraph [ref=e244]: Plant-based quinoa & chickpea mix with spinach, peas & flaxseed — ~510 kcal. Best for plant-based protein, fiber, and digestion.
+              - generic [ref=e246]: £0.00
+              - button "Add to Cart" [ref=e247]
+  - contentinfo [ref=e99]:
+    - generic [ref=e100]:
+      - generic [ref=e101]:
+        - generic [ref=e102]:
+          - heading "Join our VIP list" [level=4] [ref=e103]
+          - paragraph [ref=e104]: Be the first to hear about new product launches, exclusive competitions and helpful dog content.
+          - generic [ref=e105]:
+            - textbox "Enter your email address" [ref=e106]
+            - button "Sign up" [ref=e107] [cursor=pointer]
+        - generic [ref=e108]:
+          - generic [ref=e109]:
+            - heading "Jeko" [level=4] [ref=e110]
+            - list [ref=e111]:
+              - listitem [ref=e112]:
+                - link "Our story" [ref=e113] [cursor=pointer]:
+                  - /url: /about
+              - listitem [ref=e114]:
+                - link "Reviews" [ref=e115] [cursor=pointer]:
+                  - /url: /reviews
+              - listitem [ref=e116]:
+                - link "Recipes" [ref=e117] [cursor=pointer]:
+                  - /url: /recipes
+              - listitem [ref=e118]:
+                - link "Beyond the bowl" [ref=e119] [cursor=pointer]:
+                  - /url: /beyond-the-bowl
+              - listitem [ref=e120]:
+                - link "Shop" [ref=e121] [cursor=pointer]:
+                  - /url: /products
+              - listitem [ref=e122]:
+                - link "Community" [ref=e123] [cursor=pointer]:
+                  - /url: /community
+          - generic [ref=e124]:
+            - heading "Help" [level=4] [ref=e125]
+            - list [ref=e126]:
+              - listitem [ref=e127]:
+                - link "My account" [ref=e128] [cursor=pointer]:
+                  - /url: /profile
+              - listitem [ref=e129]:
+                - link "Contact us" [ref=e130] [cursor=pointer]:
+                  - /url: /contact
+              - listitem [ref=e131]:
+                - link "Delivery information" [ref=e132] [cursor=pointer]:
+                  - /url: /delivery-information
+              - listitem [ref=e133]:
+                - link "Returns" [ref=e134] [cursor=pointer]:
+                  - /url: /returns
+              - listitem [ref=e135]:
+                - link "Sitemap" [ref=e136] [cursor=pointer]:
+                  - /url: /sitemap-page
+          - generic [ref=e137]:
+            - heading "Information" [level=4] [ref=e138]
+            - list [ref=e139]:
+              - listitem [ref=e140]:
+                - link "Privacy policy" [ref=e141] [cursor=pointer]:
+                  - /url: /privacy-policy
+              - listitem [ref=e142]:
+                - link "Terms & conditions" [ref=e143] [cursor=pointer]:
+                  - /url: /terms-of-use
+              - listitem [ref=e144]:
+                - link "Jeko policies" [ref=e145] [cursor=pointer]:
+                  - /url: /pure-policies
+              - listitem [ref=e146]:
+                - link "Site security" [ref=e147] [cursor=pointer]:
+                  - /url: /site-security
+              - listitem [ref=e148]:
+                - link "Cookie policy" [ref=e149] [cursor=pointer]:
+                  - /url: /cookie-policy
+      - generic [ref=e150]:
+        - generic [ref=e152]: JEKO
+        - paragraph [ref=e153]: © Jeko 2020-2026
+  - alert [ref=e274]
+  - generic [ref=e278]:
+    - generic [ref=e279]:
+      - heading "Shopping Cart (1)" [level=2] [ref=e280]
+      - button [ref=e281] [cursor=pointer]:
+        - img [ref=e282]
+    - generic [ref=e286]:
+      - img "BEENS" [ref=e289]
+      - generic [ref=e290]:
+        - link "BEENS" [ref=e291] [cursor=pointer]:
+          - /url: /products/beens
+        - paragraph [ref=e292]: This is for testing
+        - generic [ref=e294]: £25.00
+        - generic [ref=e295]:
+          - generic [ref=e296]:
+            - button [ref=e297] [cursor=pointer]:
+              - img [ref=e298]
+            - generic [ref=e299]: "1"
+            - button [ref=e300] [cursor=pointer]:
+              - img [ref=e301]
+          - button "Remove" [ref=e303] [cursor=pointer]
+    - generic [ref=e304]:
+      - generic [ref=e305]:
+        - generic [ref=e306]: Subtotal
+        - generic [ref=e307]: £25.00
+      - paragraph [ref=e308]: Shipping and taxes calculated at checkout
+      - button "Checkout" [ref=e309] [cursor=pointer]
+      - button "Continue Shopping" [ref=e310] [cursor=pointer]

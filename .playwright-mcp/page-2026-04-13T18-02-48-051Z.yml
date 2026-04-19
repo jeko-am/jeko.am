@@ -1,0 +1,230 @@
+- generic [ref=e1]:
+  - alert [ref=e2]
+  - generic [ref=e3]:
+    - complementary [ref=e4]:
+      - generic [ref=e5]:
+        - generic [ref=e7]: PP
+        - generic [ref=e8]:
+          - heading "Jeko" [level=1] [ref=e9]
+          - paragraph [ref=e10]: Admin Panel
+      - navigation [ref=e11]:
+        - link "Dashboard" [active] [ref=e12] [cursor=pointer]:
+          - /url: /admin/dashboard
+          - img [ref=e13]
+          - text: Dashboard
+        - link "Store Editor" [ref=e15] [cursor=pointer]:
+          - /url: /admin/store-editor
+          - img [ref=e16]
+          - text: Store Editor
+        - link "Products" [ref=e18] [cursor=pointer]:
+          - /url: /admin/products
+          - img [ref=e19]
+          - text: Products
+        - link "Bundles" [ref=e21] [cursor=pointer]:
+          - /url: /admin/bundles
+          - img [ref=e22]
+          - text: Bundles
+        - link "Upsells" [ref=e24] [cursor=pointer]:
+          - /url: /admin/upsells
+          - img [ref=e25]
+          - text: Upsells
+        - link "Categories" [ref=e27] [cursor=pointer]:
+          - /url: /admin/categories
+          - img [ref=e28]
+          - text: Categories
+        - link "Orders" [ref=e30] [cursor=pointer]:
+          - /url: /admin/orders
+          - img [ref=e31]
+          - text: Orders
+        - link "Customers" [ref=e33] [cursor=pointer]:
+          - /url: /admin/customers
+          - img [ref=e34]
+          - text: Customers
+        - link "Discounts" [ref=e36] [cursor=pointer]:
+          - /url: /admin/discounts
+          - img [ref=e37]
+          - text: Discounts
+        - link "Pages" [ref=e39] [cursor=pointer]:
+          - /url: /admin/pages
+          - img [ref=e40]
+          - text: Pages
+        - link "Blog" [ref=e42] [cursor=pointer]:
+          - /url: /admin/blog
+          - img [ref=e43]
+          - text: Blog
+        - link "Settings" [ref=e45] [cursor=pointer]:
+          - /url: /admin/settings
+          - img [ref=e46]
+          - text: Settings
+        - link "Analytics" [ref=e48] [cursor=pointer]:
+          - /url: /admin/analytics
+          - img [ref=e49]
+          - text: Analytics
+        - link "Support" [ref=e51] [cursor=pointer]:
+          - /url: /admin/support
+          - img [ref=e52]
+          - text: Support
+      - generic [ref=e54]:
+        - link "View Store" [ref=e55] [cursor=pointer]:
+          - /url: /
+          - img [ref=e56]
+          - text: View Store
+        - button "Sign Out" [ref=e58] [cursor=pointer]:
+          - img [ref=e59]
+          - text: Sign Out
+    - generic [ref=e61]:
+      - banner [ref=e62]:
+        - button [ref=e63] [cursor=pointer]:
+          - img [ref=e64]
+        - generic [ref=e66]:
+          - generic [ref=e67]: admin@purepet.test
+          - generic [ref=e68]: A
+      - main [ref=e69]:
+        - generic [ref=e70]:
+          - generic [ref=e71]:
+            - generic [ref=e72]:
+              - heading "Dashboard" [level=1] [ref=e73]
+              - paragraph [ref=e74]: Welcome back. Here is what is happening today.
+            - generic [ref=e75]: Monday, 13 April 2026
+          - generic [ref=e76]:
+            - generic [ref=e77]:
+              - generic [ref=e78]:
+                - generic [ref=e79]: Total Orders
+                - img [ref=e81]
+              - paragraph [ref=e83]: "8"
+              - paragraph [ref=e84]: All time
+            - generic [ref=e85]:
+              - generic [ref=e86]:
+                - generic [ref=e87]: Total Revenue
+                - img [ref=e89]
+              - paragraph [ref=e91]: £274.85
+              - paragraph [ref=e92]: All time
+            - generic [ref=e93]:
+              - generic [ref=e94]:
+                - generic [ref=e95]: Total Customers
+                - img [ref=e97]
+              - paragraph [ref=e99]: "6"
+              - paragraph [ref=e100]: Registered
+            - generic [ref=e101]:
+              - generic [ref=e102]:
+                - generic [ref=e103]: Active Subscriptions
+                - img [ref=e105]
+              - paragraph [ref=e107]: "0"
+              - paragraph [ref=e108]: Currently active
+            - generic [ref=e109]:
+              - generic [ref=e110]:
+                - generic [ref=e111]: Products
+                - img [ref=e113]
+              - paragraph [ref=e115]: "6"
+              - paragraph [ref=e116]: In catalog
+            - generic [ref=e117]:
+              - generic [ref=e118]:
+                - generic [ref=e119]: Pending Reviews
+                - img [ref=e121]
+              - paragraph [ref=e123]: "0"
+              - paragraph [ref=e124]: Awaiting approval
+          - generic [ref=e125]:
+            - link "Add Product Create a new product listing" [ref=e126] [cursor=pointer]:
+              - /url: /admin/products
+              - img [ref=e128]
+              - generic [ref=e130]:
+                - paragraph [ref=e131]: Add Product
+                - paragraph [ref=e132]: Create a new product listing
+            - link "View Orders Manage and process orders" [ref=e133] [cursor=pointer]:
+              - /url: /admin/orders
+              - img [ref=e135]
+              - generic [ref=e137]:
+                - paragraph [ref=e138]: View Orders
+                - paragraph [ref=e139]: Manage and process orders
+            - link "Manage Pages Edit site content and pages" [ref=e140] [cursor=pointer]:
+              - /url: /admin/pages
+              - img [ref=e142]
+              - generic [ref=e144]:
+                - paragraph [ref=e145]: Manage Pages
+                - paragraph [ref=e146]: Edit site content and pages
+          - generic [ref=e147]:
+            - generic [ref=e148]:
+              - generic [ref=e149]:
+                - heading "Recent Orders" [level=2] [ref=e150]
+                - link "View all" [ref=e151] [cursor=pointer]:
+                  - /url: /admin/orders
+              - table [ref=e153]:
+                - rowgroup [ref=e154]:
+                  - row "Order Customer Status Total Date" [ref=e155]:
+                    - columnheader "Order" [ref=e156]
+                    - columnheader "Customer" [ref=e157]
+                    - columnheader "Status" [ref=e158]
+                    - columnheader "Total" [ref=e159]
+                    - columnheader "Date" [ref=e160]
+                - rowgroup [ref=e161]:
+                  - row "#fb30a377 mhhbs shbfjs processing £0.00 2d ago" [ref=e162]:
+                    - cell "#fb30a377" [ref=e163]:
+                      - generic [ref=e164]: "#fb30a377"
+                    - cell "mhhbs shbfjs" [ref=e165]
+                    - cell "processing" [ref=e166]:
+                      - generic [ref=e167]: processing
+                    - cell "£0.00" [ref=e168]
+                    - cell "2d ago" [ref=e169]
+                  - row "#ce697cd3 Guest Tester processing £16.99 26 Mar" [ref=e170]:
+                    - cell "#ce697cd3" [ref=e171]:
+                      - generic [ref=e172]: "#ce697cd3"
+                    - cell "Guest Tester" [ref=e173]
+                    - cell "processing" [ref=e174]:
+                      - generic [ref=e175]: processing
+                    - cell "£16.99" [ref=e176]
+                    - cell "26 Mar" [ref=e177]
+                  - row "#33d4004a Guest Tester processing £50.97 26 Mar" [ref=e178]:
+                    - cell "#33d4004a" [ref=e179]:
+                      - generic [ref=e180]: "#33d4004a"
+                    - cell "Guest Tester" [ref=e181]
+                    - cell "processing" [ref=e182]:
+                      - generic [ref=e183]: processing
+                    - cell "£50.97" [ref=e184]
+                    - cell "26 Mar" [ref=e185]
+                  - row "#57cf9c85 Guest Tester pending £50.97 26 Mar" [ref=e186]:
+                    - cell "#57cf9c85" [ref=e187]:
+                      - generic [ref=e188]: "#57cf9c85"
+                    - cell "Guest Tester" [ref=e189]
+                    - cell "pending" [ref=e190]:
+                      - generic [ref=e191]: pending
+                    - cell "£50.97" [ref=e192]
+                    - cell "26 Mar" [ref=e193]
+                  - row "#d7d5369b Unknown pending £50.97 26 Mar" [ref=e194]:
+                    - cell "#d7d5369b" [ref=e195]:
+                      - generic [ref=e196]: "#d7d5369b"
+                    - cell "Unknown" [ref=e197]
+                    - cell "pending" [ref=e198]:
+                      - generic [ref=e199]: pending
+                    - cell "£50.97" [ref=e200]
+                    - cell "26 Mar" [ref=e201]
+                  - row "#324c6459 Sarah Johnson processing £59.97 26 Mar" [ref=e202]:
+                    - cell "#324c6459" [ref=e203]:
+                      - generic [ref=e204]: "#324c6459"
+                    - cell "Sarah Johnson" [ref=e205]
+                    - cell "processing" [ref=e206]:
+                      - generic [ref=e207]: processing
+                    - cell "£59.97" [ref=e208]
+                    - cell "26 Mar" [ref=e209]
+                  - row "#253d4629 Fixed Customer delivered £24.99 24 Mar" [ref=e210]:
+                    - cell "#253d4629" [ref=e211]:
+                      - generic [ref=e212]: "#253d4629"
+                    - cell "Fixed Customer" [ref=e213]
+                    - cell "delivered" [ref=e214]:
+                      - generic [ref=e215]: delivered
+                    - cell "£24.99" [ref=e216]
+                    - cell "24 Mar" [ref=e217]
+                  - row "#1412ab7b Unknown delivered £19.99 24 Mar" [ref=e218]:
+                    - cell "#1412ab7b" [ref=e219]:
+                      - generic [ref=e220]: "#1412ab7b"
+                    - cell "Unknown" [ref=e221]
+                    - cell "delivered" [ref=e222]:
+                      - generic [ref=e223]: delivered
+                    - cell "£19.99" [ref=e224]
+                    - cell "24 Mar" [ref=e225]
+            - generic [ref=e226]:
+              - heading "Recent Activity" [level=2] [ref=e228]
+              - generic [ref=e229]:
+                - img [ref=e230]
+                - text: No recent activity.
+    - button [ref=e233] [cursor=pointer]:
+      - img [ref=e234]

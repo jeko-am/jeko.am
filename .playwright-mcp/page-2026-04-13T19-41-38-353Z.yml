@@ -1,0 +1,484 @@
+- generic [active] [ref=e1]:
+  - banner [ref=e2]:
+    - generic [ref=e4]:
+      - link "JEKO" [ref=e5] [cursor=pointer]:
+        - /url: /
+        - generic [ref=e6]: JEKO
+      - navigation [ref=e7]:
+        - link "About" [ref=e9] [cursor=pointer]:
+          - /url: /about
+          - text: About
+          - img [ref=e10]
+        - link "Community" [ref=e13] [cursor=pointer]:
+          - /url: /community
+          - text: Community
+          - img [ref=e14]
+        - link "Shop" [ref=e17] [cursor=pointer]:
+          - /url: /products
+        - link "Reviews" [ref=e19] [cursor=pointer]:
+          - /url: /reviews
+        - link "Health & breeds" [ref=e21] [cursor=pointer]:
+          - /url: /benefits
+          - text: Health & breeds
+          - img [ref=e22]
+      - generic [ref=e24]:
+        - button "Shopping cart" [ref=e25] [cursor=pointer]:
+          - img [ref=e26]
+        - link "Sign up" [ref=e32] [cursor=pointer]:
+          - /url: /auth/signup
+  - main [ref=e33]:
+    - generic [ref=e99]:
+      - img "Beef + Rice + Veggies" [ref=e102]
+      - generic [ref=e103]:
+        - heading "Beef + Rice + Veggies" [level=1] [ref=e104]
+        - generic [ref=e105]: £0.00
+        - paragraph [ref=e106]: Shipping calculated at checkout.
+        - generic [ref=e107]:
+          - paragraph [ref=e108]: Premium nutrition — nothing hidden.
+          - paragraph [ref=e109]: Hearty beef with brown rice, spinach, peas & carrots — ~520 kcal. Best for energy and muscle support.
+        - generic [ref=e110]:
+          - heading "Value Bundles" [level=3] [ref=e111]
+          - generic [ref=e114]:
+            - img "Complete Nutrition Pack" [ref=e116]
+            - generic [ref=e117]:
+              - heading "Complete Nutrition Pack" [level=4] [ref=e118]
+              - paragraph [ref=e119]: Perfect starter bundle with all essential nutrients for optimal health
+              - generic [ref=e120]:
+                - generic [ref=e121]:
+                  - text: £0.00
+                  - generic [ref=e122]: Save 20%
+                - button "Add Bundle" [ref=e123] [cursor=pointer]
+        - generic [ref=e124]:
+          - generic [ref=e125]:
+            - button "−" [disabled] [ref=e126]
+            - generic [ref=e127]: "1"
+            - button "+" [ref=e128] [cursor=pointer]
+          - button "Add to Cart" [ref=e129] [cursor=pointer]
+        - generic [ref=e130]:
+          - heading "Perfect Pairings" [level=3] [ref=e131]
+          - generic [ref=e132]:
+            - generic [ref=e134]:
+              - img "Chicken + Quinoa + Greens" [ref=e136]
+              - generic [ref=e137]:
+                - heading "Chicken + Quinoa + Greens" [level=4] [ref=e138]
+                - paragraph [ref=e139]: Lean chicken with quinoa, zucchini & green beans — ~480 kcal. Best for lean protein and weight control.
+                - generic [ref=e140]:
+                  - generic [ref=e141]: £0.00
+                  - button "Add to Cart" [ref=e142] [cursor=pointer]
+            - generic [ref=e144]:
+              - img "Tuna + Rice Bowl" [ref=e146]
+              - generic [ref=e147]:
+                - heading "Tuna + Rice Bowl" [level=4] [ref=e148]
+                - paragraph [ref=e149]: Omega-rich tuna with brown rice, spinach, peas & carrots — ~430 kcal. Best for coat health and light digestion.
+                - generic [ref=e150]:
+                  - generic [ref=e151]: £0.00
+                  - button "Add to Cart" [ref=e152] [cursor=pointer]
+        - generic [ref=e153]:
+          - img [ref=e155]
+          - generic [ref=e157]:
+            - paragraph [ref=e158]: Vet Approved & Lab Tested 2026
+            - paragraph [ref=e159]: All ingredients tested for quality & safety →
+        - generic [ref=e160]:
+          - button "Ingredients & Nutrition" [ref=e161] [cursor=pointer]:
+            - heading "Ingredients & Nutrition" [level=2] [ref=e162]
+            - img [ref=e163]
+          - generic [ref=e167]:
+            - text: A hearty, balanced meal combining lean beef with brown rice and a mix of nutritious vegetables. Brown rice (150g cooked) provides sustained energy, while spinach (30g), peas (80g), and carrots (80g) deliver essential vitamins and fiber. Paired with 120g of cooked beef for high-quality protein and iron. Approximately 520 kcal per serving.
+            - text: "Calorie Breakdown:"
+            - text: • Brown rice (150g) — 165 kcal
+            - text: • Spinach (30g) — 7 kcal
+            - text: • Peas (80g) — 65 kcal
+            - text: • Carrots (80g) — 30 kcal
+            - text: • Beef (120g) — 250 kcal
+        - generic [ref=e168]:
+          - button "Feeding Guide" [ref=e169] [cursor=pointer]:
+            - heading "Feeding Guide" [level=2] [ref=e170]
+            - img [ref=e171]
+          - generic [ref=e173]:
+            - paragraph [ref=e174]: "Serve based on your dog's weight:"
+            - list [ref=e175]:
+              - listitem [ref=e176]:
+                - strong [ref=e177]: "Small dogs (up to 10kg):"
+                - text: 100-200g per day
+              - listitem [ref=e178]:
+                - strong [ref=e179]: "Medium dogs (10-25kg):"
+                - text: 200-400g per day
+              - listitem [ref=e180]:
+                - strong [ref=e181]: "Large dogs (25kg+):"
+                - text: 400-600g per day
+            - paragraph [ref=e182]: Always ensure fresh water is available. Transition gradually over 7-10 days.
+        - generic [ref=e183]:
+          - button "Shipping & Returns" [ref=e184] [cursor=pointer]:
+            - heading "Shipping & Returns" [level=2] [ref=e185]
+            - img [ref=e186]
+          - generic [ref=e188]:
+            - paragraph [ref=e189]:
+              - strong [ref=e190]: Free UK delivery
+              - text: on all orders. Orders placed before 2pm are dispatched same day.
+            - paragraph [ref=e191]: "Standard delivery: 2-3 working days. Express delivery available at checkout."
+            - paragraph [ref=e192]: Not happy? Full refund within 30 days — no questions asked.
+    - generic [ref=e194]:
+      - heading "The Jeko Difference" [level=2] [ref=e195]
+      - generic [ref=e196]:
+        - generic [ref=e197]:
+          - img [ref=e198]
+          - generic [ref=e200]: Vet Approved
+        - generic [ref=e201]:
+          - img [ref=e202]
+          - generic [ref=e204]: Natural Ingredients
+        - generic [ref=e205]:
+          - img [ref=e206]
+          - generic [ref=e208]: Grain-Free Options
+        - generic [ref=e209]:
+          - img [ref=e210]
+          - generic [ref=e212]: Lab Tested
+        - generic [ref=e213]:
+          - img [ref=e214]
+          - generic [ref=e216]: Human Grade
+        - generic [ref=e217]:
+          - img [ref=e218]
+          - generic [ref=e220]: Gentle on Tummies
+        - generic [ref=e221]:
+          - img [ref=e222]
+          - generic [ref=e224]: Nutrient-Rich
+    - generic [ref=e226]:
+      - img "Fresh food in bowl" [ref=e228]
+      - generic [ref=e231]:
+        - heading "Fresh. Balanced. Irresistible." [level=2] [ref=e232]
+        - generic [ref=e233]:
+          - paragraph [ref=e234]:
+            - strong [ref=e235]: "Protein Profile:"
+            - text: High-quality, single-source animal protein for lean muscle maintenance and sustained energy.
+          - paragraph [ref=e236]:
+            - strong [ref=e237]: "Nutrition Highlights:"
+            - text: Rich in omega-3 fatty acids for a glossy coat, prebiotics for gut health, and essential vitamins for immune support.
+          - paragraph [ref=e238]:
+            - strong [ref=e239]: "Preparation:"
+            - text: Gently air-dried to lock in nutrients. Just add warm water, stir, and serve — ready in 10 seconds.
+    - generic [ref=e241]:
+      - heading "Customer Reviews" [level=2] [ref=e242]
+      - generic [ref=e243]:
+        - generic [ref=e244]:
+          - generic [ref=e245]:
+            - img [ref=e246]
+            - img [ref=e248]
+            - img [ref=e250]
+            - img [ref=e252]
+            - img [ref=e254]
+          - generic [ref=e256]: 130 Reviews
+        - button "Write a review" [ref=e622] [cursor=pointer]
+      - paragraph [ref=e624]: Thank you for your review! It will appear once approved.
+      - generic [ref=e258]:
+        - generic [ref=e259]:
+          - generic [ref=e260]:
+            - generic [ref=e261]: Russell M.
+            - generic [ref=e262]:
+              - img [ref=e263]
+              - text: Verified
+          - generic [ref=e265]: 21/03/2026
+          - generic [ref=e266]:
+            - img [ref=e267]
+            - img [ref=e269]
+            - img [ref=e271]
+            - img [ref=e273]
+            - img [ref=e275]
+          - paragraph [ref=e277]: My dog absolutely devours this! Great quality and you can tell the ingredients are fresh. Very fine product!
+          - paragraph [ref=e278]: "Item type: Beef + Rice + Veggies"
+        - generic [ref=e279]:
+          - generic [ref=e280]:
+            - generic [ref=e281]: Trang H.
+            - generic [ref=e282]:
+              - img [ref=e283]
+              - text: Verified
+          - generic [ref=e285]: 20/03/2026
+          - generic [ref=e286]:
+            - img [ref=e287]
+            - img [ref=e289]
+            - img [ref=e291]
+            - img [ref=e293]
+            - img [ref=e295]
+          - paragraph [ref=e297]: Quick delivery. My fussy eater actually finished the whole bowl. Will definitely order again.
+          - paragraph [ref=e298]: "Item type: Beef + Rice + Veggies"
+        - generic [ref=e299]:
+          - generic [ref=e300]:
+            - generic [ref=e301]: Kelly W.
+            - generic [ref=e302]:
+              - img [ref=e303]
+              - text: Verified
+          - generic [ref=e305]: 02/03/2026
+          - generic [ref=e306]:
+            - img [ref=e307]
+            - img [ref=e309]
+            - img [ref=e311]
+            - img [ref=e313]
+            - img [ref=e315]
+          - paragraph [ref=e317]: I love finding a quality dog food that my pup actually enjoys. His coat is shinier and he has more energy since we switched.
+          - paragraph [ref=e318]: "Item type: Beef + Rice + Veggies"
+        - generic [ref=e319]:
+          - generic [ref=e320]:
+            - generic [ref=e321]: Susan S.
+            - generic [ref=e322]:
+              - img [ref=e323]
+              - text: Verified
+          - generic [ref=e325]: 28/02/2026
+          - generic [ref=e326]:
+            - img [ref=e327]
+            - img [ref=e329]
+            - img [ref=e331]
+            - img [ref=e333]
+            - img [ref=e335]
+          - paragraph [ref=e337]: Doesn't upset my dog's sensitive stomach and the only food he can eat while on an elimination diet.
+          - paragraph [ref=e338]: "Item type: Beef + Rice + Veggies"
+        - generic [ref=e339]:
+          - generic [ref=e340]:
+            - generic [ref=e341]: S S.
+            - generic [ref=e342]:
+              - img [ref=e343]
+              - text: Verified
+          - generic [ref=e345]: 26/02/2026
+          - generic [ref=e346]:
+            - img [ref=e347]
+            - img [ref=e349]
+            - img [ref=e351]
+            - img [ref=e353]
+            - img [ref=e355]
+          - paragraph [ref=e357]: Fast delivery and very delicious - my dog cleaned the bowl in seconds. Smooth texture, great product.
+          - paragraph [ref=e358]: "Item type: Beef + Rice + Veggies"
+    - generic [ref=e360]:
+      - img "Science lab research" [ref=e362]
+      - generic [ref=e365]:
+        - heading "Learn The Science Behind Jeko" [level=2] [ref=e366]
+        - paragraph [ref=e367]: Developed with veterinary nutritionists, every recipe is backed by science to deliver optimal nutrition.
+        - link "Learn More" [ref=e368] [cursor=pointer]:
+          - /url: /benefits
+    - generic [ref=e370]:
+      - generic [ref=e371]:
+        - heading "Trusted by Vets & Nutritionists" [level=2] [ref=e372]
+        - generic [ref=e373]:
+          - button [ref=e374] [cursor=pointer]:
+            - img [ref=e375]
+          - button [ref=e377] [cursor=pointer]:
+            - img [ref=e378]
+      - generic [ref=e380]:
+        - generic [ref=e381]:
+          - generic [ref=e382]:
+            - heading "Dr. Sarah Wilson, BVSc" [level=4] [ref=e383]
+            - text: Veterinary Nutritionist
+          - paragraph [ref=e384]: As a veterinary nutritionist, I emphasize the importance of choosing food that supports a dog's overall balance. This is why I trust and confidently recommend Jeko to my patients. Their commitment to natural ingredients and rigorous quality testing provides a clean, supportive feeding experience.
+          - link "Beef + Rice + Veggies" [ref=e385] [cursor=pointer]:
+            - /url: /products/beef-rice-veggies
+            - generic [ref=e386]: Beef + Rice + Veggies
+        - generic [ref=e387]:
+          - generic [ref=e388]:
+            - heading "Dr. James Chen, DVM" [level=4] [ref=e389]
+            - text: Veterinary Dermatologist
+          - paragraph [ref=e390]: I've seen remarkable improvements in skin and coat conditions since recommending Jeko to my patients. The natural, hypoallergenic recipes are a game-changer for dogs with sensitivities.
+          - link "Salmon & Potato Grain-Free" [ref=e391] [cursor=pointer]:
+            - /url: /products/salmon-potato-grain-free
+            - generic [ref=e392]: Salmon & Potato Grain-Free
+        - generic [ref=e393]:
+          - generic [ref=e394]:
+            - heading "Emma Richards" [level=4] [ref=e395]
+            - text: Canine Behaviourist
+          - paragraph [ref=e396]: As a canine behaviourist, I see the link between nutrition and behaviour daily. Dogs on Jeko are calmer, more focused, and have better energy regulation throughout the day. It makes a real difference.
+          - link "Beef + Rice + Veggies" [ref=e397] [cursor=pointer]:
+            - /url: /products/beef-rice-veggies
+            - generic [ref=e398]: Beef + Rice + Veggies
+        - generic [ref=e399]:
+          - generic [ref=e400]:
+            - heading "Dr. Hannah Brooks, MRCVS" [level=4] [ref=e401]
+            - text: Small Animal Vet
+          - paragraph [ref=e402]: It is extremely important to me to recommend clean products. Jeko is a brand I can trust is clean and has the research to back it up. The flavour quality is outstanding — dogs genuinely love it. I recommend it to all my patients!
+          - link "Puppy Growth Formula" [ref=e403] [cursor=pointer]:
+            - /url: /products/puppy-growth-formula
+            - generic [ref=e404]: Puppy Growth Formula
+        - generic [ref=e405]:
+          - generic [ref=e406]:
+            - heading "Dr. Oliver Patel, BVM&S" [level=4] [ref=e407]
+            - text: Holistic Veterinarian
+          - paragraph [ref=e408]: As a holistic vet, I greatly appreciate having a food I can recommend to clients managing chronic conditions. Jeko's careful ingredient sourcing and gentle processing is exactly what these dogs need.
+          - link "Beef + Rice + Veggies" [ref=e409] [cursor=pointer]:
+            - /url: /products/beef-rice-veggies
+            - generic [ref=e410]: Beef + Rice + Veggies
+    - generic [ref=e412]:
+      - img "Happy dog lifestyle" [ref=e414]
+      - generic [ref=e417]:
+        - heading "Food that fuels their best days" [level=2] [ref=e418]
+        - generic [ref=e419]:
+          - paragraph [ref=e420]:
+            - strong [ref=e421]: "At Jeko, the mission is simple:"
+          - paragraph [ref=e422]: Create food that makes your dog feel as good as it tastes.
+          - paragraph [ref=e423]: Always fresh, natural & vet-approved.
+          - paragraph [ref=e424]: It's the kind they love, crave, and sprint to the bowl for every single time — for boundless energy, a shiny coat, and a happier, healthier life.
+          - paragraph [ref=e425]: Jeko is for the devoted pet parents simply seeking more for their best friend.
+        - link "Try Jeko" [ref=e426] [cursor=pointer]:
+          - /url: /auth/signup
+    - generic [ref=e428]:
+      - generic [ref=e430]:
+        - heading "Why We Started Jeko" [level=2] [ref=e431]
+        - generic [ref=e432]:
+          - paragraph [ref=e433]: We didn't start this brand for the trend.
+          - paragraph [ref=e434]: We started Jeko because our own dogs deserved better — and so does yours.
+          - paragraph [ref=e435]: When we looked at what was in most commercial dog food, we were shocked. Fillers, preservatives, mysterious “meat derivatives” — making our dogs worse, not better.
+          - paragraph [ref=e436]: They needed a better option — so we created one.
+        - link "Learn More" [ref=e437] [cursor=pointer]:
+          - /url: /about
+      - img "The Jeko team" [ref=e439]
+    - generic [ref=e442]:
+      - heading "Our Mission" [level=2] [ref=e443]
+      - paragraph [ref=e444]: “To create food that helps your dog feel their best, so they can keep doing what they love — being your best friend.”
+    - generic [ref=e445]:
+      - img "Happy healthy dogs" [ref=e446]
+      - heading "Boundless Energy, Shiny Coat, Happier Days" [level=2] [ref=e449]
+    - generic [ref=e451]:
+      - heading "You May Also Like" [level=2] [ref=e452]
+      - generic [ref=e453]:
+        - link "Chicken + Quinoa + Greens View Product Chicken + Quinoa + Greens Lean chicken with quinoa, zucchini & green beans — ~480 kcal. Best for lean protein and weight control. £0.00 (4.9) Add to Cart" [ref=e455] [cursor=pointer]:
+          - /url: /products/chicken-quinoa-greens
+          - generic [ref=e456]:
+            - generic [ref=e457]:
+              - img "Chicken + Quinoa + Greens" [ref=e458]
+              - generic [ref=e460]: View Product
+            - generic [ref=e461]:
+              - heading "Chicken + Quinoa + Greens" [level=3] [ref=e462]
+              - paragraph [ref=e463]: Lean chicken with quinoa, zucchini & green beans — ~480 kcal. Best for lean protein and weight control.
+              - generic [ref=e465]: £0.00
+              - generic [ref=e466]:
+                - img [ref=e467]
+                - img [ref=e469]
+                - img [ref=e471]
+                - img [ref=e473]
+                - img [ref=e475]
+                - generic [ref=e477]: (4.9)
+              - button "Add to Cart" [ref=e478]
+        - link "Tuna + Rice Bowl View Product Tuna + Rice Bowl Omega-rich tuna with brown rice, spinach, peas & carrots — ~430 kcal. Best for coat health and light digestion. £0.00 (4.9) Add to Cart" [ref=e480] [cursor=pointer]:
+          - /url: /products/tuna-rice-bowl
+          - generic [ref=e481]:
+            - generic [ref=e482]:
+              - img "Tuna + Rice Bowl" [ref=e483]
+              - generic [ref=e485]: View Product
+            - generic [ref=e486]:
+              - heading "Tuna + Rice Bowl" [level=3] [ref=e487]
+              - paragraph [ref=e488]: Omega-rich tuna with brown rice, spinach, peas & carrots — ~430 kcal. Best for coat health and light digestion.
+              - generic [ref=e490]: £0.00
+              - generic [ref=e491]:
+                - img [ref=e492]
+                - img [ref=e494]
+                - img [ref=e496]
+                - img [ref=e498]
+                - img [ref=e500]
+                - generic [ref=e502]: (4.9)
+              - button "Add to Cart" [ref=e503]
+        - link "Cod + Rice + Veggies View Product Cod + Rice + Veggies Mild cod with white rice, green beans & carrots — ~360 kcal. Best for sensitive stomachs and low-fat diets. £0.00 (4.9) Add to Cart" [ref=e505] [cursor=pointer]:
+          - /url: /products/cod-rice-veggies
+          - generic [ref=e506]:
+            - generic [ref=e507]:
+              - img "Cod + Rice + Veggies" [ref=e508]
+              - generic [ref=e510]: View Product
+            - generic [ref=e511]:
+              - heading "Cod + Rice + Veggies" [level=3] [ref=e512]
+              - paragraph [ref=e513]: Mild cod with white rice, green beans & carrots — ~360 kcal. Best for sensitive stomachs and low-fat diets.
+              - generic [ref=e515]: £0.00
+              - generic [ref=e516]:
+                - img [ref=e517]
+                - img [ref=e519]
+                - img [ref=e521]
+                - img [ref=e523]
+                - img [ref=e525]
+                - generic [ref=e527]: (4.9)
+              - button "Add to Cart" [ref=e528]
+        - link "Chickpea + Quinoa Plant Mix View Product Chickpea + Quinoa Plant Mix Plant-based quinoa & chickpea mix with spinach, peas & flaxseed — ~510 kcal. Best for plant-based protein, fiber, and digestion. £0.00 (4.9) Add to Cart" [ref=e530] [cursor=pointer]:
+          - /url: /products/chickpea-quinoa-plant-mix
+          - generic [ref=e531]:
+            - generic [ref=e532]:
+              - img "Chickpea + Quinoa Plant Mix" [ref=e533]
+              - generic [ref=e535]: View Product
+            - generic [ref=e536]:
+              - heading "Chickpea + Quinoa Plant Mix" [level=3] [ref=e537]
+              - paragraph [ref=e538]: Plant-based quinoa & chickpea mix with spinach, peas & flaxseed — ~510 kcal. Best for plant-based protein, fiber, and digestion.
+              - generic [ref=e540]: £0.00
+              - generic [ref=e541]:
+                - img [ref=e542]
+                - img [ref=e544]
+                - img [ref=e546]
+                - img [ref=e548]
+                - img [ref=e550]
+                - generic [ref=e552]: (4.9)
+              - button "Add to Cart" [ref=e553]
+  - contentinfo [ref=e42]:
+    - generic [ref=e43]:
+      - generic [ref=e44]:
+        - generic [ref=e45]:
+          - heading "Join our VIP list" [level=4] [ref=e46]
+          - paragraph [ref=e47]: Be the first to hear about new product launches, exclusive competitions and helpful dog content.
+          - generic [ref=e48]:
+            - textbox "Enter your email address" [ref=e49]
+            - button "Sign up" [ref=e50] [cursor=pointer]
+        - generic [ref=e51]:
+          - generic [ref=e52]:
+            - heading "Jeko" [level=4] [ref=e53]
+            - list [ref=e54]:
+              - listitem [ref=e55]:
+                - link "Our story" [ref=e56] [cursor=pointer]:
+                  - /url: /about
+              - listitem [ref=e57]:
+                - link "Reviews" [ref=e58] [cursor=pointer]:
+                  - /url: /reviews
+              - listitem [ref=e59]:
+                - link "Recipes" [ref=e60] [cursor=pointer]:
+                  - /url: /recipes
+              - listitem [ref=e61]:
+                - link "Beyond the bowl" [ref=e62] [cursor=pointer]:
+                  - /url: /beyond-the-bowl
+              - listitem [ref=e63]:
+                - link "Shop" [ref=e64] [cursor=pointer]:
+                  - /url: /products
+              - listitem [ref=e65]:
+                - link "Community" [ref=e66] [cursor=pointer]:
+                  - /url: /community
+          - generic [ref=e67]:
+            - heading "Help" [level=4] [ref=e68]
+            - list [ref=e69]:
+              - listitem [ref=e70]:
+                - link "My account" [ref=e71] [cursor=pointer]:
+                  - /url: /profile
+              - listitem [ref=e72]:
+                - link "Contact us" [ref=e73] [cursor=pointer]:
+                  - /url: /contact
+              - listitem [ref=e74]:
+                - link "Delivery information" [ref=e75] [cursor=pointer]:
+                  - /url: /delivery-information
+              - listitem [ref=e76]:
+                - link "Returns" [ref=e77] [cursor=pointer]:
+                  - /url: /returns
+              - listitem [ref=e78]:
+                - link "Sitemap" [ref=e79] [cursor=pointer]:
+                  - /url: /sitemap-page
+          - generic [ref=e80]:
+            - heading "Information" [level=4] [ref=e81]
+            - list [ref=e82]:
+              - listitem [ref=e83]:
+                - link "Privacy policy" [ref=e84] [cursor=pointer]:
+                  - /url: /privacy-policy
+              - listitem [ref=e85]:
+                - link "Terms & conditions" [ref=e86] [cursor=pointer]:
+                  - /url: /terms-of-use
+              - listitem [ref=e87]:
+                - link "Jeko policies" [ref=e88] [cursor=pointer]:
+                  - /url: /pure-policies
+              - listitem [ref=e89]:
+                - link "Site security" [ref=e90] [cursor=pointer]:
+                  - /url: /site-security
+              - listitem [ref=e91]:
+                - link "Cookie policy" [ref=e92] [cursor=pointer]:
+                  - /url: /cookie-policy
+      - generic [ref=e93]:
+        - generic [ref=e95]: JEKO
+        - paragraph [ref=e96]: © Jeko 2020-2026
+  - generic [ref=e554]:
+    - generic [ref=e555]:
+      - paragraph [ref=e556]: Bow Wow! 🐾
+      - paragraph [ref=e557]: Find a friend for your pup!
+    - button "Find pet matches" [ref=e559] [cursor=pointer]:
+      - img [ref=e560]
+  - alert [ref=e580]

@@ -1,0 +1,135 @@
+- generic [ref=e1]:
+  - alert [ref=e6]: Jeko - Personalised Healthy Natural Pet Food
+  - generic [ref=e40]:
+    - complementary [ref=e41]:
+      - generic [ref=e42]:
+        - generic [ref=e44]: PP
+        - generic [ref=e45]:
+          - heading "Jeko" [level=1] [ref=e46]
+          - paragraph [ref=e47]: Admin Panel
+      - navigation [ref=e48]:
+        - link "Dashboard" [ref=e49] [cursor=pointer]:
+          - /url: /admin/dashboard
+          - img [ref=e50]
+          - text: Dashboard
+        - link "Store Editor" [ref=e52] [cursor=pointer]:
+          - /url: /admin/store-editor
+          - img [ref=e53]
+          - text: Store Editor
+        - link "Products" [ref=e55] [cursor=pointer]:
+          - /url: /admin/products
+          - img [ref=e56]
+          - text: Products
+        - link "Bundles" [ref=e58] [cursor=pointer]:
+          - /url: /admin/bundles
+          - img [ref=e59]
+          - text: Bundles
+        - link "Upsells" [ref=e61] [cursor=pointer]:
+          - /url: /admin/upsells
+          - img [ref=e62]
+          - text: Upsells
+        - link "Categories" [ref=e64] [cursor=pointer]:
+          - /url: /admin/categories
+          - img [ref=e65]
+          - text: Categories
+        - link "Orders" [ref=e67] [cursor=pointer]:
+          - /url: /admin/orders
+          - img [ref=e68]
+          - text: Orders
+        - link "Customers" [ref=e70] [cursor=pointer]:
+          - /url: /admin/customers
+          - img [ref=e71]
+          - text: Customers
+        - link "Reviews" [ref=e73] [cursor=pointer]:
+          - /url: /admin/reviews
+          - img [ref=e74]
+          - text: Reviews
+        - link "Discounts" [ref=e76] [cursor=pointer]:
+          - /url: /admin/discounts
+          - img [ref=e77]
+          - text: Discounts
+        - link "Pages" [ref=e79] [cursor=pointer]:
+          - /url: /admin/pages
+          - img [ref=e80]
+          - text: Pages
+        - link "Blog" [ref=e82] [cursor=pointer]:
+          - /url: /admin/blog
+          - img [ref=e83]
+          - text: Blog
+        - link "Settings" [ref=e85] [cursor=pointer]:
+          - /url: /admin/settings
+          - img [ref=e86]
+          - text: Settings
+        - link "Analytics" [ref=e88] [cursor=pointer]:
+          - /url: /admin/analytics
+          - img [ref=e89]
+          - text: Analytics
+        - link "Support" [ref=e91] [cursor=pointer]:
+          - /url: /admin/support
+          - img [ref=e92]
+          - text: Support
+      - generic [ref=e94]:
+        - link "View Store" [ref=e95] [cursor=pointer]:
+          - /url: /
+          - img [ref=e96]
+          - text: View Store
+        - button "Sign Out" [ref=e98] [cursor=pointer]:
+          - img [ref=e99]
+          - text: Sign Out
+    - generic [ref=e101]:
+      - banner [ref=e102]:
+        - button [ref=e103] [cursor=pointer]:
+          - img [ref=e104]
+        - generic [ref=e106]:
+          - generic [ref=e107]: admin@purepet.test
+          - generic [ref=e108]: A
+      - main [ref=e109]:
+        - generic [ref=e276]:
+          - generic [ref=e278]:
+            - heading "Reviews" [level=1] [ref=e279]
+            - paragraph [ref=e280]:
+              - text: Manage customer reviews and product rating settings
+              - generic [ref=e281]: 1 pending
+          - generic [ref=e282]:
+            - button "Reviews 1" [active] [ref=e283] [cursor=pointer]
+            - button "Product Rating Settings" [ref=e284] [cursor=pointer]
+          - generic [ref=e375]:
+            - combobox [ref=e376]:
+              - option "All statuses" [selected]
+              - option "Pending"
+              - option "Approved"
+              - option "Rejected"
+            - combobox [ref=e377]:
+              - option "All products" [selected]
+              - option "Beef + Rice + Veggies"
+              - option "BEENS"
+              - option "Chicken + Quinoa + Greens"
+              - option "Chickpea + Quinoa Plant Mix"
+              - option "Cod + Rice + Veggies"
+              - option "Tuna + Rice Bowl"
+          - generic [ref=e380]:
+            - generic [ref=e381]:
+              - generic [ref=e382]:
+                - generic [ref=e383]: Test Reviewer
+                - generic [ref=e384]: pending
+                - generic [ref=e385]: on Beef + Rice + Veggies
+              - generic [ref=e386]:
+                - img [ref=e387]
+                - img [ref=e389]
+                - img [ref=e391]
+                - img [ref=e393]
+                - img [ref=e395]
+              - paragraph [ref=e397]: Amazing food!
+              - paragraph [ref=e398]: My dog absolutely loves this food. His coat is shinier and he has so much more energy since switching to Jeko.
+              - generic [ref=e399]:
+                - generic [ref=e400]: 14 Apr 2026
+                - generic [ref=e401]: test@example.com
+            - generic [ref=e402]:
+              - button "Approve" [ref=e403] [cursor=pointer]
+              - button "Reject" [ref=e404] [cursor=pointer]
+              - button "Edit" [ref=e405] [cursor=pointer]:
+                - img [ref=e406]
+              - button "Delete" [ref=e408] [cursor=pointer]:
+                - img [ref=e409]
+    - button [ref=e273] [cursor=pointer]:
+      - img [ref=e274]

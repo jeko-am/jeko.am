@@ -1,0 +1,221 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e2]:
+    - banner [ref=e3]:
+      - generic [ref=e5]:
+        - link "JEKO" [ref=e6] [cursor=pointer]:
+          - /url: /
+          - generic [ref=e7]: JEKO
+        - navigation [ref=e8]:
+          - link "About" [ref=e10] [cursor=pointer]:
+            - /url: /about
+            - text: About
+            - img [ref=e11]
+          - link "Community" [ref=e14] [cursor=pointer]:
+            - /url: /community
+            - text: Community
+            - img [ref=e15]
+          - link "Shop" [ref=e18] [cursor=pointer]:
+            - /url: /products
+          - link "Reviews" [ref=e20] [cursor=pointer]:
+            - /url: /reviews
+          - link "Health & breeds" [ref=e22] [cursor=pointer]:
+            - /url: /benefits
+            - text: Health & breeds
+            - img [ref=e23]
+        - generic [ref=e25]:
+          - button "Shopping cart" [ref=e26] [cursor=pointer]:
+            - img [ref=e27]
+          - link "Help" [ref=e31] [cursor=pointer]:
+            - /url: /contact
+          - link "Login" [ref=e32] [cursor=pointer]:
+            - /url: /login
+          - link "Sign up" [ref=e33] [cursor=pointer]:
+            - /url: /auth/signup
+    - main [ref=e34]:
+      - generic [ref=e36]:
+        - heading "Contact Us" [level=1] [ref=e37]
+        - paragraph [ref=e38]: Have a question about your order, our recipes, or just want to say hello? We'd love to hear from you.
+      - generic [ref=e41]:
+        - generic [ref=e43]:
+          - heading "Send Us a Message" [level=2] [ref=e44]
+          - paragraph [ref=e45]: Fill out the form below and our team will be in touch.
+          - generic [ref=e46]:
+            - generic [ref=e47]:
+              - generic [ref=e48]: Full Name *
+              - textbox "Full Name *" [ref=e49]:
+                - /placeholder: Your full name
+            - generic [ref=e50]:
+              - generic [ref=e51]: Email *
+              - textbox "Email *" [ref=e52]:
+                - /placeholder: your@email.com
+            - generic [ref=e53]:
+              - generic [ref=e54]: Phone (optional)
+              - textbox "Phone (optional)" [ref=e55]:
+                - /placeholder: Your phone number
+            - generic [ref=e56]:
+              - generic [ref=e57]: Subject *
+              - combobox "Subject *" [ref=e58]:
+                - option "Select a subject" [disabled] [selected]
+                - option "General Enquiry"
+                - option "Order Issue"
+                - option "Subscription Help"
+                - option "Product Question"
+                - option "Partnership Opportunity"
+                - option "Other"
+            - generic [ref=e59]:
+              - generic [ref=e60]: Order Number (optional)
+              - textbox "Order Number (optional)" [ref=e61]:
+                - /placeholder: "e.g. #PP-12345"
+            - generic [ref=e62]:
+              - generic [ref=e63]: Message *
+              - textbox "Message *" [ref=e64]:
+                - /placeholder: Tell us how we can help...
+            - button "Send Message" [ref=e65] [cursor=pointer]
+        - generic [ref=e66]:
+          - generic [ref=e67]:
+            - heading "Get in Touch" [level=2] [ref=e68]
+            - generic [ref=e69]:
+              - generic [ref=e70]:
+                - img [ref=e72]
+                - generic [ref=e75]:
+                  - paragraph [ref=e76]: Email
+                  - link "hello@jeko.am" [ref=e77] [cursor=pointer]:
+                    - /url: mailto:hello@jeko.am
+              - generic [ref=e78]:
+                - img [ref=e80]
+                - generic [ref=e82]:
+                  - paragraph [ref=e83]: Phone
+                  - link "+374 10 000 000" [ref=e84] [cursor=pointer]:
+                    - /url: tel:+37410000000
+              - generic [ref=e85]:
+                - img [ref=e87]
+                - generic [ref=e90]:
+                  - paragraph [ref=e91]: Business Hours
+                  - paragraph [ref=e92]:
+                    - text: "Mon–Fri: 9am–5pm"
+                    - text: "Sat: 10am–2pm"
+              - generic [ref=e93]:
+                - img [ref=e95]
+                - generic [ref=e98]:
+                  - paragraph [ref=e99]: Address
+                  - paragraph [ref=e100]:
+                    - text: Jeko
+                    - text: Unit 5, Yorkshire Business Park
+                    - text: Leeds, LS1 4AP
+          - generic [ref=e101]:
+            - heading "What to Expect" [level=3] [ref=e102]
+            - generic [ref=e103]:
+              - paragraph [ref=e106]: We aim to respond to all enquiries within 24 hours on business days.
+              - paragraph [ref=e109]: For urgent order issues, please include your order number for a faster resolution.
+              - paragraph [ref=e112]: Weekend enquiries will be addressed on the next business day.
+          - generic [ref=e113]:
+            - heading "Need a Quick Answer?" [level=3] [ref=e114]
+            - paragraph [ref=e115]: Check our FAQ section for quick answers to the most common questions about our products, delivery, and subscriptions.
+            - link "Visit FAQ" [ref=e116] [cursor=pointer]:
+              - /url: /benefits
+              - text: Visit FAQ
+              - img [ref=e117]
+      - generic [ref=e121]:
+        - generic [ref=e122]:
+          - generic [ref=e123]:
+            - img [ref=e124]
+            - paragraph [ref=e126]: Yorkshire Business Park, Leeds
+            - paragraph [ref=e127]: Yerevan, Armenia
+          - generic [ref=e128]:
+            - heading "Visit Us" [level=4] [ref=e129]
+            - paragraph [ref=e130]: Our kitchen is based in the heart of Yorkshire. Tours available by appointment.
+        - generic [ref=e131]:
+          - heading "Helpful Links" [level=4] [ref=e132]
+          - generic [ref=e133]:
+            - link "Our Products" [ref=e134] [cursor=pointer]:
+              - /url: /products
+              - img [ref=e136]
+              - generic [ref=e140]: Our Products
+            - link "Customer Reviews" [ref=e141] [cursor=pointer]:
+              - /url: /reviews
+              - img [ref=e143]
+              - generic [ref=e145]: Customer Reviews
+            - link "Our Story" [ref=e146] [cursor=pointer]:
+              - /url: /about
+              - img [ref=e148]
+              - generic [ref=e153]: Our Story
+            - link "Create a Plan" [ref=e154] [cursor=pointer]:
+              - /url: /auth/signup
+              - img [ref=e156]
+              - generic [ref=e158]: Create a Plan
+    - contentinfo [ref=e159]:
+      - generic [ref=e160]:
+        - generic [ref=e161]:
+          - generic [ref=e162]:
+            - heading "Join our VIP list" [level=4] [ref=e163]
+            - paragraph [ref=e164]: Be the first to hear about new product launches, exclusive competitions and helpful dog content.
+            - generic [ref=e165]:
+              - textbox "Enter your email address" [ref=e166]
+              - button "Sign up" [ref=e167] [cursor=pointer]
+          - generic [ref=e168]:
+            - generic [ref=e169]:
+              - heading "Jeko" [level=4] [ref=e170]
+              - list [ref=e171]:
+                - listitem [ref=e172]:
+                  - link "Our story" [ref=e173] [cursor=pointer]:
+                    - /url: /about
+                - listitem [ref=e174]:
+                  - link "Reviews" [ref=e175] [cursor=pointer]:
+                    - /url: /reviews
+                - listitem [ref=e176]:
+                  - link "Recipes" [ref=e177] [cursor=pointer]:
+                    - /url: /recipes
+                - listitem [ref=e178]:
+                  - link "Beyond the bowl" [ref=e179] [cursor=pointer]:
+                    - /url: /beyond-the-bowl
+                - listitem [ref=e180]:
+                  - link "Shop" [ref=e181] [cursor=pointer]:
+                    - /url: /products
+                - listitem [ref=e182]:
+                  - link "Community" [ref=e183] [cursor=pointer]:
+                    - /url: /community
+            - generic [ref=e184]:
+              - heading "Help" [level=4] [ref=e185]
+              - list [ref=e186]:
+                - listitem [ref=e187]:
+                  - link "My account" [ref=e188] [cursor=pointer]:
+                    - /url: /profile
+                - listitem [ref=e189]:
+                  - link "Contact us" [ref=e190] [cursor=pointer]:
+                    - /url: /contact
+                - listitem [ref=e191]:
+                  - link "Delivery information" [ref=e192] [cursor=pointer]:
+                    - /url: /delivery-information
+                - listitem [ref=e193]:
+                  - link "Returns" [ref=e194] [cursor=pointer]:
+                    - /url: /returns
+                - listitem [ref=e195]:
+                  - link "Sitemap" [ref=e196] [cursor=pointer]:
+                    - /url: /sitemap-page
+            - generic [ref=e197]:
+              - heading "Information" [level=4] [ref=e198]
+              - list [ref=e199]:
+                - listitem [ref=e200]:
+                  - link "Privacy policy" [ref=e201] [cursor=pointer]:
+                    - /url: /privacy-policy
+                - listitem [ref=e202]:
+                  - link "Terms & conditions" [ref=e203] [cursor=pointer]:
+                    - /url: /terms-of-use
+                - listitem [ref=e204]:
+                  - link "Jeko policies" [ref=e205] [cursor=pointer]:
+                    - /url: /pure-policies
+                - listitem [ref=e206]:
+                  - link "Site security" [ref=e207] [cursor=pointer]:
+                    - /url: /site-security
+                - listitem [ref=e208]:
+                  - link "Cookie policy" [ref=e209] [cursor=pointer]:
+                    - /url: /cookie-policy
+        - generic [ref=e210]:
+          - generic [ref=e212]: JEKO
+          - paragraph [ref=e213]: © Jeko 2020-2026
+  - generic:
+    - generic:
+      - paragraph: Bow Wow! 🐾
+      - paragraph: Find a friend for your pup!
+    - button "Find pet matches":
+      - img

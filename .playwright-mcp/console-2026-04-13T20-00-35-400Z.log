@@ -1,0 +1,261 @@
+[    1217ms] [INFO] %cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold @ webpack-internal:///(app-pages-browser)/./node_modules/next/dist/compiled/react-dom/cjs/react-dom.development.js:38559
+[   90361ms] [LOG] [Fast Refresh] rebuilding @ webpack-internal:///(app-pages-browser)/./node_modules/next/dist/client/components/react-dev-overlay/app/hot-reloader-client.js:186
+[   90734ms] [LOG] [Fast Refresh] done in 374ms @ webpack-internal:///(app-pages-browser)/./node_modules/next/dist/client/components/react-dev-overlay/app/hot-reloader-client.js:43
+[  103332ms] [LOG] [Fast Refresh] rebuilding @ webpack-internal:///(app-pages-browser)/./node_modules/next/dist/client/components/react-dev-overlay/app/hot-reloader-client.js:186
+[  103742ms] [LOG] [Fast Refresh] done in 409ms @ webpack-internal:///(app-pages-browser)/./node_modules/next/dist/client/components/react-dev-overlay/app/hot-reloader-client.js:43
+[  146727ms] [LOG] [Fast Refresh] rebuilding @ webpack-internal:///(app-pages-browser)/./node_modules/next/dist/client/components/react-dev-overlay/app/hot-reloader-client.js:186
+[  147030ms] [LOG] [Fast Refresh] done in 303ms @ webpack-internal:///(app-pages-browser)/./node_modules/next/dist/client/components/react-dev-overlay/app/hot-reloader-client.js:43
+[  168164ms] [LOG] [Fast Refresh] rebuilding @ webpack-internal:///(app-pages-browser)/./node_modules/next/dist/client/components/react-dev-overlay/app/hot-reloader-client.js:186
+[  168355ms] [ERROR] ./src/app/reviews/client.tsx
+Error: 
+  x Expression expected
+     ,-[/Users/admin/Desktop/claude code armen/pure-pet-clone/src/app/reviews/client.tsx:212:1]
+ 212 |   const displayTestimonials = cmsTestimonials.length > 0 ? cmsTestimonials : categoryTestimonials;
+ 213 | 
+ 214 |   return (
+ 215 |     <>
+     :      ^
+ 216 |       <EditorOverlay />
+ 217 |       <Header />
+ 218 |       <main style={{ paddingTop: "80px" }}>
+     `----
+
+  x Expression expected
+     ,-[/Users/admin/Desktop/claude code armen/pure-pet-clone/src/app/reviews/client.tsx:214:1]
+ 214 |   return (
+ 215 |     <>
+ 216 |       <EditorOverlay />
+ 217 |       <Header />
+     :                ^
+ 218 |       <main style={{ paddingTop: "80px" }}>
+ 219 |         {/* Hero Section */}
+ 220 |         <div data-section-index={0} data-section-name="Hero">
+     `----
+
+  x Expected corresponding JSX closing tag for <div>
+     ,-[/Users/admin/Desktop/claude code armen/pure-pet-clone/src/app/reviews/client.tsx:588:1]
+ 588 |             </div>
+ 589 |           </section>
+ 590 |         </div>
+ 591 |       </main>
+     :       ^^^^^^^
+ 592 |       <Footer />
+ 593 |     </>
+ 594 |   );
+     `----
+
+Caused by:
+    Syntax Error
+
+Import trace for requested module:
+./src/app/reviews/client.tsx @ webpack-internal:///(app-pages-browser)/./node_modules/next/dist/client/app-index.js:32
+[  168396ms] [LOG] [Fast Refresh] rebuilding @ webpack-internal:///(app-pages-browser)/./node_modules/next/dist/client/components/react-dev-overlay/app/hot-reloader-client.js:186
+[  168469ms] [ERROR] ./src/app/reviews/client.tsx
+Error: 
+  x Expression expected
+     ,-[/Users/admin/Desktop/claude code armen/pure-pet-clone/src/app/reviews/client.tsx:212:1]
+ 212 |   const displayTestimonials = cmsTestimonials.length > 0 ? cmsTestimonials : categoryTestimonials;
+ 213 | 
+ 214 |   return (
+ 215 |     <>
+     :      ^
+ 216 |       <EditorOverlay />
+ 217 |       <Header />
+ 218 |       <main style={{ paddingTop: "80px" }}>
+     `----
+
+  x Expression expected
+     ,-[/Users/admin/Desktop/claude code armen/pure-pet-clone/src/app/reviews/client.tsx:214:1]
+ 214 |   return (
+ 215 |     <>
+ 216 |       <EditorOverlay />
+ 217 |       <Header />
+     :                ^
+ 218 |       <main style={{ paddingTop: "80px" }}>
+ 219 |         {/* Hero Section */}
+ 220 |         <div data-section-index={0} data-section-name="Hero">
+     `----
+
+  x Expected corresponding JSX closing tag for <div>
+     ,-[/Users/admin/Desktop/claude code armen/pure-pet-clone/src/app/reviews/client.tsx:588:1]
+ 588 |             </div>
+ 589 |           </section>
+ 590 |         </div>
+ 591 |       </main>
+     :       ^^^^^^^
+ 592 |       <Footer />
+ 593 |     </>
+ 594 |   );
+     `----
+
+Caused by:
+    Syntax Error
+
+Import trace for requested module:
+./src/app/reviews/client.tsx
+./src/app/reviews/page.tsx @ webpack-internal:///(app-pages-browser)/./node_modules/next/dist/client/app-index.js:32
+[  171058ms] [LOG] [Fast Refresh] done in 2662ms @ webpack-internal:///(app-pages-browser)/./node_modules/next/dist/client/components/react-dev-overlay/app/hot-reloader-client.js:43
+[  172150ms] [LOG] [Fast Refresh] done in 3753ms @ webpack-internal:///(app-pages-browser)/./node_modules/next/dist/client/components/react-dev-overlay/app/hot-reloader-client.js:43
+[  172377ms] [ERROR] ./src/app/reviews/client.tsx
+Error: 
+  x Expression expected
+     ,-[/Users/admin/Desktop/claude code armen/pure-pet-clone/src/app/reviews/client.tsx:212:1]
+ 212 |   const displayTestimonials = cmsTestimonials.length > 0 ? cmsTestimonials : categoryTestimonials;
+ 213 | 
+ 214 |   return (
+ 215 |     <>
+     :      ^
+ 216 |       <EditorOverlay />
+ 217 |       <Header />
+ 218 |       <main style={{ paddingTop: "80px" }}>
+     `----
+
+  x Expression expected
+     ,-[/Users/admin/Desktop/claude code armen/pure-pet-clone/src/app/reviews/client.tsx:214:1]
+ 214 |   return (
+ 215 |     <>
+ 216 |       <EditorOverlay />
+ 217 |       <Header />
+     :                ^
+ 218 |       <main style={{ paddingTop: "80px" }}>
+ 219 |         {/* Hero Section */}
+ 220 |         <div data-section-index={0} data-section-name="Hero">
+     `----
+
+  x Expected corresponding JSX closing tag for <div>
+     ,-[/Users/admin/Desktop/claude code armen/pure-pet-clone/src/app/reviews/client.tsx:588:1]
+ 588 |             </div>
+ 589 |           </section>
+ 590 |         </div>
+ 591 |       </main>
+     :       ^^^^^^^
+ 592 |       <Footer />
+ 593 |     </>
+ 594 |   );
+     `----
+
+Caused by:
+    Syntax Error
+
+Import trace for requested module:
+./src/app/reviews/client.tsx
+./src/app/reviews/page.tsx @ webpack-internal:///(app-pages-browser)/./node_modules/next/dist/client/app-index.js:32
+[  172635ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:3000/reviews?_rsc=1svd5:0
+[  172683ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:3000/reviews?_rsc=1svd5:0
+[  172733ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:3000/reviews?_rsc=1svd5:0
+[  172874ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:3000/reviews:0
+[  173395ms] [INFO] %cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold @ webpack-internal:///./node_modules/react-dom/cjs/react-dom.development.js:29889
+[  173453ms] ModuleBuildError: Module build failed (from ./node_modules/next/dist/build/webpack/loaders/next-swc-loader.js):
+Error: 
+  x Expression expected
+     ,-[/Users/admin/Desktop/claude code armen/pure-pet-clone/src/app/reviews/client.tsx:212:1]
+ 212 |   const displayTestimonials = cmsTestimonials.length > 0 ? cmsTestimonials : categoryTestimonials;
+ 213 | 
+ 214 |   return (
+ 215 |     <>
+     :      ^
+ 216 |       <EditorOverlay />
+ 217 |       <Header />
+ 218 |       <main style={{ paddingTop: "80px" }}>
+     `----
+
+  x Expression expected
+     ,-[/Users/admin/Desktop/claude code armen/pure-pet-clone/src/app/reviews/client.tsx:214:1]
+ 214 |   return (
+ 215 |     <>
+ 216 |       <EditorOverlay />
+ 217 |       <Header />
+     :                ^
+ 218 |       <main style={{ paddingTop: "80px" }}>
+ 219 |         {/* Hero Section */}
+ 220 |         <div data-section-index={0} data-section-name="Hero">
+     `----
+
+  x Expected corresponding JSX closing tag for <div>
+     ,-[/Users/admin/Desktop/claude code armen/pure-pet-clone/src/app/reviews/client.tsx:588:1]
+ 588 |             </div>
+ 589 |           </section>
+ 590 |         </div>
+ 591 |       </main>
+     :       ^^^^^^^
+ 592 |       <Footer />
+ 593 |     </>
+ 594 |   );
+     `----
+
+
+Caused by:
+    Syntax Error
+    at processResult (file:///Users/admin/Desktop/claude code armen/pure-pet-clone/node_modules/next/dist/compiled/webpack/bundle5.js:28:400590)
+    at <unknown> (file:///Users/admin/Desktop/claude code armen/pure-pet-clone/node_modules/next/dist/compiled/webpack/bundle5.js:28:402302)
+    at <unknown> (file:///Users/admin/Desktop/claude code armen/pure-pet-clone/node_modules/next/dist/compiled/loader-runner/LoaderRunner.js:1:8645)
+    at <unknown> (file:///Users/admin/Desktop/claude code armen/pure-pet-clone/node_modules/next/dist/compiled/loader-runner/LoaderRunner.js:1:5019)
+    at r.callback (file:///Users/admin/Desktop/claude code armen/pure-pet-clone/node_modules/next/dist/compiled/loader-runner/LoaderRunner.js:1:4039)
+[  173451ms] [LOG] [HMR] connected @ webpack-internal:///./node_modules/next/dist/client/components/react-dev-overlay/pages/websocket.js:38
+[  173453ms] [ERROR] ./src/app/reviews/client.tsx
+Error: 
+  x Expression expected
+     ,-[/Users/admin/Desktop/claude code armen/pure-pet-clone/src/app/reviews/client.tsx:212:1]
+ 212 |   const displayTestimonials = cmsTestimonials.length > 0 ? cmsTestimonials : categoryTestimonials;
+ 213 | 
+ 214 |   return (
+ 215 |     <>
+     :      ^
+ 216 |       <EditorOverlay />
+ 217 |       <Header />
+ 218 |       <main style={{ paddingTop: "80px" }}>
+     `----
+
+  x Expression expected
+     ,-[/Users/admin/Desktop/claude code armen/pure-pet-clone/src/app/reviews/client.tsx:214:1]
+ 214 |   return (
+ 215 |     <>
+ 216 |       <EditorOverlay />
+ 217 |       <Header />
+     :                ^
+ 218 |       <main style={{ paddingTop: "80px" }}>
+ 219 |         {/* Hero Section */}
+ 220 |         <div data-section-index={0} data-section-name="Hero">
+     `----
+
+  x Expected corresponding JSX closing tag for <div>
+     ,-[/Users/admin/Desktop/claude code armen/pure-pet-clone/src/app/reviews/client.tsx:588:1]
+ 588 |             </div>
+ 589 |           </section>
+ 590 |         </div>
+ 591 |       </main>
+     :       ^^^^^^^
+ 592 |       <Footer />
+ 593 |     </>
+ 594 |   );
+     `----
+
+Caused by:
+    Syntax Error @ webpack-internal:///./node_modules/next/dist/client/components/react-dev-overlay/internal/helpers/hydration-error-info.js:62
+[  189226ms] [LOG] [Fast Refresh] rebuilding @ webpack-internal:///./node_modules/next/dist/client/components/react-dev-overlay/pages/hot-reloader-client.js:221
+[  190532ms] [LOG] [Fast Refresh] rebuilding @ webpack-internal:///./node_modules/next/dist/client/components/react-dev-overlay/pages/hot-reloader-client.js:221
+[  191096ms] [ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ http://localhost:3000/_next/static/webpack/ea026ccb46c60763.webpack.hot-update.json:0
+[  191096ms] [WARNING] [Fast Refresh] performing full reload because your application had an unrecoverable error @ webpack-internal:///./node_modules/next/dist/client/components/react-dev-overlay/pages/hot-reloader-client.js:349
+[  192383ms] [INFO] %cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold @ webpack-internal:///(app-pages-browser)/./node_modules/next/dist/compiled/react-dom/cjs/react-dom.development.js:38559
+[  192523ms] [WARNING] Image with src "https://www.datocms-assets.com/55536/1673617327-dog-food-reviews.jpg?auto=format&fit=crop&h=800&w=1920" was detected as the Largest Contentful Paint (LCP). Please add the "priority" property if this image is above the fold.
+Read more: https://nextjs.org/docs/api-reference/next/image#priority @ webpack-internal:///(app-pages-browser)/./node_modules/next/dist/shared/lib/utils/warn-once.js:15
+[  195816ms] [LOG] [Fast Refresh] rebuilding @ webpack-internal:///(app-pages-browser)/./node_modules/next/dist/client/components/react-dev-overlay/app/hot-reloader-client.js:186
+[  196224ms] [LOG] [Fast Refresh] done in 409ms @ webpack-internal:///(app-pages-browser)/./node_modules/next/dist/client/components/react-dev-overlay/app/hot-reloader-client.js:43
+[  204234ms] [LOG] [Fast Refresh] rebuilding @ webpack-internal:///(app-pages-browser)/./node_modules/next/dist/client/components/react-dev-overlay/app/hot-reloader-client.js:186
+[  204737ms] [LOG] [Fast Refresh] done in 503ms @ webpack-internal:///(app-pages-browser)/./node_modules/next/dist/client/components/react-dev-overlay/app/hot-reloader-client.js:43
+[  210854ms] [LOG] [Fast Refresh] rebuilding @ webpack-internal:///(app-pages-browser)/./node_modules/next/dist/client/components/react-dev-overlay/app/hot-reloader-client.js:186
+[  211280ms] [LOG] [Fast Refresh] done in 425ms @ webpack-internal:///(app-pages-browser)/./node_modules/next/dist/client/components/react-dev-overlay/app/hot-reloader-client.js:43
+[  217791ms] [LOG] [Fast Refresh] rebuilding @ webpack-internal:///(app-pages-browser)/./node_modules/next/dist/client/components/react-dev-overlay/app/hot-reloader-client.js:186
+[  218308ms] [LOG] [Fast Refresh] done in 517ms @ webpack-internal:///(app-pages-browser)/./node_modules/next/dist/client/components/react-dev-overlay/app/hot-reloader-client.js:43
+[  224797ms] [LOG] [Fast Refresh] rebuilding @ webpack-internal:///(app-pages-browser)/./node_modules/next/dist/client/components/react-dev-overlay/app/hot-reloader-client.js:186
+[  225061ms] [LOG] [Fast Refresh] done in 264ms @ webpack-internal:///(app-pages-browser)/./node_modules/next/dist/client/components/react-dev-overlay/app/hot-reloader-client.js:43
+[  245529ms] [LOG] [Fast Refresh] rebuilding @ webpack-internal:///(app-pages-browser)/./node_modules/next/dist/client/components/react-dev-overlay/app/hot-reloader-client.js:186
+[  246111ms] [LOG] [Fast Refresh] done in 582ms @ webpack-internal:///(app-pages-browser)/./node_modules/next/dist/client/components/react-dev-overlay/app/hot-reloader-client.js:43
+[  255938ms] [LOG] [Fast Refresh] rebuilding @ webpack-internal:///(app-pages-browser)/./node_modules/next/dist/client/components/react-dev-overlay/app/hot-reloader-client.js:186
+[  256260ms] [LOG] [Fast Refresh] done in 323ms @ webpack-internal:///(app-pages-browser)/./node_modules/next/dist/client/components/react-dev-overlay/app/hot-reloader-client.js:43
+[  262711ms] [LOG] [Fast Refresh] rebuilding @ webpack-internal:///(app-pages-browser)/./node_modules/next/dist/client/components/react-dev-overlay/app/hot-reloader-client.js:186
+[  262994ms] [LOG] [Fast Refresh] done in 284ms @ webpack-internal:///(app-pages-browser)/./node_modules/next/dist/client/components/react-dev-overlay/app/hot-reloader-client.js:43
+[  285541ms] [LOG] [Fast Refresh] rebuilding @ webpack-internal:///(app-pages-browser)/./node_modules/next/dist/client/components/react-dev-overlay/app/hot-reloader-client.js:186
+[  285825ms] [LOG] [Fast Refresh] done in 283ms @ webpack-internal:///(app-pages-browser)/./node_modules/next/dist/client/components/react-dev-overlay/app/hot-reloader-client.js:43
+[  292296ms] [LOG] [Fast Refresh] rebuilding @ webpack-internal:///(app-pages-browser)/./node_modules/next/dist/client/components/react-dev-overlay/app/hot-reloader-client.js:186
+[  292561ms] [LOG] [Fast Refresh] done in 264ms @ webpack-internal:///(app-pages-browser)/./node_modules/next/dist/client/components/react-dev-overlay/app/hot-reloader-client.js:43

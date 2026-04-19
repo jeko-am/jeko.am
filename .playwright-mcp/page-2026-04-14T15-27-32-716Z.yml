@@ -1,0 +1,6 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e4]:
+    - heading "Your cart is empty" [level=1] [ref=e5]
+    - link "Continue Shopping" [ref=e6] [cursor=pointer]:
+      - /url: /products
+  - alert [ref=e7]

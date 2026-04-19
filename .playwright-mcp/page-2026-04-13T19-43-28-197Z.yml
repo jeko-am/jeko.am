@@ -1,0 +1,150 @@
+- generic [ref=e1]:
+  - alert [ref=e6]: Jeko - Personalised Healthy Natural Pet Food
+  - generic [ref=e40]:
+    - complementary [ref=e41]:
+      - generic [ref=e42]:
+        - generic [ref=e44]: PP
+        - generic [ref=e45]:
+          - heading "Jeko" [level=1] [ref=e46]
+          - paragraph [ref=e47]: Admin Panel
+      - navigation [ref=e48]:
+        - link "Dashboard" [ref=e49] [cursor=pointer]:
+          - /url: /admin/dashboard
+          - img [ref=e50]
+          - text: Dashboard
+        - link "Store Editor" [ref=e52] [cursor=pointer]:
+          - /url: /admin/store-editor
+          - img [ref=e53]
+          - text: Store Editor
+        - link "Products" [ref=e55] [cursor=pointer]:
+          - /url: /admin/products
+          - img [ref=e56]
+          - text: Products
+        - link "Bundles" [ref=e58] [cursor=pointer]:
+          - /url: /admin/bundles
+          - img [ref=e59]
+          - text: Bundles
+        - link "Upsells" [ref=e61] [cursor=pointer]:
+          - /url: /admin/upsells
+          - img [ref=e62]
+          - text: Upsells
+        - link "Categories" [ref=e64] [cursor=pointer]:
+          - /url: /admin/categories
+          - img [ref=e65]
+          - text: Categories
+        - link "Orders" [ref=e67] [cursor=pointer]:
+          - /url: /admin/orders
+          - img [ref=e68]
+          - text: Orders
+        - link "Customers" [ref=e70] [cursor=pointer]:
+          - /url: /admin/customers
+          - img [ref=e71]
+          - text: Customers
+        - link "Reviews" [ref=e73] [cursor=pointer]:
+          - /url: /admin/reviews
+          - img [ref=e74]
+          - text: Reviews
+        - link "Discounts" [ref=e76] [cursor=pointer]:
+          - /url: /admin/discounts
+          - img [ref=e77]
+          - text: Discounts
+        - link "Pages" [ref=e79] [cursor=pointer]:
+          - /url: /admin/pages
+          - img [ref=e80]
+          - text: Pages
+        - link "Blog" [ref=e82] [cursor=pointer]:
+          - /url: /admin/blog
+          - img [ref=e83]
+          - text: Blog
+        - link "Settings" [ref=e85] [cursor=pointer]:
+          - /url: /admin/settings
+          - img [ref=e86]
+          - text: Settings
+        - link "Analytics" [ref=e88] [cursor=pointer]:
+          - /url: /admin/analytics
+          - img [ref=e89]
+          - text: Analytics
+        - link "Support" [ref=e91] [cursor=pointer]:
+          - /url: /admin/support
+          - img [ref=e92]
+          - text: Support
+      - generic [ref=e94]:
+        - link "View Store" [ref=e95] [cursor=pointer]:
+          - /url: /
+          - img [ref=e96]
+          - text: View Store
+        - button "Sign Out" [ref=e98] [cursor=pointer]:
+          - img [ref=e99]
+          - text: Sign Out
+    - generic [ref=e101]:
+      - banner [ref=e102]:
+        - button [ref=e103] [cursor=pointer]:
+          - img [ref=e104]
+        - generic [ref=e106]:
+          - generic [ref=e107]: admin@purepet.test
+          - generic [ref=e108]: A
+      - main [ref=e109]:
+        - generic [ref=e276]:
+          - generic [ref=e278]:
+            - heading "Reviews" [level=1] [ref=e279]
+            - paragraph [ref=e280]:
+              - text: Manage customer reviews and product rating settings
+              - generic [ref=e281]: 1 pending
+          - generic [ref=e282]:
+            - button "Reviews 1" [ref=e283] [cursor=pointer]
+            - button "Product Rating Settings" [active] [ref=e284] [cursor=pointer]
+          - generic [ref=e321]:
+            - paragraph [ref=e323]: Override the displayed star rating and review count per product. Leave blank to use actual review data.
+            - table [ref=e324]:
+              - rowgroup [ref=e325]:
+                - row "Product Actual Reviews Override Rating Override Count Actions" [ref=e326]:
+                  - columnheader "Product" [ref=e327]
+                  - columnheader "Actual Reviews" [ref=e328]
+                  - columnheader "Override Rating" [ref=e329]
+                  - columnheader "Override Count" [ref=e330]
+                  - columnheader "Actions" [ref=e331]
+              - rowgroup [ref=e332]:
+                - row "Beef + Rice + Veggies No reviews Auto Auto Edit" [ref=e333]:
+                  - cell "Beef + Rice + Veggies" [ref=e334]
+                  - cell "No reviews" [ref=e335]
+                  - cell "Auto" [ref=e336]
+                  - cell "Auto" [ref=e337]
+                  - cell "Edit" [ref=e338]:
+                    - button "Edit" [ref=e339] [cursor=pointer]
+                - row "BEENS No reviews Auto Auto Edit" [ref=e340]:
+                  - cell "BEENS" [ref=e341]
+                  - cell "No reviews" [ref=e342]
+                  - cell "Auto" [ref=e343]
+                  - cell "Auto" [ref=e344]
+                  - cell "Edit" [ref=e345]:
+                    - button "Edit" [ref=e346] [cursor=pointer]
+                - row "Chicken + Quinoa + Greens No reviews Auto Auto Edit" [ref=e347]:
+                  - cell "Chicken + Quinoa + Greens" [ref=e348]
+                  - cell "No reviews" [ref=e349]
+                  - cell "Auto" [ref=e350]
+                  - cell "Auto" [ref=e351]
+                  - cell "Edit" [ref=e352]:
+                    - button "Edit" [ref=e353] [cursor=pointer]
+                - row "Chickpea + Quinoa Plant Mix No reviews Auto Auto Edit" [ref=e354]:
+                  - cell "Chickpea + Quinoa Plant Mix" [ref=e355]
+                  - cell "No reviews" [ref=e356]
+                  - cell "Auto" [ref=e357]
+                  - cell "Auto" [ref=e358]
+                  - cell "Edit" [ref=e359]:
+                    - button "Edit" [ref=e360] [cursor=pointer]
+                - row "Cod + Rice + Veggies No reviews Auto Auto Edit" [ref=e361]:
+                  - cell "Cod + Rice + Veggies" [ref=e362]
+                  - cell "No reviews" [ref=e363]
+                  - cell "Auto" [ref=e364]
+                  - cell "Auto" [ref=e365]
+                  - cell "Edit" [ref=e366]:
+                    - button "Edit" [ref=e367] [cursor=pointer]
+                - row "Tuna + Rice Bowl No reviews Auto Auto Edit" [ref=e368]:
+                  - cell "Tuna + Rice Bowl" [ref=e369]
+                  - cell "No reviews" [ref=e370]
+                  - cell "Auto" [ref=e371]
+                  - cell "Auto" [ref=e372]
+                  - cell "Edit" [ref=e373]:
+                    - button "Edit" [ref=e374] [cursor=pointer]
+    - button [ref=e273] [cursor=pointer]:
+      - img [ref=e274]

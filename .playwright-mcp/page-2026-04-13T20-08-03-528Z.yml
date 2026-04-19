@@ -1,0 +1,128 @@
+- generic [ref=e1]:
+  - alert [ref=e6]
+  - generic [ref=e7]:
+    - complementary [ref=e8]:
+      - generic [ref=e9]:
+        - generic [ref=e11]: PP
+        - generic [ref=e12]:
+          - heading "Jeko" [level=1] [ref=e13]
+          - paragraph [ref=e14]: Admin Panel
+      - navigation [ref=e15]:
+        - link "Dashboard" [ref=e16] [cursor=pointer]:
+          - /url: /admin/dashboard
+          - img [ref=e17]
+          - text: Dashboard
+        - link "Store Editor" [ref=e19] [cursor=pointer]:
+          - /url: /admin/store-editor
+          - img [ref=e20]
+          - text: Store Editor
+        - link "Products" [ref=e22] [cursor=pointer]:
+          - /url: /admin/products
+          - img [ref=e23]
+          - text: Products
+        - link "Bundles" [ref=e25] [cursor=pointer]:
+          - /url: /admin/bundles
+          - img [ref=e26]
+          - text: Bundles
+        - link "Upsells" [ref=e28] [cursor=pointer]:
+          - /url: /admin/upsells
+          - img [ref=e29]
+          - text: Upsells
+        - link "Categories" [ref=e31] [cursor=pointer]:
+          - /url: /admin/categories
+          - img [ref=e32]
+          - text: Categories
+        - link "Orders" [ref=e34] [cursor=pointer]:
+          - /url: /admin/orders
+          - img [ref=e35]
+          - text: Orders
+        - link "Customers" [ref=e37] [cursor=pointer]:
+          - /url: /admin/customers
+          - img [ref=e38]
+          - text: Customers
+        - link "Reviews" [ref=e40] [cursor=pointer]:
+          - /url: /admin/reviews
+          - img [ref=e41]
+          - text: Reviews
+        - link "Discounts" [ref=e43] [cursor=pointer]:
+          - /url: /admin/discounts
+          - img [ref=e44]
+          - text: Discounts
+        - link "Pages" [ref=e46] [cursor=pointer]:
+          - /url: /admin/pages
+          - img [ref=e47]
+          - text: Pages
+        - link "Blog" [ref=e49] [cursor=pointer]:
+          - /url: /admin/blog
+          - img [ref=e50]
+          - text: Blog
+        - link "Settings" [active] [ref=e52] [cursor=pointer]:
+          - /url: /admin/settings
+          - img [ref=e53]
+          - text: Settings
+        - link "Analytics" [ref=e55] [cursor=pointer]:
+          - /url: /admin/analytics
+          - img [ref=e56]
+          - text: Analytics
+        - link "Support" [ref=e58] [cursor=pointer]:
+          - /url: /admin/support
+          - img [ref=e59]
+          - text: Support
+      - generic [ref=e61]:
+        - link "View Store" [ref=e62] [cursor=pointer]:
+          - /url: /
+          - img [ref=e63]
+          - text: View Store
+        - button "Sign Out" [ref=e65] [cursor=pointer]:
+          - img [ref=e66]
+          - text: Sign Out
+    - generic [ref=e68]:
+      - banner [ref=e69]:
+        - button [ref=e70] [cursor=pointer]:
+          - img [ref=e71]
+        - generic [ref=e73]:
+          - generic [ref=e74]: admin@purepet.test
+          - generic [ref=e75]: A
+      - main [ref=e76]:
+        - generic [ref=e243]:
+          - generic [ref=e244]:
+            - heading "Settings" [level=1] [ref=e245]
+            - paragraph [ref=e246]: Configure your store settings, theme, shipping, and more
+          - generic [ref=e247]:
+            - navigation [ref=e249]:
+              - button "Shipping" [ref=e250] [cursor=pointer]:
+                - img [ref=e251]
+                - text: Shipping
+              - button "Pixels & Tags" [ref=e253] [cursor=pointer]:
+                - img [ref=e254]
+                - text: Pixels & Tags
+              - button "Menus" [ref=e256] [cursor=pointer]:
+                - img [ref=e257]
+                - text: Menus
+              - button "Subscribers" [ref=e259] [cursor=pointer]:
+                - img [ref=e260]
+                - text: Subscribers
+            - generic [ref=e263]:
+              - generic [ref=e264]:
+                - generic [ref=e265]:
+                  - heading "Shipping Zones" [level=3] [ref=e266]
+                  - button "+ Add Zone" [ref=e267] [cursor=pointer]
+                - paragraph [ref=e269]: No shipping zones configured
+              - generic [ref=e270]:
+                - generic [ref=e271]:
+                  - heading "Shipping Rates" [level=3] [ref=e272]
+                  - button "+ Add Rate" [disabled] [ref=e273]
+                - generic [ref=e274]:
+                  - table [ref=e275]:
+                    - rowgroup [ref=e276]:
+                      - row "Name Zone Price Weight Status Actions" [ref=e277]:
+                        - columnheader "Name" [ref=e278]
+                        - columnheader "Zone" [ref=e279]
+                        - columnheader "Price" [ref=e280]
+                        - columnheader "Weight" [ref=e281]
+                        - columnheader "Status" [ref=e282]
+                        - columnheader "Actions" [ref=e283]
+                    - rowgroup
+                  - paragraph [ref=e284]: No shipping rates configured
+    - button [ref=e240] [cursor=pointer]:
+      - img [ref=e241]

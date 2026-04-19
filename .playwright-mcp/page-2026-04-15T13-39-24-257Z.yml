@@ -1,0 +1,31 @@
+- generic [ref=e1]:
+  - alert [ref=e2]
+  - generic [ref=e3]:
+    - banner [ref=e4]:
+      - generic [ref=e5]:
+        - link "JEKO" [ref=e6] [cursor=pointer]:
+          - /url: /
+          - generic [ref=e7]: JEKO
+        - generic [ref=e8]:
+          - paragraph [ref=e9]:
+            - text: Already have an account?
+            - link "Log in" [ref=e10] [cursor=pointer]:
+              - /url: /login
+          - button [ref=e65] [cursor=pointer]:
+            - img [ref=e66]
+    - main [ref=e11]:
+      - generic [ref=e13]:
+        - paragraph [ref=e26]: 💕 One more thing...
+        - generic [ref=e389]:
+          - heading "Looking for a match?" [level=1] [ref=e390]
+          - paragraph [ref=e391]: Would you like Bruno to appear in matches with other pets?
+          - img "Pets looking for a match" [ref=e393]
+          - generic [ref=e394]:
+            - button "Yes!" [active] [ref=e395] [cursor=pointer]:
+              - img [ref=e397]
+              - generic [ref=e399]: Yes!
+              - img [ref=e408]
+            - button "No thanks" [ref=e400] [cursor=pointer]:
+              - img [ref=e402]
+              - generic [ref=e405]: No thanks
+          - button "Continue" [ref=e406] [cursor=pointer]

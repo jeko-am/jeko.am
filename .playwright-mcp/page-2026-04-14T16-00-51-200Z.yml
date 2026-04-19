@@ -1,0 +1,201 @@
+- generic [active] [ref=e1]:
+  - banner [ref=e2]:
+    - generic [ref=e4]:
+      - link "JEKO" [ref=e5] [cursor=pointer]:
+        - /url: /
+        - generic [ref=e6]: JEKO
+      - navigation [ref=e7]:
+        - link "About" [ref=e9] [cursor=pointer]:
+          - /url: /about
+          - text: About
+          - img [ref=e10]
+        - link "Community" [ref=e13] [cursor=pointer]:
+          - /url: /community
+          - text: Community
+          - img [ref=e14]
+        - link "Shop" [ref=e17] [cursor=pointer]:
+          - /url: /products
+        - link "Reviews" [ref=e19] [cursor=pointer]:
+          - /url: /reviews
+        - link "Health & breeds" [ref=e21] [cursor=pointer]:
+          - /url: /benefits
+          - text: Health & breeds
+          - img [ref=e22]
+      - generic [ref=e24]:
+        - button "Shopping cart" [ref=e25] [cursor=pointer]:
+          - img [ref=e26]
+        - link "Help" [ref=e30] [cursor=pointer]:
+          - /url: /contact
+        - link "Login" [ref=e31] [cursor=pointer]:
+          - /url: /login
+        - link "Sign up" [ref=e32] [cursor=pointer]:
+          - /url: /auth/signup
+  - main [ref=e33]:
+    - img "Jeko founders" [ref=e37]
+    - generic [ref=e39]:
+      - generic [ref=e41]:
+        - generic:
+          - img
+          - img
+          - img
+          - img
+          - img
+        - generic [ref=e43]:
+          - paragraph [ref=e44]: "2012"
+          - heading "It started with a simple question" [level=2] [ref=e45]
+          - generic [ref=e46]:
+            - paragraph [ref=e47]: "\"Little brown biscuits – we wouldn't eat these for every meal, every day, so why should our pets?\""
+            - paragraph [ref=e48]: This is the question that led us on a journey to change the face of pet food for the better.
+      - generic [ref=e50]:
+        - generic:
+          - img
+          - img
+          - img
+        - generic [ref=e52]:
+          - generic [ref=e53]:
+            - paragraph [ref=e54]: "2013"
+            - heading "A food revelation" [level=2] [ref=e55]:
+              - text: A food
+              - text: revelation
+            - paragraph [ref=e57]: Months of research led us to an age-old preservation method of removing the moisture from food.
+          - img "A food" [ref=e62]
+      - generic [ref=e64]:
+        - generic:
+          - img
+          - img
+          - img
+        - generic [ref=e66]:
+          - generic [ref=e67]:
+            - paragraph [ref=e68]: "2014"
+            - heading "Memorable milestones" [level=2] [ref=e69]:
+              - text: Memorable
+              - text: milestones
+            - paragraph [ref=e71]: In 2014, our co-founders entered the Dragons' Den and we were lucky enough to win over two dragons!
+          - img "Memorable" [ref=e76]
+      - generic [ref=e78]:
+        - generic:
+          - img
+          - img
+          - img
+        - generic [ref=e80]:
+          - generic [ref=e81]:
+            - paragraph [ref=e82]: "2017"
+            - heading "Hosting a royal visit" [level=2] [ref=e83]:
+              - text: Hosting a
+              - text: royal visit
+            - paragraph [ref=e85]: Her Royal Highness Princess Anne visited us here in West Yorkshire in 2017.
+          - img "Hosting a" [ref=e90]
+      - generic [ref=e92]:
+        - generic:
+          - img
+          - img
+          - img
+          - img
+          - img
+        - generic:
+          - img
+          - img
+          - img
+        - generic [ref=e94]:
+          - paragraph [ref=e95]: "2024"
+          - heading "Where we are today" [level=2] [ref=e96]:
+            - text: Where we are
+            - text: today
+          - generic [ref=e97]:
+            - paragraph [ref=e98]: We've come a long way from creating recipes in Dan's kitchen.
+            - paragraph [ref=e99]: So you could say that in many ways, this is only the beginning!
+    - generic [ref=e102]:
+      - heading "Since 2012" [level=2] [ref=e103]
+      - paragraph [ref=e104]: we've delivered
+      - generic [ref=e105]: 92,871,751
+      - paragraph [ref=e106]: meals and changed the lives of thousands of pets for the better
+    - generic [ref=e109]:
+      - img "Learn more about Jeko" [ref=e111]
+      - generic [ref=e114]:
+        - heading "Learn more" [level=2] [ref=e115]
+        - paragraph [ref=e116]: about Pure
+        - paragraph [ref=e117]: Our dogs are a part of the family, so they deserve the best food.
+    - generic [ref=e120]:
+      - generic [ref=e122]:
+        - heading "Personalise your" [level=2] [ref=e123]
+        - paragraph [ref=e124]: dog's food
+        - paragraph [ref=e125]: Proactively invest in your pet's health.
+        - link "Discover your dog's menu" [ref=e126] [cursor=pointer]:
+          - /url: /signup
+      - img "Personalise your dog's food" [ref=e128]
+  - contentinfo [ref=e130]:
+    - generic [ref=e131]:
+      - generic [ref=e132]:
+        - generic [ref=e133]:
+          - heading "Join our VIP list" [level=4] [ref=e134]
+          - paragraph [ref=e135]: Be the first to hear about new product launches, exclusive competitions and helpful dog content.
+          - generic [ref=e136]:
+            - textbox "Enter your email address" [ref=e137]
+            - button "Sign up" [ref=e138] [cursor=pointer]
+        - generic [ref=e139]:
+          - generic [ref=e140]:
+            - heading "Jeko" [level=4] [ref=e141]
+            - list [ref=e142]:
+              - listitem [ref=e143]:
+                - link "Our story" [ref=e144] [cursor=pointer]:
+                  - /url: /about
+              - listitem [ref=e145]:
+                - link "Reviews" [ref=e146] [cursor=pointer]:
+                  - /url: /reviews
+              - listitem [ref=e147]:
+                - link "Recipes" [ref=e148] [cursor=pointer]:
+                  - /url: /recipes
+              - listitem [ref=e149]:
+                - link "Beyond the bowl" [ref=e150] [cursor=pointer]:
+                  - /url: /beyond-the-bowl
+              - listitem [ref=e151]:
+                - link "Shop" [ref=e152] [cursor=pointer]:
+                  - /url: /products
+              - listitem [ref=e153]:
+                - link "Community" [ref=e154] [cursor=pointer]:
+                  - /url: /community
+          - generic [ref=e155]:
+            - heading "Help" [level=4] [ref=e156]
+            - list [ref=e157]:
+              - listitem [ref=e158]:
+                - link "My account" [ref=e159] [cursor=pointer]:
+                  - /url: /profile
+              - listitem [ref=e160]:
+                - link "Contact us" [ref=e161] [cursor=pointer]:
+                  - /url: /contact
+              - listitem [ref=e162]:
+                - link "Delivery information" [ref=e163] [cursor=pointer]:
+                  - /url: /delivery-information
+              - listitem [ref=e164]:
+                - link "Returns" [ref=e165] [cursor=pointer]:
+                  - /url: /returns
+              - listitem [ref=e166]:
+                - link "Sitemap" [ref=e167] [cursor=pointer]:
+                  - /url: /sitemap-page
+          - generic [ref=e168]:
+            - heading "Information" [level=4] [ref=e169]
+            - list [ref=e170]:
+              - listitem [ref=e171]:
+                - link "Privacy policy" [ref=e172] [cursor=pointer]:
+                  - /url: /privacy-policy
+              - listitem [ref=e173]:
+                - link "Terms & conditions" [ref=e174] [cursor=pointer]:
+                  - /url: /terms-of-use
+              - listitem [ref=e175]:
+                - link "Jeko policies" [ref=e176] [cursor=pointer]:
+                  - /url: /pure-policies
+              - listitem [ref=e177]:
+                - link "Site security" [ref=e178] [cursor=pointer]:
+                  - /url: /site-security
+              - listitem [ref=e179]:
+                - link "Cookie policy" [ref=e180] [cursor=pointer]:
+                  - /url: /cookie-policy
+      - generic [ref=e181]:
+        - generic [ref=e183]: JEKO
+        - paragraph [ref=e184]: © Jeko 2020-2026
+  - generic:
+    - generic:
+      - paragraph: Bow Wow! 🐾
+      - paragraph: Find a friend for your pup!
+    - button "Find pet matches":
+      - img

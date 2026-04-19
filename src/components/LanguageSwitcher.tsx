@@ -9,10 +9,17 @@ function getCookie(name: string): string {
 }
 
 function setGoogTransCookie(lang: string) {
-  const value = lang === "hy" ? "/en/hy" : "/en/en";
   const domain = window.location.hostname;
-  document.cookie = `googtrans=${value};path=/;domain=${domain}`;
-  document.cookie = `googtrans=${value};path=/`;
+  if (lang === "en") {
+    const past = "Thu, 01 Jan 1970 00:00:00 GMT";
+    document.cookie = `googtrans=;path=/;domain=${domain};expires=${past}`;
+    document.cookie = `googtrans=;path=/;expires=${past}`;
+    document.cookie = `googtrans=;path=/;domain=.${domain};expires=${past}`;
+  } else {
+    const value = `/en/${lang}`;
+    document.cookie = `googtrans=${value};path=/;domain=${domain}`;
+    document.cookie = `googtrans=${value};path=/`;
+  }
   window.location.reload();
 }
 
@@ -35,7 +42,7 @@ export default function LanguageSwitcher() {
 
   useEffect(() => {
     const cookie = getCookie("googtrans");
-    if (cookie.includes("/hy")) setCurrentLang("hy");
+    if (cookie && cookie.includes("/hy")) setCurrentLang("hy");
     else setCurrentLang("en");
 
     window.googleTranslateElementInit = () => {

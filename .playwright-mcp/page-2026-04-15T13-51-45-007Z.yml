@@ -1,0 +1,192 @@
+- generic [active] [ref=e1]:
+  - alert [ref=e2]
+  - banner [ref=e3]:
+    - generic [ref=e5]:
+      - link "JEKO" [ref=e6] [cursor=pointer]:
+        - /url: /
+        - generic [ref=e7]: JEKO
+      - navigation [ref=e8]:
+        - link "About" [ref=e10] [cursor=pointer]:
+          - /url: /about
+          - text: About
+          - img [ref=e11]
+        - link "Community" [ref=e14] [cursor=pointer]:
+          - /url: /community
+          - text: Community
+          - img [ref=e15]
+        - link "Shop" [ref=e18] [cursor=pointer]:
+          - /url: /products
+        - link "Reviews" [ref=e20] [cursor=pointer]:
+          - /url: /reviews
+        - link "Health & breeds" [ref=e22] [cursor=pointer]:
+          - /url: /benefits
+          - text: Health & breeds
+          - img [ref=e23]
+      - button "Shopping cart" [ref=e26] [cursor=pointer]:
+        - img [ref=e27]
+  - main [ref=e31]:
+    - generic [ref=e32]:
+      - generic [ref=e33]:
+        - heading "Community" [level=1] [ref=e34]
+        - paragraph [ref=e35]: Share moments, connect with fellow pet parents, and celebrate your furry friends.
+      - generic [ref=e37]:
+        - generic [ref=e38]:
+          - generic [ref=e39]:
+            - img "Shipio T." [ref=e40]
+            - generic [ref=e41]:
+              - paragraph [ref=e43]: Shipio T.
+              - paragraph [ref=e44]: Golden Retriever
+          - textbox "Share something about your pet..." [ref=e45]
+          - generic [ref=e47]: 0/500
+        - generic [ref=e48]:
+          - generic [ref=e50] [cursor=pointer]:
+            - img [ref=e51]
+            - text: Add photo
+          - button "Post" [disabled] [ref=e55]
+      - generic [ref=e57]:
+        - button "All Posts" [ref=e58] [cursor=pointer]: All Posts
+        - button "Following" [ref=e60] [cursor=pointer]
+        - button "Trending" [ref=e61] [cursor=pointer]
+      - generic [ref=e62]:
+        - article [ref=e63]:
+          - img "Photo by tony s." [ref=e64]
+          - generic [ref=e65]:
+            - paragraph [ref=e66]: There was one evening I will never forget. I had come home after an exhausting, heartbreaking day — the kind where you feel invisible and defeated. I sat down on the floor and buried my face in my hands. Within seconds, Bruno was there. He pressed his warm body against mine, licked my tears, and rested his chin on my shoulder. We sat like that for a long time, in complete silence. No advice, no judgment, no words. Just his steady warmth and his unconditional presence. I felt, in that moment, tru
+            - button "more" [ref=e67] [cursor=pointer]
+          - generic [ref=e68]:
+            - generic [ref=e69]: T
+            - generic [ref=e70]:
+              - generic [ref=e71]: tony s.
+              - generic [ref=e72]: Labradoodle
+              - generic [ref=e73]: Noida
+            - button "Follow" [ref=e74] [cursor=pointer]
+          - generic [ref=e75]:
+            - generic [ref=e76]: 2h ago
+            - button "Report post" [ref=e78] [cursor=pointer]:
+              - img [ref=e79]
+          - generic [ref=e81]:
+            - button "0" [ref=e82] [cursor=pointer]:
+              - img [ref=e83]
+              - generic [ref=e85]: "0"
+            - button "0" [ref=e86] [cursor=pointer]:
+              - img [ref=e87]
+              - generic [ref=e89]: "0"
+            - button [ref=e91] [cursor=pointer]:
+              - img [ref=e92]
+        - article [ref=e95]:
+          - img "Photo by admin" [ref=e96]
+          - generic [ref=e97]:
+            - paragraph [ref=e98]: My Dog — My Whole World There are moments in life that change you forever. For me, one of those moments was the day a tiny, trembling bundle of golden fur was placed into my hands. He looked up at me with those big, liquid brown eyes — uncertain, a little afraid — and I felt something shift deep inside my chest. That was the day Bruno came into my life, and nothing has ever been the same since. Bruno is a Golden Retriever. He was just eight weeks old when I first brought him home
+            - button "more" [ref=e99] [cursor=pointer]
+          - generic [ref=e100]:
+            - generic [ref=e101]: A
+            - generic [ref=e103]: admin
+            - button "Follow" [ref=e104] [cursor=pointer]
+          - generic [ref=e105]:
+            - generic [ref=e106]: 3h ago
+            - button "Report post" [ref=e108] [cursor=pointer]:
+              - img [ref=e109]
+          - generic [ref=e111]:
+            - button "1" [ref=e112] [cursor=pointer]:
+              - img [ref=e113]
+              - generic [ref=e115]: "1"
+            - button "3" [ref=e116] [cursor=pointer]:
+              - img [ref=e117]
+              - generic [ref=e119]: "3"
+            - button [ref=e121] [cursor=pointer]:
+              - img [ref=e122]
+        - article [ref=e125]:
+          - paragraph [ref=e127]: kjshddfjsf
+          - generic [ref=e128]:
+            - generic [ref=e129]: S
+            - generic [ref=e131]: sdfjs10
+            - button "Follow" [ref=e132] [cursor=pointer]
+          - generic [ref=e133]:
+            - generic [ref=e134]: 23h ago
+            - button "Report post" [ref=e136] [cursor=pointer]:
+              - img [ref=e137]
+          - generic [ref=e139]:
+            - button "0" [ref=e140] [cursor=pointer]:
+              - img [ref=e141]
+              - generic [ref=e143]: "0"
+            - button "0" [ref=e144] [cursor=pointer]:
+              - img [ref=e145]
+              - generic [ref=e147]: "0"
+            - button [ref=e149] [cursor=pointer]:
+              - img [ref=e150]
+  - contentinfo [ref=e153]:
+    - generic [ref=e154]:
+      - generic [ref=e155]:
+        - generic [ref=e156]:
+          - heading "Join our VIP list" [level=4] [ref=e157]
+          - paragraph [ref=e158]: Be the first to hear about new product launches, exclusive competitions and helpful dog content.
+          - generic [ref=e159]:
+            - textbox "Enter your email address" [ref=e160]
+            - button "Sign up" [ref=e161] [cursor=pointer]
+        - generic [ref=e162]:
+          - generic [ref=e163]:
+            - heading "Jeko" [level=4] [ref=e164]
+            - list [ref=e165]:
+              - listitem [ref=e166]:
+                - link "Our story" [ref=e167] [cursor=pointer]:
+                  - /url: /about
+              - listitem [ref=e168]:
+                - link "Reviews" [ref=e169] [cursor=pointer]:
+                  - /url: /reviews
+              - listitem [ref=e170]:
+                - link "Recipes" [ref=e171] [cursor=pointer]:
+                  - /url: /recipes
+              - listitem [ref=e172]:
+                - link "Beyond the bowl" [ref=e173] [cursor=pointer]:
+                  - /url: /beyond-the-bowl
+              - listitem [ref=e174]:
+                - link "Shop" [ref=e175] [cursor=pointer]:
+                  - /url: /products
+              - listitem [ref=e176]:
+                - link "Community" [ref=e177] [cursor=pointer]:
+                  - /url: /community
+          - generic [ref=e178]:
+            - heading "Help" [level=4] [ref=e179]
+            - list [ref=e180]:
+              - listitem [ref=e181]:
+                - link "My account" [ref=e182] [cursor=pointer]:
+                  - /url: /profile
+              - listitem [ref=e183]:
+                - link "Contact us" [ref=e184] [cursor=pointer]:
+                  - /url: /contact
+              - listitem [ref=e185]:
+                - link "Delivery information" [ref=e186] [cursor=pointer]:
+                  - /url: /delivery-information
+              - listitem [ref=e187]:
+                - link "Returns" [ref=e188] [cursor=pointer]:
+                  - /url: /returns
+              - listitem [ref=e189]:
+                - link "Sitemap" [ref=e190] [cursor=pointer]:
+                  - /url: /sitemap-page
+          - generic [ref=e191]:
+            - heading "Information" [level=4] [ref=e192]
+            - list [ref=e193]:
+              - listitem [ref=e194]:
+                - link "Privacy policy" [ref=e195] [cursor=pointer]:
+                  - /url: /privacy-policy
+              - listitem [ref=e196]:
+                - link "Terms & conditions" [ref=e197] [cursor=pointer]:
+                  - /url: /terms-of-use
+              - listitem [ref=e198]:
+                - link "Jeko policies" [ref=e199] [cursor=pointer]:
+                  - /url: /pure-policies
+              - listitem [ref=e200]:
+                - link "Site security" [ref=e201] [cursor=pointer]:
+                  - /url: /site-security
+              - listitem [ref=e202]:
+                - link "Cookie policy" [ref=e203] [cursor=pointer]:
+                  - /url: /cookie-policy
+      - generic [ref=e204]:
+        - generic [ref=e206]: JEKO
+        - paragraph [ref=e207]: © Jeko 2020-2026
+  - generic [ref=e208]:
+    - generic [ref=e209]:
+      - paragraph [ref=e210]: Bow Wow! 🐾
+      - paragraph [ref=e211]: Find a friend for your pup!
+    - button "Find pet matches" [ref=e213] [cursor=pointer]:
+      - img [ref=e214]

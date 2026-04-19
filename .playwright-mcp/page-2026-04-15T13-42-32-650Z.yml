@@ -1,0 +1,115 @@
+- generic [ref=e1]:
+  - alert [ref=e2]
+  - generic [ref=e3]:
+    - banner [ref=e4]:
+      - generic [ref=e5]:
+        - link "JEKO" [ref=e6] [cursor=pointer]:
+          - /url: /
+          - generic [ref=e7]: JEKO
+        - generic [ref=e8]:
+          - paragraph [ref=e9]:
+            - text: Already have an account?
+            - link "Log in" [ref=e10] [cursor=pointer]:
+              - /url: /login
+          - button [ref=e65] [cursor=pointer]:
+            - img [ref=e66]
+    - main [ref=e11]:
+      - generic [ref=e13]:
+        - paragraph [ref=e26]: 🏁 Last lap!
+        - generic [ref=e435]:
+          - heading "Where are you located?" [level=1] [ref=e436]
+          - paragraph [ref=e437]: Connect with nearby pet owners and local events
+          - generic [ref=e438]:
+            - generic [ref=e439]:
+              - generic [ref=e440]: Country *
+              - button "India" [ref=e857] [cursor=pointer]:
+                - generic [ref=e443]: India
+                - img [ref=e444]
+            - generic [ref=e446]:
+              - generic [ref=e447]: State / Province *
+              - generic [ref=e448]:
+                - button "Select state / province" [ref=e449] [cursor=pointer]:
+                  - generic [ref=e450]: Select state / province
+                  - img [ref=e451]
+                - generic [ref=e859]:
+                  - textbox "Search or type your own..." [ref=e861]: Rajasthan
+                  - list [ref=e862]:
+                    - listitem [ref=e863]:
+                      - button "Andaman and Nicobar Islands" [ref=e864] [cursor=pointer]
+                    - listitem [ref=e865]:
+                      - button "Andhra Pradesh" [ref=e866] [cursor=pointer]
+                    - listitem [ref=e867]:
+                      - button "Arunachal Pradesh" [ref=e868] [cursor=pointer]
+                    - listitem [ref=e869]:
+                      - button "Assam" [ref=e870] [cursor=pointer]
+                    - listitem [ref=e871]:
+                      - button "Bihar" [ref=e872] [cursor=pointer]
+                    - listitem [ref=e873]:
+                      - button "Chandigarh" [ref=e874] [cursor=pointer]
+                    - listitem [ref=e875]:
+                      - button "Chhattisgarh" [ref=e876] [cursor=pointer]
+                    - listitem [ref=e877]:
+                      - button "Dadra and Nagar Haveli" [ref=e878] [cursor=pointer]
+                    - listitem [ref=e879]:
+                      - button "Daman and Diu" [ref=e880] [cursor=pointer]
+                    - listitem [ref=e881]:
+                      - button "Delhi" [ref=e882] [cursor=pointer]
+                    - listitem [ref=e883]:
+                      - button "Goa" [ref=e884] [cursor=pointer]
+                    - listitem [ref=e885]:
+                      - button "Gujarat" [ref=e886] [cursor=pointer]
+                    - listitem [ref=e887]:
+                      - button "Haryana" [ref=e888] [cursor=pointer]
+                    - listitem [ref=e889]:
+                      - button "Himachal Pradesh" [ref=e890] [cursor=pointer]
+                    - listitem [ref=e891]:
+                      - button "Jammu and Kashmir" [ref=e892] [cursor=pointer]
+                    - listitem [ref=e893]:
+                      - button "Jharkhand" [ref=e894] [cursor=pointer]
+                    - listitem [ref=e895]:
+                      - button "Karnataka" [ref=e896] [cursor=pointer]
+                    - listitem [ref=e897]:
+                      - button "Kerala" [ref=e898] [cursor=pointer]
+                    - listitem [ref=e899]:
+                      - button "Ladakh" [ref=e900] [cursor=pointer]
+                    - listitem [ref=e901]:
+                      - button "Lakshadweep" [ref=e902] [cursor=pointer]
+                    - listitem [ref=e903]:
+                      - button "Madhya Pradesh" [ref=e904] [cursor=pointer]
+                    - listitem [ref=e905]:
+                      - button "Maharashtra" [ref=e906] [cursor=pointer]
+                    - listitem [ref=e907]:
+                      - button "Manipur" [ref=e908] [cursor=pointer]
+                    - listitem [ref=e909]:
+                      - button "Meghalaya" [ref=e910] [cursor=pointer]
+                    - listitem [ref=e911]:
+                      - button "Mizoram" [ref=e912] [cursor=pointer]
+                    - listitem [ref=e913]:
+                      - button "Nagaland" [ref=e914] [cursor=pointer]
+                    - listitem [ref=e915]:
+                      - button "Odisha" [ref=e916] [cursor=pointer]
+                    - listitem [ref=e917]:
+                      - button "Puducherry" [ref=e918] [cursor=pointer]
+                    - listitem [ref=e919]:
+                      - button "Punjab" [ref=e920] [cursor=pointer]
+                    - listitem [ref=e921]:
+                      - button "Rajasthan" [ref=e922] [cursor=pointer]
+                    - listitem [ref=e923]:
+                      - button "Sikkim" [ref=e924] [cursor=pointer]
+                    - listitem [ref=e925]:
+                      - button "Tamil Nadu" [ref=e926] [cursor=pointer]
+                    - listitem [ref=e927]:
+                      - button "Telangana" [ref=e928] [cursor=pointer]
+                    - listitem [ref=e929]:
+                      - button "Tripura" [ref=e930] [cursor=pointer]
+                    - listitem [ref=e931]:
+                      - button "Uttar Pradesh" [ref=e932] [cursor=pointer]
+                    - listitem [ref=e933]:
+                      - button "Uttarakhand" [ref=e934] [cursor=pointer]
+                    - listitem [ref=e935]:
+                      - button "West Bengal" [ref=e936] [cursor=pointer]
+                - paragraph [ref=e937]: State / Province is required
+            - generic [ref=e453]:
+              - generic [ref=e454]: City *
+              - textbox "Type your city" [active] [ref=e858]: Jaipur
+          - button "Continue" [ref=e460] [cursor=pointer]

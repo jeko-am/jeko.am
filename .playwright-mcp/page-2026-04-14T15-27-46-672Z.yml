@@ -1,0 +1,124 @@
+- generic [active] [ref=e1]:
+  - banner [ref=e2]:
+    - generic [ref=e4]:
+      - link "JEKO" [ref=e5] [cursor=pointer]:
+        - /url: /
+        - generic [ref=e6]: JEKO
+      - navigation [ref=e7]:
+        - link "About" [ref=e9] [cursor=pointer]:
+          - /url: /about
+          - text: About
+          - img [ref=e10]
+        - link "Community" [ref=e13] [cursor=pointer]:
+          - /url: /community
+          - text: Community
+          - img [ref=e14]
+        - link "Shop" [ref=e17] [cursor=pointer]:
+          - /url: /products
+        - link "Reviews" [ref=e19] [cursor=pointer]:
+          - /url: /reviews
+        - link "Health & breeds" [ref=e21] [cursor=pointer]:
+          - /url: /benefits
+          - text: Health & breeds
+          - img [ref=e22]
+      - generic [ref=e24]:
+        - button "Shopping cart" [ref=e25] [cursor=pointer]:
+          - img [ref=e26]
+        - link "Help" [ref=e30] [cursor=pointer]:
+          - /url: /contact
+        - link "Login" [ref=e31] [cursor=pointer]:
+          - /url: /login
+        - link "Sign up" [ref=e32] [cursor=pointer]:
+          - /url: /auth/signup
+  - main [ref=e33]:
+    - generic [ref=e35]:
+      - heading "Shop Our Products" [level=1] [ref=e36]
+      - paragraph [ref=e37]: Everything your furry friend needs. Premium food, treats, and accessories made with love.
+    - generic [ref=e39]:
+      - generic [ref=e40]:
+        - generic [ref=e41]:
+          - img [ref=e42]
+          - textbox "Search products..." [ref=e44]
+        - button "All" [ref=e46] [cursor=pointer]
+        - combobox [ref=e47] [cursor=pointer]:
+          - option "Newest" [selected]
+          - 'option "Price: Low to High"'
+          - 'option "Price: High to Low"'
+          - option "Name A-Z"
+      - paragraph [ref=e49]: Loading...
+  - contentinfo [ref=e99]:
+    - generic [ref=e100]:
+      - generic [ref=e101]:
+        - generic [ref=e102]:
+          - heading "Join our VIP list" [level=4] [ref=e103]
+          - paragraph [ref=e104]: Be the first to hear about new product launches, exclusive competitions and helpful dog content.
+          - generic [ref=e105]:
+            - textbox "Enter your email address" [ref=e106]
+            - button "Sign up" [ref=e107] [cursor=pointer]
+        - generic [ref=e108]:
+          - generic [ref=e109]:
+            - heading "Jeko" [level=4] [ref=e110]
+            - list [ref=e111]:
+              - listitem [ref=e112]:
+                - link "Our story" [ref=e113] [cursor=pointer]:
+                  - /url: /about
+              - listitem [ref=e114]:
+                - link "Reviews" [ref=e115] [cursor=pointer]:
+                  - /url: /reviews
+              - listitem [ref=e116]:
+                - link "Recipes" [ref=e117] [cursor=pointer]:
+                  - /url: /recipes
+              - listitem [ref=e118]:
+                - link "Beyond the bowl" [ref=e119] [cursor=pointer]:
+                  - /url: /beyond-the-bowl
+              - listitem [ref=e120]:
+                - link "Shop" [ref=e121] [cursor=pointer]:
+                  - /url: /products
+              - listitem [ref=e122]:
+                - link "Community" [ref=e123] [cursor=pointer]:
+                  - /url: /community
+          - generic [ref=e124]:
+            - heading "Help" [level=4] [ref=e125]
+            - list [ref=e126]:
+              - listitem [ref=e127]:
+                - link "My account" [ref=e128] [cursor=pointer]:
+                  - /url: /profile
+              - listitem [ref=e129]:
+                - link "Contact us" [ref=e130] [cursor=pointer]:
+                  - /url: /contact
+              - listitem [ref=e131]:
+                - link "Delivery information" [ref=e132] [cursor=pointer]:
+                  - /url: /delivery-information
+              - listitem [ref=e133]:
+                - link "Returns" [ref=e134] [cursor=pointer]:
+                  - /url: /returns
+              - listitem [ref=e135]:
+                - link "Sitemap" [ref=e136] [cursor=pointer]:
+                  - /url: /sitemap-page
+          - generic [ref=e137]:
+            - heading "Information" [level=4] [ref=e138]
+            - list [ref=e139]:
+              - listitem [ref=e140]:
+                - link "Privacy policy" [ref=e141] [cursor=pointer]:
+                  - /url: /privacy-policy
+              - listitem [ref=e142]:
+                - link "Terms & conditions" [ref=e143] [cursor=pointer]:
+                  - /url: /terms-of-use
+              - listitem [ref=e144]:
+                - link "Jeko policies" [ref=e145] [cursor=pointer]:
+                  - /url: /pure-policies
+              - listitem [ref=e146]:
+                - link "Site security" [ref=e147] [cursor=pointer]:
+                  - /url: /site-security
+              - listitem [ref=e148]:
+                - link "Cookie policy" [ref=e149] [cursor=pointer]:
+                  - /url: /cookie-policy
+      - generic [ref=e150]:
+        - generic [ref=e152]: JEKO
+        - paragraph [ref=e153]: © Jeko 2020-2026
+  - generic:
+    - generic:
+      - paragraph: Bow Wow! 🐾
+      - paragraph: Find a friend for your pup!
+    - button "Find pet matches":
+      - img
