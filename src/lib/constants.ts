@@ -3,7 +3,24 @@ export const DOG_BREEDS = [
 ];
 
 export const CAT_BREEDS = [
-  "Abyssinian", "American Bobtail", "American Curl", "American Shorthair", "American Wirehair", "Applehead Siamese", "Balinese", "Bambino", "Bengal", "Birman", "Bombay", "Brazilian Shorthair", "British Longhair", "British Shorthair", "Burmese", "Burmilla", "Calico", "Caracat", "Chantilly-Tiffany", "Chartreux", "Chausie", "Cheetoh", "Chinchilla", "Colorpoint Shorthair", "Cornish Rex", "Cymric", "Devon Rex", "Dilute Calico", "Don Sphynx", "Egyptian Mau", "European Shorthair", "Exotic Shorthair", "Foldex", "German Rex", "Getup Cat", "Ginger Tabby", "Golden British Shorthair", "Havana Brown", "Highland Fold", "Highlander", "Himalayan", "Japanese Bobtail", "Javanese", "Khao Manee", "Korat", "Kurilian Bobtail", "Lambkin", "Lancashire", "LaPerm", "Lykoi", "Maine Coon", "Mandalay", "Mandarin", "Manx", "Marble Bengal", "Marmalade", "Mau", "Mink Bengal", "Minuet", "Mist", "Mitted Ragdoll", "Mixed Breed", "Moggie", "Munchkin", "Nebelung", "Neva Masquerade", "Nibelung", "Norwegian Forest Cat", "Ocicat", "Ojos Azules", "Orange Tabby", "Oriental", "Oriental Shorthair", "Owyhee Bob", "Patterdale", "Peke-Faced Persian", "Persian", "Peterbald", "Pixie-Bob", "Raas", "Ragamuffin", "Ragdoll", "Rajas", "Ragdoll Colorpoint", "Red Tabby", "Russian Blue", "Russian White", "Rusty Spotted Cat", "Sacred Birman", "Savanah", "Scottish Fold", "Selkirk Rex", "Sepia Bengal", "Serengeti", "Seychellois", "Shaded Golden", "Shaggy Bengal", "Shorthair", "Siamese", "Siberian", "Silver Bengal", "Singapura", "Snowshoe", "Sokoke", "Somerset Rex", "Sphynx", "Spotted Bengal", "St. Barts Brown", "Tabby", "Tabby and White", "Tan Ragdoll", "Tasman", "Tennessee Rex", "Thai", "Tonkinese", "Topaz", "Torbie", "Tortoiseshell", "Tortoiseshell and White", "Tosca", "Toyger", "Turkish Angora", "Turkish Van", "Ural Rex", "Urumqi", "Van Kedisi", "Vikinglo", "Vitesse", "Volyn Blue", "Volyn Shorthair", "Wampus", "Whiskers", "White Cornish Rex", "Wirehair", "Wladimir Blue", "Xanthe", "Xantus", "Xenia", "Yamagata", "Yamato", "Yangtze", "Yapok", "Yarmouth", "Yarrow", "Yazoo", "Ye Olde Catte", "Yekaterinburg", "Yemenite", "Yengeese", "Yenta", "Yeon", "Yerevan", "Yesha", "Yeshiva", "Yessian", "Yester", "Yeti", "Yetts", "Yeukie", "Yeuk", "Yew", "Yews", "Yf", "Yhe", "Yhow", "Yi", "Yid", "Yiddish", "Yiddisher", "Yie", "Yif", "Yiff", "Yigged", "Yagga", "Yaguara", "Yaguarundi", "Yah", "Yahoo", "Yahweh", "Yajik", "Yak", "Yakhne", "Yakka", "Yakow", "Yaks", "Yakuza", "Yal", "Yale", "Yaley", "Yali", "Yam", "Yamabushi", "Yamada", "Yamadori", "Yamagumo", "Yamaha", "Yamagana", "Yamagara", "Yamagatana", "Yamagishi", "Yamaha", "Yamaime", "Yamainu", "Yamakaeri", "Yamakaze", "Yamakatsu", "Yamakaya", "Yamaki", "Yamakimi", "Yamakokami", "Yamakoma", "Yamakonda", "Yamakoori", "Yamakorona", "Yamakota", "Yamakouma", "Yamakowa", "Yamakoya", "Yamakozasa", "Yamakozo"
+  "Abyssinian", "American Bobtail", "American Curl", "American Shorthair", "American Wirehair",
+  "Applehead Siamese", "Balinese", "Bambino", "Bengal", "Birman", "Bombay", "Brazilian Shorthair",
+  "British Longhair", "British Shorthair", "Burmese", "Burmilla", "Calico", "Caracat",
+  "Chantilly-Tiffany", "Chartreux", "Chausie", "Cheetoh", "Chinchilla", "Colorpoint Shorthair",
+  "Cornish Rex", "Cymric", "Devon Rex", "Dilute Calico", "Don Sphynx", "Egyptian Mau",
+  "European Shorthair", "Exotic Shorthair", "Foldex", "German Rex", "Ginger Tabby",
+  "Golden British Shorthair", "Havana Brown", "Highland Fold", "Highlander", "Himalayan",
+  "Japanese Bobtail", "Javanese", "Khao Manee", "Korat", "Kurilian Bobtail", "Lambkin",
+  "LaPerm", "Lykoi", "Maine Coon", "Mandalay", "Manx", "Marble Bengal", "Mink Bengal",
+  "Minuet", "Mist", "Mitted Ragdoll", "Mixed Breed", "Moggie", "Munchkin", "Nebelung",
+  "Neva Masquerade", "Norwegian Forest Cat", "Ocicat", "Ojos Azules", "Orange Tabby",
+  "Oriental", "Oriental Shorthair", "Owyhee Bob", "Peke-Faced Persian", "Persian", "Peterbald",
+  "Pixie-Bob", "Raas", "Ragamuffin", "Ragdoll", "Ragdoll Colorpoint", "Red Tabby",
+  "Russian Blue", "Russian White", "Sacred Birman", "Savannah", "Scottish Fold", "Selkirk Rex",
+  "Sepia Bengal", "Serengeti", "Seychellois", "Siamese", "Siberian", "Silver Bengal",
+  "Singapura", "Snowshoe", "Sokoke", "Sphynx", "Spotted Bengal", "Tabby", "Tabby and White",
+  "Tennessee Rex", "Thai", "Tonkinese", "Torbie", "Tortoiseshell", "Tortoiseshell and White",
+  "Toyger", "Turkish Angora", "Turkish Van", "Ural Rex"
 ];
 
 export const OTHER_BREEDS = [

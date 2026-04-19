@@ -7,6 +7,7 @@ import Footer from "@/components/Footer";
 import { useAuth } from "@/lib/auth";
 import { useSignupUrl } from "@/lib/useSignupUrl";
 import { supabase } from "@/lib/supabase";
+import { getBreedsByPetType } from "@/lib/constants";
 
 /* ─── Types ─────────────────────────────────────────────────────────── */
 
@@ -42,38 +43,6 @@ type ConnectionStatus = "none" | "sent" | "received" | "matched";
 
 /* ─── Constants ─────────────────────────────────────────────────────── */
 
-const COMMON_BREEDS = [
-  "Labrador Retriever",
-  "German Shepherd",
-  "Golden Retriever",
-  "French Bulldog",
-  "Bulldog",
-  "Poodle",
-  "Beagle",
-  "Rottweiler",
-  "Dachshund",
-  "Yorkshire Terrier",
-  "Boxer",
-  "Cavalier King Charles Spaniel",
-  "Miniature Schnauzer",
-  "Shih Tzu",
-  "Border Collie",
-  "Cocker Spaniel",
-  "Chihuahua",
-  "Pug",
-  "Staffordshire Bull Terrier",
-  "Whippet",
-  "Jack Russell Terrier",
-  "Springer Spaniel",
-  "Dalmatian",
-  "Siberian Husky",
-  "Doberman",
-  "Great Dane",
-  "Maltese",
-  "Bernese Mountain Dog",
-  "Corgi",
-  "Bichon Frise",
-];
 
 const PET_TYPES = [
   { value: "dog", label: "Dog" },
@@ -205,9 +174,9 @@ function ProfilePrompt({
   const breedInputRef = useRef<HTMLInputElement>(null);
   const suggestionsRef = useRef<HTMLDivElement>(null);
 
-  const filteredBreeds = COMMON_BREEDS.filter((b) =>
-    b.toLowerCase().includes(breed.toLowerCase())
-  );
+  const filteredBreeds = getBreedsByPetType(
+    petType === "cat" ? "Cat" : petType === "other" ? "Other" : "Dog"
+  ).filter((b) => b.toLowerCase().includes(breed.toLowerCase()));
 
   // Close suggestions when clicking outside
   useEffect(() => {

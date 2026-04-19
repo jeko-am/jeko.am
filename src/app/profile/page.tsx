@@ -30,6 +30,7 @@ interface PetProfile {
   id: string;
   user_id: string;
   pet_name: string;
+  pet_type: string | null;
   breed: string | null;
   dog_age_years: number | null;
   weight_kg: number | null;
@@ -723,6 +724,7 @@ export default function ProfilePage() {
                 </div>
                 <MatchingPreferences
                   petProfileId={petProfile?.id}
+                  petType={petProfile?.pet_type ?? undefined}
                   onPreferencesChange={() => {}}
                 />
               </div>

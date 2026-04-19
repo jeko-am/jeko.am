@@ -6,6 +6,7 @@ import Link from "next/link";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { useAuth } from "@/lib/auth";
+import { useSignupUrl } from "@/lib/useSignupUrl";
 import { supabase } from "@/lib/supabase";
 
 /* ─── Types ──────────────────────────────────────────────────────────── */
@@ -66,6 +67,7 @@ function AuthModal() {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState("");
+  const signupUrl = useSignupUrl();
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
@@ -155,6 +157,13 @@ function AuthModal() {
             {loading ? "Please wait..." : "Log In"}
           </button>
         </form>
+
+        <p className="text-center text-deep-green/50 text-[13px] mt-4">
+          Don&apos;t have an account?{" "}
+          <Link href={signupUrl} className="text-gold font-medium hover:underline">
+            Create one
+          </Link>
+        </p>
       </div>
     </div>
   );

@@ -1,6 +1,7 @@
 'use client';
 
 import { useAuth } from '@/lib/auth';
+import Header from '@/components/Header';
 import { supabase } from '@/lib/supabase';
 import {
   getBreedsByPetType,
@@ -1512,51 +1513,12 @@ function SignupPageInner() {
 
   return (
     <div className="min-h-screen bg-off-white flex flex-col">
-      {/* -------- Top bar -------- */}
-      <header className="bg-deep-green sticky top-0 z-50">
-        <div className="max-w-3xl mx-auto px-5 h-[56px] flex items-center justify-between">
-          <Link href="/" className="flex-shrink-0">
-            <span
-              style={{
-                fontFamily: "'TR Frankfurter', 'Rubik', sans-serif",
-                color: '#F2A900',
-                transform: 'rotate(-6deg)',
-                display: 'inline-block',
-                fontSize: '28px',
-                fontWeight: 700,
-                lineHeight: 1,
-              }}
-            >
-              JEKO
-            </span>
-          </Link>
-          <div className="flex items-center gap-4">
-            <p className="text-white/60 text-xs sm:text-sm hidden sm:block">
-              Already have an account?{' '}
-              <Link href="/login" className="text-gold font-semibold hover:text-yellow-300 transition-colors underline underline-offset-2">
-                Log in
-              </Link>
-            </p>
-            {step > 0 && (
-              <button
-                type="button"
-                onClick={goBack}
-                disabled={animating}
-                className="text-white/70 hover:text-white transition-colors p-1"
-              >
-                <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
-                </svg>
-              </button>
-            )}
-          </div>
-        </div>
-      </header>
+      <Header />
 
       {/* -------- Main quiz area -------- */}
-      <main className="flex-1 flex flex-col">
+      <main className="flex-1 flex flex-col pt-[64px] lg:pt-[80px]">
         <form onSubmit={handleSubmit} noValidate className="flex-1 flex flex-col">
-          <div className={`flex-1 flex flex-col items-center justify-center px-5 pt-2 pb-8 transition-all duration-300 ease-in-out ${slideClass}`}>
+          <div className={`flex-1 flex flex-col items-center justify-center px-5 pt-8 pb-8 transition-all duration-300 ease-in-out ${slideClass}`}>
 
             {/* Segmented progress bar */}
             <div className="w-full max-w-md mb-8">
@@ -1666,7 +1628,10 @@ function SignupPageInner() {
                   {/* Popular breeds quick-pick */}
                   <p className="text-xs font-medium text-deep-green/70 mt-4 mb-2">Popular breeds</p>
                   <div className="flex flex-wrap justify-center gap-2">
-                    {['Labrador Retriever', 'Golden Retriever', 'French Bulldog', 'German Shepherd', 'Poodle', 'Beagle'].map((b) => (
+                    {(petType === 'Cat'
+                      ? ['Maine Coon', 'Ragdoll', 'British Shorthair', 'Siamese', 'Persian', 'Bengal']
+                      : ['Labrador Retriever', 'Golden Retriever', 'French Bulldog', 'German Shepherd', 'Poodle', 'Beagle']
+                    ).map((b) => (
                       <button
                         key={b}
                         type="button"
