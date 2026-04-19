@@ -1546,7 +1546,7 @@ function SignupPageInner() {
             {/* ============ STEP 0: PET TYPE ============ */}
             {step === 0 && (
               <div className="w-full max-w-lg text-center">
-                <h1 className="text-2xl sm:text-3xl font-rubik font-bold text-deep-green mb-6">
+                <h1 className="text-2xl sm:text-3xl font-rubik font-bold text-gold mb-6">
                   {STEP_TITLES[0]}
                 </h1>
                 <p className="text-deep-green/50 text-sm mb-8">Let&apos;s get started with the basics</p>
@@ -1603,7 +1603,7 @@ function SignupPageInner() {
             {/* ============ STEP 2: BREED ============ */}
             {step === 1 && (
               <div className="w-full max-w-lg text-center">
-                <h1 className="text-2xl sm:text-3xl font-rubik font-bold text-deep-green mb-2">
+                <h1 className="text-2xl sm:text-3xl font-rubik font-bold text-gold mb-2">
                   Tell us more about {petName}
                 </h1>
                 <p className="text-deep-green/50 text-sm mb-8">Breed, gender, age & weight</p>
@@ -1701,7 +1701,7 @@ function SignupPageInner() {
             {/* ============ STEP 2: PERSONALITY ============ */}
             {step === 2 && (
               <div className="w-full max-w-lg text-center">
-                <h1 className="text-2xl sm:text-3xl font-rubik font-bold text-deep-green mb-2">
+                <h1 className="text-2xl sm:text-3xl font-rubik font-bold text-gold mb-2">
                   How would you describe {petName}?
                 </h1>
                 <p className="text-deep-green/50 text-sm mb-6">Pick what fits best</p>
@@ -1738,7 +1738,7 @@ function SignupPageInner() {
             {/* ============ STEP 5: DISABILITIES & ALLERGIES ============ */}
             {step === 3 && (
               <div className="w-full max-w-lg text-center">
-                <h1 className="text-2xl sm:text-3xl font-rubik font-bold text-deep-green mb-2">
+                <h1 className="text-2xl sm:text-3xl font-rubik font-bold text-gold mb-2">
                   {petName}&apos;s health & special needs
                 </h1>
                 <p className="text-deep-green/50 text-sm mb-6">Help us understand any special considerations</p>
@@ -1795,7 +1795,7 @@ function SignupPageInner() {
             {/* ============ STEP 6: DIET & WALKS & ACTIVITIES ============ */}
             {step === 4 && (
               <div className="w-full max-w-lg text-center">
-                <h1 className="text-2xl sm:text-3xl font-rubik font-bold text-deep-green mb-2">
+                <h1 className="text-2xl sm:text-3xl font-rubik font-bold text-gold mb-2">
                   What does {petName} love?
                 </h1>
                 <p className="text-deep-green/50 text-sm mb-6">Help us find the perfect matches</p>
@@ -1834,7 +1834,7 @@ function SignupPageInner() {
             {/* ============ STEP 5: LOOKING FOR A MATCH? ============ */}
             {step === 5 && (
               <div className="w-full max-w-lg text-center">
-                <h1 className="text-2xl sm:text-3xl font-rubik font-bold text-deep-green mb-2">
+                <h1 className="text-2xl sm:text-3xl font-rubik font-bold text-gold mb-2">
                   Looking for a match?
                 </h1>
                 <p className="text-deep-green/50 text-sm mb-6">Would you like {petName} to appear in matches with other pets?</p>
@@ -1872,7 +1872,7 @@ function SignupPageInner() {
             {/* ============ STEP 9: PHOTO & BIO ============ */}
             {step === 6 && (
               <div className="w-full max-w-md text-center">
-                <h1 className="text-2xl sm:text-3xl font-rubik font-bold text-deep-green mb-2">
+                <h1 className="text-2xl sm:text-3xl font-rubik font-bold text-gold mb-2">
                   Show off {petName}!
                 </h1>
                 <p className="text-deep-green/50 text-sm mb-8">Add a photo and tell us what makes them special</p>
@@ -1981,7 +1981,7 @@ function SignupPageInner() {
             {/* ============ STEP 10: LOCATION ============ */}
             {step === 7 && (
               <div className="w-full max-w-md text-center">
-                <h1 className="text-2xl sm:text-3xl font-rubik font-bold text-deep-green mb-2">
+                <h1 className="text-2xl sm:text-3xl font-rubik font-bold text-gold mb-2">
                   Where are you located?
                 </h1>
                 <p className="text-deep-green/50 text-sm mb-8">Connect with nearby pet owners and local events</p>
@@ -2041,7 +2041,7 @@ function SignupPageInner() {
             {/* ============ STEP 11: ACCOUNT CREATION ============ */}
             {step === 8 && (
               <div className="w-full max-w-md text-center">
-                <h1 className="text-2xl sm:text-3xl font-rubik font-bold text-deep-green mb-2">
+                <h1 className="text-2xl sm:text-3xl font-rubik font-bold text-gold mb-2">
                   Almost there! Create your account
                 </h1>
                 <p className="text-deep-green/50 text-sm mb-6">Last step to join the pack</p>

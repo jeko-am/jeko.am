@@ -9,18 +9,25 @@ function getCookie(name: string): string {
 }
 
 function setGoogTransCookie(lang: string) {
-  const domain = window.location.hostname;
+  const domain = window.location.hostname; // e.g. www.jeko.am
+  const rootDomain = domain.replace(/^www\./, ""); // e.g. jeko.am
+
   if (lang === "en") {
     const past = "Thu, 01 Jan 1970 00:00:00 GMT";
-    document.cookie = `googtrans=;path=/;domain=${domain};expires=${past}`;
+    // Clear every domain variant Google Translate could have used
+    for (const d of [domain, `.${domain}`, rootDomain, `.${rootDomain}`]) {
+      document.cookie = `googtrans=;path=/;domain=${d};expires=${past}`;
+    }
     document.cookie = `googtrans=;path=/;expires=${past}`;
-    document.cookie = `googtrans=;path=/;domain=.${domain};expires=${past}`;
+    // Hard-navigate so the page loads fresh outside any translate proxy
+    window.location.href = window.location.href.split("?")[0];
   } else {
     const value = `/en/${lang}`;
     document.cookie = `googtrans=${value};path=/;domain=${domain}`;
+    document.cookie = `googtrans=${value};path=/;domain=.${rootDomain}`;
     document.cookie = `googtrans=${value};path=/`;
+    window.location.reload();
   }
-  window.location.reload();
 }
 
 declare global {
