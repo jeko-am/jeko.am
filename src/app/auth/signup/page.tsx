@@ -1080,6 +1080,14 @@ function SignupPageInner() {
     'JP-Okinawa': ['Naha','Okinawa City'],
   };
 
+  // Countries that use direct city lists — no state/province field needed
+  const noStateCountries = new Set([
+    'Armenia','Georgia','Iran','Turkey','France','United Arab Emirates','Lebanon',
+    'Netherlands','Belgium','Switzerland','Austria','Poland','Sweden','Norway',
+    'Denmark','Finland','Czech Republic','Greece','South Korea','Singapore',
+    'Egypt','South Africa','Ukraine','Azerbaijan','New Zealand','Philippines','Thailand',
+  ]);
+
   // Helper to get the prefix for state-based city lookup
   const statePrefix: Record<string, string> = {
     'United States': 'US', 'Canada': 'CA', 'Australia': 'AU', 'United Kingdom': 'UK', 'Germany': 'DE',
@@ -1087,8 +1095,9 @@ function SignupPageInner() {
     'Argentina': 'AR', 'Italy': 'IT', 'Spain': 'ES', 'Japan': 'JP',
   };
 
-  // Get states: prefer API data, fall back to hardcoded
+  // Get states: prefer API data, fall back to hardcoded (skip for no-state countries)
   const getStatesForCountry = (): string[] => {
+    if (noStateCountries.has(country)) return [];
     if (apiStates.length > 0) return apiStates;
     return countryStates[country] || [];
   };
@@ -1162,11 +1171,16 @@ function SignupPageInner() {
   /* ---------- fetch states from API when country changes ---------- */
   useEffect(() => {
     if (!country) return;
-    // If we already have hardcoded states, use those as initial and still try API
     setApiStates([]);
     setState('');
     setCity('');
     setApiCities([]);
+
+    // Skip API for countries that use direct city lists (no province needed)
+    if (noStateCountries.has(country)) {
+      setLoadingStates(false);
+      return;
+    }
 
     let cancelled = false;
     setLoadingStates(true);

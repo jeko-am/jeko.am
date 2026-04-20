@@ -97,6 +97,7 @@ function OAuthCompleteInner() {
 
         /* ---- Step 4: Save profiles from quiz data ---- */
         const raw = sessionStorage.getItem('jeko-signup-quiz');
+        console.log('[OAuth] sessionStorage jeko-signup-quiz:', raw ? `found (${raw.length} chars)` : 'NOT FOUND');
         if (!raw) {
           // No quiz data in sessionStorage. Check if this user already
           // completed signup before (has a pet_profiles row). If not,
@@ -121,55 +122,94 @@ function OAuthCompleteInner() {
         }
 
         const quiz = JSON.parse(raw);
+        console.log('[OAuth] Quiz data loaded from sessionStorage:', Object.keys(quiz));
         const email = userEmail || quiz.email || '';
         const emailUsername = email.split('@')[0] || '';
         const displayName = generateDisplayName(
           quiz.fullName || (metadata?.full_name as string) || (metadata?.name as string) || emailUsername || 'User'
         );
 
-        // Save user profile
-        await supabase.from('user_profiles').upsert({
-          user_id: userId,
-          full_name: (quiz.fullName || (metadata?.full_name as string) || (metadata?.name as string) || emailUsername || '').trim(),
-          email: email.trim().toLowerCase(),
-          display_name: displayName,
-          age: quiz.age ? parseInt(quiz.age) : null,
-          city: (quiz.city || '').trim(),
-          state: (quiz.state || '').trim(),
-          country: quiz.country || '',
-          phone: (quiz.phone || '').trim() || null,
-        }, { onConflict: 'user_id' });
+        // Save user profile with retry
+        let userProfileSaved = false;
+        for (let attempt = 0; attempt < 3; attempt++) {
+          const { error } = await supabase.from('user_profiles').upsert({
+            user_id: userId,
+            full_name: (quiz.fullName || (metadata?.full_name as string) || (metadata?.name as string) || emailUsername || '').trim(),
+            email: email.trim().toLowerCase(),
+            display_name: displayName,
+            age: quiz.age ? parseInt(quiz.age) : null,
+            city: (quiz.city || '').trim(),
+            state: (quiz.state || '').trim(),
+            country: quiz.country || '',
+            phone: (quiz.phone || '').trim() || null,
+          }, { onConflict: 'user_id' });
+          if (!error) {
+            userProfileSaved = true;
+            console.log('[OAuth] user_profiles saved successfully');
+            break;
+          }
+          console.error(`[OAuth] user_profiles save attempt ${attempt + 1} failed:`, error);
+          await new Promise(r => setTimeout(r, 1000));
+        }
 
-        // Save pet profile
-        await supabase.from('pet_profiles').upsert({
-          user_id: userId,
-          pet_name: (quiz.dogName || '').trim(),
-          breed: (quiz.breed || '').trim(),
-          pet_type: quiz.petType || 'Dog',
-          city: (quiz.city || '').trim(),
-          city_normalized: (quiz.city || '').trim().toLowerCase(),
-          breed_normalized: (quiz.breed || '').trim().toLowerCase(),
-          contact_email: email.trim().toLowerCase(),
-          contact_phone: (quiz.phone || '').trim() || null,
-          share_contact: quiz.shareContact ?? true,
-          display_name: displayName,
-          dog_age_years: quiz.dogAge ? parseFloat(quiz.dogAge) : null,
-          weight_kg: quiz.weightKg ? parseFloat(quiz.weightKg) : null,
-          gender: quiz.gender || 'Unknown',
-          diet_preference: quiz.dietPreferences?.length > 0 ? quiz.dietPreferences : null,
-          disabilities: quiz.disabilities?.length > 0 && !quiz.disabilities?.includes('None') ? quiz.disabilities : null,
-          allergies: quiz.allergies?.length > 0 && !quiz.allergies?.includes('None') ? quiz.allergies : null,
-          activity_level: quiz.activityLevel || null,
-          walk_preference: quiz.walkPreference || null,
-          favorite_activity: quiz.favoriteActivity || null,
-          temperament: quiz.temperament || null,
-          looking_for_mate: quiz.lookingForMatch === true ? quiz.lookingForMate : false,
-          preferred_radius_km: quiz.lookingForMatch === true ? quiz.preferredRadiusKm : null,
-          preferred_breed: quiz.lookingForMatch === true ? quiz.preferredBreed || null : null,
-          gets_along_with_dogs: quiz.getsAlongWithDogs ?? true,
-          bio: (quiz.bio || '').trim() || null,
-          profile_photo_url: quiz.uploadedPhotoUrl || null,
-        }, { onConflict: 'user_id' });
+        if (!userProfileSaved) {
+          console.error('[OAuth] All user_profiles save attempts failed');
+          clearInterval(msgInterval);
+          setStatus('Failed to save profile. Please try signing up again.');
+          await supabase.auth.signOut().catch(() => {});
+          setTimeout(() => router.push('/auth/signup'), 2000);
+          return;
+        }
+
+        // Save pet profile with retry
+        let petProfileSaved = false;
+        for (let attempt = 0; attempt < 3; attempt++) {
+          const { error } = await supabase.from('pet_profiles').upsert({
+            user_id: userId,
+            pet_name: (quiz.dogName || '').trim(),
+            breed: (quiz.breed || '').trim(),
+            pet_type: quiz.petType || 'Dog',
+            city: (quiz.city || '').trim(),
+            city_normalized: (quiz.city || '').trim().toLowerCase(),
+            breed_normalized: (quiz.breed || '').trim().toLowerCase(),
+            contact_email: email.trim().toLowerCase(),
+            contact_phone: (quiz.phone || '').trim() || null,
+            share_contact: quiz.shareContact ?? true,
+            display_name: displayName,
+            dog_age_years: quiz.dogAge ? parseFloat(quiz.dogAge) : null,
+            weight_kg: quiz.weightKg ? parseFloat(quiz.weightKg) : null,
+            gender: quiz.gender || 'Unknown',
+            diet_preference: quiz.dietPreferences?.length > 0 ? quiz.dietPreferences : null,
+            disabilities: quiz.disabilities?.length > 0 && !quiz.disabilities?.includes('None') ? quiz.disabilities : null,
+            allergies: quiz.allergies?.length > 0 && !quiz.allergies?.includes('None') ? quiz.allergies : null,
+            activity_level: quiz.activityLevel || null,
+            walk_preference: quiz.walkPreference || null,
+            favorite_activity: quiz.favoriteActivity || null,
+            temperament: quiz.temperament || null,
+            looking_for_mate: quiz.lookingForMatch === true ? quiz.lookingForMate : false,
+            preferred_radius_km: quiz.lookingForMatch === true ? quiz.preferredRadiusKm : null,
+            preferred_breed: quiz.lookingForMatch === true ? quiz.preferredBreed || null : null,
+            gets_along_with_dogs: quiz.getsAlongWithDogs ?? true,
+            bio: (quiz.bio || '').trim() || null,
+            profile_photo_url: quiz.uploadedPhotoUrl || null,
+          }, { onConflict: 'user_id' });
+          if (!error) {
+            petProfileSaved = true;
+            console.log('[OAuth] pet_profiles saved successfully');
+            break;
+          }
+          console.error(`[OAuth] pet_profiles save attempt ${attempt + 1} failed:`, error);
+          await new Promise(r => setTimeout(r, 1000));
+        }
+
+        if (!petProfileSaved) {
+          console.error('[OAuth] All pet_profiles save attempts failed');
+          clearInterval(msgInterval);
+          setStatus('Failed to save pet profile. Please try again.');
+          await supabase.auth.signOut().catch(() => {});
+          setTimeout(() => router.push('/auth/signup'), 2000);
+          return;
+        }
 
         sessionStorage.removeItem('jeko-signup-quiz');
         clearInterval(msgInterval);
