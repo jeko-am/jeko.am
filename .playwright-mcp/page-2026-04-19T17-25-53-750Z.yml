@@ -1,0 +1,151 @@
+- generic [ref=e1]:
+  - generic [ref=e2]:
+    - complementary [ref=e3]:
+      - generic [ref=e4]:
+        - generic [ref=e6]: PP
+        - generic [ref=e7]:
+          - heading "Jeko" [level=1] [ref=e8]
+          - paragraph [ref=e9]: Admin Panel
+      - navigation [ref=e10]:
+        - link "Dashboard" [ref=e11] [cursor=pointer]:
+          - /url: /admin/dashboard
+          - img [ref=e12]
+          - text: Dashboard
+        - link "Store Editor" [ref=e14] [cursor=pointer]:
+          - /url: /admin/store-editor
+          - img [ref=e15]
+          - text: Store Editor
+        - link "Products" [ref=e17] [cursor=pointer]:
+          - /url: /admin/products
+          - img [ref=e18]
+          - text: Products
+        - link "Bundles" [ref=e20] [cursor=pointer]:
+          - /url: /admin/bundles
+          - img [ref=e21]
+          - text: Bundles
+        - link "Upsells" [ref=e23] [cursor=pointer]:
+          - /url: /admin/upsells
+          - img [ref=e24]
+          - text: Upsells
+        - link "Categories" [ref=e26] [cursor=pointer]:
+          - /url: /admin/categories
+          - img [ref=e27]
+          - text: Categories
+        - link "Orders" [ref=e29] [cursor=pointer]:
+          - /url: /admin/orders
+          - img [ref=e30]
+          - text: Orders
+        - link "Customers" [ref=e32] [cursor=pointer]:
+          - /url: /admin/customers
+          - img [ref=e33]
+          - text: Customers
+        - link "Reviews" [ref=e35] [cursor=pointer]:
+          - /url: /admin/reviews
+          - img [ref=e36]
+          - text: Reviews
+        - link "Discounts" [ref=e38] [cursor=pointer]:
+          - /url: /admin/discounts
+          - img [ref=e39]
+          - text: Discounts
+        - link "Pages" [ref=e41] [cursor=pointer]:
+          - /url: /admin/pages
+          - img [ref=e42]
+          - text: Pages
+        - link "Blog" [ref=e44] [cursor=pointer]:
+          - /url: /admin/blog
+          - img [ref=e45]
+          - text: Blog
+        - link "Settings" [ref=e47] [cursor=pointer]:
+          - /url: /admin/settings
+          - img [ref=e48]
+          - text: Settings
+        - link "Analytics" [ref=e50] [cursor=pointer]:
+          - /url: /admin/analytics
+          - img [ref=e51]
+          - text: Analytics
+        - link "Support" [ref=e53] [cursor=pointer]:
+          - /url: /admin/support
+          - img [ref=e54]
+          - text: Support
+      - generic [ref=e56]:
+        - link "View Store" [ref=e57] [cursor=pointer]:
+          - /url: /
+          - img [ref=e58]
+          - text: View Store
+        - button "Sign Out" [ref=e60] [cursor=pointer]:
+          - img [ref=e61]
+          - text: Sign Out
+    - generic [ref=e63]:
+      - banner [ref=e64]:
+        - button [ref=e65] [cursor=pointer]:
+          - img [ref=e66]
+        - generic [ref=e68]:
+          - generic [ref=e69]: admin@purepet.test
+          - generic [ref=e70]: A
+      - main [ref=e71]:
+        - generic [ref=e72]:
+          - generic [ref=e73]:
+            - generic [ref=e74]:
+              - heading "Discounts" [level=1] [ref=e75]
+              - paragraph [ref=e76]: Manage discount codes and automatic discounts
+            - button "Create Discount Code" [active] [ref=e77] [cursor=pointer]:
+              - img [ref=e78]
+              - text: Create Discount Code
+          - navigation [ref=e81]:
+            - button "Discount Codes0" [ref=e82] [cursor=pointer]
+            - button "Automatic Discounts0" [ref=e83] [cursor=pointer]
+          - generic [ref=e84]:
+            - img [ref=e87]
+            - heading "No discount codes yet" [level=3] [ref=e89]
+            - paragraph [ref=e90]: Create your first discount code to get started.
+            - button "Create Discount Code" [ref=e91] [cursor=pointer]:
+              - img [ref=e92]
+              - text: Create Discount Code
+          - generic [ref=e106]:
+            - generic [ref=e107]:
+              - heading "Create Discount Code" [level=2] [ref=e108]
+              - button [ref=e109] [cursor=pointer]:
+                - img [ref=e110]
+            - generic [ref=e112]:
+              - generic [ref=e113]:
+                - generic [ref=e114]: Discount Code
+                - generic [ref=e115]:
+                  - textbox "e.g. SAVE20" [ref=e116]
+                  - button "Generate Code" [ref=e117] [cursor=pointer]
+              - generic [ref=e118]:
+                - generic [ref=e119]:
+                  - generic [ref=e120]: Type
+                  - combobox [ref=e121]:
+                    - option "Percentage" [selected]
+                    - option "Fixed Amount"
+                    - option "Free Shipping"
+                - generic [ref=e122]:
+                  - generic [ref=e123]: Value (%)
+                  - spinbutton [ref=e124]: "0"
+              - generic [ref=e125]:
+                - generic [ref=e126]:
+                  - generic [ref=e127]: Min Order Amount (GBP)
+                  - spinbutton [ref=e128]
+                - generic [ref=e129]:
+                  - generic [ref=e130]: Max Uses
+                  - spinbutton [ref=e131]
+              - generic [ref=e132]:
+                - generic [ref=e133]:
+                  - generic [ref=e134]: Starts At
+                  - textbox [ref=e135]
+                - generic [ref=e136]:
+                  - generic [ref=e137]: Expires At
+                  - textbox [ref=e138]
+              - generic [ref=e139]:
+                - generic [ref=e140]: Applies To
+                - combobox [ref=e141]:
+                  - option "All Products" [selected]
+                  - option "Specific Products"
+                  - option "Specific Collections"
+              - generic [ref=e142]:
+                - button [ref=e143] [cursor=pointer]
+                - generic [ref=e145]: Active
+            - generic [ref=e146]:
+              - button "Cancel" [ref=e147] [cursor=pointer]
+              - button "Create Code" [disabled] [ref=e148]
+  - alert [ref=e86]

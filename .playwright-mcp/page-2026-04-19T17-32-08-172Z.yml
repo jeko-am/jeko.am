@@ -1,0 +1,455 @@
+- generic [ref=e1]:
+  - generic [ref=e6]:
+    - complementary [ref=e7]:
+      - generic [ref=e8]:
+        - generic [ref=e10]: PP
+        - generic [ref=e11]:
+          - heading "Jeko" [level=1] [ref=e12]
+          - paragraph [ref=e13]: Admin Panel
+      - navigation [ref=e14]:
+        - link "Dashboard" [ref=e15] [cursor=pointer]:
+          - /url: /admin/dashboard
+          - img [ref=e16]
+          - text: Dashboard
+        - link "Store Editor" [ref=e18] [cursor=pointer]:
+          - /url: /admin/store-editor
+          - img [ref=e19]
+          - text: Store Editor
+        - link "Products" [ref=e21] [cursor=pointer]:
+          - /url: /admin/products
+          - img [ref=e22]
+          - text: Products
+        - link "Bundles" [ref=e24] [cursor=pointer]:
+          - /url: /admin/bundles
+          - img [ref=e25]
+          - text: Bundles
+        - link "Upsells" [ref=e27] [cursor=pointer]:
+          - /url: /admin/upsells
+          - img [ref=e28]
+          - text: Upsells
+        - link "Categories" [ref=e30] [cursor=pointer]:
+          - /url: /admin/categories
+          - img [ref=e31]
+          - text: Categories
+        - link "Orders" [ref=e33] [cursor=pointer]:
+          - /url: /admin/orders
+          - img [ref=e34]
+          - text: Orders
+        - link "Customers" [ref=e36] [cursor=pointer]:
+          - /url: /admin/customers
+          - img [ref=e37]
+          - text: Customers
+        - link "Reviews" [ref=e39] [cursor=pointer]:
+          - /url: /admin/reviews
+          - img [ref=e40]
+          - text: Reviews
+        - link "Discounts" [ref=e42] [cursor=pointer]:
+          - /url: /admin/discounts
+          - img [ref=e43]
+          - text: Discounts
+        - link "Pages" [ref=e45] [cursor=pointer]:
+          - /url: /admin/pages
+          - img [ref=e46]
+          - text: Pages
+        - link "Blog" [ref=e48] [cursor=pointer]:
+          - /url: /admin/blog
+          - img [ref=e49]
+          - text: Blog
+        - link "Settings" [ref=e51] [cursor=pointer]:
+          - /url: /admin/settings
+          - img [ref=e52]
+          - text: Settings
+        - link "Analytics" [ref=e54] [cursor=pointer]:
+          - /url: /admin/analytics
+          - img [ref=e55]
+          - text: Analytics
+        - link "Support" [ref=e57] [cursor=pointer]:
+          - /url: /admin/support
+          - img [ref=e58]
+          - text: Support
+      - generic [ref=e60]:
+        - link "View Store" [ref=e61] [cursor=pointer]:
+          - /url: /
+          - img [ref=e62]
+          - text: View Store
+        - button "Sign Out" [ref=e64] [cursor=pointer]:
+          - img [ref=e65]
+          - text: Sign Out
+    - generic [ref=e67]:
+      - banner [ref=e68]:
+        - button [ref=e69] [cursor=pointer]:
+          - img [ref=e70]
+        - generic [ref=e72]:
+          - generic [ref=e73]: admin@purepet.test
+          - generic [ref=e74]: A
+      - main [ref=e75]:
+        - generic [ref=e76]:
+          - generic [ref=e77]:
+            - generic [ref=e78]:
+              - generic [ref=e79]:
+                - heading "Upsells & Cross-sells" [level=1] [ref=e80]
+                - paragraph [ref=e81]: Configure product recommendations and upgrades
+              - generic [ref=e82]:
+                - link "← Back to Dashboard" [ref=e83] [cursor=pointer]:
+                  - /url: /admin/dashboard
+                - button "+ Add Upsell" [ref=e84] [cursor=pointer]
+            - generic [ref=e85]:
+              - generic [ref=e86]: "Filter by source product:"
+              - combobox [ref=e87]:
+                - option "All Products" [selected]
+                - option "Beef + Rice + Veggies"
+                - option "Chicken + Quinoa + Greens"
+                - option "Chickpea + Quinoa Plant Mix"
+                - option "Cod + Rice + Veggies"
+                - option "Tuna + Rice Bowl"
+            - table [ref=e89]:
+              - rowgroup [ref=e90]:
+                - row "Source Product Recommendation Type Discount Status Actions" [ref=e91]:
+                  - columnheader "Source Product" [ref=e92]
+                  - columnheader "Recommendation" [ref=e93]
+                  - columnheader "Type" [ref=e94]
+                  - columnheader "Discount" [ref=e95]
+                  - columnheader "Status" [ref=e96]
+                  - columnheader "Actions" [ref=e97]
+              - rowgroup [ref=e98]:
+                - row "Beef + Rice + Veggies Beef + Rice + Veggies Chickpea + Quinoa Plant Mix Chickpea + Quinoa Plant Mix £0.00 Cross-sell — Active" [ref=e99]:
+                  - cell "Beef + Rice + Veggies Beef + Rice + Veggies" [ref=e100]:
+                    - generic [ref=e101]:
+                      - img "Beef + Rice + Veggies" [ref=e102]
+                      - generic [ref=e103]: Beef + Rice + Veggies
+                  - cell "Chickpea + Quinoa Plant Mix Chickpea + Quinoa Plant Mix £0.00" [ref=e104]:
+                    - generic [ref=e105]:
+                      - img "Chickpea + Quinoa Plant Mix" [ref=e106]
+                      - generic [ref=e107]:
+                        - paragraph [ref=e108]: Chickpea + Quinoa Plant Mix
+                        - paragraph [ref=e109]: £0.00
+                  - cell "Cross-sell" [ref=e110]
+                  - cell "—" [ref=e111]
+                  - cell "Active" [ref=e112]
+                  - cell [ref=e113]:
+                    - generic [ref=e114]:
+                      - button "Edit" [ref=e115] [cursor=pointer]:
+                        - img [ref=e116]
+                      - button "Delete" [ref=e118] [cursor=pointer]:
+                        - img [ref=e119]
+                - row "Beef + Rice + Veggies Beef + Rice + Veggies Cod + Rice + Veggies Cod + Rice + Veggies £0.00 Cross-sell 50% off Active" [ref=e121]:
+                  - cell "Beef + Rice + Veggies Beef + Rice + Veggies" [ref=e122]:
+                    - generic [ref=e123]:
+                      - img "Beef + Rice + Veggies" [ref=e124]
+                      - generic [ref=e125]: Beef + Rice + Veggies
+                  - cell "Cod + Rice + Veggies Cod + Rice + Veggies £0.00" [ref=e126]:
+                    - generic [ref=e127]:
+                      - img "Cod + Rice + Veggies" [ref=e128]
+                      - generic [ref=e129]:
+                        - paragraph [ref=e130]: Cod + Rice + Veggies
+                        - paragraph [ref=e131]: £0.00
+                  - cell "Cross-sell" [ref=e132]
+                  - cell "50% off" [ref=e133]:
+                    - generic [ref=e134]: 50% off
+                  - cell "Active" [ref=e135]
+                  - cell [ref=e136]:
+                    - generic [ref=e137]:
+                      - button "Edit" [ref=e138] [cursor=pointer]:
+                        - img [ref=e139]
+                      - button "Delete" [ref=e141] [cursor=pointer]:
+                        - img [ref=e142]
+                - row "Tuna + Rice Bowl Tuna + Rice Bowl Beef + Rice + Veggies Beef + Rice + Veggies £0.00 Cross-sell — Active" [ref=e444]:
+                  - cell "Tuna + Rice Bowl Tuna + Rice Bowl" [ref=e445]:
+                    - generic [ref=e446]:
+                      - img "Tuna + Rice Bowl" [ref=e447]
+                      - generic [ref=e448]: Tuna + Rice Bowl
+                  - cell "Beef + Rice + Veggies Beef + Rice + Veggies £0.00" [ref=e449]:
+                    - generic [ref=e450]:
+                      - img "Beef + Rice + Veggies" [ref=e451]
+                      - generic [ref=e452]:
+                        - paragraph [ref=e453]: Beef + Rice + Veggies
+                        - paragraph [ref=e454]: £0.00
+                  - cell "Cross-sell" [ref=e455]
+                  - cell "—" [ref=e456]
+                  - cell "Active" [ref=e457]
+                  - cell [ref=e458]:
+                    - generic [ref=e459]:
+                      - button "Edit" [ref=e460] [cursor=pointer]:
+                        - img [ref=e461]
+                      - button "Delete" [ref=e463] [cursor=pointer]:
+                        - img [ref=e464]
+                - row "Chickpea + Quinoa Plant Mix Chickpea + Quinoa Plant Mix Beef + Rice + Veggies Beef + Rice + Veggies £0.00 Upsell 10% off Active" [ref=e144]:
+                  - cell "Chickpea + Quinoa Plant Mix Chickpea + Quinoa Plant Mix" [ref=e145]:
+                    - generic [ref=e146]:
+                      - img "Chickpea + Quinoa Plant Mix" [ref=e147]
+                      - generic [ref=e148]: Chickpea + Quinoa Plant Mix
+                  - cell "Beef + Rice + Veggies Beef + Rice + Veggies £0.00" [ref=e149]:
+                    - generic [ref=e150]:
+                      - img "Beef + Rice + Veggies" [ref=e151]
+                      - generic [ref=e152]:
+                        - paragraph [ref=e153]: Beef + Rice + Veggies
+                        - paragraph [ref=e154]: £0.00
+                  - cell "Upsell" [ref=e155]
+                  - cell "10% off" [ref=e156]:
+                    - generic [ref=e157]: 10% off
+                  - cell "Active" [ref=e158]
+                  - cell [ref=e159]:
+                    - generic [ref=e160]:
+                      - button "Edit" [ref=e161] [cursor=pointer]:
+                        - img [ref=e162]
+                      - button "Delete" [ref=e164] [cursor=pointer]:
+                        - img [ref=e165]
+                - row "Cod + Rice + Veggies Cod + Rice + Veggies Chicken + Quinoa + Greens Chicken + Quinoa + Greens £0.00 Cross-sell — Active" [ref=e167]:
+                  - cell "Cod + Rice + Veggies Cod + Rice + Veggies" [ref=e168]:
+                    - generic [ref=e169]:
+                      - img "Cod + Rice + Veggies" [ref=e170]
+                      - generic [ref=e171]: Cod + Rice + Veggies
+                  - cell "Chicken + Quinoa + Greens Chicken + Quinoa + Greens £0.00" [ref=e172]:
+                    - generic [ref=e173]:
+                      - img "Chicken + Quinoa + Greens" [ref=e174]
+                      - generic [ref=e175]:
+                        - paragraph [ref=e176]: Chicken + Quinoa + Greens
+                        - paragraph [ref=e177]: £0.00
+                  - cell "Cross-sell" [ref=e178]
+                  - cell "—" [ref=e179]
+                  - cell "Active" [ref=e180]
+                  - cell [ref=e181]:
+                    - generic [ref=e182]:
+                      - button "Edit" [ref=e183] [cursor=pointer]:
+                        - img [ref=e184]
+                      - button "Delete" [ref=e186] [cursor=pointer]:
+                        - img [ref=e187]
+                - row "Chicken + Quinoa + Greens Chicken + Quinoa + Greens Cod + Rice + Veggies Cod + Rice + Veggies £0.00 Cross-sell — Active" [ref=e189]:
+                  - cell "Chicken + Quinoa + Greens Chicken + Quinoa + Greens" [ref=e190]:
+                    - generic [ref=e191]:
+                      - img "Chicken + Quinoa + Greens" [ref=e192]
+                      - generic [ref=e193]: Chicken + Quinoa + Greens
+                  - cell "Cod + Rice + Veggies Cod + Rice + Veggies £0.00" [ref=e194]:
+                    - generic [ref=e195]:
+                      - img "Cod + Rice + Veggies" [ref=e196]
+                      - generic [ref=e197]:
+                        - paragraph [ref=e198]: Cod + Rice + Veggies
+                        - paragraph [ref=e199]: £0.00
+                  - cell "Cross-sell" [ref=e200]
+                  - cell "—" [ref=e201]
+                  - cell "Active" [ref=e202]
+                  - cell [ref=e203]:
+                    - generic [ref=e204]:
+                      - button "Edit" [ref=e205] [cursor=pointer]:
+                        - img [ref=e206]
+                      - button "Delete" [ref=e208] [cursor=pointer]:
+                        - img [ref=e209]
+                - row "Beef + Rice + Veggies Beef + Rice + Veggies Chicken + Quinoa + Greens Chicken + Quinoa + Greens £0.00 Cross-sell 10% off Active" [ref=e211]:
+                  - cell "Beef + Rice + Veggies Beef + Rice + Veggies" [ref=e212]:
+                    - generic [ref=e213]:
+                      - img "Beef + Rice + Veggies" [ref=e214]
+                      - generic [ref=e215]: Beef + Rice + Veggies
+                  - cell "Chicken + Quinoa + Greens Chicken + Quinoa + Greens £0.00" [ref=e216]:
+                    - generic [ref=e217]:
+                      - img "Chicken + Quinoa + Greens" [ref=e218]
+                      - generic [ref=e219]:
+                        - paragraph [ref=e220]: Chicken + Quinoa + Greens
+                        - paragraph [ref=e221]: £0.00
+                  - cell "Cross-sell" [ref=e222]
+                  - cell "10% off" [ref=e223]:
+                    - generic [ref=e224]: 10% off
+                  - cell "Active" [ref=e225]
+                  - cell [ref=e226]:
+                    - generic [ref=e227]:
+                      - button "Edit" [ref=e228] [cursor=pointer]:
+                        - img [ref=e229]
+                      - button "Delete" [ref=e231] [cursor=pointer]:
+                        - img [ref=e232]
+                - row "Tuna + Rice Bowl Tuna + Rice Bowl Cod + Rice + Veggies Cod + Rice + Veggies £0.00 Cross-sell — Active" [ref=e234]:
+                  - cell "Tuna + Rice Bowl Tuna + Rice Bowl" [ref=e235]:
+                    - generic [ref=e236]:
+                      - img "Tuna + Rice Bowl" [ref=e237]
+                      - generic [ref=e238]: Tuna + Rice Bowl
+                  - cell "Cod + Rice + Veggies Cod + Rice + Veggies £0.00" [ref=e239]:
+                    - generic [ref=e240]:
+                      - img "Cod + Rice + Veggies" [ref=e241]
+                      - generic [ref=e242]:
+                        - paragraph [ref=e243]: Cod + Rice + Veggies
+                        - paragraph [ref=e244]: £0.00
+                  - cell "Cross-sell" [ref=e245]
+                  - cell "—" [ref=e246]
+                  - cell "Active" [ref=e247]
+                  - cell [ref=e248]:
+                    - generic [ref=e249]:
+                      - button "Edit" [ref=e250] [cursor=pointer]:
+                        - img [ref=e251]
+                      - button "Delete" [ref=e253] [cursor=pointer]:
+                        - img [ref=e254]
+                - row "Cod + Rice + Veggies Cod + Rice + Veggies Beef + Rice + Veggies Beef + Rice + Veggies £0.00 Upsell 10% off Active" [ref=e256]:
+                  - cell "Cod + Rice + Veggies Cod + Rice + Veggies" [ref=e257]:
+                    - generic [ref=e258]:
+                      - img "Cod + Rice + Veggies" [ref=e259]
+                      - generic [ref=e260]: Cod + Rice + Veggies
+                  - cell "Beef + Rice + Veggies Beef + Rice + Veggies £0.00" [ref=e261]:
+                    - generic [ref=e262]:
+                      - img "Beef + Rice + Veggies" [ref=e263]
+                      - generic [ref=e264]:
+                        - paragraph [ref=e265]: Beef + Rice + Veggies
+                        - paragraph [ref=e266]: £0.00
+                  - cell "Upsell" [ref=e267]
+                  - cell "10% off" [ref=e268]:
+                    - generic [ref=e269]: 10% off
+                  - cell "Active" [ref=e270]
+                  - cell [ref=e271]:
+                    - generic [ref=e272]:
+                      - button "Edit" [ref=e273] [cursor=pointer]:
+                        - img [ref=e274]
+                      - button "Delete" [ref=e276] [cursor=pointer]:
+                        - img [ref=e277]
+                - row "Beef + Rice + Veggies Beef + Rice + Veggies Tuna + Rice Bowl Tuna + Rice Bowl £0.00 Cross-sell — Active" [ref=e279]:
+                  - cell "Beef + Rice + Veggies Beef + Rice + Veggies" [ref=e280]:
+                    - generic [ref=e281]:
+                      - img "Beef + Rice + Veggies" [ref=e282]
+                      - generic [ref=e283]: Beef + Rice + Veggies
+                  - cell "Tuna + Rice Bowl Tuna + Rice Bowl £0.00" [ref=e284]:
+                    - generic [ref=e285]:
+                      - img "Tuna + Rice Bowl" [ref=e286]
+                      - generic [ref=e287]:
+                        - paragraph [ref=e288]: Tuna + Rice Bowl
+                        - paragraph [ref=e289]: £0.00
+                  - cell "Cross-sell" [ref=e290]
+                  - cell "—" [ref=e291]
+                  - cell "Active" [ref=e292]
+                  - cell [ref=e293]:
+                    - generic [ref=e294]:
+                      - button "Edit" [ref=e295] [cursor=pointer]:
+                        - img [ref=e296]
+                      - button "Delete" [ref=e298] [cursor=pointer]:
+                        - img [ref=e299]
+                - row "Tuna + Rice Bowl Tuna + Rice Bowl Chickpea + Quinoa Plant Mix Chickpea + Quinoa Plant Mix £0.00 Cross-sell 15% off Active" [ref=e301]:
+                  - cell "Tuna + Rice Bowl Tuna + Rice Bowl" [ref=e302]:
+                    - generic [ref=e303]:
+                      - img "Tuna + Rice Bowl" [ref=e304]
+                      - generic [ref=e305]: Tuna + Rice Bowl
+                  - cell "Chickpea + Quinoa Plant Mix Chickpea + Quinoa Plant Mix £0.00" [ref=e306]:
+                    - generic [ref=e307]:
+                      - img "Chickpea + Quinoa Plant Mix" [ref=e308]
+                      - generic [ref=e309]:
+                        - paragraph [ref=e310]: Chickpea + Quinoa Plant Mix
+                        - paragraph [ref=e311]: £0.00
+                  - cell "Cross-sell" [ref=e312]
+                  - cell "15% off" [ref=e313]:
+                    - generic [ref=e314]: 15% off
+                  - cell "Active" [ref=e315]
+                  - cell [ref=e316]:
+                    - generic [ref=e317]:
+                      - button "Edit" [ref=e318] [cursor=pointer]:
+                        - img [ref=e319]
+                      - button "Delete" [ref=e321] [cursor=pointer]:
+                        - img [ref=e322]
+                - row "Chickpea + Quinoa Plant Mix Chickpea + Quinoa Plant Mix Tuna + Rice Bowl Tuna + Rice Bowl £0.00 Cross-sell — Active" [ref=e324]:
+                  - cell "Chickpea + Quinoa Plant Mix Chickpea + Quinoa Plant Mix" [ref=e325]:
+                    - generic [ref=e326]:
+                      - img "Chickpea + Quinoa Plant Mix" [ref=e327]
+                      - generic [ref=e328]: Chickpea + Quinoa Plant Mix
+                  - cell "Tuna + Rice Bowl Tuna + Rice Bowl £0.00" [ref=e329]:
+                    - generic [ref=e330]:
+                      - img "Tuna + Rice Bowl" [ref=e331]
+                      - generic [ref=e332]:
+                        - paragraph [ref=e333]: Tuna + Rice Bowl
+                        - paragraph [ref=e334]: £0.00
+                  - cell "Cross-sell" [ref=e335]
+                  - cell "—" [ref=e336]
+                  - cell "Active" [ref=e337]
+                  - cell [ref=e338]:
+                    - generic [ref=e339]:
+                      - button "Edit" [ref=e340] [cursor=pointer]:
+                        - img [ref=e341]
+                      - button "Delete" [ref=e343] [cursor=pointer]:
+                        - img [ref=e344]
+                - row "Chicken + Quinoa + Greens Chicken + Quinoa + Greens Chickpea + Quinoa Plant Mix Chickpea + Quinoa Plant Mix £0.00 Upsell 15% off Active" [ref=e346]:
+                  - cell "Chicken + Quinoa + Greens Chicken + Quinoa + Greens" [ref=e347]:
+                    - generic [ref=e348]:
+                      - img "Chicken + Quinoa + Greens" [ref=e349]
+                      - generic [ref=e350]: Chicken + Quinoa + Greens
+                  - cell "Chickpea + Quinoa Plant Mix Chickpea + Quinoa Plant Mix £0.00" [ref=e351]:
+                    - generic [ref=e352]:
+                      - img "Chickpea + Quinoa Plant Mix" [ref=e353]
+                      - generic [ref=e354]:
+                        - paragraph [ref=e355]: Chickpea + Quinoa Plant Mix
+                        - paragraph [ref=e356]: £0.00
+                  - cell "Upsell" [ref=e357]
+                  - cell "15% off" [ref=e358]:
+                    - generic [ref=e359]: 15% off
+                  - cell "Active" [ref=e360]
+                  - cell [ref=e361]:
+                    - generic [ref=e362]:
+                      - button "Edit" [ref=e363] [cursor=pointer]:
+                        - img [ref=e364]
+                      - button "Delete" [ref=e366] [cursor=pointer]:
+                        - img [ref=e367]
+          - generic [ref=e467]:
+            - generic [ref=e468]:
+              - heading "Create Upsell" [level=2] [ref=e469]
+              - button [ref=e470] [cursor=pointer]:
+                - img [ref=e471]
+            - generic [ref=e473]:
+              - generic [ref=e524]:
+                - img [ref=e525]
+                - text: Duplicate entry — this source → target combination already exists for this type.
+              - generic [ref=e474]:
+                - generic [ref=e475]:
+                  - generic [ref=e476]: Source Product *
+                  - combobox [ref=e477]:
+                    - option "Select product..."
+                    - option "Beef + Rice + Veggies"
+                    - option "Chicken + Quinoa + Greens"
+                    - option "Chickpea + Quinoa Plant Mix"
+                    - option "Cod + Rice + Veggies"
+                    - option "Tuna + Rice Bowl" [selected]
+                  - paragraph [ref=e478]: Product page where this will be shown
+                - generic [ref=e479]:
+                  - generic [ref=e480]: Target Product *
+                  - combobox [ref=e481]:
+                    - option "Select product..."
+                    - option "Beef + Rice + Veggies" [selected]
+                    - option "Chicken + Quinoa + Greens"
+                    - option "Chickpea + Quinoa Plant Mix"
+                    - option "Cod + Rice + Veggies"
+                  - paragraph [ref=e482]: Product being recommended
+              - generic [ref=e483]:
+                - generic [ref=e484]: Recommendation Type
+                - generic [ref=e485]:
+                  - generic [ref=e486] [cursor=pointer]:
+                    - radio "Cross-sell (Perfect Pairings)" [checked] [ref=e487]
+                    - generic [ref=e488]: Cross-sell (Perfect Pairings)
+                  - generic [ref=e489] [cursor=pointer]:
+                    - radio "Upsell (Upgrade)" [ref=e490]
+                    - generic [ref=e491]: Upsell (Upgrade)
+              - generic [ref=e492]:
+                - generic [ref=e493]: Custom Title (optional)
+                - textbox "e.g., Upgrade to Premium or Perfect Pairing" [ref=e494]
+              - generic [ref=e495]:
+                - generic [ref=e496]: Custom Description (optional)
+                - textbox "Why customers should consider this..." [ref=e497]
+              - generic [ref=e498]:
+                - generic [ref=e499]:
+                  - generic [ref=e500]: Discount %
+                  - spinbutton [ref=e501]: "0"
+                  - paragraph [ref=e502]: Applied to target product
+                - generic [ref=e503]:
+                  - generic [ref=e504]: Sort Order
+                  - spinbutton [ref=e505]: "0"
+                - generic [ref=e507] [cursor=pointer]:
+                  - checkbox "Active" [checked] [ref=e508]
+                  - generic [ref=e509]: Active
+              - generic [ref=e513]:
+                - heading "Preview" [level=3] [ref=e514]
+                - generic [ref=e515]:
+                  - paragraph [ref=e516]:
+                    - text: "On"
+                    - strong [ref=e517]: Tuna + Rice Bowl
+                    - text: "page:"
+                  - generic [ref=e519]:
+                    - paragraph [ref=e520]: Perfect Pairings
+                    - paragraph [ref=e521]: Hearty beef with brown rice, spinach, peas & carrots — ~520 kcal. Best for energy and muscle support.
+                    - generic [ref=e523]: £0.00
+            - generic [ref=e510]:
+              - button "Cancel" [ref=e511] [cursor=pointer]
+              - button "Create Upsell" [active] [ref=e512] [cursor=pointer]
+  - alert [ref=e369]
+  - generic [ref=e372] [cursor=pointer]:
+    - img [ref=e373]
+    - generic [ref=e375]: 1 error
+    - button "Hide Errors" [ref=e376]:
+      - img [ref=e377]

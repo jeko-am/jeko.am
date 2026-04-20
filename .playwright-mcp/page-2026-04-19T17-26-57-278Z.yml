@@ -1,0 +1,151 @@
+- generic [ref=e1]:
+  - generic [ref=e2]:
+    - complementary [ref=e3]:
+      - generic [ref=e4]:
+        - generic [ref=e6]: PP
+        - generic [ref=e7]:
+          - heading "Jeko" [level=1] [ref=e8]
+          - paragraph [ref=e9]: Admin Panel
+      - navigation [ref=e10]:
+        - link "Dashboard" [ref=e11] [cursor=pointer]:
+          - /url: /admin/dashboard
+          - img [ref=e12]
+          - text: Dashboard
+        - link "Store Editor" [ref=e14] [cursor=pointer]:
+          - /url: /admin/store-editor
+          - img [ref=e15]
+          - text: Store Editor
+        - link "Products" [ref=e17] [cursor=pointer]:
+          - /url: /admin/products
+          - img [ref=e18]
+          - text: Products
+        - link "Bundles" [ref=e20] [cursor=pointer]:
+          - /url: /admin/bundles
+          - img [ref=e21]
+          - text: Bundles
+        - link "Upsells" [ref=e23] [cursor=pointer]:
+          - /url: /admin/upsells
+          - img [ref=e24]
+          - text: Upsells
+        - link "Categories" [ref=e26] [cursor=pointer]:
+          - /url: /admin/categories
+          - img [ref=e27]
+          - text: Categories
+        - link "Orders" [ref=e29] [cursor=pointer]:
+          - /url: /admin/orders
+          - img [ref=e30]
+          - text: Orders
+        - link "Customers" [ref=e32] [cursor=pointer]:
+          - /url: /admin/customers
+          - img [ref=e33]
+          - text: Customers
+        - link "Reviews" [ref=e35] [cursor=pointer]:
+          - /url: /admin/reviews
+          - img [ref=e36]
+          - text: Reviews
+        - link "Discounts" [ref=e38] [cursor=pointer]:
+          - /url: /admin/discounts
+          - img [ref=e39]
+          - text: Discounts
+        - link "Pages" [ref=e41] [cursor=pointer]:
+          - /url: /admin/pages
+          - img [ref=e42]
+          - text: Pages
+        - link "Blog" [ref=e44] [cursor=pointer]:
+          - /url: /admin/blog
+          - img [ref=e45]
+          - text: Blog
+        - link "Settings" [ref=e47] [cursor=pointer]:
+          - /url: /admin/settings
+          - img [ref=e48]
+          - text: Settings
+        - link "Analytics" [ref=e50] [cursor=pointer]:
+          - /url: /admin/analytics
+          - img [ref=e51]
+          - text: Analytics
+        - link "Support" [ref=e53] [cursor=pointer]:
+          - /url: /admin/support
+          - img [ref=e54]
+          - text: Support
+      - generic [ref=e56]:
+        - link "View Store" [ref=e57] [cursor=pointer]:
+          - /url: /
+          - img [ref=e58]
+          - text: View Store
+        - button "Sign Out" [ref=e60] [cursor=pointer]:
+          - img [ref=e61]
+          - text: Sign Out
+    - generic [ref=e63]:
+      - banner [ref=e64]:
+        - button [ref=e65] [cursor=pointer]:
+          - img [ref=e66]
+        - generic [ref=e68]:
+          - generic [ref=e69]: admin@purepet.test
+          - generic [ref=e70]: A
+      - main [ref=e71]:
+        - generic [ref=e72]:
+          - generic [ref=e73]:
+            - generic [ref=e74]:
+              - heading "Discounts" [level=1] [ref=e75]
+              - paragraph [ref=e76]: Manage discount codes and automatic discounts
+            - button "Create Automatic Discount" [active] [ref=e179] [cursor=pointer]:
+              - img [ref=e78]
+              - text: Create Automatic Discount
+          - navigation [ref=e81]:
+            - button "Discount Codes1" [ref=e149] [cursor=pointer]
+            - button "Automatic Discounts0" [ref=e83] [cursor=pointer]
+          - generic [ref=e180]:
+            - img [ref=e182]
+            - heading "No automatic discounts yet" [level=3] [ref=e185]
+            - paragraph [ref=e186]: Create automatic discounts that apply without a code.
+            - button "Create Automatic Discount" [ref=e187] [cursor=pointer]:
+              - img [ref=e188]
+              - text: Create Automatic Discount
+          - generic [ref=e192]:
+            - generic [ref=e193]:
+              - heading "Create Automatic Discount" [level=2] [ref=e194]
+              - button [ref=e195] [cursor=pointer]:
+                - img [ref=e196]
+            - generic [ref=e198]:
+              - generic [ref=e199]:
+                - generic [ref=e200]: Name
+                - textbox "e.g. Buy 2 Get 1 Free" [ref=e201]
+              - generic [ref=e202]:
+                - generic [ref=e203]:
+                  - generic [ref=e204]: Discount Type
+                  - combobox [ref=e205]:
+                    - option "Percentage Off" [selected]
+                    - option "Free Shipping"
+                    - option "Buy X Get Y"
+                    - option "Bundle Deal"
+                  - paragraph [ref=e206]: How the discount is applied
+                - generic [ref=e207]:
+                  - generic [ref=e208]: Percentage (%)
+                  - spinbutton [ref=e209]: "10"
+              - generic [ref=e210]:
+                - paragraph [ref=e211]: Trigger Conditions (discount applies when these are met)
+                - generic [ref=e212]:
+                  - generic [ref=e213]:
+                    - generic [ref=e214]: Min Cart Value (£)
+                    - spinbutton [ref=e215]: "0"
+                  - generic [ref=e216]:
+                    - generic [ref=e217]: Min Number of Products
+                    - spinbutton [ref=e218]: "0"
+              - generic [ref=e219]:
+                - generic [ref=e220]:
+                  - generic [ref=e221]: Starts At
+                  - textbox [ref=e222]
+                - generic [ref=e223]:
+                  - generic [ref=e224]: Expires At
+                  - textbox [ref=e225]
+                - generic [ref=e226]:
+                  - generic [ref=e227]: Priority
+                  - spinbutton [ref=e228]: "0"
+                  - paragraph [ref=e229]: Lower = higher priority
+              - generic [ref=e230]:
+                - button [ref=e231] [cursor=pointer]
+                - generic [ref=e233]: Active
+            - generic [ref=e234]:
+              - button "Cancel" [ref=e235] [cursor=pointer]
+              - button "Create Discount" [disabled] [ref=e236]
+  - alert [ref=e86]

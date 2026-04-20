@@ -1,0 +1,153 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e6]:
+    - complementary [ref=e7]:
+      - generic [ref=e8]:
+        - generic [ref=e10]: PP
+        - generic [ref=e11]:
+          - heading "Jeko" [level=1] [ref=e12]
+          - paragraph [ref=e13]: Admin Panel
+      - navigation [ref=e14]:
+        - link "Dashboard" [ref=e15] [cursor=pointer]:
+          - /url: /admin/dashboard
+          - img [ref=e16]
+          - text: Dashboard
+        - link "Store Editor" [ref=e18] [cursor=pointer]:
+          - /url: /admin/store-editor
+          - img [ref=e19]
+          - text: Store Editor
+        - link "Products" [ref=e21] [cursor=pointer]:
+          - /url: /admin/products
+          - img [ref=e22]
+          - text: Products
+        - link "Bundles" [ref=e24] [cursor=pointer]:
+          - /url: /admin/bundles
+          - img [ref=e25]
+          - text: Bundles
+        - link "Upsells" [ref=e27] [cursor=pointer]:
+          - /url: /admin/upsells
+          - img [ref=e28]
+          - text: Upsells
+        - link "Categories" [ref=e30] [cursor=pointer]:
+          - /url: /admin/categories
+          - img [ref=e31]
+          - text: Categories
+        - link "Orders" [ref=e33] [cursor=pointer]:
+          - /url: /admin/orders
+          - img [ref=e34]
+          - text: Orders
+        - link "Customers" [ref=e36] [cursor=pointer]:
+          - /url: /admin/customers
+          - img [ref=e37]
+          - text: Customers
+        - link "Reviews" [ref=e39] [cursor=pointer]:
+          - /url: /admin/reviews
+          - img [ref=e40]
+          - text: Reviews
+        - link "Discounts" [ref=e42] [cursor=pointer]:
+          - /url: /admin/discounts
+          - img [ref=e43]
+          - text: Discounts
+        - link "Pages" [ref=e45] [cursor=pointer]:
+          - /url: /admin/pages
+          - img [ref=e46]
+          - text: Pages
+        - link "Blog" [ref=e48] [cursor=pointer]:
+          - /url: /admin/blog
+          - img [ref=e49]
+          - text: Blog
+        - link "Settings" [ref=e51] [cursor=pointer]:
+          - /url: /admin/settings
+          - img [ref=e52]
+          - text: Settings
+        - link "Analytics" [ref=e54] [cursor=pointer]:
+          - /url: /admin/analytics
+          - img [ref=e55]
+          - text: Analytics
+        - link "Support" [ref=e57] [cursor=pointer]:
+          - /url: /admin/support
+          - img [ref=e58]
+          - text: Support
+      - generic [ref=e60]:
+        - link "View Store" [ref=e61] [cursor=pointer]:
+          - /url: /
+          - img [ref=e62]
+          - text: View Store
+        - button "Sign Out" [ref=e64] [cursor=pointer]:
+          - img [ref=e65]
+          - text: Sign Out
+    - generic [ref=e67]:
+      - banner [ref=e68]:
+        - button [ref=e69] [cursor=pointer]:
+          - img [ref=e70]
+        - generic [ref=e72]:
+          - generic [ref=e73]: admin@purepet.test
+          - generic [ref=e74]: A
+      - main [ref=e75]:
+        - generic [ref=e76]:
+          - generic [ref=e77]:
+            - heading "Settings" [level=1] [ref=e78]
+            - paragraph [ref=e79]: Configure your store settings, theme, shipping, and more
+          - generic [ref=e209]:
+            - img [ref=e210]
+            - text: Shipping rate saved
+          - generic [ref=e80]:
+            - navigation [ref=e82]:
+              - button "Shipping" [ref=e83] [cursor=pointer]:
+                - img [ref=e84]
+                - text: Shipping
+              - button "Pixels & Tags" [ref=e86] [cursor=pointer]:
+                - img [ref=e87]
+                - text: Pixels & Tags
+              - button "Menus" [ref=e89] [cursor=pointer]:
+                - img [ref=e90]
+                - text: Menus
+              - button "Subscribers" [ref=e92] [cursor=pointer]:
+                - img [ref=e93]
+                - text: Subscribers
+            - generic [ref=e212]:
+              - generic [ref=e213]:
+                - generic [ref=e214]:
+                  - heading "Shipping Zones" [level=3] [ref=e215]
+                  - button "+ Add Zone" [ref=e216] [cursor=pointer]
+                - generic [ref=e218]:
+                  - generic [ref=e219]: United KingdomGB, IE
+                  - generic [ref=e220]:
+                    - button [ref=e221] [cursor=pointer]:
+                      - img [ref=e222]
+                    - button [ref=e224] [cursor=pointer]:
+                      - img [ref=e225]
+              - generic [ref=e227]:
+                - generic [ref=e228]:
+                  - heading "Shipping Rates" [level=3] [ref=e229]
+                  - button "+ Add Rate" [ref=e230] [cursor=pointer]
+                - table [ref=e232]:
+                  - rowgroup [ref=e233]:
+                    - row "Name Zone Price Min Order Delivery Status Actions" [ref=e234]:
+                      - columnheader "Name" [ref=e235]
+                      - columnheader "Zone" [ref=e236]
+                      - columnheader "Price" [ref=e237]
+                      - columnheader "Min Order" [ref=e238]
+                      - columnheader "Delivery" [ref=e239]
+                      - columnheader "Status" [ref=e240]
+                      - columnheader "Actions" [ref=e241]
+                  - rowgroup [ref=e242]:
+                    - row "Standard Delivery United Kingdom £3.99 — 3–5 days Active" [ref=e243]:
+                      - cell "Standard Delivery" [ref=e244]
+                      - cell "United Kingdom" [ref=e245]
+                      - cell "£3.99" [ref=e246]
+                      - cell "—" [ref=e247]
+                      - cell "3–5 days" [ref=e248]
+                      - cell "Active" [ref=e249]:
+                        - generic [ref=e250]: Active
+                      - cell [ref=e251]:
+                        - generic [ref=e252]:
+                          - button [ref=e253] [cursor=pointer]:
+                            - img [ref=e254]
+                          - button [ref=e256] [cursor=pointer]:
+                            - img [ref=e257]
+  - alert [ref=e119]
+  - generic [ref=e122] [cursor=pointer]:
+    - img [ref=e123]
+    - generic [ref=e125]: 1 error
+    - button "Hide Errors" [ref=e126]:
+      - img [ref=e127]

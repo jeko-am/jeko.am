@@ -18,6 +18,7 @@ function CustomerLoginForm() {
   const [submitting, setSubmitting] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [googleLoading, setGoogleLoading] = useState(false);
+  const [signInAttempted, setSignInAttempted] = useState(false);
 
   // Redirect if already authenticated
   useEffect(() => {
@@ -25,6 +26,16 @@ function CustomerLoginForm() {
       router.push(redirect);
     }
   }, [user, loading, router, redirect]);
+
+  // Detect when user was auto-signed out due to missing pet profile
+  useEffect(() => {
+    if (signInAttempted && !loading && !user && submitting) {
+      // Auth completed but user is null - likely auto-signed out due to missing pet profile
+      setSubmitting(false);
+      setSignInAttempted(false);
+      setError('No pet profile found. Please sign up to create your profile.');
+    }
+  }, [signInAttempted, loading, user, submitting]);
 
   async function handleSubmit(e: FormEvent) {
     e.preventDefault();
@@ -36,6 +47,7 @@ function CustomerLoginForm() {
     }
 
     setSubmitting(true);
+    setSignInAttempted(true);
 
     try {
       const { error: signInError } = await signIn(email, password);
@@ -53,6 +65,7 @@ function CustomerLoginForm() {
           setError(message || 'An unexpected error occurred. Please try again.');
         }
         setSubmitting(false);
+        setSignInAttempted(false);
         return;
       }
 
@@ -62,6 +75,7 @@ function CustomerLoginForm() {
     } catch {
       setError('A network error occurred. Please check your connection and try again.');
       setSubmitting(false);
+      setSignInAttempted(false);
     }
   }
 

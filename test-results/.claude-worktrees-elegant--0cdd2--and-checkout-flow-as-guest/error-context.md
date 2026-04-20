@@ -1,0 +1,346 @@
+# Page snapshot
+
+```yaml
+- generic [active] [ref=e1]:
+  - main [ref=e2]:
+    - generic [ref=e4]:
+      - link "open/limits" [ref=e5] [cursor=pointer]:
+        - /url: /
+        - img [ref=e6]
+        - generic [ref=e10]: open/limits
+      - navigation [ref=e11]:
+        - link "Home" [ref=e12] [cursor=pointer]:
+          - /url: /
+        - link "Portfolio" [ref=e13] [cursor=pointer]:
+          - /url: /portfolio
+        - link "About us" [ref=e14] [cursor=pointer]:
+          - /url: /aboutus
+      - link "Book a call" [ref=e15] [cursor=pointer]:
+        - /url: https://calendly.com/himanshu-sethi/30min
+        - text: Book a call
+        - img [ref=e17]
+    - generic [ref=e19]:
+      - generic:
+        - img
+      - generic [ref=e20]:
+        - heading "High-Converting UGC Ads for Lower CAC, Higher ROAS" [level=1] [ref=e21]:
+          - text: High-Converting UGC Ads for
+          - text: Lower CAC, Higher ROAS
+        - paragraph [ref=e22]: Produced by Highly Qualified Creative Strategists and Media Buyers
+        - link "Book a call" [ref=e24] [cursor=pointer]:
+          - /url: https://calendly.com/himanshu-sethi/30min
+          - text: Book a call
+          - img [ref=e26]
+    - generic [ref=e60]:
+      - paragraph [ref=e61]: Trusted by
+      - generic [ref=e62]:
+        - list [ref=e64]:
+          - listitem [ref=e65]:
+            - img "brand logo" [ref=e66]
+          - listitem [ref=e67]:
+            - img "brand logo" [ref=e68]
+          - listitem [ref=e69]:
+            - img "brand logo" [ref=e70]
+          - listitem [ref=e71]:
+            - img "brand logo" [ref=e72]
+          - listitem [ref=e73]:
+            - img "brand logo" [ref=e74]
+          - listitem [ref=e75]:
+            - img "brand logo" [ref=e76]
+          - listitem [ref=e77]:
+            - img "brand logo" [ref=e78]
+          - listitem [ref=e79]:
+            - img "brand logo" [ref=e80]
+          - listitem [ref=e81]:
+            - img "brand logo" [ref=e82]
+          - listitem [ref=e83]:
+            - img "brand logo" [ref=e84]
+          - listitem [ref=e85]:
+            - img "brand logo" [ref=e86]
+          - listitem [ref=e87]:
+            - img "brand logo" [ref=e88]
+          - listitem [ref=e89]:
+            - img "brand logo" [ref=e90]
+          - listitem [ref=e91]:
+            - img "brand logo" [ref=e92]
+          - listitem [ref=e93]:
+            - img "brand logo" [ref=e94]
+          - listitem [ref=e95]:
+            - img "brand logo" [ref=e96]
+          - listitem [ref=e97]:
+            - img "brand logo" [ref=e98]
+          - listitem [ref=e99]:
+            - img "brand logo" [ref=e100]
+          - listitem [ref=e101]:
+            - img "brand logo" [ref=e102]
+          - listitem [ref=e103]:
+            - img "brand logo" [ref=e104]
+          - listitem [ref=e105]:
+            - img "brand logo" [ref=e106]
+          - listitem [ref=e107]:
+            - img "brand logo" [ref=e108]
+          - listitem [ref=e109]:
+            - img "brand logo" [ref=e110]
+          - listitem [ref=e111]:
+            - img "brand logo" [ref=e112]
+        - list [ref=e114]:
+          - listitem [ref=e115]:
+            - img "brand logo" [ref=e116]
+          - listitem [ref=e117]:
+            - img "brand logo" [ref=e118]
+          - listitem [ref=e119]:
+            - img "brand logo" [ref=e120]
+          - listitem [ref=e121]:
+            - img "brand logo" [ref=e122]
+          - listitem [ref=e123]:
+            - img "brand logo" [ref=e124]
+          - listitem [ref=e125]:
+            - img "brand logo" [ref=e126]
+          - listitem [ref=e127]:
+            - img "brand logo" [ref=e128]
+          - listitem [ref=e129]:
+            - img "brand logo" [ref=e130]
+          - listitem [ref=e131]:
+            - img "brand logo" [ref=e132]
+          - listitem [ref=e133]:
+            - img "brand logo" [ref=e134]
+          - listitem [ref=e135]:
+            - img "brand logo" [ref=e136]
+          - listitem [ref=e137]:
+            - img "brand logo" [ref=e138]
+          - listitem [ref=e139]:
+            - img "brand logo" [ref=e140]
+          - listitem [ref=e141]:
+            - img "brand logo" [ref=e142]
+          - listitem [ref=e143]:
+            - img "brand logo" [ref=e144]
+          - listitem [ref=e145]:
+            - img "brand logo" [ref=e146]
+          - listitem [ref=e147]:
+            - img "brand logo" [ref=e148]
+          - listitem [ref=e149]:
+            - img "brand logo" [ref=e150]
+          - listitem [ref=e151]:
+            - img "brand logo" [ref=e152]
+          - listitem [ref=e153]:
+            - img "brand logo" [ref=e154]
+          - listitem [ref=e155]:
+            - img "brand logo" [ref=e156]
+          - listitem [ref=e157]:
+            - img "brand logo" [ref=e158]
+          - listitem [ref=e159]:
+            - img "brand logo" [ref=e160]
+          - listitem [ref=e161]:
+            - img "brand logo" [ref=e162]
+    - generic [ref=e163]:
+      - generic [ref=e166]:
+        - paragraph [ref=e167]: Performance Creatives
+        - heading "Performance-Focused Video Ads" [level=2] [ref=e168]:
+          - text: Performance-Focused
+          - text: Video Ads
+        - paragraph [ref=e169]: These are ads designed to scale. We produce them with professional actors but keep the UGC-style framework intact, so the content feels authentic yet polished. With the flexibility to add more visuals and storytelling angles, our performance creative strategists craft ads that don't just look good — they deliver high ROAS at scale.
+      - generic:
+        - generic:
+          - img:
+            - generic:
+              - generic: 4x Avg. ROAS . 1500+ Ads Produced . 100+ Brands . 4x Avg. ROAS . 1500+ Ads Produced . 100+ Brands . 4x Avg. ROAS . 1500+ Ads Produced . 100+ Brands . 4x Avg. ROAS . 1500+ Ads Produced . 100+ Brands . 4x Avg. ROAS . 1500+ Ads Produced . 100+ Brands . 4x Avg. ROAS . 1500+ Ads Produced . 100+ Brands . 4x Avg. ROAS . 1500+ Ads Produced . 100+ Brands . 4x Avg. ROAS . 1500+ Ads Produced . 100+ Brands . 4x Avg. ROAS . 1500+ Ads Produced . 100+ Brands . 4x Avg. ROAS . 1500+ Ads Produced . 100+ Brands . 4x Avg. ROAS . 1500+ Ads Produced . 100+ Brands . 4x Avg. ROAS . 1500+ Ads Produced . 100+ Brands .
+      - generic [ref=e189]:
+        - paragraph [ref=e190]: Performance UGC Videos
+        - heading "Partnership Ads with UGC Creators" [level=2] [ref=e191]:
+          - text: Partnership Ads with UGC
+          - text: Creators
+        - paragraph [ref=e192]: We team up with creators to turn their authentic content into ads. These partnership ads help your brand build trust and credibility while reaching the right audiences. Because the content feels natural and relatable, it drives better engagement, higher click-throughs, and stronger ROAS.
+    - generic [ref=e194]:
+      - generic [ref=e195]:
+        - generic [ref=e196]: Our Work
+        - heading "Brands made these with Open Limits" [level=2] [ref=e197]:
+          - text: Brands made these
+          - text: with Open Limits
+      - generic [ref=e198]:
+        - link "Technology →" [ref=e200] [cursor=pointer]:
+          - /url: /portfolio
+          - generic [ref=e201]:
+            - paragraph [ref=e202]: Technology
+            - generic [ref=e203]: →
+        - link "Personal Care →" [ref=e207] [cursor=pointer]:
+          - /url: /portfolio
+          - generic [ref=e208]:
+            - paragraph [ref=e209]: Personal Care
+            - generic [ref=e210]: →
+        - link "Baby Care →" [ref=e214] [cursor=pointer]:
+          - /url: /portfolio
+          - generic [ref=e215]:
+            - paragraph [ref=e216]: Baby Care
+            - generic [ref=e217]: →
+        - link "Health & Wellness →" [ref=e221] [cursor=pointer]:
+          - /url: /portfolio
+          - generic [ref=e222]:
+            - paragraph [ref=e223]: Health & Wellness
+            - generic [ref=e224]: →
+        - link "Jewellery →" [ref=e228] [cursor=pointer]:
+          - /url: /portfolio
+          - generic [ref=e229]:
+            - paragraph [ref=e230]: Jewellery
+            - generic [ref=e231]: →
+        - link "App →" [ref=e235] [cursor=pointer]:
+          - /url: /portfolio
+          - generic [ref=e236]:
+            - paragraph [ref=e237]: App
+            - generic [ref=e238]: →
+        - link "Gifting →" [ref=e242] [cursor=pointer]:
+          - /url: /portfolio
+          - generic [ref=e243]:
+            - paragraph [ref=e244]: Gifting
+            - generic [ref=e245]: →
+        - link "Fashion & Lifestyle →" [ref=e249] [cursor=pointer]:
+          - /url: /portfolio
+          - generic [ref=e250]:
+            - paragraph [ref=e251]: Fashion & Lifestyle
+            - generic [ref=e252]: →
+      - link "View all" [ref=e256] [cursor=pointer]:
+        - /url: /portfolio
+        - text: View all
+        - img [ref=e258]
+    - generic [ref=e261]:
+      - generic [ref=e262]:
+        - generic [ref=e263]: Process
+        - 'heading "From Idea to Execution: We Handle It All!" [level=2] [ref=e264]'
+      - generic [ref=e265]:
+        - generic [ref=e266]:
+          - heading "Past Performance Analysis" [level=3] [ref=e267]
+          - paragraph [ref=e268]: We review your previous ads to identify what's working and what isn't — so we build on proven wins.
+        - generic [ref=e269]:
+          - heading "Ideation & Strategy" [level=3] [ref=e270]
+          - paragraph [ref=e271]: Hook-first concepts anchored in your brand, product truth, and audience insight.
+        - generic [ref=e272]:
+          - heading "Scripting" [level=3] [ref=e273]
+          - paragraph [ref=e274]: Tight, testable scripts engineered for retention, comprehension, and action.
+        - generic [ref=e275]:
+          - heading "Shortlisting Creators" [level=3] [ref=e276]
+          - paragraph [ref=e277]: We match faces, tone, and style to each angle for maximum resonance.
+        - generic [ref=e278]:
+          - heading "Post Production" [level=3] [ref=e279]
+          - paragraph [ref=e280]: Edit, captions, pacing, sound design — tuned for platform-native performance.
+    - generic [ref=e282]:
+      - generic [ref=e283]:
+        - generic [ref=e284]:
+          - generic [ref=e285]: About Us
+          - heading "Crafting UGC ads that truly Connect" [level=2] [ref=e286]
+        - paragraph [ref=e287]: We're a creative performance agency specializing in strategic, high-impact content that resonates, engages, and converts. Our expert team handles the entire UGC ad production process, driving maximum ROAS while minimizing CAC.
+      - generic [ref=e288]:
+        - img [ref=e289]
+        - img [ref=e292]
+        - generic [ref=e296]:
+          - paragraph [ref=e297]: 150+
+          - paragraph [ref=e298]: Brand collaborations
+        - generic [ref=e299]:
+          - paragraph [ref=e300]: 10+
+          - paragraph [ref=e301]: years of D2C Experience
+        - generic [ref=e302]:
+          - paragraph [ref=e303]: "3.8"
+          - paragraph [ref=e304]: Avg. ROAS
+        - generic [ref=e305]:
+          - paragraph [ref=e306]: $4M+
+          - paragraph [ref=e307]: Revenue generated
+    - generic [ref=e308]:
+      - generic [ref=e309]:
+        - generic [ref=e310]: Testimonial
+        - heading "What our partners says about us" [level=2] [ref=e311]
+      - generic [ref=e313]:
+        - generic [ref=e314]:
+          - paragraph [ref=e315]: “Open Limits delivers exactly what they commit, every single time. The creative strategy, scripting, and execution have been key to improving our ROAS.”
+          - paragraph [ref=e317]: Team Suwasthi
+        - generic [ref=e318]:
+          - paragraph [ref=e319]: “We've partnered with Open Limits for over a year. They're efficient, deliver high-quality work, bring in the right creators, and consistently hit our goals.”
+          - paragraph [ref=e321]: Team Rivela
+        - generic [ref=e322]:
+          - paragraph [ref=e323]: “Their UGC-led creatives didn't just look great — they performed. We saw a clear jump in CTR, better hook retention, and strong ROAS across campaigns.”
+          - paragraph [ref=e325]: Shiva, ET Media Labs
+        - generic [ref=e326]:
+          - paragraph [ref=e327]: “Production quality is top notch, scripting and direction unmatched — we saw a 35% reduction in CAC within weeks.”
+          - paragraph [ref=e329]: Team VedicDerm
+        - generic [ref=e330]:
+          - paragraph [ref=e331]: “From script to shoot, everything was on point. The videos matched our brand voice and performed great in ads.”
+          - paragraph [ref=e333]: Team Uncle Tony
+        - generic [ref=e334]:
+          - paragraph [ref=e335]: “Open Limits delivers exactly what they commit, every single time. The creative strategy, scripting, and execution have been key to improving our ROAS.”
+          - paragraph [ref=e337]: Team Suwasthi
+        - generic [ref=e338]:
+          - paragraph [ref=e339]: “We've partnered with Open Limits for over a year. They're efficient, deliver high-quality work, bring in the right creators, and consistently hit our goals.”
+          - paragraph [ref=e341]: Team Rivela
+        - generic [ref=e342]:
+          - paragraph [ref=e343]: “Their UGC-led creatives didn't just look great — they performed. We saw a clear jump in CTR, better hook retention, and strong ROAS across campaigns.”
+          - paragraph [ref=e345]: Shiva, ET Media Labs
+        - generic [ref=e346]:
+          - paragraph [ref=e347]: “Production quality is top notch, scripting and direction unmatched — we saw a 35% reduction in CAC within weeks.”
+          - paragraph [ref=e349]: Team VedicDerm
+        - generic [ref=e350]:
+          - paragraph [ref=e351]: “From script to shoot, everything was on point. The videos matched our brand voice and performed great in ads.”
+          - paragraph [ref=e353]: Team Uncle Tony
+        - generic [ref=e354]:
+          - paragraph [ref=e355]: “Open Limits delivers exactly what they commit, every single time. The creative strategy, scripting, and execution have been key to improving our ROAS.”
+          - paragraph [ref=e357]: Team Suwasthi
+        - generic [ref=e358]:
+          - paragraph [ref=e359]: “We've partnered with Open Limits for over a year. They're efficient, deliver high-quality work, bring in the right creators, and consistently hit our goals.”
+          - paragraph [ref=e361]: Team Rivela
+        - generic [ref=e362]:
+          - paragraph [ref=e363]: “Their UGC-led creatives didn't just look great — they performed. We saw a clear jump in CTR, better hook retention, and strong ROAS across campaigns.”
+          - paragraph [ref=e365]: Shiva, ET Media Labs
+        - generic [ref=e366]:
+          - paragraph [ref=e367]: “Production quality is top notch, scripting and direction unmatched — we saw a 35% reduction in CAC within weeks.”
+          - paragraph [ref=e369]: Team VedicDerm
+        - generic [ref=e370]:
+          - paragraph [ref=e371]: “From script to shoot, everything was on point. The videos matched our brand voice and performed great in ads.”
+          - paragraph [ref=e373]: Team Uncle Tony
+    - generic [ref=e376]:
+      - img [ref=e378]
+      - generic [ref=e382]:
+        - generic [ref=e383]:
+          - paragraph [ref=e384]: Ready to Go Viral?
+          - paragraph [ref=e385]: Let's Talk Strategy / Book Your Free Call
+        - link "Book a call" [ref=e386] [cursor=pointer]:
+          - /url: https://calendly.com/himanshu-sethi/30min
+          - text: Book a call
+          - img [ref=e388]
+    - generic [ref=e390]:
+      - generic [ref=e391]:
+        - generic [ref=e392]:
+          - generic [ref=e393]:
+            - img [ref=e394]
+            - generic [ref=e398]: open/limits
+          - paragraph [ref=e399]:
+            - text: High-Converting UGC Ads for
+            - text: Lower CAC, Higher ROAS
+        - generic [ref=e400]:
+          - paragraph [ref=e401]: Resources
+          - list [ref=e402]:
+            - listitem [ref=e403]:
+              - link "Portfolio" [ref=e404] [cursor=pointer]:
+                - /url: /portfolio
+            - listitem [ref=e405]:
+              - link "About us" [ref=e406] [cursor=pointer]:
+                - /url: /aboutus
+        - generic [ref=e407]:
+          - paragraph [ref=e408]: Contact us
+          - list [ref=e409]:
+            - listitem [ref=e410]:
+              - img [ref=e411]
+              - link "hello@openlimits.co" [ref=e414] [cursor=pointer]:
+                - /url: mailto:hello@openlimits.co
+            - listitem [ref=e415]:
+              - img [ref=e416]
+              - text: +91 98765 43210
+            - listitem [ref=e418]:
+              - img [ref=e419]
+              - text: Bengaluru, India
+      - generic [ref=e423]:
+        - paragraph [ref=e424]: Copyright 2026 By Open Limits. All Rights Reserved.
+        - generic [ref=e425]:
+          - link "Instagram" [ref=e426] [cursor=pointer]:
+            - /url: https://www.instagram.com/
+            - img [ref=e427]
+          - link "LinkedIn" [ref=e431] [cursor=pointer]:
+            - /url: https://www.linkedin.com/
+            - img [ref=e432]
+  - alert [ref=e434]
+```
