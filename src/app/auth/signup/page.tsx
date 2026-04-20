@@ -1429,6 +1429,7 @@ function SignupPageInner() {
       const displayName = generateDisplayName(fullName);
       await new Promise((r) => setTimeout(r, 1000));
 
+      let userProfileSaved = false;
       for (let attempt = 0; attempt < 3; attempt++) {
         const { error } = await supabase.from('user_profiles').upsert({
           user_id: userId,
@@ -1440,8 +1441,18 @@ function SignupPageInner() {
           country,
           phone: phone.trim() || null,
         }, { onConflict: 'user_id' });
-        if (!error) break;
+        if (!error) {
+          userProfileSaved = true;
+          break;
+        }
+        console.error(`user_profiles save attempt ${attempt + 1} failed:`, error);
         await new Promise((r) => setTimeout(r, 1000));
+      }
+
+      if (!userProfileSaved) {
+        setSubmitError('Failed to save profile. Please try again.');
+        setSubmitting(false);
+        return;
       }
 
       const petPayload = {
@@ -1474,10 +1485,24 @@ function SignupPageInner() {
         profile_photo_url: uploadedPhotoUrl || null,
       };
 
+      let petProfileSaved = false;
+      let lastError = null;
       for (let attempt = 0; attempt < 3; attempt++) {
         const { error } = await supabase.from('pet_profiles').upsert(petPayload, { onConflict: 'user_id' });
-        if (!error) break;
+        if (!error) {
+          petProfileSaved = true;
+          break;
+        }
+        lastError = error;
+        console.error(`pet_profiles save attempt ${attempt + 1} failed:`, error);
         await new Promise((r) => setTimeout(r, 1000));
+      }
+
+      if (!petProfileSaved) {
+        console.error('All pet_profiles save attempts failed:', lastError);
+        setSubmitError('Failed to save pet profile. Please try again or contact support.');
+        setSubmitting(false);
+        return;
       }
 
       router.push('/community');
