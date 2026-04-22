@@ -6,6 +6,7 @@ import MobileNavWrapper from "@/components/MobileNavWrapper";
 import SideCart from "@/components/SideCart";
 import ConditionalDogChatbot from "@/components/ConditionalDogChatbot";
 import TrackingScripts from "@/components/TrackingScripts";
+import AnalyticsInit from "@/components/AnalyticsInit";
 import GTMNoScript from "@/components/GTMNoScript";
 
 export const metadata: Metadata = {
@@ -33,6 +34,7 @@ export default function RootLayout({
         <GTMNoScript />
         <AuthProvider>
           <CartProvider>
+            <AnalyticsInit />
             {children}
             <MobileNavWrapper />
             <SideCart />

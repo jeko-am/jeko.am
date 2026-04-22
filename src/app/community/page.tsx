@@ -106,13 +106,14 @@ function AvatarCircle({
   avatarUrl?: string | null;
   size?: "sm" | "md" | "lg";
 }) {
+  const [imgError, setImgError] = useState(false);
   const sizeClasses = {
     sm: "w-7 h-7 text-xs",
     md: "w-10 h-10 text-lg",
     lg: "w-12 h-12 text-xl",
   };
 
-  if (avatarUrl) {
+  if (avatarUrl && !imgError) {
     return (
       <Image
         src={avatarUrl}
@@ -121,6 +122,7 @@ function AvatarCircle({
         height={48}
         className={`${sizeClasses[size]} rounded-full object-cover`}
         unoptimized
+        onError={() => setImgError(true)}
       />
     );
   }
@@ -702,6 +704,7 @@ function DesktopPostCard({
   const [captionExpanded, setCaptionExpanded] = useState(false);
   const [showCopied, setShowCopied] = useState(false);
   const [loginTooltip, setLoginTooltip] = useState<string | null>(null);
+  const [postImgError, setPostImgError] = useState(false);
   const loginTooltipTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const isAuthor = userId === post.user_id;
@@ -799,7 +802,7 @@ function DesktopPostCard({
   return (
     <article className="break-inside-avoid mb-6 bg-white rounded-xl shadow-sm hover:shadow-md transition-shadow border border-gray-100 overflow-hidden">
       {/* Image */}
-      {post.image_url && (
+      {post.image_url && !postImgError && (
         <Image
           src={post.image_url}
           alt={`Photo by ${post.author_name}`}
@@ -807,6 +810,7 @@ function DesktopPostCard({
           height={600}
           className="w-full h-auto"
           unoptimized
+          onError={() => setPostImgError(true)}
         />
       )}
 
@@ -1046,6 +1050,7 @@ function MobilePostCard({
   const [captionExpanded, setCaptionExpanded] = useState(false);
   const [showCopied, setShowCopied] = useState(false);
   const [loginTooltip, setLoginTooltip] = useState<string | null>(null);
+  const [postImgError, setPostImgError] = useState(false);
   const loginTooltipTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const isAuthor = userId === post.user_id;
@@ -1239,7 +1244,7 @@ function MobilePostCard({
       </div>
 
       {/* Image - full width, edge-to-edge */}
-      {post.image_url && (
+      {post.image_url && !postImgError && (
         <Image
           src={post.image_url}
           alt={`Photo by ${post.author_name}`}
@@ -1247,6 +1252,7 @@ function MobilePostCard({
           height={800}
           className="w-full h-auto"
           unoptimized
+          onError={() => setPostImgError(true)}
         />
       )}
 

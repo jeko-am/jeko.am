@@ -132,6 +132,13 @@ export default function AdminAnalyticsPage() {
   const [subscriberGrowth, setSubscriberGrowth] = useState<SubscriberMonth[]>([]);
   const [dailyOrders, setDailyOrders] = useState<DailyOrders[]>([]);
 
+  // ─── Visitor & Event Analytics ───────────────────────────────────────────────
+  const [visitorCount, setVisitorCount] = useState(0);
+  const [addToCartCount, setAddToCartCount] = useState(0);
+  const [checkoutStartCount, setCheckoutStartCount] = useState(0);
+  const [checkoutCompleteCount, setCheckoutCompleteCount] = useState(0);
+  const [lastUpdated, setLastUpdated] = useState<Date | null>(null);
+
   // ─── Data Fetching ────────────────────────────────────────────────────────
 
   const fetchAnalytics = useCallback(async () => {
@@ -255,6 +262,44 @@ export default function AdminAnalyticsPage() {
       });
       setSubscriberGrowth(Array.from(monthMap.entries()).map(([month, count]) => ({ month, count })));
 
+      // ─── Visitor & Event Analytics ───────────────────────────────────────
+      const { count: sessionsCount, error: sessErr } = await supabase
+        .from('analytics_sessions')
+        .select('*', { count: 'exact', head: true })
+        .gte('started_at', startStr)
+        .lte('started_at', endStr);
+      if (sessErr) console.warn('Sessions fetch error:', sessErr.message);
+      setVisitorCount(sessionsCount || 0);
+
+      const { count: atcCount, error: atcErr } = await supabase
+        .from('analytics_events')
+        .select('*', { count: 'exact', head: true })
+        .eq('event_type', 'add_to_cart')
+        .gte('created_at', startStr)
+        .lte('created_at', endStr);
+      if (atcErr) console.warn('ATC fetch error:', atcErr.message);
+      setAddToCartCount(atcCount || 0);
+
+      const { count: csCount, error: csErr } = await supabase
+        .from('analytics_events')
+        .select('*', { count: 'exact', head: true })
+        .eq('event_type', 'checkout_start')
+        .gte('created_at', startStr)
+        .lte('created_at', endStr);
+      if (csErr) console.warn('Checkout start fetch error:', csErr.message);
+      setCheckoutStartCount(csCount || 0);
+
+      const { count: ccCount, error: ccErr } = await supabase
+        .from('analytics_events')
+        .select('*', { count: 'exact', head: true })
+        .eq('event_type', 'checkout_complete')
+        .gte('created_at', startStr)
+        .lte('created_at', endStr);
+      if (ccErr) console.warn('Checkout complete fetch error:', ccErr.message);
+      // Orders are ground truth for completed checkouts — events may lag
+      setCheckoutCompleteCount(Math.max(ccCount || 0, stats.totalOrders));
+      setLastUpdated(new Date());
+
     } catch (err: unknown) {
       setError(err instanceof Error ? err.message : 'Failed to load analytics data');
     } finally {
@@ -292,6 +337,69 @@ export default function AdminAnalyticsPage() {
   useEffect(() => {
     fetchAnalytics();
   }, [fetchAnalytics]);
+
+  // Auto-refresh every 5 minutes
+  useEffect(() => {
+    const interval = setInterval(() => {
+      fetchAnalytics();
+    }, 5 * 60 * 1000);
+    return () => clearInterval(interval);
+  }, [fetchAnalytics]);
+
+  // ─── CSV Export ────────────────────────────────────────────────────────────
+
+  async function exportReports() {
+    const { start, end } = getDateRange(dateRange);
+    const suffix = `${dateRange}-${new Date().toISOString().split('T')[0]}`;
+
+    // Export Orders
+    const { data: orders, error: orderErr } = await supabase
+      .from('orders')
+      .select('id, order_number, status, total, currency, email, created_at, customer_id')
+      .gte('created_at', start.toISOString())
+      .lte('created_at', end.toISOString())
+      .order('created_at', { ascending: false });
+    if (!orderErr && orders) {
+      const orderHeaders = ['ID', 'Order Number', 'Status', 'Total', 'Currency', 'Email', 'Customer ID', 'Created At'];
+      const orderRows = orders.map((o: Record<string, unknown>) => [
+        o.id, o.order_number, o.status, o.total, o.currency, o.email, o.customer_id, o.created_at,
+      ]);
+      const orderCsv = [orderHeaders, ...orderRows].map(r => r.map((c) => `"${String(c ?? '').replace(/"/g, '""')}"`).join(',')).join('\n');
+      const orderBlob = new Blob([orderCsv], { type: 'text/csv' });
+      const orderUrl = URL.createObjectURL(orderBlob);
+      const a1 = document.createElement('a');
+      a1.href = orderUrl;
+      a1.download = `orders-${suffix}.csv`;
+      a1.click();
+      URL.revokeObjectURL(orderUrl);
+    }
+
+    // Export Events
+    const { data: events, error: eventErr } = await supabase
+      .from('analytics_events')
+      .select('id, event_type, page_url, product_name, product_price, quantity, created_at, session_id')
+      .gte('created_at', start.toISOString())
+      .lte('created_at', end.toISOString())
+      .order('created_at', { ascending: false });
+    if (!eventErr && events) {
+      const eventHeaders = ['ID', 'Event Type', 'Page URL', 'Product Name', 'Product Price', 'Quantity', 'Session ID', 'Created At'];
+      const eventRows = events.map((e: Record<string, unknown>) => [
+        e.id, e.event_type, e.page_url, e.product_name, e.product_price, e.quantity, e.session_id, e.created_at,
+      ]);
+      const eventCsv = [eventHeaders, ...eventRows].map(r => r.map((c) => `"${String(c ?? '').replace(/"/g, '""')}"`).join(',')).join('\n');
+      const eventBlob = new Blob([eventCsv], { type: 'text/csv' });
+      const eventUrl = URL.createObjectURL(eventBlob);
+      const a2 = document.createElement('a');
+      a2.href = eventUrl;
+      a2.download = `analytics-events-${suffix}.csv`;
+      a2.click();
+      URL.revokeObjectURL(eventUrl);
+    }
+
+    if (orderErr || eventErr) {
+      alert('Some report data failed to export. Please try again.');
+    }
+  }
 
   // ─── Render Helpers ────────────────────────────────────────────────────────
 
@@ -343,21 +451,35 @@ export default function AdminAnalyticsPage() {
         <div>
           <h1 className="text-2xl font-bold text-gray-900">Analytics</h1>
           <p className="text-sm text-gray-500 mt-1">Track your store performance and key metrics</p>
+          {lastUpdated && (
+            <p className="text-xs text-gray-400 mt-0.5">Last updated: {lastUpdated.toLocaleTimeString()}</p>
+          )}
         </div>
-        <div className="flex items-center gap-1 bg-white border border-gray-200 rounded-lg p-1">
-          {DATE_RANGES.map(r => (
-            <button
-              key={r.id}
-              onClick={() => setDateRange(r.id)}
-              className={`px-3 py-1.5 text-xs font-medium rounded-md transition-colors ${
-                dateRange === r.id
-                  ? 'bg-deep-green text-white'
-                  : 'text-gray-600 hover:bg-gray-100'
-              }`}
-            >
-              {r.label}
-            </button>
-          ))}
+        <div className="flex items-center gap-2">
+          <div className="flex items-center gap-1 bg-white border border-gray-200 rounded-lg p-1">
+            {DATE_RANGES.map(r => (
+              <button
+                key={r.id}
+                onClick={() => setDateRange(r.id)}
+                className={`px-3 py-1.5 text-xs font-medium rounded-md transition-colors ${
+                  dateRange === r.id
+                    ? 'bg-deep-green text-white'
+                    : 'text-gray-600 hover:bg-gray-100'
+                }`}
+              >
+                {r.label}
+              </button>
+            ))}
+          </div>
+          <button
+            onClick={exportReports}
+            className="px-3 py-1.5 text-xs font-medium rounded-md bg-white border border-gray-200 text-gray-700 hover:bg-gray-50 transition-colors flex items-center gap-1.5"
+          >
+            <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+              <path strokeLinecap="round" strokeLinejoin="round" d="M12 10v6m0 0l-3-3m3 3l3-3M3 17V7a2 2 0 012-2h6l2 2h6a2 2 0 012 2v10a2 2 0 01-2 2H5a2 2 0 01-2-2z" />
+            </svg>
+            Export Reports
+          </button>
         </div>
       </div>
 
@@ -432,10 +554,10 @@ export default function AdminAnalyticsPage() {
           </div>
         </div>
 
-        {/* Page Views (placeholder) */}
+        {/* Visitors */}
         <div className="bg-white rounded-xl border border-gray-200 p-5">
           <div className="flex items-center justify-between mb-2">
-            <span className="text-xs font-medium text-gray-500 uppercase tracking-wider">Page Views</span>
+            <span className="text-xs font-medium text-gray-500 uppercase tracking-wider">Visitors</span>
             <div className="w-8 h-8 bg-amber-50 rounded-lg flex items-center justify-center">
               <svg className="w-4 h-4 text-amber-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
                 <path strokeLinecap="round" strokeLinejoin="round" d="M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178z" />
@@ -443,11 +565,11 @@ export default function AdminAnalyticsPage() {
               </svg>
             </div>
           </div>
-          <p className="text-2xl font-bold text-gray-900">--</p>
-          <p className="text-xs text-gray-400 mt-1">Connect analytics to view</p>
+          <p className="text-2xl font-bold text-gray-900">{visitorCount.toLocaleString()}</p>
+          <p className="text-xs text-gray-400 mt-1">Unique sessions this period</p>
         </div>
 
-        {/* Conversion Rate (placeholder) */}
+        {/* Conversion Rate */}
         <div className="bg-white rounded-xl border border-gray-200 p-5">
           <div className="flex items-center justify-between mb-2">
             <span className="text-xs font-medium text-gray-500 uppercase tracking-wider">Conversion</span>
@@ -457,8 +579,54 @@ export default function AdminAnalyticsPage() {
               </svg>
             </div>
           </div>
-          <p className="text-2xl font-bold text-gray-900">--</p>
-          <p className="text-xs text-gray-400 mt-1">Connect analytics to view</p>
+          <p className="text-2xl font-bold text-gray-900">
+            {visitorCount > 0 ? `${((checkoutCompleteCount / visitorCount) * 100).toFixed(1)}%` : '0.0%'}
+          </p>
+          <p className="text-xs text-gray-400 mt-1">
+            {checkoutCompleteCount} orders / {visitorCount} visitors
+          </p>
+        </div>
+      </div>
+
+      {/* Event Metrics */}
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+        <div className="bg-white rounded-xl border border-gray-200 p-5">
+          <div className="flex items-center justify-between mb-2">
+            <span className="text-xs font-medium text-gray-500 uppercase tracking-wider">Add to Cart Events</span>
+            <div className="w-8 h-8 bg-orange-50 rounded-lg flex items-center justify-center">
+              <svg className="w-4 h-4 text-orange-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+              </svg>
+            </div>
+          </div>
+          <p className="text-2xl font-bold text-gray-900">{addToCartCount.toLocaleString()}</p>
+          <p className="text-xs text-gray-400 mt-1">Items added to cart this period</p>
+        </div>
+
+        <div className="bg-white rounded-xl border border-gray-200 p-5">
+          <div className="flex items-center justify-between mb-2">
+            <span className="text-xs font-medium text-gray-500 uppercase tracking-wider">Checkout Started</span>
+            <div className="w-8 h-8 bg-indigo-50 rounded-lg flex items-center justify-center">
+              <svg className="w-4 h-4 text-indigo-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 10.5V6a3.75 3.75 0 10-7.5 0v4.5m11.356-1.993l1.263 12c.07.665-.45 1.243-1.119 1.243H4.25a1.125 1.125 0 01-1.12-1.243l1.264-12A1.125 1.125 0 015.513 7.5h12.974c.576 0 1.059.435 1.119 1.007z" />
+              </svg>
+            </div>
+          </div>
+          <p className="text-2xl font-bold text-gray-900">{checkoutStartCount.toLocaleString()}</p>
+          <p className="text-xs text-gray-400 mt-1">Users started checkout</p>
+        </div>
+
+        <div className="bg-white rounded-xl border border-gray-200 p-5">
+          <div className="flex items-center justify-between mb-2">
+            <span className="text-xs font-medium text-gray-500 uppercase tracking-wider">Checkout Completed</span>
+            <div className="w-8 h-8 bg-emerald-50 rounded-lg flex items-center justify-center">
+              <svg className="w-4 h-4 text-emerald-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+            </div>
+          </div>
+          <p className="text-2xl font-bold text-gray-900">{checkoutCompleteCount.toLocaleString()}</p>
+          <p className="text-xs text-gray-400 mt-1">Users completed checkout</p>
         </div>
       </div>
 

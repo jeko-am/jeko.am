@@ -4,7 +4,7 @@ import { useCart } from '@/lib/cart-context';
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
-import { createOrder, OrderData, calculateOrderTotals } from '@/lib/orders';
+import { createOrder, OrderData, calculateOrderTotals, CreatedOrder } from '@/lib/orders';
 import { useAuth } from '@/lib/auth';
 import { trackInitiateCheckout, trackPurchase } from '@/lib/tracking';
 
@@ -33,6 +33,8 @@ export default function CheckoutPage() {
   const [isProcessing, setIsProcessing] = useState(false);
   const [orderComplete, setOrderComplete] = useState(false);
   const [orderNumber, setOrderNumber] = useState('');
+  const [completedOrder, setCompletedOrder] = useState<CreatedOrder | null>(null);
+  const [orderItems, setOrderItems] = useState(items);
   
   // Pre-fill form with user data when logged in
   useEffect(() => {
@@ -91,6 +93,12 @@ export default function CheckoutPage() {
   }
 
   if (orderComplete) {
+    const displayItems = orderItems.length > 0 ? orderItems : items;
+    const displayTotal = completedOrder?.total ?? totalPrice;
+    const displaySubtotal = completedOrder?.subtotal ?? totalPrice;
+    const displayShipping = completedOrder?.shipping_amount ?? 0;
+    const displayTax = completedOrder?.tax_amount ?? 0;
+
     return (
       <div className="min-h-screen bg-off-white py-16">
         <div className="max-w-4xl mx-auto px-4">
@@ -100,29 +108,70 @@ export default function CheckoutPage() {
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
               </svg>
             </div>
-            
+
             <h1 className="text-3xl font-bold text-deep-green mb-4">Order Complete!</h1>
             <p className="text-gray-600 mb-2">Thank you for your purchase</p>
             <p className="text-lg font-semibold text-gray-900 mb-8">Order #{orderNumber}</p>
-            
+
+            {/* Order Items List */}
+            {displayItems.length > 0 && (
+              <div className="bg-white rounded-xl shadow-sm p-6 mb-6 max-w-md mx-auto">
+                <h2 className="text-lg font-semibold text-deep-green mb-4">Order Items</h2>
+                <div className="space-y-3 text-left">
+                  {displayItems.map((item) => (
+                    <div key={item.id} className="flex gap-3">
+                      <div className="w-14 h-14 bg-gray-100 rounded-lg overflow-hidden flex-shrink-0">
+                        <img
+                          src={item.image}
+                          alt={item.name}
+                          className="w-full h-full object-cover"
+                        />
+                      </div>
+                      <div className="flex-1 min-w-0 text-left">
+                        <div className="text-sm font-medium text-gray-900 truncate">{item.name}</div>
+                        <div className="text-sm text-gray-500">Qty: {item.quantity}</div>
+                        <div className="text-sm font-semibold text-deep-green">
+                          {formatPrice(item.price * item.quantity)}
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+
             <div className="bg-white rounded-xl shadow-sm p-6 mb-8 max-w-md mx-auto">
               <h2 className="text-lg font-semibold text-deep-green mb-4">Order Summary</h2>
               <div className="space-y-2 text-sm">
                 <div className="flex justify-between">
-                  <span>Items ({items.length})</span>
-                  <span>{formatPrice(totalPrice)}</span>
+                  <span>Items ({displayItems.length})</span>
+                  <span>{formatPrice(displaySubtotal)}</span>
                 </div>
-                <div className="flex justify-between">
-                  <span>Shipping</span>
-                  <span>Free</span>
-                </div>
+                {displayShipping > 0 && (
+                  <div className="flex justify-between">
+                    <span>Shipping</span>
+                    <span>{formatPrice(displayShipping)}</span>
+                  </div>
+                )}
+                {displayShipping === 0 && (
+                  <div className="flex justify-between">
+                    <span>Shipping</span>
+                    <span className="text-green-600">Free</span>
+                  </div>
+                )}
+                {displayTax > 0 && (
+                  <div className="flex justify-between">
+                    <span>Tax</span>
+                    <span>{formatPrice(displayTax)}</span>
+                  </div>
+                )}
                 <div className="border-t pt-2 flex justify-between font-semibold">
                   <span>Total</span>
-                  <span>{formatPrice(totalPrice)}</span>
+                  <span>{formatPrice(displayTotal)}</span>
                 </div>
               </div>
             </div>
-            
+
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link href="/products" className="btn-gold">
                 Continue Shopping
@@ -192,10 +241,14 @@ export default function CheckoutPage() {
 
       // Create order in database
       const order = await createOrder(orderData);
-      
+
       // Set order number from database response
       setOrderNumber(`#${order.order_number}`);
-      
+
+      // Save order data and items BEFORE clearing cart
+      setCompletedOrder(order);
+      setOrderItems([...items]);
+
       // Track purchase
       trackPurchase(
         String(order.order_number),

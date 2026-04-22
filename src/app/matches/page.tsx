@@ -361,7 +361,7 @@ export default function MatchesPage() {
     return (
       <div className="min-h-screen bg-off-white flex flex-col">
         <Header />
-        <div className="flex-1 flex items-center justify-center">
+        <div className="flex-1 flex items-center justify-center pt-[76px] lg:pt-[92px]">
           <div className="w-10 h-10 border-4 border-gold border-t-transparent rounded-full animate-spin" />
         </div>
         <Footer />
@@ -375,7 +375,7 @@ export default function MatchesPage() {
     <div className="min-h-screen bg-off-white flex flex-col">
       <Header />
 
-      <div className="flex-1">
+      <div className="flex-1 pt-[76px] lg:pt-[92px]">
         {!user ? (
           <>
             {/* Community promo banner */}

@@ -6,10 +6,11 @@ import { useRouter, useSearchParams } from 'next/navigation';
 import { FormEvent, Suspense, useEffect, useState } from 'react';
 
 function LoginForm() {
-  const { signIn, user, loading } = useAuth();
+  const { signIn, user, isAdmin, loading } = useAuth();
   const router = useRouter();
   const searchParams = useSearchParams();
   const redirect = searchParams.get('redirect') || '/profile';
+  const isAdminRedirect = redirect.startsWith('/admin');
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -17,12 +18,14 @@ function LoginForm() {
   const [submitting, setSubmitting] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
 
-  // Redirect if already authenticated as user
+  // Redirect if already authenticated
+  // For admin redirects, wait until isAdmin is resolved to avoid loop
   useEffect(() => {
-    if (!loading && user) {
-      router.push(redirect);
-    }
-  }, [user, loading, router, redirect]);
+    if (loading) return;
+    if (!user) return;
+    if (isAdminRedirect && !isAdmin) return;
+    router.push(redirect);
+  }, [user, isAdmin, loading, router, redirect, isAdminRedirect]);
 
   async function handleSubmit(e: FormEvent) {
     e.preventDefault();

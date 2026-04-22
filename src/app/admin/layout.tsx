@@ -2,7 +2,7 @@
 
 import { useAuth } from '@/lib/auth';
 import { useRouter, usePathname } from 'next/navigation';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import Link from 'next/link';
 
 
@@ -31,18 +31,24 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
   const pathname = usePathname();
   const [sidebarOpen, setSidebarOpen] = useState(true);
   const [mounted, setMounted] = useState(false);
+  const hasRedirected = useRef(false);
 
   useEffect(() => setMounted(true), []);
 
   useEffect(() => {
-    // Redirect immediately if no user - don't wait for auth checks
+    // Only run redirects after the auth system has finished loading
+    if (loading) return;
+
+    // Redirect immediately if no user
     if (!user) {
       router.push('/auth/login?redirect=/admin/dashboard');
       return;
     }
 
-    // Additional check for admin role
-    if (!loading && !isAdmin) {
+    // Only redirect non-admins once — prevents loop when isAdmin flips
+    // during the brief window after login before admin check completes
+    if (!isAdmin && !hasRedirected.current) {
+      hasRedirected.current = true;
       router.push('/auth/login?redirect=/admin/dashboard');
     }
   }, [user, isAdmin, loading, router]);
