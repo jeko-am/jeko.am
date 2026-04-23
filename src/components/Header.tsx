@@ -118,8 +118,15 @@ export default function Header({ content }: { content?: any }) {
   const [mobileActiveDropdown, setMobileActiveDropdown] = useState<string | null>(null);
   const [scrolled, setScrolled] = useState(false);
   const { totalItems, openCart } = useCart();
-  const { user, signOut, isAdmin } = useAuth();
+  const { user: authUser, signOut, isAdmin: authIsAdmin } = useAuth();
   const [isLoggingOut, setIsLoggingOut] = useState(false);
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => { setMounted(true); }, []);
+  // Gate auth/cart-dependent UI until after hydration to avoid SSR/CSR mismatch
+  // caused by AuthProvider and CartProvider reading localStorage on first render.
+  const user = mounted ? authUser : null;
+  const isAdmin = mounted ? authIsAdmin : false;
+  const cartCount = mounted ? totalItems : 0;
 
   const handleSignOut = async () => {
     setIsLoggingOut(true);
@@ -133,7 +140,8 @@ export default function Header({ content }: { content?: any }) {
   const logoText = content?.logo_text ?? "JEKO";
   const ctaText = content?.cta_text ?? "Sign up";
   const signupUrl = useSignupUrl();
-  const ctaUrl = content?.cta_url ?? signupUrl;
+  // Gate the dynamic signup→profile swap until after hydration.
+  const ctaUrl = content?.cta_url ?? (mounted ? signupUrl : '/auth/signup');
   const helpUrl = content?.help_url ?? "/contact";
   const loginUrl = content?.login_url ?? "/login";
 
@@ -220,9 +228,9 @@ export default function Header({ content }: { content?: any }) {
               aria-label="Shopping cart"
             >
               <CartIcon />
-              {totalItems > 0 && (
+              {cartCount > 0 && (
                 <span className="absolute -top-2 -right-2 bg-gold text-deep-green text-xs font-bold w-5 h-5 rounded-full flex items-center justify-center">
-                  {totalItems > 99 ? '99+' : totalItems}
+                  {cartCount > 99 ? '99+' : cartCount}
                 </span>
               )}
             </button>

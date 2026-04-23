@@ -316,7 +316,7 @@ const SwipeCard = memo(function SwipeCard({ candidate, isTop, onSwipe, onLove: _
               className="w-14 h-14 rounded-full bg-emerald-500 hover:bg-emerald-600 active:scale-90 flex items-center justify-center text-white shadow-lg transition-all" aria-label="Love">
               <svg className="w-7 h-7" fill="currentColor" viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
             </button>
-            <button onClick={(e)=>{e.stopPropagation();triggerSwipe("right");}}
+            <button onClick={(e)=>{e.stopPropagation();triggerSwipe("left");}}
               className="w-12 h-12 rounded-full bg-gray-800 flex items-center justify-center text-white hover:bg-gray-700 active:scale-90 transition-all shadow-lg" aria-label="Next">
               <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth={2.5} viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6"/></svg>
             </button>
@@ -403,6 +403,9 @@ export default function SwipePage() {
   const [loadingCandidates, setLoadingCandidates] = useState(true);
   const [allExhausted, setAllExhausted] = useState(false);
   const loadingMoreRef = useRef(false);
+  // Tracks user_ids already swiped in this session so in-flight upserts don't
+  // let already-swiped cards reappear when loadCandidates fires before the DB commits.
+  const swipedIdsRef = useRef<Set<string>>(new Set());
   const [likesToday, setLikesToday] = useState(0);
   const [matchCount, setMatchCount] = useState(0);
   const [matchModalPet, setMatchModalPet] = useState<PetCandidate|null>(null);
@@ -456,6 +459,8 @@ export default function SwipePage() {
           excludeSet.add(row.swiped_id);
         }
       }
+      // Include in-flight swipes that haven't hit the DB yet
+      for(const id of swipedIdsRef.current) excludeSet.add(id);
       const excludedIds=Array.from(excludeSet);
 
       // Build candidate query with preference filters
@@ -546,9 +551,18 @@ export default function SwipePage() {
           });
         }
       }
-      if(batch.length===0) setAllExhausted(true);
-      if(append) setCandidates(prev=>[...prev,...batch]);
-      else{setCandidates(batch);setCurrentIndex(0);}
+      if(append) {
+        setCandidates(prev=>{
+          const existing=new Set(prev.map(c=>c.user_id));
+          const deduped=batch.filter(c=>!existing.has(c.user_id)&&!swipedIdsRef.current.has(c.user_id));
+          if(deduped.length===0) setAllExhausted(true);
+          return [...prev,...deduped];
+        });
+      } else {
+        if(batch.length===0) setAllExhausted(true);
+        setCandidates(batch);
+        setCurrentIndex(0);
+      }
     }catch(err){console.error("Failed to load candidates:",err);}
     finally{setLoadingCandidates(false);loadingMoreRef.current=false;}
   },[user,myPetProfile]);
@@ -567,6 +581,7 @@ export default function SwipePage() {
   const handleSwipe = useCallback((direction:"left"|"right")=>{
     const candidate=candidates[currentIndex];
     if(!candidate||!user) return;
+    swipedIdsRef.current.add(candidate.user_id);
     setCurrentIndex(prev=>prev+1);
     const action=direction==="right"?"like":"pass";
     if(action==="like") setLikesToday(prev=>prev+1);
