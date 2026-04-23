@@ -1712,8 +1712,9 @@ function SignupPageInner() {
                 </div>
                 {errors.gender && <p className="text-red-500 text-sm mt-2">{errors.gender}</p>}
 
-                {/* Age */}
-                <div className="max-w-sm mx-auto">
+                {/* Age & Weight - Side by side on iPad/tablet */}
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 max-w-md mx-auto">
+                  {/* Age */}
                   <div>
                     <label className="block text-sm font-medium text-deep-green mb-2">Age (years) <span className="text-red-400">*</span></label>
                     <input
@@ -1726,10 +1727,8 @@ function SignupPageInner() {
                     />
                     {errors.dogAge && <p className="text-red-500 text-xs mt-1">{errors.dogAge}</p>}
                   </div>
-                </div>
 
-                {/* Weight */}
-                <div className="max-w-sm mx-auto">
+                  {/* Weight */}
                   <div>
                     <label className="block text-sm font-medium text-deep-green mb-2">Weight (kg) <span className="text-red-400">*</span></label>
                     <input
