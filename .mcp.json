@@ -10,11 +10,16 @@
         "-y",
         "@supabase/mcp-server-supabase@latest",
         "--access-token",
-        "sbp_1c16afee168b610a3ad75345633503357608baec"
+        "sbp_db473eb93b65e8c11aba6eec4e83c3af3ef53e44"
+      ]
+    },
+    "code-review-graph": {
+      "command": "uvx",
+      "args": [
+        "code-review-graph",
+        "serve"
       ],
-      "env": {
-        "SUPABASE_ACCESS_TOKEN": "sbp_1c16afee168b610a3ad75345633503357608baec"
-      }
+      "type": "stdio"
     }
   }
 }

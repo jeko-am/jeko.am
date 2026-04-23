@@ -1,0 +1,179 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e97]:
+    - banner [ref=e98]:
+      - generic [ref=e100]:
+        - link "JEKO" [ref=e101] [cursor=pointer]:
+          - /url: /
+          - generic [ref=e102]: JEKO
+        - navigation [ref=e103]:
+          - link "About" [ref=e105] [cursor=pointer]:
+            - /url: /about
+            - text: About
+            - img [ref=e106]
+          - link "Community" [ref=e109] [cursor=pointer]:
+            - /url: /community
+            - text: Community
+            - img [ref=e110]
+          - link "Shop" [ref=e113] [cursor=pointer]:
+            - /url: /products
+          - link "Reviews" [ref=e115] [cursor=pointer]:
+            - /url: /reviews
+          - link "Health & breeds" [ref=e117] [cursor=pointer]:
+            - /url: /benefits
+            - text: Health & breeds
+            - img [ref=e118]
+        - generic [ref=e120]:
+          - button "Switch language" [ref=e122] [cursor=pointer]:
+            - generic [ref=e123]: 🇬🇧
+            - generic [ref=e124]: EN
+            - img [ref=e125]
+          - button "Shopping cart" [ref=e127] [cursor=pointer]:
+            - img [ref=e128]
+            - generic [ref=e132]: "2"
+          - link "Help" [ref=e133] [cursor=pointer]:
+            - /url: /contact
+          - generic [ref=e134]:
+            - link "Profile" [ref=e135] [cursor=pointer]:
+              - /url: /profile
+              - img [ref=e136]
+              - text: Profile
+            - button "Logout" [ref=e138] [cursor=pointer]:
+              - img [ref=e139]
+              - text: Logout
+    - generic [ref=e142]:
+      - link "Profile" [ref=e143] [cursor=pointer]:
+        - /url: /profile
+        - img [ref=e144]
+        - generic [ref=e146]: Profile
+      - generic [ref=e147]:
+        - generic [ref=e148]:
+          - generic [ref=e149]: ❤️
+          - generic [ref=e150]: "0"
+        - generic [ref=e152]:
+          - generic [ref=e153]: 🎯
+          - generic [ref=e154]: "0"
+      - link "Matches" [ref=e155] [cursor=pointer]:
+        - /url: /matches
+        - img [ref=e156]
+        - generic [ref=e158]: Matches
+    - generic [ref=e160]:
+      - generic [ref=e164]:
+        - img "Red4" [ref=e166]
+        - generic [ref=e171]:
+          - heading "Red4" [level=3] [ref=e172]
+          - paragraph [ref=e173]: Bull Terrier
+          - generic [ref=e174]:
+            - generic [ref=e175]:
+              - img [ref=e176]
+              - text: Yerevan
+            - generic [ref=e179]:
+              - img [ref=e180]
+              - text: Large
+            - generic [ref=e182]:
+              - img [ref=e183]
+              - text: 4 years
+      - generic [ref=e186]:
+        - generic [ref=e187]: LIKE
+        - generic [ref=e188]: NOPE
+        - img "RED22" [ref=e190]
+        - generic [ref=e195]:
+          - heading "RED22" [level=3] [ref=e196]
+          - paragraph [ref=e197]: Bull Terrier
+          - generic [ref=e198]:
+            - generic [ref=e199]:
+              - img [ref=e200]
+              - text: Yerevan
+            - generic [ref=e203]:
+              - img [ref=e204]
+              - text: Large
+            - generic [ref=e206]:
+              - img [ref=e207]
+              - text: 5 years
+        - generic [ref=e209]:
+          - button "Pass" [ref=e210] [cursor=pointer]:
+            - img [ref=e211]
+          - button "Love" [ref=e213] [cursor=pointer]:
+            - img [ref=e214]
+          - button "Next" [ref=e216] [cursor=pointer]:
+            - img [ref=e217]
+    - contentinfo [ref=e219]:
+      - generic [ref=e220]:
+        - generic [ref=e221]:
+          - generic [ref=e222]:
+            - heading "Join our VIP list" [level=4] [ref=e223]
+            - paragraph [ref=e224]: Be the first to hear about new product launches, exclusive competitions and helpful dog content.
+            - generic [ref=e225]:
+              - textbox "Enter your email address" [ref=e226]
+              - button "Sign up" [ref=e227] [cursor=pointer]
+          - generic [ref=e228]:
+            - generic [ref=e229]:
+              - heading "Jeko" [level=4] [ref=e230]
+              - list [ref=e231]:
+                - listitem [ref=e232]:
+                  - link "Our story" [ref=e233] [cursor=pointer]:
+                    - /url: /about
+                - listitem [ref=e234]:
+                  - link "Reviews" [ref=e235] [cursor=pointer]:
+                    - /url: /reviews
+                - listitem [ref=e236]:
+                  - link "Recipes" [ref=e237] [cursor=pointer]:
+                    - /url: /recipes
+                - listitem [ref=e238]:
+                  - link "Beyond the bowl" [ref=e239] [cursor=pointer]:
+                    - /url: /beyond-the-bowl
+                - listitem [ref=e240]:
+                  - link "Shop" [ref=e241] [cursor=pointer]:
+                    - /url: /products
+                - listitem [ref=e242]:
+                  - link "Community" [ref=e243] [cursor=pointer]:
+                    - /url: /community
+            - generic [ref=e244]:
+              - heading "Help" [level=4] [ref=e245]
+              - list [ref=e246]:
+                - listitem [ref=e247]:
+                  - link "My account" [ref=e248] [cursor=pointer]:
+                    - /url: /profile
+                - listitem [ref=e249]:
+                  - link "Contact us" [ref=e250] [cursor=pointer]:
+                    - /url: /contact
+                - listitem [ref=e251]:
+                  - link "Delivery information" [ref=e252] [cursor=pointer]:
+                    - /url: /delivery-information
+                - listitem [ref=e253]:
+                  - link "Returns" [ref=e254] [cursor=pointer]:
+                    - /url: /returns
+                - listitem [ref=e255]:
+                  - link "Sitemap" [ref=e256] [cursor=pointer]:
+                    - /url: /sitemap-page
+            - generic [ref=e257]:
+              - heading "Information" [level=4] [ref=e258]
+              - list [ref=e259]:
+                - listitem [ref=e260]:
+                  - link "Privacy policy" [ref=e261] [cursor=pointer]:
+                    - /url: /privacy-policy
+                - listitem [ref=e262]:
+                  - link "Terms & conditions" [ref=e263] [cursor=pointer]:
+                    - /url: /terms-of-use
+                - listitem [ref=e264]:
+                  - link "Jeko policies" [ref=e265] [cursor=pointer]:
+                    - /url: /pure-policies
+                - listitem [ref=e266]:
+                  - link "Site security" [ref=e267] [cursor=pointer]:
+                    - /url: /site-security
+                - listitem [ref=e268]:
+                  - link "Cookie policy" [ref=e269] [cursor=pointer]:
+                    - /url: /cookie-policy
+        - generic [ref=e270]:
+          - generic [ref=e272]: JEKO
+          - paragraph [ref=e273]: © Jeko 2020-2026
+  - link "Home":
+    - /url: /
+    - img
+    - text: Home
+  - alert [ref=e274]
+  - generic [ref=e277] [cursor=pointer]:
+    - img [ref=e278]
+    - generic [ref=e280]: 1 error
+    - button "Hide Errors" [ref=e281]:
+      - img [ref=e282]
+  - img [ref=e287]

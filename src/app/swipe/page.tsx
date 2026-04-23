@@ -460,7 +460,7 @@ export default function SwipePage() {
         }
       }
       // Include in-flight swipes that haven't hit the DB yet
-      for(const id of swipedIdsRef.current) excludeSet.add(id);
+      Array.from(swipedIdsRef.current).forEach(id => excludeSet.add(id));
       const excludedIds=Array.from(excludeSet);
 
       // Build candidate query with preference filters

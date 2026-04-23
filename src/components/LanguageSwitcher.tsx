@@ -75,10 +75,11 @@ export default function LanguageSwitcher() {
     <>
       <div id="gt_hidden_element" className="hidden" />
 
-      <div className="relative">
+      <div className="relative z-50">
         <button
           onClick={() => setOpen((o) => !o)}
-          className="flex items-center gap-1.5 bg-white/10 backdrop-blur-sm border border-white/20 rounded-lg px-3 py-2 text-[15px] font-rubik font-medium text-white hover:bg-white/20 transition-all duration-200 notranslate"
+          onTouchEnd={(e) => { e.preventDefault(); setOpen((o) => !o); }}
+          className="flex items-center gap-1.5 bg-white/10 backdrop-blur-sm border border-white/20 rounded-lg px-3 py-2 text-[15px] font-rubik font-medium text-white hover:bg-white/20 transition-all duration-200 notranslate cursor-pointer active:bg-white/30"
           aria-label="Switch language"
           translate="no"
         >
@@ -99,7 +100,7 @@ export default function LanguageSwitcher() {
           <>
             {/* Click-away overlay */}
             <div className="fixed inset-0 z-40" onClick={() => setOpen(false)} />
-            <div className="absolute right-0 mt-2 bg-white border border-gray-100 shadow-xl rounded-xl overflow-hidden min-w-[150px] z-50">
+            <div className="absolute right-0 mt-2 bg-white border border-gray-100 shadow-xl rounded-xl overflow-hidden min-w-[150px] z-[60]">
               {languages.map((lang) => (
                 <button
                   key={lang.code}
@@ -107,7 +108,12 @@ export default function LanguageSwitcher() {
                     setOpen(false);
                     if (lang.code !== currentLang) setGoogTransCookie(lang.code);
                   }}
-                  className={`w-full flex items-center gap-2.5 px-4 py-2.5 text-[13px] font-rubik text-left transition-colors duration-150 notranslate ${
+                  onTouchEnd={(e) => {
+                    e.preventDefault();
+                    setOpen(false);
+                    if (lang.code !== currentLang) setGoogTransCookie(lang.code);
+                  }}
+                  className={`w-full flex items-center gap-2.5 px-4 py-2.5 text-[13px] font-rubik text-left transition-colors duration-150 notranslate cursor-pointer active:bg-gray-100 ${
                     lang.code === currentLang
                       ? "bg-deep-green/5 text-deep-green font-semibold"
                       : "text-gray-700 hover:bg-gray-50"

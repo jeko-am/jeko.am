@@ -747,7 +747,7 @@ function SignupPageInner() {
   const [petType, setPetType] = useState<string>('');
   const [dogName, setDogName] = useState('');
   const [breed, setBreed] = useState('');
-  const [dogAge] = useState('');
+  const [dogAge, setDogAge] = useState('');
   const [weightKg, setWeightKg] = useState('');
   const [gender, setGender] = useState('');
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -1299,6 +1299,7 @@ function SignupPageInner() {
     if (s === 1) {
       if (!breed.trim()) newErrors.breed = 'Please select or type a breed';
       if (!gender) newErrors.gender = 'Please select a gender';
+      if (!dogAge) newErrors.dogAge = 'Please enter your pet\'s age';
       if (!weightKg) newErrors.weightKg = 'Please enter your pet\'s weight';
     }
     if (s === 2 && !temperament) newErrors.activityLevel = 'Please select a personality or skip this step';
@@ -1710,6 +1711,22 @@ function SignupPageInner() {
                   ))}
                 </div>
                 {errors.gender && <p className="text-red-500 text-sm mt-2">{errors.gender}</p>}
+
+                {/* Age */}
+                <div className="max-w-sm mx-auto">
+                  <div>
+                    <label className="block text-sm font-medium text-deep-green mb-2">Age (years) <span className="text-red-400">*</span></label>
+                    <input
+                      type="text"
+                      inputMode="decimal"
+                      value={dogAge}
+                      onChange={(e) => { const v = e.target.value; if (v === '' || /^\d{0,2}(\.\d{0,1})?$/.test(v)) setDogAge(v); }}
+                      placeholder="e.g. 3"
+                      className={`w-full px-4 py-3 border-2 rounded-xl text-center text-gray-900 placeholder:text-gray-300 focus:outline-none focus:ring-2 focus:ring-deep-green focus:border-transparent ${errors.dogAge ? 'border-red-400' : 'border-gray-200'}`}
+                    />
+                    {errors.dogAge && <p className="text-red-500 text-xs mt-1">{errors.dogAge}</p>}
+                  </div>
+                </div>
 
                 {/* Weight */}
                 <div className="max-w-sm mx-auto">
