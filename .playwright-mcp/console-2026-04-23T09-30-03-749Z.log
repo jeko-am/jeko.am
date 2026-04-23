@@ -1,0 +1,339 @@
+[    3135ms] [INFO] %cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold @ webpack-internal:///(app-pages-browser)/./node_modules/next/dist/compiled/react-dom/cjs/react-dom.development.js:38559
+[    4365ms] [ERROR] Failed to load resource: the server responded with a status of 409 () @ https://dzhtpnskezkrtfinntbi.supabase.co/rest/v1/analytics_sessions:0
+[    4513ms] [ERROR] Failed to load resource: the server responded with a status of 409 () @ https://dzhtpnskezkrtfinntbi.supabase.co/rest/v1/analytics_sessions:0
+[   20394ms] [LOG] [Fast Refresh] rebuilding @ webpack-internal:///(app-pages-browser)/./node_modules/next/dist/client/components/react-dev-overlay/app/hot-reloader-client.js:186
+[   20685ms] [LOG] [Fast Refresh] done in 292ms @ webpack-internal:///(app-pages-browser)/./node_modules/next/dist/client/components/react-dev-overlay/app/hot-reloader-client.js:43
+[   43537ms] [LOG] [Fast Refresh] rebuilding @ webpack-internal:///(app-pages-browser)/./node_modules/next/dist/client/components/react-dev-overlay/app/hot-reloader-client.js:186
+[   44525ms] [WARNING] [Fast Refresh] performing full reload
+
+Fast Refresh will perform a full reload when you edit a file that's imported by modules outside of the React rendering tree.
+You might have a file which exports a React component but also exports a value that is imported by a non-React component file.
+Consider migrating the non-React component export to a separate file and importing it into both files.
+
+It is also possible the parent component of the component you edited is a class component, which disables Fast Refresh.
+Fast Refresh requires at least one parent function component in your React tree. @ webpack-internal:///(app-pages-browser)/./node_modules/next/dist/client/components/react-dev-overlay/app/hot-reloader-client.js:112
+[   45273ms] [INFO] %cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold @ webpack-internal:///(app-pages-browser)/./node_modules/next/dist/compiled/react-dom/cjs/react-dom.development.js:38559
+[   49830ms] [LOG] [Fast Refresh] rebuilding @ webpack-internal:///(app-pages-browser)/./node_modules/next/dist/client/components/react-dev-overlay/app/hot-reloader-client.js:186
+[   50095ms] [WARNING] [Fast Refresh] performing full reload
+
+Fast Refresh will perform a full reload when you edit a file that's imported by modules outside of the React rendering tree.
+You might have a file which exports a React component but also exports a value that is imported by a non-React component file.
+Consider migrating the non-React component export to a separate file and importing it into both files.
+
+It is also possible the parent component of the component you edited is a class component, which disables Fast Refresh.
+Fast Refresh requires at least one parent function component in your React tree. @ webpack-internal:///(app-pages-browser)/./node_modules/next/dist/client/components/react-dev-overlay/app/hot-reloader-client.js:112
+[   51958ms] [INFO] %cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold @ webpack-internal:///(app-pages-browser)/./node_modules/next/dist/compiled/react-dom/cjs/react-dom.development.js:38559
+[   57659ms] [LOG] [Fast Refresh] rebuilding @ webpack-internal:///(app-pages-browser)/./node_modules/next/dist/client/components/react-dev-overlay/app/hot-reloader-client.js:186
+[   58539ms] [WARNING] [Fast Refresh] performing full reload
+
+Fast Refresh will perform a full reload when you edit a file that's imported by modules outside of the React rendering tree.
+You might have a file which exports a React component but also exports a value that is imported by a non-React component file.
+Consider migrating the non-React component export to a separate file and importing it into both files.
+
+It is also possible the parent component of the component you edited is a class component, which disables Fast Refresh.
+Fast Refresh requires at least one parent function component in your React tree. @ webpack-internal:///(app-pages-browser)/./node_modules/next/dist/client/components/react-dev-overlay/app/hot-reloader-client.js:112
+[   60484ms] [INFO] %cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold @ webpack-internal:///(app-pages-browser)/./node_modules/next/dist/compiled/react-dom/cjs/react-dom.development.js:38559
+[   69974ms] [LOG] [Fast Refresh] rebuilding @ webpack-internal:///(app-pages-browser)/./node_modules/next/dist/client/components/react-dev-overlay/app/hot-reloader-client.js:186
+[   70122ms] [WARNING] [Fast Refresh] performing full reload
+
+Fast Refresh will perform a full reload when you edit a file that's imported by modules outside of the React rendering tree.
+You might have a file which exports a React component but also exports a value that is imported by a non-React component file.
+Consider migrating the non-React component export to a separate file and importing it into both files.
+
+It is also possible the parent component of the component you edited is a class component, which disables Fast Refresh.
+Fast Refresh requires at least one parent function component in your React tree. @ webpack-internal:///(app-pages-browser)/./node_modules/next/dist/client/components/react-dev-overlay/app/hot-reloader-client.js:112
+[   71319ms] [INFO] %cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold @ webpack-internal:///(app-pages-browser)/./node_modules/next/dist/compiled/react-dom/cjs/react-dom.development.js:38559
+[  137402ms] [LOG] [Fast Refresh] rebuilding @ webpack-internal:///(app-pages-browser)/./node_modules/next/dist/client/components/react-dev-overlay/app/hot-reloader-client.js:186
+[  138611ms] [LOG] [Fast Refresh] rebuilding @ webpack-internal:///(app-pages-browser)/./node_modules/next/dist/client/components/react-dev-overlay/app/hot-reloader-client.js:186
+[  138676ms] [LOG] [Fast Refresh] done in 66ms @ webpack-internal:///(app-pages-browser)/./node_modules/next/dist/client/components/react-dev-overlay/app/hot-reloader-client.js:43
+[  139248ms] [LOG] [Fast Refresh] done in 638ms @ webpack-internal:///(app-pages-browser)/./node_modules/next/dist/client/components/react-dev-overlay/app/hot-reloader-client.js:43
+[  139274ms] [LOG] [Fast Refresh] rebuilding @ webpack-internal:///(app-pages-browser)/./node_modules/next/dist/client/components/react-dev-overlay/app/hot-reloader-client.js:186
+[  139353ms] [LOG] [Fast Refresh] done in 80ms @ webpack-internal:///(app-pages-browser)/./node_modules/next/dist/client/components/react-dev-overlay/app/hot-reloader-client.js:43
+[  141013ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:3000/admin/dashboard?_rsc=ni5m1:0
+[  141143ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:3000/admin/dashboard:0
+[  141506ms] [INFO] %cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold @ webpack-internal:///./node_modules/react-dom/cjs/react-dom.development.js:29889
+[  141575ms] Error: Cannot find module './1682.js'
+Require stack:
+- /Users/admin/Desktop/claude code armen/pure-pet-clone/.next/server/webpack-runtime.js
+- /Users/admin/Desktop/claude code armen/pure-pet-clone/.next/server/pages/_document.js
+- /Users/admin/Desktop/claude code armen/pure-pet-clone/node_modules/next/dist/server/require.js
+- /Users/admin/Desktop/claude code armen/pure-pet-clone/node_modules/next/dist/server/load-components.js
+- /Users/admin/Desktop/claude code armen/pure-pet-clone/node_modules/next/dist/build/utils.js
+- /Users/admin/Desktop/claude code armen/pure-pet-clone/node_modules/next/dist/server/dev/hot-middleware.js
+- /Users/admin/Desktop/claude code armen/pure-pet-clone/node_modules/next/dist/server/dev/hot-reloader-webpack.js
+- /Users/admin/Desktop/claude code armen/pure-pet-clone/node_modules/next/dist/server/lib/router-utils/setup-dev-bundler.js
+- /Users/admin/Desktop/claude code armen/pure-pet-clone/node_modules/next/dist/server/lib/router-server.js
+- /Users/admin/Desktop/claude code armen/pure-pet-clone/node_modules/next/dist/server/lib/start-server.js
+    at Module._resolveFilename (node:internal/modules/cjs/loader:1475:15)
+    at <unknown> (file:///Users/admin/Desktop/claude code armen/pure-pet-clone/node_modules/next/dist/server/require-hook.js:55:36)
+    at wrapResolveFilename (node:internal/modules/cjs/loader:1048:27)
+    at defaultResolveImplForCJSLoading (node:internal/modules/cjs/loader:1072:10)
+    at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1093:12)
+    at Module._load (node:internal/modules/cjs/loader:1261:25)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:255:19)
+    at Module.require (node:internal/modules/cjs/loader:1575:12)
+    at mod.require (file:///Users/admin/Desktop/claude code armen/pure-pet-clone/node_modules/next/dist/server/require-hook.js:65:28)
+    at require (node:internal/modules/helpers:191:16)
+    at __webpack_require__.f.require (file:///Users/admin/Desktop/claude code armen/pure-pet-clone/.next/server/webpack-runtime.js:198:28)
+    at <unknown> (file:///Users/admin/Desktop/claude code armen/pure-pet-clone/.next/server/webpack-runtime.js:111:40)
+    at Array.reduce (<anonymous>)
+    at __webpack_require__.e (file:///Users/admin/Desktop/claude code armen/pure-pet-clone/.next/server/webpack-runtime.js:110:67)
+    at Array.map (<anonymous>)
+    at __webpack_require__.X (file:///Users/admin/Desktop/claude code armen/pure-pet-clone/.next/server/webpack-runtime.js:162:22)
+    at <unknown> (file:///Users/admin/Desktop/claude code armen/pure-pet-clone/.next/server/pages/_document.js:1:340)
+    at Object.<anonymous> (file:///Users/admin/Desktop/claude code armen/pure-pet-clone/.next/server/pages/_document.js:1:383)
+    at Module._compile (node:internal/modules/cjs/loader:1831:14)
+    at Module._extensions..js (node:internal/modules/cjs/loader:1971:10)
+    at Module.load (node:internal/modules/cjs/loader:1552:32)
+    at Module._load (node:internal/modules/cjs/loader:1354:12)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:255:19)
+    at Module.require (node:internal/modules/cjs/loader:1575:12)
+    at mod.require (file:///Users/admin/Desktop/claude code armen/pure-pet-clone/node_modules/next/dist/server/require-hook.js:65:28)
+    at require (node:internal/modules/helpers:191:16)
+    at requirePage (file:///Users/admin/Desktop/claude code armen/pure-pet-clone/node_modules/next/dist/server/require.js:109:84)
+    at <unknown> (file:///Users/admin/Desktop/claude code armen/pure-pet-clone/node_modules/next/dist/server/load-components.js:72:65)
+    at async loadComponentsImpl (file:///Users/admin/Desktop/claude code armen/pure-pet-clone/node_modules/next/dist/server/load-components.js:71:33)
+    at async DevServer.findPageComponentsImpl (file:///Users/admin/Desktop/claude code armen/pure-pet-clone/node_modules/next/dist/server/next-server.js:714:36)
+[  141572ms] [LOG] [HMR] connected @ webpack-internal:///./node_modules/next/dist/client/components/react-dev-overlay/pages/websocket.js:38
+[  141665ms] [LOG] [Fast Refresh] rebuilding @ webpack-internal:///./node_modules/next/dist/client/components/react-dev-overlay/pages/hot-reloader-client.js:221
+[  141715ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:3000/favicon.ico:0
+[  142355ms] [ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ http://localhost:3000/_next/static/webpack/ea026ccb46c60763.webpack.hot-update.json:0
+[  142355ms] [WARNING] [Fast Refresh] performing full reload because your application had an unrecoverable error @ webpack-internal:///./node_modules/next/dist/client/components/react-dev-overlay/pages/hot-reloader-client.js:349
+[  142486ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:3000/admin/dashboard:0
+[  142784ms] [INFO] %cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold @ webpack-internal:///./node_modules/react-dom/cjs/react-dom.development.js:29889
+[  142805ms] Error: Cannot find module './1682.js'
+Require stack:
+- /Users/admin/Desktop/claude code armen/pure-pet-clone/.next/server/webpack-runtime.js
+- /Users/admin/Desktop/claude code armen/pure-pet-clone/.next/server/app/_not-found/page.js
+- /Users/admin/Desktop/claude code armen/pure-pet-clone/node_modules/next/dist/server/require.js
+- /Users/admin/Desktop/claude code armen/pure-pet-clone/node_modules/next/dist/server/load-components.js
+- /Users/admin/Desktop/claude code armen/pure-pet-clone/node_modules/next/dist/build/utils.js
+- /Users/admin/Desktop/claude code armen/pure-pet-clone/node_modules/next/dist/server/dev/hot-middleware.js
+- /Users/admin/Desktop/claude code armen/pure-pet-clone/node_modules/next/dist/server/dev/hot-reloader-webpack.js
+- /Users/admin/Desktop/claude code armen/pure-pet-clone/node_modules/next/dist/server/lib/router-utils/setup-dev-bundler.js
+- /Users/admin/Desktop/claude code armen/pure-pet-clone/node_modules/next/dist/server/lib/router-server.js
+- /Users/admin/Desktop/claude code armen/pure-pet-clone/node_modules/next/dist/server/lib/start-server.js
+    at Module._resolveFilename (node:internal/modules/cjs/loader:1475:15)
+    at <unknown> (file:///Users/admin/Desktop/claude code armen/pure-pet-clone/node_modules/next/dist/server/require-hook.js:55:36)
+    at wrapResolveFilename (node:internal/modules/cjs/loader:1048:27)
+    at defaultResolveImplForCJSLoading (node:internal/modules/cjs/loader:1072:10)
+    at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1093:12)
+    at Module._load (node:internal/modules/cjs/loader:1261:25)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:255:19)
+    at Module.require (node:internal/modules/cjs/loader:1575:12)
+    at mod.require (file:///Users/admin/Desktop/claude code armen/pure-pet-clone/node_modules/next/dist/server/require-hook.js:65:28)
+    at require (node:internal/modules/helpers:191:16)
+    at __webpack_require__.f.require (file:///Users/admin/Desktop/claude code armen/pure-pet-clone/.next/server/webpack-runtime.js:203:28)
+    at <unknown> (file:///Users/admin/Desktop/claude code armen/pure-pet-clone/.next/server/webpack-runtime.js:116:40)
+    at Array.reduce (<anonymous>)
+    at __webpack_require__.e (file:///Users/admin/Desktop/claude code armen/pure-pet-clone/.next/server/webpack-runtime.js:115:67)
+    at Array.map (<anonymous>)
+    at __webpack_require__.X (file:///Users/admin/Desktop/claude code armen/pure-pet-clone/.next/server/webpack-runtime.js:167:22)
+    at <unknown> (file:///Users/admin/Desktop/claude code armen/pure-pet-clone/.next/server/pages/_document.js:1:340)
+    at Object.<anonymous> (file:///Users/admin/Desktop/claude code armen/pure-pet-clone/.next/server/pages/_document.js:1:383)
+    at Module._compile (node:internal/modules/cjs/loader:1831:14)
+    at Module._extensions..js (node:internal/modules/cjs/loader:1971:10)
+    at Module.load (node:internal/modules/cjs/loader:1552:32)
+    at Module._load (node:internal/modules/cjs/loader:1354:12)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:255:19)
+    at Module.require (node:internal/modules/cjs/loader:1575:12)
+    at mod.require (file:///Users/admin/Desktop/claude code armen/pure-pet-clone/node_modules/next/dist/server/require-hook.js:65:28)
+    at require (node:internal/modules/helpers:191:16)
+    at requirePage (file:///Users/admin/Desktop/claude code armen/pure-pet-clone/node_modules/next/dist/server/require.js:109:84)
+    at <unknown> (file:///Users/admin/Desktop/claude code armen/pure-pet-clone/node_modules/next/dist/server/load-components.js:72:65)
+    at async loadComponentsImpl (file:///Users/admin/Desktop/claude code armen/pure-pet-clone/node_modules/next/dist/server/load-components.js:71:33)
+    at async DevServer.findPageComponentsImpl (file:///Users/admin/Desktop/claude code armen/pure-pet-clone/node_modules/next/dist/server/next-server.js:714:36)
+[  142800ms] [LOG] [HMR] connected @ webpack-internal:///./node_modules/next/dist/client/components/react-dev-overlay/pages/websocket.js:38
+[  142831ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:3000/favicon.ico:0
+[  143107ms] [ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ http://localhost:3000/_next/static/webpack/ea026ccb46c60763.webpack.hot-update.json:0
+[  143108ms] [WARNING] [Fast Refresh] performing full reload because your application had an unrecoverable error @ webpack-internal:///./node_modules/next/dist/client/components/react-dev-overlay/pages/hot-reloader-client.js:349
+[  143162ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:3000/admin/dashboard:0
+[  143359ms] [INFO] %cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold @ webpack-internal:///./node_modules/react-dom/cjs/react-dom.development.js:29889
+[  143373ms] Error: Cannot find module './1682.js'
+Require stack:
+- /Users/admin/Desktop/claude code armen/pure-pet-clone/.next/server/webpack-runtime.js
+- /Users/admin/Desktop/claude code armen/pure-pet-clone/.next/server/app/_not-found/page.js
+- /Users/admin/Desktop/claude code armen/pure-pet-clone/node_modules/next/dist/server/require.js
+- /Users/admin/Desktop/claude code armen/pure-pet-clone/node_modules/next/dist/server/load-components.js
+- /Users/admin/Desktop/claude code armen/pure-pet-clone/node_modules/next/dist/build/utils.js
+- /Users/admin/Desktop/claude code armen/pure-pet-clone/node_modules/next/dist/server/dev/hot-middleware.js
+- /Users/admin/Desktop/claude code armen/pure-pet-clone/node_modules/next/dist/server/dev/hot-reloader-webpack.js
+- /Users/admin/Desktop/claude code armen/pure-pet-clone/node_modules/next/dist/server/lib/router-utils/setup-dev-bundler.js
+- /Users/admin/Desktop/claude code armen/pure-pet-clone/node_modules/next/dist/server/lib/router-server.js
+- /Users/admin/Desktop/claude code armen/pure-pet-clone/node_modules/next/dist/server/lib/start-server.js
+    at Module._resolveFilename (node:internal/modules/cjs/loader:1475:15)
+    at <unknown> (file:///Users/admin/Desktop/claude code armen/pure-pet-clone/node_modules/next/dist/server/require-hook.js:55:36)
+    at wrapResolveFilename (node:internal/modules/cjs/loader:1048:27)
+    at defaultResolveImplForCJSLoading (node:internal/modules/cjs/loader:1072:10)
+    at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1093:12)
+    at Module._load (node:internal/modules/cjs/loader:1261:25)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:255:19)
+    at Module.require (node:internal/modules/cjs/loader:1575:12)
+    at mod.require (file:///Users/admin/Desktop/claude code armen/pure-pet-clone/node_modules/next/dist/server/require-hook.js:65:28)
+    at require (node:internal/modules/helpers:191:16)
+    at __webpack_require__.f.require (file:///Users/admin/Desktop/claude code armen/pure-pet-clone/.next/server/webpack-runtime.js:203:28)
+    at <unknown> (file:///Users/admin/Desktop/claude code armen/pure-pet-clone/.next/server/webpack-runtime.js:116:40)
+    at Array.reduce (<anonymous>)
+    at __webpack_require__.e (file:///Users/admin/Desktop/claude code armen/pure-pet-clone/.next/server/webpack-runtime.js:115:67)
+    at Array.map (<anonymous>)
+    at __webpack_require__.X (file:///Users/admin/Desktop/claude code armen/pure-pet-clone/.next/server/webpack-runtime.js:167:22)
+    at <unknown> (file:///Users/admin/Desktop/claude code armen/pure-pet-clone/.next/server/pages/_document.js:1:340)
+    at Object.<anonymous> (file:///Users/admin/Desktop/claude code armen/pure-pet-clone/.next/server/pages/_document.js:1:383)
+    at Module._compile (node:internal/modules/cjs/loader:1831:14)
+    at Module._extensions..js (node:internal/modules/cjs/loader:1971:10)
+    at Module.load (node:internal/modules/cjs/loader:1552:32)
+    at Module._load (node:internal/modules/cjs/loader:1354:12)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:255:19)
+    at Module.require (node:internal/modules/cjs/loader:1575:12)
+    at mod.require (file:///Users/admin/Desktop/claude code armen/pure-pet-clone/node_modules/next/dist/server/require-hook.js:65:28)
+    at require (node:internal/modules/helpers:191:16)
+    at requirePage (file:///Users/admin/Desktop/claude code armen/pure-pet-clone/node_modules/next/dist/server/require.js:109:84)
+    at <unknown> (file:///Users/admin/Desktop/claude code armen/pure-pet-clone/node_modules/next/dist/server/load-components.js:72:65)
+    at async loadComponentsImpl (file:///Users/admin/Desktop/claude code armen/pure-pet-clone/node_modules/next/dist/server/load-components.js:71:33)
+    at async DevServer.findPageComponentsImpl (file:///Users/admin/Desktop/claude code armen/pure-pet-clone/node_modules/next/dist/server/next-server.js:714:36)
+[  143372ms] [LOG] [HMR] connected @ webpack-internal:///./node_modules/next/dist/client/components/react-dev-overlay/pages/websocket.js:38
+[  143392ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:3000/favicon.ico:0
+[  143688ms] [ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ http://localhost:3000/_next/static/webpack/ea026ccb46c60763.webpack.hot-update.json:0
+[  143688ms] [WARNING] [Fast Refresh] performing full reload because your application had an unrecoverable error @ webpack-internal:///./node_modules/next/dist/client/components/react-dev-overlay/pages/hot-reloader-client.js:349
+[  143748ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:3000/admin/dashboard:0
+[  143957ms] [INFO] %cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold @ webpack-internal:///./node_modules/react-dom/cjs/react-dom.development.js:29889
+[  143970ms] Error: Cannot find module './1682.js'
+Require stack:
+- /Users/admin/Desktop/claude code armen/pure-pet-clone/.next/server/webpack-runtime.js
+- /Users/admin/Desktop/claude code armen/pure-pet-clone/.next/server/app/_not-found/page.js
+- /Users/admin/Desktop/claude code armen/pure-pet-clone/node_modules/next/dist/server/require.js
+- /Users/admin/Desktop/claude code armen/pure-pet-clone/node_modules/next/dist/server/load-components.js
+- /Users/admin/Desktop/claude code armen/pure-pet-clone/node_modules/next/dist/build/utils.js
+- /Users/admin/Desktop/claude code armen/pure-pet-clone/node_modules/next/dist/server/dev/hot-middleware.js
+- /Users/admin/Desktop/claude code armen/pure-pet-clone/node_modules/next/dist/server/dev/hot-reloader-webpack.js
+- /Users/admin/Desktop/claude code armen/pure-pet-clone/node_modules/next/dist/server/lib/router-utils/setup-dev-bundler.js
+- /Users/admin/Desktop/claude code armen/pure-pet-clone/node_modules/next/dist/server/lib/router-server.js
+- /Users/admin/Desktop/claude code armen/pure-pet-clone/node_modules/next/dist/server/lib/start-server.js
+    at Module._resolveFilename (node:internal/modules/cjs/loader:1475:15)
+    at <unknown> (file:///Users/admin/Desktop/claude code armen/pure-pet-clone/node_modules/next/dist/server/require-hook.js:55:36)
+    at wrapResolveFilename (node:internal/modules/cjs/loader:1048:27)
+    at defaultResolveImplForCJSLoading (node:internal/modules/cjs/loader:1072:10)
+    at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1093:12)
+    at Module._load (node:internal/modules/cjs/loader:1261:25)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:255:19)
+    at Module.require (node:internal/modules/cjs/loader:1575:12)
+    at mod.require (file:///Users/admin/Desktop/claude code armen/pure-pet-clone/node_modules/next/dist/server/require-hook.js:65:28)
+    at require (node:internal/modules/helpers:191:16)
+    at __webpack_require__.f.require (file:///Users/admin/Desktop/claude code armen/pure-pet-clone/.next/server/webpack-runtime.js:203:28)
+    at <unknown> (file:///Users/admin/Desktop/claude code armen/pure-pet-clone/.next/server/webpack-runtime.js:116:40)
+    at Array.reduce (<anonymous>)
+    at __webpack_require__.e (file:///Users/admin/Desktop/claude code armen/pure-pet-clone/.next/server/webpack-runtime.js:115:67)
+    at Array.map (<anonymous>)
+    at __webpack_require__.X (file:///Users/admin/Desktop/claude code armen/pure-pet-clone/.next/server/webpack-runtime.js:167:22)
+    at <unknown> (file:///Users/admin/Desktop/claude code armen/pure-pet-clone/.next/server/pages/_document.js:1:340)
+    at Object.<anonymous> (file:///Users/admin/Desktop/claude code armen/pure-pet-clone/.next/server/pages/_document.js:1:383)
+    at Module._compile (node:internal/modules/cjs/loader:1831:14)
+    at Module._extensions..js (node:internal/modules/cjs/loader:1971:10)
+    at Module.load (node:internal/modules/cjs/loader:1552:32)
+    at Module._load (node:internal/modules/cjs/loader:1354:12)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:255:19)
+    at Module.require (node:internal/modules/cjs/loader:1575:12)
+    at mod.require (file:///Users/admin/Desktop/claude code armen/pure-pet-clone/node_modules/next/dist/server/require-hook.js:65:28)
+    at require (node:internal/modules/helpers:191:16)
+    at requirePage (file:///Users/admin/Desktop/claude code armen/pure-pet-clone/node_modules/next/dist/server/require.js:109:84)
+    at <unknown> (file:///Users/admin/Desktop/claude code armen/pure-pet-clone/node_modules/next/dist/server/load-components.js:72:65)
+    at async loadComponentsImpl (file:///Users/admin/Desktop/claude code armen/pure-pet-clone/node_modules/next/dist/server/load-components.js:71:33)
+    at async DevServer.findPageComponentsImpl (file:///Users/admin/Desktop/claude code armen/pure-pet-clone/node_modules/next/dist/server/next-server.js:714:36)
+[  143969ms] [LOG] [HMR] connected @ webpack-internal:///./node_modules/next/dist/client/components/react-dev-overlay/pages/websocket.js:38
+[  143999ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:3000/favicon.ico:0
+[  144277ms] [ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ http://localhost:3000/_next/static/webpack/ea026ccb46c60763.webpack.hot-update.json:0
+[  144277ms] [WARNING] [Fast Refresh] performing full reload because your application had an unrecoverable error @ webpack-internal:///./node_modules/next/dist/client/components/react-dev-overlay/pages/hot-reloader-client.js:349
+[  144341ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:3000/admin/dashboard:0
+[  144556ms] [INFO] %cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold @ webpack-internal:///./node_modules/react-dom/cjs/react-dom.development.js:29889
+[  144575ms] Error: Cannot find module './1682.js'
+Require stack:
+- /Users/admin/Desktop/claude code armen/pure-pet-clone/.next/server/webpack-runtime.js
+- /Users/admin/Desktop/claude code armen/pure-pet-clone/.next/server/app/_not-found/page.js
+- /Users/admin/Desktop/claude code armen/pure-pet-clone/node_modules/next/dist/server/require.js
+- /Users/admin/Desktop/claude code armen/pure-pet-clone/node_modules/next/dist/server/load-components.js
+- /Users/admin/Desktop/claude code armen/pure-pet-clone/node_modules/next/dist/build/utils.js
+- /Users/admin/Desktop/claude code armen/pure-pet-clone/node_modules/next/dist/server/dev/hot-middleware.js
+- /Users/admin/Desktop/claude code armen/pure-pet-clone/node_modules/next/dist/server/dev/hot-reloader-webpack.js
+- /Users/admin/Desktop/claude code armen/pure-pet-clone/node_modules/next/dist/server/lib/router-utils/setup-dev-bundler.js
+- /Users/admin/Desktop/claude code armen/pure-pet-clone/node_modules/next/dist/server/lib/router-server.js
+- /Users/admin/Desktop/claude code armen/pure-pet-clone/node_modules/next/dist/server/lib/start-server.js
+    at Module._resolveFilename (node:internal/modules/cjs/loader:1475:15)
+    at <unknown> (file:///Users/admin/Desktop/claude code armen/pure-pet-clone/node_modules/next/dist/server/require-hook.js:55:36)
+    at wrapResolveFilename (node:internal/modules/cjs/loader:1048:27)
+    at defaultResolveImplForCJSLoading (node:internal/modules/cjs/loader:1072:10)
+    at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1093:12)
+    at Module._load (node:internal/modules/cjs/loader:1261:25)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:255:19)
+    at Module.require (node:internal/modules/cjs/loader:1575:12)
+    at mod.require (file:///Users/admin/Desktop/claude code armen/pure-pet-clone/node_modules/next/dist/server/require-hook.js:65:28)
+    at require (node:internal/modules/helpers:191:16)
+    at __webpack_require__.f.require (file:///Users/admin/Desktop/claude code armen/pure-pet-clone/.next/server/webpack-runtime.js:203:28)
+    at <unknown> (file:///Users/admin/Desktop/claude code armen/pure-pet-clone/.next/server/webpack-runtime.js:116:40)
+    at Array.reduce (<anonymous>)
+    at __webpack_require__.e (file:///Users/admin/Desktop/claude code armen/pure-pet-clone/.next/server/webpack-runtime.js:115:67)
+    at Array.map (<anonymous>)
+    at __webpack_require__.X (file:///Users/admin/Desktop/claude code armen/pure-pet-clone/.next/server/webpack-runtime.js:167:22)
+    at <unknown> (file:///Users/admin/Desktop/claude code armen/pure-pet-clone/.next/server/pages/_document.js:1:340)
+    at Object.<anonymous> (file:///Users/admin/Desktop/claude code armen/pure-pet-clone/.next/server/pages/_document.js:1:383)
+    at Module._compile (node:internal/modules/cjs/loader:1831:14)
+    at Module._extensions..js (node:internal/modules/cjs/loader:1971:10)
+    at Module.load (node:internal/modules/cjs/loader:1552:32)
+    at Module._load (node:internal/modules/cjs/loader:1354:12)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:255:19)
+    at Module.require (node:internal/modules/cjs/loader:1575:12)
+    at mod.require (file:///Users/admin/Desktop/claude code armen/pure-pet-clone/node_modules/next/dist/server/require-hook.js:65:28)
+    at require (node:internal/modules/helpers:191:16)
+    at requirePage (file:///Users/admin/Desktop/claude code armen/pure-pet-clone/node_modules/next/dist/server/require.js:109:84)
+    at <unknown> (file:///Users/admin/Desktop/claude code armen/pure-pet-clone/node_modules/next/dist/server/load-components.js:72:65)
+    at async loadComponentsImpl (file:///Users/admin/Desktop/claude code armen/pure-pet-clone/node_modules/next/dist/server/load-components.js:71:33)
+    at async DevServer.findPageComponentsImpl (file:///Users/admin/Desktop/claude code armen/pure-pet-clone/node_modules/next/dist/server/next-server.js:714:36)
+[  144575ms] [LOG] [HMR] connected @ webpack-internal:///./node_modules/next/dist/client/components/react-dev-overlay/pages/websocket.js:38
+[  144605ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:3000/favicon.ico:0
+[  144915ms] [ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ http://localhost:3000/_next/static/webpack/ea026ccb46c60763.webpack.hot-update.json:0
+[  144915ms] [WARNING] [Fast Refresh] performing full reload because your application had an unrecoverable error @ webpack-internal:///./node_modules/next/dist/client/components/react-dev-overlay/pages/hot-reloader-client.js:349
+[  144973ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:3000/admin/dashboard:0
+[  145181ms] [INFO] %cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold @ webpack-internal:///./node_modules/react-dom/cjs/react-dom.development.js:29889
+[  145259ms] Error: Cannot find module './1682.js'
+Require stack:
+- /Users/admin/Desktop/claude code armen/pure-pet-clone/.next/server/webpack-runtime.js
+- /Users/admin/Desktop/claude code armen/pure-pet-clone/.next/server/app/_not-found/page.js
+- /Users/admin/Desktop/claude code armen/pure-pet-clone/node_modules/next/dist/server/require.js
+- /Users/admin/Desktop/claude code armen/pure-pet-clone/node_modules/next/dist/server/load-components.js
+- /Users/admin/Desktop/claude code armen/pure-pet-clone/node_modules/next/dist/build/utils.js
+- /Users/admin/Desktop/claude code armen/pure-pet-clone/node_modules/next/dist/server/dev/hot-middleware.js
+- /Users/admin/Desktop/claude code armen/pure-pet-clone/node_modules/next/dist/server/dev/hot-reloader-webpack.js
+- /Users/admin/Desktop/claude code armen/pure-pet-clone/node_modules/next/dist/server/lib/router-utils/setup-dev-bundler.js
+- /Users/admin/Desktop/claude code armen/pure-pet-clone/node_modules/next/dist/server/lib/router-server.js
+- /Users/admin/Desktop/claude code armen/pure-pet-clone/node_modules/next/dist/server/lib/start-server.js
+    at Module._resolveFilename (node:internal/modules/cjs/loader:1475:15)
+    at <unknown> (file:///Users/admin/Desktop/claude code armen/pure-pet-clone/node_modules/next/dist/server/require-hook.js:55:36)
+    at wrapResolveFilename (node:internal/modules/cjs/loader:1048:27)
+    at defaultResolveImplForCJSLoading (node:internal/modules/cjs/loader:1072:10)
+    at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1093:12)
+    at Module._load (node:internal/modules/cjs/loader:1261:25)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:255:19)
+    at Module.require (node:internal/modules/cjs/loader:1575:12)
+    at mod.require (file:///Users/admin/Desktop/claude code armen/pure-pet-clone/node_modules/next/dist/server/require-hook.js:65:28)
+    at require (node:internal/modules/helpers:191:16)
+    at __webpack_require__.f.require (file:///Users/admin/Desktop/claude code armen/pure-pet-clone/.next/server/webpack-runtime.js:203:28)
+    at <unknown> (file:///Users/admin/Desktop/claude code armen/pure-pet-clone/.next/server/webpack-runtime.js:116:40)
+    at Array.reduce (<anonymous>)
+    at __webpack_require__.e (file:///Users/admin/Desktop/claude code armen/pure-pet-clone/.next/server/webpack-runtime.js:115:67)
+    at Array.map (<anonymous>)
+    at __webpack_require__.X (file:///Users/admin/Desktop/claude code armen/pure-pet-clone/.next/server/webpack-runtime.js:167:22)
+    at <unknown> (file:///Users/admin/Desktop/claude code armen/pure-pet-clone/.next/server/pages/_document.js:1:340)
+    at Object.<anonymous> (file:///Users/admin/Desktop/claude code armen/pure-pet-clone/.next/server/pages/_document.js:1:383)
+    at Module._compile (node:internal/modules/cjs/loader:1831:14)
+    at Module._extensions..js (node:internal/modules/cjs/loader:1971:10)
+    at Module.load (node:internal/modules/cjs/loader:1552:32)
+    at Module._load (node:internal/modules/cjs/loader:1354:12)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:255:19)
+    at Module.require (node:internal/modules/cjs/loader:1575:12)
+    at mod.require (file:///Users/admin/Desktop/claude code armen/pure-pet-clone/node_modules/next/dist/server/require-hook.js:65:28)
+    at require (node:internal/modules/helpers:191:16)
+    at requirePage (file:///Users/admin/Desktop/claude code armen/pure-pet-clone/node_modules/next/dist/server/require.js:109:84)
+    at <unknown> (file:///Users/admin/Desktop/claude code armen/pure-pet-clone/node_modules/next/dist/server/load-components.js:72:65)
+    at async loadComponentsImpl (file:///Users/admin/Desktop/claude code armen/pure-pet-clone/node_modules/next/dist/server/load-components.js:71:33)
+    at async DevServer.findPageComponentsImpl (file:///Users/admin/Desktop/claude code armen/pure-pet-clone/node_modules/next/dist/server/next-server.js:714:36)
+[  145197ms] [LOG] [HMR] connected @ webpack-internal:///./node_modules/next/dist/client/components/react-dev-overlay/pages/websocket.js:38
+[  145245ms] [ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ http://localhost:3000/favicon.ico:0

@@ -487,14 +487,28 @@ export default function SwipePage() {
       if(wMin>0) query=query.gte("weight_kg",wMin);
       if(wMax<100) query=query.lte("weight_kg",wMax);
 
-      const {data:fetched}=await query.limit(BATCH_SIZE*3);
-      let allCandidates:PetCandidate[]=(fetched||[]) as PetCandidate[];
-
-      // Breed filter client-side (array match)
-      if((prefs?.preferred_breeds||[]).length>0){
-        const preferredNorm=prefs!.preferred_breeds!.map((b:string)=>b.toLowerCase());
-        allCandidates=allCandidates.filter(c=>!c.breed_normalized||preferredNorm.includes(c.breed_normalized));
+      // Location filter - respect user preferences
+      const acceptAnyCity=prefs?.accept_any_city??false;
+      const preferredCities=prefs?.preferred_cities??[];
+      if(!acceptAnyCity){
+        if(preferredCities.length>0){
+          // Filter to only preferred cities (normalize for comparison)
+          const preferredCitiesNorm=preferredCities.map((c:string)=>c.toLowerCase());
+          query=query.in("city_normalized",preferredCitiesNorm);
+        } else if(myPetProfile?.city_normalized){
+          // If user doesn't accept any city but has no preferred list, default to same city
+          query=query.eq("city_normalized",myPetProfile.city_normalized);
+        }
       }
+
+      // Breed filter - apply at database level if specified
+      if((prefs?.preferred_breeds||[]).length>0){
+        const preferredBreedsNorm=prefs!.preferred_breeds!.map((b:string)=>b.toLowerCase());
+        query=query.in("breed_normalized",preferredBreedsNorm);
+      }
+
+      const {data:fetched}=await query.limit(BATCH_SIZE*3);
+      const allCandidates:PetCandidate[]=(fetched||[]) as PetCandidate[];
 
       // Sort: same city first, then same breed, then random
       const myCity=myPetProfile?.city_normalized||"";

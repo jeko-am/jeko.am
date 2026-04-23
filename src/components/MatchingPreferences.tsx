@@ -55,7 +55,7 @@ export default function MatchingPreferences({ petProfileId, petType, onPreferenc
   });
   const [preferences, setPreferences] = useState<PreferencesState>({
     preferred_distance_km: 50,
-    accept_any_city: true,
+    accept_any_city: false,
     preferred_genders: [],
     preferred_breeds: [],
     preferred_age_min: 0,
