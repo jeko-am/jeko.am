@@ -1159,7 +1159,7 @@ function SignupPageInner() {
   /* ---------- redirect if already logged in (unless completing OAuth) ---------- */
   useEffect(() => {
     if (!authLoading && user && !completingOAuth && searchParams.get('completing') !== '1') {
-      router.push('/community');
+      router.push('/profile');
     }
   }, [authLoading, user, completingOAuth, router, searchParams]);
 
@@ -1299,7 +1299,6 @@ function SignupPageInner() {
     if (s === 1) {
       if (!breed.trim()) newErrors.breed = 'Please select or type a breed';
       if (!gender) newErrors.gender = 'Please select a gender';
-      if (!dogAge) newErrors.dogAge = 'Please enter your pet\'s age';
       if (!weightKg) newErrors.weightKg = 'Please enter your pet\'s weight';
     }
     if (s === 2 && !temperament) newErrors.activityLevel = 'Please select a personality or skip this step';
@@ -1519,7 +1518,21 @@ function SignupPageInner() {
         return;
       }
 
-      router.push('/community');
+      // Seed pet_photos with the signup profile photo so the user can swipe immediately
+      if (uploadedPhotoUrl) {
+        const { data: petRow } = await supabase.from('pet_profiles').select('id').eq('user_id', userId).maybeSingle();
+        if (petRow?.id) {
+          await supabase.from('pet_photos').insert({
+            user_id: userId,
+            pet_profile_id: petRow.id,
+            photo_url: uploadedPhotoUrl,
+            photo_order: 0,
+            is_primary: true,
+          });
+        }
+      }
+
+      router.push('/profile');
     } catch {
       setSubmitError('An unexpected error occurred. Please try again.');
       setSubmitting(false);
@@ -1698,20 +1711,8 @@ function SignupPageInner() {
                 </div>
                 {errors.gender && <p className="text-red-500 text-sm mt-2">{errors.gender}</p>}
 
-                {/* Age & Weight */}
-                <div className="grid grid-cols-2 gap-4 max-w-sm mx-auto">
-                  <div>
-                    <label className="block text-sm font-medium text-deep-green mb-2">Age (years) <span className="text-red-400">*</span></label>
-                    <input
-                      type="text"
-                      inputMode="decimal"
-                      value={dogAge}
-                      onChange={(e) => { const v = e.target.value; if (v === '' || /^\d{0,2}(\.\d{0,1})?$/.test(v)) setDogAge(v); }}
-                      placeholder="e.g. 3"
-                      className={`w-full px-4 py-3 border-2 rounded-xl text-center text-gray-900 placeholder:text-gray-300 focus:outline-none focus:ring-2 focus:ring-deep-green focus:border-transparent ${errors.dogAge ? 'border-red-400' : 'border-gray-200'}`}
-                    />
-                    {errors.dogAge && <p className="text-red-500 text-xs mt-1">{errors.dogAge}</p>}
-                  </div>
+                {/* Weight */}
+                <div className="max-w-sm mx-auto">
                   <div>
                     <label className="block text-sm font-medium text-deep-green mb-2">Weight (kg) <span className="text-red-400">*</span></label>
                     <input
@@ -1892,6 +1893,12 @@ function SignupPageInner() {
                   <QuizCard icon={QIcon.no} label="No thanks" selected={lookingForMatch === false} onClick={() => { setLookingForMatch(false); setLookingForPlaymates(false); setLookingForMate(false); setLookingForWalkingBuddies(false); }} />
                 </div>
 
+                {lookingForMatch === true && (
+                  <div className="flex items-center justify-center gap-2 mb-6">
+                    <span className="text-lg">🐾</span>
+                    <p className="text-sm text-deep-green font-medium">{petName} will appear in searches now! You can customize match preferences later.</p>
+                  </div>
+                )}
                 {lookingForMatch === false && (
                   <p className="text-sm text-deep-green/40 mb-6">{petName} won&apos;t appear in match results. You can change this and customize match preferences later.</p>
                 )}
@@ -2198,32 +2205,15 @@ function SignupPageInner() {
                   </div>
 
                   {/* Optional fields */}
-                  <div className="grid grid-cols-2 gap-4">
-                    <div>
-                      <label className="block text-sm font-medium text-deep-green mb-1.5">Age <span className="text-gray-400 text-xs">(optional)</span></label>
-                      <input
-                        type="number"
-                        min={1}
-                        max={120}
-                        value={age}
-                        onChange={(e) => setAge(e.target.value)}
-                        placeholder="25"
-                        className={`w-full px-4 py-3 border-2 rounded-xl text-gray-900 placeholder:text-gray-300 focus:outline-none focus:ring-2 focus:ring-deep-green focus:border-transparent transition-shadow ${
-                          errors.age ? 'border-red-400' : 'border-gray-200'
-                        }`}
-                      />
-                      {errors.age && <p className="text-red-500 text-xs mt-1">{errors.age}</p>}
-                    </div>
-                    <div>
-                      <label className="block text-sm font-medium text-deep-green mb-1.5">Phone <span className="text-gray-400 text-xs">(optional)</span></label>
-                      <input
-                        type="tel"
-                        value={phone}
-                        onChange={(e) => setPhone(e.target.value)}
-                        placeholder="+44 7700..."
-                        className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl text-gray-900 placeholder:text-gray-300 focus:outline-none focus:ring-2 focus:ring-deep-green focus:border-transparent transition-shadow"
-                      />
-                    </div>
+                  <div>
+                    <label className="block text-sm font-medium text-deep-green mb-1.5">Phone <span className="text-gray-400 text-xs">(optional)</span></label>
+                    <input
+                      type="tel"
+                      value={phone}
+                      onChange={(e) => setPhone(e.target.value)}
+                      placeholder="+44 7700..."
+                      className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl text-gray-900 placeholder:text-gray-300 focus:outline-none focus:ring-2 focus:ring-deep-green focus:border-transparent transition-shadow"
+                    />
                   </div>
 
                   {/* Share contact toggle */}

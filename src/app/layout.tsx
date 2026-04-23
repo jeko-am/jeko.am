@@ -3,6 +3,7 @@ import "./globals.css";
 import { AuthProvider } from "@/lib/auth";
 import { CartProvider } from "@/lib/cart-context";
 import MobileNavWrapper from "@/components/MobileNavWrapper";
+import DesktopHomeButton from "@/components/DesktopHomeButton";
 import SideCart from "@/components/SideCart";
 import ConditionalDogChatbot from "@/components/ConditionalDogChatbot";
 import TrackingScripts from "@/components/TrackingScripts";
@@ -37,6 +38,7 @@ export default function RootLayout({
             <AnalyticsInit />
             {children}
             <MobileNavWrapper />
+            <DesktopHomeButton />
             <SideCart />
             <ConditionalDogChatbot />
           </CartProvider>

@@ -351,16 +351,14 @@ function NotEnoughPhotosCTA({ photoCount }: { photoCount: number }) {
         <div className="w-20 h-20 mx-auto mb-6 bg-amber-100 rounded-full flex items-center justify-center text-4xl">📸</div>
         <h2 className="font-medium text-2xl sm:text-3xl text-gray-900 mb-3 tracking-wide">Add More Photos First</h2>
         <p className="text-gray-500 mb-4 leading-relaxed">
-          You need at least <strong>4 swipe photos</strong> before you can start matching. This helps other pet owners see your pet from multiple angles!
+          You need at least <strong>1 photo</strong> of your pet before you can start matching. Go to your profile and upload a pet photo!
         </p>
         <div className="flex items-center justify-center gap-2 mb-8">
-          {Array.from({ length: 4 }).map((_, i) => (
-            <div key={i} className={`w-10 h-10 rounded-full flex items-center justify-center text-lg font-medium border-2 ${i < photoCount ? "bg-emerald-100 border-emerald-400 text-emerald-600" : "bg-gray-100 border-gray-300 text-gray-400"}`}>
-              {i < photoCount ? "✓" : i + 1}
-            </div>
-          ))}
+          <div className={`w-10 h-10 rounded-full flex items-center justify-center text-lg font-medium border-2 ${photoCount > 0 ? "bg-emerald-100 border-emerald-400 text-emerald-600" : "bg-gray-100 border-gray-300 text-gray-400"}`}>
+            {photoCount > 0 ? "✓" : "1"}
+          </div>
         </div>
-        <p className="text-sm text-gray-400 mb-6">{photoCount}/4 photos added</p>
+        <p className="text-sm text-gray-400 mb-6">{photoCount}/1 photo added</p>
         <Link href="/profile" className="inline-block w-full bg-emerald-500 text-white font-medium text-lg py-3 rounded-xl hover:bg-emerald-600 transition-colors tracking-wide">
           Upload Photos in Profile →
         </Link>
@@ -417,9 +415,10 @@ export default function SwipePage() {
       if(data){
         setMyPetProfile(data as PetCandidate);
         setHasProfile(true);
-        // Check swipe photo count
+        // Count gallery photos; if none, profile_photo_url counts as 1
         const {count}=await supabase.from("pet_photos").select("*",{count:"exact",head:true}).eq("user_id",user.id);
-        setPhotoCount(count??0);
+        const galleryCount = count ?? 0;
+        setPhotoCount(galleryCount > 0 ? galleryCount : (data.profile_photo_url ? 1 : 0));
       } else {
         setHasProfile(false);
         setPhotoCount(0);
@@ -526,7 +525,11 @@ export default function SwipePage() {
             if(!photoMap.has(p.user_id)) photoMap.set(p.user_id,[]);
             photoMap.get(p.user_id)!.push(p.photo_url);
           }
-          batch.forEach(c=>{c.photos=photoMap.get(c.user_id)||[];});
+          batch.forEach(c=>{
+            const gallery = photoMap.get(c.user_id) || [];
+            // If no gallery photos, use profile_photo_url as primary
+            c.photos = gallery.length > 0 ? gallery : (c.profile_photo_url ? [c.profile_photo_url] : []);
+          });
         }
       }
       if(batch.length===0) setAllExhausted(true);
@@ -590,7 +593,7 @@ export default function SwipePage() {
       <div className="min-h-screen flex flex-col bg-gray-50 pt-[64px] lg:pt-[80px]">
         <Header/>
 
-        {!authLoading && user && hasProfile===true && photoCount!==null && photoCount>=4 && (
+        {!authLoading && user && hasProfile===true && photoCount!==null && photoCount>=1 && (
           <div className="sticky top-[64px] lg:top-[80px] z-30 bg-white/90 backdrop-blur-md border-b border-gray-100 shadow-sm">
             <div className="max-w-lg mx-auto flex items-center justify-between px-4 py-3">
               <Link href="/profile" className="flex items-center gap-2 text-gray-600 hover:text-gray-900 transition-colors">
@@ -625,14 +628,14 @@ export default function SwipePage() {
 
         {!authLoading && !user && <NotLoggedInCTA/>}
         {!authLoading && user && hasProfile===false && <NoPetProfileCTA/>}
-        {!authLoading && user && hasProfile===true && photoCount!==null && photoCount<4 && <NotEnoughPhotosCTA photoCount={photoCount}/>}
+        {!authLoading && user && hasProfile===true && photoCount!==null && photoCount<1 && <NotEnoughPhotosCTA photoCount={photoCount}/>}
         {!authLoading && user && (hasProfile===null || (hasProfile===true && photoCount===null)) && (
           <div className="flex-1 flex items-center justify-center">
             <div className="w-10 h-10 border-4 border-emerald-400 border-t-transparent rounded-full animate-spin"/>
           </div>
         )}
 
-        {!authLoading && user && hasProfile===true && photoCount!==null && photoCount>=4 && (
+        {!authLoading && user && hasProfile===true && photoCount!==null && photoCount>=1 && (
           <div className="flex-1 flex flex-col items-center justify-center px-4 py-4 sm:py-6">
             {loadingCandidates && candidates.length===0 && (
               <div className="flex-1 flex items-center justify-center">

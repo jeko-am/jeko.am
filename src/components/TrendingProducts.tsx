@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState, useRef } from 'react';
+import { useEffect, useLayoutEffect, useState, useRef } from 'react';
 import { supabase } from '@/lib/supabase';
 import ProductCard from './ProductCard';
 
@@ -19,6 +19,9 @@ interface Product {
 export default function TrendingProducts({ content }: { content?: any }) {
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
+  const [canScrollLeft, setCanScrollLeft] = useState(false);
+  const [canScrollRight, setCanScrollRight] = useState(false);
+  const [isScrollable, setIsScrollable] = useState(false);
   const scrollRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -51,6 +54,31 @@ export default function TrendingProducts({ content }: { content?: any }) {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  const checkScroll = () => {
+    if (!scrollRef.current) return;
+    const { scrollLeft, scrollWidth, clientWidth } = scrollRef.current;
+    const scrollable = scrollWidth > clientWidth + 1;
+    setIsScrollable(scrollable);
+    setCanScrollLeft(scrollLeft > 1);
+    setCanScrollRight(scrollable && scrollLeft < scrollWidth - clientWidth - 1);
+  };
+
+  useLayoutEffect(() => {
+    checkScroll();
+  }, [products]);
+
+  useEffect(() => {
+    const scrollContainer = scrollRef.current;
+    if (scrollContainer) {
+      scrollContainer.addEventListener('scroll', checkScroll);
+      window.addEventListener('resize', checkScroll);
+      return () => {
+        scrollContainer.removeEventListener('scroll', checkScroll);
+        window.removeEventListener('resize', checkScroll);
+      };
+    }
+  }, []);
+
   const scroll = (direction: 'left' | 'right') => {
     if (!scrollRef.current) return;
     const amount = 320;
@@ -78,25 +106,37 @@ export default function TrendingProducts({ content }: { content?: any }) {
               Our most popular picks, loved by thousands of happy dogs.
             </p>
           </div>
-          {/* Navigation arrows */}
-          <div className="hidden md:flex gap-2">
-            <button
-              onClick={() => scroll('left')}
-              className="w-10 h-10 rounded-full bg-white/10 hover:bg-gold text-white hover:text-deep-green transition-all flex items-center justify-center"
-            >
-              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-              </svg>
-            </button>
-            <button
-              onClick={() => scroll('right')}
-              className="w-10 h-10 rounded-full bg-white/10 hover:bg-gold text-white hover:text-deep-green transition-all flex items-center justify-center"
-            >
-              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-              </svg>
-            </button>
-          </div>
+          {/* Navigation arrows — only shown when content overflows */}
+          {isScrollable && (
+            <div className="hidden md:flex gap-2">
+              <button
+                onClick={() => scroll('left')}
+                disabled={!canScrollLeft}
+                className={`w-10 h-10 rounded-full transition-all flex items-center justify-center ${
+                  canScrollLeft
+                    ? 'bg-white/10 hover:bg-gold text-white hover:text-deep-green cursor-pointer'
+                    : 'bg-white/5 text-white/30 cursor-not-allowed'
+                }`}
+              >
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+                </svg>
+              </button>
+              <button
+                onClick={() => scroll('right')}
+                disabled={!canScrollRight}
+                className={`w-10 h-10 rounded-full transition-all flex items-center justify-center ${
+                  canScrollRight
+                    ? 'bg-white/10 hover:bg-gold text-white hover:text-deep-green cursor-pointer'
+                    : 'bg-white/5 text-white/30 cursor-not-allowed'
+                }`}
+              >
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                </svg>
+              </button>
+            </div>
+          )}
         </div>
 
         {/* Scrollable Row */}
@@ -119,7 +159,7 @@ export default function TrendingProducts({ content }: { content?: any }) {
             style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
           >
             {products.map((product) => (
-              <div key={product.id} className="min-w-[280px] max-w-[280px] snap-start">
+              <div key={product.id} className="flex-1 min-w-[260px] max-w-[320px] snap-start">
                 <ProductCard product={product} />
               </div>
             ))}

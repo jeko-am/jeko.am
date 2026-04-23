@@ -8,14 +8,17 @@ import { useEffect, useState, useCallback, useRef } from 'react';
 // ---------------------------------------------------------------------------
 
 interface PetProfile {
-  id: string;
-  customer_id: string;
-  name: string;
+  id: number;
+  user_id: string;
+  pet_name: string;
   breed: string;
-  age_years: number;
-  weight_kg: number;
-  activity_level: string;
+  pet_type: string | null;
+  dog_age_years: number | null;
+  weight_kg: number | null;
+  activity_level: string | null;
   allergies: string[] | null;
+  profile_photo_url: string | null;
+  city: string | null;
 }
 
 interface CustomerOrder {
@@ -27,15 +30,14 @@ interface CustomerOrder {
 }
 
 interface Customer {
-  id: string;
-  user_id: string;
-  first_name: string;
-  last_name: string;
+  id: string;        // user_profiles.user_id (auth UUID)
+  full_name: string;
   email: string;
   phone: string | null;
+  city: string | null;
+  country: string | null;
   created_at: string;
   updated_at: string;
-  // Aggregated from join
   orders_count?: number;
   total_spent?: number;
   pets_count?: number;
@@ -47,8 +49,8 @@ interface CustomerDetail extends Customer {
 }
 
 interface EditFormData {
-  first_name: string;
-  last_name: string;
+  first_name: string; // maps to full_name
+  last_name: string;  // unused, kept for form compat
   email: string;
   phone: string;
 }
@@ -136,58 +138,50 @@ export default function AdminCustomersPage() {
       // we fetch customers first, then enrich with counts.
 
       let query = supabase
-        .from('customers')
-        .select('*', { count: 'exact' })
+        .from('user_profiles')
+        .select('user_id, full_name, email, phone, city, country, created_at, updated_at', { count: 'exact' })
         .order('created_at', { ascending: false })
         .range(page * PAGE_SIZE, (page + 1) * PAGE_SIZE - 1);
 
       if (debouncedSearch.trim()) {
         const term = debouncedSearch.trim();
-        query = query.or(
-          `first_name.ilike.%${term}%,last_name.ilike.%${term}%,email.ilike.%${term}%`
-        );
+        query = query.or(`full_name.ilike.%${term}%,email.ilike.%${term}%`);
       }
 
       const { data, error: fetchError, count } = await query;
 
       if (fetchError) throw fetchError;
 
-      const customerList = (data ?? []) as Customer[];
+      // Map user_profiles rows → Customer shape (use user_id as id)
+      const customerList: Customer[] = (data ?? []).map((row: { user_id: string; full_name: string; email: string; phone: string | null; city: string | null; country: string | null; created_at: string; updated_at: string }) => ({
+        id: row.user_id,
+        full_name: row.full_name,
+        email: row.email,
+        phone: row.phone,
+        city: row.city,
+        country: row.country,
+        created_at: row.created_at,
+        updated_at: row.updated_at,
+        orders_count: 0,
+        total_spent: 0,
+        pets_count: 0,
+      }));
 
-      // Enrich with order counts, total spent, and pet counts
+      // Enrich with pet counts
       if (customerList.length > 0) {
-        const customerIds = customerList.map((c) => c.id);
+        const userIds = customerList.map((c) => c.id);
 
-        // Fetch orders grouped data
-        const { data: ordersData } = await supabase
-          .from('orders')
-          .select('customer_id, total')
-          .in('customer_id', customerIds);
-
-        // Fetch pet counts
         const { data: petsData } = await supabase
           .from('pet_profiles')
-          .select('customer_id')
-          .in('customer_id', customerIds);
-
-        // Build lookup maps
-        const orderStats = new Map<string, { count: number; total: number }>();
-        (ordersData ?? []).forEach((o: { customer_id: string; total: number }) => {
-          const existing = orderStats.get(o.customer_id) ?? { count: 0, total: 0 };
-          existing.count += 1;
-          existing.total += Number(o.total) || 0;
-          orderStats.set(o.customer_id, existing);
-        });
+          .select('user_id')
+          .in('user_id', userIds);
 
         const petCounts = new Map<string, number>();
-        (petsData ?? []).forEach((p: { customer_id: string }) => {
-          petCounts.set(p.customer_id, (petCounts.get(p.customer_id) ?? 0) + 1);
+        (petsData ?? []).forEach((p: { user_id: string }) => {
+          petCounts.set(p.user_id, (petCounts.get(p.user_id) ?? 0) + 1);
         });
 
         customerList.forEach((c) => {
-          const stats = orderStats.get(c.id);
-          c.orders_count = stats?.count ?? 0;
-          c.total_spent = stats?.total ?? 0;
           c.pets_count = petCounts.get(c.id) ?? 0;
         });
       }
@@ -213,18 +207,25 @@ export default function AdminCustomersPage() {
     setDetailLoading(true);
 
     try {
-      const [customerRes, petsRes, ordersRes] = await Promise.all([
-        supabase.from('customers').select('*').eq('id', customerId).single(),
-        supabase.from('pet_profiles').select('*').eq('customer_id', customerId).order('name'),
-        supabase.from('orders').select('id, order_number, status, total, created_at').eq('customer_id', customerId).order('created_at', { ascending: false }).limit(20),
+      const [customerRes, petsRes] = await Promise.all([
+        supabase.from('user_profiles').select('user_id, full_name, email, phone, city, country, created_at, updated_at').eq('user_id', customerId).single(),
+        supabase.from('pet_profiles').select('*').eq('user_id', customerId).order('pet_name'),
       ]);
 
       if (customerRes.error) throw customerRes.error;
 
+      const row = customerRes.data as { user_id: string; full_name: string; email: string; phone: string | null; city: string | null; country: string | null; created_at: string; updated_at: string };
       setCustomerDetail({
-        ...(customerRes.data as Customer),
+        id: row.user_id,
+        full_name: row.full_name,
+        email: row.email,
+        phone: row.phone,
+        city: row.city,
+        country: row.country,
+        created_at: row.created_at,
+        updated_at: row.updated_at,
         pet_profiles: (petsRes.data ?? []) as PetProfile[],
-        orders: (ordersRes.data ?? []) as CustomerOrder[],
+        orders: [],
       });
     } catch (err) {
       alert(err instanceof Error ? err.message : 'Failed to load customer details');
@@ -249,8 +250,8 @@ export default function AdminCustomersPage() {
   const openEditModal = () => {
     if (!customerDetail) return;
     setEditForm({
-      first_name: customerDetail.first_name,
-      last_name: customerDetail.last_name,
+      first_name: customerDetail.full_name,
+      last_name: '',
       email: customerDetail.email,
       phone: customerDetail.phone ?? '',
     });
@@ -263,41 +264,25 @@ export default function AdminCustomersPage() {
 
     try {
       const { error: updateError } = await supabase
-        .from('customers')
+        .from('user_profiles')
         .update({
-          first_name: editForm.first_name.trim(),
-          last_name: editForm.last_name.trim(),
+          full_name: editForm.first_name.trim(),
           email: editForm.email.trim(),
           phone: editForm.phone.trim() || null,
           updated_at: new Date().toISOString(),
         })
-        .eq('id', customerDetail.id);
+        .eq('user_id', customerDetail.id);
 
       if (updateError) throw updateError;
 
-      // Update local state
       setCustomerDetail((prev) =>
-        prev
-          ? {
-              ...prev,
-              first_name: editForm.first_name.trim(),
-              last_name: editForm.last_name.trim(),
-              email: editForm.email.trim(),
-              phone: editForm.phone.trim() || null,
-            }
-          : null
+        prev ? { ...prev, full_name: editForm.first_name.trim(), email: editForm.email.trim(), phone: editForm.phone.trim() || null } : null
       );
 
       setCustomers((prev) =>
         prev.map((c) =>
           c.id === customerDetail.id
-            ? {
-                ...c,
-                first_name: editForm.first_name.trim(),
-                last_name: editForm.last_name.trim(),
-                email: editForm.email.trim(),
-                phone: editForm.phone.trim() || null,
-              }
+            ? { ...c, full_name: editForm.first_name.trim(), email: editForm.email.trim(), phone: editForm.phone.trim() || null }
             : c
         )
       );
@@ -433,10 +418,10 @@ export default function AdminCustomersPage() {
                         <td className="px-4 py-3">
                           <div className="flex items-center gap-3">
                             <div className="w-8 h-8 rounded-full bg-deep-green/10 text-deep-green flex items-center justify-center text-xs font-semibold flex-shrink-0">
-                              {customer.first_name?.charAt(0)}{customer.last_name?.charAt(0)}
+                              {customer.full_name?.charAt(0)?.toUpperCase() ?? '?'}
                             </div>
                             <span className="font-medium text-gray-900">
-                              {customer.first_name} {customer.last_name}
+                              {customer.full_name || '—'}
                             </span>
                           </div>
                         </td>
@@ -532,11 +517,11 @@ export default function AdminCustomersPage() {
                 <div className="px-5 py-4 border-b border-gray-200 flex items-start justify-between">
                   <div className="flex items-center gap-3">
                     <div className="w-11 h-11 rounded-full bg-deep-green text-white flex items-center justify-center text-sm font-semibold flex-shrink-0">
-                      {customerDetail.first_name?.charAt(0)}{customerDetail.last_name?.charAt(0)}
+                      {customerDetail.full_name?.charAt(0)?.toUpperCase() ?? '?'}
                     </div>
                     <div>
                       <h3 className="font-semibold text-gray-900">
-                        {customerDetail.first_name} {customerDetail.last_name}
+                        {customerDetail.full_name || '—'}
                       </h3>
                       <p className="text-xs text-gray-500">{customerDetail.email}</p>
                     </div>
@@ -601,8 +586,8 @@ export default function AdminCustomersPage() {
                         <div key={pet.id} className="bg-gray-50 rounded-lg p-3">
                           <div className="flex items-center justify-between mb-2">
                             <div className="flex items-center gap-2">
-                              <span className="text-lg">🐕</span>
-                              <span className="font-medium text-sm text-gray-900">{pet.name}</span>
+                              <span className="text-lg">{pet.pet_type === 'Cat' ? '🐈' : '🐕'}</span>
+                              <span className="font-medium text-sm text-gray-900">{pet.pet_name}</span>
                             </div>
                             {pet.activity_level && (
                               <span className="text-xs px-2 py-0.5 rounded-full bg-gold/20 text-gold font-medium">
@@ -617,7 +602,7 @@ export default function AdminCustomersPage() {
                             </div>
                             <div>
                               <span className="text-gray-400">Age</span>
-                              <p className="text-gray-700">{pet.age_years ? `${pet.age_years}yr` : '--'}</p>
+                              <p className="text-gray-700">{pet.dog_age_years ? `${pet.dog_age_years}yr` : '--'}</p>
                             </div>
                             <div>
                               <span className="text-gray-400">Weight</span>
