@@ -747,7 +747,7 @@ function SignupPageInner() {
   const [petType, setPetType] = useState<string>('');
   const [dogName, setDogName] = useState('');
   const [breed, setBreed] = useState('');
-  const [dogAge, setDogAge] = useState('');
+  const [dogAge] = useState('');
   const [weightKg, setWeightKg] = useState('');
   const [gender, setGender] = useState('');
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -1138,7 +1138,7 @@ function SignupPageInner() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
-  const [age, setAge] = useState('');
+  const [age] = useState('');
   const [phone, setPhone] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [showEmailForm, setShowEmailForm] = useState(false);
