@@ -11,6 +11,7 @@ import { uploadToCloudinary } from "@/lib/cloudinary";
 import ImageUpload from "@/components/ImageUpload";
 import PetPhotoGallery from "@/components/PetPhotoGallery";
 import MatchingPreferences from "@/components/MatchingPreferences";
+import BreedCombobox from "@/components/BreedCombobox";
 
 /* ─── Types ──────────────────────────────────────────────────────────── */
 
@@ -53,7 +54,7 @@ export default function ProfilePage() {
   const { user, loading: authLoading } = useAuth();
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
-  const [activeTab, setActiveTab] = useState<"profile" | "pet" | "gallery" | "preferences">("profile");
+  const [activeTab, setActiveTab] = useState<"pet" | "profile" | "gallery" | "preferences">("pet");
   
   // User profile state
   const [userProfile, setUserProfile] = useState<UserProfile | null>(null);
@@ -308,7 +309,7 @@ export default function ProfilePage() {
           {/* Tabs */}
           <div className="border-b border-gray-200">
             <div className="flex flex-wrap">
-              {(["profile","pet","gallery","preferences"] as const).map((tab) => (
+              {(["pet","profile","gallery","preferences"] as const).map((tab) => (
                 <button
                   key={tab}
                   onClick={() => setActiveTab(tab)}
@@ -477,11 +478,10 @@ export default function ProfilePage() {
                   </div>
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-1">Breed</label>
-                    <input
-                      type="text"
+                    <BreedCombobox
                       value={petBreed}
-                      onChange={(e) => setPetBreed(e.target.value)}
-                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-gold focus:border-transparent"
+                      onChange={setPetBreed}
+                      petType={petProfile?.pet_type || "Dog"}
                     />
                   </div>
                   <div>

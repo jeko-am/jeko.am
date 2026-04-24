@@ -11,6 +11,14 @@ import { supabase } from "@/lib/supabase";
 
 /* ─── Types ──────────────────────────────────────────────────────────── */
 
+type MatchStatus =
+  | 'matched'
+  | 'liked_by_me'
+  | 'liked_by_them'
+  | 'passed_by_me'
+  | 'passed_by_them'
+  | 'suggestion';
+
 interface MatchWithProfile {
   id: number;
   user_a_id: string;
@@ -18,6 +26,7 @@ interface MatchWithProfile {
   is_active: boolean;
   created_at: string;
   conversation_id: number | null;
+  status: MatchStatus;
   otherPet: {
     user_id: string;
     pet_name: string;
@@ -182,8 +191,8 @@ function EmptyState() {
           No Matches Yet
         </h2>
         <p className="text-deep-green/60 mb-8 leading-relaxed">
-          Start swiping to find compatible playmates for your pup! When you and
-          another dog owner both like each other, you&apos;ll see your match here.
+          We couldn&apos;t find any pets matching your preferred breeds and cities.
+          Update your preferences or fill in your pet&apos;s breed and city to see more matches here.
         </p>
         <Link
           href="/swipe"
@@ -223,10 +232,37 @@ function MatchCard({ match }: { match: MatchWithProfile }) {
             </div>
           </div>
         )}
-        {/* Match badge */}
-        <div className="absolute top-3 right-3 bg-white/90 backdrop-blur-sm rounded-full px-3 py-1 text-xs font-medium text-deep-green flex items-center gap-1 tracking-wide">
-          <span className="text-sm">🎉</span> Matched
-        </div>
+        {/* Status badge */}
+        {match.status === "matched" && (
+          <div className="absolute top-3 right-3 bg-white/90 backdrop-blur-sm rounded-full px-3 py-1 text-xs font-medium text-deep-green flex items-center gap-1 tracking-wide">
+            <span className="text-sm">🎉</span> Matched
+          </div>
+        )}
+        {match.status === "liked_by_me" && (
+          <div className="absolute top-3 right-3 bg-white/90 backdrop-blur-sm rounded-full px-3 py-1 text-xs font-medium text-amber-600 flex items-center gap-1 tracking-wide">
+            <span className="text-sm">⏳</span> Waiting for their response
+          </div>
+        )}
+        {match.status === "liked_by_them" && (
+          <div className="absolute top-3 right-3 bg-white/90 backdrop-blur-sm rounded-full px-3 py-1 text-xs font-medium text-rose-500 flex items-center gap-1 tracking-wide">
+            <span className="text-sm">💗</span> Likes you — swipe back
+          </div>
+        )}
+        {match.status === "passed_by_me" && (
+          <div className="absolute top-3 right-3 bg-white/90 backdrop-blur-sm rounded-full px-3 py-1 text-xs font-medium text-gray-500 flex items-center gap-1 tracking-wide">
+            <span className="text-sm">🚫</span> Rejected by you
+          </div>
+        )}
+        {match.status === "passed_by_them" && (
+          <div className="absolute top-3 right-3 bg-white/90 backdrop-blur-sm rounded-full px-3 py-1 text-xs font-medium text-gray-500 flex items-center gap-1 tracking-wide">
+            <span className="text-sm">🚫</span> They passed
+          </div>
+        )}
+        {match.status === "suggestion" && (
+          <div className="absolute top-3 right-3 bg-white/90 backdrop-blur-sm rounded-full px-3 py-1 text-xs font-medium text-deep-green/70 flex items-center gap-1 tracking-wide">
+            <span className="text-sm">✨</span> Suggested match
+          </div>
+        )}
       </div>
 
       {/* Info */}
@@ -271,17 +307,41 @@ function MatchCard({ match }: { match: MatchWithProfile }) {
         {/* Time & Action */}
         <div className="flex items-center justify-between pt-3 border-t border-gray-100">
           <span className="text-xs text-deep-green/40">
-            Matched {timeAgo(match.created_at)}
+            {match.status === "matched"
+              ? `Matched ${timeAgo(match.created_at)}`
+              : match.status === "liked_by_me"
+              ? "Waiting for their response"
+              : match.status === "liked_by_them"
+              ? "They like you"
+              : match.status === "passed_by_me"
+              ? "You rejected this profile"
+              : match.status === "passed_by_them"
+              ? "They passed on you"
+              : "Suggested from your preferences"}
           </span>
-          <Link
-            href={`/messages${match.conversation_id ? `?chat=${match.conversation_id}` : ""}`}
-            className="bg-gold text-deep-green font-medium text-sm px-5 py-2 rounded-xl hover:bg-[#d99500] transition-colors flex items-center gap-1.5 tracking-wide"
-          >
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-              <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
-            </svg>
-            Message
-          </Link>
+          {match.status === "matched" ? (
+            <Link
+              href={`/messages${match.conversation_id ? `?chat=${match.conversation_id}` : ""}`}
+              className="bg-gold text-deep-green font-medium text-sm px-5 py-2 rounded-xl hover:bg-[#d99500] transition-colors flex items-center gap-1.5 tracking-wide"
+            >
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
+              </svg>
+              Message
+            </Link>
+          ) : (
+            <button
+              type="button"
+              disabled
+              title="Available only once both of you like each other"
+              className="bg-gold/50 text-deep-green/60 font-medium text-sm px-5 py-2 rounded-xl flex items-center gap-1.5 tracking-wide opacity-60 blur-[0.5px] cursor-not-allowed"
+            >
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
+              </svg>
+              Message
+            </button>
+          )}
         </div>
       </div>
     </div>
@@ -301,52 +361,134 @@ export default function MatchesPage() {
     if (!user) return;
 
     (async () => {
-      // 1. Fetch all active matches for this user
-      const { data: matchRows, error } = await supabase
-        .from("matches")
-        .select("*")
-        .or(`user_a_id.eq.${user.id},user_b_id.eq.${user.id}`)
-        .eq("is_active", true)
-        .order("created_at", { ascending: false });
+      // 1. Get current user's pet profile + matching preferences
+      const [{ data: myPet }, { data: prefs }] = await Promise.all([
+        supabase
+          .from("pet_profiles")
+          .select("breed_normalized, city_normalized")
+          .eq("user_id", user.id)
+          .maybeSingle(),
+        supabase
+          .from("matching_preferences")
+          .select("preferred_cities, preferred_breeds, accept_any_city")
+          .eq("user_id", user.id)
+          .maybeSingle(),
+      ]);
 
-      if (error || !matchRows) {
-        console.error("Error fetching matches:", error);
-        setLoading(false);
-        return;
-      }
+      // 2. Resolve target cities + breeds (prefer saved preferences, fall back to pet's own)
+      const prefCities: string[] = (prefs?.preferred_cities || [])
+        .filter(Boolean)
+        .map((c: string) => c.trim().toLowerCase());
+      const prefBreeds: string[] = (prefs?.preferred_breeds || [])
+        .filter(Boolean)
+        .map((b: string) => b.trim().toLowerCase());
+      const myCityNorm = myPet?.city_normalized?.trim().toLowerCase() || null;
+      const myBreedNorm = myPet?.breed_normalized?.trim().toLowerCase() || null;
 
-      // 2. Get conversation IDs for each match
-      const matchIds = matchRows.map((m) => m.id);
-      const { data: convos } = await supabase
-        .from("conversations")
-        .select("id, match_id")
-        .in("match_id", matchIds.length > 0 ? matchIds : [-1]);
+      const targetCities = prefCities.length > 0
+        ? prefCities
+        : myCityNorm ? [myCityNorm] : [];
+      const targetBreeds = prefBreeds.length > 0
+        ? prefBreeds
+        : myBreedNorm ? [myBreedNorm] : [];
 
-      const convoMap = new Map<number, number>();
-      convos?.forEach((c) => convoMap.set(c.match_id, c.id));
-
-      // 3. Get pet profiles for the other user in each match
-      const otherUserIds = matchRows.map((m) =>
-        m.user_a_id === user.id ? m.user_b_id : m.user_a_id
-      );
-
-      const { data: petProfiles } = await supabase
+      // 3. Fetch all pet profiles matching city AND breed, excluding self only —
+      //    liked / passed / seen profiles must still appear here.
+      let query = supabase
         .from("pet_profiles")
         .select(
           "user_id, pet_name, breed, display_name, profile_photo_url, avatar_url, city, temperament, activity_level, dog_age_years, gender, bio"
         )
-        .in("user_id", otherUserIds.length > 0 ? otherUserIds : ["__none__"]);
+        .neq("user_id", user.id);
 
-      const petMap = new Map<string, MatchWithProfile["otherPet"]>();
-      petProfiles?.forEach((p) => petMap.set(p.user_id, p));
+      if (!prefs?.accept_any_city && targetCities.length > 0) {
+        query = query.in("city_normalized", targetCities);
+      }
+      if (targetBreeds.length > 0) {
+        query = query.in("breed_normalized", targetBreeds);
+      }
 
-      // 4. Assemble
-      const assembled: MatchWithProfile[] = matchRows.map((m) => {
+      const { data } = await query.limit(200);
+      const candidates = (data || []) as NonNullable<MatchWithProfile["otherPet"]>[];
+      const candidateIds = candidates.map((c) => c.user_id);
+
+      // Fetch swipe actions in both directions to determine per-candidate status
+      const [mineRes, theirsRes] = await Promise.all([
+        candidateIds.length > 0
+          ? supabase
+              .from("swipe_actions")
+              .select("swiped_id, action")
+              .eq("swiper_id", user.id)
+              .in("swiped_id", candidateIds)
+          : Promise.resolve({ data: [] as { swiped_id: string; action: string }[] }),
+        candidateIds.length > 0
+          ? supabase
+              .from("swipe_actions")
+              .select("swiper_id, action")
+              .eq("swiped_id", user.id)
+              .in("swiper_id", candidateIds)
+          : Promise.resolve({ data: [] as { swiper_id: string; action: string }[] }),
+      ]);
+      const mineArr = (mineRes.data || []) as { swiped_id: string; action: string }[];
+      const theirsArr = (theirsRes.data || []) as { swiper_id: string; action: string }[];
+      const myLikes = new Set(mineArr.filter((r) => r.action === "like").map((r) => r.swiped_id));
+      const myPasses = new Set(mineArr.filter((r) => r.action === "pass").map((r) => r.swiped_id));
+      const theirLikes = new Set(theirsArr.filter((r) => r.action === "like").map((r) => r.swiper_id));
+      const theirPasses = new Set(theirsArr.filter((r) => r.action === "pass").map((r) => r.swiper_id));
+
+      // 3. Lookup existing mutual matches + conversations for the "Message" button
+      const { data: matchRows } = await supabase
+        .from("matches")
+        .select("id, user_a_id, user_b_id, is_active, matched_at")
+        .or(`user_a_id.eq.${user.id},user_b_id.eq.${user.id}`)
+        .eq("is_active", true);
+
+      const matchByOtherUser = new Map<
+        string,
+        { id: number; matched_at: string; user_a_id: string; user_b_id: string; is_active: boolean }
+      >();
+      (matchRows as { id: number; matched_at: string; user_a_id: string; user_b_id: string; is_active: boolean }[] | null)?.forEach((m) => {
         const otherId = m.user_a_id === user.id ? m.user_b_id : m.user_a_id;
+        matchByOtherUser.set(otherId, m);
+      });
+
+      const matchIds = (matchRows || []).map((m) => m.id);
+      const { data: convos } = await supabase
+        .from("conversations")
+        .select("id, match_id")
+        .in("match_id", matchIds.length > 0 ? matchIds : [-1]);
+      const convoMap = new Map<number, number>();
+      convos?.forEach((c) => convoMap.set(c.match_id, c.id));
+
+      // 4. Assemble — one card per candidate (same-breed + same-city)
+      const assembled: MatchWithProfile[] = candidates.map((pet, idx) => {
+        const existingMatch = matchByOtherUser.get(pet.user_id);
+        const iLiked = myLikes.has(pet.user_id);
+        const iPassed = myPasses.has(pet.user_id);
+        const theyLiked = theirLikes.has(pet.user_id);
+        const theyPassed = theirPasses.has(pet.user_id);
+        const status: MatchStatus = existingMatch
+          ? "matched"
+          : iLiked && theyLiked
+          ? "matched"
+          : iPassed
+          ? "passed_by_me"
+          : iLiked
+          ? "liked_by_me"
+          : theyLiked
+          ? "liked_by_them"
+          : theyPassed
+          ? "passed_by_them"
+          : "suggestion";
         return {
-          ...m,
-          conversation_id: convoMap.get(m.id) ?? null,
-          otherPet: petMap.get(otherId) ?? null,
+          id: existingMatch?.id ?? -(idx + 1),
+          user_a_id: existingMatch?.user_a_id ?? user.id,
+          user_b_id: existingMatch?.user_b_id ?? pet.user_id,
+          is_active: existingMatch?.is_active ?? true,
+          created_at: existingMatch?.matched_at ?? new Date().toISOString(),
+          conversation_id: existingMatch ? convoMap.get(existingMatch.id) ?? null : null,
+          status,
+          otherPet: pet,
         };
       });
 
@@ -424,8 +566,11 @@ export default function MatchesPage() {
                 Your Matches
               </h1>
               <p className="text-deep-green/50 mt-2">
-                {matches.length} match{matches.length !== 1 ? "es" : ""} — tap
-                Message to start chatting!
+                {(() => {
+                  const mutual = matches.filter((m) => m.status === "matched").length;
+                  const waiting = matches.filter((m) => m.status === "liked_by_me").length;
+                  return `${matches.length} ${matches.length === 1 ? "profile" : "profiles"} — ${mutual} mutual match${mutual === 1 ? "" : "es"}${waiting > 0 ? `, ${waiting} waiting for response` : ""}`;
+                })()}
               </p>
             </div>
 

@@ -125,15 +125,27 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       // ── Slow path: first login or cache miss → verify profile ──
       const isAuthPage = typeof window !== 'undefined' && (
         window.location.pathname.startsWith('/auth/callback') ||
-        window.location.pathname.startsWith('/auth/signup')
+        window.location.pathname.startsWith('/auth/signup') ||
+        window.location.pathname.startsWith('/admin/auth')
       );
 
       if (!isAuthPage && event !== 'USER_UPDATED') {
-        const { data: petRow } = await supabase
-          .from('pet_profiles')
+        // Admin accounts don't need a pet profile — they manage the platform.
+        const { data: adminRow } = await supabase
+          .from('admin_users')
           .select('user_id')
           .eq('user_id', userId)
+          .eq('is_active', true)
           .maybeSingle();
+        const isAdminAccount = !!adminRow;
+
+        const { data: petRow } = isAdminAccount
+          ? { data: { user_id: userId } as { user_id: string } | null }
+          : await supabase
+              .from('pet_profiles')
+              .select('user_id')
+              .eq('user_id', userId)
+              .maybeSingle();
 
         if (!petRow) {
           // Quiz data in sessionStorage → redirect to finish signup
@@ -159,6 +171,32 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         // Profile exists — cache it so we never query again until logout
         setCachedProfile(userId, true);
       }
+
+      // ── Ban check — banned users cannot use the platform ──
+      try {
+        const { data: ban } = await supabase
+          .from('user_bans')
+          .select('id, reason')
+          .eq('user_id', userId)
+          .is('unbanned_at', null)
+          .maybeSingle();
+        if (ban) {
+          clearAuthCache();
+          await supabase.auth.signOut({ scope: 'local' }).catch(() => {});
+          setSession(null);
+          setUser(null);
+          setIsAdmin(false);
+          adminCheckRef.current = null;
+          if (mounted) setLoading(false);
+          if (typeof window !== 'undefined') {
+            const reason = encodeURIComponent(ban.reason || 'Your account has been banned.');
+            if (!window.location.pathname.startsWith('/login')) {
+              window.location.href = `/login?error=banned&reason=${reason}`;
+            }
+          }
+          return;
+        }
+      } catch { /* ignore, fail-open */ }
 
       setSession(session);
       setUser(session.user);

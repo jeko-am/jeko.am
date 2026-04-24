@@ -20,10 +20,14 @@ export default function MatchingModal({ content }: { content?: Record<string, an
 
   useEffect(() => {
     setIsMounted(true);
-    // Check if user has dismissed this modal before
+    // Skip auto-open in store-editor preview so admins can edit the page
+    const isEditor =
+      typeof window !== 'undefined' &&
+      (new URLSearchParams(window.location.search).get('editor') === 'true' ||
+        window.self !== window.top);
+    if (isEditor) return;
     const isDismissed = localStorage.getItem('matchingModal_dismissed');
     if (!isDismissed && enabled) {
-      // Delay popup so visitors can explore the site first
       const t = setTimeout(() => setIsOpen(true), 6000);
       return () => clearTimeout(t);
     }

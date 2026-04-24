@@ -1,0 +1,102 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e2]:
+    - complementary [ref=e3]:
+      - generic [ref=e5]:
+        - heading "Jeko" [level=1] [ref=e6]
+        - paragraph [ref=e7]: Admin Panel
+      - navigation [ref=e8]:
+        - link "Dashboard" [ref=e9] [cursor=pointer]:
+          - /url: /admin/dashboard
+          - img [ref=e10]
+          - text: Dashboard
+        - link "Store Editor" [ref=e12] [cursor=pointer]:
+          - /url: /admin/store-editor
+          - img [ref=e13]
+          - text: Store Editor
+        - link "Products" [ref=e15] [cursor=pointer]:
+          - /url: /admin/products
+          - img [ref=e16]
+          - text: Products
+        - link "Bundles" [ref=e18] [cursor=pointer]:
+          - /url: /admin/bundles
+          - img [ref=e19]
+          - text: Bundles
+        - link "Upsells" [ref=e21] [cursor=pointer]:
+          - /url: /admin/upsells
+          - img [ref=e22]
+          - text: Upsells
+        - link "Categories" [ref=e24] [cursor=pointer]:
+          - /url: /admin/categories
+          - img [ref=e25]
+          - text: Categories
+        - link "Orders" [ref=e27] [cursor=pointer]:
+          - /url: /admin/orders
+          - img [ref=e28]
+          - text: Orders
+        - link "Customers" [ref=e30] [cursor=pointer]:
+          - /url: /admin/customers
+          - img [ref=e31]
+          - text: Customers
+        - link "Reviews" [ref=e33] [cursor=pointer]:
+          - /url: /admin/reviews
+          - img [ref=e34]
+          - text: Reviews
+        - link "Community" [ref=e36] [cursor=pointer]:
+          - /url: /admin/community
+          - img [ref=e37]
+          - text: Community
+        - link "Discounts" [ref=e39] [cursor=pointer]:
+          - /url: /admin/discounts
+          - img [ref=e40]
+          - text: Discounts
+        - link "Pages" [ref=e42] [cursor=pointer]:
+          - /url: /admin/pages
+          - img [ref=e43]
+          - text: Pages
+        - link "Blog" [ref=e45] [cursor=pointer]:
+          - /url: /admin/blog
+          - img [ref=e46]
+          - text: Blog
+        - link "Settings" [ref=e48] [cursor=pointer]:
+          - /url: /admin/settings
+          - img [ref=e49]
+          - text: Settings
+        - link "Analytics" [ref=e51] [cursor=pointer]:
+          - /url: /admin/analytics
+          - img [ref=e52]
+          - text: Analytics
+        - link "Support" [ref=e54] [cursor=pointer]:
+          - /url: /admin/support
+          - img [ref=e55]
+          - text: Support
+      - generic [ref=e57]:
+        - link "View Store" [ref=e58] [cursor=pointer]:
+          - /url: /
+          - img [ref=e59]
+          - text: View Store
+        - button "Sign Out" [ref=e61] [cursor=pointer]:
+          - img [ref=e62]
+          - text: Sign Out
+    - generic [ref=e64]:
+      - banner [ref=e65]:
+        - button [ref=e66] [cursor=pointer]:
+          - img [ref=e67]
+        - generic [ref=e69]:
+          - generic [ref=e70]: admin@purepet.test
+          - generic [ref=e71]: A
+      - main [ref=e72]:
+        - generic [ref=e73]:
+          - generic [ref=e74]:
+            - generic [ref=e75]:
+              - heading "Customers" [level=1] [ref=e76]
+              - paragraph [ref=e77]: Manage customer accounts and profiles
+            - generic [ref=e78]:
+              - generic [ref=e79]: 0 customers
+              - button "Export CSV" [ref=e80] [cursor=pointer]:
+                - img [ref=e81]
+                - text: Export CSV
+          - generic [ref=e84]:
+            - img [ref=e85]
+            - textbox "Search by name or email..." [ref=e87]
+          - paragraph [ref=e93]: Loading customers...
+  - alert [ref=e94]

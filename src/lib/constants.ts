@@ -54,6 +54,15 @@ export const DISABILITIES = ["None", "Blind", "Deaf", "Mobility Issues", "Ampute
 
 export const ALLERGIES = ["None", "Chicken", "Beef", "Grain", "Dairy", "Eggs", "Soy", "Fish", "Pollen", "Dust", "Flea", "Other"] as const;
 
+export const ARMENIAN_CITIES = [
+  "Yerevan", "Gyumri", "Vanadzor", "Vagharshapat", "Hrazdan", "Abovyan",
+  "Kapan", "Armavir", "Artashat", "Goris", "Charentsavan", "Gavar",
+  "Sevan", "Artik", "Ijevan", "Masis", "Ashtarak", "Ararat",
+  "Sisian", "Dilijan", "Alaverdi", "Stepanavan", "Martuni", "Berd",
+  "Yeghegnadzor", "Tashir", "Spitak", "Noyemberyan", "Meghri", "Byureghavan",
+  "Aparan", "Vedi", "Jermuk", "Vayk", "Talin", "Nor Hachn",
+];
+
 export const COUNTRIES = [
   "United Kingdom", "United States", "Canada", "Australia", "Ireland",
   "Germany", "France", "Netherlands", "Spain", "Italy", "Sweden", "Norway",

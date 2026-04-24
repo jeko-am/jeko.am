@@ -87,6 +87,11 @@ function EditorOverlayInner() {
       });
 
       section.addEventListener('click', (e) => {
+        // Let interactive elements (modal close, CTAs, inputs) keep working inside the preview
+        const target = e.target as HTMLElement | null;
+        if (target && target.closest('button, a, input, select, textarea, label, [role="button"]')) {
+          return;
+        }
         e.preventDefault();
         e.stopPropagation();
         const index = parseInt(section.getAttribute('data-section-index') || '0');

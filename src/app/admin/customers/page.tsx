@@ -2,6 +2,7 @@
 
 import { supabase } from '@/lib/supabase';
 import { useEffect, useState, useCallback, useRef } from 'react';
+import { useAuth } from '@/lib/auth';
 
 // ---------------------------------------------------------------------------
 // Types
@@ -46,6 +47,10 @@ interface Customer {
 interface CustomerDetail extends Customer {
   pet_profiles: PetProfile[];
   orders: CustomerOrder[];
+  is_banned?: boolean;
+  ban_reason?: string | null;
+  banned_at?: string | null;
+  ban_id?: number | null;
 }
 
 interface EditFormData {
@@ -82,9 +87,13 @@ function formatDate(iso: string): string {
 // ---------------------------------------------------------------------------
 
 export default function AdminCustomersPage() {
+  const { user: adminUser } = useAuth();
   // Data
   const [customers, setCustomers] = useState<Customer[]>([]);
   const [totalCount, setTotalCount] = useState(0);
+
+  // Ban state
+  const [banSaving, setBanSaving] = useState(false);
 
   // UI state
   const [loading, setLoading] = useState(true);
@@ -207,14 +216,16 @@ export default function AdminCustomersPage() {
     setDetailLoading(true);
 
     try {
-      const [customerRes, petsRes] = await Promise.all([
+      const [customerRes, petsRes, banRes] = await Promise.all([
         supabase.from('user_profiles').select('user_id, full_name, email, phone, city, country, created_at, updated_at').eq('user_id', customerId).single(),
         supabase.from('pet_profiles').select('*').eq('user_id', customerId).order('pet_name'),
+        supabase.from('user_bans').select('id, reason, banned_at').eq('user_id', customerId).is('unbanned_at', null).order('banned_at', { ascending: false }).limit(1).maybeSingle(),
       ]);
 
       if (customerRes.error) throw customerRes.error;
 
       const row = customerRes.data as { user_id: string; full_name: string; email: string; phone: string | null; city: string | null; country: string | null; created_at: string; updated_at: string };
+      const ban = banRes.data as { id: number; reason: string | null; banned_at: string } | null;
       setCustomerDetail({
         id: row.user_id,
         full_name: row.full_name,
@@ -226,6 +237,10 @@ export default function AdminCustomersPage() {
         updated_at: row.updated_at,
         pet_profiles: (petsRes.data ?? []) as PetProfile[],
         orders: [],
+        is_banned: !!ban,
+        ban_id: ban?.id ?? null,
+        ban_reason: ban?.reason ?? null,
+        banned_at: ban?.banned_at ?? null,
       });
     } catch (err) {
       alert(err instanceof Error ? err.message : 'Failed to load customer details');
@@ -292,6 +307,70 @@ export default function AdminCustomersPage() {
       alert(err instanceof Error ? err.message : 'Failed to update customer');
     } finally {
       setEditSaving(false);
+    }
+  };
+
+  // -------------------------------------------------------------------
+  // Ban / Unban customer
+  // -------------------------------------------------------------------
+
+  const banCustomer = async () => {
+    if (!customerDetail) return;
+    const reason = window.prompt(
+      `Ban ${customerDetail.full_name || customerDetail.email}?\n\nEnter an optional reason:`,
+      ''
+    );
+    if (reason === null) return; // cancelled
+    setBanSaving(true);
+    try {
+      const { data, error } = await supabase
+        .from('user_bans')
+        .insert({
+          user_id: customerDetail.id,
+          banned_by: adminUser?.id ?? null,
+          reason: reason.trim() || null,
+        })
+        .select('id, banned_at')
+        .single();
+      if (error) throw error;
+      setCustomerDetail((prev) =>
+        prev
+          ? {
+              ...prev,
+              is_banned: true,
+              ban_id: data.id,
+              ban_reason: reason.trim() || null,
+              banned_at: data.banned_at,
+            }
+          : null
+      );
+    } catch (err) {
+      alert(err instanceof Error ? err.message : 'Failed to ban customer');
+    } finally {
+      setBanSaving(false);
+    }
+  };
+
+  const unbanCustomer = async () => {
+    if (!customerDetail || !customerDetail.ban_id) return;
+    if (!window.confirm(`Unban ${customerDetail.full_name || customerDetail.email}?`)) return;
+    setBanSaving(true);
+    try {
+      const { error } = await supabase
+        .from('user_bans')
+        .update({
+          unbanned_at: new Date().toISOString(),
+          unbanned_by: adminUser?.id ?? null,
+        })
+        .eq('id', customerDetail.ban_id);
+      if (error) throw error;
+      setCustomerDetail((prev) =>
+        prev ? { ...prev, is_banned: false, ban_id: null, ban_reason: null, banned_at: null } : null
+      );
+    } catch (err) {
+      alert(err instanceof Error ? err.message : 'Failed to unban customer');
+    } finally {
+      setBanSaving(false);
     }
   };
 
@@ -520,10 +599,18 @@ export default function AdminCustomersPage() {
                       {customerDetail.full_name?.charAt(0)?.toUpperCase() ?? '?'}
                     </div>
                     <div>
-                      <h3 className="font-semibold text-gray-900">
+                      <h3 className="font-semibold text-gray-900 flex items-center gap-2">
                         {customerDetail.full_name || '—'}
+                        {customerDetail.is_banned && (
+                          <span className="text-[10px] font-semibold uppercase tracking-wide px-1.5 py-0.5 rounded bg-red-100 text-red-700">
+                            Banned
+                          </span>
+                        )}
                       </h3>
                       <p className="text-xs text-gray-500">{customerDetail.email}</p>
+                      {customerDetail.is_banned && customerDetail.ban_reason && (
+                        <p className="text-[11px] text-red-600 mt-0.5 italic">“{customerDetail.ban_reason}”</p>
+                      )}
                     </div>
                   </div>
                   <div className="flex items-center gap-1">
@@ -536,6 +623,25 @@ export default function AdminCustomersPage() {
                         <path strokeLinecap="round" strokeLinejoin="round" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
                       </svg>
                     </button>
+                    {customerDetail.is_banned ? (
+                      <button
+                        onClick={unbanCustomer}
+                        disabled={banSaving}
+                        className="px-2.5 py-1 text-xs font-semibold rounded-lg bg-emerald-50 text-emerald-700 hover:bg-emerald-100 transition-colors disabled:opacity-60"
+                        title="Unban customer"
+                      >
+                        Unban
+                      </button>
+                    ) : (
+                      <button
+                        onClick={banCustomer}
+                        disabled={banSaving}
+                        className="px-2.5 py-1 text-xs font-semibold rounded-lg bg-red-50 text-red-700 hover:bg-red-100 transition-colors disabled:opacity-60"
+                        title="Ban customer"
+                      >
+                        Ban
+                      </button>
+                    )}
                     <button
                       onClick={() => setSelectedCustomerId(null)}
                       className="p-1.5 rounded-lg hover:bg-gray-100 transition-colors text-gray-400 hover:text-gray-600"

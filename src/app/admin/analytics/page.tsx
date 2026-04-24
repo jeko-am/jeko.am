@@ -139,6 +139,9 @@ export default function AdminAnalyticsPage() {
   const [checkoutCompleteCount, setCheckoutCompleteCount] = useState(0);
   const [lastUpdated, setLastUpdated] = useState<Date | null>(null);
 
+  // ─── Visitor geography ───────────────────────────────────────────────────
+  const [topCities, setTopCities] = useState<{ city: string; country: string | null; count: number }[]>([]);
+
   // ─── Data Fetching ────────────────────────────────────────────────────────
 
   const fetchAnalytics = useCallback(async () => {
@@ -298,6 +301,25 @@ export default function AdminAnalyticsPage() {
       if (ccErr) console.warn('Checkout complete fetch error:', ccErr.message);
       // Orders are ground truth for completed checkouts — events may lag
       setCheckoutCompleteCount(Math.max(ccCount || 0, stats.totalOrders));
+
+      // ─── Top cities by visitor count ───────────────────────────────────
+      const { data: geoRows } = await supabase
+        .from('analytics_sessions')
+        .select('city, country')
+        .gte('started_at', startStr)
+        .lte('started_at', endStr)
+        .not('city', 'is', null);
+      const cityAgg = new Map<string, { city: string; country: string | null; count: number }>();
+      (geoRows || []).forEach((r: { city: string | null; country: string | null }) => {
+        if (!r.city) return;
+        const key = `${r.city}|${r.country || ''}`;
+        const existing = cityAgg.get(key);
+        if (existing) existing.count += 1;
+        else cityAgg.set(key, { city: r.city, country: r.country, count: 1 });
+      });
+      const sortedCities = Array.from(cityAgg.values()).sort((a, b) => b.count - a.count).slice(0, 10);
+      setTopCities(sortedCities);
+
       setLastUpdated(new Date());
 
     } catch (err: unknown) {
@@ -707,6 +729,49 @@ export default function AdminAnalyticsPage() {
             </div>
           )}
         </div>
+      </div>
+
+      {/* Visitor Cities */}
+      <div className="bg-white rounded-xl border border-gray-200 overflow-hidden">
+        <div className="px-5 py-4 border-b border-gray-100 flex items-center justify-between">
+          <h3 className="text-sm font-semibold text-gray-800">Visitors by City</h3>
+          <span className="text-xs text-gray-400">Top 10 cities in period</span>
+        </div>
+        {topCities.length === 0 ? (
+          <div className="flex flex-col items-center justify-center h-40 text-center">
+            <div className="w-12 h-12 bg-gray-100 rounded-full flex items-center justify-center mb-3">
+              <svg className="w-6 h-6 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z" />
+                <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z" />
+              </svg>
+            </div>
+            <p className="text-sm font-medium text-gray-600">No geolocation data yet</p>
+            <p className="text-xs text-gray-400 mt-1">Cities appear once visitors hit the site</p>
+          </div>
+        ) : (
+          <div className="divide-y divide-gray-50">
+            {topCities.map((c, idx) => {
+              const maxCount = topCities[0]?.count || 1;
+              const pct = (c.count / maxCount) * 100;
+              return (
+                <div key={`${c.city}-${c.country}-${idx}`} className="flex items-center gap-3 px-5 py-3">
+                  <span className="text-xs font-semibold text-gray-400 w-6 text-center">{idx + 1}</span>
+                  <div className="flex-1">
+                    <div className="flex items-center justify-between mb-1">
+                      <span className="text-sm font-medium text-gray-900">
+                        {c.city}{c.country ? <span className="text-gray-400 font-normal">, {c.country}</span> : null}
+                      </span>
+                      <span className="text-sm font-semibold text-deep-green">{c.count}</span>
+                    </div>
+                    <div className="h-1.5 bg-gray-100 rounded-full overflow-hidden">
+                      <div className="h-full bg-deep-green/70 rounded-full" style={{ width: `${pct}%` }} />
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        )}
       </div>
 
       {/* Bottom Row */}

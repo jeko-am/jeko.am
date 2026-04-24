@@ -468,7 +468,9 @@ function DesktopChatView({
 
   const scrollToBottom = useCallback((behavior: ScrollBehavior = "smooth") => {
     setTimeout(() => {
-      messagesEndRef.current?.scrollIntoView({ behavior });
+      const container = messagesContainerRef.current;
+      if (!container) return;
+      container.scrollTo({ top: container.scrollHeight, behavior });
     }, 50);
   }, []);
 
@@ -853,7 +855,9 @@ function MobileChatView({
 
   const scrollToBottom = useCallback((behavior: ScrollBehavior = "smooth") => {
     setTimeout(() => {
-      messagesEndRef.current?.scrollIntoView({ behavior });
+      const container = messagesContainerRef.current;
+      if (!container) return;
+      container.scrollTo({ top: container.scrollHeight, behavior });
     }, 50);
   }, []);
 

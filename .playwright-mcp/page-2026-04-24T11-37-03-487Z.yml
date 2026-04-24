@@ -1,0 +1,145 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e97]:
+    - banner [ref=e98]:
+      - generic [ref=e100]:
+        - link "JEKO" [ref=e101] [cursor=pointer]:
+          - /url: /
+          - generic [ref=e102]: JEKO
+        - navigation [ref=e103]:
+          - link "About" [ref=e105] [cursor=pointer]:
+            - /url: /about
+            - text: About
+            - img [ref=e106]
+          - link "Community" [ref=e109] [cursor=pointer]:
+            - /url: /community
+            - text: Community
+            - img [ref=e110]
+          - link "Shop" [ref=e113] [cursor=pointer]:
+            - /url: /products
+          - link "Reviews" [ref=e115] [cursor=pointer]:
+            - /url: /reviews
+          - link "Health & breeds" [ref=e117] [cursor=pointer]:
+            - /url: /benefits
+            - text: Health & breeds
+            - img [ref=e118]
+        - generic [ref=e120]:
+          - button "Switch language" [ref=e122] [cursor=pointer]:
+            - generic [ref=e123]: 🇬🇧
+            - generic [ref=e124]: EN
+            - img [ref=e125]
+          - button "Shopping cart" [ref=e127] [cursor=pointer]:
+            - img [ref=e128]
+            - generic [ref=e132]: "2"
+          - link "Help" [ref=e133] [cursor=pointer]:
+            - /url: /contact
+          - generic [ref=e134]:
+            - link "Profile" [ref=e135] [cursor=pointer]:
+              - /url: /profile
+              - img [ref=e136]
+              - text: Profile
+            - button "Logout" [ref=e138] [cursor=pointer]:
+              - img [ref=e139]
+              - text: Logout
+    - generic [ref=e142]:
+      - heading "Messages" [level=1] [ref=e144]
+      - generic [ref=e145]:
+        - button "Armen Armen Bull Terrier 3m hi" [ref=e148] [cursor=pointer]:
+          - img "Armen" [ref=e150]
+          - generic [ref=e151]:
+            - generic [ref=e152]:
+              - generic [ref=e153]:
+                - generic [ref=e154]: Armen
+                - generic [ref=e155]: Bull Terrier
+              - generic [ref=e156]: 3m
+            - paragraph [ref=e158]: hi
+        - generic [ref=e161]:
+          - img [ref=e163]
+          - paragraph [ref=e165]: Select a conversation
+          - paragraph [ref=e166]: Choose a chat from the list to start messaging
+    - contentinfo [ref=e167]:
+      - generic [ref=e168]:
+        - generic [ref=e169]:
+          - generic [ref=e170]:
+            - heading "Join our VIP list" [level=4] [ref=e171]
+            - paragraph [ref=e172]: Be the first to hear about new product launches, exclusive competitions and helpful dog content.
+            - generic [ref=e173]:
+              - textbox "Enter your email address" [ref=e174]
+              - button "Sign up" [ref=e175] [cursor=pointer]
+          - generic [ref=e176]:
+            - generic [ref=e177]:
+              - heading "Jeko" [level=4] [ref=e178]
+              - list [ref=e179]:
+                - listitem [ref=e180]:
+                  - link "Our story" [ref=e181] [cursor=pointer]:
+                    - /url: /about
+                - listitem [ref=e182]:
+                  - link "Reviews" [ref=e183] [cursor=pointer]:
+                    - /url: /reviews
+                - listitem [ref=e184]:
+                  - link "Recipes" [ref=e185] [cursor=pointer]:
+                    - /url: /recipes
+                - listitem [ref=e186]:
+                  - link "Beyond the bowl" [ref=e187] [cursor=pointer]:
+                    - /url: /beyond-the-bowl
+                - listitem [ref=e188]:
+                  - link "Shop" [ref=e189] [cursor=pointer]:
+                    - /url: /products
+                - listitem [ref=e190]:
+                  - link "Community" [ref=e191] [cursor=pointer]:
+                    - /url: /community
+            - generic [ref=e192]:
+              - heading "Help" [level=4] [ref=e193]
+              - list [ref=e194]:
+                - listitem [ref=e195]:
+                  - link "My account" [ref=e196] [cursor=pointer]:
+                    - /url: /profile
+                - listitem [ref=e197]:
+                  - link "Contact us" [ref=e198] [cursor=pointer]:
+                    - /url: /contact
+                - listitem [ref=e199]:
+                  - link "Delivery information" [ref=e200] [cursor=pointer]:
+                    - /url: /delivery-information
+                - listitem [ref=e201]:
+                  - link "Returns" [ref=e202] [cursor=pointer]:
+                    - /url: /returns
+                - listitem [ref=e203]:
+                  - link "Sitemap" [ref=e204] [cursor=pointer]:
+                    - /url: /sitemap-page
+            - generic [ref=e205]:
+              - heading "Information" [level=4] [ref=e206]
+              - list [ref=e207]:
+                - listitem [ref=e208]:
+                  - link "Privacy policy" [ref=e209] [cursor=pointer]:
+                    - /url: /privacy-policy
+                - listitem [ref=e210]:
+                  - link "Terms & conditions" [ref=e211] [cursor=pointer]:
+                    - /url: /terms-of-use
+                - listitem [ref=e212]:
+                  - link "Jeko policies" [ref=e213] [cursor=pointer]:
+                    - /url: /pure-policies
+                - listitem [ref=e214]:
+                  - link "Site security" [ref=e215] [cursor=pointer]:
+                    - /url: /site-security
+                - listitem [ref=e216]:
+                  - link "Cookie policy" [ref=e217] [cursor=pointer]:
+                    - /url: /cookie-policy
+        - generic [ref=e218]:
+          - generic [ref=e220]: JEKO
+          - paragraph [ref=e221]: © Jeko 2020-2026
+  - link "Home":
+    - /url: /
+    - img
+    - text: Home
+  - generic [ref=e222]:
+    - generic [ref=e223]:
+      - paragraph [ref=e224]: Bow Wow! 🐾
+      - paragraph [ref=e225]: Find a friend for your pup!
+    - button "Find pet matches" [ref=e227] [cursor=pointer]:
+      - img "Jeko dog" [ref=e228]
+  - alert [ref=e229]
+  - generic [ref=e232] [cursor=pointer]:
+    - img [ref=e233]
+    - generic [ref=e235]: 1 error
+    - button "Hide Errors" [ref=e236]:
+      - img [ref=e237]
+  - img [ref=e242]

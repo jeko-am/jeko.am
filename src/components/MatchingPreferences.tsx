@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import { useAuth } from "@/lib/auth";
 import { supabase } from "@/lib/supabase";
 import type { MatchingPreferences as MatchPrefsType } from "@/lib/matching-types";
-import { getBreedsByPetType } from "@/lib/constants";
+import { getBreedsByPetType, ARMENIAN_CITIES } from "@/lib/constants";
 
 interface MatchingPreferencesProps {
   petProfileId?: string;
@@ -31,10 +31,7 @@ interface PreferencesState extends Partial<MatchPrefsType> {
 }
 
 
-const COMMON_CITIES = [
-  "London", "Manchester", "Birmingham", "Leeds", "Glasgow", "Sheffield",
-  "Bradford", "Liverpool", "Bristol", "Manchester", "Edinburgh", "Leicester"
-];
+const COMMON_CITIES = ARMENIAN_CITIES;
 
 export default function MatchingPreferences({ petProfileId, petType, onPreferencesChange }: MatchingPreferencesProps) {
   const { user } = useAuth();

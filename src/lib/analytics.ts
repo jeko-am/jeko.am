@@ -83,6 +83,15 @@ async function upsertSession(landing: boolean = false) {
         total_events: 1,
         is_bounce: true,
       });
+      // Enrich with real IP + geolocation (runs once per new session, non-blocking)
+      try {
+        fetch('/api/analytics/geo', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ session_id: sid }),
+          keepalive: true,
+        }).catch(() => {});
+      } catch { /* non-blocking */ }
     }
   } catch {
     // Silently fail analytics - don't block user flow

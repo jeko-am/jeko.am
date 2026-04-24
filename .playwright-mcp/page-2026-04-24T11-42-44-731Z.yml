@@ -1,0 +1,406 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e2]:
+    - complementary [ref=e3]:
+      - generic [ref=e5]:
+        - heading "Jeko" [level=1] [ref=e6]
+        - paragraph [ref=e7]: Admin Panel
+      - navigation [ref=e8]:
+        - link "Dashboard" [ref=e9] [cursor=pointer]:
+          - /url: /admin/dashboard
+          - img [ref=e10]
+          - text: Dashboard
+        - link "Store Editor" [ref=e12] [cursor=pointer]:
+          - /url: /admin/store-editor
+          - img [ref=e13]
+          - text: Store Editor
+        - link "Products" [ref=e15] [cursor=pointer]:
+          - /url: /admin/products
+          - img [ref=e16]
+          - text: Products
+        - link "Bundles" [ref=e18] [cursor=pointer]:
+          - /url: /admin/bundles
+          - img [ref=e19]
+          - text: Bundles
+        - link "Upsells" [ref=e21] [cursor=pointer]:
+          - /url: /admin/upsells
+          - img [ref=e22]
+          - text: Upsells
+        - link "Categories" [ref=e24] [cursor=pointer]:
+          - /url: /admin/categories
+          - img [ref=e25]
+          - text: Categories
+        - link "Orders" [ref=e27] [cursor=pointer]:
+          - /url: /admin/orders
+          - img [ref=e28]
+          - text: Orders
+        - link "Customers" [ref=e30] [cursor=pointer]:
+          - /url: /admin/customers
+          - img [ref=e31]
+          - text: Customers
+        - link "Reviews" [ref=e33] [cursor=pointer]:
+          - /url: /admin/reviews
+          - img [ref=e34]
+          - text: Reviews
+        - link "Community" [ref=e36] [cursor=pointer]:
+          - /url: /admin/community
+          - img [ref=e37]
+          - text: Community
+        - link "Discounts" [ref=e39] [cursor=pointer]:
+          - /url: /admin/discounts
+          - img [ref=e40]
+          - text: Discounts
+        - link "Pages" [ref=e42] [cursor=pointer]:
+          - /url: /admin/pages
+          - img [ref=e43]
+          - text: Pages
+        - link "Blog" [ref=e45] [cursor=pointer]:
+          - /url: /admin/blog
+          - img [ref=e46]
+          - text: Blog
+        - link "Settings" [ref=e48] [cursor=pointer]:
+          - /url: /admin/settings
+          - img [ref=e49]
+          - text: Settings
+        - link "Analytics" [ref=e51] [cursor=pointer]:
+          - /url: /admin/analytics
+          - img [ref=e52]
+          - text: Analytics
+        - link "Support" [ref=e54] [cursor=pointer]:
+          - /url: /admin/support
+          - img [ref=e55]
+          - text: Support
+      - generic [ref=e57]:
+        - link "View Store" [ref=e58] [cursor=pointer]:
+          - /url: /
+          - img [ref=e59]
+          - text: View Store
+        - button "Sign Out" [ref=e61] [cursor=pointer]:
+          - img [ref=e62]
+          - text: Sign Out
+    - generic [ref=e64]:
+      - banner [ref=e65]:
+        - button [ref=e66] [cursor=pointer]:
+          - img [ref=e67]
+        - generic [ref=e69]:
+          - generic [ref=e70]: admin@purepet.test
+          - generic [ref=e71]: A
+      - main [ref=e72]:
+        - generic [ref=e73]:
+          - generic [ref=e74]:
+            - generic [ref=e75]:
+              - heading "Customers" [level=1] [ref=e76]
+              - paragraph [ref=e77]: Manage customer accounts and profiles
+            - generic [ref=e78]:
+              - generic [ref=e79]: 21 customers
+              - button "Export CSV" [ref=e80] [cursor=pointer]:
+                - img [ref=e81]
+                - text: Export CSV
+          - generic [ref=e84]:
+            - img [ref=e85]
+            - textbox "Search by name or email..." [ref=e87]
+          - generic [ref=e89]:
+            - table [ref=e95]:
+              - rowgroup [ref=e96]:
+                - row "Name Email Phone Orders Total Spent Pets Joined" [ref=e97]:
+                  - columnheader "Name" [ref=e98]
+                  - columnheader "Email" [ref=e99]
+                  - columnheader "Phone" [ref=e100]
+                  - columnheader "Orders" [ref=e101]
+                  - columnheader "Total Spent" [ref=e102]
+                  - columnheader "Pets" [ref=e103]
+                  - columnheader "Joined" [ref=e104]
+              - rowgroup [ref=e105]:
+                - row "K kushagra mishra kushagra@theopenlimits.com -- 0 £0.00 -- 24 Apr 2026" [ref=e106] [cursor=pointer]:
+                  - cell "K kushagra mishra" [ref=e107]:
+                    - generic [ref=e108]:
+                      - generic [ref=e109]: K
+                      - generic [ref=e110]: kushagra mishra
+                  - cell "kushagra@theopenlimits.com" [ref=e111]
+                  - cell "--" [ref=e112]
+                  - cell "0" [ref=e113]:
+                    - generic [ref=e114]: "0"
+                  - cell "£0.00" [ref=e115]
+                  - cell "--" [ref=e116]
+                  - cell "24 Apr 2026" [ref=e117]
+                - row "S Surbhi fakeid4uh@gmail.com -- 0 £0.00 -- 24 Apr 2026" [ref=e118] [cursor=pointer]:
+                  - cell "S Surbhi" [ref=e119]:
+                    - generic [ref=e120]:
+                      - generic [ref=e121]: S
+                      - generic [ref=e122]: Surbhi
+                  - cell "fakeid4uh@gmail.com" [ref=e123]
+                  - cell "--" [ref=e124]
+                  - cell "0" [ref=e125]:
+                    - generic [ref=e126]: "0"
+                  - cell "£0.00" [ref=e127]
+                  - cell "--" [ref=e128]
+                  - cell "24 Apr 2026" [ref=e129]
+                - row "A Armen armenbalayan7@gmail.com -- 0 £0.00 1 23 Apr 2026" [ref=e130] [cursor=pointer]:
+                  - cell "A Armen" [ref=e131]:
+                    - generic [ref=e132]:
+                      - generic [ref=e133]: A
+                      - generic [ref=e134]: Armen
+                  - cell "armenbalayan7@gmail.com" [ref=e135]
+                  - cell "--" [ref=e136]
+                  - cell "0" [ref=e137]:
+                    - generic [ref=e138]: "0"
+                  - cell "£0.00" [ref=e139]
+                  - cell "1" [ref=e140]:
+                    - generic [ref=e141]:
+                      - img [ref=e142]
+                      - text: "1"
+                  - cell "23 Apr 2026" [ref=e144]
+                - row "O Ojasvy Dixit ojasvy43@gmail.com +37499123456 0 £0.00 1 23 Apr 2026" [ref=e145] [cursor=pointer]:
+                  - cell "O Ojasvy Dixit" [ref=e146]:
+                    - generic [ref=e147]:
+                      - generic [ref=e148]: O
+                      - generic [ref=e149]: Ojasvy Dixit
+                  - cell "ojasvy43@gmail.com" [ref=e150]
+                  - cell "+37499123456" [ref=e151]
+                  - cell "0" [ref=e152]:
+                    - generic [ref=e153]: "0"
+                  - cell "£0.00" [ref=e154]
+                  - cell "1" [ref=e155]:
+                    - generic [ref=e156]:
+                      - img [ref=e157]
+                      - text: "1"
+                  - cell "23 Apr 2026" [ref=e159]
+                - row "A Armen armenbalayan4@gmail.com -- 0 £0.00 1 23 Apr 2026" [ref=e160] [cursor=pointer]:
+                  - cell "A Armen" [ref=e161]:
+                    - generic [ref=e162]:
+                      - generic [ref=e163]: A
+                      - generic [ref=e164]: Armen
+                  - cell "armenbalayan4@gmail.com" [ref=e165]
+                  - cell "--" [ref=e166]
+                  - cell "0" [ref=e167]:
+                    - generic [ref=e168]: "0"
+                  - cell "£0.00" [ref=e169]
+                  - cell "1" [ref=e170]:
+                    - generic [ref=e171]:
+                      - img [ref=e172]
+                      - text: "1"
+                  - cell "23 Apr 2026" [ref=e174]
+                - row "A Armen armenbalayan3@gmail.com -- 0 £0.00 1 23 Apr 2026" [ref=e175] [cursor=pointer]:
+                  - cell "A Armen" [ref=e176]:
+                    - generic [ref=e177]:
+                      - generic [ref=e178]: A
+                      - generic [ref=e179]: Armen
+                  - cell "armenbalayan3@gmail.com" [ref=e180]
+                  - cell "--" [ref=e181]
+                  - cell "0" [ref=e182]:
+                    - generic [ref=e183]: "0"
+                  - cell "£0.00" [ref=e184]
+                  - cell "1" [ref=e185]:
+                    - generic [ref=e186]:
+                      - img [ref=e187]
+                      - text: "1"
+                  - cell "23 Apr 2026" [ref=e189]
+                - row "A Armen armenbalayan2@gmail.com -- 0 £0.00 1 23 Apr 2026" [ref=e190] [cursor=pointer]:
+                  - cell "A Armen" [ref=e191]:
+                    - generic [ref=e192]:
+                      - generic [ref=e193]: A
+                      - generic [ref=e194]: Armen
+                  - cell "armenbalayan2@gmail.com" [ref=e195]
+                  - cell "--" [ref=e196]
+                  - cell "0" [ref=e197]:
+                    - generic [ref=e198]: "0"
+                  - cell "£0.00" [ref=e199]
+                  - cell "1" [ref=e200]:
+                    - generic [ref=e201]:
+                      - img [ref=e202]
+                      - text: "1"
+                  - cell "23 Apr 2026" [ref=e204]
+                - row "A Armen armenbalayan@gmail.com +37455429222 0 £0.00 1 23 Apr 2026" [ref=e205] [cursor=pointer]:
+                  - cell "A Armen" [ref=e206]:
+                    - generic [ref=e207]:
+                      - generic [ref=e208]: A
+                      - generic [ref=e209]: Armen
+                  - cell "armenbalayan@gmail.com" [ref=e210]
+                  - cell "+37455429222" [ref=e211]
+                  - cell "0" [ref=e212]:
+                    - generic [ref=e213]: "0"
+                  - cell "£0.00" [ref=e214]
+                  - cell "1" [ref=e215]:
+                    - generic [ref=e216]:
+                      - img [ref=e217]
+                      - text: "1"
+                  - cell "23 Apr 2026" [ref=e219]
+                - row "T test1 test1@gmail.com 82854585855 0 £0.00 1 23 Apr 2026" [ref=e220] [cursor=pointer]:
+                  - cell "T test1" [ref=e221]:
+                    - generic [ref=e222]:
+                      - generic [ref=e223]: T
+                      - generic [ref=e224]: test1
+                  - cell "test1@gmail.com" [ref=e225]
+                  - cell "82854585855" [ref=e226]
+                  - cell "0" [ref=e227]:
+                    - generic [ref=e228]: "0"
+                  - cell "£0.00" [ref=e229]
+                  - cell "1" [ref=e230]:
+                    - generic [ref=e231]:
+                      - img [ref=e232]
+                      - text: "1"
+                  - cell "23 Apr 2026" [ref=e234]
+                - row "M Manoj Kumar mk9199527127@gmail.com -- 0 £0.00 -- 22 Apr 2026" [ref=e235] [cursor=pointer]:
+                  - cell "M Manoj Kumar" [ref=e236]:
+                    - generic [ref=e237]:
+                      - generic [ref=e238]: M
+                      - generic [ref=e239]: Manoj Kumar
+                  - cell "mk9199527127@gmail.com" [ref=e240]
+                  - cell "--" [ref=e241]
+                  - cell "0" [ref=e242]:
+                    - generic [ref=e243]: "0"
+                  - cell "£0.00" [ref=e244]
+                  - cell "--" [ref=e245]
+                  - cell "22 Apr 2026" [ref=e246]
+                - row "M miller test@gmail.com 8744646446 0 £0.00 1 22 Apr 2026" [ref=e247] [cursor=pointer]:
+                  - cell "M miller" [ref=e248]:
+                    - generic [ref=e249]:
+                      - generic [ref=e250]: M
+                      - generic [ref=e251]: miller
+                  - cell "test@gmail.com" [ref=e252]
+                  - cell "8744646446" [ref=e253]
+                  - cell "0" [ref=e254]:
+                    - generic [ref=e255]: "0"
+                  - cell "£0.00" [ref=e256]
+                  - cell "1" [ref=e257]:
+                    - generic [ref=e258]:
+                      - img [ref=e259]
+                      - text: "1"
+                  - cell "22 Apr 2026" [ref=e261]
+                - row "T test ajknajknjklvnzvklvakvnvjnlv@gmail.com -- 0 £0.00 -- 22 Apr 2026" [ref=e262] [cursor=pointer]:
+                  - cell "T test" [ref=e263]:
+                    - generic [ref=e264]:
+                      - generic [ref=e265]: T
+                      - generic [ref=e266]: test
+                  - cell "ajknajknjklvnzvklvakvnvjnlv@gmail.com" [ref=e267]
+                  - cell "--" [ref=e268]
+                  - cell "0" [ref=e269]:
+                    - generic [ref=e270]: "0"
+                  - cell "£0.00" [ref=e271]
+                  - cell "--" [ref=e272]
+                  - cell "22 Apr 2026" [ref=e273]
+                - row "D DIVED MISHRA mishradived@gmail.com -- 0 £0.00 1 21 Apr 2026" [ref=e274] [cursor=pointer]:
+                  - cell "D DIVED MISHRA" [ref=e275]:
+                    - generic [ref=e276]:
+                      - generic [ref=e277]: D
+                      - generic [ref=e278]: DIVED MISHRA
+                  - cell "mishradived@gmail.com" [ref=e279]
+                  - cell "--" [ref=e280]
+                  - cell "0" [ref=e281]:
+                    - generic [ref=e282]: "0"
+                  - cell "£0.00" [ref=e283]
+                  - cell "1" [ref=e284]:
+                    - generic [ref=e285]:
+                      - img [ref=e286]
+                      - text: "1"
+                  - cell "21 Apr 2026" [ref=e288]
+                - row "O ojasvy dixit ojasvy34@gmail.com -- 0 £0.00 1 21 Apr 2026" [ref=e289] [cursor=pointer]:
+                  - cell "O ojasvy dixit" [ref=e290]:
+                    - generic [ref=e291]:
+                      - generic [ref=e292]: O
+                      - generic [ref=e293]: ojasvy dixit
+                  - cell "ojasvy34@gmail.com" [ref=e294]
+                  - cell "--" [ref=e295]
+                  - cell "0" [ref=e296]:
+                    - generic [ref=e297]: "0"
+                  - cell "£0.00" [ref=e298]
+                  - cell "1" [ref=e299]:
+                    - generic [ref=e300]:
+                      - img [ref=e301]
+                      - text: "1"
+                  - cell "21 Apr 2026" [ref=e303]
+                - row "T Test User Playwright testplaywright001@mailinator.com -- 0 £0.00 1 21 Apr 2026" [ref=e304] [cursor=pointer]:
+                  - cell "T Test User Playwright" [ref=e305]:
+                    - generic [ref=e306]:
+                      - generic [ref=e307]: T
+                      - generic [ref=e308]: Test User Playwright
+                  - cell "testplaywright001@mailinator.com" [ref=e309]
+                  - cell "--" [ref=e310]
+                  - cell "0" [ref=e311]:
+                    - generic [ref=e312]: "0"
+                  - cell "£0.00" [ref=e313]
+                  - cell "1" [ref=e314]:
+                    - generic [ref=e315]:
+                      - img [ref=e316]
+                      - text: "1"
+                  - cell "21 Apr 2026" [ref=e318]
+                - row "D dived divedmishra547@gmail.com +919140386746 0 £0.00 1 20 Apr 2026" [ref=e319] [cursor=pointer]:
+                  - cell "D dived" [ref=e320]:
+                    - generic [ref=e321]:
+                      - generic [ref=e322]: D
+                      - generic [ref=e323]: dived
+                  - cell "divedmishra547@gmail.com" [ref=e324]
+                  - cell "+919140386746" [ref=e325]
+                  - cell "0" [ref=e326]:
+                    - generic [ref=e327]: "0"
+                  - cell "£0.00" [ref=e328]
+                  - cell "1" [ref=e329]:
+                    - generic [ref=e330]:
+                      - img [ref=e331]
+                      - text: "1"
+                  - cell "20 Apr 2026" [ref=e333]
+                - row "S Shipio Test shipiologistics@gmail.com -- 0 £0.00 1 15 Apr 2026" [ref=e334] [cursor=pointer]:
+                  - cell "S Shipio Test" [ref=e335]:
+                    - generic [ref=e336]:
+                      - generic [ref=e337]: S
+                      - generic [ref=e338]: Shipio Test
+                  - cell "shipiologistics@gmail.com" [ref=e339]
+                  - cell "--" [ref=e340]
+                  - cell "0" [ref=e341]:
+                    - generic [ref=e342]: "0"
+                  - cell "£0.00" [ref=e343]
+                  - cell "1" [ref=e344]:
+                    - generic [ref=e345]:
+                      - img [ref=e346]
+                      - text: "1"
+                  - cell "15 Apr 2026" [ref=e348]
+                - row "T tony stark tocahausammeu-1882@yopmail.com -- 0 £0.00 1 15 Apr 2026" [ref=e349] [cursor=pointer]:
+                  - cell "T tony stark" [ref=e350]:
+                    - generic [ref=e351]:
+                      - generic [ref=e352]: T
+                      - generic [ref=e353]: tony stark
+                  - cell "tocahausammeu-1882@yopmail.com" [ref=e354]
+                  - cell "--" [ref=e355]
+                  - cell "0" [ref=e356]:
+                    - generic [ref=e357]: "0"
+                  - cell "£0.00" [ref=e358]
+                  - cell "1" [ref=e359]:
+                    - generic [ref=e360]:
+                      - img [ref=e361]
+                      - text: "1"
+                  - cell "15 Apr 2026" [ref=e363]
+                - row "M milan sdfjs10@gmail.com +917051555555 0 £0.00 1 14 Apr 2026" [ref=e364] [cursor=pointer]:
+                  - cell "M milan" [ref=e365]:
+                    - generic [ref=e366]:
+                      - generic [ref=e367]: M
+                      - generic [ref=e368]: milan
+                  - cell "sdfjs10@gmail.com" [ref=e369]
+                  - cell "+917051555555" [ref=e370]
+                  - cell "0" [ref=e371]:
+                    - generic [ref=e372]: "0"
+                  - cell "£0.00" [ref=e373]
+                  - cell "1" [ref=e374]:
+                    - generic [ref=e375]:
+                      - img [ref=e376]
+                      - text: "1"
+                  - cell "14 Apr 2026" [ref=e378]
+                - row "K kdkj kdkj@gmail.com -- 0 £0.00 -- 11 Apr 2026" [ref=e379] [cursor=pointer]:
+                  - cell "K kdkj" [ref=e380]:
+                    - generic [ref=e381]:
+                      - generic [ref=e382]: K
+                      - generic [ref=e383]: kdkj
+                  - cell "kdkj@gmail.com" [ref=e384]
+                  - cell "--" [ref=e385]
+                  - cell "0" [ref=e386]:
+                    - generic [ref=e387]: "0"
+                  - cell "£0.00" [ref=e388]
+                  - cell "--" [ref=e389]
+                  - cell "11 Apr 2026" [ref=e390]
+            - generic [ref=e391]:
+              - paragraph [ref=e392]: Showing 1–20 of 21
+              - generic [ref=e393]:
+                - button "First" [disabled] [ref=e394]
+                - button "Prev" [disabled] [ref=e395]
+                - generic [ref=e396]: 1 / 2
+                - button "Next" [ref=e397] [cursor=pointer]
+                - button "Last" [ref=e398] [cursor=pointer]
+  - alert [ref=e94]
