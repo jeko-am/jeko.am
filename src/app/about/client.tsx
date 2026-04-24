@@ -361,7 +361,7 @@ export default function AboutPageClient({ sections }: { sections: Record<string,
         <div data-section-index={8} data-section-name="Personalise CTA">
           <section className="relative overflow-hidden">
             <div className="flex flex-col md:flex-row min-h-[420px]">
-              <div className="w-full md:w-[55%] bg-[#5F295E] flex items-center">
+              <div className="w-full md:w-[55%] flex items-center" style={{ backgroundColor: s[8]?.background_color || '#5F295E' }}>
                 <div className="px-8 md:px-14 lg:px-20 py-12 md:py-16">
                   <h2 className="text-[30px] md:text-[38px] font-semibold text-white font-rubik leading-tight mb-1">
                     {s[8]?.heading ?? "Personalise your"}
@@ -393,7 +393,7 @@ export default function AboutPageClient({ sections }: { sections: Record<string,
                   className="hidden md:block absolute left-0 top-0 h-full z-10"
                   style={{
                     width: '12px',
-                    backgroundImage: "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 24'%3E%3Cpath d='M0,0 L12,12 L0,24 Z' fill='%235F295E'/%3E%3C/svg%3E\")",
+                    backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 24'%3E%3Cpath d='M0,0 L12,12 L0,24 Z' fill='${encodeURIComponent(s[8]?.background_color || '#5F295E')}'/%3E%3C/svg%3E")`,
                     backgroundSize: '12px 24px',
                     backgroundRepeat: 'repeat-y',
                   }}

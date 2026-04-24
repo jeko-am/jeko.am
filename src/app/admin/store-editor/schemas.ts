@@ -134,8 +134,9 @@ const HOMEPAGE_SECTIONS: SectionSchema[] = [
       { key: 'benefit_2', label: 'Benefit 2', type: 'text' },
       { key: 'benefit_3', label: 'Benefit 3', type: 'text' },
       { key: 'benefit_4', label: 'Benefit 4', type: 'text' },
+      { key: 'background_color', label: 'Background Color', type: 'color' },
     ],
-    defaultContent: { benefit_1: 'Store in the cupboard', benefit_2: 'From only 89p per day', benefit_3: 'Just add water and serve', benefit_4: 'Ready in 10 seconds' },
+    defaultContent: { benefit_1: 'Store in the cupboard', benefit_2: 'From only 89p per day', benefit_3: 'Just add water and serve', benefit_4: 'Ready in 10 seconds', background_color: '#5F295E' },
   },
   {
     name: 'Product Highlights', icon: ICON_PATHS.grid, color: 'bg-deep-green',
@@ -265,6 +266,7 @@ const HOMEPAGE_SECTIONS: SectionSchema[] = [
       { key: 'row_5_pure', label: 'Row 5 — Jeko (check)', type: 'toggle' },
       { key: 'row_5_dry', label: 'Row 5 — Col 2 (check)', type: 'toggle' },
       { key: 'row_5_raw', label: 'Row 5 — Col 3 (check)', type: 'toggle' },
+      { key: 'background_color', label: 'Background Color', type: 'color' },
     ],
     defaultContent: {
       heading: 'How Jeko compares', col_1_header: 'JEKO', col_2_header: 'Dry & wet', col_3_header: 'Raw & fresh',
@@ -273,6 +275,7 @@ const HOMEPAGE_SECTIONS: SectionSchema[] = [
       row_3_label: 'High quality ingredients', row_3_pure: true, row_3_dry: false, row_3_raw: true,
       row_4_label: 'Easy to store', row_4_pure: true, row_4_dry: true, row_4_raw: false,
       row_5_label: 'No risk of harmful pathogens', row_5_pure: true, row_5_dry: true, row_5_raw: false,
+      background_color: '#5F295E',
     },
   },
   {
@@ -293,8 +296,9 @@ const HOMEPAGE_SECTIONS: SectionSchema[] = [
       { key: 'image', label: 'Section Image', type: 'image' },
       { key: 'button_text', label: 'Button Text', type: 'text' },
       { key: 'button_url', label: 'Button URL', type: 'url' },
+      { key: 'background_color', label: 'Background Color', type: 'color' },
     ],
-    defaultContent: { heading: "Dog food so good we ate it on Dragons' Den", description: 'Jeko is complete nutrition from the inside out, and dogs totally love the taste!', image: '', button_text: 'Get started today', button_url: '/auth/signup' },
+    defaultContent: { heading: "Dog food so good we ate it on Dragons' Den", description: 'Jeko is complete nutrition from the inside out, and dogs totally love the taste!', image: '', button_text: 'Get started today', button_url: '/auth/signup', background_color: '#274C46' },
   },
   {
     name: 'FAQ', icon: ICON_PATHS.faq, color: 'bg-violet-500',
@@ -469,8 +473,9 @@ const ABOUT_SECTIONS: SectionSchema[] = [
       { key: 'button_text', label: 'Button Text', type: 'text' },
       { key: 'button_url', label: 'Button URL', type: 'url' },
       { key: 'image', label: 'Image', type: 'image' },
+      { key: 'background_color', label: 'Background Color', type: 'color' },
     ],
-    defaultContent: { heading: 'Personalise your', subtitle: "dog's food", description: "Proactively invest in your pet's health.", button_text: "Discover your dog's menu", button_url: '/auth/signup', image: '' },
+    defaultContent: { heading: 'Personalise your', subtitle: "dog's food", description: "Proactively invest in your pet's health.", button_text: "Discover your dog's menu", button_url: '/auth/signup', image: '', background_color: '#5F295E' },
   },
 ];
 

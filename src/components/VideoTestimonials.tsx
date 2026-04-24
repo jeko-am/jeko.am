@@ -55,11 +55,11 @@ export default function VideoTestimonials({ content }: { content?: any }) {
           </p>
         </div>
 
-        <div className="relative">
+        <div className="relative md:px-14">
           {/* Left Arrow */}
           <button
             onClick={() => scroll("left")}
-            className="absolute left-0 top-1/2 -translate-y-1/2 z-10 w-10 h-10 bg-white rounded-full shadow-lg flex items-center justify-center hover:bg-gray-100 transition-colors -ml-2"
+            className="hidden md:flex absolute left-0 top-1/2 -translate-y-1/2 z-10 w-10 h-10 bg-white rounded-full shadow-lg items-center justify-center hover:bg-gray-100 transition-colors"
             aria-label="Scroll left"
           >
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#274C46" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
@@ -70,7 +70,7 @@ export default function VideoTestimonials({ content }: { content?: any }) {
           {/* Video Carousel */}
           <div
             ref={scrollRef}
-            className="flex gap-5 overflow-x-auto scrollbar-hide pb-4 px-8"
+            className="flex gap-5 overflow-x-auto scrollbar-hide pb-4"
             style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
           >
             {videos.map((video, index) => (
@@ -110,7 +110,7 @@ export default function VideoTestimonials({ content }: { content?: any }) {
           {/* Right Arrow */}
           <button
             onClick={() => scroll("right")}
-            className="absolute right-0 top-1/2 -translate-y-1/2 z-10 w-10 h-10 bg-white rounded-full shadow-lg flex items-center justify-center hover:bg-gray-100 transition-colors -mr-2"
+            className="hidden md:flex absolute right-0 top-1/2 -translate-y-1/2 z-10 w-10 h-10 bg-white rounded-full shadow-lg items-center justify-center hover:bg-gray-100 transition-colors"
             aria-label="Scroll right"
           >
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#274C46" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">

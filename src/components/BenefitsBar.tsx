@@ -33,7 +33,7 @@ export default function BenefitsBar({ content }: { content?: Record<string, any>
   }));
 
   return (
-    <section className="bg-purple-brand py-12 zigzag-bottom zigzag-bottom-purple relative z-[1]">
+    <section className="py-12 zigzag-bottom zigzag-bottom-purple relative z-[1]" style={{ backgroundColor: content?.background_color || '#5F295E' }}>
       {/* Decorative elements - left side */}
       <div className="absolute left-0 top-0 h-full pointer-events-none hidden md:block overflow-hidden">
         <svg viewBox="0 0 120 200" className="absolute -left-4 top-4 w-28 h-44 opacity-70">

@@ -66,7 +66,7 @@ export default function ComparisonTable({ content }: { content?: any }) {
   ];
 
   return (
-    <section className="bg-purple-brand py-16 pb-20 relative z-[1] overflow-hidden">
+    <section className="py-16 pb-20 relative z-[1] overflow-hidden" style={{ backgroundColor: content?.background_color || '#5F295E' }}>
       {/* Decorative elements - right side */}
       <div className="absolute right-0 top-0 h-full pointer-events-none hidden md:block">
         <svg viewBox="0 0 180 500" className="absolute right-0 top-0 w-44 h-full">

@@ -80,14 +80,14 @@ export default function ProductCard({ product }: { product: Product }) {
 
   return (
     <Link href={`/products/${product.slug}`} className="group block h-full" data-testid="product-card" onClick={handleProductClick}>
-      <div className="bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 border-2 border-transparent hover:border-gold/30 h-full flex flex-col">
+      <div className="bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition-shadow duration-300 border-2 border-transparent hover:border-gold/30 h-full flex flex-col">
         {/* Image */}
         <div className="relative aspect-square overflow-hidden bg-beige-light">
           {hasImage ? (
             <img
               src={imageUrl}
               alt={product.name}
-              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+              className="w-full h-full object-cover"
               onError={() => setImgError(true)}
             />
           ) : (
