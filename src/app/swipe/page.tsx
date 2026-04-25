@@ -483,11 +483,12 @@ export default function SwipePage() {
         query=query.eq("looking_for_mate",true);
       }
 
-      // Hard gender filter: always show only opposite gender
-      if(myPetProfile?.gender==="male"){
-        query=query.eq("gender","female");
-      }else if(myPetProfile?.gender==="female"){
-        query=query.eq("gender","male");
+      // Hard gender filter: always show only opposite gender (case-insensitive)
+      const myGender=(myPetProfile?.gender||"").toLowerCase();
+      if(myGender==="male"){
+        query=query.ilike("gender","female");
+      }else if(myGender==="female"){
+        query=query.ilike("gender","male");
       }
 
       // Age range filter (only apply if non-default)

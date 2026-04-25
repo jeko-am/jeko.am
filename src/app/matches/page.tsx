@@ -405,11 +405,12 @@ export default function MatchesPage() {
         )
         .neq("user_id", user.id);
 
-      // Hard gender filter: always show only opposite gender
-      if (myPet?.gender === "male") {
-        query = query.eq("gender", "female");
-      } else if (myPet?.gender === "female") {
-        query = query.eq("gender", "male");
+      // Hard gender filter: always show only opposite gender (case-insensitive)
+      const myGender = (myPet?.gender || "").toLowerCase();
+      if (myGender === "male") {
+        query = query.ilike("gender", "female");
+      } else if (myGender === "female") {
+        query = query.ilike("gender", "male");
       }
 
       if (!prefs?.accept_any_city && targetCities.length > 0) {
