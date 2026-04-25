@@ -332,6 +332,16 @@ function MatchCard({ match }: { match: MatchWithProfile }) {
               </svg>
               {t("matches.messageAction")}
             </Link>
+          ) : match.status === "suggestion" ? (
+            <Link
+              href="/swipe"
+              className="bg-deep-green text-white font-medium text-sm px-5 py-2 rounded-xl hover:bg-deep-green/80 transition-colors flex items-center gap-1.5 tracking-wide"
+            >
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
+              </svg>
+              {t("matches.matchNow")}
+            </Link>
           ) : (
             <button
               type="button"
