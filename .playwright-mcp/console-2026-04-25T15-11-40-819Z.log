@@ -1,7 +1,5 @@
-[    1208ms] [INFO] %cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold @ webpack-internal:///(app-pages-browser)/./node_modules/next/dist/compiled/react-dom/cjs/react-dom.development.js:38559
-[    1406ms] [WARNING] Image with src "https://www.datocms-assets.com/55536/1673617327-dog-food-reviews.jpg?auto=format&fit=crop&h=800&w=1920" was detected as the Largest Contentful Paint (LCP). Please add the "priority" property if this image is above the fold.
-Read more: https://nextjs.org/docs/api-reference/next/image#priority @ webpack-internal:///(app-pages-browser)/./node_modules/next/dist/shared/lib/utils/warn-once.js:15
-[    1419ms] [ERROR] Warning: Prop `%s` did not match. Server: %s Client: %s%s href "/auth/signup" "/profile" 
+[    1058ms] [INFO] %cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold @ webpack-internal:///(app-pages-browser)/./node_modules/next/dist/compiled/react-dom/cjs/react-dom.development.js:38559
+[    1144ms] [ERROR] Warning: Prop `%s` did not match. Server: %s Client: %s%s href "/auth/signup" "/profile" 
     at a
     at LinkComponent (webpack-internal:///(app-pages-browser)/./node_modules/next/dist/client/link.js:121:19)
     at div
@@ -34,7 +32,7 @@ Read more: https://nextjs.org/docs/api-reference/next/image#priority @ webpack-i
     at OuterLayoutRouter (webpack-internal:///(app-pages-browser)/./node_modules/next/dist/client/components/layout-router.js:370:11)
     at CartProvider (webpack-internal:///(app-pages-browser)/./src/lib/cart-context.tsx:48:11)
     at AuthProvider (webpack-internal:///(app-pages-browser)/./src/lib/auth.tsx:109:11)
-    at LangProvider (webpack-internal:///(app-pages-browser)/./src/lib/i18n/LangProvider.tsx:52:11)
+    at LangProvider (webpack-internal:///(app-pages-browser)/./src/lib/i18n/LangProvider.tsx:54:11)
     at body
     at html
     at RootLayout (Server)
@@ -51,10 +49,26 @@ Read more: https://nextjs.org/docs/api-reference/next/image#priority @ webpack-i
     at AppRouter (webpack-internal:///(app-pages-browser)/./node_modules/next/dist/client/components/app-router.js:585:13)
     at ServerRoot (webpack-internal:///(app-pages-browser)/./node_modules/next/dist/client/app-index.js:112:27)
     at Root (webpack-internal:///(app-pages-browser)/./node_modules/next/dist/client/app-index.js:117:11) @ webpack-internal:///(app-pages-browser)/./node_modules/next/dist/client/app-index.js:32
-[  103872ms] [LOG] [Fast Refresh] rebuilding @ webpack-internal:///(app-pages-browser)/./node_modules/next/dist/client/components/react-dev-overlay/app/hot-reloader-client.js:186
-[  104415ms] [LOG] [Fast Refresh] done in 542ms @ webpack-internal:///(app-pages-browser)/./node_modules/next/dist/client/components/react-dev-overlay/app/hot-reloader-client.js:43
-[  126432ms] [INFO] %cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold @ webpack-internal:///(app-pages-browser)/./node_modules/next/dist/compiled/react-dom/cjs/react-dom.development.js:38559
-[  126549ms] [ERROR] Warning: Prop `%s` did not match. Server: %s Client: %s%s href "/auth/signup" "/profile" 
+[    1145ms] [WARNING] Image with src "https://www.datocms-assets.com/55536/1673617327-dog-food-reviews.jpg?auto=format&fit=crop&h=800&w=1920" was detected as the Largest Contentful Paint (LCP). Please add the "priority" property if this image is above the fold.
+Read more: https://nextjs.org/docs/api-reference/next/image#priority @ webpack-internal:///(app-pages-browser)/./node_modules/next/dist/shared/lib/utils/warn-once.js:15
+[  303679ms] [LOG] [Fast Refresh] rebuilding @ webpack-internal:///(app-pages-browser)/./node_modules/next/dist/client/components/react-dev-overlay/app/hot-reloader-client.js:186
+[  304383ms] [LOG] [Fast Refresh] done in 704ms @ webpack-internal:///(app-pages-browser)/./node_modules/next/dist/client/components/react-dev-overlay/app/hot-reloader-client.js:43
+[  312530ms] [LOG] [Fast Refresh] rebuilding @ webpack-internal:///(app-pages-browser)/./node_modules/next/dist/client/components/react-dev-overlay/app/hot-reloader-client.js:186
+[  313023ms] [LOG] [Fast Refresh] rebuilding @ webpack-internal:///(app-pages-browser)/./node_modules/next/dist/client/components/react-dev-overlay/app/hot-reloader-client.js:186
+[  313072ms] [LOG] [Fast Refresh] done in 49ms @ webpack-internal:///(app-pages-browser)/./node_modules/next/dist/client/components/react-dev-overlay/app/hot-reloader-client.js:43
+[  321327ms] [LOG] [Fast Refresh] rebuilding @ webpack-internal:///(app-pages-browser)/./node_modules/next/dist/client/components/react-dev-overlay/app/hot-reloader-client.js:186
+[  323505ms] [WARNING] [Fast Refresh] performing full reload
+
+Fast Refresh will perform a full reload when you edit a file that's imported by modules outside of the React rendering tree.
+You might have a file which exports a React component but also exports a value that is imported by a non-React component file.
+Consider migrating the non-React component export to a separate file and importing it into both files.
+
+It is also possible the parent component of the component you edited is a class component, which disables Fast Refresh.
+Fast Refresh requires at least one parent function component in your React tree. @ webpack-internal:///(app-pages-browser)/./node_modules/next/dist/client/components/react-dev-overlay/app/hot-reloader-client.js:112
+[  326691ms] [INFO] %cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold @ webpack-internal:///(app-pages-browser)/./node_modules/next/dist/compiled/react-dom/cjs/react-dom.development.js:38559
+[  327181ms] [WARNING] Image with src "https://www.datocms-assets.com/55536/1673617327-dog-food-reviews.jpg?auto=format&fit=crop&h=800&w=1920" was detected as the Largest Contentful Paint (LCP). Please add the "priority" property if this image is above the fold.
+Read more: https://nextjs.org/docs/api-reference/next/image#priority @ webpack-internal:///(app-pages-browser)/./node_modules/next/dist/shared/lib/utils/warn-once.js:15
+[  327238ms] [ERROR] Warning: Prop `%s` did not match. Server: %s Client: %s%s href "/auth/signup" "/profile" 
     at a
     at LinkComponent (webpack-internal:///(app-pages-browser)/./node_modules/next/dist/client/link.js:121:19)
     at div
@@ -87,7 +101,7 @@ Read more: https://nextjs.org/docs/api-reference/next/image#priority @ webpack-i
     at OuterLayoutRouter (webpack-internal:///(app-pages-browser)/./node_modules/next/dist/client/components/layout-router.js:370:11)
     at CartProvider (webpack-internal:///(app-pages-browser)/./src/lib/cart-context.tsx:48:11)
     at AuthProvider (webpack-internal:///(app-pages-browser)/./src/lib/auth.tsx:109:11)
-    at LangProvider (webpack-internal:///(app-pages-browser)/./src/lib/i18n/LangProvider.tsx:52:11)
+    at LangProvider (webpack-internal:///(app-pages-browser)/./src/lib/i18n/LangProvider.tsx:54:11)
     at body
     at html
     at RootLayout (Server)
@@ -104,14 +118,19 @@ Read more: https://nextjs.org/docs/api-reference/next/image#priority @ webpack-i
     at AppRouter (webpack-internal:///(app-pages-browser)/./node_modules/next/dist/client/components/app-router.js:585:13)
     at ServerRoot (webpack-internal:///(app-pages-browser)/./node_modules/next/dist/client/app-index.js:112:27)
     at Root (webpack-internal:///(app-pages-browser)/./node_modules/next/dist/client/app-index.js:117:11) @ webpack-internal:///(app-pages-browser)/./node_modules/next/dist/client/app-index.js:32
-[  126549ms] [WARNING] Image with src "https://www.datocms-assets.com/55536/1673617327-dog-food-reviews.jpg?auto=format&fit=crop&h=800&w=1920" was detected as the Largest Contentful Paint (LCP). Please add the "priority" property if this image is above the fold.
+[  333111ms] [LOG] [Fast Refresh] rebuilding @ webpack-internal:///(app-pages-browser)/./node_modules/next/dist/client/components/react-dev-overlay/app/hot-reloader-client.js:186
+[  333421ms] [WARNING] [Fast Refresh] performing full reload
+
+Fast Refresh will perform a full reload when you edit a file that's imported by modules outside of the React rendering tree.
+You might have a file which exports a React component but also exports a value that is imported by a non-React component file.
+Consider migrating the non-React component export to a separate file and importing it into both files.
+
+It is also possible the parent component of the component you edited is a class component, which disables Fast Refresh.
+Fast Refresh requires at least one parent function component in your React tree. @ webpack-internal:///(app-pages-browser)/./node_modules/next/dist/client/components/react-dev-overlay/app/hot-reloader-client.js:112
+[  337317ms] [INFO] %cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold @ webpack-internal:///(app-pages-browser)/./node_modules/next/dist/compiled/react-dom/cjs/react-dom.development.js:38559
+[  337652ms] [WARNING] Image with src "https://www.datocms-assets.com/55536/1673617327-dog-food-reviews.jpg?auto=format&fit=crop&h=800&w=1920" was detected as the Largest Contentful Paint (LCP). Please add the "priority" property if this image is above the fold.
 Read more: https://nextjs.org/docs/api-reference/next/image#priority @ webpack-internal:///(app-pages-browser)/./node_modules/next/dist/shared/lib/utils/warn-once.js:15
-[  222296ms] [LOG] [Fast Refresh] rebuilding @ webpack-internal:///(app-pages-browser)/./node_modules/next/dist/client/components/react-dev-overlay/app/hot-reloader-client.js:186
-[  223379ms] [LOG] [Fast Refresh] done in 1084ms @ webpack-internal:///(app-pages-browser)/./node_modules/next/dist/client/components/react-dev-overlay/app/hot-reloader-client.js:43
-[  232199ms] [INFO] %cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold @ webpack-internal:///(app-pages-browser)/./node_modules/next/dist/compiled/react-dom/cjs/react-dom.development.js:38559
-[  232356ms] [WARNING] Image with src "https://www.datocms-assets.com/55536/1673617327-dog-food-reviews.jpg?auto=format&fit=crop&h=800&w=1920" was detected as the Largest Contentful Paint (LCP). Please add the "priority" property if this image is above the fold.
-Read more: https://nextjs.org/docs/api-reference/next/image#priority @ webpack-internal:///(app-pages-browser)/./node_modules/next/dist/shared/lib/utils/warn-once.js:15
-[  232368ms] [ERROR] Warning: Prop `%s` did not match. Server: %s Client: %s%s href "/auth/signup" "/profile" 
+[  337684ms] [ERROR] Warning: Prop `%s` did not match. Server: %s Client: %s%s href "/auth/signup" "/profile" 
     at a
     at LinkComponent (webpack-internal:///(app-pages-browser)/./node_modules/next/dist/client/link.js:121:19)
     at div
@@ -144,7 +163,7 @@ Read more: https://nextjs.org/docs/api-reference/next/image#priority @ webpack-i
     at OuterLayoutRouter (webpack-internal:///(app-pages-browser)/./node_modules/next/dist/client/components/layout-router.js:370:11)
     at CartProvider (webpack-internal:///(app-pages-browser)/./src/lib/cart-context.tsx:48:11)
     at AuthProvider (webpack-internal:///(app-pages-browser)/./src/lib/auth.tsx:109:11)
-    at LangProvider (webpack-internal:///(app-pages-browser)/./src/lib/i18n/LangProvider.tsx:52:11)
+    at LangProvider (webpack-internal:///(app-pages-browser)/./src/lib/i18n/LangProvider.tsx:54:11)
     at body
     at html
     at RootLayout (Server)
@@ -161,111 +180,3 @@ Read more: https://nextjs.org/docs/api-reference/next/image#priority @ webpack-i
     at AppRouter (webpack-internal:///(app-pages-browser)/./node_modules/next/dist/client/components/app-router.js:585:13)
     at ServerRoot (webpack-internal:///(app-pages-browser)/./node_modules/next/dist/client/app-index.js:112:27)
     at Root (webpack-internal:///(app-pages-browser)/./node_modules/next/dist/client/app-index.js:117:11) @ webpack-internal:///(app-pages-browser)/./node_modules/next/dist/client/app-index.js:32
-[  328607ms] [LOG] [Fast Refresh] rebuilding @ webpack-internal:///(app-pages-browser)/./node_modules/next/dist/client/components/react-dev-overlay/app/hot-reloader-client.js:186
-[  329294ms] [LOG] [Fast Refresh] done in 688ms @ webpack-internal:///(app-pages-browser)/./node_modules/next/dist/client/components/react-dev-overlay/app/hot-reloader-client.js:43
-[  338423ms] [LOG] [Fast Refresh] rebuilding @ webpack-internal:///(app-pages-browser)/./node_modules/next/dist/client/components/react-dev-overlay/app/hot-reloader-client.js:186
-[  338546ms] [LOG] [Fast Refresh] done in 122ms @ webpack-internal:///(app-pages-browser)/./node_modules/next/dist/client/components/react-dev-overlay/app/hot-reloader-client.js:43
-[  776008ms] [LOG] [Fast Refresh] rebuilding @ webpack-internal:///(app-pages-browser)/./node_modules/next/dist/client/components/react-dev-overlay/app/hot-reloader-client.js:186
-[  776417ms] [LOG] [Fast Refresh] done in 410ms @ webpack-internal:///(app-pages-browser)/./node_modules/next/dist/client/components/react-dev-overlay/app/hot-reloader-client.js:43
-[  776441ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:3000/reviews?_rsc=1svd5:0
-[  776510ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:3000/reviews:0
-[  776914ms] [INFO] %cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold @ webpack-internal:///./node_modules/react-dom/cjs/react-dom.development.js:29889
-[  776980ms] Error: Cannot find module './1682.js'
-Require stack:
-- /Users/admin/Desktop/claude code armen/pure-pet-clone/.next/server/webpack-runtime.js
-- /Users/admin/Desktop/claude code armen/pure-pet-clone/.next/server/app/_not-found/page.js
-- /Users/admin/Desktop/claude code armen/pure-pet-clone/node_modules/next/dist/server/require.js
-- /Users/admin/Desktop/claude code armen/pure-pet-clone/node_modules/next/dist/server/load-components.js
-- /Users/admin/Desktop/claude code armen/pure-pet-clone/node_modules/next/dist/build/utils.js
-- /Users/admin/Desktop/claude code armen/pure-pet-clone/node_modules/next/dist/server/dev/hot-middleware.js
-- /Users/admin/Desktop/claude code armen/pure-pet-clone/node_modules/next/dist/server/dev/hot-reloader-webpack.js
-- /Users/admin/Desktop/claude code armen/pure-pet-clone/node_modules/next/dist/server/lib/router-utils/setup-dev-bundler.js
-- /Users/admin/Desktop/claude code armen/pure-pet-clone/node_modules/next/dist/server/lib/router-server.js
-- /Users/admin/Desktop/claude code armen/pure-pet-clone/node_modules/next/dist/server/lib/start-server.js
-    at Module._resolveFilename (node:internal/modules/cjs/loader:1475:15)
-    at <unknown> (file:///Users/admin/Desktop/claude code armen/pure-pet-clone/node_modules/next/dist/server/require-hook.js:55:36)
-    at wrapResolveFilename (node:internal/modules/cjs/loader:1048:27)
-    at defaultResolveImplForCJSLoading (node:internal/modules/cjs/loader:1072:10)
-    at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1093:12)
-    at Module._load (node:internal/modules/cjs/loader:1261:25)
-    at wrapModuleLoad (node:internal/modules/cjs/loader:255:19)
-    at Module.require (node:internal/modules/cjs/loader:1575:12)
-    at mod.require (file:///Users/admin/Desktop/claude code armen/pure-pet-clone/node_modules/next/dist/server/require-hook.js:65:28)
-    at require (node:internal/modules/helpers:191:16)
-    at __webpack_require__.f.require (file:///Users/admin/Desktop/claude code armen/pure-pet-clone/.next/server/webpack-runtime.js:203:28)
-    at <unknown> (file:///Users/admin/Desktop/claude code armen/pure-pet-clone/.next/server/webpack-runtime.js:116:40)
-    at Array.reduce (<anonymous>)
-    at __webpack_require__.e (file:///Users/admin/Desktop/claude code armen/pure-pet-clone/.next/server/webpack-runtime.js:115:67)
-    at Array.map (<anonymous>)
-    at __webpack_require__.X (file:///Users/admin/Desktop/claude code armen/pure-pet-clone/.next/server/webpack-runtime.js:167:22)
-    at <unknown> (file:///Users/admin/Desktop/claude code armen/pure-pet-clone/.next/server/pages/_document.js:1:340)
-    at Object.<anonymous> (file:///Users/admin/Desktop/claude code armen/pure-pet-clone/.next/server/pages/_document.js:1:383)
-    at Module._compile (node:internal/modules/cjs/loader:1831:14)
-    at Module._extensions..js (node:internal/modules/cjs/loader:1971:10)
-    at Module.load (node:internal/modules/cjs/loader:1552:32)
-    at Module._load (node:internal/modules/cjs/loader:1354:12)
-    at wrapModuleLoad (node:internal/modules/cjs/loader:255:19)
-    at Module.require (node:internal/modules/cjs/loader:1575:12)
-    at mod.require (file:///Users/admin/Desktop/claude code armen/pure-pet-clone/node_modules/next/dist/server/require-hook.js:65:28)
-    at require (node:internal/modules/helpers:191:16)
-    at requirePage (file:///Users/admin/Desktop/claude code armen/pure-pet-clone/node_modules/next/dist/server/require.js:109:84)
-    at <unknown> (file:///Users/admin/Desktop/claude code armen/pure-pet-clone/node_modules/next/dist/server/load-components.js:72:65)
-    at async loadComponentsImpl (file:///Users/admin/Desktop/claude code armen/pure-pet-clone/node_modules/next/dist/server/load-components.js:71:33)
-    at async DevServer.findPageComponentsImpl (file:///Users/admin/Desktop/claude code armen/pure-pet-clone/node_modules/next/dist/server/next-server.js:714:36)
-[  776978ms] [LOG] [HMR] connected @ webpack-internal:///./node_modules/next/dist/client/components/react-dev-overlay/pages/websocket.js:38
-[  790214ms] [LOG] [Fast Refresh] rebuilding @ webpack-internal:///./node_modules/next/dist/client/components/react-dev-overlay/pages/hot-reloader-client.js:221
-[  790422ms] [LOG] [Fast Refresh] rebuilding @ webpack-internal:///./node_modules/next/dist/client/components/react-dev-overlay/pages/hot-reloader-client.js:221
-[  791022ms] [LOG] [Fast Refresh] rebuilding @ webpack-internal:///./node_modules/next/dist/client/components/react-dev-overlay/pages/hot-reloader-client.js:221
-[  791601ms] [ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ http://localhost:3000/_next/static/webpack/ea026ccb46c60763.webpack.hot-update.json:0
-[  791601ms] [WARNING] [Fast Refresh] performing full reload because your application had an unrecoverable error @ webpack-internal:///./node_modules/next/dist/client/components/react-dev-overlay/pages/hot-reloader-client.js:349
-[  791659ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:3000/reviews:0
-[  791885ms] [INFO] %cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold @ webpack-internal:///./node_modules/react-dom/cjs/react-dom.development.js:29889
-[  791903ms] Error: Cannot find module './1682.js'
-Require stack:
-- /Users/admin/Desktop/claude code armen/pure-pet-clone/.next/server/webpack-runtime.js
-- /Users/admin/Desktop/claude code armen/pure-pet-clone/.next/server/pages/_document.js
-- /Users/admin/Desktop/claude code armen/pure-pet-clone/node_modules/next/dist/server/require.js
-- /Users/admin/Desktop/claude code armen/pure-pet-clone/node_modules/next/dist/server/load-components.js
-- /Users/admin/Desktop/claude code armen/pure-pet-clone/node_modules/next/dist/build/utils.js
-- /Users/admin/Desktop/claude code armen/pure-pet-clone/node_modules/next/dist/server/dev/hot-middleware.js
-- /Users/admin/Desktop/claude code armen/pure-pet-clone/node_modules/next/dist/server/dev/hot-reloader-webpack.js
-- /Users/admin/Desktop/claude code armen/pure-pet-clone/node_modules/next/dist/server/lib/router-utils/setup-dev-bundler.js
-- /Users/admin/Desktop/claude code armen/pure-pet-clone/node_modules/next/dist/server/lib/router-server.js
-- /Users/admin/Desktop/claude code armen/pure-pet-clone/node_modules/next/dist/server/lib/start-server.js
-    at Module._resolveFilename (node:internal/modules/cjs/loader:1475:15)
-    at <unknown> (file:///Users/admin/Desktop/claude code armen/pure-pet-clone/node_modules/next/dist/server/require-hook.js:55:36)
-    at wrapResolveFilename (node:internal/modules/cjs/loader:1048:27)
-    at defaultResolveImplForCJSLoading (node:internal/modules/cjs/loader:1072:10)
-    at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1093:12)
-    at Module._load (node:internal/modules/cjs/loader:1261:25)
-    at wrapModuleLoad (node:internal/modules/cjs/loader:255:19)
-    at Module.require (node:internal/modules/cjs/loader:1575:12)
-    at mod.require (file:///Users/admin/Desktop/claude code armen/pure-pet-clone/node_modules/next/dist/server/require-hook.js:65:28)
-    at require (node:internal/modules/helpers:191:16)
-    at __webpack_require__.f.require (file:///Users/admin/Desktop/claude code armen/pure-pet-clone/.next/server/webpack-runtime.js:203:28)
-    at <unknown> (file:///Users/admin/Desktop/claude code armen/pure-pet-clone/.next/server/webpack-runtime.js:116:40)
-    at Array.reduce (<anonymous>)
-    at __webpack_require__.e (file:///Users/admin/Desktop/claude code armen/pure-pet-clone/.next/server/webpack-runtime.js:115:67)
-    at Array.map (<anonymous>)
-    at __webpack_require__.X (file:///Users/admin/Desktop/claude code armen/pure-pet-clone/.next/server/webpack-runtime.js:167:22)
-    at <unknown> (file:///Users/admin/Desktop/claude code armen/pure-pet-clone/.next/server/pages/_document.js:1:340)
-    at Object.<anonymous> (file:///Users/admin/Desktop/claude code armen/pure-pet-clone/.next/server/pages/_document.js:1:383)
-    at Module._compile (node:internal/modules/cjs/loader:1831:14)
-    at Module._extensions..js (node:internal/modules/cjs/loader:1971:10)
-    at Module.load (node:internal/modules/cjs/loader:1552:32)
-    at Module._load (node:internal/modules/cjs/loader:1354:12)
-    at wrapModuleLoad (node:internal/modules/cjs/loader:255:19)
-    at Module.require (node:internal/modules/cjs/loader:1575:12)
-    at mod.require (file:///Users/admin/Desktop/claude code armen/pure-pet-clone/node_modules/next/dist/server/require-hook.js:65:28)
-    at require (node:internal/modules/helpers:191:16)
-    at requirePage (file:///Users/admin/Desktop/claude code armen/pure-pet-clone/node_modules/next/dist/server/require.js:109:84)
-    at <unknown> (file:///Users/admin/Desktop/claude code armen/pure-pet-clone/node_modules/next/dist/server/load-components.js:72:65)
-    at async loadComponentsImpl (file:///Users/admin/Desktop/claude code armen/pure-pet-clone/node_modules/next/dist/server/load-components.js:71:33)
-    at async DevServer.findPageComponentsImpl (file:///Users/admin/Desktop/claude code armen/pure-pet-clone/node_modules/next/dist/server/next-server.js:714:36)
-[  791902ms] [LOG] [HMR] connected @ webpack-internal:///./node_modules/next/dist/client/components/react-dev-overlay/pages/websocket.js:38
-[  816810ms] [LOG] [Fast Refresh] rebuilding @ webpack-internal:///./node_modules/next/dist/client/components/react-dev-overlay/pages/hot-reloader-client.js:221
-[  817957ms] [ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ http://localhost:3000/_next/static/webpack/ea026ccb46c60763.webpack.hot-update.json:0
-[  817958ms] [WARNING] [Fast Refresh] performing full reload because your application had an unrecoverable error @ webpack-internal:///./node_modules/next/dist/client/components/react-dev-overlay/pages/hot-reloader-client.js:349
-[  819232ms] [ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ http://localhost:3000/_next/static/css/app/layout.css?v=1777129317641:0
-[  819276ms] [ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ http://localhost:3000/_next/static/chunks/main-app.js?v=1777129317641:0
-[  819276ms] [ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ http://localhost:3000/_next/static/chunks/app-pages-internals.js:0

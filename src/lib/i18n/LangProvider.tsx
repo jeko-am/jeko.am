@@ -4,6 +4,7 @@ import { createContext, useCallback, useContext, useEffect, useMemo, useState } 
 import { dictionaries } from "./translations";
 import type { Dict, Lang } from "./types";
 import { LANG_COOKIE } from "./types";
+import { prewarm, registry, backgroundWarmSite } from "./hyCache";
 
 type Ctx = {
   lang: Lang;
@@ -76,6 +77,10 @@ export function LangProvider({
     setLangState(next);
     if (typeof document !== "undefined") {
       document.documentElement.lang = next;
+    }
+    if (next === "hy") {
+      // Batch-translate current page immediately, then warm the rest of the site
+      prewarm(Array.from(registry)).then(() => backgroundWarmSite());
     }
   }, []);
 

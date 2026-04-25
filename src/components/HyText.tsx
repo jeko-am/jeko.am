@@ -2,53 +2,38 @@
 
 import { useEffect, useState } from "react";
 import { useT } from "@/lib/i18n/LangProvider";
+import { translateOne, cache, registry } from "@/lib/i18n/hyCache";
 
-// Per-session memo so each EN string only ever hits the translation API once.
-const __cache = new Map<string, string>();
-// Per-session in-flight de-dupe so the same string requested by N components only sends 1 fetch.
-const __inflight = new Map<string, Promise<string | null>>();
-// Single-flight queue to be friendly to upstream rate limits.
-let __chain: Promise<unknown> = Promise.resolve();
+export { prewarm as prewarmTranslations } from "@/lib/i18n/hyCache";
 
+// Kept for backward compat — components that import memoTranslateHy directly still work.
 export async function memoTranslateHy(text: string): Promise<string | null> {
-  if (!text) return null;
-  const cached = __cache.get(text);
-  if (cached) return cached;
-  const existing = __inflight.get(text);
-  if (existing) return existing;
-  const work = __chain.then(async () => {
-    try {
-      // Normalize & → and so the translate API can transliterate names like "Janet & Bunty"
-      const normalized = text.replace(/ & /g, ' and ');
-      const r = await fetch("/api/translate", {
-        method: "POST",
-        headers: { "content-type": "application/json" },
-        body: JSON.stringify({ text: normalized, target: "hy" }),
-      });
-      const j = (await r.json()) as { translated?: string };
-      if (r.ok && j.translated && j.translated !== normalized) { __cache.set(text, j.translated); return j.translated; }
-    } catch { /* noop */ }
-    return null;
-  });
-  __chain = work.catch(() => null);
-  __inflight.set(text, work);
-  const result = await work;
-  __inflight.delete(text);
-  return result;
+  return translateOne(text);
 }
 
 export function useHyAuto(en: string | null | undefined, savedHy?: string | null): string {
   const { lang } = useT();
-  const [auto, setAuto] = useState<string | null>(null);
+
+  // Check cache synchronously so already-warmed strings render instantly
+  const cached = en && lang === "hy" && !savedHy ? cache.get(en) ?? null : null;
+  const [auto, setAuto] = useState<string | null>(cached);
+
+  // Register for future pre-warming
+  useEffect(() => { if (en) registry.add(en); }, [en]);
+
   useEffect(() => {
     let cancelled = false;
     if (lang === "hy" && en && !savedHy) {
-      memoTranslateHy(en).then((tx) => { if (!cancelled && tx) setAuto(tx); });
+      // If already in cache, apply synchronously (no flash)
+      const hit = cache.get(en);
+      if (hit) { setAuto(hit); return; }
+      translateOne(en).then(tx => { if (!cancelled && tx) setAuto(tx); });
     } else {
       setAuto(null);
     }
     return () => { cancelled = true; };
   }, [lang, en, savedHy]);
+
   if (lang === "hy") return savedHy || auto || en || "";
   return en || "";
 }
