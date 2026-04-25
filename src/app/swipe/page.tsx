@@ -483,9 +483,11 @@ export default function SwipePage() {
         query=query.eq("looking_for_mate",true);
       }
 
-      // Gender filter
-      if((prefs?.preferred_genders||[]).length>0){
-        query=query.in("gender",prefs!.preferred_genders);
+      // Hard gender filter: always show only opposite gender
+      if(myPetProfile?.gender==="male"){
+        query=query.eq("gender","female");
+      }else if(myPetProfile?.gender==="female"){
+        query=query.eq("gender","male");
       }
 
       // Age range filter (only apply if non-default)

@@ -1,12 +1,24 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import { useSignupUrl } from '@/lib/useSignupUrl';
 import { supabase } from '@/lib/supabase';
 import { useContentT } from '@/lib/i18n/useContentT';
 
 function DigitCounter({ count }: { count: number }) {
+  const [flash, setFlash] = useState(false);
+  const prevCount = useRef(count);
+
+  useEffect(() => {
+    if (prevCount.current !== count) {
+      prevCount.current = count;
+      setFlash(true);
+      const t = setTimeout(() => setFlash(false), 700);
+      return () => clearTimeout(t);
+    }
+  }, [count]);
+
   const digits = count.toString().padStart(4, '0').split('');
   return (
     <div style={{ display: 'flex', gap: '3px', alignItems: 'center', justifyContent: 'center' }}>
@@ -18,13 +30,19 @@ function DigitCounter({ count }: { count: number }) {
             fontSize: '2rem',
             fontWeight: 900,
             fontFamily: '"Arial Black", Impact, "Helvetica Neue", sans-serif',
-            background: 'linear-gradient(180deg, #93c5fd 0%, #3b82f6 30%, #1d4ed8 65%, #1e3a8a 100%)',
+            background: flash
+              ? 'linear-gradient(180deg, #fde68a 0%, #f59e0b 30%, #d97706 65%, #92400e 100%)'
+              : 'linear-gradient(180deg, #93c5fd 0%, #3b82f6 30%, #1d4ed8 65%, #1e3a8a 100%)',
             WebkitBackgroundClip: 'text',
             WebkitTextFillColor: 'transparent',
             backgroundClip: 'text',
-            filter: 'drop-shadow(0 1px 3px rgba(29,78,216,0.5))',
+            filter: flash
+              ? 'drop-shadow(0 1px 4px rgba(245,158,11,0.8))'
+              : 'drop-shadow(0 1px 3px rgba(29,78,216,0.5))',
             lineHeight: 1.1,
             letterSpacing: '-0.02em',
+            transform: flash ? 'scale(1.15)' : 'scale(1)',
+            transition: 'transform 0.2s ease, filter 0.2s ease',
           }}
         >
           {d}
@@ -54,6 +72,8 @@ export default function MatchingModal({ content }: { content?: Record<string, an
 
   useEffect(() => {
     let cancelled = false;
+
+    // Fetch initial count
     supabase
       .from('user_profiles')
       .select('user_id', { count: 'exact', head: true })
@@ -61,7 +81,21 @@ export default function MatchingModal({ content }: { content?: Record<string, an
         if (cancelled || error || count == null) return;
         setUserCount(count);
       });
-    return () => { cancelled = true; };
+
+    // Live subscription — increment counter whenever a new user registers
+    const channel = supabase
+      .channel('user-count-live')
+      .on(
+        'postgres_changes',
+        { event: 'INSERT', schema: 'public', table: 'user_profiles' },
+        () => { if (!cancelled) setUserCount(prev => prev != null ? prev + 1 : prev); }
+      )
+      .subscribe();
+
+    return () => {
+      cancelled = true;
+      supabase.removeChannel(channel);
+    };
   }, []);
 
   useEffect(() => {

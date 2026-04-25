@@ -369,7 +369,7 @@ export default function MatchesPage() {
       const [{ data: myPet }, { data: prefs }] = await Promise.all([
         supabase
           .from("pet_profiles")
-          .select("breed_normalized, city_normalized")
+          .select("breed_normalized, city_normalized, gender")
           .eq("user_id", user.id)
           .maybeSingle(),
         supabase
@@ -404,6 +404,13 @@ export default function MatchesPage() {
           "user_id, pet_name, breed, display_name, profile_photo_url, avatar_url, city, temperament, activity_level, dog_age_years, gender, bio"
         )
         .neq("user_id", user.id);
+
+      // Hard gender filter: always show only opposite gender
+      if (myPet?.gender === "male") {
+        query = query.eq("gender", "female");
+      } else if (myPet?.gender === "female") {
+        query = query.eq("gender", "male");
+      }
 
       if (!prefs?.accept_any_city && targetCities.length > 0) {
         query = query.in("city_normalized", targetCities);

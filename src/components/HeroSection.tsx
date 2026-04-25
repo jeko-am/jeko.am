@@ -41,10 +41,10 @@ export default function HeroSection({ content }: { content?: Record<string, any>
         <div className="w-full max-w-[560px] py-12 md:py-16">
           {/* H1 Heading */}
           <h1
-            className="font-rubik text-deep-green"
+            className="font-frankfurter text-deep-green"
             style={{
               fontSize: "50px",
-              fontWeight: 600,
+              fontWeight: "normal",
               lineHeight: "52px",
             }}
           >
