@@ -297,7 +297,7 @@ export default function ReviewsPageClient({ sections }: ReviewsPageClientProps) 
                       </div>
                       <div>
                         <p className="font-semibold text-deep-green text-[14px] leading-tight">
-                          {review.name}
+                          <HyText en={review.name} />
                         </p>
                         <StarRating count={review.rating} />
                       </div>
@@ -390,7 +390,7 @@ export default function ReviewsPageClient({ sections }: ReviewsPageClientProps) 
                       &ldquo;<HyText en={vetsCt.ct("vet_1_quote") || "I\u2019ve been a vet for over 30 years and for about the last 5 years I\u2019ve been suggesting Jeko to my patients. I\u2019ve found it to be incredibly helpful and some of the dogs have responded dramatically well."} />&rdquo;
                     </p>
                     <p className="text-white font-bold text-[13px]">
-                      {sections[4]?.vet_1_name ?? "Dr Julian Norton MA VetMB GPcertSAP MRCVS, Partner"}
+                      <HyText en={sections[4]?.vet_1_name ?? "Dr Julian Norton MA VetMB GPcertSAP MRCVS, Partner"} />
                     </p>
                   </div>
                 </div>
@@ -411,7 +411,7 @@ export default function ReviewsPageClient({ sections }: ReviewsPageClientProps) 
                       &ldquo;<HyText en={vetsCt.ct("vet_2_quote") || "When owners are asked what makes a healthy pet food, they often mention ingredients. But what is often not considered is how the food is processed, and this is possibly the most significant factor when choosing a dog food."} />&rdquo;
                     </p>
                     <p className="text-white font-bold text-[13px]">
-                      {sections[4]?.vet_2_name ?? "Dr Brendan Clark MRCVS"}
+                      <HyText en={sections[4]?.vet_2_name ?? "Dr Brendan Clark MRCVS"} />
                     </p>
                   </div>
                 </div>
@@ -488,7 +488,7 @@ export default function ReviewsPageClient({ sections }: ReviewsPageClientProps) 
                         : "bg-white text-deep-green border-deep-green/20 hover:border-deep-green/40 hover:shadow-sm"
                     }`}
                   >
-                    {cat}
+                    <HyText en={cat} />
                   </button>
                 ))}
               </div>
@@ -511,7 +511,7 @@ export default function ReviewsPageClient({ sections }: ReviewsPageClientProps) 
                     </div>
                     <div className="p-4">
                       <p className="font-bold text-deep-green text-[15px] mb-2">
-                        {item.name}
+                        <HyText en={item.name} />
                       </p>
                       <p className="text-deep-green/75 text-[13px] leading-[1.6] line-clamp-4">
                         <HyText en={item.text} />

@@ -62,9 +62,19 @@ export default function ProductCard({ product }: { product: Product }) {
     }
     return () => { cancelled = true; };
   }, [lang, product.name, product.short_description, savedHyName, savedHyShort]);
-  const displayName = lang === 'hy' ? (savedHyName || autoName || product.name) : product.name;
+  // Extract valid Armenian text: if the string has Armenian chars but starts with Latin (partial translate), strip the Latin prefix
+  const hyVal = (s?: string | null): string | null => {
+    if (!s) return null;
+    if (/[Ա-֏]/.test(s)) {
+      if (/^[^a-zA-Z]*[Ա-֏]/.test(s.trimStart())) return s; // already starts with Armenian
+      const m = s.match(/[Ա-֏].*/); // strip Latin prefix, keep from first Armenian char
+      return m ? m[0].trim() : null;
+    }
+    return null; // no Armenian chars at all (e.g. English text saved in hy field)
+  };
+  const displayName = lang === 'hy' ? (hyVal(savedHyName) || hyVal(autoName) || product.name) : product.name;
   const displayShort = lang === 'hy'
-    ? (savedHyShort || autoShort || product.short_description || '')
+    ? (hyVal(savedHyShort) || hyVal(autoShort) || '')
     : (product.short_description || '');
   void localize;
   const [isAdding, setIsAdding] = useState(false);

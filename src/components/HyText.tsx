@@ -18,13 +18,15 @@ export async function memoTranslateHy(text: string): Promise<string | null> {
   if (existing) return existing;
   const work = __chain.then(async () => {
     try {
+      // Normalize & → and so the translate API can transliterate names like "Janet & Bunty"
+      const normalized = text.replace(/ & /g, ' and ');
       const r = await fetch("/api/translate", {
         method: "POST",
         headers: { "content-type": "application/json" },
-        body: JSON.stringify({ text, target: "hy" }),
+        body: JSON.stringify({ text: normalized, target: "hy" }),
       });
       const j = (await r.json()) as { translated?: string };
-      if (r.ok && j.translated) { __cache.set(text, j.translated); return j.translated; }
+      if (r.ok && j.translated && j.translated !== normalized) { __cache.set(text, j.translated); return j.translated; }
     } catch { /* noop */ }
     return null;
   });

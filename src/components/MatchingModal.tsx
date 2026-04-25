@@ -4,6 +4,35 @@ import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useSignupUrl } from '@/lib/useSignupUrl';
 import { supabase } from '@/lib/supabase';
+import { useContentT } from '@/lib/i18n/useContentT';
+
+function DigitCounter({ count }: { count: number }) {
+  const digits = count.toString().padStart(4, '0').split('');
+  return (
+    <div style={{ display: 'flex', gap: '3px', alignItems: 'center', justifyContent: 'center' }}>
+      {digits.map((d, i) => (
+        <span
+          key={i}
+          style={{
+            display: 'inline-block',
+            fontSize: '2rem',
+            fontWeight: 900,
+            fontFamily: '"Arial Black", Impact, "Helvetica Neue", sans-serif',
+            background: 'linear-gradient(180deg, #93c5fd 0%, #3b82f6 30%, #1d4ed8 65%, #1e3a8a 100%)',
+            WebkitBackgroundClip: 'text',
+            WebkitTextFillColor: 'transparent',
+            backgroundClip: 'text',
+            filter: 'drop-shadow(0 1px 3px rgba(29,78,216,0.5))',
+            lineHeight: 1.1,
+            letterSpacing: '-0.02em',
+          }}
+        >
+          {d}
+        </span>
+      ))}
+    </div>
+  );
+}
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export default function MatchingModal({ content }: { content?: Record<string, any> }) {
@@ -11,15 +40,17 @@ export default function MatchingModal({ content }: { content?: Record<string, an
   const [isMounted, setIsMounted] = useState(false);
   const [userCount, setUserCount] = useState<number | null>(null);
 
+  const { ct } = useContentT(content);
+
   const enabled = content?.enabled !== false;
-  const heading = content?.heading || 'Register Your Pet & Save!';
-  const description = content?.description || 'Create a free account to unlock exclusive sales, personalised meal plans, and special care facilities for your furry friend.';
+  const heading = ct('heading') || 'Register Your Pet & Save!';
+  const description = ct('description') || 'Create a free account to unlock exclusive sales, personalised meal plans, and special care facilities for your furry friend.';
   const image = content?.image || '/WhatsApp Image 2026-04-11 at 09.54.12.jpeg';
-  const ctaText = content?.cta_text || 'Register My Pet';
+  const ctaText = ct('cta_text') || 'Register My Pet';
   const signupUrl = useSignupUrl();
   const ctaUrl = content?.cta_url || signupUrl;
-  const closeText = content?.close_text || 'Maybe later';
-  const communityCountTemplate = content?.community_count_text || 'Join {count}+ pet parents already in our community!';
+  const closeText = ct('close_text') || 'Maybe later';
+  const communityLabel = ct('community_count_text') || 'pet parents already in our community!';
 
   useEffect(() => {
     let cancelled = false;
@@ -53,7 +84,6 @@ export default function MatchingModal({ content }: { content?: Record<string, an
     localStorage.setItem('matchingModal_dismissed', 'true');
   };
 
-  // Prevent scrolling when modal is open
   useEffect(() => {
     if (isOpen) {
       document.body.style.overflow = 'hidden';
@@ -115,11 +145,12 @@ export default function MatchingModal({ content }: { content?: Record<string, an
               <p className="text-deep-green/60 text-[11px] sm:text-sm leading-tight sm:leading-relaxed mb-2 sm:mb-4">
                 {description}
               </p>
-              {userCount != null && communityCountTemplate && (
-                <div className="flex items-center gap-1.5 sm:gap-2 bg-gold/10 border border-gold/30 rounded-lg sm:rounded-xl px-2 sm:px-3 py-1.5 sm:py-2 mb-2 sm:mb-4">
-                  <span className="text-sm sm:text-lg" aria-hidden="true">🐾</span>
-                  <p className="text-deep-green text-[11px] sm:text-sm font-semibold leading-tight">
-                    {communityCountTemplate.replace('{count}', userCount.toLocaleString())}
+              {userCount != null && (
+                <div className="flex flex-col items-center bg-blue-50 border border-blue-200 rounded-lg sm:rounded-xl px-2 sm:px-3 py-2 sm:py-3 mb-2 sm:mb-4 gap-1">
+                  <DigitCounter count={userCount} />
+                  <p className="text-deep-green text-[10px] sm:text-xs font-semibold leading-tight text-center">
+                    <span className="text-sm sm:text-base" aria-hidden="true">🐾</span>{' '}
+                    {communityLabel}
                   </p>
                 </div>
               )}

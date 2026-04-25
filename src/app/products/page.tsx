@@ -16,6 +16,9 @@ interface Product {
   compare_at_price: number | null;
   images: string[] | null;
   status: string;
+  review_rating_override?: number | null;
+  review_count_override?: number | null;
+  i18n?: { hy?: { name?: string; short_description?: string } } | null;
 }
 
 interface Category {
@@ -49,7 +52,7 @@ export default function ProductsPage() {
       setLoading(true);
       let query = supabase
         .from('products')
-        .select('id, name, slug, short_description, price, compare_at_price, images, status')
+        .select('id, name, slug, short_description, price, compare_at_price, images, status, i18n, review_rating_override, review_count_override')
         .eq('status', 'active');
 
       if (selectedCategory) {
