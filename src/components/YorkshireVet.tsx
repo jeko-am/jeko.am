@@ -1,9 +1,11 @@
 "use client";
 
 import Image from "next/image";
+import { useContentT } from "@/lib/i18n/useContentT";
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export default function YorkshireVet({ content }: { content?: any }) {
+  const { ct } = useContentT(content);
   return (
     <section className="relative overflow-hidden">
       <div className="flex flex-col md:flex-row min-h-[480px]">
@@ -29,13 +31,13 @@ export default function YorkshireVet({ content }: { content?: any }) {
 
           <div className="px-12 md:px-16 lg:px-24 py-12 relative z-10">
             <h2 className="text-[32px] md:text-[40px] font-medium text-deep-green tracking-wide leading-tight mb-2">
-              {content?.heading || <>Backed by The<br />Yorkshire Vet</>}
+              {ct("heading", "home.vet.heading")}
             </h2>
             <p className="text-[#6B8E3A] text-[32px] md:text-[38px] font-medium tracking-wide mb-6">
-              {content?.author || "Julian Norton"}
+              {ct("author", "home.vet.author")}
             </p>
             <p className="text-deep-green text-[18px] leading-relaxed max-w-md italic">
-              {content?.quote || "\u201cI\u2019ve been a vet for almost 30 years. Recently I\u2019ve suggested Jeko for some of my patients, often with great results.\u201d"}
+              \u201c{ct("quote", "home.vet.quoteText")}\u201d
             </p>
           </div>
         </div>

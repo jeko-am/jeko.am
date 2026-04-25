@@ -90,11 +90,9 @@ export default async function Home() {
         </div>
       )}
       <EditorOverlay />
-      {show(0) && (
-        <div data-section-index="0" data-section-name="Header">
-          <Header content={sectionData.get(0)} />
-        </div>
-      )}
+      <div data-section-index="0" data-section-name="Header">
+        <Header content={sectionData.get(0)} />
+      </div>
       <main className="pt-[64px] lg:pt-[80px]">
         {show(1) && (
           <div data-section-index="1" data-section-name="Hero Section">

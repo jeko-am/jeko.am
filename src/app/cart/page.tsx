@@ -2,6 +2,7 @@
 
 import { useCart } from '@/lib/cart-context';
 import Link from 'next/link';
+import { useT } from '@/lib/i18n/LangProvider';
 
 
 function formatPrice(value: number): string {
@@ -9,6 +10,7 @@ function formatPrice(value: number): string {
 }
 
 export default function CartPage() {
+  const { t } = useT();
   const { items, totalPrice, removeItem, updateQuantity, clearCart } = useCart();
 
   if (items.length === 0) {
@@ -22,17 +24,17 @@ export default function CartPage() {
               </svg>
             </div>
             
-            <h1 className="text-3xl font-bold text-deep-green mb-4">Your cart is empty</h1>
+            <h1 className="text-3xl font-bold text-deep-green mb-4">{t("cart.empty.title")}</h1>
             <p className="text-gray-600 mb-8 max-w-md mx-auto">
-              Looks like you haven&apos;t added anything to your cart yet. Start shopping to fill it up!
+              {t("cart.empty.loginBody")}
             </p>
-            
+
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link href="/products" className="btn-gold">
-                Continue Shopping
+                {t("cart.continue")}
               </Link>
               <Link href="/" className="btn-outline">
-                Return to Home
+                {t("cart.returnHome")}
               </Link>
             </div>
           </div>
@@ -46,9 +48,9 @@ export default function CartPage() {
       <div className="max-w-6xl mx-auto px-4">
         {/* Header */}
         <div className="mb-8">
-          <h1 className="text-3xl font-bold text-deep-green mb-2">Shopping Cart</h1>
+          <h1 className="text-3xl font-bold text-deep-green mb-2">{t("cart.shoppingCart")}</h1>
           <p className="text-gray-600">
-            {items.length} {items.length === 1 ? 'item' : 'items'} in your cart
+            {t(items.length === 1 ? "cart.itemsCount.one" : "cart.itemsCount.many", { n: items.length })}
           </p>
         </div>
 
@@ -149,11 +151,11 @@ export default function CartPage() {
                   onClick={clearCart}
                   className="text-red-600 hover:text-red-700 transition-colors"
                 >
-                  Clear Cart
+                  {t("cart.clear")}
                 </button>
-                
+
                 <Link href="/products" className="btn-outline">
-                  Continue Shopping
+                  {t("cart.continue")}
                 </Link>
               </div>
             </div>
@@ -162,37 +164,37 @@ export default function CartPage() {
           {/* Order Summary */}
           <div className="lg:col-span-1">
             <div className="bg-white rounded-xl shadow-sm p-6 sticky top-8">
-              <h2 className="text-xl font-semibold text-deep-green mb-4">Order Summary</h2>
-              
+              <h2 className="text-xl font-semibold text-deep-green mb-4">{t("cart.summary")}</h2>
+
               <div className="space-y-3 mb-6">
                 <div className="flex justify-between text-gray-600">
-                  <span>Subtotal</span>
+                  <span>{t("cart.subtotal")}</span>
                   <span>{formatPrice(totalPrice)}</span>
                 </div>
                 <div className="flex justify-between text-gray-600">
-                  <span>Shipping</span>
-                  <span>Free</span>
+                  <span>{t("cart.shipping")}</span>
+                  <span>{t("common.free")}</span>
                 </div>
                 <div className="flex justify-between text-gray-600">
-                  <span>Tax</span>
-                  <span>Calculated at checkout</span>
+                  <span>{t("cart.tax")}</span>
+                  <span>{t("cart.taxCalculated")}</span>
                 </div>
                 <div className="border-t pt-3">
                   <div className="flex justify-between text-lg font-semibold text-deep-green">
-                    <span>Total</span>
+                    <span>{t("cart.total")}</span>
                     <span>{formatPrice(totalPrice)}</span>
                   </div>
                 </div>
               </div>
 
               <Link href="/checkout" className="w-full btn-gold block text-center">
-                Proceed to Checkout
+                {t("cart.proceedCheckout")}
               </Link>
 
               <div className="mt-6 text-sm text-gray-500">
-                <p className="mb-2">🚚 Free shipping on all orders</p>
-                <p className="mb-2">💰 Money-back guarantee</p>
-                <p>🔒 Secure checkout</p>
+                <p className="mb-2">🚚 {t("cart.benefits.freeShipping")}</p>
+                <p className="mb-2">💰 {t("cart.benefits.moneyBack")}</p>
+                <p>🔒 {t("cart.benefits.secure")}</p>
               </div>
             </div>
           </div>

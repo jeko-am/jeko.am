@@ -2,7 +2,7 @@ import HealthConditionPage from "@/components/HealthConditionPage";
 
 export default function DigestionIssuesPage() {
   return (
-    <HealthConditionPage
+    <HealthConditionPage pageSlug="/benefits/digestion-issues"
       condition="Digestion issues"
       tagline="in dogs"
       heroImage="https://images.unsplash.com/photo-1548199973-03cce0bbc87b?w=1600&h=800&fit=crop"

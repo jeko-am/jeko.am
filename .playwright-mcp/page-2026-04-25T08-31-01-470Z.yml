@@ -1,0 +1,103 @@
+- generic [active] [ref=e1]:
+  - alert [ref=e6]
+  - generic [ref=e7]:
+    - complementary [ref=e8]:
+      - generic [ref=e10]:
+        - heading "Jeko" [level=1] [ref=e11]
+        - paragraph [ref=e12]: Admin Panel
+      - navigation [ref=e13]:
+        - link "Dashboard" [ref=e14] [cursor=pointer]:
+          - /url: /admin/dashboard
+          - img [ref=e15]
+          - text: Dashboard
+        - link "Store Editor" [ref=e17] [cursor=pointer]:
+          - /url: /admin/store-editor
+          - img [ref=e18]
+          - text: Store Editor
+        - link "Translations" [ref=e20] [cursor=pointer]:
+          - /url: /admin/translations
+          - img [ref=e21]
+          - text: Translations
+        - link "Products" [ref=e23] [cursor=pointer]:
+          - /url: /admin/products
+          - img [ref=e24]
+          - text: Products
+        - link "Bundles" [ref=e26] [cursor=pointer]:
+          - /url: /admin/bundles
+          - img [ref=e27]
+          - text: Bundles
+        - link "Upsells" [ref=e29] [cursor=pointer]:
+          - /url: /admin/upsells
+          - img [ref=e30]
+          - text: Upsells
+        - link "Categories" [ref=e32] [cursor=pointer]:
+          - /url: /admin/categories
+          - img [ref=e33]
+          - text: Categories
+        - link "Orders" [ref=e35] [cursor=pointer]:
+          - /url: /admin/orders
+          - img [ref=e36]
+          - text: Orders
+        - link "Customers" [ref=e38] [cursor=pointer]:
+          - /url: /admin/customers
+          - img [ref=e39]
+          - text: Customers
+        - link "Reviews" [ref=e41] [cursor=pointer]:
+          - /url: /admin/reviews
+          - img [ref=e42]
+          - text: Reviews
+        - link "Community" [ref=e44] [cursor=pointer]:
+          - /url: /admin/community
+          - img [ref=e45]
+          - text: Community
+        - link "Discounts" [ref=e47] [cursor=pointer]:
+          - /url: /admin/discounts
+          - img [ref=e48]
+          - text: Discounts
+        - link "Pages" [ref=e50] [cursor=pointer]:
+          - /url: /admin/pages
+          - img [ref=e51]
+          - text: Pages
+        - link "Blog" [ref=e53] [cursor=pointer]:
+          - /url: /admin/blog
+          - img [ref=e54]
+          - text: Blog
+        - link "Settings" [ref=e56] [cursor=pointer]:
+          - /url: /admin/settings
+          - img [ref=e57]
+          - text: Settings
+        - link "Analytics" [ref=e59] [cursor=pointer]:
+          - /url: /admin/analytics
+          - img [ref=e60]
+          - text: Analytics
+        - link "Support" [ref=e62] [cursor=pointer]:
+          - /url: /admin/support
+          - img [ref=e63]
+          - text: Support
+      - generic [ref=e65]:
+        - link "View Store" [ref=e66] [cursor=pointer]:
+          - /url: /
+          - img [ref=e67]
+          - text: View Store
+        - button "Sign Out" [ref=e69] [cursor=pointer]:
+          - img [ref=e70]
+          - text: Sign Out
+    - generic [ref=e72]:
+      - banner [ref=e73]:
+        - button [ref=e74] [cursor=pointer]:
+          - img [ref=e75]
+        - generic [ref=e77]:
+          - generic [ref=e78]:
+            - generic [ref=e79]: "Editing:"
+            - generic [ref=e80]:
+              - button "Edit English content" [ref=e81] [cursor=pointer]:
+                - generic [ref=e82]: 🇬🇧
+                - generic [ref=e83]: EN
+              - button "Edit Armenian content" [ref=e84] [cursor=pointer]:
+                - generic [ref=e85]: 🇦🇲
+                - generic [ref=e86]: HY
+            - generic [ref=e87]: Armenian edits only
+          - generic [ref=e89]: admin@purepet.test
+          - generic [ref=e90]: A
+      - main [ref=e91]:
+        - paragraph [ref=e325]: Loading store editor...

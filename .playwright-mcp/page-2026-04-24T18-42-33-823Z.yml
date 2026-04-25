@@ -1,0 +1,370 @@
+- generic [active] [ref=e1]:
+  - banner [ref=e2]:
+    - generic [ref=e4]:
+      - link "JEKO" [ref=e5] [cursor=pointer]:
+        - /url: /
+        - generic [ref=e6]: JEKO
+      - navigation [ref=e7]:
+        - link "Մեր մասին" [ref=e9] [cursor=pointer]:
+          - /url: /about
+          - text: Մեր մասին
+          - img [ref=e10]
+        - link "Համայնք" [ref=e13] [cursor=pointer]:
+          - /url: /community
+          - text: Համայնք
+          - img [ref=e14]
+        - link "Խանութ" [ref=e17] [cursor=pointer]:
+          - /url: /products
+        - link "Կարծիքներ" [ref=e19] [cursor=pointer]:
+          - /url: /reviews
+        - link "Առողջապահական օգուտներ" [ref=e21] [cursor=pointer]:
+          - /url: /benefits
+          - text: Առողջապահական օգուտներ
+          - img [ref=e22]
+      - generic [ref=e24]:
+        - button "Switch language" [ref=e26] [cursor=pointer]:
+          - generic [ref=e27]: 🇦🇲
+          - generic [ref=e28]: HY
+          - img [ref=e29]
+        - button "Shopping cart" [ref=e31] [cursor=pointer]:
+          - img [ref=e32]
+        - link "Օգնություն" [ref=e36] [cursor=pointer]:
+          - /url: /help
+        - link "Մուտք" [ref=e37] [cursor=pointer]:
+          - /url: /login
+        - link "Գրանցվել" [ref=e38] [cursor=pointer]:
+          - /url: /auth/signup
+  - main [ref=e39]:
+    - generic [ref=e41]:
+      - img "Happy golden retriever dog enjoying fresh food" [ref=e43]
+      - generic [ref=e46]:
+        - heading "Ձեր կենդանուն առողջ կերակրելու ամենահեշտ ձևը՝ բնական սնունդ" [level=1] [ref=e47]:
+          - text: Ձեր կենդանուն առողջ կերակրելու ամենահեշտ ձևը՝
+          - text: բնական սնունդ
+        - paragraph [ref=e48]: Վայելիր թարմ սնունդը առանց ավելորդ հոգսերի՝ հասցրած տան դռան մոտ։
+        - link "Սկսել այսօր" [ref=e50] [cursor=pointer]:
+          - /url: /auth/signup
+        - generic [ref=e51]:
+          - generic [ref=e52]:
+            - img [ref=e54]
+            - img [ref=e57]
+            - img [ref=e60]
+            - img [ref=e63]
+            - img [ref=e67]
+          - generic [ref=e69]:
+            - generic [ref=e70]: Գերազանց
+            - generic [ref=e71]: 4.6 հինգից
+            - img [ref=e72]
+            - generic [ref=e74]: Trustpilot
+    - link "25% off your first box+10% off your next box" [ref=e76] [cursor=pointer]:
+      - /url: /auth/signup
+      - generic [ref=e77]:
+        - img [ref=e78]
+        - paragraph [ref=e80]: 25% off your first box+10% off your next box
+        - img [ref=e81]
+    - generic [ref=e84]:
+      - generic [ref=e85]:
+        - generic [ref=e86]:
+          - img "Preparing Jeko pet food" [ref=e87]
+          - img [ref=e89]
+          - img [ref=e92]
+        - generic [ref=e95]:
+          - heading "Ի՞նչ է Jeko կենդանիների սնունդը" [level=2] [ref=e96]
+          - generic [ref=e97]:
+            - paragraph [ref=e98]: Բնական, առողջարար սնունդ շների համար, որը ազատում է ձեզ կերակրման ժամանակի հոգսերից։
+            - paragraph [ref=e99]: Ուղղակի ավելացրու ջուր ու խառնիր՝ արագ վերականգնելու սնունդը և ստեղծելու առողջարար, սննդարար կերակուր, որը կսիրի ձեր շնիկը։
+          - link "Սկսել" [ref=e100] [cursor=pointer]:
+            - /url: /auth/signup
+      - generic:
+        - img
+    - generic [ref=e102]:
+      - generic:
+        - img
+      - generic:
+        - img
+      - generic [ref=e104]:
+        - generic [ref=e105]:
+          - img "Պահիր պահարանում" [ref=e107]
+          - paragraph [ref=e108]: Պահիր պահարանում
+        - generic [ref=e109]:
+          - img "Օրական ընդամենը 350 դրամից" [ref=e111]
+          - paragraph [ref=e112]: Օրական ընդամենը 350 դրամից
+        - generic [ref=e113]:
+          - img "Ավելացրու ջուր և մատուցիր" [ref=e115]
+          - paragraph [ref=e116]: Ավելացրու ջուր և մատուցիր
+        - generic [ref=e117]:
+          - img "Պատրաստ է 10 վայրկյանում" [ref=e119]
+          - paragraph [ref=e120]: Պատրաստ է 10 վայրկյանում
+    - generic [ref=e123]:
+      - generic [ref=e124]:
+        - generic [ref=e125]: Our Products
+        - heading "Handpicked for Your Pup" [level=2] [ref=e126]
+        - paragraph [ref=e127]: Fresh, natural ingredients your dog will love. Every meal made with care.
+      - link "Shop All Products" [ref=e154] [cursor=pointer]:
+        - /url: /products
+        - text: Shop All Products
+        - img [ref=e155]
+    - generic [ref=e161]:
+      - generic [ref=e162]: Trending Now
+      - heading "What Pet Parents Love" [level=2] [ref=e163]
+      - paragraph [ref=e164]: Our most popular picks, loved by thousands of happy dogs.
+    - generic [ref=e188]:
+      - generic [ref=e189]:
+        - heading "Don't just take our word for it" [level=2] [ref=e190]
+        - paragraph [ref=e191]: Listen to what others have to say about it
+      - generic [ref=e192]:
+        - button "Scroll left" [ref=e193] [cursor=pointer]:
+          - img [ref=e194]
+        - generic [ref=e196]:
+          - generic [ref=e197] [cursor=pointer]:
+            - generic [ref=e198]:
+              - img [ref=e202]
+              - generic [ref=e204]: 0:55
+            - paragraph [ref=e205]: Jeko vs kibble & raw
+          - generic [ref=e206] [cursor=pointer]:
+            - generic [ref=e207]:
+              - img [ref=e211]
+              - generic [ref=e213]: 0:38
+            - paragraph [ref=e214]: Feeding Jeko really is simple!
+          - generic [ref=e215] [cursor=pointer]:
+            - generic [ref=e216]:
+              - img [ref=e220]
+              - generic [ref=e222]: 0:54
+            - paragraph [ref=e223]: We've done the research
+          - generic [ref=e224] [cursor=pointer]:
+            - generic [ref=e225]:
+              - img [ref=e229]
+              - generic [ref=e231]: 0:37
+            - paragraph [ref=e232]: Fully flexible to work around you
+          - generic [ref=e233] [cursor=pointer]:
+            - generic [ref=e234]:
+              - img [ref=e238]
+              - generic [ref=e240]: 0:38
+            - paragraph [ref=e241]: Rudy goes from fussy to foodie
+          - generic [ref=e242] [cursor=pointer]:
+            - generic [ref=e243]:
+              - img [ref=e247]
+              - generic [ref=e249]: 0:37
+            - paragraph [ref=e250]: Backed by The Yorkshire Vet
+        - button "Scroll right" [ref=e251] [cursor=pointer]:
+          - img [ref=e252]
+    - generic [ref=e255]:
+      - generic:
+        - img
+      - generic:
+        - img
+      - generic [ref=e256]:
+        - heading "Ինչպե՞ս է աշխատում Jeko պլանը" [level=2] [ref=e257]
+        - generic [ref=e258]:
+          - generic [ref=e259]:
+            - img "Պատմիր քո շան մասին" [ref=e261]
+            - paragraph [ref=e262]: Քայլ 1
+            - paragraph [ref=e263]: Պատմիր քո շան մասին
+          - generic [ref=e264]:
+            - img "Ընտրիր քո անհատականացված բաղադրատոմսերը" [ref=e266]
+            - paragraph [ref=e267]: Քայլ 2
+            - paragraph [ref=e268]: Ընտրիր քո անհատականացված բաղադրատոմսերը
+          - generic [ref=e269]:
+            - img "Անվճար առաքում մինչև քո դուռը" [ref=e271]
+            - paragraph [ref=e272]: Քայլ 3
+            - paragraph [ref=e273]: Անվճար առաքում մինչև քո դուռը
+          - generic [ref=e274]:
+            - img "Փորձիր և անցիր Jeko-ի" [ref=e276]
+            - paragraph [ref=e277]: Քայլ 4
+            - paragraph [ref=e278]: Փորձիր և անցիր Jeko-ի
+        - link "Ստեղծիր անհատական պլան այսօր" [ref=e280] [cursor=pointer]:
+          - /url: /auth/signup
+    - generic [ref=e282]:
+      - generic:
+        - img
+      - generic:
+        - img
+      - generic [ref=e283]:
+        - heading "Մենք արդեն առաքել ենք" [level=2] [ref=e284]
+        - generic [ref=e285]: "0"
+        - paragraph [ref=e286]: կերակուր և դեպի լավը փոխել տասնյակ հազարավոր շների կյանքը
+        - generic [ref=e287]:
+          - generic [ref=e288]:
+            - generic [ref=e289]: 94%
+            - paragraph [ref=e290]: հաճախորդների նկատել են իրենց շան առողջական վիճակի բարելավում
+          - generic [ref=e291]:
+            - generic [ref=e292]: 91%
+            - paragraph [ref=e293]: հաճախորդների նկատել են ընդհանուր առողջական բարելավումներ Jeko-ին անցնելուց հետո
+    - generic [ref=e295]:
+      - generic:
+        - img
+      - generic:
+        - img
+      - generic [ref=e296]:
+        - heading "How Jeko compares" [level=2] [ref=e297]
+        - generic [ref=e298]:
+          - generic [ref=e299]:
+            - generic [ref=e301]: JEKO
+            - generic [ref=e302]: Dry & wet
+            - generic [ref=e303]: Raw & fresh
+          - generic [ref=e304]:
+            - generic [ref=e306]: Cost
+            - generic [ref=e308]: ££
+            - generic [ref=e310]: £
+            - generic [ref=e312]: £££
+          - generic [ref=e313]:
+            - generic [ref=e315]: No/low processing
+            - img [ref=e317]
+            - img [ref=e322]
+            - img [ref=e328]
+          - generic [ref=e332]:
+            - generic [ref=e334]: High quality ingredients
+            - img [ref=e336]
+            - img [ref=e341]
+            - img [ref=e347]
+          - generic [ref=e351]:
+            - generic [ref=e353]: Easy to store
+            - img [ref=e355]
+            - img [ref=e360]
+            - img [ref=e365]
+          - generic [ref=e370]:
+            - generic [ref=e372]: No risk of harmful pathogens
+            - img [ref=e374]
+            - img [ref=e379]
+            - img [ref=e384]
+    - generic [ref=e391]:
+      - generic [ref=e392]:
+        - generic:
+          - img
+        - generic [ref=e393]:
+          - heading "Backed by The Yorkshire Vet" [level=2] [ref=e394]
+          - paragraph [ref=e395]: Julian Norton
+          - paragraph [ref=e396]: I've been a vet for almost 30 years. Recently I've suggested Jeko for some of my patients, often with great results.
+      - img "Julian Norton - The Yorkshire Vet with Jeko" [ref=e398]
+    - generic [ref=e402]:
+      - generic [ref=e403]:
+        - img "Jeko on Dragons Den" [ref=e404]
+        - generic:
+          - img
+      - generic [ref=e407]:
+        - heading "Dog food so good we ate it on Dragons' Den" [level=2] [ref=e408]
+        - paragraph [ref=e409]: Jeko is complete nutrition from the inside out, and dogs totally love the taste! "It was possibly the best pitch I have seen in over 10 years of Dragons' Den" - Duncan Bannatyne
+        - link "Get started today" [ref=e410] [cursor=pointer]:
+          - /url: /auth/signup
+    - generic [ref=e413]:
+      - generic [ref=e414]:
+        - generic:
+          - img
+        - generic [ref=e415]:
+          - heading "Frequently Asked Questions" [level=2] [ref=e416]
+          - paragraph [ref=e417]: Everything else you need to know about Jeko
+          - generic [ref=e418]:
+            - generic [ref=e419]:
+              - button "Am I tied into a subscription?" [ref=e420] [cursor=pointer]:
+                - heading "Am I tied into a subscription?" [level=4] [ref=e421]
+                - img [ref=e422]
+              - paragraph [ref=e424]: Not at all! You can pause, change, or cancel your plan at any time. We believe in our food so much that we don't need to lock you in.
+            - generic [ref=e425]:
+              - button "Is Jeko expensive compared to other foods?" [ref=e426] [cursor=pointer]:
+                - heading "Is Jeko expensive compared to other foods?" [level=4] [ref=e427]
+                - img [ref=e428]
+              - paragraph [ref=e430]: Jeko starts from only 89p per day. When you consider the health benefits, it's great value compared to vet bills and other premium foods.
+            - generic [ref=e431]:
+              - button "Do I pay for delivery?" [ref=e432] [cursor=pointer]:
+                - heading "Do I pay for delivery?" [level=4] [ref=e433]
+                - img [ref=e434]
+              - paragraph [ref=e436]: No! Delivery is completely free on all orders. We deliver right to your doorstep.
+            - generic [ref=e437]:
+              - button "What is the nutritional value, and is it good for my dog?" [ref=e438] [cursor=pointer]:
+                - heading "What is the nutritional value, and is it good for my dog?" [level=4] [ref=e439]
+                - img [ref=e440]
+              - paragraph [ref=e442]: Jeko is a complete, balanced meal developed with veterinary nutritionists. Every recipe meets FEDIAF guidelines for complete nutrition.
+            - generic [ref=e443]:
+              - button "What if my dog doesn’t like it?" [ref=e444] [cursor=pointer]:
+                - heading "What if my dog doesn’t like it?" [level=4] [ref=e445]
+                - img [ref=e446]
+              - paragraph [ref=e448]: We offer a full money-back guarantee. If your dog doesn't love Jeko, we'll refund your first box in full.
+            - generic [ref=e449]:
+              - button "Is Jeko suitable for my dogs health concern?" [ref=e450] [cursor=pointer]:
+                - heading "Is Jeko suitable for my dogs health concern?" [level=4] [ref=e451]
+                - img [ref=e452]
+              - paragraph [ref=e454]: Jeko is often recommended for dogs with health concerns. Our recipes are gentle and made with natural, high-quality ingredients.
+            - generic [ref=e455]:
+              - button "Is Jeko complete dog food?" [ref=e456] [cursor=pointer]:
+                - heading "Is Jeko complete dog food?" [level=4] [ref=e457]
+                - img [ref=e458]
+              - paragraph [ref=e460]: Yes! Every Jeko recipe is nutritionally complete and balanced, meeting all FEDIAF guidelines for adult dogs and puppies.
+          - link "Get started with 25% off" [ref=e462] [cursor=pointer]:
+            - /url: /auth/signup
+      - img "Happy healthy dog" [ref=e464]
+  - contentinfo [ref=e466]:
+    - generic [ref=e467]:
+      - generic [ref=e468]:
+        - generic [ref=e469]:
+          - heading "Միացիր մեր VIP ցանկին" [level=4] [ref=e470]
+          - paragraph [ref=e471]: Առաջինը իմացիր նոր ապրանքների մասին, մասնակցիր բացառիկ մրցույթների և ստացիր օգտակար խորհուրդներ ընտանի կենդանիների խնամքի մասին։
+          - generic [ref=e472]:
+            - textbox "Մուտքագրիր քո էլ. փոստի հասցեն" [ref=e473]
+            - button "Գրանցվել" [ref=e474] [cursor=pointer]
+        - generic [ref=e475]:
+          - generic [ref=e476]:
+            - heading "Jeko" [level=4] [ref=e477]
+            - list [ref=e478]:
+              - listitem [ref=e479]:
+                - link "Մեր պատմությունը" [ref=e480] [cursor=pointer]:
+                  - /url: /about
+              - listitem [ref=e481]:
+                - link "Կարծիքներ" [ref=e482] [cursor=pointer]:
+                  - /url: /reviews
+              - listitem [ref=e483]:
+                - link "Բաղադրատոմսեր" [ref=e484] [cursor=pointer]:
+                  - /url: /recipes
+              - listitem [ref=e485]:
+                - link "Ավելին քան ամանը" [ref=e486] [cursor=pointer]:
+                  - /url: /beyond-the-bowl
+              - listitem [ref=e487]:
+                - link "Խանութ" [ref=e488] [cursor=pointer]:
+                  - /url: /products
+              - listitem [ref=e489]:
+                - link "Համայնք" [ref=e490] [cursor=pointer]:
+                  - /url: /community
+          - generic [ref=e491]:
+            - heading "Օգնություն" [level=4] [ref=e492]
+            - list [ref=e493]:
+              - listitem [ref=e494]:
+                - link "Իմ հաշիվը" [ref=e495] [cursor=pointer]:
+                  - /url: /profile
+              - listitem [ref=e496]:
+                - link "Կապ մեզ հետ" [ref=e497] [cursor=pointer]:
+                  - /url: /contact
+              - listitem [ref=e498]:
+                - link "Առաքման տեղեկատվություն" [ref=e499] [cursor=pointer]:
+                  - /url: /delivery-information
+              - listitem [ref=e500]:
+                - link "Վերադարձներ" [ref=e501] [cursor=pointer]:
+                  - /url: /returns
+              - listitem [ref=e502]:
+                - link "Կայքի քարտեզ" [ref=e503] [cursor=pointer]:
+                  - /url: /sitemap-page
+          - generic [ref=e504]:
+            - heading "Տեղեկատվություն" [level=4] [ref=e505]
+            - list [ref=e506]:
+              - listitem [ref=e507]:
+                - link "Գաղտնիության քաղաքականություն" [ref=e508] [cursor=pointer]:
+                  - /url: /privacy-policy
+              - listitem [ref=e509]:
+                - link "Պայմաններ և դրույթներ" [ref=e510] [cursor=pointer]:
+                  - /url: /terms-of-use
+              - listitem [ref=e511]:
+                - link "Jeko-ի քաղաքականություն" [ref=e512] [cursor=pointer]:
+                  - /url: /pure-policies
+              - listitem [ref=e513]:
+                - link "Կայքի անվտանգություն" [ref=e514] [cursor=pointer]:
+                  - /url: /site-security
+              - listitem [ref=e515]:
+                - link "Cookie-ների քաղաքականություն" [ref=e516] [cursor=pointer]:
+                  - /url: /cookie-policy
+      - generic [ref=e517]:
+        - generic [ref=e519]: JEKO
+        - paragraph [ref=e520]: © Jeko 2020-2026
+  - generic:
+    - generic:
+      - paragraph: Bow Wow! 🐾
+      - paragraph: Find a friend for your pup!
+    - button "Find pet matches":
+      - img "Jeko dog"

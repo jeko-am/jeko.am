@@ -3,13 +3,15 @@
 import Link from "next/link";
 import Image from "next/image";
 import { useSignupUrl } from "@/lib/useSignupUrl";
+import { useContentT } from "@/lib/i18n/useContentT";
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export default function WhatIsPure({ content }: { content?: Record<string, any> }) {
-  const heading = content?.heading || "What is Jeko pet food?";
-  const description = content?.description || "A natural, healthy dog food designed to take the stress out of meal times.\n\nSimply add water and stir to quickly rehydrate the food and create a healthy, nutritious meal your pup will love.";
+  const { ct } = useContentT(content);
+  const heading = ct("heading", "home.whatIs.heading");
+  const description = ct("description", "home.whatIs.description");
   const image = content?.image || "https://www.datocms-assets.com/55536/1689943504-healthy-dog-food-subscription.jpg?auto=format&fit=crop&h=600&w=1000";
-  const buttonText = content?.button_text || "Get started";
+  const buttonText = ct("button_text", "home.whatIs.buttonText");
   const signupUrl = useSignupUrl();
   const buttonUrl = content?.button_url || signupUrl;
 

@@ -1,0 +1,63 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e2]:
+    - banner [ref=e3]:
+      - generic [ref=e5]:
+        - link "JEKO" [ref=e6] [cursor=pointer]:
+          - /url: /
+          - generic [ref=e7]: JEKO
+        - navigation [ref=e8]:
+          - link "Մեր մասին" [ref=e10] [cursor=pointer]:
+            - /url: /about
+            - text: Մեր մասին
+            - img [ref=e11]
+          - link "Համայնք" [ref=e14] [cursor=pointer]:
+            - /url: /community
+            - text: Համայնք
+            - img [ref=e15]
+          - link "Խանութ" [ref=e18] [cursor=pointer]:
+            - /url: /products
+          - link "Կարծիքներ" [ref=e20] [cursor=pointer]:
+            - /url: /reviews
+          - link "Առողջապահական օգուտներ" [ref=e22] [cursor=pointer]:
+            - /url: /benefits
+            - text: Առողջապահական օգուտներ
+            - img [ref=e23]
+        - generic [ref=e25]:
+          - button "Switch language" [ref=e27] [cursor=pointer]:
+            - generic [ref=e28]: 🇦🇲
+            - generic [ref=e29]: HY
+            - img [ref=e30]
+          - button "Shopping cart" [ref=e32] [cursor=pointer]:
+            - img [ref=e33]
+          - link "Օգնություն" [ref=e37] [cursor=pointer]:
+            - /url: /contact
+          - generic [ref=e38]:
+            - link "Ադմին վահանակ" [ref=e39] [cursor=pointer]:
+              - /url: /admin/dashboard
+              - img [ref=e40]
+              - text: Ադմին վահանակ
+            - button "Ելք" [ref=e43] [cursor=pointer]:
+              - img [ref=e44]
+              - text: Ելք
+    - main [ref=e46]:
+      - generic [ref=e48]:
+        - paragraph [ref=e61]: 🚀 Եկեք սկսենք։
+        - generic [ref=e62]:
+          - heading "Ի՞նչ տեսակի ընտանի կենդանի ունեք" [level=1] [ref=e63]
+          - paragraph [ref=e64]: Եկեք սկսենք հիմունքներից
+          - generic [ref=e65]:
+            - button "Dog" [ref=e66] [cursor=pointer]:
+              - img [ref=e68]
+              - generic [ref=e74]: Dog
+            - button "Cat" [ref=e75] [cursor=pointer]:
+              - img [ref=e77]
+              - generic [ref=e82]: Cat
+            - button "Other" [ref=e83] [cursor=pointer]:
+              - img [ref=e85]
+              - generic [ref=e91]: Other
+          - button "Շարունակել" [disabled] [ref=e92]
+  - link "Home" [ref=e93] [cursor=pointer]:
+    - /url: /
+    - img [ref=e94]
+    - text: Home
+  - alert [ref=e96]

@@ -2,8 +2,10 @@
 
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import { useT } from "@/lib/i18n/LangProvider";
 
 export default function PrivacyPolicyPage() {
+  const { t } = useT();
   return (
     <>
       <Header />
@@ -12,11 +14,10 @@ export default function PrivacyPolicyPage() {
         <section className="bg-deep-green py-16 text-center relative zigzag-bottom">
           <div className="max-w-[1200px] mx-auto px-4">
             <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">
-              Privacy <span className="text-gold">Policy</span>
+              {t("policy.privacy.title").split(" ")[0]} <span className="text-gold">{t("policy.privacy.title").split(" ").slice(1).join(" ")}</span>
             </h1>
             <p className="text-white/70 max-w-xl mx-auto text-lg">
-              Your privacy matters to us. Learn how Jeko collects,
-              uses, and protects your personal information.
+              {t("policy.privacy.subtitle")}
             </p>
           </div>
         </section>

@@ -10,6 +10,8 @@ import ProductCard from '@/components/ProductCard';
 import { useCart } from '@/lib/cart-context';
 import { useSignupUrl } from '@/lib/useSignupUrl';
 import { trackViewContent } from '@/lib/tracking';
+import { useT } from '@/lib/i18n/LangProvider';
+import HyText, { useHyAuto } from '@/components/HyText';
 
 interface Product {
   id: string;
@@ -28,6 +30,7 @@ interface Product {
   created_at: string;
   review_rating_override?: number | null;
   review_count_override?: number | null;
+  i18n?: { hy?: { name?: string; short_description?: string; description?: string } } | null;
 }
 
 interface ProductReview {
@@ -84,6 +87,11 @@ interface Variant {
   is_active: boolean;
 }
 
+function ProductLongDesc({ en, savedHy }: { en: string | null | undefined; savedHy: string | null | undefined }) {
+  const value = useHyAuto(en, savedHy);
+  return <div dangerouslySetInnerHTML={{ __html: (value || '').replace(/\n/g, '<br/>') }} />;
+}
+
 function formatPrice(value: number): string {
   return new Intl.NumberFormat('en-GB', { style: 'currency', currency: 'GBP' }).format(value);
 }
@@ -111,16 +119,73 @@ function Accordion({ title, children, defaultOpen = false }: { title: string; ch
 /* ------------------------------------------------------------------ */
 /* Vet Testimonial Card                                               */
 /* ------------------------------------------------------------------ */
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+function UpsellCard({ item, lang, t, addItem }: { item: any; lang: string; t: (k: string) => string; addItem: (p: any) => void }) {
+  const isUpsell = 'target_product' in item;
+  const product = isUpsell ? item.target_product : item;
+  const enTitle: string = isUpsell ? (item.title || 'Recommended for You') : product.name;
+  const enDesc: string | null = isUpsell ? item.description : product.short_description;
+  const savedHyTitle: string | undefined = isUpsell ? item.i18n?.hy?.title : product.i18n?.hy?.name;
+  const savedHyDesc: string | undefined = isUpsell ? item.i18n?.hy?.description : product.i18n?.hy?.short_description;
+  const title = useHyAuto(enTitle, savedHyTitle);
+  const description = useHyAuto(enDesc, savedHyDesc);
+  void lang;
+  const discount = isUpsell ? item.discount_percentage : 0;
+  return (
+    <div className="border border-deep-green/10 rounded-xl p-4 hover:border-gold/30 transition-colors">
+      <div className="flex items-start gap-4">
+        <div className="w-16 h-16 rounded-lg overflow-hidden flex-shrink-0 bg-beige-light">
+          <img
+            src={product.images?.[0] || `https://images.unsplash.com/photo-1589924691995-400dc9ecc119?w=80&h=80&fit=crop`}
+            alt={product.name}
+            className="w-full h-full object-cover"
+          />
+        </div>
+        <div className="flex-1 min-w-0">
+          <h4 className="font-medium text-deep-green text-sm mb-1 tracking-wide">{title}</h4>
+          {description && <p className="text-xs text-deep-green/60 mb-2 line-clamp-2">{description}</p>}
+          <div className="flex items-center justify-between">
+            <div>
+              <span className="font-bold text-deep-green text-sm">{formatPrice(product.price)}</span>
+              {discount > 0 && (
+                <span className="ml-2 text-xs font-bold text-white bg-gold px-2 py-0.5 rounded-full">
+                  {discount}% off
+                </span>
+              )}
+            </div>
+            <button
+              onClick={() => {
+                addItem({
+                  id: product.id,
+                  name: product.name,
+                  slug: product.slug,
+                  price: product.price,
+                  compare_at_price: product.compare_at_price,
+                  image: product.images?.[0] || `https://images.unsplash.com/photo-1589924691995-400dc9ecc119?w=600&h=600&fit=crop`,
+                  short_description: product.short_description,
+                });
+              }}
+              className="px-3 py-1.5 bg-deep-green text-white text-xs font-medium rounded-lg hover:bg-deep-green/90 transition-colors"
+            >
+              {t("productDetail.addToCart")}
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 function VetCard({ vet }: { vet: { name: string; role: string; text: string; product: string; productSlug: string } }) {
   return (
     <div className="min-w-[340px] max-w-[340px] bg-beige-light rounded-2xl p-6 snap-start flex flex-col">
       <div className="mb-3">
-        <h4 className="font-medium text-deep-green text-base tracking-wide">{vet.name}</h4>
-        <span className="text-sm text-deep-green/50">{vet.role}</span>
+        <h4 className="font-medium text-deep-green text-base tracking-wide"><HyText en={vet.name} /></h4>
+        <span className="text-sm text-deep-green/50"><HyText en={vet.role} /></span>
       </div>
-      <p className="text-sm text-deep-green/70 leading-relaxed flex-1 mb-4">{vet.text}</p>
+      <p className="text-sm text-deep-green/70 leading-relaxed flex-1 mb-4"><HyText en={vet.text} /></p>
       <Link href={`/products/${vet.productSlug}`} className="flex items-center mt-auto pt-4 border-t border-deep-green/10">
-        <span className="text-xs font-medium text-deep-green line-clamp-2">{vet.product}</span>
+        <span className="text-xs font-medium text-deep-green line-clamp-2"><HyText en={vet.product} /></span>
       </Link>
     </div>
   );
@@ -144,7 +209,7 @@ function ReviewCard({ review }: { review: { name: string; date: string; rating: 
           {review.verified && (
             <span className="inline-flex items-center gap-1 text-xs text-gold">
               <svg className="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M6.267 3.455a3.066 3.066 0 001.745-.723 3.066 3.066 0 013.976 0 3.066 3.066 0 001.745.723 3.066 3.066 0 012.812 2.812c.051.643.304 1.254.723 1.745a3.066 3.066 0 010 3.976 3.066 3.066 0 00-.723 1.745 3.066 3.066 0 01-2.812 2.812 3.066 3.066 0 00-1.745.723 3.066 3.066 0 01-3.976 0 3.066 3.066 0 00-1.745-.723 3.066 3.066 0 01-2.812-2.812 3.066 3.066 0 00-.723-1.745 3.066 3.066 0 010-3.976 3.066 3.066 0 00.723-1.745 3.066 3.066 0 012.812-2.812zm7.44 5.252a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" /></svg>
-              Verified
+              <HyText en="Verified" />
             </span>
           )}
         </div>
@@ -156,8 +221,8 @@ function ReviewCard({ review }: { review: { name: string; date: string; rating: 
             </svg>
           ))}
         </div>
-        {review.title && <p className="text-sm font-medium text-deep-green mb-1">{review.title}</p>}
-        <p className="text-sm text-deep-green/70">{review.text}</p>
+        {review.title && <p className="text-sm font-medium text-deep-green mb-1"><HyText en={review.title} /></p>}
+        <p className="text-sm text-deep-green/70"><HyText en={review.text} /></p>
         {review.images && review.images.length > 0 && (
           <div className="flex gap-2 mt-3">
             {review.images.map((img, i) => (
@@ -167,7 +232,7 @@ function ReviewCard({ review }: { review: { name: string; date: string; rating: 
             ))}
           </div>
         )}
-        {review.variant && <p className="text-xs text-deep-green/40 mt-2">Item type: {review.variant}</p>}
+        {review.variant && <p className="text-xs text-deep-green/40 mt-2"><HyText en="Item type" />: <HyText en={review.variant} /></p>}
       </div>
     </>
   );
@@ -177,6 +242,7 @@ function ReviewCard({ review }: { review: { name: string; date: string; rating: 
 /* Main Page                                                          */
 /* ================================================================== */
 export default function ProductDetailPage() {
+  const { t, lang } = useT();
   const signupUrl = useSignupUrl();
   const params = useParams();
   const slug = params.slug as string;
@@ -395,7 +461,7 @@ export default function ProductDetailPage() {
   /* 404 */
   if (!product) {
     return (
-      <><Header /><main className="pt-24"><div className="max-w-[1200px] mx-auto px-4 py-20 text-center"><div className="text-6xl mb-4">🐾</div><h1 className="text-3xl font-bold text-deep-green mb-3">Product Not Found</h1><p className="text-deep-green/60 mb-6">The product you&apos;re looking for doesn&apos;t exist.</p><Link href="/products" className="btn-gold">Browse Products</Link></div></main><Footer /></>
+      <><Header /><main className="pt-24"><div className="max-w-[1200px] mx-auto px-4 py-20 text-center"><div className="text-6xl mb-4">🐾</div><h1 className="text-3xl font-bold text-deep-green mb-3">{t("products.empty.title")}</h1><p className="text-deep-green/60 mb-6">{t("products.empty.body")}</p><Link href="/products" className="btn-gold">{t("products.title")}</Link></div></main><Footer /></>
     );
   }
 
@@ -452,10 +518,10 @@ export default function ProductDetailPage() {
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-14">
               {/* --- Gallery --- */}
               <div>
-                <div className="relative aspect-square rounded-2xl overflow-hidden bg-beige-light mb-4 group">
+                <div className="relative aspect-[3/4] rounded-2xl overflow-hidden bg-beige-light mb-4 group p-6">
                   {hasImages ? (
                     <>
-                      <img src={getImageUrl(selectedImage)} alt={product.name} className="w-full h-full object-cover" onError={() => setImgErrors(p => new Set(p).add(selectedImage))} />
+                      <img src={getImageUrl(selectedImage)} alt={product.name} className="w-full h-full object-contain" onError={() => setImgErrors(p => new Set(p).add(selectedImage))} />
                       {images.length > 1 && (
                         <>
                           <button onClick={() => setSelectedImage((selectedImage - 1 + images.length) % images.length)} className="absolute left-3 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-white/80 backdrop-blur shadow flex items-center justify-center hover:bg-white transition opacity-0 group-hover:opacity-100">
@@ -491,7 +557,7 @@ export default function ProductDetailPage() {
 
               {/* --- Product Info --- */}
               <div>
-                <h1 className="text-3xl md:text-4xl font-medium text-deep-green mb-2 leading-snug tracking-wide">{product.name}</h1>
+                <h1 className="text-3xl md:text-4xl font-medium text-deep-green mb-2 leading-snug tracking-wide"><HyText en={product.name} savedHy={product.i18n?.hy?.name} /></h1>
 
                 {/* Rating summary */}
                 <a href="#reviews" onClick={(e) => { e.preventDefault(); document.getElementById('reviews')?.scrollIntoView({ behavior: 'smooth' }); }} className="inline-flex items-center gap-2 mb-4 group cursor-pointer">
@@ -502,7 +568,7 @@ export default function ProductDetailPage() {
                       </svg>
                     ))}
                   </div>
-                  <span className="text-sm font-medium text-deep-green/60 group-hover:text-deep-green group-hover:underline transition">{displayReviewCount} Reviews</span>
+                  <span className="text-sm font-medium text-deep-green/60 group-hover:text-deep-green group-hover:underline transition">{displayReviewCount} {t("productDetail.reviews")}</span>
                 </a>
 
                 {/* Price */}
@@ -510,13 +576,13 @@ export default function ProductDetailPage() {
                   <span className="text-2xl font-bold text-deep-green">{formatPrice(displayPrice)}</span>
                   {hasDiscount && <span className="text-base text-deep-green/40 line-through ml-2">{formatPrice(displayCompareAt!)}</span>}
                 </div>
-                <p className="text-sm text-deep-green/50 mb-5">Shipping calculated at checkout.</p>
+                <p className="text-sm text-deep-green/50 mb-5">{t("productDetail.shippingAtCheckout")}</p>
 
                 {/* Description */}
                 {product.short_description && (
                   <div className="mb-6">
-                    <p className="font-medium text-deep-green mb-1 tracking-wide">Premium nutrition — nothing hidden.</p>
-                    <p className="text-deep-green/70 text-sm leading-relaxed">{product.short_description}</p>
+                    <p className="font-medium text-deep-green mb-1 tracking-wide">{t("productDetail.premiumNutrition")}</p>
+                    <p className="text-deep-green/70 text-sm leading-relaxed"><HyText en={product.short_description} savedHy={product.i18n?.hy?.short_description} /></p>
                   </div>
                 )}
 
@@ -554,14 +620,16 @@ export default function ProductDetailPage() {
                 {/* --- Bundles --- */}
                 {bundles.length > 0 && (
                   <div className="mb-6">
-                    <h3 className="font-medium text-deep-green mb-3 tracking-wide">Value Bundles</h3>
+                    <h3 className="font-medium text-deep-green mb-3 tracking-wide">{t("productDetail.valueBundles")}</h3>
                     <div className="space-y-3">
                       {bundles.slice(0, 2).map((bundle) => (
                         <div key={bundle.id} className="border border-deep-green/10 rounded-xl p-4 hover:border-gold/30 transition-colors">
                           <div className="flex items-start gap-4">
                             <div className="w-16 h-16 rounded-lg overflow-hidden flex-shrink-0 bg-beige-light">
                               {(() => {
-                                const imgSrc = bundle.image_url || bundle.products?.[0]?.product?.images?.[0];
+                                const RANDOM_IMG_RE = /(placedog\.net|picsum\.photos|loremflickr|placeholder\.com|via\.placeholder)/i;
+                                const cleanBundleImg = bundle.image_url && !RANDOM_IMG_RE.test(bundle.image_url) ? bundle.image_url : null;
+                                const imgSrc = cleanBundleImg || bundle.products?.[0]?.product?.images?.[0];
                                 return imgSrc ? (
                                   <img src={imgSrc} alt={bundle.name} className="w-full h-full object-cover" />
                                 ) : (
@@ -575,8 +643,8 @@ export default function ProductDetailPage() {
                               })()}
                             </div>
                             <div className="flex-1 min-w-0">
-                              <h4 className="font-medium text-deep-green text-sm mb-1 tracking-wide">{bundle.name}</h4>
-                              <p className="text-xs text-deep-green/60 mb-2 line-clamp-2">{bundle.description}</p>
+                              <h4 className="font-medium text-deep-green text-sm mb-1 tracking-wide"><HyText en={bundle.name} savedHy={(bundle as { i18n?: { hy?: { name?: string } } }).i18n?.hy?.name} /></h4>
+                              <p className="text-xs text-deep-green/60 mb-2 line-clamp-2"><HyText en={bundle.description} savedHy={(bundle as { i18n?: { hy?: { description?: string } } }).i18n?.hy?.description} /></p>
                               <div className="flex items-center justify-between">
                                 <div>
                                   {bundle.compare_at_price && (
@@ -587,7 +655,7 @@ export default function ProductDetailPage() {
                                   <span className="font-bold text-deep-green text-sm">{formatPrice(bundle.total_price)}</span>
                                   {bundle.discount_percentage > 0 && (
                                     <span className="ml-2 text-xs font-bold text-white bg-gold px-2 py-0.5 rounded-full">
-                                      Save {bundle.discount_percentage}%
+                                      {t("productDetail.savePct").replace("{pct}", String(bundle.discount_percentage))}
                                     </span>
                                   )}
                                 </div>
@@ -610,7 +678,7 @@ export default function ProductDetailPage() {
                                   }}
                                   className="px-3 py-1.5 bg-deep-green text-white text-xs font-medium rounded-lg hover:bg-deep-green/90 transition-colors"
                                 >
-                                  Add Bundle
+                                  {t("productDetail.addBundle")}
                                 </button>
                               </div>
                             </div>
@@ -660,7 +728,7 @@ export default function ProductDetailPage() {
                         Adding...
                       </>
                     ) : (
-                      `Add to Cart${quantity > 1 ? ` (${quantity})` : ''}`
+                      `${t("productDetail.addToCart")}${quantity > 1 ? ` (${quantity})` : ''}`
                     )}
                   </button>
                 </div>
@@ -669,58 +737,19 @@ export default function ProductDetailPage() {
                 {(upsells.length > 0 || related.length > 0) && (
                   <div className="mb-6">
                     <h3 className="font-semibold text-deep-green mb-3">
-                      {upsells.some(u => u.upsell_type === 'upsell') ? 'Upgrade Your Order' : 'Perfect Pairings'}
+                      {upsells.some(u => u.upsell_type === 'upsell') ? t("productDetail.upgradeOrder") : t("productDetail.perfectPairings")}
                     </h3>
                     <div className="space-y-3">
                       {(upsells.length > 0 ? upsells : related.slice(0, 2)).map((item) => {
                         const isUpsell = 'target_product' in item;
-                        const product = isUpsell ? item.target_product : item;
-                        const title = isUpsell ? (item.title || 'Recommended for You') : product.name;
-                        const description = isUpsell ? item.description : product.short_description;
-                        const discount = isUpsell ? item.discount_percentage : 0;
-                        
                         return (
-                          <div key={isUpsell ? item.id : product.id} className="border border-deep-green/10 rounded-xl p-4 hover:border-gold/30 transition-colors">
-                            <div className="flex items-start gap-4">
-                              <div className="w-16 h-16 rounded-lg overflow-hidden flex-shrink-0 bg-beige-light">
-                                <img 
-                                  src={product.images?.[0] || `https://images.unsplash.com/photo-1589924691995-400dc9ecc119?w=80&h=80&fit=crop`} 
-                                  alt={product.name} 
-                                  className="w-full h-full object-cover"
-                                />
-                              </div>
-                              <div className="flex-1 min-w-0">
-                                <h4 className="font-medium text-deep-green text-sm mb-1 tracking-wide">{title}</h4>
-                                <p className="text-xs text-deep-green/60 mb-2 line-clamp-2">{description}</p>
-                                <div className="flex items-center justify-between">
-                                  <div>
-                                    <span className="font-bold text-deep-green text-sm">{formatPrice(product.price)}</span>
-                                    {discount > 0 && (
-                                      <span className="ml-2 text-xs font-bold text-white bg-gold px-2 py-0.5 rounded-full">
-                                        {discount}% off
-                                      </span>
-                                    )}
-                                  </div>
-                                  <button
-                                    onClick={() => {
-                                      addItem({
-                                        id: product.id,
-                                        name: product.name,
-                                        slug: product.slug,
-                                        price: product.price,
-                                        compare_at_price: product.compare_at_price,
-                                        image: product.images?.[0] || `https://images.unsplash.com/photo-1589924691995-400dc9ecc119?w=600&h=600&fit=crop`,
-                                        short_description: product.short_description,
-                                      });
-                                    }}
-                                    className="px-3 py-1.5 bg-deep-green text-white text-xs font-medium rounded-lg hover:bg-deep-green/90 transition-colors"
-                                  >
-                                    Add to Cart
-                                  </button>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
+                          <UpsellCard
+                            key={isUpsell ? item.id : (item as Product).id}
+                            item={item}
+                            lang={lang}
+                            t={t}
+                            addItem={addItem}
+                          />
                         );
                       })}
                     </div>
@@ -733,8 +762,8 @@ export default function ProductDetailPage() {
                     <svg className="w-5 h-5 text-gold" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M6.267 3.455a3.066 3.066 0 001.745-.723 3.066 3.066 0 013.976 0 3.066 3.066 0 001.745.723 3.066 3.066 0 012.812 2.812c.051.643.304 1.254.723 1.745a3.066 3.066 0 010 3.976 3.066 3.066 0 00-.723 1.745 3.066 3.066 0 01-2.812 2.812 3.066 3.066 0 00-1.745.723 3.066 3.066 0 01-3.976 0 3.066 3.066 0 00-1.745-.723 3.066 3.066 0 01-2.812-2.812 3.066 3.066 0 00-.723-1.745 3.066 3.066 0 010-3.976 3.066 3.066 0 00.723-1.745 3.066 3.066 0 012.812-2.812zm7.44 5.252a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" /></svg>
                   </div>
                   <div>
-                    <p className="text-sm font-semibold text-deep-green">Vet Approved & Lab Tested <span className="text-[10px] font-bold bg-gold/20 text-deep-green px-1.5 py-0.5 rounded ml-1">2026</span></p>
-                    <p className="text-xs text-deep-green/50">All ingredients tested for quality & safety →</p>
+                    <p className="text-sm font-semibold text-deep-green">{t("productDetail.vetApprovedLabTested")} <span className="text-[10px] font-bold bg-gold/20 text-deep-green px-1.5 py-0.5 rounded ml-1">2026</span></p>
+                    <p className="text-xs text-deep-green/50">{t("productDetail.allIngredientsTested")}</p>
                   </div>
                 </div>
 
@@ -760,7 +789,7 @@ export default function ProductDetailPage() {
                 )}
 
                 {/* Accordions */}
-                <Accordion title={String(customSections.get(3)?.ingredients_heading || "Ingredients & Nutrition")} defaultOpen>
+                <Accordion title={String(customSections.get(3)?.ingredients_heading || t("product.ingredients"))} defaultOpen>
                   {customSections.get(3)?.ingredients_list ? (
                     <div>
                       <div dangerouslySetInnerHTML={{ __html: String(customSections.get(3)!.ingredients_list).replace(/\n/g, '<br/>') }} />
@@ -772,30 +801,30 @@ export default function ProductDetailPage() {
                       )}
                     </div>
                   ) : product.description ? (
-                    <div dangerouslySetInnerHTML={{ __html: product.description.replace(/\n/g, '<br/>') }} />
+                    <ProductLongDesc en={product.description} savedHy={product.i18n?.hy?.description} />
                   ) : (
                     <p>Made with natural, human-grade ingredients carefully selected by veterinary nutritionists.</p>
                   )}
                 </Accordion>
-                <Accordion title={String(customSections.get(4)?.feeding_heading || "Feeding Guide")}>
+                <Accordion title={String(customSections.get(4)?.feeding_heading || t("productDetail.feedingGuide"))}>
                   {customSections.get(4)?.feeding_body ? (
                     <div dangerouslySetInnerHTML={{ __html: String(customSections.get(4)!.feeding_body).replace(/\n/g, '<br/>') }} />
                   ) : (
                     <>
-                      <p className="mb-2">Serve based on your dog&apos;s weight:</p>
+                      <p className="mb-2">{t("productDetail.feedingIntro")}</p>
                       <ul className="space-y-1">
-                        <li><strong>Small dogs (up to 10kg):</strong> 100-200g per day</li>
-                        <li><strong>Medium dogs (10-25kg):</strong> 200-400g per day</li>
-                        <li><strong>Large dogs (25kg+):</strong> 400-600g per day</li>
+                        <li>{t("productDetail.feedingSmall")}</li>
+                        <li>{t("productDetail.feedingMedium")}</li>
+                        <li>{t("productDetail.feedingLarge")}</li>
                       </ul>
-                      <p className="mt-2">Always ensure fresh water is available. Transition gradually over 7-10 days.</p>
+                      <p className="mt-2">{t("productDetail.feedingNote")}</p>
                     </>
                   )}
                 </Accordion>
-                <Accordion title="Shipping & Returns">
-                  <p><strong>Free UK delivery</strong> on all orders. Orders placed before 2pm are dispatched same day.</p>
-                  <p className="mt-2">Standard delivery: 2-3 working days. Express delivery available at checkout.</p>
-                  <p className="mt-2">Not happy? Full refund within 30 days — no questions asked.</p>
+                <Accordion title={t("productDetail.shippingReturns")}>
+                  <p>{t("productDetail.freeUkDelivery")}</p>
+                  <p className="mt-2">{t("productDetail.standardDelivery")}</p>
+                  <p className="mt-2">{t("productDetail.notHappy")}</p>
                 </Accordion>
 
                 {/* Custom: Product FAQ (section index 6) */}
@@ -820,11 +849,16 @@ export default function ProductDetailPage() {
         {/* ============================================================ */}
         <section className="bg-off-white py-14 border-t border-b border-deep-green/5">
           <div className="max-w-[1200px] mx-auto px-4 text-center">
-            <h2 className="text-3xl md:text-4xl font-bold text-deep-green mb-10 italic">The Jeko Difference</h2>
+            <h2 className="text-3xl md:text-4xl font-bold text-deep-green mb-10 italic">{t("productDetail.theJekoDifference")}</h2>
             <div className="flex flex-wrap justify-center gap-x-8 gap-y-4">
               {[
-                'Vet Approved', 'Natural Ingredients', 'Grain-Free Options', 'Lab Tested',
-                'Human Grade', 'Gentle on Tummies', 'Nutrient-Rich'
+                t("productDetail.diff.vetApproved"),
+                t("productDetail.diff.naturalIngredients"),
+                t("productDetail.diff.grainFree"),
+                t("productDetail.diff.labTested"),
+                t("productDetail.diff.humanGrade"),
+                t("productDetail.diff.gentleTummies"),
+                t("productDetail.diff.nutrientRich"),
               ].map(badge => (
                 <div key={badge} className="flex items-center gap-2">
                   <svg className="w-6 h-6 text-gold" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" /></svg>
@@ -863,12 +897,12 @@ export default function ProductDetailPage() {
             <div className="w-full md:w-[57%] flex items-center">
               <div className="px-8 md:px-16 lg:px-24 py-12">
                 <h2 className="text-[32px] md:text-[40px] font-semibold text-white font-rubik leading-tight mb-6 italic">
-                  Fresh. Balanced. Irresistible.
+                  {t("productDetail.freshTagline")}
                 </h2>
                 <div className="space-y-4 text-white/80 text-[18px] leading-relaxed">
-                  <p><strong className="text-gold">Protein Profile:</strong> High-quality, single-source animal protein for lean muscle maintenance and sustained energy.</p>
-                  <p><strong className="text-gold">Nutrition Highlights:</strong> Rich in omega-3 fatty acids for a glossy coat, prebiotics for gut health, and essential vitamins for immune support.</p>
-                  <p><strong className="text-gold">Preparation:</strong> Gently air-dried to lock in nutrients. Just add warm water, stir, and serve — ready in 10 seconds.</p>
+                  <p>{t("productDetail.proteinProfile")}</p>
+                  <p>{t("productDetail.nutritionHighlights")}</p>
+                  <p>{t("productDetail.preparation")}</p>
                 </div>
               </div>
             </div>
@@ -884,12 +918,12 @@ export default function ProductDetailPage() {
             <div className="w-full md:w-[57%] flex items-center order-2 md:order-1">
               <div className="px-8 md:px-16 lg:px-24 py-12">
                 <h2 className="text-[32px] md:text-[40px] font-semibold text-deep-green font-rubik leading-tight mb-4">
-                  Learn The Science Behind Jeko
+                  {t("productDetail.learnTheScience")}
                 </h2>
                 <p className="text-deep-green/70 text-[18px] leading-relaxed mb-6">
-                  Developed with veterinary nutritionists, every recipe is backed by science to deliver optimal nutrition.
+                  {t("productDetail.scienceIntro")}
                 </p>
-                <Link href="/benefits" className="btn-gold inline-block">Learn More</Link>
+                <Link href="/benefits" className="btn-gold inline-block">{t("productDetail.learnMore")}</Link>
               </div>
             </div>
 
@@ -920,7 +954,7 @@ export default function ProductDetailPage() {
         <section className="bg-beige-light py-16">
           <div className="max-w-[1400px] mx-auto px-4">
             <div className="flex items-end justify-between mb-8">
-              <h2 className="text-3xl md:text-4xl font-bold text-deep-green italic">Trusted by Vets & Nutritionists</h2>
+              <h2 className="text-3xl md:text-4xl font-bold text-deep-green italic">{t("productDetail.trustedByVets")}</h2>
               <div className="hidden md:flex gap-2">
                 <button onClick={() => scrollVets('left')} className="w-10 h-10 rounded-full border border-deep-green/20 flex items-center justify-center hover:bg-deep-green hover:text-white transition text-deep-green"><svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" /></svg></button>
                 <button onClick={() => scrollVets('right')} className="w-10 h-10 rounded-full border border-deep-green/20 flex items-center justify-center hover:bg-deep-green hover:text-white transition text-deep-green"><svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" /></svg></button>
@@ -960,16 +994,16 @@ export default function ProductDetailPage() {
             <div className="w-full md:w-[57%] bg-off-white flex items-center">
               <div className="px-8 md:px-16 lg:px-24 py-12">
                 <h2 className="text-[32px] md:text-[40px] font-semibold text-deep-green font-rubik leading-tight mb-6 italic">
-                  Food that fuels their best days
+                  <HyText en="Food that fuels their best days" />
                 </h2>
                 <div className="space-y-3 text-deep-green/70 text-[18px] leading-relaxed">
-                  <p><strong className="text-deep-green">At Jeko, the mission is simple:</strong></p>
-                  <p>Create food that makes your dog feel as good as it tastes.</p>
-                  <p>Always fresh, natural & vet-approved.</p>
-                  <p>It&apos;s the kind they love, crave, and sprint to the bowl for every single time — for boundless energy, a shiny coat, and a happier, healthier life.</p>
-                  <p>Jeko is for the devoted pet parents simply seeking more for their best friend.</p>
+                  <p><strong className="text-deep-green"><HyText en="At Jeko, the mission is simple:" /></strong></p>
+                  <p><HyText en="Create food that makes your dog feel as good as it tastes." /></p>
+                  <p><HyText en="Always fresh, natural & vet-approved." /></p>
+                  <p><HyText en="It's the kind they love, crave, and sprint to the bowl for every single time — for boundless energy, a shiny coat, and a happier, healthier life." /></p>
+                  <p><HyText en="Jeko is for the devoted pet parents simply seeking more for their best friend." /></p>
                 </div>
-                <Link href={signupUrl} className="btn-gold mt-8 inline-block">Try Jeko</Link>
+                <Link href={signupUrl} className="btn-gold mt-8 inline-block"><HyText en="Try Jeko" /></Link>
               </div>
             </div>
           </div>
@@ -984,15 +1018,15 @@ export default function ProductDetailPage() {
             <div className="w-full md:w-[57%] flex items-center order-2 md:order-1">
               <div className="px-8 md:px-16 lg:px-24 py-12">
                 <h2 className="text-[32px] md:text-[40px] font-semibold text-deep-green font-rubik leading-tight mb-6 italic">
-                  Why We Started Jeko
+                  <HyText en="Why We Started Jeko" />
                 </h2>
                 <div className="space-y-3 text-deep-green/70 text-[18px] leading-relaxed">
-                  <p>We didn&apos;t start this brand for the trend.</p>
-                  <p>We started Jeko because our own dogs deserved better — and so does yours.</p>
-                  <p>When we looked at what was in most commercial dog food, we were shocked. Fillers, preservatives, mysterious &ldquo;meat derivatives&rdquo; — making our dogs worse, not better.</p>
-                  <p>They needed a better option — so we created one.</p>
+                  <p><HyText en="We didn't start this brand for the trend." /></p>
+                  <p><HyText en="We started Jeko because our own dogs deserved better — and so does yours." /></p>
+                  <p><HyText en={"When we looked at what was in most commercial dog food, we were shocked. Fillers, preservatives, mysterious “meat derivatives” — making our dogs worse, not better."} /></p>
+                  <p><HyText en="They needed a better option — so we created one." /></p>
                 </div>
-                <Link href="/about" className="btn-outline mt-8 inline-block">Learn More</Link>
+                <Link href="/about" className="btn-outline mt-8 inline-block">{t("productDetail.learnMore")}</Link>
               </div>
             </div>
 
@@ -1022,8 +1056,8 @@ export default function ProductDetailPage() {
         {/* ============================================================ */}
         <section className="bg-deep-green py-20">
           <div className="max-w-[900px] mx-auto px-4 text-center">
-            <h2 className="text-3xl md:text-4xl font-bold text-white mb-6 italic">Our Mission</h2>
-            <p className="text-xl md:text-2xl text-white/80 leading-relaxed italic">&ldquo;To create food that helps your dog feel their best, so they can keep doing what they love — being your best friend.&rdquo;</p>
+            <h2 className="text-3xl md:text-4xl font-bold text-white mb-6 italic"><HyText en="Our Mission" /></h2>
+            <p className="text-xl md:text-2xl text-white/80 leading-relaxed italic">&ldquo;<HyText en="To create food that helps your dog feel their best, so they can keep doing what they love — being your best friend." />&rdquo;</p>
           </div>
         </section>
 
@@ -1034,7 +1068,7 @@ export default function ProductDetailPage() {
           <img src="https://images.unsplash.com/photo-1552053831-71594a27632d?w=1400&h=500&fit=crop" alt="Happy healthy dogs" className="w-full h-full object-cover" />
           <div className="absolute inset-0 bg-gradient-to-r from-deep-green/70 to-transparent flex items-center">
             <div className="max-w-[1400px] mx-auto px-4 w-full">
-              <h2 className="text-3xl md:text-5xl font-bold text-white max-w-lg italic leading-tight">Boundless Energy, Shiny Coat, Happier Days</h2>
+              <h2 className="text-3xl md:text-5xl font-bold text-white max-w-lg italic leading-tight"><HyText en="Boundless Energy, Shiny Coat, Happier Days" /></h2>
             </div>
           </div>
         </section>
@@ -1044,14 +1078,14 @@ export default function ProductDetailPage() {
         {/* ============================================================ */}
         <section className="bg-white py-16" id="reviews">
           <div className="max-w-[1200px] mx-auto px-4">
-            <h2 className="text-3xl md:text-4xl font-bold text-deep-green text-center mb-10 italic">Customer Reviews</h2>
+            <h2 className="text-3xl md:text-4xl font-bold text-deep-green text-center mb-10 italic">{t("productDetail.customerReviews")}</h2>
             <div className="flex items-center justify-between mb-6">
               <div className="flex items-center gap-3">
                 <div className="flex">{Array.from({ length: 5 }).map((_, i) => <svg key={i} className={`w-6 h-6 ${i < Math.round(displayRating) ? 'text-gold' : 'text-deep-green/15'}`} fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" /></svg>)}</div>
-                <span className="text-deep-green font-medium">{displayReviewCount} Reviews</span>
+                <span className="text-deep-green font-medium">{displayReviewCount} {t("productDetail.reviews")}</span>
               </div>
               <button onClick={() => { setShowReviewForm(!showReviewForm); setReviewSuccess(false); }} className="btn-outline text-sm py-2 px-4">
-                {showReviewForm ? 'Cancel' : 'Write a review'}
+                {showReviewForm ? <HyText en="Cancel" /> : <HyText en="Write a review" />}
               </button>
             </div>
 
@@ -1148,7 +1182,7 @@ export default function ProductDetailPage() {
         {related.length > 0 && (
           <section className="bg-off-white py-16">
             <div className="max-w-[1200px] mx-auto px-4">
-              <h2 className="text-2xl font-bold text-deep-green mb-8">You May Also Like</h2>
+              <h2 className="text-2xl font-bold text-deep-green mb-8"><HyText en="You May Also Like" /></h2>
               {/* Mobile: horizontal scroll with 2 cards visible; Desktop: 4-column grid */}
               <div className="flex gap-4 overflow-x-auto pb-3 snap-x snap-mandatory scrollbar-hide lg:grid lg:grid-cols-4 lg:gap-6 lg:overflow-visible lg:pb-0">
                 {related.map(p => (

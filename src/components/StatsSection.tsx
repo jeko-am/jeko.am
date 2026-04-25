@@ -1,14 +1,16 @@
 "use client";
 
 import { useEffect, useState, useCallback, useRef } from "react";
+import { useContentT } from "@/lib/i18n/useContentT";
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export default function StatsSection({ content }: { content?: any }) {
+  const { ct } = useContentT(content);
   const mealsServed = content?.meals_served ?? 92905251;
-  const stat1Value = content?.stat_1_value ?? "94%";
-  const stat1Label = content?.stat_1_label ?? "of customers have seen an improvement in their dog\u2019s ailment";
-  const stat2Value = content?.stat_2_value ?? "91%";
-  const stat2Label = content?.stat_2_label ?? "of customers have seen overall health improvements since switching to Jeko";
+  const stat1Value = ct("stat_1_value", "home.stats.stat1Value");
+  const stat1Label = ct("stat_1_label", "home.stats.stat1Label");
+  const stat2Value = ct("stat_2_value", "home.stats.stat2Value");
+  const stat2Label = ct("stat_2_label", "home.stats.stat2Label");
 
   const [count, setCount] = useState(0);
   const [hasAnimated, setHasAnimated] = useState(false);
@@ -67,7 +69,7 @@ export default function StatsSection({ content }: { content?: any }) {
       </div>
       <div className="max-w-[1200px] mx-auto px-6 text-center relative z-10">
         <h2 className="text-[36px] md:text-[40px] font-medium text-deep-green tracking-wide mb-4">
-          We&apos;ve delivered
+          {ct("heading", "home.stats.heading")}
         </h2>
 
         <div className="text-[48px] md:text-[64px] font-medium text-gold tracking-wide mb-4 leading-tight">
@@ -75,7 +77,7 @@ export default function StatsSection({ content }: { content?: any }) {
         </div>
 
         <p className="text-[18px] text-deep-green max-w-xl mx-auto mb-10">
-          meals and changed the lives of tens of thousands of dogs for the better
+          {ct("meals_label", "home.stats.mealsLabel")}
         </p>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-3xl mx-auto">

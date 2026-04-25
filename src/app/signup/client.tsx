@@ -3,9 +3,11 @@
 import { useState } from "react";
 import Link from "next/link";
 import EditorOverlay from "@/components/EditorOverlay";
+import { useT } from "@/lib/i18n/LangProvider";
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export default function SignupPageClient({ sections }: { sections: Record<string, any> }) {
+  const { t } = useT();
   const [dogName, setDogName] = useState("");
 
   return (
@@ -61,7 +63,7 @@ export default function SignupPageClient({ sections }: { sections: Record<string
             <div className="flex-1 flex justify-end relative z-20">
               {/* Offer badge */}
               <div className="hidden sm:block bg-[#E65A1E] text-white px-6 py-3 rounded-lg text-[14px] font-semibold max-w-[260px] text-center leading-snug">
-                {sections[0]?.offer_text ?? '25% off your first box + 10% off your next box'}
+                {sections[0]?.offer_text ?? t('auth.signup.offerText')}
               </div>
             </div>
 
@@ -104,15 +106,15 @@ export default function SignupPageClient({ sections }: { sections: Record<string
         <main className="flex-1 flex flex-col items-center justify-center px-6 pt-14 pb-10">
           <div className="w-full max-w-[480px] text-center">
             <h1 className="text-[36px] md:text-[44px] font-bold text-deep-green font-rubik mb-3 leading-tight">
-              {sections[1]?.heading ?? "Let's get started"}
+              {sections[1]?.heading ?? t('auth.signup.letsGetStarted')}
             </h1>
             <p className="text-deep-green/50 text-[16px] mb-10 font-rubik">
-              {sections[1]?.subtitle ?? 'It only takes 2-3 minutes'}
+              {sections[1]?.subtitle ?? t('auth.signup.takes2Min')}
             </p>
 
             <div className="mb-8">
               <label className="block text-deep-green font-bold text-[17px] mb-4 font-rubik">
-                {sections[1]?.label ?? "What's your dogs name?"}
+                {sections[1]?.label ?? t('auth.signup.dogNameQuestion')}
               </label>
               <input
                 type="text"
@@ -157,7 +159,7 @@ export default function SignupPageClient({ sections }: { sections: Record<string
                 </div>
               </div>
               <p className="text-deep-green/50 text-[14px] font-rubik leading-snug">
-                {(sections[1]?.add_more_text ?? 'You can add more dogs\nlater if you need to').split('\n').map((line: string, i: number) => (
+                {(sections[1]?.add_more_text ?? t('auth.signup.addMoreDogs')).split('\n').map((line: string, i: number) => (
                   <span key={i}>
                     {i > 0 && <br />}
                     {line}
@@ -179,7 +181,7 @@ export default function SignupPageClient({ sections }: { sections: Record<string
                   : "bg-[#e8d5a0] text-[#b8a878] cursor-not-allowed"
               }`}
             >
-              {sections[1]?.button_text ?? 'Continue'}
+              {sections[1]?.button_text ?? t('auth.signup.continue')}
             </button>
           </div>
         </div>

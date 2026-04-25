@@ -2,8 +2,10 @@
 
 import { useState, useEffect } from "react";
 import { useRouter, usePathname } from "next/navigation";
+import { useT } from "@/lib/i18n/LangProvider";
 
 export default function DogChatbot() {
+  const { t } = useT();
   const router = useRouter();
   const pathname = usePathname();
   const [visible, setVisible] = useState(false);
@@ -58,9 +60,9 @@ export default function DogChatbot() {
           className="text-deep-green font-bold text-[15px] whitespace-nowrap"
           style={{ fontFamily: "'TR Frankfurter', 'Rubik', sans-serif" }}
         >
-          Bow Wow! 🐾
+          {t("chatbot.bubble.greeting")}
         </p>
-        <p className="text-deep-green/60 text-[11px] font-rubik">Find a friend for your pup!</p>
+        <p className="text-deep-green/60 text-[11px] font-rubik">{t("chatbot.bubble.subtext")}</p>
         {/* Tail pointing down-right */}
         <div
           className="absolute -bottom-2 right-6 w-4 h-4 bg-white border-r border-b border-gray-100"

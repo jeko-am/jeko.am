@@ -4,11 +4,50 @@ import { useAuth } from '@/lib/auth';
 import { useRouter, usePathname } from 'next/navigation';
 import { useEffect, useState, useRef } from 'react';
 import Link from 'next/link';
+import { AdminEditLangProvider, useAdminEditLang } from '@/lib/i18n/AdminEditLang';
+import MigrationNotice from '@/app/admin/MigrationNotice';
+
+function EditLangToggle() {
+  const { editLang, setEditLang } = useAdminEditLang();
+  return (
+    <div className="flex items-center gap-2">
+      <span className="text-[11px] font-medium text-gray-500 uppercase tracking-wide hidden sm:inline">Editing:</span>
+      <div className="flex bg-gray-100 rounded-lg p-0.5 gap-0.5">
+        <button
+          onClick={() => setEditLang('en')}
+          className={`flex items-center gap-1.5 px-2.5 py-1 text-xs font-medium rounded-md transition-colors ${
+            editLang === 'en' ? 'bg-white text-deep-green shadow-sm' : 'text-gray-500 hover:text-gray-700'
+          }`}
+          aria-label="Edit English content"
+        >
+          <span>🇬🇧</span>
+          <span>EN</span>
+        </button>
+        <button
+          onClick={() => setEditLang('hy')}
+          className={`flex items-center gap-1.5 px-2.5 py-1 text-xs font-medium rounded-md transition-colors ${
+            editLang === 'hy' ? 'bg-white text-deep-green shadow-sm' : 'text-gray-500 hover:text-gray-700'
+          }`}
+          aria-label="Edit Armenian content"
+        >
+          <span>🇦🇲</span>
+          <span>HY</span>
+        </button>
+      </div>
+      {editLang === 'hy' && (
+        <span className="hidden md:inline text-[11px] text-deep-green font-medium px-2 py-0.5 bg-deep-green/10 rounded-full whitespace-nowrap">
+          Armenian edits only
+        </span>
+      )}
+    </div>
+  );
+}
 
 
 const navItems = [
   { label: 'Dashboard', href: '/admin/dashboard', icon: 'M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-4 0a1 1 0 01-1-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 01-1 1' },
   { label: 'Store Editor', href: '/admin/store-editor', icon: 'M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z' },
+  { label: 'Translations', href: '/admin/translations', icon: 'M3 5h12M9 3v2m1.048 9.5A18.022 18.022 0 016.412 9m6.088 9h7M11 21l5-10 5 10M12.751 5C11.783 10.77 8.07 15.61 3 18.129' },
   { label: 'Products', href: '/admin/products', icon: 'M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4' },
   { label: 'Bundles', href: '/admin/bundles', icon: 'M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4' },
   { label: 'Upsells', href: '/admin/upsells', icon: 'M12 8v13m0-13V6a2 2 0 112 2h-2zm0 0V5.5A2.5 2.5 0 109.5 8H12zm-7 4h14M5 12a2 2 0 110-4h14a2 2 0 110 4M5 12v7a2 2 0 002 2h10a2 2 0 002-2v-7' },
@@ -67,6 +106,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
   if (!user || !isAdmin) return null;
 
   return (
+    <AdminEditLangProvider>
     <div className="admin-panel flex min-h-screen bg-gray-100">
       {/* Mobile overlay */}
       {sidebarOpen && (
@@ -119,13 +159,18 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
           <button onClick={() => setSidebarOpen(!sidebarOpen)} className="p-1.5 rounded-lg hover:bg-gray-100 transition-colors">
             <svg className="w-5 h-5 text-gray-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" /></svg>
           </button>
-          <div className="flex items-center gap-3">
-            <span className="text-sm text-gray-500">{user.email}</span>
+          <div className="flex items-center gap-4">
+            <EditLangToggle />
+            <div className="h-6 w-px bg-gray-200 hidden sm:block" />
+            <span className="text-sm text-gray-500 hidden sm:inline">{user.email}</span>
             <div className="w-8 h-8 bg-deep-green text-white rounded-full flex items-center justify-center text-xs font-semibold">
               {user.email?.charAt(0).toUpperCase()}
             </div>
           </div>
         </header>
+
+        {/* Migration notice (only when i18n DB bits are missing) */}
+        <MigrationNotice />
 
         {/* Page content */}
         <main className="flex-1 p-6">
@@ -133,5 +178,6 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
         </main>
       </div>
     </div>
+    </AdminEditLangProvider>
   );
 }

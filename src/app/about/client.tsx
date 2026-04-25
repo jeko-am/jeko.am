@@ -5,6 +5,8 @@ import Link from "next/link";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import EditorOverlay from "@/components/EditorOverlay";
+import { useT } from "@/lib/i18n/LangProvider";
+import HyText from "@/components/HyText";
 
 /* Decorative SVG components */
 function LeafShape({ className = "", fill = "#274C46", opacity = 0.2, style }: { className?: string; fill?: string; opacity?: number; style?: React.CSSProperties }) {
@@ -41,6 +43,7 @@ function PurpleDot({ className = "", size = 10, style }: { className?: string; s
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export default function AboutPageClient({ sections }: { sections: Record<string, any> }) {
+  const { t } = useT();
   const s = sections; // shorthand
 
   const timeline = [
@@ -212,11 +215,11 @@ export default function AboutPageClient({ sections }: { sections: Record<string,
                         {item.year}
                       </p>
                       <h2 className="text-[28px] md:text-[36px] font-semibold text-deep-green font-rubik leading-tight mb-6">
-                        {item.title}
+                        <HyText en={item.title} />
                         {item.titleHighlight && (
                           <>
                             <br />
-                            <span className="text-gold">{item.titleHighlight}</span>
+                            <span className="text-gold"><HyText en={item.titleHighlight} /></span>
                           </>
                         )}
                       </h2>
@@ -228,7 +231,7 @@ export default function AboutPageClient({ sections }: { sections: Record<string,
                               item.contentItalic?.[pIdx] ? "italic" : ""
                             }`}
                           >
-                            {para}
+                            <HyText en={para} />
                           </p>
                         ))}
                       </div>
@@ -245,12 +248,12 @@ export default function AboutPageClient({ sections }: { sections: Record<string,
                           {item.year}
                         </p>
                         <h2 className="text-[26px] md:text-[34px] font-semibold text-deep-green font-rubik leading-tight mb-4">
-                          {item.title}
+                          <HyText en={item.title} />
                           {item.titleHighlight && (
                             <>
                               <br />
                               <span className="text-gold">
-                                {item.titleHighlight}
+                                <HyText en={item.titleHighlight} />
                               </span>
                             </>
                           )}
@@ -261,7 +264,7 @@ export default function AboutPageClient({ sections }: { sections: Record<string,
                               key={pIdx}
                               className="text-deep-green text-[15px] leading-[1.75]"
                             >
-                              {para}
+                              <HyText en={para} />
                             </p>
                           ))}
                         </div>
@@ -302,16 +305,16 @@ export default function AboutPageClient({ sections }: { sections: Record<string,
           <section className="bg-deep-green py-16 md:py-20">
             <div className="max-w-[1200px] mx-auto px-6 text-center">
               <h2 className="text-[24px] md:text-[28px] font-semibold text-white font-rubik mb-1">
-                {s[6]?.heading ?? "Since 2012"}
+                <HyText en={s[6]?.heading ?? t("about.stats.heading")} />
               </h2>
               <p className="text-gold text-[22px] md:text-[28px] font-semibold font-rubik mb-5">
-                {s[6]?.subtitle ?? "we\u2019ve delivered"}
+                <HyText en={s[6]?.subtitle ?? t("about.stats.subtitle")} />
               </p>
               <div className="text-[52px] md:text-[72px] lg:text-[80px] font-bold text-gold font-rubik mb-5 leading-none tracking-tight">
                 {s[6]?.number ?? "92,871,751"}
               </div>
               <p className="text-[16px] text-white/80 max-w-lg mx-auto leading-relaxed">
-                {s[6]?.description ?? "meals and changed the lives of thousands of pets for the better"}
+                <HyText en={s[6]?.description ?? t("about.stats.description")} />
               </p>
             </div>
           </section>
@@ -343,13 +346,13 @@ export default function AboutPageClient({ sections }: { sections: Record<string,
               <div className="w-full md:w-[58%] bg-off-white flex items-center">
                 <div className="px-8 md:px-14 lg:px-20 py-12 md:py-16">
                   <h2 className="text-[28px] md:text-[36px] font-semibold text-deep-green font-rubik leading-tight mb-1">
-                    {s[7]?.heading ?? "Match now"}
+                    <HyText en={s[7]?.heading ?? t("about.learnMore.heading")} />
                   </h2>
                   <p className="text-gold text-[26px] md:text-[34px] font-semibold font-rubik mb-6">
-                    {s[7]?.subtitle ?? "about Jeko"}
+                    <HyText en={s[7]?.subtitle ?? t("about.learnMore.subtitle")} />
                   </p>
                   <p className="text-deep-green text-[15px] leading-[1.8]">
-                    {s[7]?.description ?? "Our dogs are a part of the family, so they deserve the best food. After all, healthy dogs live longer lives! Just tell us about your dog and we\u2019ll create tailored recipes so they can always enjoy healthy, delicious food that\u2019s delivered straight to your door. Simply add water, stir and serve."}
+                    <HyText en={s[7]?.description ?? "Our dogs are a part of the family, so they deserve the best food. After all, healthy dogs live longer lives! Just tell us about your dog and we\u2019ll create tailored recipes so they can always enjoy healthy, delicious food that\u2019s delivered straight to your door. Simply add water, stir and serve."} />
                   </p>
                 </div>
               </div>
@@ -364,19 +367,19 @@ export default function AboutPageClient({ sections }: { sections: Record<string,
               <div className="w-full md:w-[55%] flex items-center" style={{ backgroundColor: s[8]?.background_color || '#5F295E' }}>
                 <div className="px-8 md:px-14 lg:px-20 py-12 md:py-16">
                   <h2 className="text-[30px] md:text-[38px] font-semibold text-white font-rubik leading-tight mb-1">
-                    {s[8]?.heading ?? "Personalise your"}
+                    <HyText en={s[8]?.heading ?? t("about.personaliseCta.heading")} />
                   </h2>
                   <p className="text-gold text-[26px] md:text-[34px] font-semibold font-rubik mb-6">
-                    {s[8]?.subtitle ?? "dog\u2019s food"}
+                    <HyText en={s[8]?.subtitle ?? t("about.personaliseCta.subtitle")} />
                   </p>
                   <p className="text-white/85 text-[15px] leading-[1.8] mb-8 max-w-md">
-                    {s[8]?.description ?? "Proactively invest in your pet\u2019s health with a nutritious, vet-approved dog food that\u2019s trusted by thousands. Discover your dog\u2019s recipe today."}
+                    <HyText en={s[8]?.description ?? t("about.personaliseCta.description")} />
                   </p>
                   <Link
                     href={s[8]?.button_url ?? "/products"}
                     className="inline-block bg-gold text-deep-green px-7 py-3 rounded-[5px] font-semibold text-[16px] hover:bg-[#d99500] transition-colors"
                   >
-                    {s[8]?.button_text ?? "Discover your dog\u2019s menu"}
+                    <HyText en={s[8]?.button_text ?? t("about.personaliseCta.button")} />
                   </Link>
                 </div>
               </div>

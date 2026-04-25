@@ -3,9 +3,11 @@
 import { useAuth } from '@/lib/auth';
 import { useRouter, useSearchParams } from 'next/navigation';
 import Link from 'next/link';
-import { FormEvent, Suspense, useEffect, useState } from 'react';
+import { FormEvent, Suspense, useEffect, useRef, useState } from 'react';
+import { useT } from '@/lib/i18n/LangProvider';
 
 function CustomerLoginForm() {
+  const { t } = useT();
   const { signIn, signInWithGoogle, user, loading } = useAuth();
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -14,11 +16,15 @@ function CustomerLoginForm() {
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [error, setError] = useState<string | null>(oauthError === 'not_signed_up' ? 'No account found. Please sign up first.' : null);
+  const [error, setError] = useState<string | null>(oauthError === 'not_signed_up' ? t('auth.login.notSignedUp') : null);
   const [submitting, setSubmitting] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [googleLoading, setGoogleLoading] = useState(false);
-  const [signInAttempted, setSignInAttempted] = useState(false);
+  const [, setSignInAttempted] = useState(false);
+
+  // Ref to read latest user state inside async handlers without stale closures
+  const userRef = useRef(user);
+  useEffect(() => { userRef.current = user; }, [user]);
 
   // Redirect if already authenticated
   useEffect(() => {
@@ -27,22 +33,12 @@ function CustomerLoginForm() {
     }
   }, [user, loading, router, redirect]);
 
-  // Detect when user was auto-signed out due to missing pet profile
-  useEffect(() => {
-    if (signInAttempted && !loading && !user && submitting) {
-      // Auth completed but user is null - likely auto-signed out due to missing pet profile
-      setSubmitting(false);
-      setSignInAttempted(false);
-      setError('No pet profile found. Please sign up to create your profile.');
-    }
-  }, [signInAttempted, loading, user, submitting]);
-
   async function handleSubmit(e: FormEvent) {
     e.preventDefault();
     setError(null);
 
     if (!email.trim() || !password.trim()) {
-      setError('Please enter both email and password.');
+      setError(t('auth.login.bothRequired'));
       return;
     }
 
@@ -56,24 +52,42 @@ function CustomerLoginForm() {
         // Map common Supabase auth errors to user-friendly messages
         const message = signInError.message;
         if (message.includes('Invalid login credentials')) {
-          setError('Invalid email or password. Please try again.');
+          setError(t('auth.login.invalidCreds'));
         } else if (message.includes('Email not confirmed')) {
-          setError('Please verify your email address before signing in.');
+          setError(t('auth.login.unconfirmed'));
         } else if (message.includes('Too many requests')) {
-          setError('Too many login attempts. Please wait a moment and try again.');
+          setError(t('auth.login.tooManyRequests'));
         } else {
-          setError(message || 'An unexpected error occurred. Please try again.');
+          setError(message || t('auth.login.unexpected'));
         }
         setSubmitting(false);
         setSignInAttempted(false);
         return;
       }
 
-      // signIn succeeded -- the auth state listener in useAuth will update user,
-      // and the useEffect above will handle the redirect.
-      // We keep submitting=true so the button stays disabled during the redirect.
+      // signIn API call succeeded.  Give the auth-provider's onAuthStateChange
+      // listener time to query pet_profiles and either set user (profile exists)
+      // or sign out (no profile).  We poll the ref so we don't block longer than
+      // necessary for users with profiles.
+      const maxWait = 3000; // 3s safety cap
+      const pollMs = 250;
+      let waited = 0;
+      while (waited < maxWait) {
+        await new Promise((r) => setTimeout(r, pollMs));
+        waited += pollMs;
+        if (userRef.current) {
+          // Profile exists — redirect useEffect will handle navigation
+          return;
+        }
+      }
+
+      // After waiting, user is still null → auth provider signed them out
+      // because no pet profile exists (or a network issue prevented lookup).
+      setError(t('auth.login.noPetProfile'));
+      setSubmitting(false);
+      setSignInAttempted(false);
     } catch {
-      setError('A network error occurred. Please check your connection and try again.');
+      setError(t('auth.login.networkError'));
       setSubmitting(false);
       setSignInAttempted(false);
     }
@@ -85,7 +99,7 @@ function CustomerLoginForm() {
       <div className="min-h-screen bg-gradient-to-br from-deep-green to-green-800 flex items-center justify-center">
         <div className="flex flex-col items-center gap-3">
           <div className="w-10 h-10 border-4 border-gold border-t-transparent rounded-full animate-spin" />
-          <p className="text-sm text-white/60">Checking session...</p>
+          <p className="text-sm text-white/60">{t('auth.login.checkingSession')}</p>
         </div>
       </div>
     );
@@ -97,7 +111,7 @@ function CustomerLoginForm() {
       <div className="min-h-screen bg-gradient-to-br from-deep-green to-green-800 flex items-center justify-center">
         <div className="flex flex-col items-center gap-3">
           <div className="w-10 h-10 border-4 border-gold border-t-transparent rounded-full animate-spin" />
-          <p className="text-sm text-white/60">Redirecting...</p>
+          <p className="text-sm text-white/60">{t('auth.login.redirecting')}</p>
         </div>
       </div>
     );
@@ -116,7 +130,7 @@ function CustomerLoginForm() {
               <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                 <path strokeLinecap="round" strokeLinejoin="round" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
               </svg>
-              <span className="text-sm font-medium">Home</span>
+              <span className="text-sm font-medium">{t('auth.login.home')}</span>
             </Link>
           </div>
         </div>
@@ -126,8 +140,8 @@ function CustomerLoginForm() {
           <div className="inline-flex items-center justify-center w-16 h-16 bg-gold rounded-2xl mb-4 shadow-lg">
             <span className="text-deep-green font-bold text-2xl">PP</span>
           </div>
-          <h1 className="text-2xl font-bold text-white">Welcome Back!</h1>
-          <p className="text-white/70 text-sm mt-1">Sign in to your Jeko account</p>
+          <h1 className="text-2xl font-bold text-white">{t('auth.login.welcomeBackBang')}</h1>
+          <p className="text-white/70 text-sm mt-1">{t('auth.login.subtitleShort')}</p>
         </div>
 
         {/* Login Card */}
@@ -159,7 +173,7 @@ function CustomerLoginForm() {
                 <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/>
               </svg>
             )}
-            Continue with Google
+            {t('auth.login.continueWithGoogle')}
           </button>
 
           <div className="relative mb-6">
@@ -167,7 +181,7 @@ function CustomerLoginForm() {
               <div className="w-full border-t border-gray-200" />
             </div>
             <div className="relative flex justify-center text-xs">
-              <span className="bg-white px-3 text-gray-400">or sign in with email</span>
+              <span className="bg-white px-3 text-gray-400">{t('auth.login.orSignIn')}</span>
             </div>
           </div>
 
@@ -175,7 +189,7 @@ function CustomerLoginForm() {
             {/* Email */}
             <div>
               <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1.5">
-                Email address
+                {t('auth.login.emailLabel')}
               </label>
               <input
                 id="email"
@@ -185,7 +199,7 @@ function CustomerLoginForm() {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 disabled={submitting}
-                placeholder="your@email.com"
+                placeholder={t('auth.login.emailPlaceholder')}
                 className="w-full px-4 py-3 border border-gray-300 rounded-xl text-gray-900 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-deep-green focus:border-transparent transition-shadow disabled:bg-gray-50 disabled:text-gray-500"
               />
             </div>
@@ -193,7 +207,7 @@ function CustomerLoginForm() {
             {/* Password */}
             <div>
               <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-1.5">
-                Password
+                {t('auth.login.passwordLabel')}
               </label>
               <div className="relative">
                 <input
@@ -204,7 +218,7 @@ function CustomerLoginForm() {
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   disabled={submitting}
-                  placeholder="Enter your password"
+                  placeholder={t('auth.login.passwordPlaceholder')}
                   className="w-full px-4 py-3 border border-gray-300 rounded-xl text-gray-900 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-deep-green focus:border-transparent transition-shadow disabled:bg-gray-50 disabled:text-gray-500 pr-12"
                 />
                 <button
@@ -236,21 +250,21 @@ function CustomerLoginForm() {
               {submitting ? (
                 <>
                   <div className="w-5 h-5 border-2 border-deep-green/30 border-t-deep-green rounded-full animate-spin" />
-                  Signing in...
+                  {t('auth.login.signingIn')}
                 </>
               ) : (
-                'Sign In'
+                t('auth.login.submit')
               )}
             </button>
           </form>
 
           {/* Forgot Password */}
           <div className="mt-6 text-center">
-            <Link 
-              href="/forgot-password" 
+            <Link
+              href="/forgot-password"
               className="text-sm text-deep-green hover:text-green-700 transition-colors"
             >
-              Forgot your password?
+              {t('auth.login.forgotLink')}
             </Link>
           </div>
         </div>
@@ -258,19 +272,19 @@ function CustomerLoginForm() {
         {/* Sign Up Link */}
         <div className="text-center mt-6">
           <p className="text-white/70 text-sm">
-            Don&apos;t have an account?{' '}
-            <Link 
-              href="/auth/signup" 
+            {t('auth.login.noAccount')}{' '}
+            <Link
+              href="/auth/signup"
               className="text-gold hover:text-yellow-400 font-medium transition-colors"
             >
-              Sign up for free
+              {t('auth.login.signUpFree')}
             </Link>
           </p>
         </div>
 
         {/* Footer */}
         <p className="text-center text-white/30 text-xs mt-6">
-          Jeko &middot; Happy pets, happy owners
+          {t('auth.login.happyPets')}
         </p>
       </div>
     </div>

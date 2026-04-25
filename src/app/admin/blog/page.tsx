@@ -2,6 +2,7 @@
 
 import { supabase } from '@/lib/supabase';
 import { useEffect, useState, useCallback } from 'react';
+import { useAdminEditLang } from '@/lib/i18n/AdminEditLang';
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
@@ -17,6 +18,7 @@ interface BlogPost {
   tags: string[] | null;
   seo_title: string | null;
   seo_description: string | null;
+  i18n?: { hy?: { title?: string; body?: string; excerpt?: string } } | null;
   published_at: string | null;
   created_at: string;
   updated_at: string;
@@ -32,6 +34,7 @@ interface BlogPostFormData {
   tags: string[];
   seo_title: string;
   seo_description: string;
+  i18n: { hy?: { title?: string; body?: string; excerpt?: string } } | null;
 }
 
 const emptyForm: BlogPostFormData = {
@@ -44,6 +47,7 @@ const emptyForm: BlogPostFormData = {
   tags: [],
   seo_title: '',
   seo_description: '',
+  i18n: null,
 };
 
 // ─── Helpers ──────────────────────────────────────────────────────────────────
@@ -97,6 +101,51 @@ export default function BlogPage() {
   const [saving, setSaving] = useState(false);
   const [tagsInput, setTagsInput] = useState('');
   const [slugManuallyEdited, setSlugManuallyEdited] = useState(false);
+  const { editLang } = useAdminEditLang();
+
+  function getLocBlog(key: 'title' | 'body' | 'excerpt'): string {
+    if (editLang === 'hy') return form.i18n?.hy?.[key] ?? '';
+    return (form[key] as string) ?? '';
+  }
+  function setLocBlog(key: 'title' | 'body' | 'excerpt', value: string) {
+    if (editLang === 'hy') {
+      setForm((prev) => {
+        const hy = { ...(prev.i18n?.hy ?? {}) };
+        if (value) hy[key] = value; else delete hy[key];
+        return { ...prev, i18n: { ...(prev.i18n ?? {}), hy } };
+      });
+    } else {
+      setForm((prev) => ({ ...prev, [key]: value }));
+    }
+  }
+
+  const [translatingBlog, setTranslatingBlog] = useState<Record<string, boolean>>({});
+  async function autoTranslateBlog(key: 'title' | 'body' | 'excerpt') {
+    const source = (form[key] as string) ?? '';
+    if (!source.trim()) return;
+    setTranslatingBlog((s) => ({ ...s, [key]: true }));
+    try {
+      const res = await fetch('/api/translate', {
+        method: 'POST',
+        headers: { 'content-type': 'application/json' },
+        body: JSON.stringify({ text: source, target: 'hy' }),
+      });
+      const json = (await res.json()) as { translated?: string; error?: string };
+      if (res.ok && json.translated) setLocBlog(key, json.translated);
+    } finally {
+      setTranslatingBlog((s) => ({ ...s, [key]: false }));
+    }
+  }
+  useEffect(() => {
+    if (!modalOpen || editLang !== 'hy') return;
+    const hy = form.i18n?.hy ?? {};
+    (['title', 'body', 'excerpt'] as const).forEach((k) => {
+      const has = typeof hy[k] === 'string' && hy[k]!.length > 0;
+      const src = (form[k] as string) ?? '';
+      if (!has && src.trim() && !translatingBlog[k]) autoTranslateBlog(k);
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [editLang, modalOpen, editingPost?.id]);
 
   // Delete state
   const [deletePostId, setDeletePostId] = useState<string | null>(null);
@@ -155,6 +204,7 @@ export default function BlogPage() {
       tags: post.tags || [],
       seo_title: post.seo_title || '',
       seo_description: post.seo_description || '',
+      i18n: post.i18n ?? null,
     });
     setTagsInput((post.tags || []).join(', '));
     setSlugManuallyEdited(true); // Don't overwrite existing slug on edit
@@ -198,6 +248,7 @@ export default function BlogPage() {
       seo_title: form.seo_title || null,
       seo_description: form.seo_description || null,
     };
+    if (form.i18n && Object.keys(form.i18n).length > 0) payload.i18n = form.i18n;
 
     // Set published_at when status changes to published
     if (form.status === 'published') {
@@ -213,9 +264,16 @@ export default function BlogPage() {
         .eq('id', editingPost.id);
 
       if (updateError) {
-        setError(updateError.message);
-        setSaving(false);
-        return;
+        if (/column .*i18n.* does not exist/i.test(updateError.message) && 'i18n' in payload) {
+          delete payload.i18n;
+          const retry = await supabase.from('blog_posts').update({ ...payload, updated_at: new Date().toISOString() }).eq('id', editingPost.id);
+          if (retry.error) { setError(retry.error.message); setSaving(false); return; }
+          setError('Saved without Armenian translations — run the i18n migration to enable them.');
+        } else {
+          setError(updateError.message);
+          setSaving(false);
+          return;
+        }
       }
     } else {
       const { error: insertError } = await supabase
@@ -223,9 +281,16 @@ export default function BlogPage() {
         .insert([payload]);
 
       if (insertError) {
-        setError(insertError.message);
-        setSaving(false);
-        return;
+        if (/column .*i18n.* does not exist/i.test(insertError.message) && 'i18n' in payload) {
+          delete payload.i18n;
+          const retry = await supabase.from('blog_posts').insert([payload]);
+          if (retry.error) { setError(retry.error.message); setSaving(false); return; }
+          setError('Saved without Armenian translations — run the i18n migration to enable them.');
+        } else {
+          setError(insertError.message);
+          setSaving(false);
+          return;
+        }
       }
     }
 
@@ -507,12 +572,26 @@ export default function BlogPage() {
             <div className="p-6 space-y-5">
               {/* Title */}
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Title</label>
+                <label className="block text-sm font-medium text-gray-700 mb-1 flex items-center gap-2">
+                  <span>Title</span>
+                  {editLang === 'hy' && <span className="text-[10px] font-semibold text-deep-green/70 px-1.5 py-0.5 bg-deep-green/10 rounded">HY</span>}
+                  {editLang === 'hy' && (
+                    <button type="button" onClick={() => autoTranslateBlog('title')} disabled={!form.title || !!translatingBlog.title} className="ml-auto text-[10px] font-medium text-deep-green hover:underline disabled:opacity-50">
+                      {translatingBlog.title ? 'Translating…' : 'Auto-translate'}
+                    </button>
+                  )}
+                </label>
                 <input
                   type="text"
-                  value={form.title}
-                  onChange={(e) => handleTitleChange(e.target.value)}
-                  placeholder="Enter post title..."
+                  value={getLocBlog('title')}
+                  onChange={(e) => {
+                    if (editLang === 'hy') {
+                      setLocBlog('title', e.target.value);
+                    } else {
+                      handleTitleChange(e.target.value);
+                    }
+                  }}
+                  placeholder={editLang === 'hy' ? (form.title || 'Enter post title...') : 'Enter post title...'}
                   className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-deep-green/20 focus:border-deep-green outline-none"
                 />
               </div>
@@ -551,25 +630,41 @@ export default function BlogPage() {
 
               {/* Content */}
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Content</label>
+                <label className="block text-sm font-medium text-gray-700 mb-1 flex items-center gap-2">
+                  <span>Content</span>
+                  {editLang === 'hy' && <span className="text-[10px] font-semibold text-deep-green/70 px-1.5 py-0.5 bg-deep-green/10 rounded">HY</span>}
+                  {editLang === 'hy' && (
+                    <button type="button" onClick={() => autoTranslateBlog('body')} disabled={!form.body || !!translatingBlog.body} className="ml-auto text-[10px] font-medium text-deep-green hover:underline disabled:opacity-50">
+                      {translatingBlog.body ? 'Translating…' : 'Auto-translate'}
+                    </button>
+                  )}
+                </label>
                 <textarea
-                  value={form.body}
-                  onChange={(e) => setForm({ ...form, body: e.target.value })}
+                  value={getLocBlog('body')}
+                  onChange={(e) => setLocBlog('body', e.target.value)}
                   rows={12}
-                  placeholder="Write your blog post content here..."
+                  placeholder={editLang === 'hy' ? (form.body || 'Write your blog post content here...') : 'Write your blog post content here...'}
                   className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-deep-green/20 focus:border-deep-green outline-none resize-y font-mono leading-relaxed"
                 />
-                <p className="text-xs text-gray-400 mt-1">{form.body.length} characters</p>
+                <p className="text-xs text-gray-400 mt-1">{getLocBlog('body').length} characters</p>
               </div>
 
               {/* Excerpt */}
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Excerpt</label>
+                <label className="block text-sm font-medium text-gray-700 mb-1 flex items-center gap-2">
+                  <span>Excerpt</span>
+                  {editLang === 'hy' && <span className="text-[10px] font-semibold text-deep-green/70 px-1.5 py-0.5 bg-deep-green/10 rounded">HY</span>}
+                  {editLang === 'hy' && (
+                    <button type="button" onClick={() => autoTranslateBlog('excerpt')} disabled={!form.excerpt || !!translatingBlog.excerpt} className="ml-auto text-[10px] font-medium text-deep-green hover:underline disabled:opacity-50">
+                      {translatingBlog.excerpt ? 'Translating…' : 'Auto-translate'}
+                    </button>
+                  )}
+                </label>
                 <textarea
-                  value={form.excerpt}
-                  onChange={(e) => setForm({ ...form, excerpt: e.target.value })}
+                  value={getLocBlog('excerpt')}
+                  onChange={(e) => setLocBlog('excerpt', e.target.value)}
                   rows={3}
-                  placeholder="Brief summary of the post for listings and SEO..."
+                  placeholder={editLang === 'hy' ? (form.excerpt || 'Brief summary of the post for listings and SEO...') : 'Brief summary of the post for listings and SEO...'}
                   className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-deep-green/20 focus:border-deep-green outline-none resize-y"
                 />
               </div>

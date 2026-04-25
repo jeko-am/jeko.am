@@ -13,36 +13,13 @@ import {
 } from '@/lib/constants';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { FormEvent, useEffect, useMemo, useRef, useState } from 'react';
+import { useT } from '@/lib/i18n/LangProvider';
 
 /* ------------------------------------------------------------------ */
 /*  Quiz step definitions                                              */
 /* ------------------------------------------------------------------ */
 
 const TOTAL_STEPS = 9;
-
-const STEP_TITLES = [
-  'What type of pet do you have?',
-  'What breed?',
-  'Personality',
-  'Health & special needs',
-  'What do they love?',
-  'Looking for a match?',
-  'Add a photo & bio',
-  'Where are you located?',
-  'Create your account',
-];
-
-const STEP_MESSAGES = [
-  '🚀 Let\'s get started!',
-  '✨ Great start!',
-  '🎯 You\'re on a roll!',
-  '💪 Halfway there!',
-  '🔥 Getting warmer!',
-  '💕 One more thing...',
-  '✅ Getting close now!',
-  '🏁 Last lap!',
-  '🎊 Final step!',
-];
 
 /* ------------------------------------------------------------------ */
 /*  Tiny icons                                                         */
@@ -733,9 +710,34 @@ function BreedAutocomplete({
 /* ------------------------------------------------------------------ */
 
 function SignupPageInner() {
+  const { t } = useT();
   const { signUp, signInWithGoogle, user, loading: authLoading } = useAuth();
   const router = useRouter();
   const searchParams = useSearchParams();
+
+  const STEP_TITLES = [
+    t('auth.signup.stepTitle0'),
+    t('auth.signup.stepTitle1'),
+    t('auth.signup.stepTitle2'),
+    t('auth.signup.stepTitle3'),
+    t('auth.signup.stepTitle4'),
+    t('auth.signup.stepTitle5'),
+    t('auth.signup.stepTitle6'),
+    t('auth.signup.stepTitle7'),
+    t('auth.signup.stepTitle8'),
+  ];
+
+  const STEP_MESSAGES = [
+    t('auth.signup.motivate1'),
+    t('auth.signup.motivate2'),
+    t('auth.signup.motivate3'),
+    t('auth.signup.motivate4'),
+    t('auth.signup.motivate5'),
+    t('auth.signup.motivate6'),
+    t('auth.signup.motivate7'),
+    t('auth.signup.motivate8'),
+    t('auth.signup.motivate9'),
+  ];
 
   /* ---------- quiz state ---------- */
   const [step, setStep] = useState(0);
@@ -1152,7 +1154,7 @@ function SignupPageInner() {
   const [submitting, setSubmitting] = useState(false);
   const [submitError, setSubmitError] = useState(
     searchParams.get('error') === 'incomplete_signup'
-      ? 'Please complete the signup quiz before continuing.'
+      ? t('auth.signup.incompleteSignup')
       : ''
   );
 
@@ -1256,7 +1258,7 @@ function SignupPageInner() {
   }, []);
 
   /* ---------- pet name for questions ---------- */
-  const petName = dogName.trim() || 'your pet';
+  const petName = dogName.trim() || t('common.yourPet');
 
   /* ---------- photo upload ---------- */
   async function handlePhotoSelect(e: React.ChangeEvent<HTMLInputElement>) {
@@ -1276,7 +1278,7 @@ function SignupPageInner() {
         setUploadedPhotoUrl(data.url);
         return data.url;
       } catch (err) {
-        setErrors((prev) => ({ ...prev, profilePhoto: err instanceof Error ? err.message : 'Photo upload failed' }));
+        setErrors((prev) => ({ ...prev, profilePhoto: err instanceof Error ? err.message : t('auth.signup.err.photoUpload') }));
         setUploadedPhotoUrl('');
         return null;
       } finally {
@@ -1292,37 +1294,37 @@ function SignupPageInner() {
 
     // Step 0: Pet type & name
     if (s === 0) {
-      if (!petType) newErrors.petType = 'Please select your pet type';
-      if (!dogName.trim()) newErrors.dogName = 'Please enter a name';
+      if (!petType) newErrors.petType = t('auth.signup.err.petType');
+      if (!dogName.trim()) newErrors.dogName = t('auth.signup.err.petName');
     }
     // Step 1: Breed & details
     if (s === 1) {
-      if (!breed.trim()) newErrors.breed = 'Please select or type a breed';
-      if (!gender) newErrors.gender = 'Please select a gender';
-      if (!dogAge) newErrors.dogAge = 'Please enter your pet\'s age';
-      if (!weightKg) newErrors.weightKg = 'Please enter your pet\'s weight';
+      if (!breed.trim()) newErrors.breed = t('auth.signup.err.breed');
+      if (!gender) newErrors.gender = t('auth.signup.err.gender');
+      if (!dogAge) newErrors.dogAge = t('auth.signup.err.age');
+      if (!weightKg) newErrors.weightKg = t('auth.signup.err.weight');
     }
-    if (s === 2 && !temperament) newErrors.activityLevel = 'Please select a personality or skip this step';
+    if (s === 2 && !temperament) newErrors.activityLevel = t('auth.signup.err.personality');
     // Step 3: disabilities & allergies — no required validation, user can skip
-    if (s === 4 && dietPreferences.length === 0) newErrors.diet = 'Please select at least one diet option or skip this step';
-    if (s === 5 && lookingForMatch === null) newErrors.match = 'Please select Yes or No';
+    if (s === 4 && dietPreferences.length === 0) newErrors.diet = t('auth.signup.err.diet');
+    if (s === 5 && lookingForMatch === null) newErrors.match = t('auth.signup.err.match');
     if (s === 6) {
-      if (!uploadedPhotoUrl && !uploadingPhoto && !profilePhotoPreview) newErrors.profilePhoto = 'Please upload a photo of your pet';
+      if (!uploadedPhotoUrl && !uploadingPhoto && !profilePhotoPreview) newErrors.profilePhoto = t('auth.signup.err.photo');
     }
     if (s === 7) {
-      if (!country) newErrors.country = 'Please select a country';
-      if (!city.trim()) newErrors.city = 'City is required';
-      if (getStatesForCountry().length > 0 && !state.trim()) newErrors.state = 'State / Province is required';
+      if (!country) newErrors.country = t('auth.signup.err.country');
+      if (!city.trim()) newErrors.city = t('auth.signup.err.city');
+      if (getStatesForCountry().length > 0 && !state.trim()) newErrors.state = t('auth.signup.err.state');
     }
     if (s === 8) {
-      if (!fullName.trim()) newErrors.fullName = 'Full name is required';
-      if (!email.trim()) newErrors.email = 'Email is required';
-      else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) newErrors.email = 'Please enter a valid email';
-      if (!password) newErrors.password = 'Password is required';
-      else if (password.length < 6) newErrors.password = 'At least 6 characters';
-      if (!confirmPassword) newErrors.confirmPassword = 'Please confirm password';
-      else if (password !== confirmPassword) newErrors.confirmPassword = 'Passwords don\'t match';
-      if (age && (isNaN(Number(age)) || Number(age) < 1 || Number(age) > 120)) newErrors.age = 'Invalid age';
+      if (!fullName.trim()) newErrors.fullName = t('auth.signup.err.fullName');
+      if (!email.trim()) newErrors.email = t('auth.signup.err.email');
+      else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) newErrors.email = t('auth.signup.err.emailInvalid');
+      if (!password) newErrors.password = t('auth.signup.err.password');
+      else if (password.length < 6) newErrors.password = t('auth.signup.err.passwordShort');
+      if (!confirmPassword) newErrors.confirmPassword = t('auth.signup.err.confirm');
+      else if (password !== confirmPassword) newErrors.confirmPassword = t('auth.signup.err.mismatch');
+      if (age && (isNaN(Number(age)) || Number(age) < 1 || Number(age) > 120)) newErrors.age = t('auth.signup.err.invalidAge');
     }
 
     setErrors(newErrors);
@@ -1411,7 +1413,7 @@ function SignupPageInner() {
       }
       const { error: signUpError } = await signUp(email, password, { full_name: fullName });
       if (signUpError) {
-        setSubmitError(signUpError.message || 'Signup failed. Please try again.');
+        setSubmitError(signUpError.message || t('auth.signup.err.failed'));
         setSubmitting(false);
         return;
       }
@@ -1426,7 +1428,7 @@ function SignupPageInner() {
       if (!userId) {
         const { error: signInError } = await supabase.auth.signInWithPassword({ email, password });
         if (signInError) {
-          setSubmitError('Account created! Please check your email to verify, then log in.');
+          setSubmitError(t('auth.signup.err.emailCheck'));
           setSubmitting(false);
           return;
         }
@@ -1435,7 +1437,7 @@ function SignupPageInner() {
       }
 
       if (!userId) {
-        setSubmitError('Unable to retrieve session. Please try logging in.');
+        setSubmitError(t('auth.signup.err.session'));
         setSubmitting(false);
         return;
       }
@@ -1464,7 +1466,7 @@ function SignupPageInner() {
       }
 
       if (!userProfileSaved) {
-        setSubmitError('Failed to save profile. Please try again.');
+        setSubmitError(t('auth.signup.err.saveProfile'));
         setSubmitting(false);
         return;
       }
@@ -1514,7 +1516,7 @@ function SignupPageInner() {
 
       if (!petProfileSaved) {
         console.error('All pet_profiles save attempts failed:', lastError);
-        setSubmitError('Failed to save pet profile. Please try again or contact support.');
+        setSubmitError(t('auth.signup.err.savePet'));
         setSubmitting(false);
         return;
       }
@@ -1535,7 +1537,7 @@ function SignupPageInner() {
 
       router.push('/profile');
     } catch {
-      setSubmitError('An unexpected error occurred. Please try again.');
+      setSubmitError(t('auth.signup.err.unexpected'));
       setSubmitting(false);
     }
   }
@@ -1602,17 +1604,22 @@ function SignupPageInner() {
                 <h1 className="text-2xl sm:text-3xl font-rubik font-bold text-gold mb-6">
                   {STEP_TITLES[0]}
                 </h1>
-                <p className="text-deep-green/50 text-sm mb-8">Let&apos;s get started with the basics</p>
+                <p className="text-deep-green/50 text-sm mb-8">{t('auth.signup.step0Subtitle')}</p>
 
                 {/* Pet Type Selection */}
                 <div className="grid grid-cols-3 gap-4 mb-8">
                   {PET_TYPES.map((pt) => {
                     const icons: Record<string, React.ReactNode> = { Dog: QIcon.dog, Cat: QIcon.cat, Other: QIcon.paw };
+                    const labels: Record<string, string> = {
+                      Dog: t('auth.signup.petType.dog'),
+                      Cat: t('auth.signup.petType.cat'),
+                      Other: t('auth.signup.petType.other'),
+                    };
                     return (
                       <QuizCard
                         key={pt}
                         icon={icons[pt] || QIcon.paw}
-                        label={pt}
+                        label={labels[pt] || pt}
                         selected={petType === pt}
                         onClick={() => setPetType(pt)}
                       />
@@ -1624,13 +1631,13 @@ function SignupPageInner() {
                 {/* Pet Name Input */}
                 {petType && (
                   <div className="mt-8 max-w-md mx-auto">
-                    <label className="block text-sm font-medium text-deep-green mb-3">What&apos;s your {petType.toLowerCase()}&apos;s name?</label>
+                    <label className="block text-sm font-medium text-deep-green mb-3">{t('auth.signup.petNamePrompt', { type: petType.toLowerCase() })}</label>
                     <input
                       type="text"
                       value={dogName}
                       onChange={(e) => { if (e.target.value.length <= 30) setDogName(e.target.value); }}
                       onKeyDown={(e) => { if (e.key === 'Enter') { e.preventDefault(); goNext(); } }}
-                      placeholder="e.g. Buddy, Luna, Max..."
+                      placeholder={t('auth.signup.petNamePlaceholder')}
                       maxLength={30}
                       autoFocus
                       className={`w-full px-6 py-4 border-2 rounded-2xl text-lg text-center text-gray-900 placeholder:text-gray-300 focus:outline-none focus:ring-2 focus:ring-deep-green focus:border-transparent transition-shadow ${
@@ -1648,7 +1655,7 @@ function SignupPageInner() {
                   disabled={!petType || !dogName.trim()}
                   className="mt-8 bg-gold hover:bg-yellow-500 text-deep-green font-semibold py-3.5 px-10 rounded-2xl transition-all duration-200 shadow-sm hover:shadow-md text-lg disabled:opacity-40 disabled:cursor-not-allowed"
                 >
-                  Continue
+                  {t('auth.signup.continue')}
                 </button>
               </div>
             )}
@@ -1657,22 +1664,22 @@ function SignupPageInner() {
             {step === 1 && (
               <div className="w-full max-w-lg text-center">
                 <h1 className="text-2xl sm:text-3xl font-rubik font-bold text-gold mb-2">
-                  Tell us more about {petName}
+                  {t('auth.signup.step1Title', { name: petName })}
                 </h1>
-                <p className="text-deep-green/50 text-sm mb-8">Breed, gender, age & weight</p>
+                <p className="text-deep-green/50 text-sm mb-8">{t('auth.signup.step1Subtitle')}</p>
 
                 {/* Breed */}
                 <div className="bg-white/80 border-2 border-deep-green/20 rounded-2xl p-5 max-w-md mx-auto mb-6">
-                  <p className="text-sm font-semibold text-deep-green mb-3">What breed is {petName}?</p>
+                  <p className="text-sm font-semibold text-deep-green mb-3">{t('auth.signup.breedPrompt', { name: petName })}</p>
                   <BreedAutocomplete
                     value={breed}
                     onChange={setBreed}
-                    placeholder="Start typing a breed..."
+                    placeholder={t('auth.signup.breedPlaceholderStart')}
                     error={errors.breed}
                     petType={petType}
                   />
                   {/* Popular breeds quick-pick */}
-                  <p className="text-xs font-medium text-deep-green/70 mt-4 mb-2">Popular breeds</p>
+                  <p className="text-xs font-medium text-deep-green/70 mt-4 mb-2">{t('auth.signup.popularBreeds')}</p>
                   <div className="flex flex-wrap justify-center gap-2">
                     {(petType === 'Cat'
                       ? ['Maine Coon', 'Ragdoll', 'British Shorthair', 'Siamese', 'Persian', 'Bengal']
@@ -1695,11 +1702,11 @@ function SignupPageInner() {
                 </div>
 
                 {/* Gender */}
-                <p className="text-sm font-medium text-deep-green mb-3">Gender</p>
+                <p className="text-sm font-medium text-deep-green mb-3">{t('auth.signup.gender')}</p>
                 <div className="grid grid-cols-2 gap-3 max-w-xs mx-auto mb-6">
                   {[
-                    { value: 'Male', icon: QIcon.male, label: 'Boy' },
-                    { value: 'Female', icon: QIcon.female, label: 'Girl' },
+                    { value: 'Male', icon: QIcon.male, label: t('auth.signup.genderBoy') },
+                    { value: 'Female', icon: QIcon.female, label: t('auth.signup.genderGirl') },
                   ].map((g) => (
                     <QuizCard
                       key={g.value}
@@ -1716,13 +1723,13 @@ function SignupPageInner() {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4 max-w-md mx-auto">
                   {/* Age */}
                   <div>
-                    <label className="block text-sm font-medium text-deep-green mb-2">Age (years) <span className="text-red-400">*</span></label>
+                    <label className="block text-sm font-medium text-deep-green mb-2">{t('auth.signup.ageYears')} <span className="text-red-400">*</span></label>
                     <input
                       type="text"
                       inputMode="decimal"
                       value={dogAge}
                       onChange={(e) => { const v = e.target.value; if (v === '' || /^\d{0,2}(\.\d{0,1})?$/.test(v)) setDogAge(v); }}
-                      placeholder="e.g. 3"
+                      placeholder={t('auth.signup.agePlaceholder')}
                       className={`w-full px-4 py-3 border-2 rounded-xl text-center text-gray-900 placeholder:text-gray-300 focus:outline-none focus:ring-2 focus:ring-deep-green focus:border-transparent ${errors.dogAge ? 'border-red-400' : 'border-gray-200'}`}
                     />
                     {errors.dogAge && <p className="text-red-500 text-xs mt-1">{errors.dogAge}</p>}
@@ -1730,13 +1737,13 @@ function SignupPageInner() {
 
                   {/* Weight */}
                   <div>
-                    <label className="block text-sm font-medium text-deep-green mb-2">Weight (kg) <span className="text-red-400">*</span></label>
+                    <label className="block text-sm font-medium text-deep-green mb-2">{t('auth.signup.weightKg')} <span className="text-red-400">*</span></label>
                     <input
                       type="text"
                       inputMode="decimal"
                       value={weightKg}
                       onChange={(e) => { const v = e.target.value; if (v === '' || /^\d{0,3}(\.\d{0,1})?$/.test(v)) setWeightKg(v); }}
-                      placeholder="e.g. 12"
+                      placeholder={t('auth.signup.weightPlaceholder')}
                       className={`w-full px-4 py-3 border-2 rounded-xl text-center text-gray-900 placeholder:text-gray-300 focus:outline-none focus:ring-2 focus:ring-deep-green focus:border-transparent ${errors.weightKg ? 'border-red-400' : 'border-gray-200'}`}
                     />
                     {errors.weightKg && <p className="text-red-500 text-xs mt-1">{errors.weightKg}</p>}
@@ -1749,7 +1756,7 @@ function SignupPageInner() {
                   disabled={!breed.trim()}
                   className="mt-8 bg-gold hover:bg-yellow-500 text-deep-green font-semibold py-3.5 px-10 rounded-2xl transition-all duration-200 shadow-sm hover:shadow-md text-lg disabled:opacity-40 disabled:cursor-not-allowed"
                 >
-                  Continue
+                  {t('auth.signup.continue')}
                 </button>
               </div>
             )}
@@ -1758,11 +1765,11 @@ function SignupPageInner() {
             {step === 2 && (
               <div className="w-full max-w-lg text-center">
                 <h1 className="text-2xl sm:text-3xl font-rubik font-bold text-gold mb-2">
-                  How would you describe {petName}?
+                  {t('auth.signup.step2Title', { name: petName })}
                 </h1>
-                <p className="text-deep-green/50 text-sm mb-6">Pick what fits best</p>
+                <p className="text-deep-green/50 text-sm mb-6">{t('auth.signup.step2Subtitle')}</p>
 
-                <p className="text-sm font-medium text-deep-green mb-3">Personality</p>
+                <p className="text-sm font-medium text-deep-green mb-3">{t('auth.signup.personality')}</p>
                 <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 mb-8">
                   {TEMPERAMENTS.map((t) => {
                     const icons: Record<string, React.ReactNode> = {
@@ -1786,7 +1793,7 @@ function SignupPageInner() {
                   onClick={goNext}
                   className="bg-gold hover:bg-yellow-500 text-deep-green font-semibold py-3.5 px-10 rounded-2xl transition-all duration-200 shadow-sm hover:shadow-md text-lg"
                 >
-                  Continue
+                  {t('auth.signup.continue')}
                 </button>
               </div>
             )}
@@ -1795,11 +1802,11 @@ function SignupPageInner() {
             {step === 3 && (
               <div className="w-full max-w-lg text-center">
                 <h1 className="text-2xl sm:text-3xl font-rubik font-bold text-gold mb-2">
-                  {petName}&apos;s health & special needs
+                  {t('auth.signup.step3Title', { name: petName })}
                 </h1>
-                <p className="text-deep-green/50 text-sm mb-6">Help us understand any special considerations</p>
+                <p className="text-deep-green/50 text-sm mb-6">{t('auth.signup.step3Subtitle')}</p>
 
-                <p className="text-sm font-medium text-deep-green mb-3">Any disabilities?</p>
+                <p className="text-sm font-medium text-deep-green mb-3">{t('auth.signup.disabilitiesLabel')}</p>
                 <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-8">
                   {DISABILITIES.map((d) => {
                     const icons: Record<string, React.ReactNode> = {
@@ -1818,7 +1825,7 @@ function SignupPageInner() {
                   })}
                 </div>
 
-                <p className="text-sm font-medium text-deep-green mb-3">Any allergies?</p>
+                <p className="text-sm font-medium text-deep-green mb-3">{t('auth.signup.allergiesLabel')}</p>
                 <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-8">
                   {ALLERGIES.map((a) => {
                     const icons: Record<string, React.ReactNode> = {
@@ -1843,7 +1850,7 @@ function SignupPageInner() {
                   onClick={goNext}
                   className="bg-gold hover:bg-yellow-500 text-deep-green font-semibold py-3.5 px-10 rounded-2xl transition-all duration-200 shadow-sm hover:shadow-md text-lg"
                 >
-                  Continue
+                  {t('auth.signup.continue')}
                 </button>
               </div>
             )}
@@ -1852,11 +1859,11 @@ function SignupPageInner() {
             {step === 4 && (
               <div className="w-full max-w-lg text-center">
                 <h1 className="text-2xl sm:text-3xl font-rubik font-bold text-gold mb-2">
-                  What does {petName} love?
+                  {t('auth.signup.step4Title', { name: petName })}
                 </h1>
-                <p className="text-deep-green/50 text-sm mb-6">Help us find the perfect matches</p>
+                <p className="text-deep-green/50 text-sm mb-6">{t('auth.signup.step4Subtitle')}</p>
 
-                <p className="text-sm font-medium text-deep-green mb-3">Diet</p>
+                <p className="text-sm font-medium text-deep-green mb-3">{t('auth.signup.diet')}</p>
                 <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 mb-8">
                   {DIET_PREFERENCES.map((d) => {
                     const icons: Record<string, React.ReactNode> = {
@@ -1881,7 +1888,7 @@ function SignupPageInner() {
                   onClick={goNext}
                   className="bg-gold hover:bg-yellow-500 text-deep-green font-semibold py-3.5 px-10 rounded-2xl transition-all duration-200 shadow-sm hover:shadow-md text-lg"
                 >
-                  Continue
+                  {t('auth.signup.continue')}
                 </button>
               </div>
             )}
@@ -1891,9 +1898,9 @@ function SignupPageInner() {
             {step === 5 && (
               <div className="w-full max-w-lg text-center">
                 <h1 className="text-2xl sm:text-3xl font-rubik font-bold text-gold mb-2">
-                  Looking for a match?
+                  {t('auth.signup.step5Title')}
                 </h1>
-                <p className="text-deep-green/50 text-sm mb-6">Would you like {petName} to appear in matches with other pets?</p>
+                <p className="text-deep-green/50 text-sm mb-6">{t('auth.signup.step5Subtitle', { name: petName })}</p>
 
                 {/* Illustration */}
                 <div className="mb-8 flex justify-center">
@@ -1905,18 +1912,18 @@ function SignupPageInner() {
                 </div>
 
                 <div className="grid grid-cols-2 gap-4 max-w-xs mx-auto mb-8">
-                  <QuizCard icon={QIcon.heart} label="Yes!" selected={lookingForMatch === true} onClick={() => setLookingForMatch(true)} />
-                  <QuizCard icon={QIcon.no} label="No thanks" selected={lookingForMatch === false} onClick={() => { setLookingForMatch(false); setLookingForPlaymates(false); setLookingForMate(false); setLookingForWalkingBuddies(false); }} />
+                  <QuizCard icon={QIcon.heart} label={t('auth.signup.yes')} selected={lookingForMatch === true} onClick={() => setLookingForMatch(true)} />
+                  <QuizCard icon={QIcon.no} label={t('auth.signup.noThanks')} selected={lookingForMatch === false} onClick={() => { setLookingForMatch(false); setLookingForPlaymates(false); setLookingForMate(false); setLookingForWalkingBuddies(false); }} />
                 </div>
 
                 {lookingForMatch === true && (
                   <div className="flex items-center justify-center gap-2 mb-6">
                     <span className="text-lg">🐾</span>
-                    <p className="text-sm text-deep-green font-medium">{petName} will appear in searches now! You can customize match preferences later.</p>
+                    <p className="text-sm text-deep-green font-medium">{t('auth.signup.matchYes', { name: petName })}</p>
                   </div>
                 )}
                 {lookingForMatch === false && (
-                  <p className="text-sm text-deep-green/40 mb-6">{petName} won&apos;t appear in match results. You can change this and customize match preferences later.</p>
+                  <p className="text-sm text-deep-green/40 mb-6">{t('auth.signup.matchNo', { name: petName })}</p>
                 )}
 
                 {errors.match && <p className="text-red-500 text-sm mt-4">{errors.match}</p>}
@@ -1926,7 +1933,7 @@ function SignupPageInner() {
                   disabled={lookingForMatch === null}
                   className="mt-6 bg-gold hover:bg-yellow-500 text-deep-green font-semibold py-3.5 px-10 rounded-2xl transition-all duration-200 shadow-sm hover:shadow-md text-lg disabled:opacity-40 disabled:cursor-not-allowed"
                 >
-                  Continue
+                  {t('auth.signup.continue')}
                 </button>
               </div>
             )}
@@ -1935,9 +1942,9 @@ function SignupPageInner() {
             {step === 6 && (
               <div className="w-full max-w-md text-center">
                 <h1 className="text-2xl sm:text-3xl font-rubik font-bold text-gold mb-2">
-                  Show off {petName}!
+                  {t('auth.signup.step6Title', { name: petName })}
                 </h1>
-                <p className="text-deep-green/50 text-sm mb-8">Add a photo and tell us what makes them special</p>
+                <p className="text-deep-green/50 text-sm mb-8">{t('auth.signup.step6Subtitle')}</p>
 
                 {/* Photo upload — opens native file picker on click */}
                 <div
@@ -1970,7 +1977,7 @@ function SignupPageInner() {
                     ) : (
                       <div className="flex flex-col items-center gap-2">
                         <CameraIcon />
-                        <span className="text-xs text-gray-400">Tap to add photo</span>
+                        <span className="text-xs text-gray-400">{t('auth.signup.tapToAdd')}</span>
                       </div>
                     )}
                     {uploadingPhoto && (
@@ -1988,15 +1995,15 @@ function SignupPageInner() {
                   )}
                 </div>
                 {/* Photo guidance */}
-                <p className="text-xs text-deep-green/50 mb-1">📸 Please upload a clear photo of your pet — pets only, no humans! <span className="text-red-400">*Required</span></p>
-                <p className="text-xs text-gray-400 mb-3">Best size: at least 400×400px · JPG, PNG or WebP · max 5MB</p>
+                <p className="text-xs text-deep-green/50 mb-1">{t('auth.signup.photoHint')}</p>
+                <p className="text-xs text-gray-400 mb-3">{t('auth.signup.photoSize')}</p>
 
                 {/* URL input for photo (alternative to file upload) */}
                 <div className="max-w-sm mx-auto mb-5">
-                  <p className="text-xs text-deep-green/40 mb-1.5">Or paste an image URL:</p>
+                  <p className="text-xs text-deep-green/40 mb-1.5">{t('auth.signup.orPasteUrl')}</p>
                   <input
                     type="url"
-                    placeholder="https://example.com/my-pet.jpg"
+                    placeholder={t('auth.signup.urlPlaceholder')}
                     className="w-full px-4 py-2.5 border-2 border-gray-200 rounded-xl text-sm text-gray-900 placeholder:text-gray-300 focus:outline-none focus:ring-2 focus:ring-deep-green focus:border-transparent"
                     onBlur={(e) => {
                       const url = e.target.value.trim();
@@ -2025,7 +2032,7 @@ function SignupPageInner() {
                   onChange={(e) => setBio(e.target.value)}
                   rows={3}
                   maxLength={500}
-                  placeholder={`Anything special about ${petName} you think Jeko should know?`}
+                  placeholder={t('auth.signup.bioPlaceholder', { name: petName })}
                   className="w-full px-5 py-4 border-2 border-gray-200 rounded-2xl text-gray-900 placeholder:text-gray-300 focus:outline-none focus:ring-2 focus:ring-deep-green focus:border-transparent transition-shadow resize-none text-sm"
                 />
                 <p className="text-xs text-gray-400 text-right mt-1 mb-6">{bio.length}/500</p>
@@ -2035,7 +2042,7 @@ function SignupPageInner() {
                   onClick={goNext}
                   className="bg-gold hover:bg-yellow-500 text-deep-green font-semibold py-3.5 px-10 rounded-2xl transition-all duration-200 shadow-sm hover:shadow-md text-lg disabled:opacity-40 disabled:cursor-not-allowed"
                 >
-                  Continue
+                  {t('auth.signup.continue')}
                 </button>
               </div>
             )}
@@ -2044,19 +2051,19 @@ function SignupPageInner() {
             {step === 7 && (
               <div className="w-full max-w-md text-center">
                 <h1 className="text-2xl sm:text-3xl font-rubik font-bold text-gold mb-2">
-                  Where are you located?
+                  {t('auth.signup.step7Title')}
                 </h1>
-                <p className="text-deep-green/50 text-sm mb-8">Connect with nearby pet owners and local events</p>
+                <p className="text-deep-green/50 text-sm mb-8">{t('auth.signup.step7Subtitle')}</p>
 
                 <div className="space-y-4 text-left">
                   {/* Country Dropdown */}
                   <div>
-                    <label className="block text-sm font-medium text-deep-green mb-1.5">Country <span className="text-red-400">*</span></label>
+                    <label className="block text-sm font-medium text-deep-green mb-1.5">{t('auth.signup.country')} <span className="text-red-400">*</span></label>
                     <SearchableSelect
                       value={country}
                       onChange={(v) => { setCountry(v); setState(''); setCity(''); }}
                       options={worldCountries}
-                      placeholder="Select country"
+                      placeholder={t('auth.signup.selectCountry')}
                       error={errors.country}
                     />
                   </div>
@@ -2064,12 +2071,12 @@ function SignupPageInner() {
                   {/* State/Province - shown when states are available (hardcoded or API) */}
                   {getStatesForCountry().length > 0 && (
                     <div>
-                      <label className="block text-sm font-medium text-deep-green mb-1.5">State / Province <span className="text-red-400">*</span></label>
+                      <label className="block text-sm font-medium text-deep-green mb-1.5">{t('auth.signup.stateProvince')} <span className="text-red-400">*</span></label>
                       <SearchableSelect
                         value={state}
                         onChange={(v) => { setState(v); setCity(''); setApiCities([]); }}
                         options={getStatesForCountry()}
-                        placeholder={loadingStates ? "Loading states..." : "Select state / province"}
+                        placeholder={loadingStates ? t('auth.signup.loadingStates') : t('auth.signup.selectState')}
                         error={errors.state}
                         allowFreeText
                       />
@@ -2078,12 +2085,12 @@ function SignupPageInner() {
 
                   {/* City Dropdown */}
                   <div>
-                    <label className="block text-sm font-medium text-deep-green mb-1.5">City <span className="text-red-400">*</span></label>
+                    <label className="block text-sm font-medium text-deep-green mb-1.5">{t('auth.signup.city')} <span className="text-red-400">*</span></label>
                     <SearchableSelect
                       value={city}
                       onChange={setCity}
                       options={getAvailableCities()}
-                      placeholder={loadingCities ? "Loading cities..." : getAvailableCities().length > 0 ? "Select or type city" : "Type your city"}
+                      placeholder={loadingCities ? t('auth.signup.loadingCities') : getAvailableCities().length > 0 ? t('auth.signup.selectOrTypeCity') : t('auth.signup.typeCity')}
                       error={errors.city}
                       allowFreeText
                     />
@@ -2095,7 +2102,7 @@ function SignupPageInner() {
                   onClick={goNext}
                   className="mt-8 bg-gold hover:bg-yellow-500 text-deep-green font-semibold py-3.5 px-10 rounded-2xl transition-all duration-200 shadow-sm hover:shadow-md text-lg"
                 >
-                  Continue
+                  {t('auth.signup.continue')}
                 </button>
               </div>
             )}
@@ -2104,9 +2111,9 @@ function SignupPageInner() {
             {step === 8 && (
               <div className="w-full max-w-md text-center">
                 <h1 className="text-2xl sm:text-3xl font-rubik font-bold text-gold mb-2">
-                  Almost there! Create your account
+                  {t('auth.signup.step8Title')}
                 </h1>
-                <p className="text-deep-green/50 text-sm mb-6">Last step to join the pack</p>
+                <p className="text-deep-green/50 text-sm mb-6">{t('auth.signup.step8Subtitle')}</p>
 
                 {/* Google OAuth — primary option */}
                 <button
@@ -2125,7 +2132,7 @@ function SignupPageInner() {
                       <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/>
                     </svg>
                   )}
-                  Continue with Google
+                  {t('auth.login.continueWithGoogle')}
                 </button>
 
                 {/* Divider */}
@@ -2135,7 +2142,7 @@ function SignupPageInner() {
                     onClick={() => setShowEmailForm(true)}
                     className="text-sm text-deep-green/50 hover:text-deep-green transition-colors mb-6"
                   >
-                    or sign up with email instead
+                    {t('auth.signup.orSignUpEmail')}
                   </button>
                 ) : (
                   <div className="relative mb-6">
@@ -2143,7 +2150,7 @@ function SignupPageInner() {
                       <div className="w-full border-t border-gray-200" />
                     </div>
                     <div className="relative flex justify-center text-xs">
-                      <span className="bg-off-white px-3 text-gray-400">or sign up with email</span>
+                      <span className="bg-off-white px-3 text-gray-400">{t('auth.signup.orSignUpEmailDiv')}</span>
                     </div>
                   </div>
                 )}
@@ -2152,12 +2159,12 @@ function SignupPageInner() {
                 {showEmailForm && (
                 <div className="space-y-4 text-left">
                   <div>
-                    <label className="block text-sm font-medium text-deep-green mb-1.5">Full Name <span className="text-red-400">*</span></label>
+                    <label className="block text-sm font-medium text-deep-green mb-1.5">{t('auth.signup.fullName')} <span className="text-red-400">*</span></label>
                     <input
                       type="text"
                       value={fullName}
                       onChange={(e) => setFullName(e.target.value)}
-                      placeholder="Sarah Miller"
+                      placeholder={t('auth.signup.fullNamePlaceholder')}
                       className={`w-full px-5 py-3.5 border-2 rounded-xl text-gray-900 placeholder:text-gray-300 focus:outline-none focus:ring-2 focus:ring-deep-green focus:border-transparent transition-shadow ${
                         errors.fullName ? 'border-red-400' : 'border-gray-200'
                       }`}
@@ -2166,13 +2173,13 @@ function SignupPageInner() {
                   </div>
 
                   <div>
-                    <label className="block text-sm font-medium text-deep-green mb-1.5">Email <span className="text-red-400">*</span></label>
+                    <label className="block text-sm font-medium text-deep-green mb-1.5">{t('auth.signup.emailLabel')} <span className="text-red-400">*</span></label>
                     <input
                       type="email"
                       autoComplete="email"
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
-                      placeholder="sarah@example.com"
+                      placeholder={t('auth.signup.emailPlaceholder')}
                       className={`w-full px-5 py-3.5 border-2 rounded-xl text-gray-900 placeholder:text-gray-300 focus:outline-none focus:ring-2 focus:ring-deep-green focus:border-transparent transition-shadow ${
                         errors.email ? 'border-red-400' : 'border-gray-200'
                       }`}
@@ -2181,14 +2188,14 @@ function SignupPageInner() {
                   </div>
 
                   <div>
-                    <label className="block text-sm font-medium text-deep-green mb-1.5">Password <span className="text-red-400">*</span></label>
+                    <label className="block text-sm font-medium text-deep-green mb-1.5">{t('auth.signup.passwordLabel')} <span className="text-red-400">*</span></label>
                     <div className="relative">
                       <input
                         type={showPassword ? 'text' : 'password'}
                         autoComplete="new-password"
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
-                        placeholder="Min. 6 characters"
+                        placeholder={t('auth.signup.passwordPlaceholder')}
                         className={`w-full px-5 py-3.5 pr-12 border-2 rounded-xl text-gray-900 placeholder:text-gray-300 focus:outline-none focus:ring-2 focus:ring-deep-green focus:border-transparent transition-shadow ${
                           errors.password ? 'border-red-400' : 'border-gray-200'
                         }`}
@@ -2201,14 +2208,14 @@ function SignupPageInner() {
                   </div>
 
                   <div>
-                    <label className="block text-sm font-medium text-deep-green mb-1.5">Confirm Password <span className="text-red-400">*</span></label>
+                    <label className="block text-sm font-medium text-deep-green mb-1.5">{t('auth.signup.confirmLabel')} <span className="text-red-400">*</span></label>
                     <div className="relative">
                       <input
                         type={showConfirmPassword ? 'text' : 'password'}
                         autoComplete="new-password"
                         value={confirmPassword}
                         onChange={(e) => setConfirmPassword(e.target.value)}
-                        placeholder="Re-enter your password"
+                        placeholder={t('auth.signup.confirmPlaceholder')}
                         className={`w-full px-5 py-3.5 pr-12 border-2 rounded-xl text-gray-900 placeholder:text-gray-300 focus:outline-none focus:ring-2 focus:ring-deep-green focus:border-transparent transition-shadow ${
                           errors.confirmPassword ? 'border-red-400' : 'border-gray-200'
                         }`}
@@ -2222,12 +2229,12 @@ function SignupPageInner() {
 
                   {/* Optional fields */}
                   <div>
-                    <label className="block text-sm font-medium text-deep-green mb-1.5">Phone <span className="text-gray-400 text-xs">(optional)</span></label>
+                    <label className="block text-sm font-medium text-deep-green mb-1.5">{t('auth.signup.phone')} <span className="text-gray-400 text-xs">{t('auth.signup.optional')}</span></label>
                     <input
                       type="tel"
                       value={phone}
                       onChange={(e) => setPhone(e.target.value)}
-                      placeholder="+44 7700..."
+                      placeholder={t('auth.signup.phonePlaceholder')}
                       className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl text-gray-900 placeholder:text-gray-300 focus:outline-none focus:ring-2 focus:ring-deep-green focus:border-transparent transition-shadow"
                     />
                   </div>
@@ -2241,8 +2248,8 @@ function SignupPageInner() {
                       className="mt-0.5 w-5 h-5 text-deep-green border-gray-300 rounded focus:ring-deep-green accent-deep-green"
                     />
                     <div>
-                      <p className="text-sm font-medium text-gray-700">Share pet info with matches</p>
-                      <p className="text-xs text-gray-400 mt-0.5">Other pet owners can see your info to arrange meetups</p>
+                      <p className="text-sm font-medium text-gray-700">{t('auth.signup.shareInfo')}</p>
+                      <p className="text-xs text-gray-400 mt-0.5">{t('auth.signup.shareInfoSub')}</p>
                     </div>
                   </label>
 
@@ -2254,11 +2261,11 @@ function SignupPageInner() {
                     {submitting ? (
                       <>
                         <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-                        Creating Account...
+                        {t('auth.signup.creating')}
                       </>
                     ) : (
                       <>
-                        Join the Pack
+                        {t('auth.signup.joinPack')}
                         <PawIcon />
                       </>
                     )}
@@ -2267,7 +2274,7 @@ function SignupPageInner() {
                 )}
 
                 <p className="text-center text-deep-green/30 text-xs mt-6">
-                  By creating an account you agree to our Terms of Service and Privacy Policy.
+                  {t('auth.signup.termsShort')}
                 </p>
               </div>
             )}

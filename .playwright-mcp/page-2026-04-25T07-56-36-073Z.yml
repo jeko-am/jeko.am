@@ -1,0 +1,213 @@
+- generic [active] [ref=e1]:
+  - banner [ref=e2]:
+    - generic [ref=e4]:
+      - link "JEKO" [ref=e5] [cursor=pointer]:
+        - /url: /
+        - generic [ref=e6]: JEKO
+      - navigation [ref=e7]:
+        - link "Մեր մասին" [ref=e9] [cursor=pointer]:
+          - /url: /about
+          - text: Մեր մասին
+          - img [ref=e10]
+        - link "Համայնք" [ref=e13] [cursor=pointer]:
+          - /url: /community
+          - text: Համայնք
+          - img [ref=e14]
+        - link "Խանութ" [ref=e17] [cursor=pointer]:
+          - /url: /products
+        - link "Կարծիքներ" [ref=e19] [cursor=pointer]:
+          - /url: /reviews
+        - link "Առողջապահական օգուտներ" [ref=e21] [cursor=pointer]:
+          - /url: /benefits
+          - text: Առողջապահական օգուտներ
+          - img [ref=e22]
+      - generic [ref=e24]:
+        - button "Switch language" [ref=e26] [cursor=pointer]:
+          - generic [ref=e27]: 🇦🇲
+          - generic [ref=e28]: HY
+          - img [ref=e29]
+        - button "Shopping cart" [ref=e31] [cursor=pointer]:
+          - img [ref=e32]
+        - link "Օգնություն" [ref=e36] [cursor=pointer]:
+          - /url: /contact
+        - link "Մուտք" [ref=e37] [cursor=pointer]:
+          - /url: /login
+        - link "Գրանցվել" [ref=e38] [cursor=pointer]:
+          - /url: /auth/signup
+  - main [ref=e39]:
+    - generic [ref=e40]:
+      - img "Weight management" [ref=e42]
+      - generic [ref=e45]:
+        - paragraph [ref=e46]: Առողջություն և սնուցում
+        - heading "Weight management for dogs" [level=1] [ref=e47]
+        - paragraph [ref=e48]: Over half of UK dogs are overweight. A natural, portion-controlled diet is the most effective way to help your dog reach and maintain a healthy weight.
+        - link "Ստեղծել քո շան պլանը" [ref=e49] [cursor=pointer]:
+          - /url: /auth/signup
+    - generic [ref=e51]:
+      - heading "Why weight matters for your dog" [level=2] [ref=e52]
+      - generic [ref=e53]:
+        - paragraph [ref=e54]: Obesity is now the most common nutritional disorder in dogs. Studies suggest that over 50% of dogs in the UK are carrying excess weight. It's a serious health issue that can shorten your dog's life by up to two years and significantly reduce their quality of life.
+        - paragraph [ref=e55]: Carrying extra weight puts strain on joints, increases the risk of diabetes, heart disease, and certain cancers, and makes breathing harder — especially for flat-faced breeds. Even being slightly overweight can have a measurable impact on mobility and energy levels.
+        - paragraph [ref=e56]: "The cause is almost always simple: too many calories in, not enough energy out. But the type of food matters enormously too. Highly processed foods with fillers and low-quality carbohydrates can leave dogs feeling hungry even when they've eaten enough calories, leading to overeating."
+    - generic [ref=e58]:
+      - heading "Ուշադրություն դարձրու այս նշաններին" [level=2] [ref=e59]
+      - paragraph [ref=e60]: Եթե քո շունը ցույց է տալիս այս ախտանիշներից որևէ մեկը, ճիշտ սնունդը կարող է մեծ փոփոխություն բերել։
+      - generic [ref=e61]:
+        - generic [ref=e62]:
+          - generic [ref=e63]: 👀
+          - heading "No visible waist" [level=3] [ref=e64]
+          - paragraph [ref=e65]: When viewed from above, a healthy dog should have a visible waist behind the ribs. If the body is oval or barrel-shaped, they may be overweight.
+        - generic [ref=e66]:
+          - generic [ref=e67]: 🦴
+          - heading "Can't feel ribs easily" [level=3] [ref=e68]
+          - paragraph [ref=e69]: You should be able to feel your dog's ribs with gentle pressure. If you need to press firmly, there's likely excess fat covering them.
+        - generic [ref=e70]:
+          - generic [ref=e71]: 😮‍💨
+          - heading "Getting tired quickly" [level=3] [ref=e72]
+          - paragraph [ref=e73]: If your dog tires easily on walks, pants heavily, or seems reluctant to exercise, excess weight may be the cause.
+        - generic [ref=e74]:
+          - generic [ref=e75]: 🐌
+          - heading "Difficulty moving" [level=3] [ref=e76]
+          - paragraph [ref=e77]: Struggling to get up, reluctance to climb stairs, or stiffness after rest can indicate weight-related joint strain.
+        - generic [ref=e78]:
+          - generic [ref=e79]: 😴
+          - heading "Sleeping more" [level=3] [ref=e80]
+          - paragraph [ref=e81]: Overweight dogs often sleep more and show less interest in play and activity than they used to.
+        - generic [ref=e82]:
+          - generic [ref=e83]: 🍽️
+          - heading "Always hungry" [level=3] [ref=e84]
+          - paragraph [ref=e85]: Constant begging or food-seeking behaviour can indicate that current food isn't providing the right nutrients despite having enough calories.
+    - generic [ref=e87]:
+      - img "Natural dog food" [ref=e89]
+      - generic [ref=e91]:
+        - heading "Healthy weight through" [level=2] [ref=e92]
+        - paragraph [ref=e93]: ճիշտ սնուցման միջոցով
+        - paragraph [ref=e94]: The best weight management approach isn't about feeding less of the same food — it's about feeding the right food. Natural, nutrient-dense meals satisfy your dog with quality ingredients, so they feel fuller for longer without excess empty calories.
+        - generic [ref=e95]:
+          - generic [ref=e96]:
+            - img [ref=e98]
+            - generic [ref=e100]:
+              - paragraph [ref=e101]: Personalised portions
+              - paragraph [ref=e102]: Meals tailored to your dog's exact breed, age, weight, and activity level — no guesswork, no overfeeding.
+          - generic [ref=e103]:
+            - img [ref=e105]
+            - generic [ref=e107]:
+              - paragraph [ref=e108]: High-quality protein
+              - paragraph [ref=e109]: Real meat protein helps maintain lean muscle mass while your dog loses fat, keeping their metabolism healthy.
+          - generic [ref=e110]:
+            - img [ref=e112]
+            - generic [ref=e114]:
+              - paragraph [ref=e115]: No fillers or empty calories
+              - paragraph [ref=e116]: No cheap bulking agents, excess starch, or artificial ingredients that add calories without nutrition.
+          - generic [ref=e117]:
+            - img [ref=e119]
+            - generic [ref=e121]:
+              - paragraph [ref=e122]: Natural satiety
+              - paragraph [ref=e123]: Whole food ingredients with natural fibre help your dog feel satisfied after meals, reducing begging and food-seeking.
+    - generic [ref=e125]:
+      - img "Tom, Lisa & Baxter" [ref=e127]
+      - blockquote [ref=e128]: “Our Beagle was 4kg overweight and it was affecting his joints. We'd tried reducing his kibble but he was miserable and always hungry. Switching to natural food was transformative — he lost the weight gradually over 4 months, and he actually eats more volume than before because the food is so much less calorie-dense. He runs around like a puppy again.”
+      - paragraph [ref=e129]: Tom, Lisa & Baxter
+    - generic [ref=e131]:
+      - heading "Հաճախակի տրվող հարցեր" [level=2] [ref=e132]
+      - generic [ref=e133]:
+        - group [ref=e134]:
+          - generic "How do I know if my dog is overweight?" [ref=e135] [cursor=pointer]:
+            - text: How do I know if my dog is overweight?
+            - img [ref=e136]
+        - group [ref=e138]:
+          - generic "How quickly should my dog lose weight?" [ref=e139] [cursor=pointer]:
+            - text: How quickly should my dog lose weight?
+            - img [ref=e140]
+        - group [ref=e142]:
+          - generic "Should I just feed less of their current food?" [ref=e143] [cursor=pointer]:
+            - text: Should I just feed less of their current food?
+            - img [ref=e144]
+        - group [ref=e146]:
+          - generic "How much exercise does my overweight dog need?" [ref=e147] [cursor=pointer]:
+            - text: How much exercise does my overweight dog need?
+            - img [ref=e148]
+    - generic [ref=e151]:
+      - generic [ref=e153]:
+        - heading "Պատրա՞ստ եք օգնել ձեր" [level=2] [ref=e154]
+        - paragraph [ref=e155]: շանը լավ զգալու
+        - paragraph [ref=e156]: Պատմեք մեզ ձեր շան մասին, և մենք կստեղծենք անհատական ճաշացանկ՝ նախատեսված նրա հատուկ կարիքները հոգալու համար։ Անասնաբույժի հաստատմամբ, վստահված հազարավորների կողմից։
+        - link "Բացահայտել քո շան ճաշացանկը" [ref=e157] [cursor=pointer]:
+          - /url: /products
+      - img "Happy healthy dog" [ref=e159]
+  - contentinfo [ref=e160]:
+    - generic [ref=e161]:
+      - generic [ref=e162]:
+        - generic [ref=e163]:
+          - heading "Միացիր մեր VIP ցանկին" [level=4] [ref=e164]
+          - paragraph [ref=e165]: Առաջինը իմացիր նոր ապրանքների մասին, մասնակցիր բացառիկ մրցույթների և ստացիր օգտակար խորհուրդներ ընտանի կենդանիների խնամքի մասին։
+          - generic [ref=e166]:
+            - textbox "Մուտքագրիր քո էլ. փոստի հասցեն" [ref=e167]
+            - button "Գրանցվել" [ref=e168] [cursor=pointer]
+        - generic [ref=e169]:
+          - generic [ref=e170]:
+            - heading "Jeko" [level=4] [ref=e171]
+            - list [ref=e172]:
+              - listitem [ref=e173]:
+                - link "Մեր պատմությունը" [ref=e174] [cursor=pointer]:
+                  - /url: /about
+              - listitem [ref=e175]:
+                - link "Կարծիքներ" [ref=e176] [cursor=pointer]:
+                  - /url: /reviews
+              - listitem [ref=e177]:
+                - link "Բաղադրատոմսեր" [ref=e178] [cursor=pointer]:
+                  - /url: /recipes
+              - listitem [ref=e179]:
+                - link "Ավելին քան ամանը" [ref=e180] [cursor=pointer]:
+                  - /url: /beyond-the-bowl
+              - listitem [ref=e181]:
+                - link "Խանութ" [ref=e182] [cursor=pointer]:
+                  - /url: /products
+              - listitem [ref=e183]:
+                - link "Համայնք" [ref=e184] [cursor=pointer]:
+                  - /url: /community
+          - generic [ref=e185]:
+            - heading "Օգնություն" [level=4] [ref=e186]
+            - list [ref=e187]:
+              - listitem [ref=e188]:
+                - link "Իմ հաշիվը" [ref=e189] [cursor=pointer]:
+                  - /url: /profile
+              - listitem [ref=e190]:
+                - link "Կապ մեզ հետ" [ref=e191] [cursor=pointer]:
+                  - /url: /contact
+              - listitem [ref=e192]:
+                - link "Առաքման տեղեկատվություն" [ref=e193] [cursor=pointer]:
+                  - /url: /delivery-information
+              - listitem [ref=e194]:
+                - link "Վերադարձներ" [ref=e195] [cursor=pointer]:
+                  - /url: /returns
+              - listitem [ref=e196]:
+                - link "Կայքի քարտեզ" [ref=e197] [cursor=pointer]:
+                  - /url: /sitemap-page
+          - generic [ref=e198]:
+            - heading "Տեղեկատվություն" [level=4] [ref=e199]
+            - list [ref=e200]:
+              - listitem [ref=e201]:
+                - link "Գաղտնիության քաղաքականություն" [ref=e202] [cursor=pointer]:
+                  - /url: /privacy-policy
+              - listitem [ref=e203]:
+                - link "Պայմաններ և դրույթներ" [ref=e204] [cursor=pointer]:
+                  - /url: /terms-of-use
+              - listitem [ref=e205]:
+                - link "Jeko-ի քաղաքականություն" [ref=e206] [cursor=pointer]:
+                  - /url: /pure-policies
+              - listitem [ref=e207]:
+                - link "Կայքի անվտանգություն" [ref=e208] [cursor=pointer]:
+                  - /url: /site-security
+              - listitem [ref=e209]:
+                - link "Cookie-ների քաղաքականություն" [ref=e210] [cursor=pointer]:
+                  - /url: /cookie-policy
+      - generic [ref=e211]:
+        - generic [ref=e213]: JEKO
+        - paragraph [ref=e214]: © Jeko 2020-2026
+  - generic:
+    - generic:
+      - paragraph: Հաու՜ 🐾
+      - paragraph: Գտիր ընկեր քո կենդանու համար։
+    - button "Find pet matches":
+      - img "Jeko dog"

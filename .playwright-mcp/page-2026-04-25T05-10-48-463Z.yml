@@ -1,0 +1,226 @@
+- generic [active] [ref=e1]:
+  - banner [ref=e176]:
+    - generic [ref=e178]:
+      - link "JEKO" [ref=e179] [cursor=pointer]:
+        - /url: /
+        - generic [ref=e180]: JEKO
+      - navigation [ref=e181]:
+        - link "Մեր մասին" [ref=e183] [cursor=pointer]:
+          - /url: /about
+          - text: Մեր մասին
+          - img [ref=e184]
+        - link "Համայնք" [ref=e187] [cursor=pointer]:
+          - /url: /community
+          - text: Համայնք
+          - img [ref=e188]
+        - link "Խանութ" [ref=e191] [cursor=pointer]:
+          - /url: /products
+        - link "Կարծիքներ" [ref=e193] [cursor=pointer]:
+          - /url: /reviews
+        - link "Առողջապահական օգուտներ" [ref=e195] [cursor=pointer]:
+          - /url: /benefits
+          - text: Առողջապահական օգուտներ
+          - img [ref=e196]
+      - generic [ref=e198]:
+        - button "Switch language" [ref=e200] [cursor=pointer]:
+          - generic [ref=e201]: 🇦🇲
+          - generic [ref=e202]: HY
+          - img [ref=e203]
+        - button "Shopping cart" [ref=e205] [cursor=pointer]:
+          - img [ref=e206]
+  - main [ref=e210]:
+    - generic [ref=e211]:
+      - generic [ref=e212]:
+        - heading "Community" [level=1] [ref=e213]
+        - paragraph [ref=e214]: Share moments, connect with fellow pet parents, and celebrate your furry friends.
+      - generic [ref=e216]:
+        - generic [ref=e217]:
+          - generic [ref=e218]:
+            - generic [ref=e219]: A
+            - generic [ref=e220]:
+              - generic [ref=e221]:
+                - paragraph [ref=e222]: admin
+                - generic [ref=e223]: Admin
+              - paragraph [ref=e224]: Labrador Retriever
+          - textbox "Կիսվեք ինչ-որ բանով ոհմակի հետ..." [ref=e225]
+          - generic [ref=e227]: 0/500
+        - generic [ref=e228]:
+          - generic [ref=e230] [cursor=pointer]:
+            - img [ref=e231]
+            - text: Add photo
+          - button "Post" [disabled] [ref=e235]
+      - generic [ref=e237]:
+        - button "Բոլորը" [ref=e238] [cursor=pointer]: Բոլորը
+        - button "Հետևում եմ" [ref=e240] [cursor=pointer]
+        - button "Տրենդային" [ref=e241] [cursor=pointer]
+      - generic [ref=e242]:
+        - article [ref=e243]:
+          - img "Photo by test" [ref=e244]
+          - generic [ref=e245]:
+            - paragraph [ref=e246]:
+              - text: Սա թեստի նկարագրություն է
+              - generic [ref=e247]: HY · auto
+            - button "Add Armenian Translation" [ref=e248] [cursor=pointer]
+          - generic [ref=e249]:
+            - generic [ref=e250]: T
+            - generic [ref=e251]:
+              - generic [ref=e252]: test
+              - generic [ref=e253]: Labrador Retriever
+              - generic [ref=e254]: Abovyan
+            - button "Հետևել" [ref=e255] [cursor=pointer]
+          - generic [ref=e256]:
+            - generic [ref=e257]: 1d ago
+            - generic [ref=e258]:
+              - button "Ջնջել գրառումը" [ref=e260] [cursor=pointer]:
+                - img [ref=e261]
+              - button "Բողոքարկել" [ref=e263] [cursor=pointer]:
+                - img [ref=e264]
+          - generic [ref=e266]:
+            - button "1" [ref=e267] [cursor=pointer]:
+              - img [ref=e268]
+              - generic [ref=e270]: "1"
+            - button "4" [ref=e271] [cursor=pointer]:
+              - img [ref=e272]
+              - generic [ref=e274]: "4"
+            - button [ref=e276] [cursor=pointer]:
+              - img [ref=e277]
+        - article [ref=e280]:
+          - img "Photo by test1" [ref=e281]
+          - paragraph [ref=e283]:
+            - text: Սա թեստային նկարագրություն է
+            - generic [ref=e284]: HY
+          - generic [ref=e285]:
+            - generic [ref=e286]: T
+            - generic [ref=e288]: test1
+            - button "Հետևել" [ref=e289] [cursor=pointer]
+          - generic [ref=e290]:
+            - generic [ref=e291]: 1d ago
+            - generic [ref=e292]:
+              - button "Ջնջել գրառումը" [ref=e294] [cursor=pointer]:
+                - img [ref=e295]
+              - button "Բողոքարկել" [ref=e297] [cursor=pointer]:
+                - img [ref=e298]
+          - generic [ref=e300]:
+            - button "1" [ref=e301] [cursor=pointer]:
+              - img [ref=e302]
+              - generic [ref=e304]: "1"
+            - button "0" [ref=e305] [cursor=pointer]:
+              - img [ref=e306]
+              - generic [ref=e308]: "0"
+            - button [ref=e310] [cursor=pointer]:
+              - img [ref=e311]
+        - article [ref=e314]:
+          - generic [ref=e315]:
+            - paragraph [ref=e316]:
+              - text: sshsjd
+              - generic [ref=e317]: HY · auto
+            - button "Add Armenian Translation" [ref=e318] [cursor=pointer]
+          - generic [ref=e319]:
+            - generic [ref=e320]: M
+            - generic [ref=e321]:
+              - generic [ref=e322]: miller
+              - generic [ref=e323]: Labrador Retriever
+              - generic [ref=e324]: Abovyan
+            - button "Հետևել" [ref=e325] [cursor=pointer]
+          - generic [ref=e326]:
+            - generic [ref=e327]: 2d ago
+            - generic [ref=e328]:
+              - button "Ջնջել գրառումը" [ref=e330] [cursor=pointer]:
+                - img [ref=e331]
+              - button "Բողոքարկել" [ref=e333] [cursor=pointer]:
+                - img [ref=e334]
+          - generic [ref=e336]:
+            - button "1" [ref=e337] [cursor=pointer]:
+              - img [ref=e338]
+              - generic [ref=e340]: "1"
+            - button "6" [ref=e341] [cursor=pointer]:
+              - img [ref=e342]
+              - generic [ref=e344]: "6"
+            - button [ref=e346] [cursor=pointer]:
+              - img [ref=e347]
+  - contentinfo [ref=e350]:
+    - generic [ref=e351]:
+      - generic [ref=e352]:
+        - generic [ref=e353]:
+          - heading "Միացիր մեր VIP ցանկին" [level=4] [ref=e354]
+          - paragraph [ref=e355]: Առաջինը իմացիր նոր ապրանքների մասին, մասնակցիր բացառիկ մրցույթների և ստացիր օգտակար խորհուրդներ ընտանի կենդանիների խնամքի մասին։
+          - generic [ref=e356]:
+            - textbox "Մուտքագրիր քո էլ. փոստի հասցեն" [ref=e357]
+            - button "Գրանցվել" [ref=e358] [cursor=pointer]
+        - generic [ref=e359]:
+          - generic [ref=e360]:
+            - heading "Jeko" [level=4] [ref=e361]
+            - list [ref=e362]:
+              - listitem [ref=e363]:
+                - link "Մեր պատմությունը" [ref=e364] [cursor=pointer]:
+                  - /url: /about
+              - listitem [ref=e365]:
+                - link "Կարծիքներ" [ref=e366] [cursor=pointer]:
+                  - /url: /reviews
+              - listitem [ref=e367]:
+                - link "Բաղադրատոմսեր" [ref=e368] [cursor=pointer]:
+                  - /url: /recipes
+              - listitem [ref=e369]:
+                - link "Ավելին քան ամանը" [ref=e370] [cursor=pointer]:
+                  - /url: /beyond-the-bowl
+              - listitem [ref=e371]:
+                - link "Խանութ" [ref=e372] [cursor=pointer]:
+                  - /url: /products
+              - listitem [ref=e373]:
+                - link "Համայնք" [ref=e374] [cursor=pointer]:
+                  - /url: /community
+          - generic [ref=e375]:
+            - heading "Օգնություն" [level=4] [ref=e376]
+            - list [ref=e377]:
+              - listitem [ref=e378]:
+                - link "Իմ հաշիվը" [ref=e379] [cursor=pointer]:
+                  - /url: /profile
+              - listitem [ref=e380]:
+                - link "Կապ մեզ հետ" [ref=e381] [cursor=pointer]:
+                  - /url: /contact
+              - listitem [ref=e382]:
+                - link "Առաքման տեղեկատվություն" [ref=e383] [cursor=pointer]:
+                  - /url: /delivery-information
+              - listitem [ref=e384]:
+                - link "Վերադարձներ" [ref=e385] [cursor=pointer]:
+                  - /url: /returns
+              - listitem [ref=e386]:
+                - link "Կայքի քարտեզ" [ref=e387] [cursor=pointer]:
+                  - /url: /sitemap-page
+          - generic [ref=e388]:
+            - heading "Տեղեկատվություն" [level=4] [ref=e389]
+            - list [ref=e390]:
+              - listitem [ref=e391]:
+                - link "Գաղտնիության քաղաքականություն" [ref=e392] [cursor=pointer]:
+                  - /url: /privacy-policy
+              - listitem [ref=e393]:
+                - link "Պայմաններ և դրույթներ" [ref=e394] [cursor=pointer]:
+                  - /url: /terms-of-use
+              - listitem [ref=e395]:
+                - link "Jeko-ի քաղաքականություն" [ref=e396] [cursor=pointer]:
+                  - /url: /pure-policies
+              - listitem [ref=e397]:
+                - link "Կայքի անվտանգություն" [ref=e398] [cursor=pointer]:
+                  - /url: /site-security
+              - listitem [ref=e399]:
+                - link "Cookie-ների քաղաքականություն" [ref=e400] [cursor=pointer]:
+                  - /url: /cookie-policy
+      - generic [ref=e401]:
+        - generic [ref=e403]: JEKO
+        - paragraph [ref=e404]: © Jeko 2020-2026
+  - link "Home" [ref=e405] [cursor=pointer]:
+    - /url: /
+    - img [ref=e406]
+    - text: Home
+  - generic [ref=e408]:
+    - generic [ref=e409]:
+      - paragraph [ref=e410]: Հաու՜ 🐾
+      - paragraph [ref=e411]: Գտիր ընկեր քո կենդանու համար։
+    - button "Find pet matches" [ref=e413] [cursor=pointer]:
+      - img "Jeko dog" [ref=e414]
+  - alert [ref=e415]
+  - generic [ref=e418] [cursor=pointer]:
+    - img [ref=e419]
+    - generic [ref=e421]: 1 error
+    - button "Hide Errors" [ref=e422]:
+      - img [ref=e423]

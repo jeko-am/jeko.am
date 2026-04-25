@@ -1,0 +1,289 @@
+- generic [active] [ref=e1]:
+  - alert [ref=e6]
+  - generic [ref=e7]:
+    - complementary [ref=e8]:
+      - generic [ref=e10]:
+        - heading "Jeko" [level=1] [ref=e11]
+        - paragraph [ref=e12]: Admin Panel
+      - navigation [ref=e13]:
+        - link "Dashboard" [ref=e14] [cursor=pointer]:
+          - /url: /admin/dashboard
+          - img [ref=e15]
+          - text: Dashboard
+        - link "Store Editor" [ref=e17] [cursor=pointer]:
+          - /url: /admin/store-editor
+          - img [ref=e18]
+          - text: Store Editor
+        - link "Translations" [ref=e20] [cursor=pointer]:
+          - /url: /admin/translations
+          - img [ref=e21]
+          - text: Translations
+        - link "Products" [ref=e23] [cursor=pointer]:
+          - /url: /admin/products
+          - img [ref=e24]
+          - text: Products
+        - link "Bundles" [ref=e26] [cursor=pointer]:
+          - /url: /admin/bundles
+          - img [ref=e27]
+          - text: Bundles
+        - link "Upsells" [ref=e29] [cursor=pointer]:
+          - /url: /admin/upsells
+          - img [ref=e30]
+          - text: Upsells
+        - link "Categories" [ref=e32] [cursor=pointer]:
+          - /url: /admin/categories
+          - img [ref=e33]
+          - text: Categories
+        - link "Orders" [ref=e35] [cursor=pointer]:
+          - /url: /admin/orders
+          - img [ref=e36]
+          - text: Orders
+        - link "Customers" [ref=e38] [cursor=pointer]:
+          - /url: /admin/customers
+          - img [ref=e39]
+          - text: Customers
+        - link "Reviews" [ref=e41] [cursor=pointer]:
+          - /url: /admin/reviews
+          - img [ref=e42]
+          - text: Reviews
+        - link "Community" [ref=e44] [cursor=pointer]:
+          - /url: /admin/community
+          - img [ref=e45]
+          - text: Community
+        - link "Discounts" [ref=e47] [cursor=pointer]:
+          - /url: /admin/discounts
+          - img [ref=e48]
+          - text: Discounts
+        - link "Pages" [ref=e50] [cursor=pointer]:
+          - /url: /admin/pages
+          - img [ref=e51]
+          - text: Pages
+        - link "Blog" [ref=e53] [cursor=pointer]:
+          - /url: /admin/blog
+          - img [ref=e54]
+          - text: Blog
+        - link "Settings" [ref=e56] [cursor=pointer]:
+          - /url: /admin/settings
+          - img [ref=e57]
+          - text: Settings
+        - link "Analytics" [ref=e59] [cursor=pointer]:
+          - /url: /admin/analytics
+          - img [ref=e60]
+          - text: Analytics
+        - link "Support" [ref=e62] [cursor=pointer]:
+          - /url: /admin/support
+          - img [ref=e63]
+          - text: Support
+      - generic [ref=e65]:
+        - link "View Store" [ref=e66] [cursor=pointer]:
+          - /url: /
+          - img [ref=e67]
+          - text: View Store
+        - button "Sign Out" [ref=e69] [cursor=pointer]:
+          - img [ref=e70]
+          - text: Sign Out
+    - generic [ref=e72]:
+      - banner [ref=e73]:
+        - button [ref=e74] [cursor=pointer]:
+          - img [ref=e75]
+        - generic [ref=e77]:
+          - generic [ref=e78]:
+            - generic [ref=e79]: "Editing:"
+            - generic [ref=e80]:
+              - button "Edit English content" [ref=e81] [cursor=pointer]:
+                - generic [ref=e82]: 🇬🇧
+                - generic [ref=e83]: EN
+              - button "Edit Armenian content" [ref=e84] [cursor=pointer]:
+                - generic [ref=e85]: 🇦🇲
+                - generic [ref=e86]: HY
+            - generic [ref=e87]: Armenian edits only
+          - generic [ref=e89]: admin@purepet.test
+          - generic [ref=e90]: A
+      - main [ref=e91]:
+        - generic [ref=e92]:
+          - generic [ref=e93]:
+            - generic [ref=e94]:
+              - heading "Pages" [level=1] [ref=e95]
+              - paragraph [ref=e96]: Manage your site pages and their content sections
+            - button "New Page" [ref=e97] [cursor=pointer]:
+              - img [ref=e98]
+              - text: New Page
+          - table [ref=e102]:
+            - rowgroup [ref=e103]:
+              - row "Title Slug Status Template Last Updated Actions" [ref=e104]:
+                - columnheader "Title" [ref=e105]
+                - columnheader "Slug" [ref=e106]
+                - columnheader "Status" [ref=e107]
+                - columnheader "Template" [ref=e108]
+                - columnheader "Last Updated" [ref=e109]
+                - columnheader "Actions" [ref=e110]
+            - rowgroup [ref=e111]:
+              - row "Test Page - Contact Information /contact-information published default 26 Mar 2026" [ref=e112]:
+                - cell "Test Page - Contact Information" [ref=e113]
+                - cell "/contact-information" [ref=e114]:
+                  - code [ref=e115]: /contact-information
+                - cell "published" [ref=e116]:
+                  - generic [ref=e117]: published
+                - cell "default" [ref=e119]
+                - cell "26 Mar 2026" [ref=e120]
+                - cell [ref=e121]:
+                  - generic [ref=e122]:
+                    - button "Manage Sections" [ref=e123] [cursor=pointer]:
+                      - img [ref=e124]
+                    - button "Edit Page" [ref=e126] [cursor=pointer]:
+                      - img [ref=e127]
+                    - button "Delete Page" [ref=e129] [cursor=pointer]:
+                      - img [ref=e130]
+              - row "Home // published default 22 Mar 2026" [ref=e132]:
+                - cell "Home" [ref=e133]
+                - cell // [ref=e134]:
+                  - code [ref=e135]: //
+                - cell "published" [ref=e136]:
+                  - generic [ref=e137]: published
+                - cell "default" [ref=e139]
+                - cell "22 Mar 2026" [ref=e140]
+                - cell [ref=e141]:
+                  - generic [ref=e142]:
+                    - button "Manage Sections" [ref=e143] [cursor=pointer]:
+                      - img [ref=e144]
+                    - button "Edit Page" [ref=e146] [cursor=pointer]:
+                      - img [ref=e147]
+                    - button "Delete Page" [ref=e149] [cursor=pointer]:
+                      - img [ref=e150]
+              - row "Recipes //recipes published default 21 Mar 2026" [ref=e152]:
+                - cell "Recipes" [ref=e153]
+                - cell "//recipes" [ref=e154]:
+                  - code [ref=e155]: //recipes
+                - cell "published" [ref=e156]:
+                  - generic [ref=e157]: published
+                - cell "default" [ref=e159]
+                - cell "21 Mar 2026" [ref=e160]
+                - cell [ref=e161]:
+                  - generic [ref=e162]:
+                    - button "Manage Sections" [ref=e163] [cursor=pointer]:
+                      - img [ref=e164]
+                    - button "Edit Page" [ref=e166] [cursor=pointer]:
+                      - img [ref=e167]
+                    - button "Delete Page" [ref=e169] [cursor=pointer]:
+                      - img [ref=e170]
+              - row "About //about published default 21 Mar 2026" [ref=e172]:
+                - cell "About" [ref=e173]
+                - cell "//about" [ref=e174]:
+                  - code [ref=e175]: //about
+                - cell "published" [ref=e176]:
+                  - generic [ref=e177]: published
+                - cell "default" [ref=e179]
+                - cell "21 Mar 2026" [ref=e180]
+                - cell [ref=e181]:
+                  - generic [ref=e182]:
+                    - button "Manage Sections" [ref=e183] [cursor=pointer]:
+                      - img [ref=e184]
+                    - button "Edit Page" [ref=e186] [cursor=pointer]:
+                      - img [ref=e187]
+                    - button "Delete Page" [ref=e189] [cursor=pointer]:
+                      - img [ref=e190]
+              - row "Signup //signup published default 21 Mar 2026" [ref=e192]:
+                - cell "Signup" [ref=e193]
+                - cell "//signup" [ref=e194]:
+                  - code [ref=e195]: //signup
+                - cell "published" [ref=e196]:
+                  - generic [ref=e197]: published
+                - cell "default" [ref=e199]
+                - cell "21 Mar 2026" [ref=e200]
+                - cell [ref=e201]:
+                  - generic [ref=e202]:
+                    - button "Manage Sections" [ref=e203] [cursor=pointer]:
+                      - img [ref=e204]
+                    - button "Edit Page" [ref=e206] [cursor=pointer]:
+                      - img [ref=e207]
+                    - button "Delete Page" [ref=e209] [cursor=pointer]:
+                      - img [ref=e210]
+              - row "Reviews //reviews published default 21 Mar 2026" [ref=e212]:
+                - cell "Reviews" [ref=e213]
+                - cell "//reviews" [ref=e214]:
+                  - code [ref=e215]: //reviews
+                - cell "published" [ref=e216]:
+                  - generic [ref=e217]: published
+                - cell "default" [ref=e219]
+                - cell "21 Mar 2026" [ref=e220]
+                - cell [ref=e221]:
+                  - generic [ref=e222]:
+                    - button "Manage Sections" [ref=e223] [cursor=pointer]:
+                      - img [ref=e224]
+                    - button "Edit Page" [ref=e226] [cursor=pointer]:
+                      - img [ref=e227]
+                    - button "Delete Page" [ref=e229] [cursor=pointer]:
+                      - img [ref=e230]
+              - row "Benefits //benefits published default 21 Mar 2026" [ref=e232]:
+                - cell "Benefits" [ref=e233]
+                - cell "//benefits" [ref=e234]:
+                  - code [ref=e235]: //benefits
+                - cell "published" [ref=e236]:
+                  - generic [ref=e237]: published
+                - cell "default" [ref=e239]
+                - cell "21 Mar 2026" [ref=e240]
+                - cell [ref=e241]:
+                  - generic [ref=e242]:
+                    - button "Manage Sections" [ref=e243] [cursor=pointer]:
+                      - img [ref=e244]
+                    - button "Edit Page" [ref=e246] [cursor=pointer]:
+                      - img [ref=e247]
+                    - button "Delete Page" [ref=e249] [cursor=pointer]:
+                      - img [ref=e250]
+          - generic [ref=e254]:
+            - generic [ref=e255]:
+              - heading "Edit Page" [level=2] [ref=e256]
+              - button [ref=e257] [cursor=pointer]:
+                - img [ref=e258]
+            - generic [ref=e260]:
+              - generic [ref=e261]:
+                - generic [ref=e262]:
+                  - generic [ref=e263]: Title
+                  - generic [ref=e264]: HY
+                  - button "Title HY" [ref=e265] [cursor=pointer]: Auto-translate
+                - textbox "Հայերեն վերնագիր" [ref=e266]: Թեստի էջ - Կոնտակտային տվյալներ
+              - generic [ref=e267]:
+                - generic [ref=e268]: Slug
+                - generic [ref=e269]:
+                  - generic [ref=e270]: /
+                  - textbox "page-slug" [ref=e271]: contact-information
+              - generic [ref=e272]:
+                - generic [ref=e273]:
+                  - generic [ref=e274]: Content
+                  - generic [ref=e275]: HY
+                  - button "Content HY" [ref=e276] [cursor=pointer]: Auto-translate
+                - textbox "Հայերեն բովանդակություն…" [ref=e277]: Սա թեստի էջ է, որում կան կոնտակտային տվյալներ ։ Կարող եք կապվել մեզ հետ support@purepetfood.com հասցեով կամ զանգահարել 01234-567890 հեռախոսահամարով ։
+              - generic [ref=e278]:
+                - generic [ref=e279]:
+                  - generic [ref=e280]: Status
+                  - combobox [ref=e281]:
+                    - option "Draft"
+                    - option "Published" [selected]
+                - generic [ref=e282]:
+                  - generic [ref=e283]: Template
+                  - combobox [ref=e284]:
+                    - option "Default" [selected]
+                    - option "Landing"
+                    - option "About"
+                    - option "Contact"
+                    - option "Faq"
+                    - option "Blog"
+                    - option "Product"
+              - generic [ref=e285]:
+                - heading "SEO / Meta" [level=3] [ref=e286]
+                - generic [ref=e287]:
+                  - generic [ref=e288]:
+                    - generic [ref=e289]:
+                      - generic [ref=e290]: Meta Title
+                      - generic [ref=e291]: HY
+                      - button "Meta Title HY" [ref=e292] [cursor=pointer]: Auto-translate
+                    - textbox "Հայերեն SEO վերնագիր" [ref=e293]: Կոնտակտային տվյալներ - Մաքուր տնային կենդանիների սնունդ
+                  - generic [ref=e294]:
+                    - generic [ref=e295]:
+                      - generic [ref=e296]: Meta Description
+                      - generic [ref=e297]: HY
+                      - button "Meta Description HY" [ref=e298] [cursor=pointer]: Auto-translate
+                    - textbox "Հայերեն SEO նկարագրություն…" [ref=e299]: Կապվեք Pure Pet Food - ի հետ ՝ հաճախորդների աջակցման, արտադրանքի մասին տեղեկությունների և պատվերների համար ։
+            - generic [ref=e300]:
+              - button "Cancel" [ref=e301] [cursor=pointer]
+              - button "Update Page" [ref=e302] [cursor=pointer]

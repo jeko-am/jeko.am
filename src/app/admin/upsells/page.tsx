@@ -3,6 +3,7 @@
 import { supabase } from '@/lib/supabase';
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
+import { useAdminEditLang } from '@/lib/i18n/AdminEditLang';
 
 interface Product {
   id: string;
@@ -25,6 +26,7 @@ interface Upsell {
   sort_order: number;
   source_product: Product;
   target_product: Product;
+  i18n?: { hy?: { title?: string; description?: string } } | null;
   created_at: string;
 }
 
@@ -37,6 +39,7 @@ type UpsellFormData = {
   discount_percentage: number;
   is_active: boolean;
   sort_order: number;
+  i18n: { hy?: { title?: string; description?: string } } | null;
 };
 
 type Toast = { type: 'success' | 'error'; message: string } | null;
@@ -50,6 +53,7 @@ const EMPTY_FORM: UpsellFormData = {
   discount_percentage: 0,
   is_active: true,
   sort_order: 0,
+  i18n: null,
 };
 
 function formatPrice(value: number): string {
@@ -67,6 +71,30 @@ export default function UpsellsAdminPage() {
   const [saving, setSaving] = useState(false);
   const [formError, setFormError] = useState<string | null>(null);
   const [toast, setToast] = useState<Toast>(null);
+  const { editLang } = useAdminEditLang();
+
+  // Helper: read a translatable field based on editLang
+  function getLocField(key: 'title' | 'description'): string {
+    if (editLang === 'hy') {
+      return (formData.i18n as { hy?: Record<string, string> } | null)?.hy?.[key] ?? '';
+    }
+    return (formData[key] as string) ?? '';
+  }
+
+  // Helper: write a translatable field into EN column or i18n.hy.field
+  function setLocField(key: 'title' | 'description', value: string) {
+    if (editLang === 'hy') {
+      setFormData((prev) => {
+        const i18n = (prev.i18n as { hy?: Record<string, string> } | null) ?? {};
+        const hy = { ...(i18n.hy ?? {}) };
+        if (value && value.length > 0) hy[key] = value;
+        else delete hy[key];
+        return { ...prev, i18n: { ...i18n, hy } } as UpsellFormData;
+      });
+    } else {
+      setFormData((prev) => ({ ...prev, [key]: value } as UpsellFormData));
+    }
+  }
 
   function showToast(type: 'success' | 'error', message: string) {
     setToast({ type, message });
@@ -113,6 +141,7 @@ export default function UpsellsAdminPage() {
         discount_percentage: upsell.discount_percentage,
         is_active: upsell.is_active,
         sort_order: upsell.sort_order,
+        i18n: upsell.i18n ?? null,
       });
     } else {
       setEditingUpsell(null);
@@ -154,7 +183,7 @@ export default function UpsellsAdminPage() {
     setSaving(true);
     setFormError(null);
 
-    const payload = {
+    const payload: Record<string, unknown> = {
       source_product_id: formData.source_product_id,
       target_product_id: formData.target_product_id,
       upsell_type: formData.upsell_type,
@@ -164,6 +193,9 @@ export default function UpsellsAdminPage() {
       is_active: formData.is_active,
       sort_order: formData.sort_order,
     };
+    if (formData.i18n && Object.keys(formData.i18n).length > 0) {
+      payload.i18n = formData.i18n;
+    }
 
     if (editingUpsell) {
       const { data, error } = await supabase
@@ -506,24 +538,30 @@ export default function UpsellsAdminPage() {
 
               {/* Title & Description */}
               <div>
-                <label className="block text-sm font-medium text-deep-green mb-1">Custom Title (optional)</label>
+                <label className="block text-sm font-medium text-deep-green mb-1 flex items-center gap-2">
+                  <span>Custom Title (optional)</span>
+                  {editLang === 'hy' && <span className="text-[10px] font-semibold text-deep-green/70 px-1.5 py-0.5 bg-deep-green/10 rounded">HY</span>}
+                </label>
                 <input
                   type="text"
-                  value={formData.title}
-                  onChange={e => setFormData(prev => ({ ...prev, title: e.target.value }))}
+                  value={getLocField('title')}
+                  onChange={e => setLocField('title', e.target.value)}
                   className="w-full px-3 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-deep-green/20"
-                  placeholder="e.g., Upgrade to Premium or Perfect Pairing"
+                  placeholder={editLang === 'hy' ? (formData.title || 'e.g., Upgrade to Premium or Perfect Pairing') : 'e.g., Upgrade to Premium or Perfect Pairing'}
                 />
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-deep-green mb-1">Custom Description (optional)</label>
+                <label className="block text-sm font-medium text-deep-green mb-1 flex items-center gap-2">
+                  <span>Custom Description (optional)</span>
+                  {editLang === 'hy' && <span className="text-[10px] font-semibold text-deep-green/70 px-1.5 py-0.5 bg-deep-green/10 rounded">HY</span>}
+                </label>
                 <textarea
-                  value={formData.description}
-                  onChange={e => setFormData(prev => ({ ...prev, description: e.target.value }))}
+                  value={getLocField('description')}
+                  onChange={e => setLocField('description', e.target.value)}
                   className="w-full px-3 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-deep-green/20"
                   rows={2}
-                  placeholder="Why customers should consider this..."
+                  placeholder={editLang === 'hy' ? (formData.description || 'Why customers should consider this...') : 'Why customers should consider this...'}
                 />
               </div>
 

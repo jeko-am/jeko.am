@@ -3,8 +3,10 @@
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import Link from "next/link";
+import { useT } from "@/lib/i18n/LangProvider";
 
 export default function ReturnsPage() {
+  const { t } = useT();
   return (
     <>
       <Header />
@@ -13,10 +15,10 @@ export default function ReturnsPage() {
         <section className="bg-deep-green py-16 text-center relative zigzag-bottom">
           <div className="max-w-[1200px] mx-auto px-6">
             <h1 className="font-rubik text-white text-[38px] md:text-[48px] font-bold leading-[1.15] mb-4">
-              Returns &amp; <span className="text-gold">Refunds</span>
+              {t("policy.returns.heading")} <span className="text-gold">{t("policy.returns.headingHighlight")}</span>
             </h1>
             <p className="text-white/80 max-w-2xl mx-auto text-lg leading-relaxed">
-              Not happy with your order? We&apos;re here to make things right.
+              {t("policy.returns.subtitle")}
             </p>
           </div>
         </section>
@@ -27,7 +29,7 @@ export default function ReturnsPage() {
             {/* Satisfaction Guarantee */}
             <div className="mb-12">
               <h2 className="text-deep-green font-rubik font-bold text-2xl mb-4">
-                Our Satisfaction Guarantee
+                {t("policy.returns.guarantee")}
               </h2>
               <p className="text-deep-green/80 text-[16px] leading-relaxed mb-4">
                 At Jeko, we stand behind the quality of our products.
@@ -41,7 +43,7 @@ export default function ReturnsPage() {
             {/* How to Return */}
             <div className="mb-12">
               <h2 className="text-deep-green font-rubik font-bold text-2xl mb-4">
-                How to Request a Return
+                {t("policy.returns.request")}
               </h2>
               <div className="space-y-4">
                 <div className="flex gap-4 items-start">
@@ -86,7 +88,7 @@ export default function ReturnsPage() {
             {/* Refund Timeline */}
             <div className="mb-12">
               <h2 className="text-deep-green font-rubik font-bold text-2xl mb-4">
-                Refund Timeline
+                {t("policy.returns.timeline")}
               </h2>
               <p className="text-deep-green/80 text-[16px] leading-relaxed mb-4">
                 Once your return is approved, refunds are typically processed
@@ -99,7 +101,7 @@ export default function ReturnsPage() {
             {/* Damaged or Incorrect Orders */}
             <div className="mb-12">
               <h2 className="text-deep-green font-rubik font-bold text-2xl mb-4">
-                Damaged or Incorrect Orders
+                {t("policy.returns.damaged")}
               </h2>
               <p className="text-deep-green/80 text-[16px] leading-relaxed mb-4">
                 If your order arrives damaged or you receive the wrong items,
@@ -112,7 +114,7 @@ export default function ReturnsPage() {
             {/* Subscription Cancellations */}
             <div className="mb-12">
               <h2 className="text-deep-green font-rubik font-bold text-2xl mb-4">
-                Subscription Cancellations
+                {t("policy.returns.subscription")}
               </h2>
               <p className="text-deep-green/80 text-[16px] leading-relaxed mb-4">
                 You can cancel your subscription at any time from your account
@@ -125,16 +127,16 @@ export default function ReturnsPage() {
             {/* Contact CTA */}
             <div className="bg-deep-green/5 rounded-xl p-8 text-center">
               <h3 className="text-deep-green font-rubik font-bold text-xl mb-3">
-                Need to start a return?
+                {t("policy.returns.needHelp")}
               </h3>
               <p className="text-deep-green/70 mb-5">
-                Our customer care team is ready to help.
+                {t("policy.returns.needHelpBody")}
               </p>
               <Link
                 href="/contact"
                 className="inline-block bg-deep-green text-white font-semibold px-8 py-3 rounded-full hover:bg-deep-green/90 transition-colors"
               >
-                Contact us
+                {t("policy.returns.contactCta")}
               </Link>
             </div>
           </div>

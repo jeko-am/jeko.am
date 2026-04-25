@@ -1,0 +1,213 @@
+- generic [active] [ref=e1]:
+  - banner [ref=e2]:
+    - generic [ref=e4]:
+      - link "JEKO" [ref=e5] [cursor=pointer]:
+        - /url: /
+        - generic [ref=e6]: JEKO
+      - navigation [ref=e7]:
+        - link "Մեր մասին" [ref=e9] [cursor=pointer]:
+          - /url: /about
+          - text: Մեր մասին
+          - img [ref=e10]
+        - link "Համայնք" [ref=e13] [cursor=pointer]:
+          - /url: /community
+          - text: Համայնք
+          - img [ref=e14]
+        - link "Խանութ" [ref=e17] [cursor=pointer]:
+          - /url: /products
+        - link "Կարծիքներ" [ref=e19] [cursor=pointer]:
+          - /url: /reviews
+        - link "Առողջապահական օգուտներ" [ref=e21] [cursor=pointer]:
+          - /url: /benefits
+          - text: Առողջապահական օգուտներ
+          - img [ref=e22]
+      - generic [ref=e24]:
+        - button "Switch language" [ref=e26] [cursor=pointer]:
+          - generic [ref=e27]: 🇦🇲
+          - generic [ref=e28]: HY
+          - img [ref=e29]
+        - button "Shopping cart" [ref=e31] [cursor=pointer]:
+          - img [ref=e32]
+        - link "Օգնություն" [ref=e36] [cursor=pointer]:
+          - /url: /contact
+        - link "Մուտք" [ref=e37] [cursor=pointer]:
+          - /url: /login
+        - link "Գրանցվել" [ref=e38] [cursor=pointer]:
+          - /url: /auth/signup
+  - main [ref=e39]:
+    - generic [ref=e40]:
+      - img "Colitis in dogs" [ref=e42]
+      - generic [ref=e45]:
+        - paragraph [ref=e46]: Առողջություն և սնուցում
+        - heading "Colitis in dogs & how diet can help" [level=1] [ref=e47]
+        - paragraph [ref=e48]: Colitis is one of the most common digestive conditions in dogs. The right nutrition can reduce flare-ups and support your dog's gut health naturally.
+        - link "Ստեղծել քո շան պլանը" [ref=e49] [cursor=pointer]:
+          - /url: /auth/signup
+    - generic [ref=e51]:
+      - heading "What is colitis in dogs?" [level=2] [ref=e52]
+      - generic [ref=e53]:
+        - paragraph [ref=e54]: Colitis refers to inflammation of the colon (large intestine). It can be acute, meaning it comes on suddenly and resolves quickly, or chronic, where symptoms persist over weeks or months. It affects dogs of all ages and breeds.
+        - paragraph [ref=e55]: The condition disrupts normal water absorption in the colon, leading to loose stools, urgency, and discomfort. While it can have many triggers — from stress and infections to dietary intolerances — what your dog eats plays a central role in managing it.
+        - paragraph [ref=e56]: Many dogs with colitis see significant improvement simply by switching to a gentle, natural diet that avoids common inflammatory ingredients found in highly processed kibble.
+    - generic [ref=e58]:
+      - heading "Ուշադրություն դարձրու այս նշաններին" [level=2] [ref=e59]
+      - paragraph [ref=e60]: Եթե քո շունը ցույց է տալիս այս ախտանիշներից որևէ մեկը, ճիշտ սնունդը կարող է մեծ փոփոխություն բերել։
+      - generic [ref=e61]:
+        - generic [ref=e62]:
+          - generic [ref=e63]: 💩
+          - heading "Soft or watery stools" [level=3] [ref=e64]
+          - paragraph [ref=e65]: Frequent loose stools, often with mucus or small amounts of bright red blood, are the hallmark sign of colitis.
+        - generic [ref=e66]:
+          - generic [ref=e67]: 😣
+          - heading "Straining to go" [level=3] [ref=e68]
+          - paragraph [ref=e69]: Your dog may strain or take longer than usual when going to the toilet, even if very little is produced.
+        - generic [ref=e70]:
+          - generic [ref=e71]: 🚨
+          - heading "Increased urgency" [level=3] [ref=e72]
+          - paragraph [ref=e73]: Needing to go outside more frequently or having accidents indoors can indicate colon inflammation.
+        - generic [ref=e74]:
+          - generic [ref=e75]: 😔
+          - heading "Flatulence & discomfort" [level=3] [ref=e76]
+          - paragraph [ref=e77]: Excessive gas, rumbling stomach sounds, and general signs of tummy discomfort are common.
+        - generic [ref=e78]:
+          - generic [ref=e79]: 🍽️
+          - heading "Reduced appetite" [level=3] [ref=e80]
+          - paragraph [ref=e81]: Some dogs may eat less or show reluctance at mealtimes when experiencing a flare-up.
+        - generic [ref=e82]:
+          - generic [ref=e83]: 😴
+          - heading "Lethargy" [level=3] [ref=e84]
+          - paragraph [ref=e85]: During episodes, your dog may seem more tired than usual and less interested in play or walks.
+    - generic [ref=e87]:
+      - img "Natural dog food" [ref=e89]
+      - generic [ref=e91]:
+        - heading "Managing colitis with" [level=2] [ref=e92]
+        - paragraph [ref=e93]: ճիշտ սնուցման միջոցով
+        - paragraph [ref=e94]: Diet is considered one of the most important factors in managing colitis. Highly processed foods with artificial additives, fillers, and low-quality proteins can aggravate the colon lining. A natural, gently prepared diet is far easier on the gut.
+        - generic [ref=e95]:
+          - generic [ref=e96]:
+            - img [ref=e98]
+            - generic [ref=e100]:
+              - paragraph [ref=e101]: Highly digestible ingredients
+              - paragraph [ref=e102]: Natural whole foods are gentler on inflamed gut tissue than heavily processed alternatives.
+          - generic [ref=e103]:
+            - img [ref=e105]
+            - generic [ref=e107]:
+              - paragraph [ref=e108]: No artificial additives
+              - paragraph [ref=e109]: Removing preservatives, colourings, and flavour enhancers eliminates common irritation triggers.
+          - generic [ref=e110]:
+            - img [ref=e112]
+            - generic [ref=e114]:
+              - paragraph [ref=e115]: Quality single-source protein
+              - paragraph [ref=e116]: Single protein recipes help identify and avoid specific ingredients that may cause reactions.
+          - generic [ref=e117]:
+            - img [ref=e119]
+            - generic [ref=e121]:
+              - paragraph [ref=e122]: Natural fibre balance
+              - paragraph [ref=e123]: The right blend of soluble and insoluble fibre supports healthy colon function and stool consistency.
+    - generic [ref=e125]:
+      - img "Rachel & Poppy" [ref=e127]
+      - blockquote [ref=e128]: “Our Labrador suffered with colitis for over a year. We tried multiple prescription diets with little improvement. Within two weeks of switching to natural food, the difference was remarkable. No more runny stools, no more midnight dashes to the garden. She's like a different dog.”
+      - paragraph [ref=e129]: Rachel & Poppy
+    - generic [ref=e131]:
+      - heading "Հաճախակի տրվող հարցեր" [level=2] [ref=e132]
+      - generic [ref=e133]:
+        - group [ref=e134]:
+          - generic "Can diet alone cure colitis in dogs?" [ref=e135] [cursor=pointer]:
+            - text: Can diet alone cure colitis in dogs?
+            - img [ref=e136]
+        - group [ref=e138]:
+          - generic "What proteins are best for dogs with colitis?" [ref=e139] [cursor=pointer]:
+            - text: What proteins are best for dogs with colitis?
+            - img [ref=e140]
+        - group [ref=e142]:
+          - generic "How quickly will I see improvement after a diet change?" [ref=e143] [cursor=pointer]:
+            - text: How quickly will I see improvement after a diet change?
+            - img [ref=e144]
+        - group [ref=e146]:
+          - generic "Should I avoid grain in my dog's food if they have colitis?" [ref=e147] [cursor=pointer]:
+            - text: Should I avoid grain in my dog's food if they have colitis?
+            - img [ref=e148]
+    - generic [ref=e151]:
+      - generic [ref=e153]:
+        - heading "Պատրա՞ստ եք օգնել ձեր" [level=2] [ref=e154]
+        - paragraph [ref=e155]: շանը լավ զգալու
+        - paragraph [ref=e156]: Պատմեք մեզ ձեր շան մասին, և մենք կստեղծենք անհատական ճաշացանկ՝ նախատեսված նրա հատուկ կարիքները հոգալու համար։ Անասնաբույժի հաստատմամբ, վստահված հազարավորների կողմից։
+        - link "Բացահայտել քո շան ճաշացանկը" [ref=e157] [cursor=pointer]:
+          - /url: /products
+      - img "Happy healthy dog" [ref=e159]
+  - contentinfo [ref=e160]:
+    - generic [ref=e161]:
+      - generic [ref=e162]:
+        - generic [ref=e163]:
+          - heading "Միացիր մեր VIP ցանկին" [level=4] [ref=e164]
+          - paragraph [ref=e165]: Առաջինը իմացիր նոր ապրանքների մասին, մասնակցիր բացառիկ մրցույթների և ստացիր օգտակար խորհուրդներ ընտանի կենդանիների խնամքի մասին։
+          - generic [ref=e166]:
+            - textbox "Մուտքագրիր քո էլ. փոստի հասցեն" [ref=e167]
+            - button "Գրանցվել" [ref=e168] [cursor=pointer]
+        - generic [ref=e169]:
+          - generic [ref=e170]:
+            - heading "Jeko" [level=4] [ref=e171]
+            - list [ref=e172]:
+              - listitem [ref=e173]:
+                - link "Մեր պատմությունը" [ref=e174] [cursor=pointer]:
+                  - /url: /about
+              - listitem [ref=e175]:
+                - link "Կարծիքներ" [ref=e176] [cursor=pointer]:
+                  - /url: /reviews
+              - listitem [ref=e177]:
+                - link "Բաղադրատոմսեր" [ref=e178] [cursor=pointer]:
+                  - /url: /recipes
+              - listitem [ref=e179]:
+                - link "Ավելին քան ամանը" [ref=e180] [cursor=pointer]:
+                  - /url: /beyond-the-bowl
+              - listitem [ref=e181]:
+                - link "Խանութ" [ref=e182] [cursor=pointer]:
+                  - /url: /products
+              - listitem [ref=e183]:
+                - link "Համայնք" [ref=e184] [cursor=pointer]:
+                  - /url: /community
+          - generic [ref=e185]:
+            - heading "Օգնություն" [level=4] [ref=e186]
+            - list [ref=e187]:
+              - listitem [ref=e188]:
+                - link "Իմ հաշիվը" [ref=e189] [cursor=pointer]:
+                  - /url: /profile
+              - listitem [ref=e190]:
+                - link "Կապ մեզ հետ" [ref=e191] [cursor=pointer]:
+                  - /url: /contact
+              - listitem [ref=e192]:
+                - link "Առաքման տեղեկատվություն" [ref=e193] [cursor=pointer]:
+                  - /url: /delivery-information
+              - listitem [ref=e194]:
+                - link "Վերադարձներ" [ref=e195] [cursor=pointer]:
+                  - /url: /returns
+              - listitem [ref=e196]:
+                - link "Կայքի քարտեզ" [ref=e197] [cursor=pointer]:
+                  - /url: /sitemap-page
+          - generic [ref=e198]:
+            - heading "Տեղեկատվություն" [level=4] [ref=e199]
+            - list [ref=e200]:
+              - listitem [ref=e201]:
+                - link "Գաղտնիության քաղաքականություն" [ref=e202] [cursor=pointer]:
+                  - /url: /privacy-policy
+              - listitem [ref=e203]:
+                - link "Պայմաններ և դրույթներ" [ref=e204] [cursor=pointer]:
+                  - /url: /terms-of-use
+              - listitem [ref=e205]:
+                - link "Jeko-ի քաղաքականություն" [ref=e206] [cursor=pointer]:
+                  - /url: /pure-policies
+              - listitem [ref=e207]:
+                - link "Կայքի անվտանգություն" [ref=e208] [cursor=pointer]:
+                  - /url: /site-security
+              - listitem [ref=e209]:
+                - link "Cookie-ների քաղաքականություն" [ref=e210] [cursor=pointer]:
+                  - /url: /cookie-policy
+      - generic [ref=e211]:
+        - generic [ref=e213]: JEKO
+        - paragraph [ref=e214]: © Jeko 2020-2026
+  - generic:
+    - generic:
+      - paragraph: Հաու՜ 🐾
+      - paragraph: Գտիր ընկեր քո կենդանու համար։
+    - button "Find pet matches":
+      - img "Jeko dog"

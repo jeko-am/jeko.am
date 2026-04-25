@@ -6,35 +6,8 @@ import { useCart } from "@/lib/cart-context";
 import { useAuth } from "@/lib/auth";
 import { useSignupUrl } from "@/lib/useSignupUrl";
 import LanguageSwitcher from "@/components/LanguageSwitcher";
-
-const aboutDropdown = [
-  { label: "Our story", href: "/about" },
-];
-
-const communityDropdown = [
-  { label: "Social Feed", href: "/community" },
-  { label: "Blog", href: "/blog" },
-  { label: "Swipe & Match", href: "/swipe" },
-  { label: "My Matches", href: "/matches" },
-  { label: "Find Owners", href: "/find-owners" },
-  { label: "Messages", href: "/messages" },
-];
-
-const healthDropdown = [
-  { label: "Colitis", href: "/benefits/colitis" },
-  { label: "Digestion issues", href: "/benefits/digestion-issues" },
-  { label: "Hypoallergenic", href: "/benefits/hypoallergenic" },
-  { label: "Pancreatitis", href: "/benefits/pancreatitis" },
-  { label: "Weight management", href: "/benefits/weight-management" },
-];
-
-const defaultNavItems = [
-  { label: "About", href: "/about", hasDropdown: true, dropdown: aboutDropdown },
-  { label: "Community", href: "/community", hasDropdown: true, dropdown: communityDropdown },
-  { label: "Shop", href: "/products", hasDropdown: false, dropdown: [] },
-  { label: "Reviews", href: "/reviews", hasDropdown: false, dropdown: [] },
-  { label: "Health & breeds", href: "/benefits", hasDropdown: true, dropdown: healthDropdown },
-];
+import { useT } from "@/lib/i18n/LangProvider";
+import { useContentT } from "@/lib/i18n/useContentT";
 
 const ChevronDown = () => (
   <svg
@@ -113,6 +86,40 @@ const CloseIcon = () => (
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export default function Header({ content }: { content?: any }) {
+  const { t, lang } = useT();
+  const { ct } = useContentT(content);
+  // Armenian labels are longer — tighten the nav at this lang so it fits on laptop widths.
+  const isHy = lang === "hy";
+  const navItemCls = `text-white ${isHy ? "text-[14px] xl:text-[15px]" : "text-[15px] xl:text-[17px]"} font-rubik font-medium hover:opacity-80 transition-opacity flex items-center whitespace-nowrap py-6`;
+  const ctaCls = `text-white ${isHy ? "text-[14px] xl:text-[16px]" : "text-[15px] xl:text-[17px]"} font-rubik font-medium hover:opacity-80 transition-opacity`;
+  const pillCls = `bg-white/10 backdrop-blur-sm text-white ${isHy ? "text-[13px] xl:text-[14px]" : "text-[14px] xl:text-[15px]"} font-rubik font-medium px-3 py-1.5 rounded-lg hover:bg-white/20 transition-all duration-200 flex items-center gap-1.5 whitespace-nowrap`;
+  const logoutCls = `bg-red-500/20 backdrop-blur-sm text-white ${isHy ? "text-[13px] xl:text-[14px]" : "text-[14px] xl:text-[15px]"} font-rubik font-medium px-3 py-1.5 rounded-lg hover:bg-red-500/30 transition-all duration-200 flex items-center gap-1.5 disabled:opacity-50 disabled:cursor-not-allowed whitespace-nowrap`;
+  const signupCls = `bg-gold text-deep-green ${isHy ? "text-[14px] xl:text-[16px]" : "text-[15px] xl:text-[17px]"} font-rubik font-semibold px-5 py-2 rounded-lg hover:bg-[#d99500] transition-colors whitespace-nowrap`;
+  const aboutDropdown = [
+    { label: t("footer.link.ourStory"), href: "/about" },
+  ];
+  const communityDropdown = [
+    { label: t("header.nav.community"), href: "/community" },
+    { label: t("header.nav.blog"), href: "/blog" },
+    { label: t("header.nav.swipe"), href: "/swipe" },
+    { label: t("header.nav.matches"), href: "/matches" },
+    { label: t("header.nav.findOwners"), href: "/find-owners" },
+    { label: t("header.nav.messages"), href: "/messages" },
+  ];
+  const healthDropdown = [
+    { label: t("benefits.colitis.title"), href: "/benefits/colitis" },
+    { label: t("benefits.digestion.title"), href: "/benefits/digestion-issues" },
+    { label: t("benefits.hypoallergenic.title"), href: "/benefits/hypoallergenic" },
+    { label: t("benefits.pancreatitis.title"), href: "/benefits/pancreatitis" },
+    { label: t("benefits.weight.title"), href: "/benefits/weight-management" },
+  ];
+  const defaultNavItems = [
+    { label: t("header.nav.about"), href: "/about", hasDropdown: true, dropdown: aboutDropdown },
+    { label: t("header.nav.community"), href: "/community", hasDropdown: true, dropdown: communityDropdown },
+    { label: t("header.nav.shop"), href: "/products", hasDropdown: false, dropdown: [] as { label: string; href: string }[] },
+    { label: t("header.nav.reviews"), href: "/reviews", hasDropdown: false, dropdown: [] as { label: string; href: string }[] },
+    { label: t("benefits.title"), href: "/benefits", hasDropdown: true, dropdown: healthDropdown },
+  ];
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
   const [mobileActiveDropdown, setMobileActiveDropdown] = useState<string | null>(null);
@@ -138,7 +145,7 @@ export default function Header({ content }: { content?: any }) {
   };
 
   const logoText = content?.logo_text ?? "JEKO";
-  const ctaText = content?.cta_text ?? "Sign up";
+  const ctaText = ct("cta_text", "common.signUp");
   const signupUrl = useSignupUrl();
   // Gate the dynamic signup→profile swap until after hydration.
   const ctaUrl = content?.cta_url ?? (mounted ? signupUrl : '/auth/signup');
@@ -147,11 +154,11 @@ export default function Header({ content }: { content?: any }) {
 
   const navItems = content
     ? [
-        { label: content.nav_1_label ?? "About", href: content.nav_1_url ?? "/about", hasDropdown: true, dropdown: aboutDropdown },
-        { label: content.nav_2_label ?? "Community", href: content.nav_2_url ?? "/community", hasDropdown: true, dropdown: communityDropdown },
-        { label: content.nav_3_label ?? "Shop", href: content.nav_3_url ?? "/products", hasDropdown: false, dropdown: [] as { label: string; href: string }[] },
-        { label: content.nav_4_label ?? "Reviews", href: content.nav_4_url ?? "/reviews", hasDropdown: false, dropdown: [] as { label: string; href: string }[] },
-        { label: content.nav_5_label ?? "Health & breeds", href: content.nav_5_url ?? "/benefits", hasDropdown: true, dropdown: healthDropdown },
+        { label: ct("nav_1_label", "header.nav.about"), href: content.nav_1_url ?? "/about", hasDropdown: true, dropdown: aboutDropdown },
+        { label: ct("nav_2_label", "header.nav.community"), href: content.nav_2_url ?? "/community", hasDropdown: true, dropdown: communityDropdown },
+        { label: ct("nav_3_label", "header.nav.shop"), href: content.nav_3_url ?? "/products", hasDropdown: false, dropdown: [] as { label: string; href: string }[] },
+        { label: ct("nav_4_label", "header.nav.reviews"), href: content.nav_4_url ?? "/reviews", hasDropdown: false, dropdown: [] as { label: string; href: string }[] },
+        { label: ct("nav_5_label", "benefits.title"), href: content.nav_5_url ?? "/benefits", hasDropdown: true, dropdown: healthDropdown },
       ]
     : defaultNavItems;
 
@@ -171,7 +178,7 @@ export default function Header({ content }: { content?: any }) {
           {/* Logo */}
           <Link href="/" className="flex-shrink-0" translate="no">
             <span
-              className="text-[36px] lg:text-[42px] leading-none select-none notranslate"
+              className="text-[32px] lg:text-[36px] xl:text-[40px] leading-none select-none notranslate"
               translate="no"
               style={{
                 fontFamily: "'TR Frankfurter', 'Rubik', sans-serif",
@@ -184,8 +191,8 @@ export default function Header({ content }: { content?: any }) {
             </span>
           </Link>
 
-          {/* Desktop Navigation - Center */}
-          <nav className="hidden lg:flex items-center gap-8">
+          {/* Desktop Navigation - Center (iPad landscape and larger shows hamburger until xl) */}
+          <nav className={`hidden xl:flex items-center ${isHy ? "gap-4" : "gap-6"}`}>
             {navItems.map((item) => (
               <div
                 key={item.label}
@@ -195,7 +202,7 @@ export default function Header({ content }: { content?: any }) {
               >
                 <Link
                   href={item.href}
-                  className="text-white text-[18px] font-rubik font-medium hover:opacity-80 transition-opacity flex items-center whitespace-nowrap py-6"
+                  className={navItemCls}
                 >
                   {item.label}
                   {item.hasDropdown && <ChevronDown />}
@@ -206,7 +213,7 @@ export default function Header({ content }: { content?: any }) {
                       <Link
                         key={sub.label}
                         href={sub.href}
-                        className="block px-5 py-2.5 text-white text-[16px] hover:bg-white/10 transition-colors"
+                        className="block px-5 py-2.5 text-white text-[15px] hover:bg-white/10 transition-colors"
                       >
                         {sub.label}
                       </Link>
@@ -218,7 +225,7 @@ export default function Header({ content }: { content?: any }) {
           </nav>
 
           {/* Desktop Right Side */}
-          <div className="hidden lg:flex items-center gap-6">
+          <div className={`hidden xl:flex items-center ${isHy ? "gap-3" : "gap-4"}`}>
             {/* Language Switcher */}
             <LanguageSwitcher />
             {/* Cart Button */}
@@ -239,55 +246,55 @@ export default function Header({ content }: { content?: any }) {
               <>
                 <Link
                   href={helpUrl}
-                  className="text-white text-[18px] font-rubik font-medium hover:opacity-80 transition-opacity"
+                  className={ctaCls}
                 >
-                  Help
+                  {t("common.help")}
                 </Link>
                 {user ? (
                   <div className="flex items-center gap-3">
                     {isAdmin ? (
                       <Link
                         href="/admin/dashboard"
-                        className="bg-white/10 backdrop-blur-sm text-white text-[16px] font-rubik font-medium px-4 py-2 rounded-lg hover:bg-white/20 transition-all duration-200 flex items-center gap-2"
+                        className={pillCls}
                       >
-                        <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                        <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                           <path strokeLinecap="round" strokeLinejoin="round" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
                           <path strokeLinecap="round" strokeLinejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
                         </svg>
-                        Admin Console
+                        {t("common.adminConsole")}
                       </Link>
                     ) : (
                       <Link
                         href="/profile"
-                        className="bg-white/10 backdrop-blur-sm text-white text-[16px] font-rubik font-medium px-4 py-2 rounded-lg hover:bg-white/20 transition-all duration-200 flex items-center gap-2"
+                        className={pillCls}
                       >
-                        <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                        <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                           <path strokeLinecap="round" strokeLinejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
                         </svg>
-                        Profile
+                        {t("common.profile")}
                       </Link>
                     )}
                     <button
                       onClick={handleSignOut}
                       disabled={isLoggingOut}
-                      className="bg-red-500/20 backdrop-blur-sm text-white text-[16px] font-rubik font-medium px-4 py-2 rounded-lg hover:bg-red-500/30 transition-all duration-200 flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
+                      className={logoutCls}
                     >
                       {isLoggingOut ? (
-                        <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                        <div className="w-3.5 h-3.5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
                       ) : (
-                        <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                        <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                           <path strokeLinecap="round" strokeLinejoin="round" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
                         </svg>
                       )}
-                      {isLoggingOut ? 'Logging out...' : 'Logout'}
+                      {isLoggingOut ? t("common.loggingOut") : t("common.logout")}
                     </button>
                   </div>
                 ) : (
                   <Link
                     href={loginUrl}
-                    className="text-white text-[18px] font-rubik font-medium hover:opacity-80 transition-opacity"
+                    className={ctaCls}
                   >
-                    Login
+                    {t("common.login")}
                   </Link>
                 )}
               </>
@@ -295,16 +302,16 @@ export default function Header({ content }: { content?: any }) {
             {!user && (
               <Link
                 href={ctaUrl}
-                className="bg-gold text-deep-green text-[18px] font-rubik font-semibold px-6 py-2.5 rounded-lg hover:bg-[#d99500] transition-colors whitespace-nowrap"
+                className={signupCls}
               >
                 {ctaText}
               </Link>
             )}
           </div>
 
-          {/* Mobile Hamburger Button */}
+          {/* Mobile Hamburger Button (everything below xl gets hamburger) */}
           <button
-            className="lg:hidden flex items-center justify-center p-1"
+            className="xl:hidden flex items-center justify-center p-1"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             aria-label={mobileMenuOpen ? "Close menu" : "Open menu"}
           >
@@ -315,7 +322,7 @@ export default function Header({ content }: { content?: any }) {
 
       {/* Mobile Menu Overlay */}
       {mobileMenuOpen && (
-        <div className="lg:hidden bg-deep-green border-t border-white/10">
+        <div className="xl:hidden bg-deep-green border-t border-white/10">
           <nav className="flex flex-col px-6 py-6 gap-0">
             {navItems.map((item) => (
               <div key={item.label}>
@@ -365,7 +372,7 @@ export default function Header({ content }: { content?: any }) {
               className="text-white text-[18px] font-rubik font-medium py-3 hover:opacity-80 transition-opacity"
               onClick={() => setMobileMenuOpen(false)}
             >
-              Help
+              {t("common.help")}
             </Link>
 
             <div className="pt-2 pb-1">
@@ -383,7 +390,7 @@ export default function Header({ content }: { content?: any }) {
                       <path strokeLinecap="round" strokeLinejoin="round" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
                       <path strokeLinecap="round" strokeLinejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
                     </svg>
-                    Admin Console
+                    {t("common.adminConsole")}
                   </Link>
                 ) : (
                   <Link
@@ -394,7 +401,7 @@ export default function Header({ content }: { content?: any }) {
                     <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                       <path strokeLinecap="round" strokeLinejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
                     </svg>
-                    Profile
+                    {t("common.profile")}
                   </Link>
                 )}
                 <button
@@ -417,7 +424,7 @@ export default function Header({ content }: { content?: any }) {
                       <path strokeLinecap="round" strokeLinejoin="round" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
                     </svg>
                   )}
-                  {isLoggingOut ? 'Logging out...' : 'Logout'}
+                  {isLoggingOut ? t("common.loggingOut") : t("common.logout")}
                 </button>
               </>
             ) : (
@@ -426,7 +433,7 @@ export default function Header({ content }: { content?: any }) {
                 className="text-white text-[18px] font-rubik font-medium py-3 hover:opacity-80 transition-opacity"
                 onClick={() => setMobileMenuOpen(false)}
               >
-                Login
+                {t("common.login")}
               </Link>
             )}
 

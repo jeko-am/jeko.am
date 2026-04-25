@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useSignupUrl } from "@/lib/useSignupUrl";
+import { useContentT } from "@/lib/i18n/useContentT";
 
 const Sparkle = () => (
   <svg
@@ -22,9 +23,11 @@ const Sparkle = () => (
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export default function OfferBanner({ content }: { content?: Record<string, any> }) {
-  const primaryText = content?.primary_text || "25% off your first box";
-  const secondaryText = content?.secondary_text || "10% off your next box";
+  const { ct } = useContentT(content);
   const signupUrl = useSignupUrl();
+
+  const primaryText = ct("primary_text", "home.offer.primaryText");
+  const secondaryText = ct("secondary_text", "home.offer.secondaryText");
   const linkUrl = content?.link_url || signupUrl;
   const bgColor = content?.background_color || "#5F295E";
 

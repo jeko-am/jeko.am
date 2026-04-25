@@ -3,6 +3,7 @@
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import Link from "next/link";
+import { useT } from "@/lib/i18n/LangProvider";
 
 const deliveryOptions = [
   {
@@ -32,6 +33,7 @@ const deliveryOptions = [
 ];
 
 export default function DeliveryInformationPage() {
+  const { t } = useT();
   return (
     <>
       <Header />
@@ -40,11 +42,10 @@ export default function DeliveryInformationPage() {
         <section className="bg-deep-green py-16 text-center relative zigzag-bottom">
           <div className="max-w-[1200px] mx-auto px-6">
             <h1 className="font-rubik text-white text-[38px] md:text-[48px] font-bold leading-[1.15] mb-4">
-              Delivery <span className="text-gold">Information</span>
+              {t("policy.delivery.heading")} <span className="text-gold">{t("policy.delivery.headingHighlight")}</span>
             </h1>
             <p className="text-white/80 max-w-2xl mx-auto text-lg leading-relaxed">
-              Everything you need to know about how and when your Jeko order
-              arrives at your door.
+              {t("policy.delivery.subtitle")}
             </p>
           </div>
         </section>
@@ -53,7 +54,7 @@ export default function DeliveryInformationPage() {
         <section className="bg-off-white">
           <div className="max-w-[900px] mx-auto px-6 py-16">
             <h2 className="text-deep-green font-rubik font-bold text-2xl mb-8">
-              Delivery Options
+              {t("policy.delivery.optionsHeading")}
             </h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-12">
               {deliveryOptions.map((option) => (
@@ -78,7 +79,7 @@ export default function DeliveryInformationPage() {
             {/* Where We Deliver */}
             <div className="mb-12">
               <h2 className="text-deep-green font-rubik font-bold text-2xl mb-4">
-                Where We Deliver
+                {t("policy.delivery.whereHeading")}
               </h2>
               <p className="text-deep-green/80 text-[16px] leading-relaxed mb-4">
                 We deliver across the whole of the United Kingdom, including
@@ -101,7 +102,7 @@ export default function DeliveryInformationPage() {
             {/* How Subscription Delivery Works */}
             <div className="mb-12">
               <h2 className="text-deep-green font-rubik font-bold text-2xl mb-4">
-                How Subscription Delivery Works
+                {t("policy.delivery.howSubHeading")}
               </h2>
               <p className="text-deep-green/80 text-[16px] leading-relaxed mb-4">
                 When you subscribe, we&apos;ll deliver your dog&apos;s meals on
@@ -119,7 +120,7 @@ export default function DeliveryInformationPage() {
             {/* Packaging */}
             <div className="mb-12">
               <h2 className="text-deep-green font-rubik font-bold text-2xl mb-4">
-                Packaging &amp; Storage
+                {t("policy.delivery.packagingHeading")}
               </h2>
               <p className="text-deep-green/80 text-[16px] leading-relaxed mb-4">
                 All Jeko meals are delivered in recyclable packaging with
@@ -136,7 +137,7 @@ export default function DeliveryInformationPage() {
             {/* Tracking */}
             <div className="mb-12">
               <h2 className="text-deep-green font-rubik font-bold text-2xl mb-4">
-                Tracking Your Order
+                {t("policy.delivery.trackingHeading")}
               </h2>
               <p className="text-deep-green/80 text-[16px] leading-relaxed mb-4">
                 Once your order has been dispatched, you&apos;ll receive a
@@ -149,16 +150,16 @@ export default function DeliveryInformationPage() {
             {/* Contact CTA */}
             <div className="bg-deep-green/5 rounded-xl p-8 text-center">
               <h3 className="text-deep-green font-rubik font-bold text-xl mb-3">
-                Need help with a delivery?
+                {t("policy.delivery.helpHeading")}
               </h3>
               <p className="text-deep-green/70 mb-5">
-                Our friendly team is here to help with any delivery questions.
+                {t("policy.delivery.helpBody")}
               </p>
               <Link
                 href="/contact"
                 className="inline-block bg-deep-green text-white font-semibold px-8 py-3 rounded-full hover:bg-deep-green/90 transition-colors"
               >
-                Contact us
+                {t("policy.delivery.contactCta")}
               </Link>
             </div>
           </div>

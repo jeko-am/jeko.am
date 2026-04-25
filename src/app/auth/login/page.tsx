@@ -4,8 +4,10 @@ import Link from 'next/link';
 import { useAuth } from '@/lib/auth';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { FormEvent, Suspense, useEffect, useState } from 'react';
+import { useT } from '@/lib/i18n/LangProvider';
 
 function LoginForm() {
+  const { t } = useT();
   const { signIn, user, isAdmin, loading } = useAuth();
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -32,7 +34,7 @@ function LoginForm() {
     setError(null);
 
     if (!email.trim() || !password.trim()) {
-      setError('Please enter both email and password.');
+      setError(t('auth.login.bothRequired'));
       return;
     }
 
@@ -45,13 +47,13 @@ function LoginForm() {
         // Map common Supabase auth errors to user-friendly messages
         const message = signInError.message;
         if (message.includes('Invalid login credentials')) {
-          setError('Invalid email or password. Please try again.');
+          setError(t('auth.login.invalidCreds'));
         } else if (message.includes('Email not confirmed')) {
-          setError('Please verify your email address before signing in.');
+          setError(t('auth.login.unconfirmed'));
         } else if (message.includes('Too many requests')) {
-          setError('Too many login attempts. Please wait a moment and try again.');
+          setError(t('auth.login.tooManyRequests'));
         } else {
-          setError(message || 'An unexpected error occurred. Please try again.');
+          setError(message || t('auth.login.unexpected'));
         }
         setSubmitting(false);
         return;
@@ -61,7 +63,7 @@ function LoginForm() {
       // and the useEffect above will handle the redirect once isAdmin resolves.
       // We keep submitting=true so the button stays disabled during the redirect.
     } catch {
-      setError('A network error occurred. Please check your connection and try again.');
+      setError(t('auth.login.networkError'));
       setSubmitting(false);
     }
   }
@@ -72,7 +74,7 @@ function LoginForm() {
       <div className="min-h-screen bg-deep-green flex items-center justify-center">
         <div className="flex flex-col items-center gap-3">
           <div className="w-10 h-10 border-4 border-gold border-t-transparent rounded-full animate-spin" />
-          <p className="text-sm text-white/60">Checking session...</p>
+          <p className="text-sm text-white/60">{t('auth.login.checkingSession')}</p>
         </div>
       </div>
     );
@@ -84,7 +86,7 @@ function LoginForm() {
       <div className="min-h-screen bg-deep-green flex items-center justify-center">
         <div className="flex flex-col items-center gap-3">
           <div className="w-10 h-10 border-4 border-gold border-t-transparent rounded-full animate-spin" />
-          <p className="text-sm text-white/60">Redirecting...</p>
+          <p className="text-sm text-white/60">{t('auth.login.redirecting')}</p>
         </div>
       </div>
     );
@@ -116,8 +118,8 @@ function LoginForm() {
       <div className="w-full max-w-md">
         {/* Logo / Brand */}
         <div className="text-center mb-8">
-          <h1 className="text-xl font-bold text-white">Welcome back!</h1>
-          <p className="text-white/50 text-xs mt-1">Sign in to your Jeko account</p>
+          <h1 className="text-xl font-bold text-white">{t('auth.login.welcomeBack')}</h1>
+          <p className="text-white/50 text-xs mt-1">{t('auth.login.subtitleShort')}</p>
         </div>
 
         {/* Login Card */}
@@ -136,7 +138,7 @@ function LoginForm() {
             {/* Email */}
             <div>
               <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1.5">
-                Email address
+                {t('auth.login.emailLabel')}
               </label>
               <input
                 id="email"
@@ -146,7 +148,7 @@ function LoginForm() {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 disabled={submitting}
-                placeholder="admin@jeko.am"
+                placeholder={t('auth.login.emailPlaceholderAdmin')}
                 className="w-full px-4 py-3 border border-gray-300 rounded-xl text-gray-900 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-deep-green focus:border-transparent transition-shadow disabled:bg-gray-50 disabled:text-gray-500"
               />
             </div>
@@ -154,7 +156,7 @@ function LoginForm() {
             {/* Password */}
             <div>
               <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-1.5">
-                Password
+                {t('auth.login.passwordLabel')}
               </label>
               <div className="relative">
                 <input
@@ -165,7 +167,7 @@ function LoginForm() {
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   disabled={submitting}
-                  placeholder="Enter your password"
+                  placeholder={t('auth.login.passwordPlaceholder')}
                   className="w-full px-4 py-3 border border-gray-300 rounded-xl text-gray-900 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-deep-green focus:border-transparent transition-shadow disabled:bg-gray-50 disabled:text-gray-500 pr-12"
                 />
                 <button
@@ -197,10 +199,10 @@ function LoginForm() {
               {submitting ? (
                 <>
                   <div className="w-5 h-5 border-2 border-deep-green/30 border-t-deep-green rounded-full animate-spin" />
-                  Signing in...
+                  {t('auth.login.signingIn')}
                 </>
               ) : (
-                'Sign In'
+                t('auth.login.submit')
               )}
             </button>
           </form>
@@ -208,7 +210,7 @@ function LoginForm() {
 
         {/* Footer */}
         <p className="text-center text-white/30 text-xs mt-6">
-          Jeko Pet Matching &middot; Secure login
+          {t('auth.login.secureLogin')}
         </p>
       </div>
       </div>

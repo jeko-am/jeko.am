@@ -4,6 +4,7 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import Link from "next/link";
 import { useSignupUrl } from "@/lib/useSignupUrl";
+import { useT } from "@/lib/i18n/LangProvider";
 
 const deliveryOptions = [
   {
@@ -58,6 +59,7 @@ const deliveryOptions = [
 
 export default function ShippingPolicyPage() {
   const signupUrl = useSignupUrl();
+  const { t } = useT();
   return (
     <>
       <Header />
@@ -66,10 +68,10 @@ export default function ShippingPolicyPage() {
         <section className="bg-deep-green py-16 pb-20 text-center relative zigzag-bottom">
           <div className="max-w-[900px] mx-auto px-6">
             <h1 className="text-4xl md:text-5xl font-bold text-white font-rubik mb-4">
-              Shipping &amp; <span className="text-gold">Delivery Policy</span>
+              {t("policy.shipping.heading")} <span className="text-gold">{t("policy.shipping.headingHighlight")}</span>
             </h1>
             <p className="text-white/80 text-lg md:text-xl max-w-[650px] mx-auto leading-relaxed">
-              Everything you need to know about how we deliver fresh, natural dog food straight to your door across the United Kingdom.
+              {t("policy.shipping.subtitle")}
             </p>
           </div>
         </section>

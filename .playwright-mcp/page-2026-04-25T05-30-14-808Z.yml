@@ -1,0 +1,205 @@
+- generic [active] [ref=e1]:
+  - banner [ref=e2]:
+    - generic [ref=e4]:
+      - link "JEKO" [ref=e5] [cursor=pointer]:
+        - /url: /
+        - generic [ref=e6]: JEKO
+      - navigation [ref=e7]:
+        - link "Մեր մասին" [ref=e9] [cursor=pointer]:
+          - /url: /about
+          - text: Մեր մասին
+          - img [ref=e10]
+        - link "Համայնք" [ref=e13] [cursor=pointer]:
+          - /url: /community
+          - text: Համայնք
+          - img [ref=e14]
+        - link "Խանութ" [ref=e17] [cursor=pointer]:
+          - /url: /products
+        - link "Կարծիքներ" [ref=e19] [cursor=pointer]:
+          - /url: /reviews
+        - link "Առողջապահական օգուտներ" [ref=e21] [cursor=pointer]:
+          - /url: /benefits
+          - text: Առողջապահական օգուտներ
+          - img [ref=e22]
+      - generic [ref=e24]:
+        - button "Switch language" [ref=e26] [cursor=pointer]:
+          - generic [ref=e27]: 🇦🇲
+          - generic [ref=e28]: HY
+          - img [ref=e29]
+        - button "Shopping cart" [ref=e31] [cursor=pointer]:
+          - img [ref=e32]
+        - link "Օգնություն" [ref=e36] [cursor=pointer]:
+          - /url: /contact
+        - generic [ref=e160]:
+          - link "Ադմին վահանակ" [ref=e161] [cursor=pointer]:
+            - /url: /admin/dashboard
+            - img [ref=e162]
+            - text: Ադմին վահանակ
+          - button "Ելք" [ref=e165] [cursor=pointer]:
+            - img [ref=e166]
+            - text: Ելք
+  - main [ref=e39]:
+    - generic [ref=e41]:
+      - heading "Թարմ, բնական սնունդ՝ ձեր կենդանու համար" [level=1] [ref=e42]
+      - paragraph [ref=e43]: Յուրաքանչյուր բաղադրատոմս անասնաբույժի հաստատմամբ, թեթև եփված, տան դռան մոտ։
+    - generic [ref=e45]:
+      - generic [ref=e46]:
+        - generic [ref=e47]:
+          - img [ref=e48]
+          - textbox "Որոնել ապրանքներ..." [ref=e50]
+        - generic [ref=e51]:
+          - button "Բոլորը" [ref=e52] [cursor=pointer]
+          - button "day food" [ref=e168] [cursor=pointer]
+          - button "Renal" [ref=e169] [cursor=pointer]
+          - button "Sensitive" [ref=e170] [cursor=pointer]
+          - button "Food" [ref=e171] [cursor=pointer]
+        - combobox [ref=e53] [cursor=pointer]:
+          - option "Նորագույն" [selected]
+          - option "Գին՝ ցածրից բարձր"
+          - option "Գին՝ բարձրից ցածր"
+          - option "Անուն՝ Ա-ից Ֆ"
+      - paragraph [ref=e55]: products.resultsFound.many
+      - generic [ref=e56]:
+        - link "Beef + Rice + Veggies Տեսնել ապրանքը Beef + Rice + Veggies Hearty beef with brown rice, spinach, peas & carrots — ~520 kcal. Best for energy and muscle support. £10.00 (1) Ավելացնել զամբյուղ" [ref=e172] [cursor=pointer]:
+          - /url: /products/beef-rice-veggies
+          - generic [ref=e173]:
+            - generic [ref=e174]:
+              - img "Beef + Rice + Veggies" [ref=e175]
+              - generic [ref=e177]: Տեսնել ապրանքը
+            - generic [ref=e178]:
+              - heading "Beef + Rice + Veggies" [level=3] [ref=e179]
+              - paragraph [ref=e180]: Hearty beef with brown rice, spinach, peas & carrots — ~520 kcal. Best for energy and muscle support.
+              - generic [ref=e182]: £10.00
+              - generic [ref=e183]:
+                - img [ref=e184]
+                - img [ref=e186]
+                - img [ref=e188]
+                - img [ref=e190]
+                - img [ref=e192]
+                - generic [ref=e194]: (1)
+              - button "Ավելացնել զամբյուղ" [ref=e195]
+        - link "Chicken + Quinoa + Greens Տեսնել ապրանքը Chicken + Quinoa + Greens Lean chicken with quinoa, zucchini & green beans — ~480 kcal. Best for lean protein and weight control. £15.00 Ավելացնել զամբյուղ" [ref=e196] [cursor=pointer]:
+          - /url: /products/chicken-quinoa-greens
+          - generic [ref=e197]:
+            - generic [ref=e198]:
+              - img "Chicken + Quinoa + Greens" [ref=e199]
+              - generic [ref=e201]: Տեսնել ապրանքը
+            - generic [ref=e202]:
+              - heading "Chicken + Quinoa + Greens" [level=3] [ref=e203]
+              - paragraph [ref=e204]: Lean chicken with quinoa, zucchini & green beans — ~480 kcal. Best for lean protein and weight control.
+              - generic [ref=e206]: £15.00
+              - button "Ավելացնել զամբյուղ" [ref=e207]
+        - link "Tuna + Rice Bowl Տեսնել ապրանքը Tuna + Rice Bowl Omega-rich tuna with brown rice, spinach, peas & carrots — ~430 kcal. Best for coat health and light digestion. £20.00 Ավելացնել զամբյուղ" [ref=e208] [cursor=pointer]:
+          - /url: /products/tuna-rice-bowl
+          - generic [ref=e209]:
+            - generic [ref=e210]:
+              - img "Tuna + Rice Bowl" [ref=e211]
+              - generic [ref=e213]: Տեսնել ապրանքը
+            - generic [ref=e214]:
+              - heading "Tuna + Rice Bowl" [level=3] [ref=e215]
+              - paragraph [ref=e216]: Omega-rich tuna with brown rice, spinach, peas & carrots — ~430 kcal. Best for coat health and light digestion.
+              - generic [ref=e218]: £20.00
+              - button "Ավելացնել զամբյուղ" [ref=e219]
+        - link "Cod + Rice + Veggies Տեսնել ապրանքը Cod + Rice + Veggies Mild cod with white rice, green beans & carrots — ~360 kcal. Best for sensitive stomachs and low-fat diets. £20.00 Ավելացնել զամբյուղ" [ref=e220] [cursor=pointer]:
+          - /url: /products/cod-rice-veggies
+          - generic [ref=e221]:
+            - generic [ref=e222]:
+              - img "Cod + Rice + Veggies" [ref=e223]
+              - generic [ref=e225]: Տեսնել ապրանքը
+            - generic [ref=e226]:
+              - heading "Cod + Rice + Veggies" [level=3] [ref=e227]
+              - paragraph [ref=e228]: Mild cod with white rice, green beans & carrots — ~360 kcal. Best for sensitive stomachs and low-fat diets.
+              - generic [ref=e230]: £20.00
+              - button "Ավելացնել զամբյուղ" [ref=e231]
+        - link "Chickpea + Quinoa Plant Mix Տեսնել ապրանքը Chickpea + Quinoa Plant Mix Plant-based quinoa & chickpea mix with spinach, peas & flaxseed — ~510 kcal. Best for plant-based protein, fiber, and digestion. £10.00 Ավելացնել զամբյուղ" [ref=e232] [cursor=pointer]:
+          - /url: /products/chickpea-quinoa-plant-mix
+          - generic [ref=e233]:
+            - generic [ref=e234]:
+              - img "Chickpea + Quinoa Plant Mix" [ref=e235]
+              - generic [ref=e237]: Տեսնել ապրանքը
+            - generic [ref=e238]:
+              - heading "Chickpea + Quinoa Plant Mix" [level=3] [ref=e239]
+              - paragraph [ref=e240]: Plant-based quinoa & chickpea mix with spinach, peas & flaxseed — ~510 kcal. Best for plant-based protein, fiber, and digestion.
+              - generic [ref=e242]: £10.00
+              - button "Ավելացնել զամբյուղ" [ref=e243]
+  - contentinfo [ref=e105]:
+    - generic [ref=e106]:
+      - generic [ref=e107]:
+        - generic [ref=e108]:
+          - heading "Միացիր մեր VIP ցանկին" [level=4] [ref=e109]
+          - paragraph [ref=e110]: Առաջինը իմացիր նոր ապրանքների մասին, մասնակցիր բացառիկ մրցույթների և ստացիր օգտակար խորհուրդներ ընտանի կենդանիների խնամքի մասին։
+          - generic [ref=e111]:
+            - textbox "Մուտքագրիր քո էլ. փոստի հասցեն" [ref=e112]
+            - button "Գրանցվել" [ref=e113] [cursor=pointer]
+        - generic [ref=e114]:
+          - generic [ref=e115]:
+            - heading "Jeko" [level=4] [ref=e116]
+            - list [ref=e117]:
+              - listitem [ref=e118]:
+                - link "Մեր պատմությունը" [ref=e119] [cursor=pointer]:
+                  - /url: /about
+              - listitem [ref=e120]:
+                - link "Կարծիքներ" [ref=e121] [cursor=pointer]:
+                  - /url: /reviews
+              - listitem [ref=e122]:
+                - link "Բաղադրատոմսեր" [ref=e123] [cursor=pointer]:
+                  - /url: /recipes
+              - listitem [ref=e124]:
+                - link "Ավելին քան ամանը" [ref=e125] [cursor=pointer]:
+                  - /url: /beyond-the-bowl
+              - listitem [ref=e126]:
+                - link "Խանութ" [ref=e127] [cursor=pointer]:
+                  - /url: /products
+              - listitem [ref=e128]:
+                - link "Համայնք" [ref=e129] [cursor=pointer]:
+                  - /url: /community
+          - generic [ref=e130]:
+            - heading "Օգնություն" [level=4] [ref=e131]
+            - list [ref=e132]:
+              - listitem [ref=e133]:
+                - link "Իմ հաշիվը" [ref=e134] [cursor=pointer]:
+                  - /url: /profile
+              - listitem [ref=e135]:
+                - link "Կապ մեզ հետ" [ref=e136] [cursor=pointer]:
+                  - /url: /contact
+              - listitem [ref=e137]:
+                - link "Առաքման տեղեկատվություն" [ref=e138] [cursor=pointer]:
+                  - /url: /delivery-information
+              - listitem [ref=e139]:
+                - link "Վերադարձներ" [ref=e140] [cursor=pointer]:
+                  - /url: /returns
+              - listitem [ref=e141]:
+                - link "Կայքի քարտեզ" [ref=e142] [cursor=pointer]:
+                  - /url: /sitemap-page
+          - generic [ref=e143]:
+            - heading "Տեղեկատվություն" [level=4] [ref=e144]
+            - list [ref=e145]:
+              - listitem [ref=e146]:
+                - link "Գաղտնիության քաղաքականություն" [ref=e147] [cursor=pointer]:
+                  - /url: /privacy-policy
+              - listitem [ref=e148]:
+                - link "Պայմաններ և դրույթներ" [ref=e149] [cursor=pointer]:
+                  - /url: /terms-of-use
+              - listitem [ref=e150]:
+                - link "Jeko-ի քաղաքականություն" [ref=e151] [cursor=pointer]:
+                  - /url: /pure-policies
+              - listitem [ref=e152]:
+                - link "Կայքի անվտանգություն" [ref=e153] [cursor=pointer]:
+                  - /url: /site-security
+              - listitem [ref=e154]:
+                - link "Cookie-ների քաղաքականություն" [ref=e155] [cursor=pointer]:
+                  - /url: /cookie-policy
+      - generic [ref=e156]:
+        - generic [ref=e158]: JEKO
+        - paragraph [ref=e159]: © Jeko 2020-2026
+  - link "Home":
+    - /url: /
+    - img
+    - text: Home
+  - generic [ref=e244]:
+    - generic [ref=e245]:
+      - paragraph [ref=e246]: Հաու՜ 🐾
+      - paragraph [ref=e247]: Գտիր ընկեր քո կենդանու համար։
+    - button "Find pet matches" [ref=e249] [cursor=pointer]:
+      - img "Jeko dog" [ref=e250]
+  - alert [ref=e251]

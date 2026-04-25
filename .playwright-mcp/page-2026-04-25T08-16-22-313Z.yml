@@ -1,0 +1,373 @@
+- generic [active] [ref=e1]:
+  - banner [ref=e2]:
+    - generic [ref=e4]:
+      - link "JEKO" [ref=e5] [cursor=pointer]:
+        - /url: /
+        - generic [ref=e6]: JEKO
+      - navigation [ref=e7]:
+        - link "Մեր մասին" [ref=e9] [cursor=pointer]:
+          - /url: /about
+          - text: Մեր մասին
+          - img [ref=e10]
+        - link "Համայնք" [ref=e13] [cursor=pointer]:
+          - /url: /community
+          - text: Համայնք
+          - img [ref=e14]
+        - link "Խանութ" [ref=e17] [cursor=pointer]:
+          - /url: /products
+        - link "Կարծիքներ" [ref=e19] [cursor=pointer]:
+          - /url: /reviews
+        - link "Առողջապահական օգուտներ" [ref=e21] [cursor=pointer]:
+          - /url: /benefits
+          - text: Առողջապահական օգուտներ
+          - img [ref=e22]
+      - generic [ref=e24]:
+        - button "Switch language" [ref=e26] [cursor=pointer]:
+          - generic [ref=e27]: 🇦🇲
+          - generic [ref=e28]: HY
+          - img [ref=e29]
+        - button "Shopping cart" [ref=e31] [cursor=pointer]:
+          - img [ref=e32]
+        - link "Օգնություն" [ref=e36] [cursor=pointer]:
+          - /url: /contact
+        - generic [ref=e482]:
+          - link "Ադմին վահանակ" [ref=e483] [cursor=pointer]:
+            - /url: /admin/dashboard
+            - img [ref=e484]
+            - text: Ադմին վահանակ
+          - button "Ելք" [ref=e487] [cursor=pointer]:
+            - img [ref=e488]
+            - text: Ելք
+  - main [ref=e39]:
+    - generic [ref=e41]:
+      - img "Dog food reviews" [ref=e43]
+      - generic [ref=e46]:
+        - heading "Կենդանիների կյանքեր, որոնք մենք փոխել ենք դեպի լավը" [level=1] [ref=e47]
+        - paragraph [ref=e48]: Քո կենդանու սննդակարգում ներդրումը կարող է փոխակերպիչ ազդեցություն ունենալ նրա առողջության և երջանկության վրա։
+        - link "Ստեղծել անհատական պլան" [ref=e49] [cursor=pointer]:
+          - /url: /auth/signup
+    - link "25% զեղչ առաջին տուփից+10% զեղչ հաջորդ տուփից" [ref=e51] [cursor=pointer]:
+      - /url: /signup
+      - paragraph [ref=e52]: 25% զեղչ առաջին տուփից+10% զեղչ հաջորդ տուփից
+    - generic [ref=e56]:
+      - generic [ref=e57] [cursor=pointer]:
+        - generic [ref=e58]:
+          - generic [ref=e59]:
+            - generic [ref=e60]: S
+            - generic [ref=e61]:
+              - paragraph [ref=e62]: Stacey
+              - generic [ref=e63]:
+                - img [ref=e65]
+                - img [ref=e68]
+                - img [ref=e71]
+                - img [ref=e74]
+                - img [ref=e77]
+          - generic [ref=e79]:
+            - img [ref=e80]
+            - generic [ref=e82]: Trustpilot
+        - heading "Նոր կյանք" [level=3] [ref=e490]
+        - paragraph [ref=e84]: "Ռոզին արդեն 6 շաբաթ է, ինչ Jeko Food-ում է, և ինչ տարբերություն: Դուք մեր 12-ամյա ամերիկյան բուլդոգին միանգամայն նոր շունչ եք տվել, նրա էներգիայի մակարդակը բարձրացել է և կարող եք ասել, որ նա ինքն իրեն ավելի լավ է զգում: Նրա վերարկուն այնքան փայլուն է, որ մորթին իսկապես փափուկ է, նորից նման է շան մորթի:"
+      - generic [ref=e85] [cursor=pointer]:
+        - generic [ref=e86]:
+          - generic [ref=e87]:
+            - generic [ref=e88]: D
+            - generic [ref=e89]:
+              - paragraph [ref=e90]: Dani
+              - generic [ref=e91]:
+                - img [ref=e93]
+                - img [ref=e96]
+                - img [ref=e99]
+                - img [ref=e102]
+                - img [ref=e105]
+          - generic [ref=e107]:
+            - img [ref=e108]
+            - generic [ref=e110]: Trustpilot
+        - heading "Շնորհակալություն մեր կյանքը փոխելու համար" [level=3] [ref=e491]
+        - paragraph [ref=e112]: "Մենք ունենք գրեթե 2 տարեկան GSD-ն: Մի տոննա ուսումնասիրեցի նրա համար ճիշտ սննդի մասին, գտա Ջեկոյին և մտածեցի, որ փորձենք: Նա շատ է սիրում դա. նախաճաշն ու ընթրիքն այժմ նրա ամենասիրելի մասն են: Շնորհակալություն մեր կյանքը փոխելու համար, մենք այնքան ենք պայքարել. նրա վերարկուն և քաշն արդեն ավելի լավն են:"
+      - generic [ref=e113] [cursor=pointer]:
+        - generic [ref=e114]:
+          - generic [ref=e115]:
+            - generic [ref=e116]: S
+            - generic [ref=e117]:
+              - paragraph [ref=e118]: Sophie
+              - generic [ref=e119]:
+                - img [ref=e121]
+                - img [ref=e124]
+                - img [ref=e127]
+                - img [ref=e130]
+                - img [ref=e133]
+          - generic [ref=e135]:
+            - img [ref=e136]
+            - generic [ref=e138]: Trustpilot
+        - heading "Սնուցումը գերազանց է" [level=3] [ref=e492]
+        - paragraph [ref=e140]: "Սնունդը փոխանակելուց հետո իմ շների վերարկուն ավելի քիչ յուղոտ է դարձել: Սնուցումը գերազանց է, և ինձ դուր է գալիս, որ սննդի համային տեսականի կա՝ առանց ստամոքսի խնդիրներ առաջացնելու: Նրա աթոռակը փայլուն է: Չի կարելի մեղադրել սննդի մեջ: Գինը մի փոքր ավելի թանկ է, քան որոշ խանութների մատակարարներ, բայց լավագույն սնուցման համար, իհարկե, արժե այն:"
+      - generic [ref=e141] [cursor=pointer]:
+        - generic [ref=e142]:
+          - generic [ref=e143]:
+            - generic [ref=e144]: K
+            - generic [ref=e145]:
+              - paragraph [ref=e146]: Kelly
+              - generic [ref=e147]:
+                - img [ref=e149]
+                - img [ref=e152]
+                - img [ref=e155]
+                - img [ref=e158]
+                - img [ref=e161]
+          - generic [ref=e163]:
+            - img [ref=e164]
+            - generic [ref=e166]: Trustpilot
+        - heading "Վերադարձ դեպի իր անվայել ինքնությունը" [level=3] [ref=e493]
+        - paragraph [ref=e168]: "Այս սնունդը ֆանտաստիկ է եղել իմ Sprocker Ruger-ի համար: Նրա մոտ ախտորոշվել է պանկրեատիտ։ Նա որոշ ժամանակ եղել է Ջեկոյի վրա, և նրա կղանքը ամրացել է և այլևս արյուն չի պարունակում: Նա այժմ վերադարձել է իր լկտի ինքնությանը, որի համար ես շատ շնորհակալ եմ, քանի որ դա սարսափելի ժամանակ էր:"
+      - generic [ref=e169] [cursor=pointer]:
+        - generic [ref=e170]:
+          - generic [ref=e171]:
+            - generic [ref=e172]: D
+            - generic [ref=e173]:
+              - paragraph [ref=e174]: Dottie
+              - generic [ref=e175]:
+                - img [ref=e177]
+                - img [ref=e180]
+                - img [ref=e183]
+                - img [ref=e186]
+                - img [ref=e189]
+          - generic [ref=e191]:
+            - img [ref=e192]
+            - generic [ref=e194]: Trustpilot
+        - heading "Խիստ խորհուրդ է տրվում" [level=3] [ref=e494]
+        - paragraph [ref=e196]: "Իմ շունը սիրահարված է Ջեկոյի կերակուրին: Ես երբեք չեմ տեսել, որ նա ամեն անգամ մաքուր լիզում է ամանը, ինչպես նա ընդունում է Jeko շան կերակուրը: Նրա մորթու մաշկը և առողջությունը շատ լավացել են կարճ ժամանակում Ջեկո ուտելիքով: Ես խստորեն խորհուրդ եմ տվել շների տերերին. ահա թե որքան տպավորված եմ ես:"
+      - generic [ref=e197] [cursor=pointer]:
+        - generic [ref=e198]:
+          - generic [ref=e199]:
+            - generic [ref=e200]: R
+            - generic [ref=e201]:
+              - paragraph [ref=e202]: Robyn
+              - generic [ref=e203]:
+                - img [ref=e205]
+                - img [ref=e208]
+                - img [ref=e211]
+                - img [ref=e214]
+                - img [ref=e217]
+          - generic [ref=e219]:
+            - img [ref=e220]
+            - generic [ref=e222]: Trustpilot
+        - heading "Նրանց ստամոքսը շատ լավացել է" [level=3] [ref=e495]
+        - paragraph [ref=e224]: "Իմ շունը միշտ զգայուն ստամոքս է ունեցել, բայց Ջեկոյին անցնելուց հետո այն շատ ավելի լավացել է: Սկզբում ես սկսեցի բաժանորդագրվել նմանատիպ խնդիրներ ունեցող շների համար բազմաթիվ լավ ակնարկների պատճառով: Ընդհանուր առմամբ, խորհուրդ եմ տալիս Ջեկոյին և կփոխադրեմ իմ երկրորդ (ավելի քիչ բծախնդիր) շանը, երբ նրա ներկայիս սնունդը սպառվի:"
+      - generic [ref=e225] [cursor=pointer]:
+        - generic [ref=e226]:
+          - generic [ref=e227]:
+            - generic [ref=e228]: J
+            - generic [ref=e229]:
+              - paragraph [ref=e230]: Jean
+              - generic [ref=e231]:
+                - img [ref=e233]
+                - img [ref=e236]
+                - img [ref=e239]
+                - img [ref=e242]
+                - img [ref=e245]
+          - generic [ref=e247]:
+            - img [ref=e248]
+            - generic [ref=e250]: Trustpilot
+        - heading "Այնքան ուրախ ենք, որ մենք դա թույլ տվեցինք" [level=3] [ref=e496]
+        - paragraph [ref=e252]: "Ես այնքան գոհ եմ այս սննդից: Իմ շունը ոչ միայն սիրում է այն ուտել, այլ նրա ստամոքսը դա իսկապես լավ է հանդուրժում: Նա ստանում է կոլիտի նոպաներ, և այս սննդամթերքը զգալիորեն բարելավել է այն: Այնքան ուրախ ենք, որ մենք դա թույլ տվեցինք:"
+      - generic [ref=e253] [cursor=pointer]:
+        - generic [ref=e254]:
+          - generic [ref=e255]:
+            - generic [ref=e256]: L
+            - generic [ref=e257]:
+              - paragraph [ref=e258]: Laura
+              - generic [ref=e259]:
+                - img [ref=e261]
+                - img [ref=e264]
+                - img [ref=e267]
+                - img [ref=e270]
+                - img [ref=e273]
+          - generic [ref=e275]:
+            - img [ref=e276]
+            - generic [ref=e278]: Trustpilot
+        - heading "Ոչինչ, բացի դրական մեկնաբանություններից" [level=3] [ref=e497]
+        - paragraph [ref=e280]: "Նրանք այժմ կերակրում են երկու ամիս, և ես ոչինչ չունեմ, բացի դրական մեկնաբանություններից... Շատ լավ գաղափար է դրանից հետո ջուր ավելացնել՝ փաթեթավորումը և քաշը փոխադրելու համար, երկու աշխարհներից լավագույնը մեզ համար, քանի որ դա հարմար է, գումարած, որ շները բավականաչափ խոնավություն են ստանում, քանի որ մերոնցից մեկը շատ ծարավ ձագ է:"
+      - generic [ref=e281] [cursor=pointer]:
+        - generic [ref=e282]:
+          - generic [ref=e283]:
+            - generic [ref=e284]: J
+            - generic [ref=e285]:
+              - paragraph [ref=e286]: Jilly
+              - generic [ref=e287]:
+                - img [ref=e289]
+                - img [ref=e292]
+                - img [ref=e295]
+                - img [ref=e298]
+                - img [ref=e301]
+          - generic [ref=e303]:
+            - img [ref=e304]
+            - generic [ref=e306]: Trustpilot
+        - heading "Շատ ավելի լավ որակ" [level=3] [ref=e498]
+        - paragraph [ref=e308]: "Ես որոշ հետազոտություններ արեցի և սկսեցի իմ բռնցքամարտիկը Jeko-ի վրա, որը նա աշխատում է մոտ 2 ամիս, որն ինձ ավելին չի արժենում, քան թաց սկուտեղի սնունդը, բայց շատ ավելի որակյալ է: Նրա ստամոքսը շատ է բարելավվել, և նրա վերարկուն ավելի գեղեցիկ է, քան երբևէ եղել է, այն փափուկ, հարթ և փայլուն է: Ես բարձր խորհուրդ կտայի:"
+    - generic [ref=e311]:
+      - generic [ref=e313]:
+        - heading "Լուլուն այժմ" [level=2] [ref=e314]
+        - paragraph [ref=e315]: բոլորովին ուրիշ շուն է
+        - generic [ref=e316]:
+          - paragraph [ref=e317]: "Մենք փրկեցինք Լուլուին Pro Dogs Direct բարեգործական կազմակերպությունից, որը հիանալի էր: Նա մեզ մոտ եկավ ստամոքսի և մարսողական համակարգի հետ կապված մի շարք խնդիրներով: Նրանք այնքան վատն էին, որ էֆթանազիան երկու անգամ քննարկվեց մեր անասնաբույժների կողմից:"
+          - paragraph [ref=e318]: "Մենք փորձեցինք պլանշետներ, գելեր և դեղատոմսով կիբլային դիետաներ, և այս պահի դրությամբ մենք արդեն խելամիտ էինք: Մենք գտանք Ջեկոյին առցանց ակնարկ տեսնելուց հետո, ընդամենը 2 օրվա ընթացքում նրա խնդիրները թուլացել էին, և այժմ 3 ամիս անց նա այլ շուն է: Շատ շնորհակալ ենք մեր շան կյանքը փրկելու համար:"
+      - img "Lulu the rescue dog" [ref=e320]
+    - generic [ref=e324]:
+      - generic [ref=e325]:
+        - heading "Աջակցված է անասնաբույժների կողմից" [level=2] [ref=e326]
+        - paragraph [ref=e327]: Մշակված է դիետոլոգների կողմից
+      - generic [ref=e328]:
+        - generic [ref=e329]:
+          - img "Dr Julian Norton" [ref=e331]
+          - generic [ref=e332]:
+            - paragraph [ref=e333]: "“Ես անասնաբույժ եմ եղել ավելի քան 30 տարի, և մոտ վերջին 5 տարին ես Ջեկոյին առաջարկել եմ իմ հիվանդներին: Ես գտա, որ դա աներևակայելի օգտակար է, և որոշ շներ կտրուկ լավ արձագանքեցին:”"
+            - paragraph [ref=e334]: Dr Julian Norton MA VetMB GPcertSAP MRCVS, Partner
+        - generic [ref=e335]:
+          - img "Dr Brendan Clark" [ref=e337]
+          - generic [ref=e338]:
+            - paragraph [ref=e339]: "“Երբ սեփականատերերին հարցնում են, թե ինչն է դարձնում առողջ կենդանիների սնունդը, նրանք հաճախ նշում են բաղադրիչները: Բայց այն, ինչ հաճախ հաշվի չի առնվում, այն է, թե ինչպես է կերակուրը մշակվում, և սա, հնարավոր է, ամենակարևոր գործոնն է շների կեր ընտրելիս:”"
+            - paragraph [ref=e340]: Dr Brendan Clark MRCVS
+    - generic [ref=e343]:
+      - img "Nelly the dog" [ref=e345]
+      - generic [ref=e348]:
+        - heading "Ծանոթացեք Նելլիի և Փոլիի հետ" [level=2] [ref=e349]
+        - generic [ref=e350]:
+          - paragraph [ref=e351]: "Ես Նելլիին փրկեցի երկու տարի առաջ։ Նա եկավ ինձ մոտ ալոպեկիայով; նա այնքան շատ էր քորում, որ ամբողջ մարմինը ծածկում էին քոսեր և սպիտակ կետեր:"
+          - paragraph [ref=e352]: "Ես նույնիսկ չկարողացա շոյել նրան, ինչը սրտաճմլիկ էր:"
+          - paragraph [ref=e353]: "Մենք շագանակագույն թխվածքաբլիթներից անցանք Ջեկոյին, և ընդամենը մեկ շաբաթ անց նա ամբողջովին դադարեց քորը, և նրա մաշկը մաքրվեց: Շնորհակալություն Ջեկոյին Նելլիի կյանքը վերադարձնելու համար։"
+    - generic [ref=e356]:
+      - generic [ref=e357]:
+        - heading "Դիզելը շատ ավելի առողջարար է" [level=2] [ref=e499]
+        - paragraph [ref=e359]: հազարավոր շների
+      - generic [ref=e360]:
+        - button "Fussy dogs" [ref=e361] [cursor=pointer]
+        - button "Anal gland problems" [ref=e362] [cursor=pointer]
+        - button "Colitis" [ref=e363] [cursor=pointer]
+        - button "Happy healthy dogs" [ref=e364] [cursor=pointer]
+        - button "Pancreatitis" [ref=e365] [cursor=pointer]
+        - button "Oral health" [ref=e366] [cursor=pointer]
+        - button "Sensitive skin" [ref=e367] [cursor=pointer]
+        - button "Sensitive stomach" [ref=e368] [cursor=pointer]
+        - button "Kidney disease" [ref=e369] [cursor=pointer]
+        - button "Arthritis" [ref=e370] [cursor=pointer]
+        - button "Tear stains" [ref=e371] [cursor=pointer]
+        - button "Weight management" [ref=e372] [cursor=pointer]
+      - generic [ref=e373]:
+        - generic [ref=e374]:
+          - img "Janet & Bunty" [ref=e376]
+          - generic [ref=e377]:
+            - paragraph [ref=e378]: Janet & Bunty
+            - paragraph [ref=e379]: "Իմ մալթերենը դառնում էր բծախնդիր ուտող։ Ջեկոյի գովազդը հայտնվեց Instagram-ում, և ես պատվիրեցի: Ես այնքան ուրախ եմ, որ դա արեցի, ես ստիպված էի կապվել նրանց հետ հետագա խորհրդատվության համար, և նրանց հաճախորդների սպասարկումը փայլուն էր:"
+            - button "Ցույց տալ ավելին" [ref=e380] [cursor=pointer]
+        - generic [ref=e381]:
+          - img "Louise & Echo" [ref=e383]
+          - generic [ref=e384]:
+            - paragraph [ref=e385]: Louise & Echo
+            - paragraph [ref=e386]: "Սկզբում մի փոքր թերահավատ էի, որ ցանկացած շուն կսիրի այս կերակուրը, նույնիսկ այն շունչը, որովհետև ես ունեմ չափազանց բծախնդիր շուն: Մենք փորձեցինք մեկնարկային փաթեթը, և Echo-ն իսկապես սիրում էր այն առաջին իսկ օրվանից:"
+            - button "Ցույց տալ ավելին" [ref=e387] [cursor=pointer]
+        - generic [ref=e388]:
+          - img "Julie & Alfie" [ref=e390]
+          - generic [ref=e391]:
+            - paragraph [ref=e392]: Julie & Alfie
+            - paragraph [ref=e393]: "Հիանալի է, ես բանավիճում էի ևս մեկ կերակուր փորձելու համար, քանի որ իմ chi-ն շատ խճճված է, այնքան ուրախ եմ, որ դա արեցի: Ես նրան ունեցել եմ ընդամենը մի քանի ամիս, և նա ի սկզբանե ուտել է էժան սարսափելի սնունդ:"
+            - button "Ցույց տալ ավելին" [ref=e394] [cursor=pointer]
+        - generic [ref=e395]:
+          - img "Alejandra & Coco" [ref=e397]
+          - generic [ref=e398]:
+            - paragraph [ref=e399]: Alejandra & Coco
+            - paragraph [ref=e400]: "Իմ շունը շատ բծախնդիր ուտող է, և նա սիրում էր, իսկույն սիրեց այս կերակուրը: Հիմա նա նստած սպասում է, որ իր ուտելիքը պատրաստեն։ Այս ուտելիքը նույնիսկ լավ հոտ է գալիս:"
+            - button "Ցույց տալ ավելին" [ref=e401] [cursor=pointer]
+    - generic [ref=e404]:
+      - generic [ref=e406]:
+        - heading "Մենք առաքել ենք" [level=2] [ref=e500]
+        - generic [ref=e408]:
+          - paragraph [ref=e409]: "Սա դիզելն է: Առաջին երկու տարիներին նա երջանիկ և առողջ ձագ էր, միայն իր 2-րդ տարեդարձից հետո սկսեց խնդիրներ ունենալ մաշկի, ստամոքսի և միզապարկի հետ:"
+          - paragraph [ref=e410]: "Մենք անցանք Jeko-ին, քանի որ այն սննդարար է և իր մեջ ոչ մի տհաճ բան չկա: Մենք հասկացանք, որ ներդրումներ կատարելով Դիզելի առողջության վրա, կարող ենք նրան առողջ, երջանիկ կյանք տալ:"
+      - img "Diesel the dog" [ref=e412]
+    - generic [ref=e416]:
+      - heading "Մենք հասցրել ենք" [level=2] [ref=e417]
+      - generic [ref=e418]: 92,871,751
+      - paragraph [ref=e419]: կերակուր և փոխել ենք հազարավոր ընտանի կենդանիների կյանքը դեպի լավը
+      - generic [ref=e420]:
+        - generic [ref=e421]:
+          - generic [ref=e422]: 94%
+          - paragraph [ref=e423]: Վայրէջքները նկատել են իրենց շան առողջական վիճակի բարելավում
+        - generic [ref=e424]:
+          - generic [ref=e425]: 91%
+          - paragraph [ref=e426]: տեսանելի են ընդհանուր առողջական բարելավումներ Jeko-ին անցնելուց հետո
+  - contentinfo [ref=e427]:
+    - generic [ref=e428]:
+      - generic [ref=e429]:
+        - generic [ref=e430]:
+          - heading "Միացիր մեր VIP ցանկին" [level=4] [ref=e431]
+          - paragraph [ref=e432]: Առաջինը իմացիր նոր ապրանքների մասին, մասնակցիր բացառիկ մրցույթների և ստացիր օգտակար խորհուրդներ ընտանի կենդանիների խնամքի մասին։
+          - generic [ref=e433]:
+            - textbox "Մուտքագրիր քո էլ. փոստի հասցեն" [ref=e434]
+            - button "Գրանցվել" [ref=e435] [cursor=pointer]
+        - generic [ref=e436]:
+          - generic [ref=e437]:
+            - heading "Jeko" [level=4] [ref=e438]
+            - list [ref=e439]:
+              - listitem [ref=e440]:
+                - link "Մեր պատմությունը" [ref=e441] [cursor=pointer]:
+                  - /url: /about
+              - listitem [ref=e442]:
+                - link "Կարծիքներ" [ref=e443] [cursor=pointer]:
+                  - /url: /reviews
+              - listitem [ref=e444]:
+                - link "Բաղադրատոմսեր" [ref=e445] [cursor=pointer]:
+                  - /url: /recipes
+              - listitem [ref=e446]:
+                - link "Ավելին քան ամանը" [ref=e447] [cursor=pointer]:
+                  - /url: /beyond-the-bowl
+              - listitem [ref=e448]:
+                - link "Խանութ" [ref=e449] [cursor=pointer]:
+                  - /url: /products
+              - listitem [ref=e450]:
+                - link "Համայնք" [ref=e451] [cursor=pointer]:
+                  - /url: /community
+          - generic [ref=e452]:
+            - heading "Օգնություն" [level=4] [ref=e453]
+            - list [ref=e454]:
+              - listitem [ref=e455]:
+                - link "Իմ հաշիվը" [ref=e456] [cursor=pointer]:
+                  - /url: /profile
+              - listitem [ref=e457]:
+                - link "Կապ մեզ հետ" [ref=e458] [cursor=pointer]:
+                  - /url: /contact
+              - listitem [ref=e459]:
+                - link "Առաքման տեղեկատվություն" [ref=e460] [cursor=pointer]:
+                  - /url: /delivery-information
+              - listitem [ref=e461]:
+                - link "Վերադարձներ" [ref=e462] [cursor=pointer]:
+                  - /url: /returns
+              - listitem [ref=e463]:
+                - link "Կայքի քարտեզ" [ref=e464] [cursor=pointer]:
+                  - /url: /sitemap-page
+          - generic [ref=e465]:
+            - heading "Տեղեկատվություն" [level=4] [ref=e466]
+            - list [ref=e467]:
+              - listitem [ref=e468]:
+                - link "Գաղտնիության քաղաքականություն" [ref=e469] [cursor=pointer]:
+                  - /url: /privacy-policy
+              - listitem [ref=e470]:
+                - link "Պայմաններ և դրույթներ" [ref=e471] [cursor=pointer]:
+                  - /url: /terms-of-use
+              - listitem [ref=e472]:
+                - link "Jeko-ի քաղաքականություն" [ref=e473] [cursor=pointer]:
+                  - /url: /pure-policies
+              - listitem [ref=e474]:
+                - link "Կայքի անվտանգություն" [ref=e475] [cursor=pointer]:
+                  - /url: /site-security
+              - listitem [ref=e476]:
+                - link "Cookie-ների քաղաքականություն" [ref=e477] [cursor=pointer]:
+                  - /url: /cookie-policy
+      - generic [ref=e478]:
+        - generic [ref=e480]: JEKO
+        - paragraph [ref=e481]: © Jeko 2020-2026
+  - generic [ref=e501]:
+    - generic [ref=e502]:
+      - paragraph [ref=e503]: Հաու՜ 🐾
+      - paragraph [ref=e504]: Գտիր ընկեր քո կենդանու համար։
+    - button "Find pet matches" [ref=e506] [cursor=pointer]:
+      - img "Jeko dog" [ref=e507]
+  - alert [ref=e508]

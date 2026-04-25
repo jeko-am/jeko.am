@@ -2,8 +2,10 @@
 
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import { useT } from "@/lib/i18n/LangProvider";
 
 export default function SiteSecurityPage() {
+  const { t } = useT();
   return (
     <>
       <Header />
@@ -12,10 +14,10 @@ export default function SiteSecurityPage() {
         <section className="bg-deep-green py-16 text-center relative zigzag-bottom">
           <div className="max-w-[1200px] mx-auto px-6">
             <h1 className="font-rubik text-white text-[38px] md:text-[48px] font-bold leading-[1.15] mb-4">
-              Site <span className="text-gold">Security</span>
+              {t("policy.security.heading")} <span className="text-gold">{t("policy.security.headingHighlight")}</span>
             </h1>
             <p className="text-white/80 max-w-2xl mx-auto text-lg leading-relaxed">
-              How we keep your data safe and your shopping experience secure.
+              {t("policy.security.subtitle")}
             </p>
           </div>
         </section>
@@ -26,7 +28,7 @@ export default function SiteSecurityPage() {
             {/* SSL Encryption */}
             <div className="mb-12">
               <h2 className="text-deep-green font-rubik font-bold text-2xl mb-4">
-                SSL Encryption
+                {t("policy.security.ssl")}
               </h2>
               <p className="text-deep-green/80 text-[16px] leading-relaxed mb-4">
                 Our entire website is protected by SSL (Secure Socket Layer)
@@ -40,7 +42,7 @@ export default function SiteSecurityPage() {
             {/* Payment Security */}
             <div className="mb-12">
               <h2 className="text-deep-green font-rubik font-bold text-2xl mb-4">
-                Payment Security
+                {t("policy.security.payment")}
               </h2>
               <p className="text-deep-green/80 text-[16px] leading-relaxed mb-4">
                 We use Stripe, one of the world&apos;s leading payment
@@ -59,7 +61,7 @@ export default function SiteSecurityPage() {
             {/* Data Protection */}
             <div className="mb-12">
               <h2 className="text-deep-green font-rubik font-bold text-2xl mb-4">
-                Data Protection
+                {t("policy.security.data")}
               </h2>
               <p className="text-deep-green/80 text-[16px] leading-relaxed mb-4">
                 We are fully compliant with the UK General Data Protection
@@ -77,7 +79,7 @@ export default function SiteSecurityPage() {
             {/* Account Security */}
             <div className="mb-12">
               <h2 className="text-deep-green font-rubik font-bold text-2xl mb-4">
-                Account Security
+                {t("policy.security.account")}
               </h2>
               <p className="text-deep-green/80 text-[16px] leading-relaxed mb-4">
                 Your Jeko account is protected by secure
@@ -91,7 +93,7 @@ export default function SiteSecurityPage() {
             {/* Infrastructure */}
             <div className="mb-12">
               <h2 className="text-deep-green font-rubik font-bold text-2xl mb-4">
-                Infrastructure Security
+                {t("policy.security.infra")}
               </h2>
               <p className="text-deep-green/80 text-[16px] leading-relaxed mb-4">
                 Our website is hosted on enterprise-grade infrastructure with
@@ -104,7 +106,7 @@ export default function SiteSecurityPage() {
             {/* Reporting */}
             <div className="bg-deep-green/5 rounded-xl p-8 text-center">
               <h3 className="text-deep-green font-rubik font-bold text-xl mb-3">
-                Report a Security Concern
+                {t("policy.security.report")}
               </h3>
               <p className="text-deep-green/70 mb-5">
                 If you notice anything suspicious or have security concerns,

@@ -2,6 +2,7 @@
 
 import { supabase } from '@/lib/supabase';
 import { useEffect, useState, useCallback } from 'react';
+import { useAdminEditLang } from '@/lib/i18n/AdminEditLang';
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
@@ -16,6 +17,7 @@ interface Page {
   template: string;
   created_at: string;
   updated_at: string;
+  i18n?: { hy?: { title?: string; content?: string; seo_title?: string; seo_description?: string } } | null;
 }
 
 interface PageSection {
@@ -29,6 +31,8 @@ interface PageSection {
 
 type PageFormData = Omit<Page, 'id' | 'created_at' | 'updated_at'>;
 
+type LocPageKey = 'title' | 'content' | 'seo_title' | 'seo_description';
+
 const TEMPLATES = ['default', 'landing', 'about', 'contact', 'faq', 'blog', 'product'];
 const SECTION_TYPES = ['Hero', 'Banner', 'Product Grid', 'Text Block', 'FAQ', 'Video', 'Testimonials', 'CTA', 'Image Gallery', 'Features'];
 
@@ -40,6 +44,7 @@ const emptyPageForm: PageFormData = {
   seo_description: '',
   status: 'draft',
   template: 'default',
+  i18n: null,
 };
 
 const emptySectionForm: Omit<PageSection, 'id' | 'page_id'> = {
@@ -57,10 +62,45 @@ export default function AdminPagesPage() {
   const [error, setError] = useState<string | null>(null);
   const [saving, setSaving] = useState(false);
 
+  const { editLang } = useAdminEditLang();
+
   // Page modal
   const [showPageModal, setShowPageModal] = useState(false);
   const [editingPage, setEditingPage] = useState<Page | null>(null);
   const [pageForm, setPageForm] = useState<PageFormData>(emptyPageForm);
+  const [translatingPage, setTranslatingPage] = useState<Record<string, boolean>>({});
+
+  function getLocPage(key: LocPageKey): string {
+    if (editLang === 'hy') return pageForm.i18n?.hy?.[key] ?? '';
+    return (pageForm[key] as string) ?? '';
+  }
+  function setLocPage(key: LocPageKey, value: string) {
+    if (editLang === 'hy') {
+      setPageForm((prev) => {
+        const hy = { ...(prev.i18n?.hy ?? {}) };
+        if (value) hy[key] = value; else delete hy[key];
+        return { ...prev, i18n: { ...(prev.i18n ?? {}), hy } };
+      });
+    } else {
+      setPageForm((prev) => ({ ...prev, [key]: value }));
+    }
+  }
+  async function autoTranslatePage(key: LocPageKey) {
+    const source = (pageForm[key] as string) ?? '';
+    if (!source.trim()) return;
+    setTranslatingPage((s) => ({ ...s, [key]: true }));
+    try {
+      const res = await fetch('/api/translate', {
+        method: 'POST',
+        headers: { 'content-type': 'application/json' },
+        body: JSON.stringify({ text: source, target: 'hy' }),
+      });
+      const json = (await res.json()) as { translated?: string };
+      if (res.ok && json.translated) setLocPage(key, json.translated);
+    } finally {
+      setTranslatingPage((s) => ({ ...s, [key]: false }));
+    }
+  }
 
   // Sections modal
   const [showSectionsModal, setShowSectionsModal] = useState(false);
@@ -117,6 +157,17 @@ export default function AdminPagesPage() {
     fetchPages();
   }, [fetchPages]);
 
+  useEffect(() => {
+    if (!showPageModal || editLang !== 'hy') return;
+    const hy = pageForm.i18n?.hy ?? {};
+    (['title', 'content', 'seo_title', 'seo_description'] as const).forEach((k) => {
+      const has = typeof hy[k] === 'string' && hy[k]!.length > 0;
+      const src = (pageForm[k] as string) ?? '';
+      if (!has && src.trim() && !translatingPage[k]) autoTranslatePage(k);
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [editLang, showPageModal, editingPage?.id]);
+
   // ─── Page CRUD ─────────────────────────────────────────────────────────────
 
   const openCreatePage = () => {
@@ -135,6 +186,7 @@ export default function AdminPagesPage() {
       seo_description: page.seo_description,
       status: page.status,
       template: page.template,
+      i18n: page.i18n ?? null,
     });
     setShowPageModal(true);
   };
@@ -475,20 +527,32 @@ export default function AdminPagesPage() {
             <div className="p-6 space-y-4">
               {/* Title */}
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Title</label>
+                <label className="text-sm font-medium text-gray-700 mb-1 flex items-center gap-2">
+                  <span>Title</span>
+                  {editLang === 'hy' && <span className="text-[10px] font-semibold text-deep-green/70 px-1.5 py-0.5 bg-deep-green/10 rounded">HY</span>}
+                  {editLang === 'hy' && (
+                    <button type="button" onClick={() => autoTranslatePage('title')} disabled={!pageForm.title || !!translatingPage.title} className="ml-auto text-[10px] font-medium text-deep-green hover:underline disabled:opacity-50">
+                      {translatingPage.title ? 'Translating…' : 'Auto-translate'}
+                    </button>
+                  )}
+                </label>
                 <input
                   type="text"
-                  value={pageForm.title}
+                  value={getLocPage('title')}
                   onChange={(e) => {
-                    const title = e.target.value;
-                    setPageForm(f => ({
-                      ...f,
-                      title,
-                      slug: !editingPage ? generateSlug(title) : f.slug,
-                    }));
+                    if (editLang === 'hy') {
+                      setLocPage('title', e.target.value);
+                    } else {
+                      const title = e.target.value;
+                      setPageForm(f => ({
+                        ...f,
+                        title,
+                        slug: !editingPage ? generateSlug(title) : f.slug,
+                      }));
+                    }
                   }}
                   className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-deep-green/20 focus:border-deep-green outline-none transition-all"
-                  placeholder="Page title"
+                  placeholder={editLang === 'hy' ? (translatingPage.title ? 'Թարգմանվում է…' : 'Հայերեն վերնագիր') : 'Page title'}
                 />
               </div>
 
@@ -509,13 +573,21 @@ export default function AdminPagesPage() {
 
               {/* Content */}
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Content</label>
+                <label className="text-sm font-medium text-gray-700 mb-1 flex items-center gap-2">
+                  <span>Content</span>
+                  {editLang === 'hy' && <span className="text-[10px] font-semibold text-deep-green/70 px-1.5 py-0.5 bg-deep-green/10 rounded">HY</span>}
+                  {editLang === 'hy' && (
+                    <button type="button" onClick={() => autoTranslatePage('content')} disabled={!pageForm.content || !!translatingPage.content} className="ml-auto text-[10px] font-medium text-deep-green hover:underline disabled:opacity-50">
+                      {translatingPage.content ? 'Translating…' : 'Auto-translate'}
+                    </button>
+                  )}
+                </label>
                 <textarea
-                  value={pageForm.content}
-                  onChange={(e) => setPageForm(f => ({ ...f, content: e.target.value }))}
+                  value={getLocPage('content')}
+                  onChange={(e) => setLocPage('content', e.target.value)}
                   rows={6}
                   className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-deep-green/20 focus:border-deep-green outline-none transition-all resize-y font-mono"
-                  placeholder="Page content..."
+                  placeholder={editLang === 'hy' ? (translatingPage.content ? 'Թարգմանվում է…' : 'Հայերեն բովանդակություն…') : 'Page content...'}
                 />
               </div>
 
@@ -551,23 +623,39 @@ export default function AdminPagesPage() {
                 <h3 className="text-sm font-semibold text-gray-700 mb-3">SEO / Meta</h3>
                 <div className="space-y-3">
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">Meta Title</label>
+                    <label className="text-sm font-medium text-gray-700 mb-1 flex items-center gap-2">
+                      <span>Meta Title</span>
+                      {editLang === 'hy' && <span className="text-[10px] font-semibold text-deep-green/70 px-1.5 py-0.5 bg-deep-green/10 rounded">HY</span>}
+                      {editLang === 'hy' && (
+                        <button type="button" onClick={() => autoTranslatePage('seo_title')} disabled={!pageForm.seo_title || !!translatingPage.seo_title} className="ml-auto text-[10px] font-medium text-deep-green hover:underline disabled:opacity-50">
+                          {translatingPage.seo_title ? 'Translating…' : 'Auto-translate'}
+                        </button>
+                      )}
+                    </label>
                     <input
                       type="text"
-                      value={pageForm.seo_title}
-                      onChange={(e) => setPageForm(f => ({ ...f, seo_title: e.target.value }))}
+                      value={getLocPage('seo_title')}
+                      onChange={(e) => setLocPage('seo_title', e.target.value)}
                       className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-deep-green/20 focus:border-deep-green outline-none transition-all"
-                      placeholder="SEO title"
+                      placeholder={editLang === 'hy' ? 'Հայերեն SEO վերնագիր' : 'SEO title'}
                     />
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">Meta Description</label>
+                    <label className="text-sm font-medium text-gray-700 mb-1 flex items-center gap-2">
+                      <span>Meta Description</span>
+                      {editLang === 'hy' && <span className="text-[10px] font-semibold text-deep-green/70 px-1.5 py-0.5 bg-deep-green/10 rounded">HY</span>}
+                      {editLang === 'hy' && (
+                        <button type="button" onClick={() => autoTranslatePage('seo_description')} disabled={!pageForm.seo_description || !!translatingPage.seo_description} className="ml-auto text-[10px] font-medium text-deep-green hover:underline disabled:opacity-50">
+                          {translatingPage.seo_description ? 'Translating…' : 'Auto-translate'}
+                        </button>
+                      )}
+                    </label>
                     <textarea
-                      value={pageForm.seo_description}
-                      onChange={(e) => setPageForm(f => ({ ...f, seo_description: e.target.value }))}
+                      value={getLocPage('seo_description')}
+                      onChange={(e) => setLocPage('seo_description', e.target.value)}
                       rows={2}
                       className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-deep-green/20 focus:border-deep-green outline-none transition-all resize-y"
-                      placeholder="SEO description..."
+                      placeholder={editLang === 'hy' ? 'Հայերեն SEO նկարագրություն…' : 'SEO description...'}
                     />
                   </div>
                 </div>

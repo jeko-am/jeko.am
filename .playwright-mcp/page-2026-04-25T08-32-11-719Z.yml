@@ -1,0 +1,218 @@
+- generic [active] [ref=e1]:
+  - banner [ref=e2]:
+    - generic [ref=e4]:
+      - link "JEKO" [ref=e5] [cursor=pointer]:
+        - /url: /
+        - generic [ref=e6]: JEKO
+      - navigation [ref=e7]:
+        - link "Մեր մասին" [ref=e9] [cursor=pointer]:
+          - /url: /about
+          - text: Մեր մասին
+          - img [ref=e10]
+        - link "Համայնք" [ref=e13] [cursor=pointer]:
+          - /url: /community
+          - text: Համայնք
+          - img [ref=e14]
+        - link "Խանութ" [ref=e17] [cursor=pointer]:
+          - /url: /products
+        - link "Կարծիքներ" [ref=e19] [cursor=pointer]:
+          - /url: /reviews
+        - link "Առողջապահական օգուտներ" [ref=e21] [cursor=pointer]:
+          - /url: /benefits
+          - text: Առողջապահական օգուտներ
+          - img [ref=e22]
+      - generic [ref=e24]:
+        - button "Switch language" [ref=e26] [cursor=pointer]:
+          - generic [ref=e27]: 🇦🇲
+          - generic [ref=e28]: HY
+          - img [ref=e29]
+        - button "Shopping cart" [ref=e31] [cursor=pointer]:
+          - img [ref=e32]
+        - link "Օգնություն" [ref=e36] [cursor=pointer]:
+          - /url: /contact
+        - generic [ref=e215]:
+          - link "Ադմին վահանակ" [ref=e216] [cursor=pointer]:
+            - /url: /admin/dashboard
+            - img [ref=e217]
+            - text: Ադմին վահանակ
+          - button "Ելք" [ref=e220] [cursor=pointer]:
+            - img [ref=e221]
+            - text: Ելք
+  - main [ref=e39]:
+    - generic [ref=e40]:
+      - img "Colitis in dogs" [ref=e42]
+      - generic [ref=e45]:
+        - paragraph [ref=e46]: Առողջություն և սնուցում
+        - heading "Կոլիտը շների մեջ և ինչպես կարող է օգնել դիետան" [level=1] [ref=e223]
+        - paragraph [ref=e48]: "Կոլիտը շների մարսողության ամենատարածված հիվանդություններից մեկն է: Ճիշտ սնունդը կարող է նվազեցնել բռնկումները և բնականաբար աջակցել ձեր շան աղիքների առողջությանը:"
+        - link "Ստեղծել քո շան պլանը" [ref=e49] [cursor=pointer]:
+          - /url: /auth/signup
+    - generic [ref=e51]:
+      - heading "Ի՞նչ է կոլիտը շների մեջ:" [level=2] [ref=e224]
+      - generic [ref=e53]:
+        - paragraph [ref=e54]: "Կոլիտը վերաբերում է հաստ աղիքի (հաստ աղիքի) բորբոքմանը: Այն կարող է լինել սուր, այսինքն՝ առաջանում է հանկարծակի և արագորեն անցնում է, կամ քրոնիկ, որտեղ ախտանիշները պահպանվում են շաբաթների կամ ամիսների ընթացքում: Այն ազդում է բոլոր տարիքի և ցեղատեսակների շների վրա:"
+        - paragraph [ref=e55]: "Վիճակը խաթարում է հաստ աղիքում ջրի նորմալ կլանումը, ինչը հանգեցնում է կղանքի թուլացման, շտապողականության և անհարմարության: Թեև այն կարող է ունենալ բազմաթիվ հրահրիչներ՝ սթրեսից և վարակներից մինչև սննդային անհանդուրժողականություն, այն, ինչ ձեր շունն ուտում է, կենտրոնական դեր է խաղում դրա կառավարման գործում:"
+        - paragraph [ref=e56]: "Կոլիտով հիվանդ շատ շներ զգալի բարելավումներ են տեսնում՝ պարզապես անցնելով նուրբ, բնական սննդակարգի, որը խուսափում է բարձր մշակված կիբլի մեջ հայտնաբերված սովորական բորբոքային բաղադրիչներից:"
+    - generic [ref=e58]:
+      - heading "Ուշադրություն դարձրու այս նշաններին" [level=2] [ref=e59]
+      - paragraph [ref=e60]: Եթե քո շունը ցույց է տալիս, որ այս հնարավորությունից կարող է մեկը, ճիշտ սնունդը մեծ փոփոխություն է բերել։
+      - generic [ref=e61]:
+        - generic [ref=e62]:
+          - generic [ref=e63]: 💩
+          - heading "Փափուկ կամ ջրային աթոռներ" [level=3] [ref=e225]
+          - paragraph [ref=e65]: "Հաճախակի թուլացած կղանքը, հաճախ լորձով կամ փոքր քանակությամբ վառ կարմիր արյունով, կոլիտի բնորոշ նշանն է:"
+        - generic [ref=e66]:
+          - generic [ref=e67]: 😣
+          - heading "Լարում է գնալ" [level=3] [ref=e226]
+          - paragraph [ref=e69]: "Զուգարան գնալիս ձեր շունը կարող է լարվել կամ սովորականից ավելի երկար տևել, նույնիսկ եթե այն շատ քիչ է արտադրվում:"
+        - generic [ref=e70]:
+          - generic [ref=e71]: 🚨
+          - heading "Աճող շտապողականություն" [level=3] [ref=e227]
+          - paragraph [ref=e73]: "Ավելի հաճախ դրսում դուրս գալու անհրաժեշտությունը կամ ներսում վթարներ ունենալը կարող է ցույց տալ հաստ աղիքի բորբոքում:"
+        - generic [ref=e74]:
+          - generic [ref=e75]: 😔
+          - heading "Փորկապություն և անհանգստություն" [level=3] [ref=e228]
+          - paragraph [ref=e77]: "Գազի ավելցուկը, ստամոքսի դղրդյունը և որովայնի անհարմարության ընդհանուր նշանները սովորական են:"
+        - generic [ref=e78]:
+          - generic [ref=e79]: 🍽️
+          - heading "Նվազեցված ախորժակը" [level=3] [ref=e229]
+          - paragraph [ref=e81]: "Որոշ շներ կարող են ավելի քիչ ուտել կամ դժկամություն ցուցաբերել ճաշի ժամանակ, երբ բռնկվում են:"
+        - generic [ref=e82]:
+          - generic [ref=e83]: 😴
+          - heading "Լետարգիա" [level=3] [ref=e230]
+          - paragraph [ref=e85]: "Դրվագների ժամանակ ձեր շունը կարող է սովորականից ավելի հոգնած թվալ և ավելի քիչ հետաքրքրված լինել խաղով կամ զբոսանքով:"
+    - generic [ref=e87]:
+      - img "Natural dog food" [ref=e89]
+      - generic [ref=e91]:
+        - heading "Կոլիտի կառավարում" [level=2] [ref=e231]
+        - paragraph [ref=e93]: ճիշտ սնուցման միջոցով
+        - paragraph [ref=e94]: "Դիետան համարվում է կոլիտի կառավարման ամենակարևոր գործոններից մեկը: Արհեստական հավելումներով, լցոնիչներով և ցածրորակ սպիտակուցներով բարձր վերամշակված սնունդը կարող է խորացնել հաստ աղիքի լորձաթաղանթը: Բնական, նրբորեն պատրաստված դիետան շատ ավելի հեշտ է աղիքների համար:"
+        - generic [ref=e95]:
+          - generic [ref=e96]:
+            - img [ref=e98]
+            - generic [ref=e100]:
+              - paragraph [ref=e101]: Բարձր մարսելի բաղադրիչներ
+              - paragraph [ref=e102]: "Բնական ամբողջական մթերքները ավելի մեղմ են բորբոքված աղիքային հյուսվածքի նկատմամբ, քան խիստ մշակված այլընտրանքները:"
+          - generic [ref=e103]:
+            - img [ref=e105]
+            - generic [ref=e107]:
+              - paragraph [ref=e108]: Առանց արհեստական հավելումների
+              - paragraph [ref=e109]: "Կոնսերվանտների, գունանյութերի և համի ուժեղացուցիչների հեռացումը վերացնում է ընդհանուր գրգռվածությունը:"
+          - generic [ref=e110]:
+            - img [ref=e112]
+            - generic [ref=e114]:
+              - paragraph [ref=e115]: Որակյալ մեկ աղբյուրի սպիտակուց
+              - paragraph [ref=e116]: "Մեկ սպիտակուցի բաղադրատոմսերը օգնում են բացահայտել և խուսափել հատուկ բաղադրիչներից, որոնք կարող են առաջացնել ռեակցիաներ:"
+          - generic [ref=e117]:
+            - img [ref=e119]
+            - generic [ref=e121]:
+              - paragraph [ref=e122]: Բնական մանրաթելերի հավասարակշռություն
+              - paragraph [ref=e123]: "Լուծվող և չլուծվող մանրաթելերի ճիշտ խառնուրդը նպաստում է հաստ աղիքի առողջ աշխատանքին և կղանքի կայունությանը:"
+    - generic [ref=e125]:
+      - img "Rachel & Poppy" [ref=e127]
+      - blockquote [ref=e128]: "“Մեր լաբրադորը տառապում էր կոլիտով ավելի քան մեկ տարի: Մենք փորձեցինք մի քանի դեղատոմսով դիետաներ՝ փոքր բարելավմամբ: Բնական սննդի անցնելուց հետո երկու շաբաթվա ընթացքում տարբերությունն ուշագրավ էր։ Այլևս ոչ մի հոսող աթոռակ, այլևս ոչ մի կեսգիշերային վազք դեպի այգի: Նա նման է այլ շան:”"
+      - paragraph [ref=e129]: Rachel & Poppy
+    - generic [ref=e131]:
+      - heading "Հաճախակի տրվող հարցեր" [level=2] [ref=e132]
+      - generic [ref=e133]:
+        - group [ref=e134]:
+          - generic "Կարո՞ղ է միայն դիետան բուժել շների կոլիտը:" [ref=e232] [cursor=pointer]:
+            - text: "Կարո՞ղ է միայն դիետան բուժել շների կոլիտը:"
+            - img [ref=e136]
+        - group [ref=e138]:
+          - generic "Ո՞ր սպիտակուցներն են լավագույնս կոլիտ ունեցող շների համար:" [ref=e233] [cursor=pointer]:
+            - text: "Ո՞ր սպիտակուցներն են լավագույնս կոլիտ ունեցող շների համար:"
+            - img [ref=e140]
+        - group [ref=e142]:
+          - generic "Դիետայի փոփոխությունից հետո որքա՞ն արագ բարելավում կտեսնեմ:" [ref=e234] [cursor=pointer]:
+            - text: "Դիետայի փոփոխությունից հետո որքա՞ն արագ բարելավում կտեսնեմ:"
+            - img [ref=e144]
+        - group [ref=e146]:
+          - generic "Արդյո՞ք ես պետք է խուսափեմ հացահատիկից իմ շան կերակուրից, եթե նրանք ունեն կոլիտ:" [ref=e235] [cursor=pointer]:
+            - text: "Արդյո՞ք ես պետք է խուսափեմ հացահատիկից իմ շան կերակուրից, եթե նրանք ունեն կոլիտ:"
+            - img [ref=e148]
+    - generic [ref=e151]:
+      - generic [ref=e153]:
+        - heading "Պատրա՞ստ եք օգնել ձեր" [level=2] [ref=e154]
+        - paragraph [ref=e155]: շանը լավ զգալու
+        - paragraph [ref=e156]: Պատմեք մեզ ձեր շան մասին, և մենք կստեղծենք անհատական ճաշացանկ՝ հատուկ կարիքների հոգալու համար։ Անասնաբույժի հաստատմամբ, վստահված հազարավորների կողմից։
+        - link "Բացահայտել քո շան ճաշացանկը" [ref=e157] [cursor=pointer]:
+          - /url: /products
+      - img "Happy healthy dog" [ref=e159]
+  - contentinfo [ref=e160]:
+    - generic [ref=e161]:
+      - generic [ref=e162]:
+        - generic [ref=e163]:
+          - heading "Միացիր մեր VIP ցանկին" [level=4] [ref=e164]
+          - paragraph [ref=e165]: Առաջինը իմացիր նոր ապրանքների մասին, մասնակցիր բացառիկ մրցույթների և ստացիր օգտակար խորհուրդներ ընտանի կենդանիների խնամքի մասին։
+          - generic [ref=e166]:
+            - textbox "Մուտքագրիր քո էլ. փոստի հասցեն" [ref=e167]
+            - button "Գրանցվել" [ref=e168] [cursor=pointer]
+        - generic [ref=e169]:
+          - generic [ref=e170]:
+            - heading "Jeko" [level=4] [ref=e171]
+            - list [ref=e172]:
+              - listitem [ref=e173]:
+                - link "Մեր պատմությունը" [ref=e174] [cursor=pointer]:
+                  - /url: /about
+              - listitem [ref=e175]:
+                - link "Կարծիքներ" [ref=e176] [cursor=pointer]:
+                  - /url: /reviews
+              - listitem [ref=e177]:
+                - link "Բաղադրատոմսեր" [ref=e178] [cursor=pointer]:
+                  - /url: /recipes
+              - listitem [ref=e179]:
+                - link "Ավելին քան ամանը" [ref=e180] [cursor=pointer]:
+                  - /url: /beyond-the-bowl
+              - listitem [ref=e181]:
+                - link "Խանութ" [ref=e182] [cursor=pointer]:
+                  - /url: /products
+              - listitem [ref=e183]:
+                - link "Համայնք" [ref=e184] [cursor=pointer]:
+                  - /url: /community
+          - generic [ref=e185]:
+            - heading "Օգնություն" [level=4] [ref=e186]
+            - list [ref=e187]:
+              - listitem [ref=e188]:
+                - link "Իմ հաշիվը" [ref=e189] [cursor=pointer]:
+                  - /url: /profile
+              - listitem [ref=e190]:
+                - link "Կապ մեզ հետ" [ref=e191] [cursor=pointer]:
+                  - /url: /contact
+              - listitem [ref=e192]:
+                - link "Առաքման տեղեկատվություն" [ref=e193] [cursor=pointer]:
+                  - /url: /delivery-information
+              - listitem [ref=e194]:
+                - link "Վերադարձներ" [ref=e195] [cursor=pointer]:
+                  - /url: /returns
+              - listitem [ref=e196]:
+                - link "Կայքի քարտեզ" [ref=e197] [cursor=pointer]:
+                  - /url: /sitemap-page
+          - generic [ref=e198]:
+            - heading "Տեղեկատվություն" [level=4] [ref=e199]
+            - list [ref=e200]:
+              - listitem [ref=e201]:
+                - link "Գաղտնիության քաղաքականություն" [ref=e202] [cursor=pointer]:
+                  - /url: /privacy-policy
+              - listitem [ref=e203]:
+                - link "Պայմաններ և դրույթներ" [ref=e204] [cursor=pointer]:
+                  - /url: /terms-of-use
+              - listitem [ref=e205]:
+                - link "Jeko-ի քաղաքականություն" [ref=e206] [cursor=pointer]:
+                  - /url: /pure-policies
+              - listitem [ref=e207]:
+                - link "Կայքի անվտանգություն" [ref=e208] [cursor=pointer]:
+                  - /url: /site-security
+              - listitem [ref=e209]:
+                - link "Cookie-ների քաղաքականություն" [ref=e210] [cursor=pointer]:
+                  - /url: /cookie-policy
+      - generic [ref=e211]:
+        - generic [ref=e213]: JEKO
+        - paragraph [ref=e214]: © Jeko 2020-2026
+  - generic [ref=e236]:
+    - generic [ref=e237]:
+      - paragraph [ref=e238]: Հաու՜ 🐾
+      - paragraph [ref=e239]: Գտիր ընկեր քո կենդանու համար։
+    - button "Find pet matches" [ref=e241] [cursor=pointer]:
+      - img "Jeko dog" [ref=e242]
+  - alert [ref=e243]

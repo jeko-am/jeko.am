@@ -6,6 +6,26 @@ import { useCart } from '@/lib/cart-context';
 import { supabase } from '@/lib/supabase';
 import { useAuth } from '@/lib/auth';
 import { recordProductView } from '@/lib/product-history';
+import { useT } from '@/lib/i18n/LangProvider';
+import { localize } from '@/lib/i18n/localizeRecord';
+
+// Per-session memo for machine translations so each EN string only hits the API once.
+const __cardTranslationCache = new Map<string, string>();
+async function memoTranslate(text: string): Promise<string | null> {
+  if (!text) return null;
+  const cached = __cardTranslationCache.get(text);
+  if (cached) return cached;
+  try {
+    const r = await fetch('/api/translate', {
+      method: 'POST',
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify({ text, target: 'hy' }),
+    });
+    const j = (await r.json()) as { translated?: string };
+    if (r.ok && j.translated) { __cardTranslationCache.set(text, j.translated); return j.translated; }
+  } catch { /* noop */ }
+  return null;
+}
 
 interface Product {
   id: string;
@@ -18,6 +38,7 @@ interface Product {
   status: string;
   review_rating_override?: number | null;
   review_count_override?: number | null;
+  i18n?: { hy?: { name?: string; short_description?: string; description?: string } } | null;
 }
 
 function formatPrice(value: number): string {
@@ -25,7 +46,27 @@ function formatPrice(value: number): string {
 }
 
 export default function ProductCard({ product }: { product: Product }) {
+  const { t, lang } = useT();
   const [imgError, setImgError] = useState(false);
+  const savedHyName = product.i18n?.hy?.name;
+  const savedHyShort = product.i18n?.hy?.short_description;
+  const [autoName, setAutoName] = useState<string | null>(null);
+  const [autoShort, setAutoShort] = useState<string | null>(null);
+  useEffect(() => {
+    let cancelled = false;
+    if (lang === 'hy') {
+      if (!savedHyName && product.name) memoTranslate(product.name).then(tx => { if (!cancelled && tx) setAutoName(tx); });
+      if (!savedHyShort && product.short_description) memoTranslate(product.short_description).then(tx => { if (!cancelled && tx) setAutoShort(tx); });
+    } else {
+      setAutoName(null); setAutoShort(null);
+    }
+    return () => { cancelled = true; };
+  }, [lang, product.name, product.short_description, savedHyName, savedHyShort]);
+  const displayName = lang === 'hy' ? (savedHyName || autoName || product.name) : product.name;
+  const displayShort = lang === 'hy'
+    ? (savedHyShort || autoShort || product.short_description || '')
+    : (product.short_description || '');
+  void localize;
   const [isAdding, setIsAdding] = useState(false);
   const [reviewStats, setReviewStats] = useState<{ avg: number; count: number } | null>(null);
   const { addItem } = useCart();
@@ -82,12 +123,12 @@ export default function ProductCard({ product }: { product: Product }) {
     <Link href={`/products/${product.slug}`} className="group block h-full" data-testid="product-card" onClick={handleProductClick}>
       <div className="bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition-shadow duration-300 border-2 border-transparent hover:border-gold/30 h-full flex flex-col">
         {/* Image */}
-        <div className="relative aspect-square overflow-hidden bg-beige-light">
+        <div className="relative aspect-[3/4] overflow-hidden bg-beige-light p-4">
           {hasImage ? (
             <img
               src={imageUrl}
               alt={product.name}
-              className="w-full h-full object-cover"
+              className="w-full h-full object-contain"
               onError={() => setImgError(true)}
             />
           ) : (
@@ -108,7 +149,7 @@ export default function ProductCard({ product }: { product: Product }) {
           {/* Paw overlay on hover */}
           <div className="absolute inset-0 bg-deep-green/0 group-hover:bg-deep-green/10 transition-colors duration-300 flex items-center justify-center">
             <span className="opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-gold text-deep-green font-semibold text-sm px-5 py-2 rounded-full shadow-lg">
-              View Product
+              {t("product.viewProduct")}
             </span>
           </div>
         </div>
@@ -116,10 +157,10 @@ export default function ProductCard({ product }: { product: Product }) {
         {/* Info */}
         <div className="p-4 flex-1 flex flex-col justify-between">
           <h3 className="font-medium text-deep-green text-lg leading-snug mb-2 group-hover:text-gold transition-colors line-clamp-2 tracking-wide">
-            {product.name}
+            {displayName}
           </h3>
-          {product.short_description && (
-            <p className="text-sm text-deep-green/60 mb-3 line-clamp-2">{product.short_description}</p>
+          {displayShort && (
+            <p className="text-sm text-deep-green/60 mb-3 line-clamp-2">{displayShort}</p>
           )}
           <div className="flex items-center gap-2 mt-auto">
             <span className="text-lg font-bold text-deep-green">{formatPrice(product.price)}</span>
@@ -151,9 +192,9 @@ export default function ProductCard({ product }: { product: Product }) {
             {isAdding ? (
               <>
                 <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-                Added!
+                {t("product.added")}
               </>
-            ) : 'Add to Cart'}
+            ) : t("product.addToCartBtn")}
           </button>
         </div>
       </div>

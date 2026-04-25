@@ -2,6 +2,7 @@
 
 import { supabase } from '@/lib/supabase';
 import { useEffect, useState, useCallback } from 'react';
+import { useAdminEditLang } from '@/lib/i18n/AdminEditLang';
 
 // ────────────────────────────── Types ──────────────────────────────
 
@@ -14,6 +15,7 @@ interface Category {
   parent_id: string | null;
   sort_order: number;
   is_active: boolean;
+  i18n?: { hy?: { name?: string; description?: string } } | null;
   created_at: string;
   updated_at: string;
   parent?: Category | null;
@@ -28,6 +30,7 @@ interface CategoryFormData {
   parent_id: string;
   sort_order: number;
   is_active: boolean;
+  i18n: { hy?: { name?: string; description?: string } } | null;
 }
 
 type Alert = { type: 'success' | 'error'; message: string } | null;
@@ -42,6 +45,7 @@ const emptyForm: CategoryFormData = {
   parent_id: '',
   sort_order: 0,
   is_active: true,
+  i18n: null,
 };
 
 function slugify(text: string): string {
@@ -66,6 +70,23 @@ export default function CategoriesAdminPage() {
   const [modalOpen, setModalOpen] = useState(false);
   const [editingId, setEditingId] = useState<string | null>(null);
   const [form, setForm] = useState<CategoryFormData>(emptyForm);
+  const { editLang } = useAdminEditLang();
+
+  function getLocCat(key: 'name' | 'description'): string {
+    if (editLang === 'hy') return form.i18n?.hy?.[key] ?? '';
+    return (form[key] as string) ?? '';
+  }
+  function setLocCat(key: 'name' | 'description', value: string) {
+    if (editLang === 'hy') {
+      setForm((prev) => {
+        const hy = { ...(prev.i18n?.hy ?? {}) };
+        if (value) hy[key] = value; else delete hy[key];
+        return { ...prev, i18n: { ...(prev.i18n ?? {}), hy } };
+      });
+    } else {
+      setForm((prev) => ({ ...prev, [key]: value }));
+    }
+  }
 
   // Delete state
   const [deleteId, setDeleteId] = useState<string | null>(null);
@@ -159,6 +180,7 @@ export default function CategoriesAdminPage() {
       parent_id: cat.parent_id || '',
       sort_order: cat.sort_order,
       is_active: cat.is_active,
+      i18n: cat.i18n ?? null,
     });
     setModalOpen(true);
   };
@@ -172,7 +194,7 @@ export default function CategoriesAdminPage() {
     }
     setSaving(true);
     try {
-      const payload = {
+      const payload: Record<string, unknown> = {
         name: form.name.trim(),
         slug: form.slug.trim() || slugify(form.name),
         description: form.description.trim() || null,
@@ -182,15 +204,29 @@ export default function CategoriesAdminPage() {
         is_active: form.is_active,
         updated_at: new Date().toISOString(),
       };
+      if (form.i18n && Object.keys(form.i18n).length > 0) payload.i18n = form.i18n;
 
-      if (editingId) {
-        const { error } = await supabase.from('categories').update(payload).eq('id', editingId);
-        if (error) throw error;
-        setAlert({ type: 'success', message: 'Category updated successfully.' });
-      } else {
-        const { error } = await supabase.from('categories').insert(payload);
-        if (error) throw error;
-        setAlert({ type: 'success', message: 'Category created successfully.' });
+      const tryWrite = async (p: Record<string, unknown>) => {
+        if (editingId) {
+          const { error } = await supabase.from('categories').update(p).eq('id', editingId);
+          if (error) throw error;
+        } else {
+          const { error } = await supabase.from('categories').insert(p);
+          if (error) throw error;
+        }
+      };
+      try {
+        await tryWrite(payload);
+        setAlert({ type: 'success', message: editingId ? 'Category updated successfully.' : 'Category created successfully.' });
+      } catch (err) {
+        const msg = err instanceof Error ? err.message : String(err);
+        if (/column .*i18n.* does not exist/i.test(msg) && 'i18n' in payload) {
+          delete payload.i18n;
+          await tryWrite(payload);
+          setAlert({ type: 'error', message: 'Saved without Armenian translations — run the i18n migration to enable them.' });
+        } else {
+          throw err;
+        }
       }
 
       setModalOpen(false);
@@ -498,19 +534,23 @@ export default function CategoriesAdminPage() {
             <div className="px-6 py-5 space-y-4">
               {/* Name */}
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Name *</label>
+                <label className="block text-sm font-medium text-gray-700 mb-1 flex items-center gap-2">
+                  <span>Name {editLang === 'en' && '*'}</span>
+                  {editLang === 'hy' && <span className="text-[10px] font-semibold text-deep-green/70 px-1.5 py-0.5 bg-deep-green/10 rounded">HY</span>}
+                </label>
                 <input
                   type="text"
-                  value={form.name}
-                  onChange={(e) =>
-                    setForm((f) => ({
-                      ...f,
-                      name: e.target.value,
-                      slug: editingId ? f.slug : slugify(e.target.value),
-                    }))
-                  }
+                  value={getLocCat('name')}
+                  onChange={(e) => {
+                    const v = e.target.value;
+                    setLocCat('name', v);
+                    // Only auto-slugify in EN mode (slug is shared)
+                    if (editLang === 'en' && !editingId) {
+                      setForm((f) => ({ ...f, slug: slugify(v) }));
+                    }
+                  }}
                   className="w-full px-3 py-2.5 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-deep-green/20 focus:border-deep-green"
-                  placeholder="e.g. Dry Food"
+                  placeholder={editLang === 'hy' ? (form.name || 'e.g. Dry Food') : 'e.g. Dry Food'}
                 />
               </div>
 
@@ -528,13 +568,16 @@ export default function CategoriesAdminPage() {
 
               {/* Description */}
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Description</label>
+                <label className="block text-sm font-medium text-gray-700 mb-1 flex items-center gap-2">
+                  <span>Description</span>
+                  {editLang === 'hy' && <span className="text-[10px] font-semibold text-deep-green/70 px-1.5 py-0.5 bg-deep-green/10 rounded">HY</span>}
+                </label>
                 <textarea
-                  value={form.description}
-                  onChange={(e) => setForm((f) => ({ ...f, description: e.target.value }))}
+                  value={getLocCat('description')}
+                  onChange={(e) => setLocCat('description', e.target.value)}
                   rows={3}
                   className="w-full px-3 py-2.5 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-deep-green/20 focus:border-deep-green resize-none"
-                  placeholder="Optional category description..."
+                  placeholder={editLang === 'hy' ? (form.description || 'Optional category description...') : 'Optional category description...'}
                 />
               </div>
 

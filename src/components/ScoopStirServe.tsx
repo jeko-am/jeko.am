@@ -1,13 +1,15 @@
 "use client";
 
 import Image from "next/image";
+import { useT } from "@/lib/i18n/LangProvider";
 
 export default function ScoopStirServe() {
+  const { t } = useT();
   return (
     <section className="relative w-full h-[500px] md:h-[600px] overflow-hidden">
       <Image
         src="https://www.datocms-assets.com/55536/1689943504-healthy-dog-food-subscription.jpg?auto=format&fit=crop&h=700&w=1600"
-        alt="Simply scoop, stir and serve Jeko pet food"
+        alt={t("home.scoop.title")}
         fill
         unoptimized
         className="object-cover object-center"

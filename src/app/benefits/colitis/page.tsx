@@ -2,7 +2,7 @@ import HealthConditionPage from "@/components/HealthConditionPage";
 
 export default function ColitisPage() {
   return (
-    <HealthConditionPage
+    <HealthConditionPage pageSlug="/benefits/colitis"
       condition="Colitis in dogs"
       tagline="& how diet can help"
       heroImage="https://images.unsplash.com/photo-1534361960057-19889db9621e?w=1600&h=800&fit=crop"

@@ -1,0 +1,13 @@
+[     495ms] [INFO] %cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold @ webpack-internal:///(app-pages-browser)/./node_modules/next/dist/compiled/react-dom/cjs/react-dom.development.js:38559
+[    1550ms] [ERROR] Failed to load resource: the server responded with a status of 404 () @ https://dzhtpnskezkrtfinntbi.supabase.co/rest/v1/translations?select=key%2Cen%2Chy:0
+[    2147ms] [ERROR] Failed to load resource: the server responded with a status of 404 () @ https://dzhtpnskezkrtfinntbi.supabase.co/rest/v1/translations?select=key%2Cen%2Chy:0
+[   66517ms] [LOG] [Fast Refresh] rebuilding @ webpack-internal:///(app-pages-browser)/./node_modules/next/dist/client/components/react-dev-overlay/app/hot-reloader-client.js:186
+[   66793ms] [LOG] [Fast Refresh] done in 276ms @ webpack-internal:///(app-pages-browser)/./node_modules/next/dist/client/components/react-dev-overlay/app/hot-reloader-client.js:43
+[   74596ms] [LOG] [Fast Refresh] rebuilding @ webpack-internal:///(app-pages-browser)/./node_modules/next/dist/client/components/react-dev-overlay/app/hot-reloader-client.js:186
+[   74960ms] [LOG] [Fast Refresh] done in 365ms @ webpack-internal:///(app-pages-browser)/./node_modules/next/dist/client/components/react-dev-overlay/app/hot-reloader-client.js:43
+[   84581ms] [LOG] [Fast Refresh] rebuilding @ webpack-internal:///(app-pages-browser)/./node_modules/next/dist/client/components/react-dev-overlay/app/hot-reloader-client.js:186
+[   84808ms] [LOG] [Fast Refresh] done in 228ms @ webpack-internal:///(app-pages-browser)/./node_modules/next/dist/client/components/react-dev-overlay/app/hot-reloader-client.js:43
+[   85301ms] [ERROR] Failed to load resource: the server responded with a status of 404 () @ https://dzhtpnskezkrtfinntbi.supabase.co/rest/v1/translations?select=key&limit=1:0
+[   85685ms] [ERROR] Failed to load resource: the server responded with a status of 404 () @ https://dzhtpnskezkrtfinntbi.supabase.co/rest/v1/translations?select=key&limit=1:0
+[   85867ms] [ERROR] Failed to load resource: the server responded with a status of 400 () @ https://dzhtpnskezkrtfinntbi.supabase.co/rest/v1/products?select=i18n&limit=1:0
+[   86231ms] [ERROR] Failed to load resource: the server responded with a status of 400 () @ https://dzhtpnskezkrtfinntbi.supabase.co/rest/v1/products?select=i18n&limit=1:0

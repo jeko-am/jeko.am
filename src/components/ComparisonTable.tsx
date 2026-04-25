@@ -1,5 +1,7 @@
 "use client";
 
+import { useContentT } from "@/lib/i18n/useContentT";
+
 const CheckIcon = () => (
   <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" fill="none" viewBox="0 0 48 48">
     <g fillRule="evenodd" clipPath="url(#a)" clipRule="evenodd">
@@ -27,38 +29,39 @@ const CrossIcon = () => (
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export default function ComparisonTable({ content }: { content?: any }) {
-  const heading = (content?.heading ?? "How Jeko compares").replace(/\bPure\b/gi, "Jeko");
-  const col1Header = (content?.col_1_header ?? "JEKO").replace(/\bPURE\b/gi, "JEKO").replace(/\bPure\b/g, "Jeko");
-  const col2Header = content?.col_2_header ?? "Dry & wet";
-  const col3Header = content?.col_3_header ?? "Raw & fresh";
+  const { ct } = useContentT(content);
+  const heading = ct("heading", "home.compare.heading").replace(/\bPure\b/gi, "Jeko");
+  const col1Header = ct("col_1_header", "home.compare.col1").replace(/\bPURE\b/gi, "JEKO").replace(/\bPure\b/g, "Jeko");
+  const col2Header = ct("col_2_header", "home.compare.col2");
+  const col3Header = ct("col_3_header", "home.compare.col3");
 
   const rows = [
     {
-      label: content?.row_1_label ?? "Cost",
+      label: ct("row_1_label", "common.price"),
       pure: content?.row_1_pure ?? "££",
       dry: content?.row_1_dry ?? "£",
       raw: content?.row_1_raw ?? "£££",
     },
     {
-      label: content?.row_2_label ?? "No/low processing",
+      label: ct("row_2_label", "home.compare.row.lowProcessing"),
       pure: content?.row_2_pure ?? true,
       dry: content?.row_2_dry ?? false,
       raw: content?.row_2_raw ?? true,
     },
     {
-      label: content?.row_3_label ?? "High quality ingredients",
+      label: ct("row_3_label", "home.compare.row.highQuality"),
       pure: content?.row_3_pure ?? true,
       dry: content?.row_3_dry ?? false,
       raw: content?.row_3_raw ?? true,
     },
     {
-      label: content?.row_4_label ?? "Easy to store",
+      label: ct("row_4_label", "home.compare.row.easyStore"),
       pure: content?.row_4_pure ?? true,
       dry: content?.row_4_dry ?? true,
       raw: content?.row_4_raw ?? false,
     },
     {
-      label: content?.row_5_label ?? "No risk of harmful pathogens",
+      label: ct("row_5_label", "home.compare.row.noPathogens"),
       pure: content?.row_5_pure ?? true,
       dry: content?.row_5_dry ?? true,
       raw: content?.row_5_raw ?? false,

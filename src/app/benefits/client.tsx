@@ -5,7 +5,9 @@ import Link from "next/link";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import EditorOverlay from "@/components/EditorOverlay";
+import HyText from "@/components/HyText";
 import { useSignupUrl } from "@/lib/useSignupUrl";
+import { useT } from "@/lib/i18n/LangProvider";
 
 interface BenefitsPageClientProps {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -13,10 +15,11 @@ interface BenefitsPageClientProps {
 }
 
 export default function BenefitsPageClient({ sections }: BenefitsPageClientProps) {
+  const { t } = useT();
   const signupUrl = useSignupUrl();
   const contentSections = [
     {
-      title: sections[2]?.title ?? "Jeko common sense",
+      title: sections[2]?.title ?? t("benefits.section.commonSense.title"),
       text: sections[2]?.text ?? "We work on facts and common sense over here in Yorkshire. After all, we all know natural, healthy food is the best way to feed any animal. Our food is made in the UK, is full of the same ingredients you'd find in your own food and doesn't include anything you wouldn't eat yourself.",
       image: sections[2]?.image || "https://www.datocms-assets.com/55536/1673605636-delicious-dog-food.jpg?auto=format&fit=crop&h=600&w=1000",
       imageLeft: true,
@@ -25,19 +28,19 @@ export default function BenefitsPageClient({ sections }: BenefitsPageClientProps
       sectionIndex: 2,
     },
     {
-      title: sections[3]?.title ?? "No hidden nasties",
+      title: sections[3]?.title ?? t("benefits.section.noNasties.title"),
       text: sections[3]?.text ?? "We preserve our high quality natural ingredients by removing the water, meaning we don't add any preservatives, while avoiding the high temperature and high pressure extrusion process used to make traditional dry biscuit dog food. Gone are the days of mysterious brown biscuits full of nasties.",
       image: sections[3]?.image || "https://www.datocms-assets.com/55536/1673605662-personalised-dog-food.jpg?auto=format&fit=crop&h=600&w=1000",
       imageLeft: false,
       bg: "bg-white",
       cta: {
-        label: sections[3]?.cta_label ?? "Read about our food",
+        label: sections[3]?.cta_label ?? t("benefits.readFood.cta"),
         href: sections[3]?.cta_href ?? "/recipes",
       },
       sectionIndex: 3,
     },
     {
-      title: sections[4]?.title ?? "Long healthy lives",
+      title: sections[4]?.title ?? t("benefits.section.longLives.title"),
       text: sections[4]?.text ?? "Studies have found that puppies fed a processed diet initially appeared to be healthy, but once they reached maturity, they were more likely to rapidly age and develop degenerative disease symptoms. We stand for fresh, healthy food for long, healthy lives.",
       image: sections[4]?.image || "https://www.datocms-assets.com/55536/1664894577-dog-walking.jpg?auto=format&fit=crop&h=600&w=1000",
       imageLeft: true,
@@ -90,20 +93,20 @@ export default function BenefitsPageClient({ sections }: BenefitsPageClientProps
             <div className="relative z-10 max-w-[1200px] mx-auto px-6 py-16 md:py-24">
               <div className="max-w-[520px]">
                 <h1 className="font-rubik text-white text-[38px] md:text-[48px] font-bold leading-[1.15] mb-5">
-                  {sections[0]?.heading ?? "What are the benefits"}{" "}
+                  <HyText en={sections[0]?.heading ?? t("benefits.hero.heading")} />{" "}
                   <span className="text-gold italic">
-                    {sections[0]?.heading_highlight ?? "to your pet?"}
+                    <HyText en={sections[0]?.heading_highlight ?? t("benefits.hero.headingHighlight")} />
                   </span>
                 </h1>
                 <p className="text-white/90 text-[17px] leading-relaxed mb-8 max-w-[440px]">
-                  {sections[0]?.subheading ?? "Our natural, healthy pet food has led to thousands of success stories from happy owners and healthy dogs."}
+                  <HyText en={sections[0]?.subheading ?? t("benefits.hero.subheading")} />
                 </p>
                 <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
                   <Link
                     href={sections[0]?.button_url ?? signupUrl}
                     className="inline-block bg-gold text-deep-green px-7 py-3 rounded-[5px] font-semibold text-[16px] hover:bg-[#d99500] transition-colors"
                   >
-                    {sections[0]?.button_text ?? "Create a tailored plan"}
+                    <HyText en={sections[0]?.button_text ?? t("benefits.hero.button")} />
                   </Link>
                   {/* Trustpilot stars */}
                   <div className="flex items-center gap-2">
@@ -144,9 +147,9 @@ export default function BenefitsPageClient({ sections }: BenefitsPageClientProps
                       </span>
                     </div>
                     <span className="text-[13px] font-bold text-white">
-                      Excellent
+                      {t("benefits.trustpilot.label")}
                     </span>
-                    <span className="text-[13px] text-white/70">4.7 / 5</span>
+                    <span className="text-[13px] text-white/70">{t("benefits.trustpilot.score")}</span>
                   </div>
                 </div>
               </div>
@@ -162,11 +165,11 @@ export default function BenefitsPageClient({ sections }: BenefitsPageClientProps
           >
             <p className="text-[17px] leading-snug font-rubik">
               <span className="font-bold">
-                {sections[1]?.primary_text ?? "25% off your first box"}
+                <HyText en={sections[1]?.primary_text ?? t("benefits.offer.primary")} />
               </span>
               <span className="mx-2 font-light">+</span>
               <span className="font-medium text-[15px] text-white/90">
-                {sections[1]?.secondary_text ?? "10% off your next box"}
+                <HyText en={sections[1]?.secondary_text ?? t("benefits.offer.secondary")} />
               </span>
             </p>
           </Link>
@@ -223,17 +226,17 @@ export default function BenefitsPageClient({ sections }: BenefitsPageClientProps
                 >
                   <div className="px-8 md:px-14 lg:px-20 py-12 md:py-16 max-w-[560px]">
                     <h2 className="text-[28px] md:text-[34px] font-bold text-deep-green font-rubik leading-tight mb-5">
-                      {section.title}
+                      <HyText en={section.title} />
                     </h2>
                     <p className="text-deep-green/90 text-[15px] leading-[1.75]">
-                      {section.text}
+                      <HyText en={section.text} />
                     </p>
                     {section.cta && (
                       <Link
                         href={section.cta.href}
                         className="inline-block mt-7 border-2 border-deep-green text-deep-green px-6 py-2.5 rounded-[5px] font-semibold text-[15px] hover:bg-deep-green hover:text-white transition-all duration-200"
                       >
-                        {section.cta.label}
+                        <HyText en={section.cta.label} />
                       </Link>
                     )}
                   </div>
@@ -264,10 +267,10 @@ export default function BenefitsPageClient({ sections }: BenefitsPageClientProps
                     </div>
                     <div className="p-5 flex-1 flex flex-col justify-between">
                       <p className="text-white/90 text-[14px] leading-[1.7] mb-4 italic">
-                        &ldquo;{t.quote}&rdquo;
+                        &ldquo;<HyText en={t.quote} />&rdquo;
                       </p>
                       <p className="text-white font-semibold text-[13px]">
-                        {t.name}
+                        <HyText en={t.name} />
                       </p>
                     </div>
                   </div>
@@ -283,7 +286,7 @@ export default function BenefitsPageClient({ sections }: BenefitsPageClientProps
             <div className="max-w-[1200px] mx-auto px-6">
               <div className="md:ml-auto md:w-1/2 md:pl-10 lg:pl-16">
                 <h2 className="text-[28px] md:text-[34px] font-bold text-deep-green font-rubik leading-tight mb-1">
-                  {sections[6]?.heading ?? "Better bellies"}
+                  <HyText en={sections[6]?.heading ?? t("benefits.bellies.heading")} />
                 </h2>
                 <p
                   className="text-gold text-[28px] md:text-[34px] mb-6"
@@ -298,10 +301,10 @@ export default function BenefitsPageClient({ sections }: BenefitsPageClientProps
                     textDecorationThickness: "2px",
                   }}
                 >
-                  {sections[6]?.subtitle ?? "Improved smell"}
+                  <HyText en={sections[6]?.subtitle ?? t("benefits.bellies.subtitle")} />
                 </p>
                 <p className="text-deep-green/90 text-[15px] leading-[1.75] max-w-[500px]">
-                  {sections[6]?.description ?? "Brown biscuits full of artificial ingredients that are scientifically designed in a lab, can often go in one way and come out the other, smelly and unpleasant. Switching to a highly digestible, high quality food will improve smell and stool consistency. A welcome change!"}
+                  <HyText en={sections[6]?.description ?? "Brown biscuits full of artificial ingredients that are scientifically designed in a lab, can often go in one way and come out the other, smelly and unpleasant. Switching to a highly digestible, high quality food will improve smell and stool consistency. A welcome change!"} />
                 </p>
               </div>
             </div>
@@ -314,14 +317,14 @@ export default function BenefitsPageClient({ sections }: BenefitsPageClientProps
             <div className="max-w-[1200px] mx-auto px-6">
               <div className="md:w-1/2 md:pr-10 lg:pr-16">
                 <h2 className="text-[28px] md:text-[34px] font-bold text-deep-green font-rubik leading-tight mb-5">
-                  {sections[7]?.heading ?? "Combat obesity"}
+                  <HyText en={sections[7]?.heading ?? t("benefits.obesity.heading")} />
                 </h2>
                 <div className="space-y-4">
                   <p className="text-deep-green/90 text-[15px] leading-[1.75]">
-                    {sections[7]?.text_1 ?? "According to the PFMA, 51% of dogs are overweight or obese. Obesity leads to a whole host of health issues in later life such as arthritis, diabetes and even cancer. Poor quality foods can cause your dog to eat more to feel full."}
+                    <HyText en={sections[7]?.text_1 ?? "According to the PFMA, 51% of dogs are overweight or obese. Obesity leads to a whole host of health issues in later life such as arthritis, diabetes and even cancer. Poor quality foods can cause your dog to eat more to feel full."} />
                   </p>
                   <p className="text-deep-green/90 text-[15px] leading-[1.75]">
-                    {sections[7]?.text_2 ?? "We know in our diet, if we eat processed food regularly, we can feel sluggish, become overweight and suffer from health issues later in life. Switching to a healthier, natural diet helps maintain a healthy body weight and combat obesity."}
+                    <HyText en={sections[7]?.text_2 ?? "We know in our diet, if we eat processed food regularly, we can feel sluggish, become overweight and suffer from health issues later in life. Switching to a healthier, natural diet helps maintain a healthy body weight and combat obesity."} />
                   </p>
                 </div>
               </div>
@@ -336,7 +339,7 @@ export default function BenefitsPageClient({ sections }: BenefitsPageClientProps
               <div className="w-full md:w-[55%] bg-[#5F295E] flex items-center">
                 <div className="px-8 md:px-14 lg:px-20 py-12 md:py-16 max-w-[520px]">
                   <h2 className="text-[30px] md:text-[38px] font-bold text-white font-rubik leading-tight mb-1">
-                    {sections[8]?.heading ?? "Personalise your"}
+                    <HyText en={sections[8]?.heading ?? t("benefits.personalise.heading")} />
                   </h2>
                   <p
                     className="text-gold text-[28px] md:text-[36px] font-bold font-rubik mb-6"
@@ -351,16 +354,16 @@ export default function BenefitsPageClient({ sections }: BenefitsPageClientProps
                       textDecorationThickness: "2px",
                     }}
                   >
-                    {sections[8]?.subtitle ?? "dog\u2019s food"}
+                    <HyText en={sections[8]?.subtitle ?? t("benefits.personalise.subtitle")} />
                   </p>
                   <p className="text-white/85 text-[15px] leading-[1.75] mb-8 max-w-[420px]">
-                    {sections[8]?.description ?? "Proactively invest in your pet\u2019s health with a nutritious, vet-approved dog food subscription that\u2019s trusted by thousands. Discover your dog\u2019s recipe today with free dog food delivery."}
+                    <HyText en={sections[8]?.description ?? "Proactively invest in your pet\u2019s health with a nutritious, vet-approved dog food subscription that\u2019s trusted by thousands. Discover your dog\u2019s recipe today with free dog food delivery."} />
                   </p>
                   <Link
                     href={sections[8]?.button_url ?? "/products"}
                     className="inline-block bg-gold text-deep-green px-7 py-3 rounded-[5px] font-semibold text-[16px] hover:bg-[#d99500] transition-colors"
                   >
-                    {sections[8]?.button_text ?? "Discover your dog\u2019s menu"}
+                    <HyText en={sections[8]?.button_text ?? t("benefits.personalise.button")} />
                   </Link>
                 </div>
               </div>

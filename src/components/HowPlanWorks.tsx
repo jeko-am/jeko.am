@@ -3,66 +3,47 @@
 import Link from "next/link";
 import Image from "next/image";
 import { useSignupUrl } from "@/lib/useSignupUrl";
-
-const steps = [
-  {
-    step: "Step 1",
-    title: "Tell us about your dog",
-    icon: "https://www.purepetfood.com/_next/static/media/add-dog-yellow.d420b8ed.png",
-  },
-  {
-    step: "Step 2",
-    title: "Choose your tailored recipes",
-    icon: "https://www.purepetfood.com/_next/static/media/naturally-tasty.90dfdb2e.png",
-  },
-  {
-    step: "Step 3",
-    title: "Delivered to your door for free",
-    icon: "https://www.purepetfood.com/_next/static/media/free-delivery-truck.6102579b.png",
-  },
-  {
-    step: "Step 4",
-    title: "Try it and transition to Jeko",
-    icon: "https://www.purepetfood.com/_next/static/media/bowl-with-yellow-scoop.5cef6df6.png",
-  },
-];
+import { useContentT } from "@/lib/i18n/useContentT";
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export default function HowPlanWorks({ content }: { content?: any }) {
-  const heading = (content?.heading ?? "How does a Jeko plan work?").replace(/\bPure\b/gi, "Jeko");
-  const step1Title = content?.step_1_title ?? "Tell us about your dog";
-  const step1Description = content?.step_1_description ?? "Tell us about your dog";
-  const step2Title = content?.step_2_title ?? "Choose your tailored recipes";
-  const step2Description = content?.step_2_description ?? "Choose your tailored recipes";
-  const step3Title = content?.step_3_title ?? "Delivered to your door for free";
-  const step3Description = content?.step_3_description ?? "Delivered to your door for free";
-  const buttonText = content?.button_text ?? "Create a tailored plan today";
+  const { ct, t } = useContentT(content);
+  const heading = ct("heading", "home.howPlan.heading").replace(/\bPure\b/gi, "Jeko");
+  const stepLabel = t("home.howPlan.stepLabel");
+  const step1Title = ct("step_1_title", "home.howPlan.step1Title");
+  const step1Description = ct("step_1_description", "home.howPlan.step1Title");
+  const step2Title = ct("step_2_title", "home.howPlan.step2Title");
+  const step2Description = ct("step_2_description", "home.howPlan.step2Title");
+  const step3Title = ct("step_3_title", "home.howPlan.step3Title");
+  const step3Description = ct("step_3_description", "home.howPlan.step3Title");
+  const step4Title = t("home.howPlan.step4Title");
+  const buttonText = ct("button_text", "home.howPlan.buttonText");
   const signupUrl = useSignupUrl();
   const buttonUrl = content?.button_url ?? signupUrl;
 
   const dynamicSteps = [
     {
-      step: "Step 1",
+      step: `${stepLabel} 1`,
       title: step1Title,
       description: step1Description,
       icon: "https://www.purepetfood.com/_next/static/media/add-dog-yellow.d420b8ed.png",
     },
     {
-      step: "Step 2",
+      step: `${stepLabel} 2`,
       title: step2Title,
       description: step2Description,
       icon: "https://www.purepetfood.com/_next/static/media/naturally-tasty.90dfdb2e.png",
     },
     {
-      step: "Step 3",
+      step: `${stepLabel} 3`,
       title: step3Title,
       description: step3Description,
       icon: "https://www.purepetfood.com/_next/static/media/free-delivery-truck.6102579b.png",
     },
     {
-      step: "Step 4",
-      title: steps[3].title,
-      description: steps[3].title,
+      step: `${stepLabel} 4`,
+      title: step4Title,
+      description: step4Title,
       icon: "https://www.purepetfood.com/_next/static/media/bowl-with-yellow-scoop.5cef6df6.png",
     },
   ];

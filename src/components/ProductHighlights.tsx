@@ -5,6 +5,7 @@ import { supabase } from '@/lib/supabase';
 import { useAuth } from '@/lib/auth';
 import { getViewedProductIds } from '@/lib/product-history';
 import ProductCard from './ProductCard';
+import { useContentT } from '@/lib/i18n/useContentT';
 
 interface Product {
   id: string;
@@ -19,6 +20,7 @@ interface Product {
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export default function ProductHighlights({ content }: { content?: any }) {
+  const { ct, t } = useContentT(content);
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
   const [isPersonalized, setIsPersonalized] = useState(false);
@@ -78,17 +80,13 @@ export default function ProductHighlights({ content }: { content?: any }) {
         {/* Header */}
         <div className="text-center mb-12">
           <span className="inline-block bg-gold/20 text-deep-green text-sm font-semibold px-4 py-1.5 rounded-full mb-4">
-            {isPersonalized ? 'Based on Your Browsing' : 'Our Products'}
+            {isPersonalized ? t("home.productHighlights.eyebrowPersonalized") : t("home.productHighlights.eyebrow")}
           </span>
           <h2 className="text-3xl md:text-4xl font-medium text-deep-green mb-3 tracking-wide">
-            {isPersonalized
-              ? 'Picked Just for You'
-              : (content?.heading || 'Handpicked for Your Pup')}
+            {isPersonalized ? t("home.productHighlights.eyebrowPersonalized") : ct("heading", "home.productHighlights.heading")}
           </h2>
           <p className="text-deep-green/60 max-w-lg mx-auto">
-            {isPersonalized
-              ? 'Products you recently explored — pick up where you left off.'
-              : (content?.subheading || 'Fresh, natural ingredients your dog will love. Every meal made with care.')}
+            {isPersonalized ? t("home.productHighlights.description") : ct("subheading", "home.productHighlights.description")}
           </p>
         </div>
 
@@ -120,7 +118,7 @@ export default function ProductHighlights({ content }: { content?: any }) {
             href="/products"
             className="btn-gold inline-flex items-center gap-2"
           >
-            Shop All Products
+            {t("home.productHighlights.shopAll")}
             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
             </svg>

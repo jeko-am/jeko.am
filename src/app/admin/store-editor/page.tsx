@@ -3,6 +3,21 @@
 import { supabase } from '@/lib/supabase';
 import { useEffect, useState, useCallback, useRef, DragEvent, ChangeEvent } from 'react';
 import { ALL_PAGE_CONFIGS, PRODUCT_PAGE_SECTIONS, type SectionSchema, type PageConfig, type FieldDef } from './schemas';
+import { useAdminEditLang } from '@/lib/i18n/AdminEditLang';
+import { dictionaries } from '@/lib/i18n/translations';
+import { memoTranslateHy } from '@/components/HyText';
+
+/** Build the HY default value map for a section's translatable fields from the static dictionary. */
+function buildHyDefaults(schema: SectionSchema): Record<string, unknown> {
+  const out: Record<string, unknown> = {};
+  for (const f of schema.fields) {
+    if ((f.type === 'text' || f.type === 'textarea') && f.i18nKey) {
+      const v = dictionaries.hy[f.i18nKey];
+      if (v) out[f.key] = v;
+    }
+  }
+  return out;
+}
 
 /* ═══════════════════════════════════════════════════════════════════════════
    TYPES
@@ -463,6 +478,9 @@ export default function AdminStoreEditorPage() {
   // Editor state
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
   const [editValues, setEditValues] = useState<Record<string, unknown>>({});
+  const [editValuesHy, setEditValuesHy] = useState<Record<string, unknown>>({});
+  // Global admin-wide language toggle controls which language is being edited.
+  const { editLang, setEditLang } = useAdminEditLang();
   const [hasChanges, setHasChanges] = useState(false);
 
   // All products for product_picker fields
@@ -582,6 +600,7 @@ export default function AdminStoreEditorPage() {
     setActivePageConfigIdx(configIdx);
     setSelectedIndex(null);
     setEditValues({});
+    setEditValuesHy({});
     setHasChanges(false);
     const configs = [...ALL_PAGE_CONFIGS, ...productPages];
     fetchPageSections(configs[configIdx]?.slug || '/');
@@ -613,10 +632,17 @@ export default function AdminStoreEditorPage() {
     const sectionRecord = getSectionRecord(index);
     const schema = activeSections[index];
 
+    const hyDefaults = buildHyDefaults(schema);
     if (sectionRecord) {
-      setEditValues({ ...schema.defaultContent, ...sectionRecord.content });
+      const existing = sectionRecord.content as Record<string, unknown>;
+      const hy = (existing?.hy as Record<string, unknown> | undefined) ?? {};
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      const { hy: _omitHy, ...enOnly } = existing as Record<string, unknown>;
+      setEditValues({ ...schema.defaultContent, ...enOnly });
+      setEditValuesHy({ ...hyDefaults, ...hy });
     } else {
       setEditValues({ ...schema.defaultContent });
+      setEditValuesHy({ ...hyDefaults });
     }
 
     // Tell iframe to highlight this section
@@ -629,9 +655,41 @@ export default function AdminStoreEditorPage() {
     }
     setSelectedIndex(null);
     setEditValues({});
+    setEditValuesHy({});
     setHasChanges(false);
     iframeRef.current?.contentWindow?.postMessage({ type: 'deselect' }, '*');
   }
+
+  // ─── Auto-translate empty HY fields when editor opens in HY mode ──────
+  // For each translatable field where the admin hasn't saved Armenian yet
+  // (and there's no static dictionary translation), fetch a machine
+  // translation of the English default and pre-fill it. Admin sees Armenian
+  // text to edit, not English.
+  useEffect(() => {
+    if (selectedIndex === null || editLang !== 'hy') return;
+    const schema = activeSections[selectedIndex];
+    if (!schema) return;
+    let cancelled = false;
+    (async () => {
+      const updates: Record<string, string> = {};
+      for (const f of schema.fields) {
+        if (f.type !== 'text' && f.type !== 'textarea') continue;
+        const existing = editValuesHy[f.key];
+        if (typeof existing === 'string' && existing.length > 0) continue;
+        if (f.i18nKey && dictionaries.hy[f.i18nKey]) continue;
+        const en = editValues[f.key];
+        if (typeof en !== 'string' || !en.trim()) continue;
+        const tx = await memoTranslateHy(en);
+        if (cancelled) return;
+        if (tx) updates[f.key] = tx;
+      }
+      if (!cancelled && Object.keys(updates).length > 0) {
+        setEditValuesHy(prev => ({ ...prev, ...updates }));
+      }
+    })();
+    return () => { cancelled = true; };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [selectedIndex, editLang, editValues]);
 
   // ─── Map section index to Supabase record ────────────────────────────
   function getSectionRecord(index: number): PageSection | null {
@@ -646,9 +704,33 @@ export default function AdminStoreEditorPage() {
   }
 
   // ─── Field change handler ─────────────────────────────────────────────
+  // Writes to either the English store or the Armenian override store based on editLang.
+  // Non-text fields (image, color, toggle, list, product_picker, url) always write to EN;
+  // Armenian mode is only meaningful for text/textarea so those are the only ones swapped.
   function updateField(key: string, value: unknown) {
-    setEditValues(prev => ({ ...prev, [key]: value }));
+    if (editLang === 'hy') {
+      setEditValuesHy(prev => ({ ...prev, [key]: value }));
+    } else {
+      setEditValues(prev => ({ ...prev, [key]: value }));
+    }
     setHasChanges(true);
+  }
+
+  function getFieldValue(key: string, fieldType: string): unknown {
+    // Only text-like fields use Armenian overrides; others always English store
+    const translatable = fieldType === 'text' || fieldType === 'textarea';
+    if (editLang === 'hy' && translatable) {
+      const v = editValuesHy[key];
+      if (v !== undefined && v !== null && v !== '') return v;
+      // Static Armenian dictionary (when field has an i18nKey).
+      const field = activeSections[selectedIndex ?? -1]?.fields.find(f => f.key === key);
+      if (field?.i18nKey && dictionaries.hy[field.i18nKey]) return dictionaries.hy[field.i18nKey];
+      // No HY value yet — return empty so the auto-translate effect can
+      // populate it. The English source is shown via the placeholder so the
+      // admin still has context for what they are translating.
+      return '';
+    }
+    return editValues[key];
   }
 
   // ─── Ensure page exists (auto-create if needed) ───────────────────────
@@ -693,7 +775,18 @@ export default function AdminStoreEditorPage() {
       }
 
       const indexKey = activePageConfig.indexKey;
-      const contentToSave = { ...editValues, [indexKey]: selectedIndex };
+      // Strip empty Armenian values so we don't store "" blanks
+      const hyClean: Record<string, unknown> = {};
+      for (const [k, v] of Object.entries(editValuesHy)) {
+        if (v !== undefined && v !== null && v !== '') hyClean[k] = v;
+      }
+      const contentToSave: Record<string, unknown> = {
+        ...editValues,
+        [indexKey]: selectedIndex,
+      };
+      if (Object.keys(hyClean).length > 0) {
+        contentToSave.hy = hyClean;
+      }
       // For homepage backward compat, also include _homepage_index
       if (indexKey !== '_homepage_index') {
         contentToSave._section_index = selectedIndex;
@@ -878,10 +971,43 @@ export default function AdminStoreEditorPage() {
                 <span className="text-sm font-semibold text-gray-900 truncate">{selectedSchema.name}</span>
               </div>
 
+              {/* Language toggle for section content */}
+              <div className="px-4 pt-3 pb-0 flex-shrink-0">
+                <div className="flex bg-gray-100 rounded-lg p-1 gap-1">
+                  <button
+                    onClick={() => setEditLang('en')}
+                    className={`flex-1 flex items-center justify-center gap-1.5 px-3 py-1.5 text-xs font-medium rounded-md transition-colors ${
+                      editLang === 'en' ? 'bg-white text-deep-green shadow-sm' : 'text-gray-500 hover:text-gray-700'
+                    }`}
+                  >
+                    <span>🇬🇧</span>
+                    <span>English</span>
+                  </button>
+                  <button
+                    onClick={() => setEditLang('hy')}
+                    className={`flex-1 flex items-center justify-center gap-1.5 px-3 py-1.5 text-xs font-medium rounded-md transition-colors ${
+                      editLang === 'hy' ? 'bg-white text-deep-green shadow-sm' : 'text-gray-500 hover:text-gray-700'
+                    }`}
+                  >
+                    <span>🇦🇲</span>
+                    <span>Հայերեն</span>
+                  </button>
+                </div>
+                {editLang === 'hy' && (
+                  <p className="mt-2 text-[11px] text-gray-500 leading-relaxed">
+                    Editing Armenian translations. Only text fields are shown here — images, toggles and URLs are shared.
+                    Placeholders show the English value.
+                  </p>
+                )}
+              </div>
+
               {/* Settings fields */}
               <div className="flex-1 overflow-y-auto px-4 py-4 space-y-5">
                 {selectedSchema.fields.map(field => {
-                  const value = editValues[field.key];
+                  const value = getFieldValue(field.key, field.type);
+                  const enValue = editValues[field.key];
+                  // In Armenian mode, hide non-translatable fields to keep the UX focused
+                  if (editLang === 'hy' && field.type !== 'text' && field.type !== 'textarea') return null;
 
                   if (field.type === 'image') {
                     return (
@@ -947,13 +1073,17 @@ export default function AdminStoreEditorPage() {
                   }
 
                   if (field.type === 'textarea') {
+                    const hyPlaceholder = editLang === 'hy' && enValue ? String(enValue) : field.placeholder;
                     return (
                       <div key={field.key}>
-                        <label className="block text-[13px] font-medium text-gray-700 mb-1.5">{field.label}</label>
+                        <label className="block text-[13px] font-medium text-gray-700 mb-1.5 flex items-center gap-2">
+                          <span>{field.label}</span>
+                          {editLang === 'hy' && <span className="text-[10px] font-semibold text-deep-green/70 px-1.5 py-0.5 bg-deep-green/10 rounded">HY</span>}
+                        </label>
                         <textarea
                           value={String(value || '')}
                           onChange={(e) => updateField(field.key, e.target.value)}
-                          placeholder={field.placeholder}
+                          placeholder={hyPlaceholder}
                           rows={3}
                           className="w-full px-3 py-2 text-sm border border-gray-200 rounded-lg focus:ring-2 focus:ring-deep-green/20 focus:border-deep-green outline-none resize-y"
                         />
@@ -1022,14 +1152,18 @@ export default function AdminStoreEditorPage() {
                   }
 
                   // text / url
+                  const textHyPlaceholder = editLang === 'hy' && field.type === 'text' && enValue ? String(enValue) : field.placeholder;
                   return (
                     <div key={field.key}>
-                      <label className="block text-[13px] font-medium text-gray-700 mb-1.5">{field.label}</label>
+                      <label className="block text-[13px] font-medium text-gray-700 mb-1.5 flex items-center gap-2">
+                        <span>{field.label}</span>
+                        {editLang === 'hy' && field.type === 'text' && <span className="text-[10px] font-semibold text-deep-green/70 px-1.5 py-0.5 bg-deep-green/10 rounded">HY</span>}
+                      </label>
                       <input
                         type={field.type === 'url' ? 'url' : 'text'}
                         value={String(value || '')}
                         onChange={(e) => updateField(field.key, e.target.value)}
-                        placeholder={field.placeholder}
+                        placeholder={textHyPlaceholder}
                         className="w-full px-3 py-2 text-sm border border-gray-200 rounded-lg focus:ring-2 focus:ring-deep-green/20 focus:border-deep-green outline-none"
                       />
                     </div>
@@ -1156,8 +1290,8 @@ export default function AdminStoreEditorPage() {
             >
               <iframe
                 ref={iframeRef}
-                key={previewKey}
-                src={`${activePageConfig.previewPath}${activePageConfig.previewPath.includes('?') ? '&' : '?'}editor=true`}
+                key={`${previewKey}-${editLang}`}
+                src={`${activePageConfig.previewPath}${activePageConfig.previewPath.includes('?') ? '&' : '?'}editor=true&lang=${editLang}`}
                 className="w-full border-0 block"
                 style={{ height: 'calc(100vh - 120px)', minHeight: 500 }}
                 title="Live Store Preview"

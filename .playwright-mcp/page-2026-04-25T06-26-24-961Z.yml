@@ -1,0 +1,210 @@
+- generic [active] [ref=e1]:
+  - banner [ref=e2]:
+    - generic [ref=e4]:
+      - link "JEKO" [ref=e5] [cursor=pointer]:
+        - /url: /
+        - generic [ref=e6]: JEKO
+      - navigation [ref=e7]:
+        - link "Մեր մասին" [ref=e9] [cursor=pointer]:
+          - /url: /about
+          - text: Մեր մասին
+          - img [ref=e10]
+        - link "Համայնք" [ref=e13] [cursor=pointer]:
+          - /url: /community
+          - text: Համայնք
+          - img [ref=e14]
+        - link "Խանութ" [ref=e17] [cursor=pointer]:
+          - /url: /products
+        - link "Կարծիքներ" [ref=e19] [cursor=pointer]:
+          - /url: /reviews
+        - link "Առողջապահական օգուտներ" [ref=e21] [cursor=pointer]:
+          - /url: /benefits
+          - text: Առողջապահական օգուտներ
+          - img [ref=e22]
+      - generic [ref=e24]:
+        - button "Switch language" [ref=e26] [cursor=pointer]:
+          - generic [ref=e27]: 🇦🇲
+          - generic [ref=e28]: HY
+          - img [ref=e29]
+        - button "Shopping cart" [ref=e31] [cursor=pointer]:
+          - img [ref=e32]
+        - link "Օգնություն" [ref=e36] [cursor=pointer]:
+          - /url: /contact
+        - generic [ref=e191]:
+          - link "Ադմին վահանակ" [ref=e192] [cursor=pointer]:
+            - /url: /admin/dashboard
+            - img [ref=e193]
+            - text: Ադմին վահանակ
+          - button "Ելք" [ref=e196] [cursor=pointer]:
+            - img [ref=e197]
+            - text: Ելք
+  - main [ref=e39]:
+    - img "Jeko founders" [ref=e43]
+    - generic [ref=e45]:
+      - generic [ref=e47]:
+        - generic:
+          - img
+          - img
+          - img
+          - img
+          - img
+        - generic [ref=e49]:
+          - paragraph [ref=e50]: "2012"
+          - heading "Սկսվեց պարզ հարցից" [level=2] [ref=e199]
+          - generic [ref=e52]:
+            - paragraph [ref=e53]: "«Փոքրիկ շագանակագույն թխվածքաբլիթներ. մենք չէինք ուտի դրանք ամեն կերակուրի համար, ամեն օր, ուրեմն ինչո՞ւ պետք է մեր ընտանի կենդանիները»:"
+            - paragraph [ref=e54]: "Սա այն հարցն է, որը մեզ տանում էր դեպի լավը փոխելու ընտանի կենդանիների սննդի դեմքը:"
+      - generic [ref=e56]:
+        - generic:
+          - img
+          - img
+          - img
+        - generic [ref=e58]:
+          - generic [ref=e59]:
+            - paragraph [ref=e60]: "2013"
+            - heading "Մի սնունդ հայտնություն" [level=2] [ref=e200]:
+              - text: Մի սնունդ
+              - text: հայտնություն
+            - paragraph [ref=e63]: "Ամիսների հետազոտությունը մեզ հանգեցրեց սննդամթերքի խոնավությունը հեռացնելու դարավոր պահպանման մեթոդին:"
+          - img "A food" [ref=e68]
+      - generic [ref=e70]:
+        - generic:
+          - img
+          - img
+          - img
+        - generic [ref=e72]:
+          - generic [ref=e73]:
+            - paragraph [ref=e74]: "2014"
+            - heading "Հիշարժան հանգրվաններ" [level=2] [ref=e201]:
+              - text: Հիշարժան
+              - text: հանգրվաններ
+            - paragraph [ref=e77]: "2014 թվականին մեր համահիմնադիրները մտան Դրակոնների որջ, և մենք բախտ ունեցանք հաղթելու երկու վիշապների:"
+          - img "Memorable" [ref=e82]
+      - generic [ref=e84]:
+        - generic:
+          - img
+          - img
+          - img
+        - generic [ref=e86]:
+          - generic [ref=e87]:
+            - paragraph [ref=e88]: "2017"
+            - heading "Հոսթինգ ա թագավորական այցելություն" [level=2] [ref=e202]:
+              - text: Հոսթինգ ա
+              - text: թագավորական այցելություն
+            - paragraph [ref=e91]: "Նորին Արքայական Մեծություն Արքայադուստր Աննան մեզ այցելեց այստեղ՝ Արևմտյան Յորքշիրում 2017 թվականին:"
+          - img "Hosting a" [ref=e96]
+      - generic [ref=e98]:
+        - generic:
+          - img
+          - img
+          - img
+          - img
+          - img
+        - generic:
+          - img
+          - img
+          - img
+        - generic [ref=e100]:
+          - paragraph [ref=e101]: "2024"
+          - heading "Որտեղ ենք մենք այսօր" [level=2] [ref=e203]:
+            - text: Որտեղ ենք մենք
+            - text: այսօր
+          - generic [ref=e103]:
+            - paragraph [ref=e104]: "Մենք երկար ճանապարհ ենք անցել Դենի խոհանոցում բաղադրատոմսեր ստեղծելուց:"
+            - paragraph [ref=e105]: "Այսպիսով, դուք կարող եք ասել, որ շատ առումներով սա միայն սկիզբն է:"
+    - generic [ref=e108]:
+      - heading "2012 թվականից" [level=2] [ref=e204]
+      - paragraph [ref=e110]: մենք առաքել ենք
+      - generic [ref=e111]: 92,871,751
+      - paragraph [ref=e112]: կերակուրները և փոխեցին հազարավոր ընտանի կենդանիների կյանքը դեպի լավը
+    - generic [ref=e115]:
+      - img "Learn more about Jeko" [ref=e117]
+      - generic [ref=e120]:
+        - heading "Իմացեք ավելին" [level=2] [ref=e205]
+        - paragraph [ref=e122]: Pure-ի մասին
+        - paragraph [ref=e123]: "Մեր շները ընտանիքի մի մասն են, ուստի նրանք արժանի են լավագույն սննդին:"
+    - generic [ref=e126]:
+      - generic [ref=e128]:
+        - heading "Անհատականացրեք ձեր" [level=2] [ref=e206]
+        - paragraph [ref=e130]: շան սնունդ
+        - paragraph [ref=e131]: "Ակտիվորեն ներդրումներ կատարեք ձեր ընտանի կենդանու առողջության համար:"
+        - link "Բացահայտեք ձեր շան ճաշացանկը" [ref=e207] [cursor=pointer]:
+          - /url: /signup
+      - img "Personalise your dog's food" [ref=e134]
+  - contentinfo [ref=e136]:
+    - generic [ref=e137]:
+      - generic [ref=e138]:
+        - generic [ref=e139]:
+          - heading "Միացիր մեր VIP ցանկին" [level=4] [ref=e140]
+          - paragraph [ref=e141]: Առաջինը իմացիր նոր ապրանքների մասին, մասնակցիր բացառիկ մրցույթների և ստացիր օգտակար խորհուրդներ ընտանի կենդանիների խնամքի մասին։
+          - generic [ref=e142]:
+            - textbox "Մուտքագրիր քո էլ. փոստի հասցեն" [ref=e143]
+            - button "Գրանցվել" [ref=e144] [cursor=pointer]
+        - generic [ref=e145]:
+          - generic [ref=e146]:
+            - heading "Jeko" [level=4] [ref=e147]
+            - list [ref=e148]:
+              - listitem [ref=e149]:
+                - link "Մեր պատմությունը" [ref=e150] [cursor=pointer]:
+                  - /url: /about
+              - listitem [ref=e151]:
+                - link "Կարծիքներ" [ref=e152] [cursor=pointer]:
+                  - /url: /reviews
+              - listitem [ref=e153]:
+                - link "Բաղադրատոմսեր" [ref=e154] [cursor=pointer]:
+                  - /url: /recipes
+              - listitem [ref=e155]:
+                - link "Ավելին քան ամանը" [ref=e156] [cursor=pointer]:
+                  - /url: /beyond-the-bowl
+              - listitem [ref=e157]:
+                - link "Խանութ" [ref=e158] [cursor=pointer]:
+                  - /url: /products
+              - listitem [ref=e159]:
+                - link "Համայնք" [ref=e160] [cursor=pointer]:
+                  - /url: /community
+          - generic [ref=e161]:
+            - heading "Օգնություն" [level=4] [ref=e162]
+            - list [ref=e163]:
+              - listitem [ref=e164]:
+                - link "Իմ հաշիվը" [ref=e165] [cursor=pointer]:
+                  - /url: /profile
+              - listitem [ref=e166]:
+                - link "Կապ մեզ հետ" [ref=e167] [cursor=pointer]:
+                  - /url: /contact
+              - listitem [ref=e168]:
+                - link "Առաքման տեղեկատվություն" [ref=e169] [cursor=pointer]:
+                  - /url: /delivery-information
+              - listitem [ref=e170]:
+                - link "Վերադարձներ" [ref=e171] [cursor=pointer]:
+                  - /url: /returns
+              - listitem [ref=e172]:
+                - link "Կայքի քարտեզ" [ref=e173] [cursor=pointer]:
+                  - /url: /sitemap-page
+          - generic [ref=e174]:
+            - heading "Տեղեկատվություն" [level=4] [ref=e175]
+            - list [ref=e176]:
+              - listitem [ref=e177]:
+                - link "Գաղտնիության քաղաքականություն" [ref=e178] [cursor=pointer]:
+                  - /url: /privacy-policy
+              - listitem [ref=e179]:
+                - link "Պայմաններ և դրույթներ" [ref=e180] [cursor=pointer]:
+                  - /url: /terms-of-use
+              - listitem [ref=e181]:
+                - link "Jeko-ի քաղաքականություն" [ref=e182] [cursor=pointer]:
+                  - /url: /pure-policies
+              - listitem [ref=e183]:
+                - link "Կայքի անվտանգություն" [ref=e184] [cursor=pointer]:
+                  - /url: /site-security
+              - listitem [ref=e185]:
+                - link "Cookie-ների քաղաքականություն" [ref=e186] [cursor=pointer]:
+                  - /url: /cookie-policy
+      - generic [ref=e187]:
+        - generic [ref=e189]: JEKO
+        - paragraph [ref=e190]: © Jeko 2020-2026
+  - generic [ref=e208]:
+    - generic [ref=e209]:
+      - paragraph [ref=e210]: Հաու՜ 🐾
+      - paragraph [ref=e211]: Գտիր ընկեր քո կենդանու համար։
+    - button "Find pet matches" [ref=e213] [cursor=pointer]:
+      - img "Jeko dog" [ref=e214]
+  - alert [ref=e215]

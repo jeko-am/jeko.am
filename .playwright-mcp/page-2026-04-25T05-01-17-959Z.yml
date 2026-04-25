@@ -1,0 +1,180 @@
+- generic [active] [ref=e1]:
+  - alert [ref=e6]
+  - generic [ref=e7]:
+    - complementary [ref=e8]:
+      - generic [ref=e10]:
+        - heading "Jeko" [level=1] [ref=e11]
+        - paragraph [ref=e12]: Admin Panel
+      - navigation [ref=e13]:
+        - link "Dashboard" [ref=e14] [cursor=pointer]:
+          - /url: /admin/dashboard
+          - img [ref=e15]
+          - text: Dashboard
+        - link "Store Editor" [ref=e17] [cursor=pointer]:
+          - /url: /admin/store-editor
+          - img [ref=e18]
+          - text: Store Editor
+        - link "Translations" [ref=e20] [cursor=pointer]:
+          - /url: /admin/translations
+          - img [ref=e21]
+          - text: Translations
+        - link "Products" [ref=e23] [cursor=pointer]:
+          - /url: /admin/products
+          - img [ref=e24]
+          - text: Products
+        - link "Bundles" [ref=e26] [cursor=pointer]:
+          - /url: /admin/bundles
+          - img [ref=e27]
+          - text: Bundles
+        - link "Upsells" [ref=e29] [cursor=pointer]:
+          - /url: /admin/upsells
+          - img [ref=e30]
+          - text: Upsells
+        - link "Categories" [ref=e32] [cursor=pointer]:
+          - /url: /admin/categories
+          - img [ref=e33]
+          - text: Categories
+        - link "Orders" [ref=e35] [cursor=pointer]:
+          - /url: /admin/orders
+          - img [ref=e36]
+          - text: Orders
+        - link "Customers" [ref=e38] [cursor=pointer]:
+          - /url: /admin/customers
+          - img [ref=e39]
+          - text: Customers
+        - link "Reviews" [ref=e41] [cursor=pointer]:
+          - /url: /admin/reviews
+          - img [ref=e42]
+          - text: Reviews
+        - link "Community" [ref=e44] [cursor=pointer]:
+          - /url: /admin/community
+          - img [ref=e45]
+          - text: Community
+        - link "Discounts" [ref=e47] [cursor=pointer]:
+          - /url: /admin/discounts
+          - img [ref=e48]
+          - text: Discounts
+        - link "Pages" [ref=e50] [cursor=pointer]:
+          - /url: /admin/pages
+          - img [ref=e51]
+          - text: Pages
+        - link "Blog" [ref=e53] [cursor=pointer]:
+          - /url: /admin/blog
+          - img [ref=e54]
+          - text: Blog
+        - link "Settings" [ref=e56] [cursor=pointer]:
+          - /url: /admin/settings
+          - img [ref=e57]
+          - text: Settings
+        - link "Analytics" [ref=e59] [cursor=pointer]:
+          - /url: /admin/analytics
+          - img [ref=e60]
+          - text: Analytics
+        - link "Support" [ref=e62] [cursor=pointer]:
+          - /url: /admin/support
+          - img [ref=e63]
+          - text: Support
+      - generic [ref=e65]:
+        - link "View Store" [ref=e66] [cursor=pointer]:
+          - /url: /
+          - img [ref=e67]
+          - text: View Store
+        - button "Sign Out" [ref=e69] [cursor=pointer]:
+          - img [ref=e70]
+          - text: Sign Out
+    - generic [ref=e72]:
+      - banner [ref=e73]:
+        - button [ref=e74] [cursor=pointer]:
+          - img [ref=e75]
+        - generic [ref=e77]:
+          - generic [ref=e78]:
+            - generic [ref=e79]: "Editing:"
+            - generic [ref=e80]:
+              - button "Edit English content" [ref=e81] [cursor=pointer]:
+                - generic [ref=e82]: 🇬🇧
+                - generic [ref=e83]: EN
+              - button "Edit Armenian content" [ref=e84] [cursor=pointer]:
+                - generic [ref=e85]: 🇦🇲
+                - generic [ref=e86]: HY
+            - generic [ref=e87]: Armenian edits only
+          - generic [ref=e89]: admin@purepet.test
+          - generic [ref=e90]: A
+      - main [ref=e91]:
+        - generic [ref=e92]:
+          - generic [ref=e93]:
+            - generic [ref=e94]:
+              - heading "Community Posts" [level=1] [ref=e95]
+              - paragraph [ref=e96]: 3 active · 6 removed
+            - button "Refresh" [ref=e97] [cursor=pointer]:
+              - img [ref=e98]
+              - text: Refresh
+          - generic [ref=e100]:
+            - button "all" [ref=e101] [cursor=pointer]
+            - button "flagged" [ref=e102] [cursor=pointer]
+            - button "removed" [ref=e103] [cursor=pointer]
+          - generic [ref=e104]:
+            - generic [ref=e109]:
+              - generic [ref=e110]:
+                - generic [ref=e111]:
+                  - generic [ref=e112]: test
+                  - generic [ref=e113]: Labrador Retriever
+                  - generic [ref=e114]: Abovyan
+                - paragraph [ref=e115]: This is a test description
+                - button "Add Armenian Translation" [ref=e116] [cursor=pointer]
+                - generic [ref=e117]:
+                  - generic [ref=e118]: 23 Apr 2026
+                  - generic [ref=e119]:
+                    - img [ref=e120]
+                    - text: "1"
+                  - generic [ref=e122]:
+                    - img [ref=e123]
+                    - text: "4"
+              - generic [ref=e125]:
+                - button "Flag post" [ref=e126] [cursor=pointer]:
+                  - img [ref=e127]
+                - button "Remove post" [ref=e129] [cursor=pointer]:
+                  - img [ref=e130]
+            - generic [ref=e136]:
+              - generic [ref=e137]:
+                - generic [ref=e139]: test1
+                - paragraph [ref=e140]: this is 2nd testing profile
+                - paragraph [ref=e141]:
+                  - generic [ref=e142]: HY
+                  - text: Սա թեստային նկարագրություն է
+                - button "Edit Armenian Translation" [ref=e143] [cursor=pointer]
+                - generic [ref=e144]:
+                  - generic [ref=e145]: 23 Apr 2026
+                  - generic [ref=e146]:
+                    - img [ref=e147]
+                    - text: "1"
+                  - generic [ref=e149]:
+                    - img [ref=e150]
+                    - text: "0"
+              - generic [ref=e152]:
+                - button "Flag post" [ref=e153] [cursor=pointer]:
+                  - img [ref=e154]
+                - button "Remove post" [ref=e156] [cursor=pointer]:
+                  - img [ref=e157]
+            - generic [ref=e160]:
+              - img [ref=e163]
+              - generic [ref=e166]:
+                - generic [ref=e167]:
+                  - generic [ref=e168]:
+                    - generic [ref=e169]: miller
+                    - generic [ref=e170]: Labrador Retriever
+                    - generic [ref=e171]: Abovyan
+                  - paragraph [ref=e172]: sshsjd
+                  - button "Add Armenian Translation" [ref=e173] [cursor=pointer]
+                  - generic [ref=e174]:
+                    - generic [ref=e175]: 22 Apr 2026
+                    - generic [ref=e176]:
+                      - img [ref=e177]
+                      - text: "1"
+                    - generic [ref=e179]:
+                      - img [ref=e180]
+                      - text: "6"
+                - generic [ref=e182]:
+                  - button "Flag post" [ref=e183] [cursor=pointer]:
+                    - img [ref=e184]
+                  - button "Remove post" [ref=e186] [cursor=pointer]:
+                    - img [ref=e187]

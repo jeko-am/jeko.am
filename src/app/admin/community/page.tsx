@@ -17,6 +17,7 @@ interface Post {
   share_count: number;
   is_flagged: boolean;
   is_deleted: boolean;
+  i18n?: { hy?: { caption?: string } } | null;
   created_at: string;
 }
 
@@ -28,6 +29,8 @@ export default function AdminCommunityPage() {
   const [tab, setTab] = useState<Tab>('all');
   const [removed, setRemoved] = useState<Post[]>([]);
   const [actionLoading, setActionLoading] = useState<string | null>(null);
+  const [editingId, setEditingId] = useState<string | null>(null);
+  const [editingText, setEditingText] = useState('');
 
   useEffect(() => {
     fetchPosts();
@@ -35,7 +38,7 @@ export default function AdminCommunityPage() {
 
   async function fetchPosts() {
     setLoading(true);
-    const sel = 'id, user_id, author_name, caption, image_url, breed_tag, city_tag, likes_count, comments_count, report_count, share_count, is_flagged, is_deleted, created_at';
+    const sel = 'id, user_id, author_name, caption, image_url, breed_tag, city_tag, likes_count, comments_count, report_count, share_count, is_flagged, is_deleted, i18n, created_at';
 
     const [activeRes, removedRes] = await Promise.all([
       supabase.from('posts').select(sel).eq('is_deleted', false).order('created_at', { ascending: false }),
@@ -45,6 +48,57 @@ export default function AdminCommunityPage() {
     if (!activeRes.error && activeRes.data) setPosts(activeRes.data);
     if (!removedRes.error && removedRes.data) setRemoved(removedRes.data);
     setLoading(false);
+  }
+
+  async function saveHyTranslation(post: Post) {
+    if (!editingText.trim()) return;
+    setActionLoading(post.id + '-hy');
+    const nextI18n = { ...(post.i18n ?? {}), hy: { ...(post.i18n?.hy ?? {}), caption: editingText.trim() } };
+    const { error } = await supabase
+      .from('posts')
+      .update({ i18n: nextI18n })
+      .eq('id', post.id);
+    if (!error) {
+      setPosts(prev => prev.map(p => p.id === post.id ? { ...p, i18n: nextI18n } : p));
+      setRemoved(prev => prev.map(p => p.id === post.id ? { ...p, i18n: nextI18n } : p));
+      setEditingId(null);
+      setEditingText('');
+    }
+    setActionLoading(null);
+  }
+
+  async function openEditor(post: Post) {
+    const existing = post.i18n?.hy?.caption;
+    setEditingId(post.id);
+    if (existing) { setEditingText(existing); return; }
+    if (!post.caption?.trim()) { setEditingText(''); return; }
+    setEditingText('');
+    setActionLoading(post.id + '-tx');
+    try {
+      const r = await fetch('/api/translate', {
+        method: 'POST',
+        headers: { 'content-type': 'application/json' },
+        body: JSON.stringify({ text: post.caption, target: 'hy' }),
+      });
+      const j = (await r.json()) as { translated?: string };
+      if (r.ok && j.translated) setEditingText(j.translated);
+    } catch { /* leave blank on error */ }
+    setActionLoading(null);
+  }
+
+  async function retranslate(post: Post) {
+    if (!post.caption?.trim()) return;
+    setActionLoading(post.id + '-tx');
+    try {
+      const r = await fetch('/api/translate', {
+        method: 'POST',
+        headers: { 'content-type': 'application/json' },
+        body: JSON.stringify({ text: post.caption, target: 'hy' }),
+      });
+      const j = (await r.json()) as { translated?: string };
+      if (r.ok && j.translated) setEditingText(j.translated);
+    } catch { /* noop */ }
+    setActionLoading(null);
   }
 
   async function removePost(post: Post) {
@@ -197,6 +251,56 @@ export default function AdminCommunityPage() {
                       </div>
                       {post.caption && (
                         <p className="text-sm text-gray-600 mt-1 line-clamp-2">{post.caption}</p>
+                      )}
+                      {post.i18n?.hy?.caption && (
+                        <p className="text-sm text-deep-green mt-1 line-clamp-2">
+                          <span className="inline-block mr-1.5 text-[10px] font-bold bg-deep-green/10 text-deep-green px-1.5 py-0.5 rounded">HY</span>
+                          {post.i18n.hy.caption}
+                        </p>
+                      )}
+                      {editingId === post.id ? (
+                        <div className="mt-2 space-y-2">
+                          <textarea
+                            value={editingText}
+                            onChange={e => setEditingText(e.target.value)}
+                            rows={3}
+                            disabled={actionLoading === post.id + '-tx'}
+                            className="w-full px-3 py-2 text-sm border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-deep-green/20 focus:border-deep-green resize-y disabled:bg-gray-50"
+                            placeholder={actionLoading === post.id + '-tx' ? 'Թարգմանվում է…' : 'Հայերեն թարգմանություն…'}
+                          />
+                          <div className="flex gap-2">
+                            <button
+                              onClick={() => saveHyTranslation(post)}
+                              disabled={actionLoading === post.id + '-hy' || actionLoading === post.id + '-tx' || !editingText.trim()}
+                              className="px-3 py-1.5 text-xs font-medium bg-deep-green text-white rounded-lg hover:bg-deep-green/90 transition-colors disabled:opacity-50"
+                            >
+                              {actionLoading === post.id + '-hy' ? 'Saving...' : 'Save'}
+                            </button>
+                            <button
+                              onClick={() => retranslate(post)}
+                              disabled={actionLoading === post.id + '-tx' || !post.caption}
+                              className="px-3 py-1.5 text-xs font-medium border border-deep-green/30 text-deep-green rounded-lg hover:bg-deep-green/5 transition-colors disabled:opacity-50"
+                            >
+                              {actionLoading === post.id + '-tx' ? 'Translating…' : 'Re-translate'}
+                            </button>
+                            <button
+                              onClick={() => { setEditingId(null); setEditingText(''); }}
+                              className="px-3 py-1.5 text-xs font-medium bg-gray-100 text-gray-600 rounded-lg hover:bg-gray-200 transition-colors"
+                            >
+                              Cancel
+                            </button>
+                          </div>
+                        </div>
+                      ) : (
+                        <button
+                          onClick={() => openEditor(post)}
+                          className="mt-2 inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium border border-deep-green/30 text-deep-green rounded-lg hover:bg-deep-green/5 transition-colors"
+                        >
+                          <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
+                          </svg>
+                          {post.i18n?.hy?.caption ? 'Edit Armenian Translation' : 'Add Armenian Translation'}
+                        </button>
                       )}
                       <div className="flex items-center gap-4 mt-2 text-xs text-gray-400">
                         <span>{new Date(post.created_at).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' })}</span>

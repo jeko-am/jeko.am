@@ -3,6 +3,7 @@
 import { useEffect, useState, Suspense } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { supabase } from '@/lib/supabase';
+import { useT } from '@/lib/i18n/LangProvider';
 
 function generateDisplayName(fullName: string): string {
   const parts = fullName.trim().split(/\s+/);
@@ -10,18 +11,18 @@ function generateDisplayName(fullName: string): string {
   return `${parts[0]} ${parts[parts.length - 1][0]}.`;
 }
 
-const FUN_MESSAGES = [
-  'Planting your pet profile...',
-  'Sniffing out the best settings...',
-  'Fetching your data...',
-  'Mixing the perfect recipe...',
-  'Chasing down your preferences...',
-  'Teaching new tricks...',
-  'Growing your pet garden...',
-  'Sprinkling some magic...',
-];
-
 function OAuthCompleteInner() {
+  const { t } = useT();
+  const FUN_MESSAGES = [
+    t('auth.callback.msg1'),
+    t('auth.callback.msg2'),
+    t('auth.callback.msg3'),
+    t('auth.callback.msg4'),
+    t('auth.callback.msg5'),
+    t('auth.callback.msg6'),
+    t('auth.callback.msg7'),
+    t('auth.callback.msg8'),
+  ];
   const router = useRouter();
   const searchParams = useSearchParams();
   const [status, setStatus] = useState(FUN_MESSAGES[0]);
@@ -44,7 +45,7 @@ function OAuthCompleteInner() {
           if (error) {
             console.error('Code exchange failed:', error);
             clearInterval(msgInterval);
-            setStatus('Authentication failed. Redirecting...');
+            setStatus(t('auth.callback.authFailed'));
             setTimeout(() => router.push('/auth/signup'), 2000);
             return;
           }
@@ -68,7 +69,7 @@ function OAuthCompleteInner() {
 
         if (!userId) {
           clearInterval(msgInterval);
-          setStatus('Session not found. Redirecting...');
+          setStatus(t('auth.callback.sessionNotFound'));
           setTimeout(() => router.push('/auth/signup'), 2000);
           return;
         }
@@ -155,7 +156,7 @@ function OAuthCompleteInner() {
         if (!userProfileSaved) {
           console.error('[OAuth] All user_profiles save attempts failed');
           clearInterval(msgInterval);
-          setStatus('Failed to save profile. Please try signing up again.');
+          setStatus(t('auth.callback.failedProfile'));
           await supabase.auth.signOut().catch(() => {});
           setTimeout(() => router.push('/auth/signup'), 2000);
           return;
@@ -205,7 +206,7 @@ function OAuthCompleteInner() {
         if (!petProfileSaved) {
           console.error('[OAuth] All pet_profiles save attempts failed');
           clearInterval(msgInterval);
-          setStatus('Failed to save pet profile. Please try again.');
+          setStatus(t('auth.callback.failedPet'));
           await supabase.auth.signOut().catch(() => {});
           setTimeout(() => router.push('/auth/signup'), 2000);
           return;
@@ -213,14 +214,14 @@ function OAuthCompleteInner() {
 
         sessionStorage.removeItem('jeko-signup-quiz');
         clearInterval(msgInterval);
-        setStatus('Welcome to Jeko!');
+        setStatus(t('auth.callback.welcome'));
         setTimeout(() => router.push('/community'), 1200);
       } catch (err) {
         console.error('OAuth completion error:', err);
         clearInterval(msgInterval);
         // Sign out to prevent incomplete profiles from persisting
         await supabase.auth.signOut().catch(() => {});
-        setStatus('Something went wrong. Redirecting...');
+        setStatus(t('auth.callback.wentWrong'));
         setTimeout(() => router.push('/auth/signup'), 2000);
       }
     }

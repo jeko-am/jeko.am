@@ -1,0 +1,706 @@
+- generic [active] [ref=e1]:
+  - alert [ref=e6]
+  - generic [ref=e7]:
+    - complementary [ref=e8]:
+      - generic [ref=e10]:
+        - heading "Jeko" [level=1] [ref=e11]
+        - paragraph [ref=e12]: Admin Panel
+      - navigation [ref=e13]:
+        - link "Dashboard" [ref=e14] [cursor=pointer]:
+          - /url: /admin/dashboard
+          - img [ref=e15]
+          - text: Dashboard
+        - link "Store Editor" [ref=e17] [cursor=pointer]:
+          - /url: /admin/store-editor
+          - img [ref=e18]
+          - text: Store Editor
+        - link "Translations" [ref=e20] [cursor=pointer]:
+          - /url: /admin/translations
+          - img [ref=e21]
+          - text: Translations
+        - link "Products" [ref=e23] [cursor=pointer]:
+          - /url: /admin/products
+          - img [ref=e24]
+          - text: Products
+        - link "Bundles" [ref=e26] [cursor=pointer]:
+          - /url: /admin/bundles
+          - img [ref=e27]
+          - text: Bundles
+        - link "Upsells" [ref=e29] [cursor=pointer]:
+          - /url: /admin/upsells
+          - img [ref=e30]
+          - text: Upsells
+        - link "Categories" [ref=e32] [cursor=pointer]:
+          - /url: /admin/categories
+          - img [ref=e33]
+          - text: Categories
+        - link "Orders" [ref=e35] [cursor=pointer]:
+          - /url: /admin/orders
+          - img [ref=e36]
+          - text: Orders
+        - link "Customers" [ref=e38] [cursor=pointer]:
+          - /url: /admin/customers
+          - img [ref=e39]
+          - text: Customers
+        - link "Reviews" [ref=e41] [cursor=pointer]:
+          - /url: /admin/reviews
+          - img [ref=e42]
+          - text: Reviews
+        - link "Community" [ref=e44] [cursor=pointer]:
+          - /url: /admin/community
+          - img [ref=e45]
+          - text: Community
+        - link "Discounts" [ref=e47] [cursor=pointer]:
+          - /url: /admin/discounts
+          - img [ref=e48]
+          - text: Discounts
+        - link "Pages" [ref=e50] [cursor=pointer]:
+          - /url: /admin/pages
+          - img [ref=e51]
+          - text: Pages
+        - link "Blog" [ref=e53] [cursor=pointer]:
+          - /url: /admin/blog
+          - img [ref=e54]
+          - text: Blog
+        - link "Settings" [ref=e56] [cursor=pointer]:
+          - /url: /admin/settings
+          - img [ref=e57]
+          - text: Settings
+        - link "Analytics" [ref=e59] [cursor=pointer]:
+          - /url: /admin/analytics
+          - img [ref=e60]
+          - text: Analytics
+        - link "Support" [ref=e62] [cursor=pointer]:
+          - /url: /admin/support
+          - img [ref=e63]
+          - text: Support
+      - generic [ref=e65]:
+        - link "View Store" [ref=e66] [cursor=pointer]:
+          - /url: /
+          - img [ref=e67]
+          - text: View Store
+        - button "Sign Out" [ref=e69] [cursor=pointer]:
+          - img [ref=e70]
+          - text: Sign Out
+    - generic [ref=e72]:
+      - banner [ref=e73]:
+        - button [ref=e74] [cursor=pointer]:
+          - img [ref=e75]
+        - generic [ref=e77]:
+          - generic [ref=e78]:
+            - generic [ref=e79]: "Editing:"
+            - generic [ref=e80]:
+              - button "Edit English content" [ref=e81] [cursor=pointer]:
+                - generic [ref=e82]: 🇬🇧
+                - generic [ref=e83]: EN
+              - button "Edit Armenian content" [ref=e84] [cursor=pointer]:
+                - generic [ref=e85]: 🇦🇲
+                - generic [ref=e86]: HY
+            - generic [ref=e87]: Armenian edits only
+          - generic [ref=e89]: admin@purepet.test
+          - generic [ref=e90]: A
+      - main [ref=e91]:
+        - generic [ref=e92]:
+          - generic [ref=e93]:
+            - generic [ref=e95]:
+              - img [ref=e97]
+              - generic [ref=e99]:
+                - heading "Online Store" [level=1] [ref=e100]
+                - paragraph [ref=e101]: Homepage
+            - generic [ref=e102]:
+              - generic [ref=e103]:
+                - button "Mobile (390px)" [ref=e104] [cursor=pointer]:
+                  - img [ref=e105]
+                - button "Tablet (768px)" [ref=e107] [cursor=pointer]:
+                  - img [ref=e108]
+                - button "Desktop" [ref=e110] [cursor=pointer]:
+                  - img [ref=e111]
+              - button "Refresh preview" [ref=e113] [cursor=pointer]:
+                - img [ref=e114]
+              - link "View Store" [ref=e116] [cursor=pointer]:
+                - /url: /
+                - img [ref=e117]
+                - text: View Store
+          - generic [ref=e119]:
+            - generic [ref=e121]:
+              - generic [ref=e122]:
+                - generic [ref=e123]: Page
+                - combobox [ref=e124] [cursor=pointer]:
+                  - option "Homepage" [selected]
+                  - option "About"
+                  - option "Benefits"
+                  - 'option "Health & Breeds: Colitis"'
+                  - 'option "Health & Breeds: Digestion Issues"'
+                  - 'option "Health & Breeds: Hypoallergenic"'
+                  - 'option "Health & Breeds: Pancreatitis"'
+                  - 'option "Health & Breeds: Weight Management"'
+                  - option "Recipes"
+                  - option "Reviews"
+                  - option "Signup"
+                  - option "Beyond the Bowl"
+                  - option "Contact"
+                  - option "Community"
+                  - option "Blog"
+                  - option "Cart"
+                  - option "Checkout"
+                  - option "Profile"
+                  - option "Find Pet Owners"
+                  - option "Swipe"
+                  - option "Matches"
+                  - option "Messages"
+                  - option "Login"
+                  - option "Signup (Auth)"
+                  - option "Privacy Policy"
+                  - option "Terms of Use"
+                  - option "Cookie Policy"
+                  - option "Refund Policy"
+                  - option "Shipping Policy"
+                  - option "Returns"
+                  - option "Delivery Information"
+                  - option "Site Security"
+                  - option "Pure Policies"
+                  - option "Sitemap"
+                  - option "Matching Preferences"
+                  - option "SEO"
+                  - option "Beef + Rice + Veggies"
+                  - option "Chicken + Quinoa + Greens"
+                  - option "Chickpea + Quinoa Plant Mix"
+                  - option "Cod + Rice + Veggies"
+                  - option "Tuna + Rice Bowl"
+              - paragraph [ref=e126]: Sections
+              - generic [ref=e127]:
+                - generic [ref=e128] [cursor=pointer]:
+                  - img [ref=e130]
+                  - generic [ref=e132]: Header
+                  - generic [ref=e133]:
+                    - button "Show" [ref=e134]:
+                      - img [ref=e135]
+                    - img [ref=e137]
+                - generic [ref=e139] [cursor=pointer]:
+                  - img [ref=e141]
+                  - generic [ref=e143]: Hero Section
+                  - generic [ref=e144]:
+                    - button "Hide" [ref=e145]:
+                      - img [ref=e146]
+                    - img [ref=e149]
+                - generic [ref=e151] [cursor=pointer]:
+                  - img [ref=e153]
+                  - generic [ref=e155]: Offer Banner
+                  - generic [ref=e156]:
+                    - button "Hide" [ref=e157]:
+                      - img [ref=e158]
+                    - img [ref=e161]
+                - generic [ref=e163] [cursor=pointer]:
+                  - img [ref=e165]
+                  - generic [ref=e167]: What is Jeko
+                  - generic [ref=e168]:
+                    - button "Hide" [ref=e169]:
+                      - img [ref=e170]
+                    - img [ref=e173]
+                - generic [ref=e175] [cursor=pointer]:
+                  - img [ref=e177]
+                  - generic [ref=e179]: Benefits Bar
+                  - generic [ref=e180]:
+                    - button "Hide" [ref=e181]:
+                      - img [ref=e182]
+                    - img [ref=e185]
+                - generic [ref=e187] [cursor=pointer]:
+                  - img [ref=e189]
+                  - generic [ref=e191]: Product Highlights
+                  - generic [ref=e192]:
+                    - button "Hide" [ref=e193]:
+                      - img [ref=e194]
+                    - img [ref=e197]
+                - generic [ref=e199] [cursor=pointer]:
+                  - img [ref=e201]
+                  - generic [ref=e203]: Trending Products
+                  - generic [ref=e204]:
+                    - button "Hide" [ref=e205]:
+                      - img [ref=e206]
+                    - img [ref=e209]
+                - generic [ref=e211] [cursor=pointer]:
+                  - img [ref=e213]
+                  - generic [ref=e215]: Video Testimonials
+                  - generic [ref=e216]:
+                    - button "Hide" [ref=e217]:
+                      - img [ref=e218]
+                    - img [ref=e221]
+                - generic [ref=e223] [cursor=pointer]:
+                  - img [ref=e225]
+                  - generic [ref=e227]: How It Works
+                  - generic [ref=e228]:
+                    - button "Hide" [ref=e229]:
+                      - img [ref=e230]
+                    - img [ref=e233]
+                - generic [ref=e235] [cursor=pointer]:
+                  - img [ref=e237]
+                  - generic [ref=e239]: Stats
+                  - generic [ref=e240]:
+                    - button "Hide" [ref=e241]:
+                      - img [ref=e242]
+                    - img [ref=e245]
+                - generic [ref=e247] [cursor=pointer]:
+                  - img [ref=e249]
+                  - generic [ref=e251]: Comparison Table
+                  - generic [ref=e252]:
+                    - button "Hide" [ref=e253]:
+                      - img [ref=e254]
+                    - img [ref=e257]
+                - generic [ref=e259] [cursor=pointer]:
+                  - img [ref=e261]
+                  - generic [ref=e263]: Yorkshire Vet
+                  - generic [ref=e264]:
+                    - button "Hide" [ref=e265]:
+                      - img [ref=e266]
+                    - img [ref=e269]
+                - generic [ref=e271] [cursor=pointer]:
+                  - img [ref=e273]
+                  - generic [ref=e275]: Dragons Den
+                  - generic [ref=e276]:
+                    - button "Hide" [ref=e277]:
+                      - img [ref=e278]
+                    - img [ref=e281]
+                - generic [ref=e283] [cursor=pointer]:
+                  - img [ref=e285]
+                  - generic [ref=e287]: FAQ
+                  - generic [ref=e288]:
+                    - button "Hide" [ref=e289]:
+                      - img [ref=e290]
+                    - img [ref=e293]
+                - generic [ref=e295] [cursor=pointer]:
+                  - img [ref=e297]
+                  - generic [ref=e299]: Footer
+                  - generic [ref=e300]:
+                    - button "Hide" [ref=e301]:
+                      - img [ref=e302]
+                    - img [ref=e305]
+                - generic [ref=e307] [cursor=pointer]:
+                  - img [ref=e309]
+                  - generic [ref=e311]: Popup Modal
+                  - generic [ref=e312]:
+                    - button "Hide" [ref=e313]:
+                      - img [ref=e314]
+                    - img [ref=e317]
+            - generic [ref=e319]:
+              - generic [ref=e321]: Full Width — Desktop
+              - iframe [ref=e324]:
+                - generic [active] [ref=f7e1]:
+                  - banner [ref=f7e2] [cursor=pointer]:
+                    - generic [ref=f7e4]:
+                      - link "JEKO" [ref=f7e5]:
+                        - /url: /
+                        - generic [ref=f7e6]: JEKO
+                      - button "Open menu" [ref=f7e7]:
+                        - img [ref=f7e8]
+                  - main [ref=f7e10]:
+                    - generic [ref=f7e12] [cursor=pointer]:
+                      - img "Happy golden retriever dog enjoying fresh food" [ref=f7e14]
+                      - generic [ref=f7e16]:
+                        - heading "Ձեր կենդանուն առողջ կերակրելու ամենահեշտ ձևը՝ բնական սնունդ" [level=1] [ref=f7e17]:
+                          - text: Ձեր կենդանուն առողջ կերակրելու ամենահեշտ ձևը՝
+                          - text: բնական սնունդ
+                        - paragraph [ref=f7e18]: Վայելիր թարմ սնունդը առանց ավելորդ հոգսերի՝ հասցրած տան դռան մոտ։
+                        - link "Սկսել այսօր" [ref=f7e20]:
+                          - /url: /auth/signup
+                        - generic [ref=f7e21]:
+                          - generic [ref=f7e22]:
+                            - img [ref=f7e24]
+                            - img [ref=f7e27]
+                            - img [ref=f7e30]
+                            - img [ref=f7e33]
+                            - img [ref=f7e37]
+                          - generic [ref=f7e39]:
+                            - generic [ref=f7e40]: Գերազանց
+                            - generic [ref=f7e41]: 4.6 հինգից
+                            - img [ref=f7e42]
+                            - generic [ref=f7e44]: Trustpilot
+                    - link "25% զեղչ առաջին տուփից+10% զեղչ հաջորդ տուփից" [ref=f7e46] [cursor=pointer]:
+                      - /url: /auth/signup
+                      - generic [ref=f7e47]:
+                        - img [ref=f7e48]
+                        - paragraph [ref=f7e50]: 25% զեղչ առաջին տուփից+10% զեղչ հաջորդ տուփից
+                        - img [ref=f7e51]
+                    - generic [ref=f7e54] [cursor=pointer]:
+                      - generic [ref=f7e55]:
+                        - generic [ref=f7e56]:
+                          - img "Preparing Jeko pet food" [ref=f7e57]
+                          - img [ref=f7e59]
+                          - img [ref=f7e62]
+                        - generic [ref=f7e65]:
+                          - heading "Ի՞նչ է Jeko կենդանիների սնունդը" [level=2] [ref=f7e66]
+                          - generic [ref=f7e67]:
+                            - paragraph [ref=f7e68]: Բնական, առողջարար սնունդ շների համար, որը ազատում է ձեզ կերակրման ժամանակի հոգսերից։
+                            - paragraph [ref=f7e69]: Ուղղակի ավելացրու ջուր ու խառնիր՝ արագ վերականգնելու սնունդը և ստեղծելու առողջարար, սննդարար կերակուր, որը կսիրի ձեր շնիկը։
+                          - link "Սկսել" [ref=f7e70]:
+                            - /url: /auth/signup
+                      - generic:
+                        - img
+                    - generic [ref=f7e72] [cursor=pointer]:
+                      - generic:
+                        - img
+                      - generic:
+                        - img
+                      - generic [ref=f7e74]:
+                        - generic [ref=f7e75]:
+                          - img "Պահիր պահարանում" [ref=f7e77]
+                          - paragraph [ref=f7e78]: Պահիր պահարանում
+                        - generic [ref=f7e79]:
+                          - img "Օրական ընդամենը 350 դրամից" [ref=f7e81]
+                          - paragraph [ref=f7e82]: Օրական ընդամենը 350 դրամից
+                        - generic [ref=f7e83]:
+                          - img "Ավելացրու ջուր և մատուցիր" [ref=f7e85]
+                          - paragraph [ref=f7e86]: Ավելացրու ջուր և մատուցիր
+                        - generic [ref=f7e87]:
+                          - img "Պատրաստ է 10 վայրկյանում" [ref=f7e89]
+                          - paragraph [ref=f7e90]: Պատրաստ է 10 վայրկյանում
+                    - generic [ref=f7e93] [cursor=pointer]:
+                      - generic [ref=f7e94]:
+                        - generic [ref=f7e95]: Ըստ ձեր զննարկման
+                        - heading "Ըստ ձեր զննարկման" [level=2] [ref=f7e96]
+                        - paragraph [ref=f7e97]: Թարմ, բնական բաղադրիչներ, որոնց ձեր կենդանին կսիրի։ Յուրաքանչյուր կերակուր՝ պատրաստված սիրով։
+                      - 'link "Beef + Rice + Veggies Տեսնել ապրանքը Տավարի միս + բրինձ + բանջարեղեն Առատ տավարի միս շագանակագույն բրնձով, սպանախով, ոլոռով և գազարով — ~ 520 կկալ։ Լավագույն էներգիայի և մկանների աջակցության համար: £10.00 (1) Ավելացնել զամբյուղ" [ref=f7e99]':
+                        - /url: /products/beef-rice-veggies
+                        - generic [ref=f7e100]:
+                          - generic [ref=f7e101]:
+                            - img "Beef + Rice + Veggies" [ref=f7e102]
+                            - generic [ref=f7e104]: Տեսնել ապրանքը
+                          - generic [ref=f7e105]:
+                            - heading "Տավարի միս + բրինձ + բանջարեղեն" [level=3] [ref=f7e106]
+                            - paragraph [ref=f7e107]: "Առատ տավարի միս շագանակագույն բրնձով, սպանախով, ոլոռով և գազարով — ~ 520 կկալ։ Լավագույն էներգիայի և մկանների աջակցության համար:"
+                            - generic [ref=f7e109]: £10.00
+                            - generic [ref=f7e110]:
+                              - img [ref=f7e111]
+                              - img [ref=f7e113]
+                              - img [ref=f7e115]
+                              - img [ref=f7e117]
+                              - img [ref=f7e119]
+                              - generic [ref=f7e121]: (1)
+                            - button "Ավելացնել զամբյուղ" [ref=f7e122]
+                      - link "Տեսնել բոլոր ապրանքները" [ref=f7e124]:
+                        - /url: /products
+                        - text: Տեսնել բոլոր ապրանքները
+                        - img [ref=f7e125]
+                    - generic [ref=f7e129] [cursor=pointer]:
+                      - generic [ref=f7e130]:
+                        - generic [ref=f7e131]:
+                          - generic [ref=f7e132]: Հիմա տրենդում է
+                          - heading "Այն, ինչ սիրում են կենդանիների տերերը" [level=2] [ref=f7e133]
+                          - paragraph [ref=f7e134]: Մեր ամենատարածված ընտրանքները, որոնք սիրում են հազարավոր գոհ կենդանիներ։
+                        - generic [ref=f7e135]:
+                          - button [disabled] [ref=f7e136]:
+                            - img [ref=f7e137]
+                          - button [ref=f7e139]:
+                            - img [ref=f7e140]
+                      - generic [ref=f7e142]:
+                        - 'link "Beef + Rice + Veggies Տեսնել ապրանքը Տավարի միս + բրինձ + բանջարեղեն Առատ տավարի միս շագանակագույն բրնձով, սպանախով, ոլոռով և գազարով — ~ 520 կկալ։ Լավագույն էներգիայի և մկանների աջակցության համար: £10.00 (1) Ավելացնել զամբյուղ" [ref=f7e144]':
+                          - /url: /products/beef-rice-veggies
+                          - generic [ref=f7e145]:
+                            - generic [ref=f7e146]:
+                              - img "Beef + Rice + Veggies" [ref=f7e147]
+                              - generic [ref=f7e149]: Տեսնել ապրանքը
+                            - generic [ref=f7e150]:
+                              - heading "Տավարի միս + բրինձ + բանջարեղեն" [level=3] [ref=f7e151]
+                              - paragraph [ref=f7e152]: "Առատ տավարի միս շագանակագույն բրնձով, սպանախով, ոլոռով և գազարով — ~ 520 կկալ։ Լավագույն էներգիայի և մկանների աջակցության համար:"
+                              - generic [ref=f7e154]: £10.00
+                              - generic [ref=f7e155]:
+                                - img [ref=f7e156]
+                                - img [ref=f7e158]
+                                - img [ref=f7e160]
+                                - img [ref=f7e162]
+                                - img [ref=f7e164]
+                                - generic [ref=f7e166]: (1)
+                              - button "Ավելացնել զամբյուղ" [ref=f7e167]
+                        - 'link "Chicken + Quinoa + Greens Տեսնել ապրանքը Հավի միս + Քինոա + Կանաչի Անյուղ հավ քինոայով, ցուկկինիով և կանաչ լոբիով — ~ 480 կկալ։ Լավագույնը նիհար սպիտակուցի և քաշի վերահսկման համար: £15.00 Ավելացնել զամբյուղ" [ref=f7e169]':
+                          - /url: /products/chicken-quinoa-greens
+                          - generic [ref=f7e170]:
+                            - generic [ref=f7e171]:
+                              - img "Chicken + Quinoa + Greens" [ref=f7e172]
+                              - generic [ref=f7e174]: Տեսնել ապրանքը
+                            - generic [ref=f7e175]:
+                              - heading "Հավի միս + Քինոա + Կանաչի" [level=3] [ref=f7e176]
+                              - paragraph [ref=f7e177]: "Անյուղ հավ քինոայով, ցուկկինիով և կանաչ լոբիով — ~ 480 կկալ։ Լավագույնը նիհար սպիտակուցի և քաշի վերահսկման համար:"
+                              - generic [ref=f7e179]: £15.00
+                              - button "Ավելացնել զամբյուղ" [ref=f7e180]
+                        - 'link "Chickpea + Quinoa Plant Mix Տեսնել ապրանքը Chickpea + Quinoa բույսերի խառնուրդ Բուսական հիմքով քինոայի և սիսեռի խառնուրդ սպանախի, ոլոռի և կտավատի սերմի հետ — ~510 կկալ: Լավագույնը բուսական սպիտակուցի, մանրաթելերի և մարսողության համար: £10.00 Ավելացնել զամբյուղ" [ref=f7e182]':
+                          - /url: /products/chickpea-quinoa-plant-mix
+                          - generic [ref=f7e183]:
+                            - generic [ref=f7e184]:
+                              - img "Chickpea + Quinoa Plant Mix" [ref=f7e185]
+                              - generic [ref=f7e187]: Տեսնել ապրանքը
+                            - generic [ref=f7e188]:
+                              - heading "Chickpea + Quinoa բույսերի խառնուրդ" [level=3] [ref=f7e189]
+                              - paragraph [ref=f7e190]: "Բուսական հիմքով քինոայի և սիսեռի խառնուրդ սպանախի, ոլոռի և կտավատի սերմի հետ — ~510 կկալ: Լավագույնը բուսական սպիտակուցի, մանրաթելերի և մարսողության համար:"
+                              - generic [ref=f7e192]: £10.00
+                              - button "Ավելացնել զամբյուղ" [ref=f7e193]
+                        - 'link "Cod + Rice + Veggies Տեսնել ապրանքը Ձողաձուկ + բրինձ + բանջարեղեն Թեթև ձողաձուկ սպիտակ բրնձով, կանաչ լոբի և գազարով — ~ 360 կկալ: Լավագույնը զգայուն ստամոքսի և ցածր յուղայնությամբ դիետաների համար: £20.00 Ավելացնել զամբյուղ" [ref=f7e195]':
+                          - /url: /products/cod-rice-veggies
+                          - generic [ref=f7e196]:
+                            - generic [ref=f7e197]:
+                              - img "Cod + Rice + Veggies" [ref=f7e198]
+                              - generic [ref=f7e200]: Տեսնել ապրանքը
+                            - generic [ref=f7e201]:
+                              - heading "Ձողաձուկ + բրինձ + բանջարեղեն" [level=3] [ref=f7e202]
+                              - paragraph [ref=f7e203]: "Թեթև ձողաձուկ սպիտակ բրնձով, կանաչ լոբի և գազարով — ~ 360 կկալ: Լավագույնը զգայուն ստամոքսի և ցածր յուղայնությամբ դիետաների համար:"
+                              - generic [ref=f7e205]: £20.00
+                              - button "Ավելացնել զամբյուղ" [ref=f7e206]
+                    - generic [ref=f7e209] [cursor=pointer]:
+                      - generic [ref=f7e210]:
+                        - heading "Մի հավատա միայն մեր խոսքերին" [level=2] [ref=f7e211]
+                        - paragraph [ref=f7e212]: Լսիր, թե ինչ են ասում ուրիշները
+                      - generic [ref=f7e213]:
+                        - button "Scroll left" [ref=f7e214]:
+                          - img [ref=f7e215]
+                        - generic [ref=f7e217]:
+                          - generic [ref=f7e218]:
+                            - generic [ref=f7e219]:
+                              - img [ref=f7e223]
+                              - generic [ref=f7e225]: 0:55
+                            - paragraph [ref=f7e226]: Jeko՝ չոր կերի և հում սննդի դեմ
+                          - generic [ref=f7e227]:
+                            - generic [ref=f7e228]:
+                              - img [ref=f7e232]
+                              - generic [ref=f7e234]: 0:38
+                            - paragraph [ref=f7e235]: Jeko-ով կերակրելը իսկապես պարզ է։
+                          - generic [ref=f7e236]:
+                            - generic [ref=f7e237]:
+                              - img [ref=f7e241]
+                              - generic [ref=f7e243]: 0:54
+                            - paragraph [ref=f7e244]: Մենք կատարել ենք հետազոտությունը
+                          - generic [ref=f7e245]:
+                            - generic [ref=f7e246]:
+                              - img [ref=f7e250]
+                              - generic [ref=f7e252]: 0:37
+                            - paragraph [ref=f7e253]: Ամբողջովին ճկուն՝ ձեր գրաֆիկին համապատասխան
+                          - generic [ref=f7e254]:
+                            - generic [ref=f7e255]:
+                              - img [ref=f7e259]
+                              - generic [ref=f7e261]: 0:38
+                            - paragraph [ref=f7e262]: Ռուդին քմահաճից դարձավ իսկական գուրման
+                          - generic [ref=f7e263]:
+                            - generic [ref=f7e264]:
+                              - img [ref=f7e268]
+                              - generic [ref=f7e270]: 0:37
+                            - paragraph [ref=f7e271]: Հաստատված է Յորքշիրցի անասնաբույժի կողմից
+                        - button "Scroll right" [ref=f7e272]:
+                          - img [ref=f7e273]
+                    - generic [ref=f7e276] [cursor=pointer]:
+                      - generic:
+                        - img
+                      - generic:
+                        - img
+                      - generic [ref=f7e277]:
+                        - heading "Ինչպե՞ս է աշխատում Jeko պլանը" [level=2] [ref=f7e278]
+                        - generic [ref=f7e279]:
+                          - generic [ref=f7e280]:
+                            - img "Պատմիր քո շան մասին" [ref=f7e282]
+                            - paragraph [ref=f7e283]: Քայլ 1
+                            - paragraph [ref=f7e284]: Պատմիր քո շան մասին
+                          - generic [ref=f7e285]:
+                            - img "Ընտրիր քո անհատականացված բաղադրատոմսերը" [ref=f7e287]
+                            - paragraph [ref=f7e288]: Քայլ 2
+                            - paragraph [ref=f7e289]: Ընտրիր քո անհատականացված բաղադրատոմսերը
+                          - generic [ref=f7e290]:
+                            - img "Անվճար առաքում մինչև քո դուռը" [ref=f7e292]
+                            - paragraph [ref=f7e293]: Քայլ 3
+                            - paragraph [ref=f7e294]: Անվճար առաքում մինչև քո դուռը
+                          - generic [ref=f7e295]:
+                            - img "Փորձիր և անցիր Jeko-ի" [ref=f7e297]
+                            - paragraph [ref=f7e298]: Քայլ 4
+                            - paragraph [ref=f7e299]: Փորձիր և անցիր Jeko-ի
+                        - link "Ստեղծիր անհատական պլան այսօր" [ref=f7e301]:
+                          - /url: /auth/signup
+                    - generic [ref=f7e303] [cursor=pointer]:
+                      - generic:
+                        - img
+                      - generic:
+                        - img
+                      - generic [ref=f7e304]:
+                        - heading "Մենք արդեն առաքել ենք" [level=2] [ref=f7e305]
+                        - generic [ref=f7e306]: "0"
+                        - paragraph [ref=f7e307]: կերակուր և դեպի լավը փոխել տասնյակ հազարավոր շների կյանքը
+                        - generic [ref=f7e308]:
+                          - generic [ref=f7e309]:
+                            - generic [ref=f7e310]: 94%
+                            - paragraph [ref=f7e311]: հաճախորդների նկատել են իրենց շան առողջական վիճակի բարելավում
+                          - generic [ref=f7e312]:
+                            - generic [ref=f7e313]: 91%
+                            - paragraph [ref=f7e314]: հաճախորդների նկատել են ընդհանուր առողջական բարելավումներ Jeko-ին անցնելուց հետո
+                    - generic [ref=f7e316] [cursor=pointer]:
+                      - generic:
+                        - img
+                      - generic:
+                        - img
+                      - generic [ref=f7e317]:
+                        - heading "Ինչպե՞ս է Jeko-ն համեմատվում" [level=2] [ref=f7e318]
+                        - generic [ref=f7e319]:
+                          - generic [ref=f7e320]:
+                            - generic [ref=f7e322]: JEKO
+                            - generic [ref=f7e323]: Չոր ու թաց
+                            - generic [ref=f7e324]: Հում ու թարմ
+                          - generic [ref=f7e325]:
+                            - generic [ref=f7e327]: Գին
+                            - generic [ref=f7e329]: ££
+                            - generic [ref=f7e331]: £
+                            - generic [ref=f7e333]: £££
+                          - generic [ref=f7e334]:
+                            - generic [ref=f7e336]: Առանց/նվազագույն մշակում
+                            - img [ref=f7e338]
+                            - img [ref=f7e343]
+                            - img [ref=f7e349]
+                          - generic [ref=f7e353]:
+                            - generic [ref=f7e355]: Բարձրորակ բաղադրիչներ
+                            - img [ref=f7e357]
+                            - img [ref=f7e362]
+                            - img [ref=f7e368]
+                          - generic [ref=f7e372]:
+                            - generic [ref=f7e374]: Հեշտ պահպանվող
+                            - img [ref=f7e376]
+                            - img [ref=f7e381]
+                            - img [ref=f7e386]
+                          - generic [ref=f7e391]:
+                            - generic [ref=f7e393]: Առանց վտանգավոր մանրէների ռիսկի
+                            - img [ref=f7e395]
+                            - img [ref=f7e400]
+                            - img [ref=f7e405]
+                    - generic [ref=f7e412] [cursor=pointer]:
+                      - generic [ref=f7e413]:
+                        - generic:
+                          - img
+                        - generic [ref=f7e414]:
+                          - heading "Հաստատված է Յորքշիրցի անասնաբույժի կողմից" [level=2] [ref=f7e415]
+                          - paragraph [ref=f7e416]: Դոկտոր Փիթեր Ռայթ
+                          - paragraph [ref=f7e417]: \u201c«Ես անասնաբույժ եմ գրեթե 30 տարի։ Վերջերս իմ հիվանդներից մի քանիսին առաջարկել եմ Jeko, և արդյունքները շատ հաճախ հիանալի են։»\u201d
+                      - img "Julian Norton - The Yorkshire Vet with Jeko" [ref=f7e419]
+                    - generic [ref=f7e423] [cursor=pointer]:
+                      - generic [ref=f7e424]:
+                        - img "Jeko on Dragons Den" [ref=f7e425]
+                        - generic:
+                          - img
+                      - generic [ref=f7e428]:
+                        - heading "Շնի կերը այնքան լավն է, որ մենք այն կերանք Dragons' Den-ում" [level=2] [ref=f7e429]
+                        - paragraph [ref=f7e430]: Jeko-ն ներսից դուրս ամբողջական սնունդ է, և շները լիովին սիրում են համը։ «Թերևս ամենալավ ներկայացումը, որ ես տեսել եմ Dragons' Den-ի 10 տարվա ընթացքում» – Դանկան Բանատայն
+                        - link "Սկսել այսօր" [ref=f7e431]:
+                          - /url: /auth/signup
+                    - generic [ref=f7e434] [cursor=pointer]:
+                      - generic [ref=f7e435]:
+                        - generic:
+                          - img
+                        - generic [ref=f7e436]:
+                          - heading "Հաճախակի տրվող հարցեր" [level=2] [ref=f7e437]
+                          - paragraph [ref=f7e438]: Այն ամենը, ինչ պետք է իմանալ Jeko-ի մասին
+                          - generic [ref=f7e439]:
+                            - generic [ref=f7e440]:
+                              - button "Ենթակա՞ եմ բաժանորդագրության" [ref=f7e441]:
+                                - heading "Ենթակա՞ եմ բաժանորդագրության" [level=4] [ref=f7e442]
+                                - img [ref=f7e443]
+                              - paragraph [ref=f7e445]: Ամենևին ոչ։ Կարող ես դադարեցնել, փոխել կամ չեղարկել քո պլանը ցանկացած պահի։ Մենք այնքան ենք հավատում մեր սննդին, որ կարիք չունենք քեզ կապելու։
+                            - generic [ref=f7e446]:
+                              - button "Jeko-ն թա՞նկ է այլ սննդերի համեմատ" [ref=f7e447]:
+                                - heading "Jeko-ն թա՞նկ է այլ սննդերի համեմատ" [level=4] [ref=f7e448]
+                                - img [ref=f7e449]
+                              - paragraph [ref=f7e451]: Jeko-ն սկսվում է օրական ընդամենը 350 դրամից։ Հաշվի առնելով առողջապահական օգուտները՝ այն մեծ արժեք ունի՝ համեմատած անասնաբուժական ծախսերի և այլ պրեմիում սննդերի հետ։
+                            - generic [ref=f7e452]:
+                              - button "Առաքման համար վճարե՞լ է պետք" [ref=f7e453]:
+                                - heading "Առաքման համար վճարե՞լ է պետք" [level=4] [ref=f7e454]
+                                - img [ref=f7e455]
+                              - paragraph [ref=f7e457]: Ոչ։ Առաքումը լիովին անվճար է բոլոր պատվերների համար։ Մենք առաքում ենք ուղիղ քո տան դռան մոտ։
+                            - generic [ref=f7e458]:
+                              - button "Ի՞նչ սննդարարություն ունի, և օգտակա՞ր է իմ շան համար" [ref=f7e459]:
+                                - heading "Ի՞նչ սննդարարություն ունի, և օգտակա՞ր է իմ շան համար" [level=4] [ref=f7e460]
+                                - img [ref=f7e461]
+                              - paragraph [ref=f7e463]: Jeko-ն ամբողջական, հավասարակշռված կերակուր է՝ մշակված անասնաբույժ-դիետոլոգների հետ միասին։ Յուրաքանչյուր բաղադրատոմս բավարարում է FEDIAF-ի ամբողջական սննդարարության ուղեցույցներին։
+                            - generic [ref=f7e464]:
+                              - button "Իսկ եթե շանս այն չսիրի՞" [ref=f7e465]:
+                                - heading "Իսկ եթե շանս այն չսիրի՞" [level=4] [ref=f7e466]
+                                - img [ref=f7e467]
+                              - paragraph [ref=f7e469]: Մենք առաջարկում ենք գումարի ամբողջական վերադարձի երաշխիք։ Եթե քո շունը չսիրի Jeko-ն, մենք ամբողջությամբ կվերադարձնենք առաջին տուփի գումարը։
+                            - generic [ref=f7e470]:
+                              - button "Jeko-ն հարմա՞ր է շանս առողջական խնդիրների համար" [ref=f7e471]:
+                                - heading "Jeko-ն հարմա՞ր է շանս առողջական խնդիրների համար" [level=4] [ref=f7e472]
+                                - img [ref=f7e473]
+                              - paragraph [ref=f7e475]: Jeko-ն հաճախ առաջարկվում է առողջական խնդիրներ ունեցող շների համար։ Մեր բաղադրատոմսերը նուրբ են և պատրաստված են բնական, բարձրորակ բաղադրիչներով։
+                            - generic [ref=f7e476]:
+                              - button "Jeko-ն ամբողջական շան սնու՞նդ է" [ref=f7e477]:
+                                - heading "Jeko-ն ամբողջական շան սնու՞նդ է" [level=4] [ref=f7e478]
+                                - img [ref=f7e479]
+                              - paragraph [ref=f7e481]: Այո։ Յուրաքանչյուր Jeko բաղադրատոմս սննդարարորեն ամբողջական և հավասարակշռված է՝ համապատասխան մեծահասակ շների և լակոտների FEDIAF ուղեցույցներին։
+                          - link "Սկսել այսօր" [ref=f7e483]:
+                            - /url: /auth/signup
+                      - img "Happy healthy dog" [ref=f7e485]
+                  - contentinfo [ref=f7e487] [cursor=pointer]:
+                    - generic [ref=f7e488]:
+                      - generic [ref=f7e489]:
+                        - generic [ref=f7e490]:
+                          - heading "Միացիր մեր VIP ցանկին" [level=4] [ref=f7e491]
+                          - paragraph [ref=f7e492]: Առաջինը իմացիր նոր ապրանքների մասին, մասնակցիր բացառիկ մրցույթների և ստացիր օգտակար խորհուրդներ ընտանի կենդանիների խնամքի մասին։
+                          - generic [ref=f7e493]:
+                            - textbox "Մուտքագրիր քո էլ. փոստի հասցեն" [ref=f7e494]
+                            - button "Գրանցվել" [ref=f7e495]
+                        - generic [ref=f7e496]:
+                          - generic [ref=f7e497]:
+                            - heading "Jeko" [level=4] [ref=f7e498]
+                            - list [ref=f7e499]:
+                              - listitem [ref=f7e500]:
+                                - link "Մեր պատմությունը" [ref=f7e501]:
+                                  - /url: /about
+                              - listitem [ref=f7e502]:
+                                - link "Կարծիքներ" [ref=f7e503]:
+                                  - /url: /reviews
+                              - listitem [ref=f7e504]:
+                                - link "Բաղադրատոմսեր" [ref=f7e505]:
+                                  - /url: /recipes
+                              - listitem [ref=f7e506]:
+                                - link "Ավելին քան ամանը" [ref=f7e507]:
+                                  - /url: /beyond-the-bowl
+                              - listitem [ref=f7e508]:
+                                - link "Խանութ" [ref=f7e509]:
+                                  - /url: /products
+                              - listitem [ref=f7e510]:
+                                - link "Համայնք" [ref=f7e511]:
+                                  - /url: /community
+                          - generic [ref=f7e512]:
+                            - heading "Օգնություն" [level=4] [ref=f7e513]
+                            - list [ref=f7e514]:
+                              - listitem [ref=f7e515]:
+                                - link "Իմ հաշիվը" [ref=f7e516]:
+                                  - /url: /profile
+                              - listitem [ref=f7e517]:
+                                - link "Կապ մեզ հետ" [ref=f7e518]:
+                                  - /url: /contact
+                              - listitem [ref=f7e519]:
+                                - link "Առաքման տեղեկատվություն" [ref=f7e520]:
+                                  - /url: /delivery-information
+                              - listitem [ref=f7e521]:
+                                - link "Վերադարձներ" [ref=f7e522]:
+                                  - /url: /returns
+                              - listitem [ref=f7e523]:
+                                - link "Կայքի քարտեզ" [ref=f7e524]:
+                                  - /url: /sitemap-page
+                          - generic [ref=f7e525]:
+                            - heading "Տեղեկատվություն" [level=4] [ref=f7e526]
+                            - list [ref=f7e527]:
+                              - listitem [ref=f7e528]:
+                                - link "Գաղտնիության քաղաքականություն" [ref=f7e529]:
+                                  - /url: /privacy-policy
+                              - listitem [ref=f7e530]:
+                                - link "Պայմաններ և դրույթներ" [ref=f7e531]:
+                                  - /url: /terms-of-use
+                              - listitem [ref=f7e532]:
+                                - link "Jeko-ի քաղաքականություն" [ref=f7e533]:
+                                  - /url: /pure-policies
+                              - listitem [ref=f7e534]:
+                                - link "Կայքի անվտանգություն" [ref=f7e535]:
+                                  - /url: /site-security
+                              - listitem [ref=f7e536]:
+                                - link "Cookie-ների քաղաքականություն" [ref=f7e537]:
+                                  - /url: /cookie-policy
+                      - generic [ref=f7e538]:
+                        - generic [ref=f7e540]: JEKO
+                        - paragraph [ref=f7e541]: © Jeko 2020-2026
+                  - generic [ref=f7e542]:
+                    - generic [ref=f7e543]:
+                      - paragraph [ref=f7e544]: Հաու՜ 🐾
+                      - paragraph [ref=f7e545]: Գտիր ընկեր քո կենդանու համար։
+                    - button "Find pet matches" [ref=f7e547] [cursor=pointer]:
+                      - img "Jeko dog" [ref=f7e548]
+                  - alert [ref=f7e549]

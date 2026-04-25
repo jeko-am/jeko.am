@@ -7,6 +7,8 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import EditorOverlay from "@/components/EditorOverlay";
 import { useSignupUrl } from "@/lib/useSignupUrl";
+import { useT } from "@/lib/i18n/LangProvider";
+import HyText from "@/components/HyText";
 
 const recipes = [
   {
@@ -79,6 +81,7 @@ interface RecipesPageClientProps {
 }
 
 export default function RecipesPageClient({ sections }: RecipesPageClientProps) {
+  const { t } = useT();
   const signupUrl = useSignupUrl();
   const [activeFilter, setActiveFilter] = useState("general");
 
@@ -108,27 +111,27 @@ export default function RecipesPageClient({ sections }: RecipesPageClientProps) 
             <div className="relative z-10 max-w-container mx-auto px-6 py-16 md:py-24">
               <div className="max-w-[520px]">
                 <h1 className="font-rubik text-white text-[42px] md:text-[52px] font-semibold leading-[1.1] mb-4">
-                  {sections[0]?.heading ?? "Real goodness"}<br />
+                  <HyText en={sections[0]?.heading ?? t("recipes.hero.heading")} /><br />
                   <span className="text-gold italic">
-                    {sections[0]?.heading_highlight ?? "Real food"}
+                    <HyText en={sections[0]?.heading_highlight ?? t("recipes.hero.headingHighlight")} />
                   </span>
                 </h1>
                 <p className="text-white/90 text-[17px] leading-relaxed mb-8 max-w-[400px]">
-                  {sections[0]?.subheading ?? "After all, your pet should be eating like one of the family too."}
+                  <HyText en={sections[0]?.subheading ?? t("recipes.hero.subheading")} />
                 </p>
 
                 {/* Dropdown + CTA */}
                 <div className="flex flex-col sm:flex-row gap-3 mb-6">
                   <select className="px-4 py-3 rounded-[5px] bg-white text-deep-green text-[15px] outline-none cursor-pointer min-w-[260px] border border-gray-200">
-                    <option>What do you currently feed your dog?</option>
-                    <option>Dry kibble</option>
-                    <option>Wet/canned food</option>
-                    <option>Raw food</option>
-                    <option>Home cooked</option>
-                    <option>Other</option>
+                    <option>{t("recipes.hero.dropdown.placeholder")}</option>
+                    <option>{t("recipes.hero.dropdown.kibble")}</option>
+                    <option>{t("recipes.hero.dropdown.wet")}</option>
+                    <option>{t("recipes.hero.dropdown.raw")}</option>
+                    <option>{t("recipes.hero.dropdown.home")}</option>
+                    <option>{t("recipes.hero.dropdown.other")}</option>
                   </select>
                   <button className="bg-gold text-deep-green px-6 py-3 rounded-[5px] font-semibold text-[15px] hover:bg-[#d99500] transition-colors whitespace-nowrap">
-                    See our healthy options
+                    {t("recipes.hero.cta")}
                   </button>
                 </div>
 
@@ -171,9 +174,9 @@ export default function RecipesPageClient({ sections }: RecipesPageClientProps) 
                     </span>
                   </div>
                   <span className="text-sm font-semibold text-white">
-                    Excellent
+                    {t("trustpilot.excellent")}
                   </span>
-                  <span className="text-sm text-white/70">4.7 out of 5</span>
+                  <span className="text-sm text-white/70">{t("trustpilot.outOf5").replace("{score}", "4.7")}</span>
                   <span className="text-xs text-white/60">Trustpilot</span>
                 </div>
               </div>
@@ -189,11 +192,11 @@ export default function RecipesPageClient({ sections }: RecipesPageClientProps) 
           >
             <p className="text-lg leading-snug">
               <span className="font-bold">
-                {sections[1]?.primary_text ?? "25% off your first box"}
+                <HyText en={sections[1]?.primary_text ?? t("benefits.offer.primary")} />
               </span>
               <span className="mx-1.5">+</span>
               <span className="font-medium text-base text-white/90">
-                {sections[1]?.secondary_text ?? "10% off your next box"}
+                <HyText en={sections[1]?.secondary_text ?? t("benefits.offer.secondary")} />
               </span>
             </p>
           </Link>
@@ -225,13 +228,13 @@ export default function RecipesPageClient({ sections }: RecipesPageClientProps) 
               <div className="w-full md:w-[58%] flex items-center bg-off-white">
                 <div className="px-8 md:px-12 lg:px-16 py-12 max-w-[540px]">
                   <h2 className="text-[32px] md:text-[38px] font-semibold text-deep-green leading-tight mb-1 font-rubik">
-                    {sections[2]?.heading ?? "Personalised"}
+                    <HyText en={sections[2]?.heading ?? t("recipes.personalised.heading")} />
                   </h2>
                   <p className="text-gold text-[30px] md:text-[36px] font-semibold font-rubik mb-6 italic">
-                    {sections[2]?.subtitle ?? "to your dog"}
+                    <HyText en={sections[2]?.subtitle ?? t("recipes.personalised.subtitle")} />
                   </p>
                   <p className="text-[16px] text-deep-green/80 leading-[1.7]">
-                    {sections[2]?.description ?? "We\u2019ll create your dog\u2019s tailored menu designed to meet the needs of your pup down to a tee. You can then select up to two personalised recipes for each dog food delivery, helping you invest in the health of your dog for a long, paw-some life!"}
+                    <HyText en={sections[2]?.description ?? "We\u2019ll create your dog\u2019s tailored menu designed to meet the needs of your pup down to a tee. You can then select up to two personalised recipes for each dog food delivery, helping you invest in the health of your dog for a long, paw-some life!"} />
                   </p>
                 </div>
               </div>
@@ -246,13 +249,13 @@ export default function RecipesPageClient({ sections }: RecipesPageClientProps) 
               <div className="w-full md:w-[58%] bg-deep-green flex items-center relative">
                 <div className="px-8 md:px-12 lg:px-16 py-12 max-w-[540px]">
                   <h2 className="text-[30px] md:text-[38px] font-semibold text-white font-rubik leading-tight mb-1">
-                    {sections[3]?.heading ?? "Natural health"}
+                    <HyText en={sections[3]?.heading ?? t("recipes.natural.heading")} />
                   </h2>
                   <p className="text-gold text-[28px] md:text-[34px] font-semibold font-rubik mb-6 italic">
-                    {sections[3]?.subtitle ?? "just add water"}
+                    <HyText en={sections[3]?.subtitle ?? t("recipes.natural.subtitle")} />
                   </p>
                   <p className="text-white/85 text-[16px] leading-[1.7]">
-                    {sections[3]?.description ?? "Lovingly prepared in Yorkshire, we don\u2019t use any weird ingredients or anything even remotely strange, it\u2019s just good, honest food that your dog will love! All you need to do is add water, stir and serve."}
+                    <HyText en={sections[3]?.description ?? "Lovingly prepared in Yorkshire, we don\u2019t use any weird ingredients or anything even remotely strange, it\u2019s just good, honest food that your dog will love! All you need to do is add water, stir and serve."} />
                   </p>
                 </div>
               </div>
@@ -285,10 +288,10 @@ export default function RecipesPageClient({ sections }: RecipesPageClientProps) 
             <div className="max-w-[1100px] mx-auto px-6">
               <div className="text-center mb-2">
                 <h2 className="text-[28px] md:text-[36px] font-semibold text-deep-green font-rubik mb-3">
-                  {sections[4]?.heading ?? "Our drool-worthy menu of recipes"}
+                  <HyText en={sections[4]?.heading ?? t("recipes.grid.heading")} />
                 </h2>
                 <p className="text-deep-green/70 text-[15px] max-w-2xl mx-auto leading-relaxed">
-                  {sections[4]?.subheading ?? "We\u2019ll tailor your menu specifically to your needs and make sure your dog gets the very best nutrition for them."}
+                  <HyText en={sections[4]?.subheading ?? t("recipes.grid.subheading")} />
                 </p>
               </div>
 
@@ -304,7 +307,7 @@ export default function RecipesPageClient({ sections }: RecipesPageClientProps) 
                         : "text-deep-green/50 hover:text-deep-green/70"
                     }`}
                   >
-                    {tab}
+                    <HyText en={tab.charAt(0).toUpperCase() + tab.slice(1)} />
                     {activeFilter === tab && (
                       <span className="absolute bottom-0 left-0 right-0 h-[3px] bg-gold rounded-t-sm" />
                     )}
@@ -331,16 +334,16 @@ export default function RecipesPageClient({ sections }: RecipesPageClientProps) 
                     <div className="border-t-[3px] border-gold" />
                     <div className="p-4 pb-5">
                       <h3 className="font-semibold text-deep-green text-[18px] font-rubik mb-1">
-                        {recipe.name}
+                        <HyText en={recipe.name} />
                       </h3>
                       <p className="text-deep-green/60 text-[13px] leading-relaxed mb-3 min-h-[36px]">
-                        {recipe.subtitle}
+                        <HyText en={recipe.subtitle} />
                       </p>
                       <Link
                         href={signupUrl}
                         className="text-deep-green text-[14px] font-medium underline underline-offset-2 decoration-deep-green/40 hover:decoration-deep-green transition-colors"
                       >
-                        More info
+                        {t("recipes.moreInfo")}
                       </Link>
                     </div>
                   </div>
@@ -367,17 +370,17 @@ export default function RecipesPageClient({ sections }: RecipesPageClientProps) 
                 <div className="w-full md:w-1/2 bg-deep-green flex items-center">
                   <div className="px-8 md:px-12 py-10 md:py-12">
                     <h2 className="text-[28px] md:text-[34px] font-semibold text-white font-rubik leading-tight mb-1">
-                      {sections[5]?.heading ?? "Carefully prepared"}
+                      <HyText en={sections[5]?.heading ?? t("recipes.prepared.heading")} />
                     </h2>
                     <p className="text-gold text-[26px] md:text-[32px] font-semibold font-rubik mb-5 italic">
-                      {sections[5]?.subtitle ?? "with your dog in mind"}
+                      <HyText en={sections[5]?.subtitle ?? t("recipes.prepared.subtitle")} />
                     </p>
                     <div className="space-y-4">
                       <p className="text-white/85 text-[15px] leading-[1.7]">
-                        {sections[5]?.text_1 ?? "We take delicious, natural ingredients, chop them up really small to make everything a bit easier on the doggy digestive system and then remove the moisture from the food."}
+                        <HyText en={sections[5]?.text_1 ?? "We take delicious, natural ingredients, chop them up really small to make everything a bit easier on the doggy digestive system and then remove the moisture from the food."} />
                       </p>
                       <p className="text-white/85 text-[15px] leading-[1.7]">
-                        {sections[5]?.text_2 ?? "This way, the nutrients in the food are carefully protected and naturally preserved, meaning that every bite is bursting with goodness and flavour."}
+                        <HyText en={sections[5]?.text_2 ?? "This way, the nutrients in the food are carefully protected and naturally preserved, meaning that every bite is bursting with goodness and flavour."} />
                       </p>
                     </div>
                   </div>
@@ -392,10 +395,10 @@ export default function RecipesPageClient({ sections }: RecipesPageClientProps) 
           <section className="bg-white py-14 md:py-16">
             <div className="max-w-[800px] mx-auto px-6">
               <h2 className="text-[28px] md:text-[36px] font-semibold text-deep-green font-rubik leading-tight mb-5">
-                {sections[6]?.heading ?? "Dogs deserve better"}
+                <HyText en={sections[6]?.heading ?? t("recipes.deserve.heading")} />
               </h2>
               <p className="text-deep-green/75 text-[16px] leading-[1.8]">
-                {sections[6]?.description ?? "Other pet foods contain additives, preservatives and things you just wouldn\u2019t want to feed your dog. Our dogs are part of our family, so why wouldn\u2019t we feed them natural, healthy ingredients?"}
+                <HyText en={sections[6]?.description ?? "Other pet foods contain additives, preservatives and things you just wouldn\u2019t want to feed your dog. Our dogs are part of our family, so why wouldn\u2019t we feed them natural, healthy ingredients?"} />
               </p>
             </div>
           </section>
@@ -406,17 +409,17 @@ export default function RecipesPageClient({ sections }: RecipesPageClientProps) 
           <section className="bg-off-white py-14 md:py-20 relative overflow-hidden">
             <div className="max-w-[800px] mx-auto px-6 relative z-10">
               <h2 className="text-[26px] md:text-[34px] font-semibold text-deep-green font-rubik leading-tight mb-8 text-center">
-                {sections[7]?.heading ?? "What if my dry dog food has good ingredients?"}
+                <HyText en={sections[7]?.heading ?? t("recipes.dryQa.heading")} />
               </h2>
               <div className="space-y-5 text-left">
                 <p className="text-deep-green/75 text-[16px] leading-[1.8]">
-                  {sections[7]?.text_1 ?? "Good ingredients are at the very core of good food, naturally. However, what it takes to get those great ingredients into a burnt, brown ball of kibble is pretty intense."}
+                  <HyText en={sections[7]?.text_1 ?? "Good ingredients are at the very core of good food, naturally. However, what it takes to get those great ingredients into a burnt, brown ball of kibble is pretty intense."} />
                 </p>
                 <p className="text-deep-green/75 text-[16px] leading-[1.8]">
-                  {sections[7]?.text_2 ?? "The ingredients are processed beyond recognition using a processing method called extrusion, which is where the food is put under harmfully high heats and then squished, prodded and shaped into those little brown balls we\u2019ve come to recognise as the norm for dog food. It\u2019s those extreme temperatures that can kill all the vital nutrients that were originally in the ingredients, making the quality of the initial ingredients not as important as you\u2019d think."}
+                  <HyText en={sections[7]?.text_2 ?? "The ingredients are processed beyond recognition using a processing method called extrusion, which is where the food is put under harmfully high heats and then squished, prodded and shaped into those little brown balls we\u2019ve come to recognise as the norm for dog food. It\u2019s those extreme temperatures that can kill all the vital nutrients that were originally in the ingredients, making the quality of the initial ingredients not as important as you\u2019d think."} />
                 </p>
                 <p className="text-deep-green/75 text-[16px] leading-[1.8]">
-                  {sections[7]?.text_3 ?? "Our gently air-dried process locks in up to 5x more nutrients than traditional kibble, preserving the quality of the initial ingredients for your dog\u2019s benefit."}
+                  <HyText en={sections[7]?.text_3 ?? "Our gently air-dried process locks in up to 5x more nutrients than traditional kibble, preserving the quality of the initial ingredients for your dog\u2019s benefit."} />
                 </p>
               </div>
             </div>
@@ -430,19 +433,19 @@ export default function RecipesPageClient({ sections }: RecipesPageClientProps) 
               <div className="w-full md:w-[55%] flex items-center">
                 <div className="px-8 md:px-12 lg:px-16 py-12 max-w-[540px]">
                   <h2 className="text-[30px] md:text-[38px] font-semibold text-white font-rubik leading-tight mb-1">
-                    {sections[8]?.heading ?? "Personalise your"}
+                    <HyText en={sections[8]?.heading ?? t("recipes.personaliseCta.heading")} />
                   </h2>
                   <p className="text-gold text-[28px] md:text-[36px] font-semibold font-rubik mb-6 italic">
-                    {sections[8]?.subtitle ?? "dog\u2019s food"}
+                    <HyText en={sections[8]?.subtitle ?? t("recipes.personaliseCta.subtitle")} />
                   </p>
                   <p className="text-white/85 text-[16px] leading-[1.7] mb-8">
-                    {sections[8]?.description ?? "Proactively invest in your pet\u2019s health with a nutritious, vet-approved dog food that\u2019s trusted by thousands. Discover your dog\u2019s recipe today."}
+                    <HyText en={sections[8]?.description ?? "Proactively invest in your pet\u2019s health with a nutritious, vet-approved dog food that\u2019s trusted by thousands. Discover your dog\u2019s recipe today."} />
                   </p>
                   <Link
                     href={sections[8]?.button_url ?? "/products"}
                     className="inline-block bg-gold text-deep-green px-7 py-3 rounded-[5px] font-semibold text-[16px] hover:bg-[#d99500] transition-colors"
                   >
-                    {sections[8]?.button_text ?? "Discover your dog\u2019s menu"}
+                    <HyText en={sections[8]?.button_text ?? t("recipes.personaliseCta.button")} />
                   </Link>
                 </div>
               </div>

@@ -1,0 +1,197 @@
+- generic [active] [ref=e1]:
+  - alert [ref=e2]
+  - generic [ref=e3]:
+    - complementary [ref=e4]:
+      - generic [ref=e6]:
+        - heading "Jeko" [level=1] [ref=e7]
+        - paragraph [ref=e8]: Admin Panel
+      - navigation [ref=e9]:
+        - link "Dashboard" [ref=e10] [cursor=pointer]:
+          - /url: /admin/dashboard
+          - img [ref=e11]
+          - text: Dashboard
+        - link "Store Editor" [ref=e13] [cursor=pointer]:
+          - /url: /admin/store-editor
+          - img [ref=e14]
+          - text: Store Editor
+        - link "Translations" [ref=e16] [cursor=pointer]:
+          - /url: /admin/translations
+          - img [ref=e17]
+          - text: Translations
+        - link "Products" [ref=e19] [cursor=pointer]:
+          - /url: /admin/products
+          - img [ref=e20]
+          - text: Products
+        - link "Bundles" [ref=e22] [cursor=pointer]:
+          - /url: /admin/bundles
+          - img [ref=e23]
+          - text: Bundles
+        - link "Upsells" [ref=e25] [cursor=pointer]:
+          - /url: /admin/upsells
+          - img [ref=e26]
+          - text: Upsells
+        - link "Categories" [ref=e28] [cursor=pointer]:
+          - /url: /admin/categories
+          - img [ref=e29]
+          - text: Categories
+        - link "Orders" [ref=e31] [cursor=pointer]:
+          - /url: /admin/orders
+          - img [ref=e32]
+          - text: Orders
+        - link "Customers" [ref=e34] [cursor=pointer]:
+          - /url: /admin/customers
+          - img [ref=e35]
+          - text: Customers
+        - link "Reviews" [ref=e37] [cursor=pointer]:
+          - /url: /admin/reviews
+          - img [ref=e38]
+          - text: Reviews
+        - link "Community" [ref=e40] [cursor=pointer]:
+          - /url: /admin/community
+          - img [ref=e41]
+          - text: Community
+        - link "Discounts" [ref=e43] [cursor=pointer]:
+          - /url: /admin/discounts
+          - img [ref=e44]
+          - text: Discounts
+        - link "Pages" [ref=e46] [cursor=pointer]:
+          - /url: /admin/pages
+          - img [ref=e47]
+          - text: Pages
+        - link "Blog" [ref=e49] [cursor=pointer]:
+          - /url: /admin/blog
+          - img [ref=e50]
+          - text: Blog
+        - link "Settings" [ref=e52] [cursor=pointer]:
+          - /url: /admin/settings
+          - img [ref=e53]
+          - text: Settings
+        - link "Analytics" [ref=e55] [cursor=pointer]:
+          - /url: /admin/analytics
+          - img [ref=e56]
+          - text: Analytics
+        - link "Support" [ref=e58] [cursor=pointer]:
+          - /url: /admin/support
+          - img [ref=e59]
+          - text: Support
+      - generic [ref=e61]:
+        - link "View Store" [ref=e62] [cursor=pointer]:
+          - /url: /
+          - img [ref=e63]
+          - text: View Store
+        - button "Sign Out" [ref=e65] [cursor=pointer]:
+          - img [ref=e66]
+          - text: Sign Out
+    - generic [ref=e68]:
+      - banner [ref=e69]:
+        - button [ref=e70] [cursor=pointer]:
+          - img [ref=e71]
+        - generic [ref=e73]:
+          - generic [ref=e74]:
+            - generic [ref=e75]: "Editing:"
+            - generic [ref=e76]:
+              - button "Edit English content" [ref=e77] [cursor=pointer]:
+                - generic [ref=e78]: 🇬🇧
+                - generic [ref=e79]: EN
+              - button "Edit Armenian content" [ref=e80] [cursor=pointer]:
+                - generic [ref=e81]: 🇦🇲
+                - generic [ref=e82]: HY
+            - generic [ref=e83]: Armenian edits only
+          - generic [ref=e85]: admin@purepet.test
+          - generic [ref=e86]: A
+      - main [ref=e87]:
+        - generic [ref=e88]:
+          - generic [ref=e89]:
+            - generic [ref=e90]:
+              - heading "Products" [level=1] [ref=e91]
+              - paragraph [ref=e92]: 0 products total
+            - button "Add Product" [ref=e93] [cursor=pointer]:
+              - img [ref=e94]
+              - text: Add Product
+          - generic [ref=e96]:
+            - img [ref=e97]
+            - textbox "Search products by name..." [ref=e99]
+          - table [ref=e102]:
+            - rowgroup [ref=e103]:
+              - row "Image Name Category Price Stock Status Created Actions" [ref=e104]:
+                - columnheader "Image" [ref=e105]
+                - columnheader "Name" [ref=e106]
+                - columnheader "Category" [ref=e107]
+                - columnheader "Price" [ref=e108]
+                - columnheader "Stock" [ref=e109]
+                - columnheader "Status" [ref=e110]
+                - columnheader "Created" [ref=e111]
+                - columnheader "Actions" [ref=e112]
+            - rowgroup [ref=e113]:
+              - row [ref=e114]:
+                - cell [ref=e115]
+                - cell [ref=e117]
+                - cell [ref=e119]
+                - cell [ref=e121]
+                - cell [ref=e123]
+                - cell [ref=e125]
+                - cell [ref=e127]
+                - cell [ref=e129]
+              - row [ref=e131]:
+                - cell [ref=e132]
+                - cell [ref=e134]
+                - cell [ref=e136]
+                - cell [ref=e138]
+                - cell [ref=e140]
+                - cell [ref=e142]
+                - cell [ref=e144]
+                - cell [ref=e146]
+              - row [ref=e148]:
+                - cell [ref=e149]
+                - cell [ref=e151]
+                - cell [ref=e153]
+                - cell [ref=e155]
+                - cell [ref=e157]
+                - cell [ref=e159]
+                - cell [ref=e161]
+                - cell [ref=e163]
+              - row [ref=e165]:
+                - cell [ref=e166]
+                - cell [ref=e168]
+                - cell [ref=e170]
+                - cell [ref=e172]
+                - cell [ref=e174]
+                - cell [ref=e176]
+                - cell [ref=e178]
+                - cell [ref=e180]
+              - row [ref=e182]:
+                - cell [ref=e183]
+                - cell [ref=e185]
+                - cell [ref=e187]
+                - cell [ref=e189]
+                - cell [ref=e191]
+                - cell [ref=e193]
+                - cell [ref=e195]
+                - cell [ref=e197]
+              - row [ref=e199]:
+                - cell [ref=e200]
+                - cell [ref=e202]
+                - cell [ref=e204]
+                - cell [ref=e206]
+                - cell [ref=e208]
+                - cell [ref=e210]
+                - cell [ref=e212]
+                - cell [ref=e214]
+              - row [ref=e216]:
+                - cell [ref=e217]
+                - cell [ref=e219]
+                - cell [ref=e221]
+                - cell [ref=e223]
+                - cell [ref=e225]
+                - cell [ref=e227]
+                - cell [ref=e229]
+                - cell [ref=e231]
+              - row [ref=e233]:
+                - cell [ref=e234]
+                - cell [ref=e236]
+                - cell [ref=e238]
+                - cell [ref=e240]
+                - cell [ref=e242]
+                - cell [ref=e244]
+                - cell [ref=e246]
+                - cell [ref=e248]

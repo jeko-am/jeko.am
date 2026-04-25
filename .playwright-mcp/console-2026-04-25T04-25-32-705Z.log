@@ -1,0 +1,266 @@
+[     684ms] [INFO] %cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold @ webpack-internal:///(app-pages-browser)/./node_modules/next/dist/compiled/react-dom/cjs/react-dom.development.js:38559
+[   89396ms] [LOG] [Fast Refresh] rebuilding @ webpack-internal:///(app-pages-browser)/./node_modules/next/dist/client/components/react-dev-overlay/app/hot-reloader-client.js:186
+[   89857ms] [LOG] [Fast Refresh] done in 461ms @ webpack-internal:///(app-pages-browser)/./node_modules/next/dist/client/components/react-dev-overlay/app/hot-reloader-client.js:43
+[   99089ms] [LOG] [Fast Refresh] rebuilding @ webpack-internal:///(app-pages-browser)/./node_modules/next/dist/client/components/react-dev-overlay/app/hot-reloader-client.js:186
+[   99402ms] [LOG] [Fast Refresh] done in 313ms @ webpack-internal:///(app-pages-browser)/./node_modules/next/dist/client/components/react-dev-overlay/app/hot-reloader-client.js:43
+[  108189ms] [LOG] [Fast Refresh] rebuilding @ webpack-internal:///(app-pages-browser)/./node_modules/next/dist/client/components/react-dev-overlay/app/hot-reloader-client.js:186
+[  108487ms] [LOG] [Fast Refresh] done in 298ms @ webpack-internal:///(app-pages-browser)/./node_modules/next/dist/client/components/react-dev-overlay/app/hot-reloader-client.js:43
+[  175621ms] [LOG] [Fast Refresh] rebuilding @ webpack-internal:///(app-pages-browser)/./node_modules/next/dist/client/components/react-dev-overlay/app/hot-reloader-client.js:186
+[  176133ms] [LOG] [Fast Refresh] done in 512ms @ webpack-internal:///(app-pages-browser)/./node_modules/next/dist/client/components/react-dev-overlay/app/hot-reloader-client.js:43
+[  188049ms] [LOG] [Fast Refresh] rebuilding @ webpack-internal:///(app-pages-browser)/./node_modules/next/dist/client/components/react-dev-overlay/app/hot-reloader-client.js:186
+[  188365ms] [LOG] [Fast Refresh] done in 317ms @ webpack-internal:///(app-pages-browser)/./node_modules/next/dist/client/components/react-dev-overlay/app/hot-reloader-client.js:43
+[  199375ms] [LOG] [Fast Refresh] rebuilding @ webpack-internal:///(app-pages-browser)/./node_modules/next/dist/client/components/react-dev-overlay/app/hot-reloader-client.js:186
+[  199964ms] [LOG] [Fast Refresh] done in 588ms @ webpack-internal:///(app-pages-browser)/./node_modules/next/dist/client/components/react-dev-overlay/app/hot-reloader-client.js:43
+[  228594ms] [LOG] [Fast Refresh] rebuilding @ webpack-internal:///(app-pages-browser)/./node_modules/next/dist/client/components/react-dev-overlay/app/hot-reloader-client.js:186
+[  228865ms] [LOG] [Fast Refresh] done in 271ms @ webpack-internal:///(app-pages-browser)/./node_modules/next/dist/client/components/react-dev-overlay/app/hot-reloader-client.js:43
+[  329361ms] [LOG] [Fast Refresh] rebuilding @ webpack-internal:///(app-pages-browser)/./node_modules/next/dist/client/components/react-dev-overlay/app/hot-reloader-client.js:186
+[  329761ms] [LOG] [Fast Refresh] done in 400ms @ webpack-internal:///(app-pages-browser)/./node_modules/next/dist/client/components/react-dev-overlay/app/hot-reloader-client.js:43
+[  334199ms] [LOG] [Fast Refresh] rebuilding @ webpack-internal:///(app-pages-browser)/./node_modules/next/dist/client/components/react-dev-overlay/app/hot-reloader-client.js:186
+[  334533ms] [LOG] [Fast Refresh] done in 335ms @ webpack-internal:///(app-pages-browser)/./node_modules/next/dist/client/components/react-dev-overlay/app/hot-reloader-client.js:43
+[  430053ms] [LOG] [Fast Refresh] rebuilding @ webpack-internal:///(app-pages-browser)/./node_modules/next/dist/client/components/react-dev-overlay/app/hot-reloader-client.js:186
+[  430706ms] [LOG] [Fast Refresh] done in 653ms @ webpack-internal:///(app-pages-browser)/./node_modules/next/dist/client/components/react-dev-overlay/app/hot-reloader-client.js:43
+[  439544ms] [LOG] [Fast Refresh] rebuilding @ webpack-internal:///(app-pages-browser)/./node_modules/next/dist/client/components/react-dev-overlay/app/hot-reloader-client.js:186
+[  439839ms] [LOG] [Fast Refresh] done in 295ms @ webpack-internal:///(app-pages-browser)/./node_modules/next/dist/client/components/react-dev-overlay/app/hot-reloader-client.js:43
+[  465642ms] [LOG] [Fast Refresh] rebuilding @ webpack-internal:///(app-pages-browser)/./node_modules/next/dist/client/components/react-dev-overlay/app/hot-reloader-client.js:186
+[  465905ms] [LOG] [Fast Refresh] done in 264ms @ webpack-internal:///(app-pages-browser)/./node_modules/next/dist/client/components/react-dev-overlay/app/hot-reloader-client.js:43
+[  478131ms] [LOG] [Fast Refresh] rebuilding @ webpack-internal:///(app-pages-browser)/./node_modules/next/dist/client/components/react-dev-overlay/app/hot-reloader-client.js:186
+[  478369ms] [LOG] [Fast Refresh] done in 238ms @ webpack-internal:///(app-pages-browser)/./node_modules/next/dist/client/components/react-dev-overlay/app/hot-reloader-client.js:43
+[  534041ms] [LOG] [Fast Refresh] rebuilding @ webpack-internal:///(app-pages-browser)/./node_modules/next/dist/client/components/react-dev-overlay/app/hot-reloader-client.js:186
+[  534479ms] [LOG] [Fast Refresh] done in 437ms @ webpack-internal:///(app-pages-browser)/./node_modules/next/dist/client/components/react-dev-overlay/app/hot-reloader-client.js:43
+[  555598ms] [LOG] [Fast Refresh] rebuilding @ webpack-internal:///(app-pages-browser)/./node_modules/next/dist/client/components/react-dev-overlay/app/hot-reloader-client.js:186
+[  556131ms] [LOG] [Fast Refresh] done in 533ms @ webpack-internal:///(app-pages-browser)/./node_modules/next/dist/client/components/react-dev-overlay/app/hot-reloader-client.js:43
+[  613435ms] [LOG] [Fast Refresh] rebuilding @ webpack-internal:///(app-pages-browser)/./node_modules/next/dist/client/components/react-dev-overlay/app/hot-reloader-client.js:186
+[  613936ms] [ERROR] ./src/app/community/page.tsx
+Error: 
+  × the name `lang` is defined multiple times
+     ╭─[/Users/admin/Desktop/claude code armen/pure-pet-clone/src/app/community/page.tsx:700:1]
+ 700 │   onDelete: (postId: number) => void;
+ 701 │   onPostUpdated: (postId: number, updates: Partial<Post>) => void;
+ 702 │ }) {
+ 703 │   const { t, lang } = useT();
+     ·              ──┬─
+     ·                ╰── previous definition of `lang` here
+ 704 │   const [showComments, setShowComments] = useState(false);
+ 705 │   const [localCommentsCount, setLocalCommentsCount] = useState(
+ 706 │     post.comments_count
+ 707 │   );
+ 708 │   const [reporting, setReporting] = useState(false);
+ 709 │   const [reported, setReported] = useState(false);
+ 710 │   const [deleting, setDeleting] = useState(false);
+ 711 │   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
+ 712 │   const [captionExpanded, setCaptionExpanded] = useState(false);
+ 713 │   const [showCopied, setShowCopied] = useState(false);
+ 714 │   const [loginTooltip, setLoginTooltip] = useState<string | null>(null);
+ 715 │   const [postImgError, setPostImgError] = useState(false);
+ 716 │   const [translating, setTranslating] = useState(false);
+ 717 │   const loginTooltipTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+ 718 │ 
+ 719 │   const isAuthor = userId === post.user_id;
+ 720 │   const canDelete = isAuthor || isAdmin;
+ 721 │   const showFollowButton = userId && !isAuthor;
+ 722 │   const canTranslate = (isAuthor || isAdmin) && post.caption && !post.i18n?.hy?.caption;
+ 723 │ 
+ 724 │   const { lang } = useT();
+     ·           ──┬─
+     ·             ╰── `lang` redefined here
+ 725 │   const displayCaption = lang === 'hy'
+ 726 │     ? (localize(post as unknown as Record<string, unknown>, 'caption', 'hy') || post.caption)
+ 727 │     : post.caption;
+     ╰────
+
+Import trace for requested module:
+./src/app/community/page.tsx @ webpack-internal:///(app-pages-browser)/./node_modules/next/dist/client/app-index.js:32
+[  643245ms] [LOG] [Fast Refresh] rebuilding @ webpack-internal:///(app-pages-browser)/./node_modules/next/dist/client/components/react-dev-overlay/app/hot-reloader-client.js:186
+[  643923ms] [ERROR] ./src/app/community/page.tsx
+Error: 
+  × the name `lang` is defined multiple times
+     ╭─[/Users/admin/Desktop/claude code armen/pure-pet-clone/src/app/community/page.tsx:700:1]
+ 700 │   onDelete: (postId: number) => void;
+ 701 │   onPostUpdated: (postId: number, updates: Partial<Post>) => void;
+ 702 │ }) {
+ 703 │   const { t, lang } = useT();
+     ·              ──┬─
+     ·                ╰── previous definition of `lang` here
+ 704 │   const [showComments, setShowComments] = useState(false);
+ 705 │   const [localCommentsCount, setLocalCommentsCount] = useState(
+ 706 │     post.comments_count
+ 707 │   );
+ 708 │   const [reporting, setReporting] = useState(false);
+ 709 │   const [reported, setReported] = useState(false);
+ 710 │   const [deleting, setDeleting] = useState(false);
+ 711 │   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
+ 712 │   const [captionExpanded, setCaptionExpanded] = useState(false);
+ 713 │   const [showCopied, setShowCopied] = useState(false);
+ 714 │   const [loginTooltip, setLoginTooltip] = useState<string | null>(null);
+ 715 │   const [postImgError, setPostImgError] = useState(false);
+ 716 │   const [translating, setTranslating] = useState(false);
+ 717 │   const loginTooltipTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+ 718 │ 
+ 719 │   const isAuthor = userId === post.user_id;
+ 720 │   const canDelete = isAuthor || isAdmin;
+ 721 │   const showFollowButton = userId && !isAuthor;
+ 722 │   const canTranslate = (isAuthor || isAdmin) && post.caption && !post.i18n?.hy?.caption;
+ 723 │ 
+ 724 │   const { lang } = useT();
+     ·           ──┬─
+     ·             ╰── `lang` redefined here
+ 725 │   const displayCaption = lang === 'hy'
+ 726 │     ? (localize(post as unknown as Record<string, unknown>, 'caption', 'hy') || post.caption)
+ 727 │     : post.caption;
+     ╰────
+
+  × the name `lang` is defined multiple times
+      ╭─[/Users/admin/Desktop/claude code armen/pure-pet-clone/src/app/community/page.tsx:1083:1]
+ 1083 │   onDelete: (postId: number) => void;
+ 1084 │   onPostUpdated: (postId: number, updates: Partial<Post>) => void;
+ 1085 │ }) {
+ 1086 │   const { t, lang } = useT();
+      ·              ──┬─
+      ·                ╰── previous definition of `lang` here
+ 1087 │   const [showComments, setShowComments] = useState(false);
+ 1088 │   const [localCommentsCount, setLocalCommentsCount] = useState(
+ 1089 │     post.comments_count
+ 1090 │   );
+ 1091 │   const [reporting, setReporting] = useState(false);
+ 1092 │   const [reported, setReported] = useState(false);
+ 1093 │   const [deleting, setDeleting] = useState(false);
+ 1094 │   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
+ 1095 │   const [captionExpanded, setCaptionExpanded] = useState(false);
+ 1096 │   const [showCopied, setShowCopied] = useState(false);
+ 1097 │   const [loginTooltip, setLoginTooltip] = useState<string | null>(null);
+ 1098 │   const [postImgError, setPostImgError] = useState(false);
+ 1099 │   const [translating, setTranslating] = useState(false);
+ 1100 │   const loginTooltipTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+ 1101 │ 
+ 1102 │   const isAuthor = userId === post.user_id;
+ 1103 │   const canDelete = isAuthor || isAdmin;
+ 1104 │   const showFollowButton = userId && !isAuthor;
+ 1105 │   const canTranslate = (isAuthor || isAdmin) && post.caption && !post.i18n?.hy?.caption;
+ 1106 │ 
+ 1107 │   const { lang } = useT();
+      ·           ──┬─
+      ·             ╰── `lang` redefined here
+ 1108 │   const displayCaption = lang === 'hy'
+ 1109 │     ? (localize(post as unknown as Record<string, unknown>, 'caption', 'hy') || post.caption)
+ 1110 │     : post.caption;
+      ╰────
+
+Import trace for requested module:
+./src/app/community/page.tsx @ webpack-internal:///(app-pages-browser)/./node_modules/next/dist/client/app-index.js:32
+[  644077ms] [LOG] [Fast Refresh] rebuilding @ webpack-internal:///(app-pages-browser)/./node_modules/next/dist/client/components/react-dev-overlay/app/hot-reloader-client.js:186
+[  646913ms] [ERROR] ./src/app/community/page.tsx
+Error: 
+  × the name `lang` is defined multiple times
+     ╭─[/Users/admin/Desktop/claude code armen/pure-pet-clone/src/app/community/page.tsx:700:1]
+ 700 │   onDelete: (postId: number) => void;
+ 701 │   onPostUpdated: (postId: number, updates: Partial<Post>) => void;
+ 702 │ }) {
+ 703 │   const { t, lang } = useT();
+     ·              ──┬─
+     ·                ╰── previous definition of `lang` here
+ 704 │   const [showComments, setShowComments] = useState(false);
+ 705 │   const [localCommentsCount, setLocalCommentsCount] = useState(
+ 706 │     post.comments_count
+ 707 │   );
+ 708 │   const [reporting, setReporting] = useState(false);
+ 709 │   const [reported, setReported] = useState(false);
+ 710 │   const [deleting, setDeleting] = useState(false);
+ 711 │   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
+ 712 │   const [captionExpanded, setCaptionExpanded] = useState(false);
+ 713 │   const [showCopied, setShowCopied] = useState(false);
+ 714 │   const [loginTooltip, setLoginTooltip] = useState<string | null>(null);
+ 715 │   const [postImgError, setPostImgError] = useState(false);
+ 716 │   const [translating, setTranslating] = useState(false);
+ 717 │   const loginTooltipTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+ 718 │ 
+ 719 │   const isAuthor = userId === post.user_id;
+ 720 │   const canDelete = isAuthor || isAdmin;
+ 721 │   const showFollowButton = userId && !isAuthor;
+ 722 │   const canTranslate = (isAuthor || isAdmin) && post.caption && !post.i18n?.hy?.caption;
+ 723 │ 
+ 724 │   const { lang } = useT();
+     ·           ──┬─
+     ·             ╰── `lang` redefined here
+ 725 │   const displayCaption = lang === 'hy'
+ 726 │     ? (localize(post as unknown as Record<string, unknown>, 'caption', 'hy') || post.caption)
+ 727 │     : post.caption;
+     ╰────
+
+  × the name `lang` is defined multiple times
+      ╭─[/Users/admin/Desktop/claude code armen/pure-pet-clone/src/app/community/page.tsx:1083:1]
+ 1083 │   onDelete: (postId: number) => void;
+ 1084 │   onPostUpdated: (postId: number, updates: Partial<Post>) => void;
+ 1085 │ }) {
+ 1086 │   const { t, lang } = useT();
+      ·              ──┬─
+      ·                ╰── previous definition of `lang` here
+ 1087 │   const [showComments, setShowComments] = useState(false);
+ 1088 │   const [localCommentsCount, setLocalCommentsCount] = useState(
+ 1089 │     post.comments_count
+ 1090 │   );
+ 1091 │   const [reporting, setReporting] = useState(false);
+ 1092 │   const [reported, setReported] = useState(false);
+ 1093 │   const [deleting, setDeleting] = useState(false);
+ 1094 │   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
+ 1095 │   const [captionExpanded, setCaptionExpanded] = useState(false);
+ 1096 │   const [showCopied, setShowCopied] = useState(false);
+ 1097 │   const [loginTooltip, setLoginTooltip] = useState<string | null>(null);
+ 1098 │   const [postImgError, setPostImgError] = useState(false);
+ 1099 │   const [translating, setTranslating] = useState(false);
+ 1100 │   const loginTooltipTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+ 1101 │ 
+ 1102 │   const isAuthor = userId === post.user_id;
+ 1103 │   const canDelete = isAuthor || isAdmin;
+ 1104 │   const showFollowButton = userId && !isAuthor;
+ 1105 │   const canTranslate = (isAuthor || isAdmin) && post.caption && !post.i18n?.hy?.caption;
+ 1106 │ 
+ 1107 │   const { lang } = useT();
+      ·           ──┬─
+      ·             ╰── `lang` redefined here
+ 1108 │   const displayCaption = lang === 'hy'
+ 1109 │     ? (localize(post as unknown as Record<string, unknown>, 'caption', 'hy') || post.caption)
+ 1110 │     : post.caption;
+      ╰────
+
+Import trace for requested module:
+./src/app/community/page.tsx @ webpack-internal:///(app-pages-browser)/./node_modules/next/dist/client/app-index.js:32
+[  658949ms] [LOG] [Fast Refresh] rebuilding @ webpack-internal:///(app-pages-browser)/./node_modules/next/dist/client/components/react-dev-overlay/app/hot-reloader-client.js:186
+[  660990ms] [LOG] [Fast Refresh] done in 2042ms @ webpack-internal:///(app-pages-browser)/./node_modules/next/dist/client/components/react-dev-overlay/app/hot-reloader-client.js:43
+[  677416ms] [LOG] [Fast Refresh] rebuilding @ webpack-internal:///(app-pages-browser)/./node_modules/next/dist/client/components/react-dev-overlay/app/hot-reloader-client.js:186
+[  679573ms] [LOG] [Fast Refresh] done in 2157ms @ webpack-internal:///(app-pages-browser)/./node_modules/next/dist/client/components/react-dev-overlay/app/hot-reloader-client.js:43
+[  699987ms] [LOG] [Fast Refresh] rebuilding @ webpack-internal:///(app-pages-browser)/./node_modules/next/dist/client/components/react-dev-overlay/app/hot-reloader-client.js:186
+[  700748ms] [LOG] [Fast Refresh] done in 762ms @ webpack-internal:///(app-pages-browser)/./node_modules/next/dist/client/components/react-dev-overlay/app/hot-reloader-client.js:43
+[  707444ms] [LOG] [Fast Refresh] rebuilding @ webpack-internal:///(app-pages-browser)/./node_modules/next/dist/client/components/react-dev-overlay/app/hot-reloader-client.js:186
+[  708075ms] [LOG] [Fast Refresh] done in 631ms @ webpack-internal:///(app-pages-browser)/./node_modules/next/dist/client/components/react-dev-overlay/app/hot-reloader-client.js:43
+[  720152ms] [LOG] [Fast Refresh] rebuilding @ webpack-internal:///(app-pages-browser)/./node_modules/next/dist/client/components/react-dev-overlay/app/hot-reloader-client.js:186
+[  720822ms] [LOG] [Fast Refresh] done in 670ms @ webpack-internal:///(app-pages-browser)/./node_modules/next/dist/client/components/react-dev-overlay/app/hot-reloader-client.js:43
+[  726719ms] [LOG] [Fast Refresh] rebuilding @ webpack-internal:///(app-pages-browser)/./node_modules/next/dist/client/components/react-dev-overlay/app/hot-reloader-client.js:186
+[  727320ms] [LOG] [Fast Refresh] done in 601ms @ webpack-internal:///(app-pages-browser)/./node_modules/next/dist/client/components/react-dev-overlay/app/hot-reloader-client.js:43
+[  742011ms] [LOG] [Fast Refresh] rebuilding @ webpack-internal:///(app-pages-browser)/./node_modules/next/dist/client/components/react-dev-overlay/app/hot-reloader-client.js:186
+[  742500ms] [LOG] [Fast Refresh] done in 488ms @ webpack-internal:///(app-pages-browser)/./node_modules/next/dist/client/components/react-dev-overlay/app/hot-reloader-client.js:43
+[  750351ms] [LOG] [Fast Refresh] rebuilding @ webpack-internal:///(app-pages-browser)/./node_modules/next/dist/client/components/react-dev-overlay/app/hot-reloader-client.js:186
+[  751339ms] [LOG] [Fast Refresh] done in 988ms @ webpack-internal:///(app-pages-browser)/./node_modules/next/dist/client/components/react-dev-overlay/app/hot-reloader-client.js:43
+[  756859ms] [LOG] [Fast Refresh] rebuilding @ webpack-internal:///(app-pages-browser)/./node_modules/next/dist/client/components/react-dev-overlay/app/hot-reloader-client.js:186
+[  757417ms] [LOG] [Fast Refresh] done in 558ms @ webpack-internal:///(app-pages-browser)/./node_modules/next/dist/client/components/react-dev-overlay/app/hot-reloader-client.js:43
+[  764279ms] [LOG] [Fast Refresh] rebuilding @ webpack-internal:///(app-pages-browser)/./node_modules/next/dist/client/components/react-dev-overlay/app/hot-reloader-client.js:186
+[  765717ms] [LOG] [Fast Refresh] done in 1438ms @ webpack-internal:///(app-pages-browser)/./node_modules/next/dist/client/components/react-dev-overlay/app/hot-reloader-client.js:43
+[  771110ms] [LOG] [Fast Refresh] rebuilding @ webpack-internal:///(app-pages-browser)/./node_modules/next/dist/client/components/react-dev-overlay/app/hot-reloader-client.js:186
+[  772222ms] [LOG] [Fast Refresh] done in 1111ms @ webpack-internal:///(app-pages-browser)/./node_modules/next/dist/client/components/react-dev-overlay/app/hot-reloader-client.js:43
+[  783370ms] [LOG] [Fast Refresh] rebuilding @ webpack-internal:///(app-pages-browser)/./node_modules/next/dist/client/components/react-dev-overlay/app/hot-reloader-client.js:186
+[  784312ms] [LOG] [Fast Refresh] done in 942ms @ webpack-internal:///(app-pages-browser)/./node_modules/next/dist/client/components/react-dev-overlay/app/hot-reloader-client.js:43
+[  792612ms] [LOG] [Fast Refresh] rebuilding @ webpack-internal:///(app-pages-browser)/./node_modules/next/dist/client/components/react-dev-overlay/app/hot-reloader-client.js:186
+[  793599ms] [LOG] [Fast Refresh] done in 987ms @ webpack-internal:///(app-pages-browser)/./node_modules/next/dist/client/components/react-dev-overlay/app/hot-reloader-client.js:43
+[  808095ms] [LOG] [Fast Refresh] rebuilding @ webpack-internal:///(app-pages-browser)/./node_modules/next/dist/client/components/react-dev-overlay/app/hot-reloader-client.js:186
+[  808579ms] [LOG] [Fast Refresh] done in 484ms @ webpack-internal:///(app-pages-browser)/./node_modules/next/dist/client/components/react-dev-overlay/app/hot-reloader-client.js:43
+[  816550ms] [LOG] [Fast Refresh] rebuilding @ webpack-internal:///(app-pages-browser)/./node_modules/next/dist/client/components/react-dev-overlay/app/hot-reloader-client.js:186
+[  817250ms] [LOG] [Fast Refresh] done in 701ms @ webpack-internal:///(app-pages-browser)/./node_modules/next/dist/client/components/react-dev-overlay/app/hot-reloader-client.js:43
+[  829300ms] [LOG] [Fast Refresh] rebuilding @ webpack-internal:///(app-pages-browser)/./node_modules/next/dist/client/components/react-dev-overlay/app/hot-reloader-client.js:186
+[  829671ms] [LOG] [Fast Refresh] done in 372ms @ webpack-internal:///(app-pages-browser)/./node_modules/next/dist/client/components/react-dev-overlay/app/hot-reloader-client.js:43
+[  837852ms] [LOG] [Fast Refresh] rebuilding @ webpack-internal:///(app-pages-browser)/./node_modules/next/dist/client/components/react-dev-overlay/app/hot-reloader-client.js:186
+[  838257ms] [LOG] [Fast Refresh] done in 404ms @ webpack-internal:///(app-pages-browser)/./node_modules/next/dist/client/components/react-dev-overlay/app/hot-reloader-client.js:43
+[  845443ms] [LOG] [Fast Refresh] rebuilding @ webpack-internal:///(app-pages-browser)/./node_modules/next/dist/client/components/react-dev-overlay/app/hot-reloader-client.js:186
+[  845898ms] [LOG] [Fast Refresh] done in 455ms @ webpack-internal:///(app-pages-browser)/./node_modules/next/dist/client/components/react-dev-overlay/app/hot-reloader-client.js:43
+[  851440ms] [LOG] [Fast Refresh] rebuilding @ webpack-internal:///(app-pages-browser)/./node_modules/next/dist/client/components/react-dev-overlay/app/hot-reloader-client.js:186
+[  851874ms] [LOG] [Fast Refresh] done in 434ms @ webpack-internal:///(app-pages-browser)/./node_modules/next/dist/client/components/react-dev-overlay/app/hot-reloader-client.js:43
+[  874197ms] [LOG] [Fast Refresh] rebuilding @ webpack-internal:///(app-pages-browser)/./node_modules/next/dist/client/components/react-dev-overlay/app/hot-reloader-client.js:186
+[  874786ms] [LOG] [Fast Refresh] done in 589ms @ webpack-internal:///(app-pages-browser)/./node_modules/next/dist/client/components/react-dev-overlay/app/hot-reloader-client.js:43

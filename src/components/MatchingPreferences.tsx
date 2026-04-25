@@ -1,8 +1,10 @@
+"use client";
 import { useState, useEffect, useRef } from "react";
 import { useAuth } from "@/lib/auth";
 import { supabase } from "@/lib/supabase";
 import type { MatchingPreferences as MatchPrefsType } from "@/lib/matching-types";
 import { getBreedsByPetType, ARMENIAN_CITIES } from "@/lib/constants";
+import { useT } from "@/lib/i18n/LangProvider";
 
 interface MatchingPreferencesProps {
   petProfileId?: string;
@@ -34,6 +36,7 @@ interface PreferencesState extends Partial<MatchPrefsType> {
 const COMMON_CITIES = ARMENIAN_CITIES;
 
 export default function MatchingPreferences({ petProfileId, petType, onPreferencesChange }: MatchingPreferencesProps) {
+  const { t } = useT();
   const { user } = useAuth();
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
@@ -129,6 +132,14 @@ export default function MatchingPreferences({ petProfileId, petType, onPreferenc
 
   const fetchPreferences = async () => {
     try {
+      // Load user's own pet profile so we can prefill preferences
+      // (city, breed, gender, weight, age) from signup data.
+      const { data: petProfile } = await supabase
+        .from("pet_profiles")
+        .select("breed, gender, city, weight_kg, dog_age_years")
+        .eq("id", petProfileId)
+        .maybeSingle();
+
       const { data } = await supabase
         .from("matching_preferences")
         .select("*")
@@ -136,8 +147,47 @@ export default function MatchingPreferences({ petProfileId, petType, onPreferenc
         .eq("pet_profile_id", petProfileId)
         .maybeSingle();
 
+      const weight = petProfile?.weight_kg ? Number(petProfile.weight_kg) : null;
+      const age = petProfile?.dog_age_years ? Number(petProfile.dog_age_years) : null;
+
       if (data) {
-        setPreferences(data);
+        // Backfill fields from the pet profile when the saved preference row
+        // left them empty — so returning users don't see blank selectors.
+        setPreferences((prev) => {
+          const merged = { ...prev, ...data } as PreferencesState;
+          if (petProfile) {
+            if ((!merged.preferred_cities || merged.preferred_cities.length === 0) && petProfile.city) {
+              merged.preferred_cities = [petProfile.city];
+            }
+            if ((!merged.preferred_breeds || merged.preferred_breeds.length === 0) && petProfile.breed) {
+              merged.preferred_breeds = [petProfile.breed];
+            }
+            if ((!merged.preferred_genders || merged.preferred_genders.length === 0) && petProfile.gender) {
+              merged.preferred_genders = [petProfile.gender];
+            }
+            if ((!merged.preferred_weight_max || merged.preferred_weight_max === 100) && weight) {
+              merged.preferred_weight_max = Math.min(100, Math.ceil(weight * 1.5));
+            }
+            if ((!merged.preferred_age_max || merged.preferred_age_max === 20) && age) {
+              merged.preferred_age_max = Math.min(20, Math.ceil(age + 3));
+            }
+          }
+          return merged;
+        });
+      } else if (petProfile) {
+        // First time — seed entirely from pet profile.
+        setPreferences((prev) => ({
+          ...prev,
+          preferred_cities: petProfile.city ? [petProfile.city] : prev.preferred_cities,
+          preferred_breeds: petProfile.breed ? [petProfile.breed] : prev.preferred_breeds,
+          preferred_genders: petProfile.gender ? [petProfile.gender] : prev.preferred_genders,
+          preferred_weight_max: weight
+            ? Math.min(100, Math.ceil(weight * 1.5))
+            : prev.preferred_weight_max,
+          preferred_age_max: age
+            ? Math.min(20, Math.ceil(age + 3))
+            : prev.preferred_age_max,
+        }));
       }
     } catch (error) {
       console.error("Error fetching preferences:", error);
@@ -167,7 +217,7 @@ export default function MatchingPreferences({ petProfileId, petType, onPreferenc
       onPreferencesChange?.(data);
     } catch (error) {
       console.error("Error saving preferences:", error);
-      alert("Failed to save preferences. Please try again.");
+      alert(t("prefs.saveErr"));
     } finally {
       setSaving(false);
     }
@@ -198,15 +248,15 @@ export default function MatchingPreferences({ petProfileId, petType, onPreferenc
     <div className="space-y-6">
       {/* Header */}
       <div>
-        <h3 className="text-lg font-medium text-gray-900 tracking-wide">Matching Preferences</h3>
+        <h3 className="text-lg font-medium text-gray-900 tracking-wide">{t("prefs.heading")}</h3>
         <p className="text-sm text-gray-600 mt-1">
-          Set your preferences to find better matches for your pet
+          {t("prefs.subtitle")}
         </p>
       </div>
 
       {/* Location Preferences */}
       <div className="bg-gray-50 p-4 rounded-lg">
-        <h4 className="font-medium text-gray-900 mb-3">📍 Location Preferences</h4>
+        <h4 className="font-medium text-gray-900 mb-3">📍 {t("prefs.location.heading")}</h4>
         
         <div className="space-y-3">
           <div className="flex items-center">
@@ -218,7 +268,7 @@ export default function MatchingPreferences({ petProfileId, petType, onPreferenc
               className="mr-2 h-4 w-4 text-gold focus:ring-gold border-gray-300 rounded"
             />
             <label htmlFor="accept-any-city" className="text-sm text-gray-700">
-              Accept pets from any city
+              {t("prefs.location.anyCity")}
             </label>
           </div>
 
@@ -240,7 +290,7 @@ export default function MatchingPreferences({ petProfileId, petType, onPreferenc
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">Preferred Cities</label>
+                <label className="block text-sm font-medium text-gray-700 mb-2">{t("prefs.location.preferredCities")}</label>
                 <div className="grid grid-cols-2 gap-2">
                   {COMMON_CITIES.map(city => (
                     <label key={city} className="flex items-center text-sm">
@@ -262,12 +312,12 @@ export default function MatchingPreferences({ petProfileId, petType, onPreferenc
 
       {/* Pet Preferences */}
       <div className="bg-gray-50 p-4 rounded-lg">
-        <h4 className="font-medium text-gray-900 mb-3">🐕 Pet Preferences</h4>
+        <h4 className="font-medium text-gray-900 mb-3">🐕 {t("prefs.pet.heading")}</h4>
         
         <div className="space-y-4">
           {/* Gender */}
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">Gender Preference</label>
+            <label className="block text-sm font-medium text-gray-700 mb-2">{t("prefs.pet.gender")}</label>
             <div className="space-x-4">
               {configOptions.genders.map(gender => (
                 <label key={gender} className="inline-flex items-center">
@@ -285,7 +335,7 @@ export default function MatchingPreferences({ petProfileId, petType, onPreferenc
 
           {/* Breeds */}
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">Preferred Breeds</label>
+            <label className="block text-sm font-medium text-gray-700 mb-2">{t("prefs.pet.breeds")}</label>
             {/* Selected breed tags */}
             {(preferences.preferred_breeds || []).length > 0 && (
               <div className="flex flex-wrap gap-2 mb-2">
@@ -312,7 +362,7 @@ export default function MatchingPreferences({ petProfileId, petType, onPreferenc
                 onChange={e => { setBreedSearch(e.target.value); setBreedDropdownOpen(true); }}
                 onFocus={() => setBreedDropdownOpen(true)}
                 onBlur={() => setTimeout(() => setBreedDropdownOpen(false), 150)}
-                placeholder="Type to search breeds..."
+                placeholder={t("prefs.pet.breedPh")}
                 className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-gold focus:border-transparent"
               />
               {breedDropdownOpen && filteredBreeds.length > 0 && (
@@ -338,7 +388,7 @@ export default function MatchingPreferences({ petProfileId, petType, onPreferenc
           {/* Age Range */}
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">
-              Max Age: <span className="text-gold font-semibold">{preferences.preferred_age_max} years</span>
+              {t("prefs.pet.maxAge")} <span className="text-gold font-semibold">{preferences.preferred_age_max} years</span>
             </label>
             <div className="flex items-center gap-3 mt-2">
               <span className="text-xs text-gray-400">0</span>
@@ -357,7 +407,7 @@ export default function MatchingPreferences({ petProfileId, petType, onPreferenc
           {/* Weight Range */}
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">
-              Max Weight: <span className="text-gold font-semibold">{preferences.preferred_weight_max} kg</span>
+              {t("prefs.pet.maxWeight")} <span className="text-gold font-semibold">{preferences.preferred_weight_max} kg</span>
             </label>
             <div className="flex items-center gap-3 mt-2">
               <span className="text-xs text-gray-400">0</span>
@@ -376,80 +426,6 @@ export default function MatchingPreferences({ petProfileId, petType, onPreferenc
         </div>
       </div>
 
-      {/* Matching Goals */}
-      <div className="bg-gray-50 p-4 rounded-lg">
-        <h4 className="font-medium text-gray-900 mb-3">🎯 What are you looking for?</h4>
-        
-        <div className="space-y-2">
-          <label className="flex items-center">
-            <input
-              type="checkbox"
-              checked={preferences.looking_for_playmates}
-              onChange={(e) => updatePreference("looking_for_playmates", e.target.checked)}
-              className="mr-2 h-4 w-4 text-gold focus:ring-gold border-gray-300 rounded"
-            />
-            <span className="text-sm text-gray-700">Playmates for my pet</span>
-          </label>
-          
-          <label className="flex items-center">
-            <input
-              type="checkbox"
-              checked={preferences.looking_for_mate}
-              onChange={(e) => updatePreference("looking_for_mate", e.target.checked)}
-              className="mr-2 h-4 w-4 text-gold focus:ring-gold border-gray-300 rounded"
-            />
-            <span className="text-sm text-gray-700">A mate for my pet</span>
-          </label>
-          
-          <label className="flex items-center">
-            <input
-              type="checkbox"
-              checked={preferences.looking_for_walking_buddies}
-              onChange={(e) => updatePreference("looking_for_walking_buddies", e.target.checked)}
-              className="mr-2 h-4 w-4 text-gold focus:ring-gold border-gray-300 rounded"
-            />
-            <span className="text-sm text-gray-700">Walking buddies</span>
-          </label>
-        </div>
-      </div>
-
-      {/* Filter Settings */}
-      <div className="bg-gray-50 p-4 rounded-lg">
-        <h4 className="font-medium text-gray-900 mb-3">⚙️ Filter Settings</h4>
-        
-        <div className="space-y-2">
-          <label className="flex items-center">
-            <input
-              type="checkbox"
-              checked={preferences.exclude_already_seen}
-              onChange={(e) => updatePreference("exclude_already_seen", e.target.checked)}
-              className="mr-2 h-4 w-4 text-gold focus:ring-gold border-gray-300 rounded"
-            />
-            <span className="text-sm text-gray-700">Hide pets I&apos;ve already seen</span>
-          </label>
-          
-          <label className="flex items-center">
-            <input
-              type="checkbox"
-              checked={preferences.exclude_already_liked}
-              onChange={(e) => updatePreference("exclude_already_liked", e.target.checked)}
-              className="mr-2 h-4 w-4 text-gold focus:ring-gold border-gray-300 rounded"
-            />
-            <span className="text-sm text-gray-700">Hide pets I&apos;ve already liked</span>
-          </label>
-          
-          <label className="flex items-center">
-            <input
-              type="checkbox"
-              checked={preferences.exclude_already_disliked}
-              onChange={(e) => updatePreference("exclude_already_disliked", e.target.checked)}
-              className="mr-2 h-4 w-4 text-gold focus:ring-gold border-gray-300 rounded"
-            />
-            <span className="text-sm text-gray-700">Hide pets I&apos;ve already disliked</span>
-          </label>
-        </div>
-      </div>
-
       {/* Save Button */}
       <div className="flex justify-end">
         <button
@@ -457,7 +433,7 @@ export default function MatchingPreferences({ petProfileId, petType, onPreferenc
           disabled={saving}
           className="bg-gold hover:bg-yellow-500 text-white font-medium py-2 px-6 rounded-lg transition-colors disabled:opacity-50"
         >
-          {saving ? "Saving..." : "Save Preferences"}
+          {saving ? t("prefs.saving") : t("prefs.saveBtn")}
         </button>
       </div>
     </div>

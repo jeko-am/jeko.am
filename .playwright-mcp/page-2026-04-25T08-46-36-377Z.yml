@@ -1,0 +1,409 @@
+- generic [active] [ref=e1]:
+  - alert [ref=e6]
+  - generic [ref=e7]:
+    - complementary [ref=e8]:
+      - generic [ref=e10]:
+        - heading "Jeko" [level=1] [ref=e11]
+        - paragraph [ref=e12]: Admin Panel
+      - navigation [ref=e13]:
+        - link "Dashboard" [ref=e14] [cursor=pointer]:
+          - /url: /admin/dashboard
+          - img [ref=e15]
+          - text: Dashboard
+        - link "Store Editor" [ref=e17] [cursor=pointer]:
+          - /url: /admin/store-editor
+          - img [ref=e18]
+          - text: Store Editor
+        - link "Translations" [ref=e20] [cursor=pointer]:
+          - /url: /admin/translations
+          - img [ref=e21]
+          - text: Translations
+        - link "Products" [ref=e23] [cursor=pointer]:
+          - /url: /admin/products
+          - img [ref=e24]
+          - text: Products
+        - link "Bundles" [ref=e26] [cursor=pointer]:
+          - /url: /admin/bundles
+          - img [ref=e27]
+          - text: Bundles
+        - link "Upsells" [ref=e29] [cursor=pointer]:
+          - /url: /admin/upsells
+          - img [ref=e30]
+          - text: Upsells
+        - link "Categories" [ref=e32] [cursor=pointer]:
+          - /url: /admin/categories
+          - img [ref=e33]
+          - text: Categories
+        - link "Orders" [ref=e35] [cursor=pointer]:
+          - /url: /admin/orders
+          - img [ref=e36]
+          - text: Orders
+        - link "Customers" [ref=e38] [cursor=pointer]:
+          - /url: /admin/customers
+          - img [ref=e39]
+          - text: Customers
+        - link "Reviews" [ref=e41] [cursor=pointer]:
+          - /url: /admin/reviews
+          - img [ref=e42]
+          - text: Reviews
+        - link "Community" [ref=e44] [cursor=pointer]:
+          - /url: /admin/community
+          - img [ref=e45]
+          - text: Community
+        - link "Discounts" [ref=e47] [cursor=pointer]:
+          - /url: /admin/discounts
+          - img [ref=e48]
+          - text: Discounts
+        - link "Pages" [ref=e50] [cursor=pointer]:
+          - /url: /admin/pages
+          - img [ref=e51]
+          - text: Pages
+        - link "Blog" [ref=e53] [cursor=pointer]:
+          - /url: /admin/blog
+          - img [ref=e54]
+          - text: Blog
+        - link "Settings" [ref=e56] [cursor=pointer]:
+          - /url: /admin/settings
+          - img [ref=e57]
+          - text: Settings
+        - link "Analytics" [ref=e59] [cursor=pointer]:
+          - /url: /admin/analytics
+          - img [ref=e60]
+          - text: Analytics
+        - link "Support" [ref=e62] [cursor=pointer]:
+          - /url: /admin/support
+          - img [ref=e63]
+          - text: Support
+      - generic [ref=e65]:
+        - link "View Store" [ref=e66] [cursor=pointer]:
+          - /url: /
+          - img [ref=e67]
+          - text: View Store
+        - button "Sign Out" [ref=e69] [cursor=pointer]:
+          - img [ref=e70]
+          - text: Sign Out
+    - generic [ref=e72]:
+      - banner [ref=e73]:
+        - button [ref=e74] [cursor=pointer]:
+          - img [ref=e75]
+        - generic [ref=e77]:
+          - generic [ref=e78]:
+            - generic [ref=e79]: "Editing:"
+            - generic [ref=e80]:
+              - button "Edit English content" [ref=e81] [cursor=pointer]:
+                - generic [ref=e82]: 🇬🇧
+                - generic [ref=e83]: EN
+              - button "Edit Armenian content" [ref=e84] [cursor=pointer]:
+                - generic [ref=e85]: 🇦🇲
+                - generic [ref=e86]: HY
+            - generic [ref=e87]: Armenian edits only
+          - generic [ref=e89]: admin@purepet.test
+          - generic [ref=e90]: A
+      - main [ref=e91]:
+        - generic [ref=e92]:
+          - generic [ref=e93]:
+            - generic [ref=e325]:
+              - img [ref=e327]
+              - generic [ref=e329]:
+                - heading "Online Store" [level=1] [ref=e330]
+                - paragraph [ref=e331]: "Health & Breeds: Hypoallergenic"
+            - generic [ref=e332]:
+              - generic [ref=e333]:
+                - button "Mobile (390px)" [ref=e334] [cursor=pointer]:
+                  - img [ref=e335]
+                - button "Tablet (768px)" [ref=e337] [cursor=pointer]:
+                  - img [ref=e338]
+                - button "Desktop" [ref=e340] [cursor=pointer]:
+                  - img [ref=e341]
+              - button "Refresh preview" [ref=e343] [cursor=pointer]:
+                - img [ref=e344]
+              - link "View Store" [ref=e346] [cursor=pointer]:
+                - /url: /benefits/hypoallergenic
+                - img [ref=e347]
+                - text: View Store
+          - generic [ref=e349]:
+            - generic [ref=e351]:
+              - generic [ref=e352]:
+                - generic [ref=e353]: Page
+                - combobox [ref=e354] [cursor=pointer]:
+                  - option "Homepage"
+                  - option "About"
+                  - option "Benefits"
+                  - 'option "Health & Breeds: Colitis"'
+                  - 'option "Health & Breeds: Digestion Issues"'
+                  - 'option "Health & Breeds: Hypoallergenic" [selected]'
+                  - 'option "Health & Breeds: Pancreatitis"'
+                  - 'option "Health & Breeds: Weight Management"'
+                  - option "Recipes"
+                  - option "Reviews"
+                  - option "Signup"
+                  - option "Beyond the Bowl"
+                  - option "Contact"
+                  - option "Community"
+                  - option "Blog"
+                  - option "Cart"
+                  - option "Checkout"
+                  - option "Profile"
+                  - option "Find Pet Owners"
+                  - option "Swipe"
+                  - option "Matches"
+                  - option "Messages"
+                  - option "Login"
+                  - option "Signup (Auth)"
+                  - option "Privacy Policy"
+                  - option "Terms of Use"
+                  - option "Cookie Policy"
+                  - option "Refund Policy"
+                  - option "Shipping Policy"
+                  - option "Returns"
+                  - option "Delivery Information"
+                  - option "Site Security"
+                  - option "Pure Policies"
+                  - option "Sitemap"
+                  - option "Matching Preferences"
+                  - option "SEO"
+                  - option "Beef + Rice + Veggies"
+                  - option "Chicken + Quinoa + Greens"
+                  - option "Chickpea + Quinoa Plant Mix"
+                  - option "Cod + Rice + Veggies"
+                  - option "Tuna + Rice Bowl"
+              - paragraph [ref=e356]: Sections
+              - generic [ref=e357]:
+                - generic [ref=e358] [cursor=pointer]:
+                  - img [ref=e360]
+                  - generic [ref=e362]: Hero
+                  - generic [ref=e363]:
+                    - button "Hide" [ref=e364]:
+                      - img [ref=e365]
+                    - img [ref=e368]
+                - generic [ref=e370] [cursor=pointer]:
+                  - img [ref=e372]
+                  - generic [ref=e374]: What Is
+                  - generic [ref=e375]:
+                    - button "Hide" [ref=e376]:
+                      - img [ref=e377]
+                    - img [ref=e380]
+                - generic [ref=e382] [cursor=pointer]:
+                  - img [ref=e384]
+                  - generic [ref=e386]: Symptoms / Signs
+                  - generic [ref=e387]:
+                    - button "Hide" [ref=e388]:
+                      - img [ref=e389]
+                    - img [ref=e392]
+                - generic [ref=e394] [cursor=pointer]:
+                  - img [ref=e396]
+                  - generic [ref=e398]: How Diet Helps
+                  - generic [ref=e399]:
+                    - button "Hide" [ref=e400]:
+                      - img [ref=e401]
+                    - img [ref=e404]
+                - generic [ref=e406] [cursor=pointer]:
+                  - img [ref=e408]
+                  - generic [ref=e410]: Testimonial
+                  - generic [ref=e411]:
+                    - button "Hide" [ref=e412]:
+                      - img [ref=e413]
+                    - img [ref=e416]
+                - generic [ref=e418] [cursor=pointer]:
+                  - img [ref=e420]
+                  - generic [ref=e422]: FAQs
+                  - generic [ref=e423]:
+                    - button "Hide" [ref=e424]:
+                      - img [ref=e425]
+                    - img [ref=e428]
+                - generic [ref=e430] [cursor=pointer]:
+                  - img [ref=e432]
+                  - generic [ref=e434]: CTA Block
+                  - generic [ref=e435]:
+                    - button "Hide" [ref=e436]:
+                      - img [ref=e437]
+                    - img [ref=e440]
+            - generic [ref=e442]:
+              - generic [ref=e444]: Full Width — Desktop
+              - iframe [ref=e447]:
+                - generic [active] [ref=f8e1]:
+                  - banner [ref=f8e2]:
+                    - generic [ref=f8e4]:
+                      - link "JEKO" [ref=f8e5] [cursor=pointer]:
+                        - /url: /
+                        - generic [ref=f8e6]: JEKO
+                      - button "Open menu" [ref=f8e7] [cursor=pointer]:
+                        - img [ref=f8e8]
+                  - main [ref=f8e10]:
+                    - generic [ref=f8e11]:
+                      - img "Hypoallergenic" [ref=f8e13]
+                      - generic [ref=f8e16]:
+                        - paragraph [ref=f8e17]: Առողջություն և սնուցում
+                        - heading "Հիպոալերգենիկ շան սնունդ" [level=1] [ref=f8e186]
+                        - paragraph [ref=f8e19]: "Սննդային ալերգիաներն ու անհանդուրժողականությունը ազդում են ավելի շատ շների վրա, քան դուք կարող եք մտածել: Բնական, հիպոալերգենային դիետան սահմանափակ բաղադրիչներով կարող է երկարատև թեթևացում բերել:"
+                        - link "Ստեղծել քո շան պլանը" [ref=f8e20] [cursor=pointer]:
+                          - /url: /auth/signup
+                    - generic [ref=f8e22]:
+                      - heading "Ի՞նչ է նշանակում հիպոալերգենիկ շների համար:" [level=2] [ref=f8e187]
+                      - generic [ref=f8e24]:
+                        - paragraph [ref=f8e25]: "Հիպոալերգենային դիետան նախատեսված է նվազագույնի հասցնելու ալերգիկ ռեակցիա առաջացնելու վտանգը: Շների մոտ սննդային ալերգիաները սովորաբար ռեակցիա են հատուկ սպիտակուցների նկատմամբ՝ առավել հաճախ տավարի, կաթնամթերքի, ցորենի, հավի և սոյայի նկատմամբ: Այս ռեակցիաները ժամանակի ընթացքում զարգանում են կրկնակի բացահայտմամբ:"
+                        - paragraph [ref=f8e26]: "Արժե նշել, թե որն է իրական սննդային ալերգիայի (իմունային համակարգի արձագանք) և սննդի անհանդուրժողականության (մարսողական խնդիր) տարբերությունը: Երկուսն էլ կարող են անհանգստություն առաջացնել, բայց ալերգիան հակված է նաև ազդել մաշկի և ականջների վրա, մինչդեռ անհանդուրժողականությունը սովորաբար սահմանափակվում է աղիքների ախտանիշներով:"
+                        - paragraph [ref=f8e27]: "Սննդի հետ կապված ալերգիաները կառավարելու լավագույն մոտեցումը վերացման դիետան է՝ օգտագործելով նոր կամ սահմանափակ բաղադրիչներ, որոնց ձեր շունը նախկինում չի ենթարկվել՝ զուգորդված խուսափելով արհեստական հավելումներից և լցոնիչներից, որոնք կարող են վատթարացնել բորբոքային ռեակցիաները:"
+                    - generic [ref=f8e29]:
+                      - heading "Ուշադրություն դարձրու այս նշաններին" [level=2] [ref=f8e30]
+                      - paragraph [ref=f8e31]: Եթե քո շունը ցույց է տալիս, որ այս հնարավորությունից կարող է մեկը, ճիշտ սնունդը մեծ փոփոխություն է բերել։
+                      - generic [ref=f8e32]:
+                        - generic [ref=f8e33]:
+                          - generic [ref=f8e34]: 🐾
+                          - heading "Մաշկի և թաթերի քոր առաջացում" [level=3] [ref=f8e188]
+                          - paragraph [ref=f8e36]: "Անընդհատ քորելը, թաթերը լիզելը կամ դեմքը կահույքին քսելը սննդային ալերգիայի դասական նշաններ են:"
+                        - generic [ref=f8e37]:
+                          - generic [ref=f8e38]: 👂
+                          - heading "Կրկնվող ականջի վարակներ" [level=3] [ref=f8e189]
+                          - paragraph [ref=f8e40]: "Ականջի քրոնիկ ինֆեկցիաները, որոնք անընդհատ հայտնվում են, նույնիսկ բուժման դեպքում, հաճախ կապված են սննդի նկատմամբ զգայունության հետ:"
+                        - generic [ref=f8e41]:
+                          - generic [ref=f8e42]: 🔴
+                          - heading "Կարմիր, բորբոքված մաշկ" [level=3] [ref=f8e190]
+                          - paragraph [ref=f8e44]: "Թեժ կետեր, ցան կամ կարմրած մաշկ, հատկապես որովայնի, աճուկի և թեւատակերի շրջանում:"
+                        - generic [ref=f8e45]:
+                          - generic [ref=f8e46]: 💩
+                          - heading "Մարսողական խանգարում" [level=3] [ref=f8e191]
+                          - paragraph [ref=f8e48]: "Կղանքը, ավելորդ գազը կամ փսխումը մաշկային ախտանիշների հետ մեկտեղ կարող են վկայել սննդային ալերգիայի մասին:"
+                        - generic [ref=f8e49]:
+                          - generic [ref=f8e50]: 🦠
+                          - heading "Մաշկի վարակներ" [level=3] [ref=f8e192]
+                          - paragraph [ref=f8e52]: "Կրկնվող բակտերիալ կամ խմորիչ մաշկի վարակները կարող են պայմանավորված լինել սննդի նկատմամբ հիմքում ընկած ալերգիկ արձագանքով:"
+                        - generic [ref=f8e53]:
+                          - generic [ref=f8e54]: 😿
+                          - heading "Ձանձրալի, շերտավոր վերարկու" [level=3] [ref=f8e193]
+                          - paragraph [ref=f8e56]: "Վերարկուն, որը կորցրել է իր փայլը, թեփով կամ չափից դուրս թափվելով, կարող է մատնանշել դիետիկ խնդիրները:"
+                    - generic [ref=f8e58]:
+                      - img "Natural dog food" [ref=f8e60]
+                      - generic [ref=f8e62]:
+                        - heading "Relief միջոցով" [level=2] [ref=f8e194]
+                        - paragraph [ref=f8e64]: ճիշտ սնուցման միջոցով
+                        - paragraph [ref=f8e65]: "Շատ առևտրային շների կերակուրներ պարունակում են բաղադրիչների երկար ցուցակ, որոնցից որևէ մեկը կարող է ռեակցիա առաջացնել: Բնական, սահմանափակ բաղադրիչներով դիետան հեշտացնում է խնդրահարույց մթերքների հայտնաբերումը և վերացումը՝ միաժամանակ ապահովելով ամբողջական, հավասարակշռված սնուցում:"
+                        - generic [ref=f8e66]:
+                          - generic [ref=f8e67]:
+                            - img [ref=f8e69]
+                            - generic [ref=f8e71]:
+                              - paragraph [ref=f8e72]: Սահմանափակ, թափանցիկ բաղադրիչներ
+                              - paragraph [ref=f8e73]: "Ավելի քիչ բաղադրիչներ նշանակում են ավելի քիչ պոտենցիալ հրահրողներ: Յուրաքանչյուր բաղադրիչ նշված է հստակ՝ առանց թաքնված տհաճությունների:"
+                          - generic [ref=f8e74]:
+                            - img [ref=f8e76]
+                            - generic [ref=f8e78]:
+                              - paragraph [ref=f8e79]: Սպիտակուցի նոր տարբերակներ
+                              - paragraph [ref=f8e80]: "Սպիտակուցներ, ինչպիսիք են բադը, որսը և սաղմոնը, որոնք շատ շներ նախկինում չէին կերել, ինչը նվազեցնում է առկա զգայունության հավանականությունը:"
+                          - generic [ref=f8e81]:
+                            - img [ref=f8e83]
+                            - generic [ref=f8e85]:
+                              - paragraph [ref=f8e86]: Ընդհանուր ալերգեններ չկան
+                              - paragraph [ref=f8e87]: "Բաղադրատոմսեր, որոնք զերծ են ընդհանուր խթանիչներից, ինչպիսիք են տավարի միսը, կաթնամթերքը, ցորենը, սոյան և արհեստական հավելումները:"
+                          - generic [ref=f8e88]:
+                            - img [ref=f8e90]
+                            - generic [ref=f8e92]:
+                              - paragraph [ref=f8e93]: Հակաբորբոքային սնուցիչներ
+                              - paragraph [ref=f8e94]: "Բնական օմեգա ճարպաթթուները և իրական բաղադրիչներից ստացված հակաօքսիդանտները օգնում են հանգստացնել բորբոքային պատասխանները:"
+                    - generic [ref=f8e96]:
+                      - img "Sophie & Lola" [ref=f8e98]
+                      - blockquote [ref=f8e99]: "“Մեր ֆրանսիական բուլդոգը անընդհատ քորում էր և մի քանի շաբաթը մեկ ականջի ինֆեկցիա էր ունենում: Անասնաբույժը կասկածում էր սննդային ալերգիայի մասին, սակայն դեղատոմսով նախատեսված դիետաները լիովին չլուծեցին այն: Մենք անցանք բադի բնական բաղադրատոմսին և մեկ ամսվա ընթացքում քորը դադարեց, և նրա ականջները մաքրվեցին: Այդ ժամանակվանից նա վարակ չի ունեցել:”"
+                      - paragraph [ref=f8e100]: Sophie & Lola
+                    - generic [ref=f8e102]:
+                      - heading "Հաճախակի տրվող հարցեր" [level=2] [ref=f8e103]
+                      - generic [ref=f8e104]:
+                        - group [ref=f8e105]:
+                          - generic "Ինչպե՞ս պարզել, թե որ բաղադրիչից է իմ շունը ալերգիկ:" [ref=f8e195] [cursor=pointer]:
+                            - text: "Ինչպե՞ս պարզել, թե որ բաղադրիչից է իմ շունը ալերգիկ:"
+                            - img [ref=f8e107]
+                        - group [ref=f8e109]:
+                          - generic "Արդյո՞ք հացահատիկը շների մեջ ամենատարածված ալերգենն է:" [ref=f8e196] [cursor=pointer]:
+                            - text: "Արդյո՞ք հացահատիկը շների մեջ ամենատարածված ալերգենն է:"
+                            - img [ref=f8e111]
+                        - group [ref=f8e113]:
+                          - generic "Կարո՞ղ է իմ շունը հետագայում ալերգիա զարգացնել:" [ref=f8e197] [cursor=pointer]:
+                            - text: "Կարո՞ղ է իմ շունը հետագայում ալերգիա զարգացնել:"
+                            - img [ref=f8e115]
+                        - group [ref=f8e117]:
+                          - generic "Ո՞րն է տարբերությունը հիպոալերգենային և առանց հացահատիկի սննդի միջև:" [ref=f8e198] [cursor=pointer]:
+                            - text: "Ո՞րն է տարբերությունը հիպոալերգենային և առանց հացահատիկի սննդի միջև:"
+                            - img [ref=f8e119]
+                    - generic [ref=f8e122]:
+                      - generic [ref=f8e124]:
+                        - heading "Պատրա՞ստ եք օգնել ձեր" [level=2] [ref=f8e125]
+                        - paragraph [ref=f8e126]: շանը լավ զգալու
+                        - paragraph [ref=f8e127]: Պատմեք մեզ ձեր շան մասին, և մենք կստեղծենք անհատական ճաշացանկ՝ նախատեսված նրա հատուկ կարիքները հոգալու համար։ Անասնաբույժի հաստատմամբ, վստահված հազարավորների կողմից։
+                        - link "Բացահայտել քո շան ճաշացանկը" [ref=f8e128] [cursor=pointer]:
+                          - /url: /products
+                      - img "Happy healthy dog" [ref=f8e130]
+                  - contentinfo [ref=f8e131]:
+                    - generic [ref=f8e132]:
+                      - generic [ref=f8e133]:
+                        - generic [ref=f8e134]:
+                          - heading "Միացիր մեր VIP ցանկին" [level=4] [ref=f8e135]
+                          - paragraph [ref=f8e136]: Առաջինը իմացիր նոր ապրանքների մասին, մասնակցիր բացառիկ մրցույթների և ստացիր օգտակար խորհուրդներ ընտանի կենդանիների խնամքի մասին։
+                          - generic [ref=f8e137]:
+                            - textbox "Մուտքագրիր քո էլ. փոստի հասցեն" [ref=f8e138]
+                            - button "Գրանցվել" [ref=f8e139] [cursor=pointer]
+                        - generic [ref=f8e140]:
+                          - generic [ref=f8e141]:
+                            - heading "Jeko" [level=4] [ref=f8e142]
+                            - list [ref=f8e143]:
+                              - listitem [ref=f8e144]:
+                                - link "Մեր պատմությունը" [ref=f8e145] [cursor=pointer]:
+                                  - /url: /about
+                              - listitem [ref=f8e146]:
+                                - link "Կարծիքներ" [ref=f8e147] [cursor=pointer]:
+                                  - /url: /reviews
+                              - listitem [ref=f8e148]:
+                                - link "Բաղադրատոմսեր" [ref=f8e149] [cursor=pointer]:
+                                  - /url: /recipes
+                              - listitem [ref=f8e150]:
+                                - link "Ավելին քան ամանը" [ref=f8e151] [cursor=pointer]:
+                                  - /url: /beyond-the-bowl
+                              - listitem [ref=f8e152]:
+                                - link "Խանութ" [ref=f8e153] [cursor=pointer]:
+                                  - /url: /products
+                              - listitem [ref=f8e154]:
+                                - link "Համայնք" [ref=f8e155] [cursor=pointer]:
+                                  - /url: /community
+                          - generic [ref=f8e156]:
+                            - heading "Օգնություն" [level=4] [ref=f8e157]
+                            - list [ref=f8e158]:
+                              - listitem [ref=f8e159]:
+                                - link "Իմ հաշիվը" [ref=f8e160] [cursor=pointer]:
+                                  - /url: /profile
+                              - listitem [ref=f8e161]:
+                                - link "Կապ մեզ հետ" [ref=f8e162] [cursor=pointer]:
+                                  - /url: /contact
+                              - listitem [ref=f8e163]:
+                                - link "Առաքման տեղեկատվություն" [ref=f8e164] [cursor=pointer]:
+                                  - /url: /delivery-information
+                              - listitem [ref=f8e165]:
+                                - link "Վերադարձներ" [ref=f8e166] [cursor=pointer]:
+                                  - /url: /returns
+                              - listitem [ref=f8e167]:
+                                - link "Կայքի քարտեզ" [ref=f8e168] [cursor=pointer]:
+                                  - /url: /sitemap-page
+                          - generic [ref=f8e169]:
+                            - heading "Տեղեկատվություն" [level=4] [ref=f8e170]
+                            - list [ref=f8e171]:
+                              - listitem [ref=f8e172]:
+                                - link "Գաղտնիության քաղաքականություն" [ref=f8e173] [cursor=pointer]:
+                                  - /url: /privacy-policy
+                              - listitem [ref=f8e174]:
+                                - link "Պայմաններ և դրույթներ" [ref=f8e175] [cursor=pointer]:
+                                  - /url: /terms-of-use
+                              - listitem [ref=f8e176]:
+                                - link "Jeko-ի քաղաքականություն" [ref=f8e177] [cursor=pointer]:
+                                  - /url: /pure-policies
+                              - listitem [ref=f8e178]:
+                                - link "Կայքի անվտանգություն" [ref=f8e179] [cursor=pointer]:
+                                  - /url: /site-security
+                              - listitem [ref=f8e180]:
+                                - link "Cookie-ների քաղաքականություն" [ref=f8e181] [cursor=pointer]:
+                                  - /url: /cookie-policy
+                      - generic [ref=f8e182]:
+                        - generic [ref=f8e184]: JEKO
+                        - paragraph [ref=f8e185]: © Jeko 2020-2026
+                  - generic [ref=f8e199]:
+                    - generic [ref=f8e200]:
+                      - paragraph [ref=f8e201]: Հաու՜ 🐾
+                      - paragraph [ref=f8e202]: Գտիր ընկեր քո կենդանու համար։
+                    - button "Find pet matches" [ref=f8e204] [cursor=pointer]:
+                      - img "Jeko dog" [ref=f8e205]
+                  - alert [ref=f8e206]

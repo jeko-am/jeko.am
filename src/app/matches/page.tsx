@@ -8,6 +8,7 @@ import Footer from "@/components/Footer";
 import { useAuth } from "@/lib/auth";
 import { useSignupUrl } from "@/lib/useSignupUrl";
 import { supabase } from "@/lib/supabase";
+import { useT } from "@/lib/i18n/LangProvider";
 
 /* ─── Types ──────────────────────────────────────────────────────────── */
 
@@ -45,12 +46,12 @@ interface MatchWithProfile {
 
 /* ─── Helpers ────────────────────────────────────────────────────────── */
 
-function timeAgo(dateStr: string): string {
+function timeAgo(dateStr: string, justNowLabel = "just now"): string {
   const now = new Date();
   const date = new Date(dateStr);
   const seconds = Math.floor((now.getTime() - date.getTime()) / 1000);
 
-  if (seconds < 60) return "just now";
+  if (seconds < 60) return justNowLabel;
   const minutes = Math.floor(seconds / 60);
   if (minutes < 60) return `${minutes}m ago`;
   const hours = Math.floor(minutes / 60);
@@ -71,6 +72,7 @@ function petInitial(pet: MatchWithProfile["otherPet"]): string {
 /* ─── Auth Modal ─────────────────────────────────────────────────────── */
 
 function AuthModal() {
+  const { t } = useT();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
@@ -85,7 +87,7 @@ function AuthModal() {
     setLoading(true);
 
     if (password.length < 6) {
-      setError("Password must be at least 6 characters");
+      setError(t("matches.login.passwordTooShort"));
       setLoading(false);
       return;
     }
@@ -110,10 +112,10 @@ function AuthModal() {
             🐾
           </div>
           <h2 className="font-medium text-2xl text-deep-green mb-2 tracking-wide">
-            Log in to see matches
+            {t("matches.login.title")}
           </h2>
           <p className="text-deep-green/50 text-[15px]">
-            Welcome back! Enter your details below.
+            {t("matches.login.subtitle")}
           </p>
         </div>
 
@@ -122,27 +124,27 @@ function AuthModal() {
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
             <label className="block text-deep-green/70 text-sm font-medium mb-1.5">
-              Email
+              {t("matches.login.email")}
             </label>
             <input
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
-              placeholder="you@example.com"
+              placeholder={t("matches.login.emailPlaceholder")}
               className="w-full px-4 py-3 rounded-xl border border-deep-green/15 text-deep-green text-[15px] placeholder-deep-green/30 outline-none focus:border-gold transition-colors bg-off-white/40"
             />
           </div>
           <div>
             <label className="block text-deep-green/70 text-sm font-medium mb-1.5">
-              Password
+              {t("matches.login.password")}
             </label>
             <input
               type="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
-              placeholder="••••••••"
+              placeholder={t("matches.login.passwordPlaceholder")}
               className="w-full px-4 py-3 rounded-xl border border-deep-green/15 text-deep-green text-[15px] placeholder-deep-green/30 outline-none focus:border-gold transition-colors bg-off-white/40"
             />
           </div>
@@ -163,14 +165,14 @@ function AuthModal() {
             disabled={loading}
             className="w-full bg-gold text-deep-green font-medium text-[16px] py-3.5 rounded-xl hover:bg-[#d99500] transition-colors disabled:opacity-50 tracking-wide"
           >
-            {loading ? "Please wait..." : "Log In"}
+            {loading ? t("matches.login.pleaseWait") : t("matches.login.submit")}
           </button>
         </form>
 
         <p className="text-center text-deep-green/50 text-[13px] mt-4">
-          Don&apos;t have an account?{" "}
+          {t("matches.login.noAccount")}{" "}
           <Link href={signupUrl} className="text-gold font-medium hover:underline">
-            Create one
+            {t("matches.login.createOne")}
           </Link>
         </p>
       </div>
@@ -181,6 +183,7 @@ function AuthModal() {
 /* ─── Empty State ────────────────────────────────────────────────────── */
 
 function EmptyState() {
+  const { t } = useT();
   return (
     <div className="flex-1 flex items-center justify-center px-4 py-20">
       <div className="bg-white rounded-2xl shadow-xl p-8 max-w-md w-full text-center">
@@ -188,17 +191,16 @@ function EmptyState() {
           💔
         </div>
         <h2 className="font-medium text-2xl text-deep-green mb-4 tracking-wide">
-          No Matches Yet
+          {t("matches.empty.titleAlt")}
         </h2>
         <p className="text-deep-green/60 mb-8 leading-relaxed">
-          We couldn&apos;t find any pets matching your preferred breeds and cities.
-          Update your preferences or fill in your pet&apos;s breed and city to see more matches here.
+          {t("matches.empty.bodyFull")}
         </p>
         <Link
           href="/swipe"
           className="inline-block bg-gold text-deep-green font-medium text-lg px-8 py-3 rounded-xl hover:bg-[#d99500] transition-colors tracking-wide"
         >
-          Start Swiping
+          {t("matches.empty.startSwiping")}
         </Link>
       </div>
     </div>
@@ -208,6 +210,7 @@ function EmptyState() {
 /* ─── Match Card ─────────────────────────────────────────────────────── */
 
 function MatchCard({ match }: { match: MatchWithProfile }) {
+  const { t } = useT();
   const pet = match.otherPet;
   const photo = petPhoto(pet);
 
@@ -218,7 +221,7 @@ function MatchCard({ match }: { match: MatchWithProfile }) {
         {photo ? (
           <Image
             src={photo}
-            alt={pet?.pet_name || "Pet"}
+            alt={pet?.pet_name || t("matches.petFallback")}
             fill
             className="object-cover"
             unoptimized
@@ -235,32 +238,32 @@ function MatchCard({ match }: { match: MatchWithProfile }) {
         {/* Status badge */}
         {match.status === "matched" && (
           <div className="absolute top-3 right-3 bg-white/90 backdrop-blur-sm rounded-full px-3 py-1 text-xs font-medium text-deep-green flex items-center gap-1 tracking-wide">
-            <span className="text-sm">🎉</span> Matched
+            <span className="text-sm">🎉</span> {t("matches.badge.matched")}
           </div>
         )}
         {match.status === "liked_by_me" && (
           <div className="absolute top-3 right-3 bg-white/90 backdrop-blur-sm rounded-full px-3 py-1 text-xs font-medium text-amber-600 flex items-center gap-1 tracking-wide">
-            <span className="text-sm">⏳</span> Waiting for their response
+            <span className="text-sm">⏳</span> {t("matches.badge.waiting")}
           </div>
         )}
         {match.status === "liked_by_them" && (
           <div className="absolute top-3 right-3 bg-white/90 backdrop-blur-sm rounded-full px-3 py-1 text-xs font-medium text-rose-500 flex items-center gap-1 tracking-wide">
-            <span className="text-sm">💗</span> Likes you — swipe back
+            <span className="text-sm">💗</span> {t("matches.badge.likesYou")}
           </div>
         )}
         {match.status === "passed_by_me" && (
           <div className="absolute top-3 right-3 bg-white/90 backdrop-blur-sm rounded-full px-3 py-1 text-xs font-medium text-gray-500 flex items-center gap-1 tracking-wide">
-            <span className="text-sm">🚫</span> Rejected by you
+            <span className="text-sm">🚫</span> {t("matches.badge.rejectedByYou")}
           </div>
         )}
         {match.status === "passed_by_them" && (
           <div className="absolute top-3 right-3 bg-white/90 backdrop-blur-sm rounded-full px-3 py-1 text-xs font-medium text-gray-500 flex items-center gap-1 tracking-wide">
-            <span className="text-sm">🚫</span> They passed
+            <span className="text-sm">🚫</span> {t("matches.badge.theyPassedBadge")}
           </div>
         )}
         {match.status === "suggestion" && (
           <div className="absolute top-3 right-3 bg-white/90 backdrop-blur-sm rounded-full px-3 py-1 text-xs font-medium text-deep-green/70 flex items-center gap-1 tracking-wide">
-            <span className="text-sm">✨</span> Suggested match
+            <span className="text-sm">✨</span> {t("matches.badge.suggested")}
           </div>
         )}
       </div>
@@ -270,10 +273,10 @@ function MatchCard({ match }: { match: MatchWithProfile }) {
         <div className="flex items-start justify-between mb-2">
           <div>
             <h3 className="font-medium text-lg text-deep-green tracking-wide">
-              {pet?.pet_name || "Unknown"}
+              {pet?.pet_name || t("matches.unknown")}
             </h3>
             <p className="text-sm text-deep-green/50">
-              {pet?.breed || "Mixed breed"}
+              {pet?.breed || t("matches.mixedBreed")}
               {pet?.dog_age_years ? ` · ${pet.dog_age_years}y` : ""}
               {pet?.gender && pet.gender !== "Unknown" ? ` · ${pet.gender}` : ""}
             </p>
@@ -308,16 +311,16 @@ function MatchCard({ match }: { match: MatchWithProfile }) {
         <div className="flex items-center justify-between pt-3 border-t border-gray-100">
           <span className="text-xs text-deep-green/40">
             {match.status === "matched"
-              ? `Matched ${timeAgo(match.created_at)}`
+              ? `${t("matches.badge.matched")} ${timeAgo(match.created_at, t("matches.time.justNow"))}`
               : match.status === "liked_by_me"
-              ? "Waiting for their response"
+              ? t("matches.status.waiting")
               : match.status === "liked_by_them"
-              ? "They like you"
+              ? t("matches.status.theyLike")
               : match.status === "passed_by_me"
-              ? "You rejected this profile"
+              ? t("matches.status.youRejected")
               : match.status === "passed_by_them"
-              ? "They passed on you"
-              : "Suggested from your preferences"}
+              ? t("matches.status.theyPassedOn")
+              : t("matches.status.suggested")}
           </span>
           {match.status === "matched" ? (
             <Link
@@ -327,19 +330,19 @@ function MatchCard({ match }: { match: MatchWithProfile }) {
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                 <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
               </svg>
-              Message
+              {t("matches.messageAction")}
             </Link>
           ) : (
             <button
               type="button"
               disabled
-              title="Available only once both of you like each other"
+              title={t("matches.messageDisabled")}
               className="bg-gold/50 text-deep-green/60 font-medium text-sm px-5 py-2 rounded-xl flex items-center gap-1.5 tracking-wide opacity-60 blur-[0.5px] cursor-not-allowed"
             >
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                 <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
               </svg>
-              Message
+              {t("matches.messageAction")}
             </button>
           )}
         </div>
@@ -353,6 +356,7 @@ function MatchCard({ match }: { match: MatchWithProfile }) {
 /* ═══════════════════════════════════════════════════════════════════════ */
 
 export default function MatchesPage() {
+  const { t } = useT();
   const { user, loading: authLoading } = useAuth();
   const [matches, setMatches] = useState<MatchWithProfile[]>([]);
   const [loading, setLoading] = useState(true);
@@ -534,17 +538,17 @@ export default function MatchesPage() {
                   className="text-4xl md:text-5xl text-gold mb-4"
                   style={{ fontFamily: "'TR Frankfurter', 'Rubik', sans-serif" }}
                 >
-                  Looking for a partner for your pet?
+                  {t("matches.hero.title")}
                 </h1>
                 <p className="text-white/80 text-lg md:text-xl font-medium leading-relaxed mb-8 tracking-wide">
-                  Come join the community — connect with thousands of pet owners, find playmates, and make lifelong friendships for you and your furry friend.
+                  {t("matches.hero.body")}
                 </p>
                 <div className="flex flex-wrap justify-center gap-6 mb-8">
                   {[
-                    { icon: "🐾", label: "Find Playmates" },
-                    { icon: "💬", label: "Chat with Owners" },
-                    { icon: "❤️", label: "Make Matches" },
-                    { icon: "📍", label: "Near You" },
+                    { icon: "🐾", label: t("matches.hero.findPlaymates") },
+                    { icon: "💬", label: t("matches.hero.chatOwners") },
+                    { icon: "❤️", label: t("matches.hero.makeMatches") },
+                    { icon: "📍", label: t("matches.hero.nearYou") },
                   ].map((f) => (
                     <div key={f.label} className="flex items-center gap-2 bg-white/10 rounded-full px-5 py-2.5">
                       <span className="text-xl">{f.icon}</span>
@@ -563,7 +567,7 @@ export default function MatchesPage() {
             {/* Header */}
             <div className="mb-8 text-center">
               <h1 className="font-medium text-3xl md:text-4xl text-deep-green tracking-wide">
-                Your Matches
+                {t("matches.titleAlt")}
               </h1>
               <p className="text-deep-green/50 mt-2">
                 {(() => {
@@ -590,7 +594,7 @@ export default function MatchesPage() {
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                   <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
                 </svg>
-                Find more matches
+                {t("matches.findMore")}
               </Link>
             </div>
           </div>

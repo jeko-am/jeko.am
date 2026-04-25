@@ -2,7 +2,7 @@ import HealthConditionPage from "@/components/HealthConditionPage";
 
 export default function HypoallergenicPage() {
   return (
-    <HealthConditionPage
+    <HealthConditionPage pageSlug="/benefits/hypoallergenic"
       condition="Hypoallergenic"
       tagline="dog food"
       heroImage="https://images.unsplash.com/photo-1537151625747-768eb6cf92b2?w=1600&h=800&fit=crop"

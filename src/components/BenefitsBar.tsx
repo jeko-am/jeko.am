@@ -1,35 +1,38 @@
 "use client";
 
 import Image from "next/image";
+import { useContentT } from "@/lib/i18n/useContentT";
 
 const defaultBenefits = [
   {
     icon: "https://www.purepetfood.com/_next/static/media/box-with-red-hearts.d6dbf870.png",
-    text: "Store in the cupboard",
     key: "benefit_1",
+    dictKey: "home.benefits.storeCupboard",
   },
   {
     icon: "https://www.purepetfood.com/_next/static/media/piggy-bank-pink.b9a77b6e.png",
-    text: "From only 89p per day",
     key: "benefit_2",
+    dictKey: "home.benefits.from89p",
   },
   {
     icon: "https://www.purepetfood.com/_next/static/media/droplet-blue.991caf56.png",
-    text: "Just add water and serve",
     key: "benefit_3",
+    dictKey: "home.benefits.addWater",
   },
   {
     icon: "https://www.purepetfood.com/_next/static/media/bowl-with-white-scoop.1ea3ccfc.png",
-    text: "Ready in 10 seconds",
     key: "benefit_4",
+    dictKey: "home.benefits.ready10s",
   },
 ];
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export default function BenefitsBar({ content }: { content?: Record<string, any> }) {
+  const { ct } = useContentT(content);
+
   const benefits = defaultBenefits.map((benefit) => ({
     ...benefit,
-    text: content?.[benefit.key] || benefit.text,
+    text: ct(benefit.key, benefit.dictKey),
   }));
 
   return (

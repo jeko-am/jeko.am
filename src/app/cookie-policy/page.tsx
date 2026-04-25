@@ -2,6 +2,7 @@
 
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import { useT } from "@/lib/i18n/LangProvider";
 
 const cookieTableData = [
   {
@@ -148,6 +149,7 @@ function getTypeBadgeClasses(type: string): string {
 }
 
 export default function CookiePolicyPage() {
+  const { t } = useT();
   return (
     <>
       <Header />
@@ -156,11 +158,10 @@ export default function CookiePolicyPage() {
         <section className="bg-deep-green py-16 text-center relative zigzag-bottom">
           <div className="max-w-[900px] mx-auto px-6">
             <h1 className="text-4xl md:text-5xl font-bold text-white font-rubik mb-4">
-              Cookie Policy
+              {t("policy.cookies.title")}
             </h1>
             <p className="text-white/80 text-lg max-w-[600px] mx-auto leading-relaxed">
-              We believe in transparency. This policy explains how Jeko
-              uses cookies and similar technologies when you visit our website.
+              {t("policy.cookies.subtitle")}
             </p>
           </div>
         </section>

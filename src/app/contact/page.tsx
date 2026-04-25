@@ -1,13 +1,16 @@
 "use client";
 
 import { useState } from "react";
+import HyText from "@/components/HyText";
 import Link from "next/link";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { supabase } from "@/lib/supabase";
 import { useSignupUrl } from "@/lib/useSignupUrl";
+import { useT } from "@/lib/i18n/LangProvider";
 
 export default function ContactPage() {
+  const { t } = useT();
   const signupUrl = useSignupUrl();
   const [formData, setFormData] = useState({
     fullName: "",
@@ -49,7 +52,7 @@ export default function ContactPage() {
       if (insertError) throw insertError;
       setSubmitted(true);
     } catch {
-      setError("Failed to send message. Please try again.");
+      setError(t("contact.form.error"));
     } finally {
       setSubmitting(false);
     }
@@ -67,11 +70,10 @@ export default function ContactPage() {
         <section className="bg-deep-green zigzag-bottom py-16 md:py-20">
           <div className="max-w-[1200px] mx-auto px-6 text-center">
             <h1 className="text-white font-rubik font-bold text-4xl md:text-5xl mb-4">
-              Contact Us
+              {t("contact.page.heading")}
             </h1>
             <p className="text-off-white/80 text-lg md:text-xl max-w-2xl mx-auto leading-relaxed">
-              Have a question about your order, our recipes, or just want to say
-              hello? We&apos;d love to hear from you.
+              {t("contact.page.subheading")}
             </p>
           </div>
         </section>
@@ -103,10 +105,10 @@ export default function ContactPage() {
                         </svg>
                       </div>
                       <h2 className="text-deep-green font-rubik font-bold text-2xl md:text-3xl mb-3">
-                        Thank you!
+                        {t("contact.success.heading")}
                       </h2>
                       <p className="text-deep-green/70 text-lg max-w-md">
-                        We&apos;ll get back to you within 24 hours.
+                        {t("contact.success.body")}
                       </p>
                       <button
                         onClick={() => {
@@ -122,17 +124,17 @@ export default function ContactPage() {
                         }}
                         className="mt-8 px-6 py-3 bg-gold text-deep-green font-bold rounded-xl hover:bg-yellow-400 transition-colors"
                       >
-                        Send Another Message
+                        {t("contact.success.sendAnother")}
                       </button>
                     </div>
                   ) : (
                     /* Form */
                     <>
                       <h2 className="text-deep-green font-rubik font-bold text-2xl md:text-3xl mb-2">
-                        Send Us a Message
+                        {t("contact.form.heading")}
                       </h2>
                       <p className="text-deep-green/60 mb-8">
-                        Fill out the form below and our team will be in touch.
+                        {t("contact.form.subheading")}
                       </p>
                       <form onSubmit={handleSubmit} className="space-y-5">
                         {/* Full Name */}
@@ -141,7 +143,7 @@ export default function ContactPage() {
                             htmlFor="fullName"
                             className="block text-deep-green font-semibold text-sm mb-1.5"
                           >
-                            Full Name <span className="text-red-500">*</span>
+                            {t("contact.form.fullName")} <span className="text-red-500">*</span>
                           </label>
                           <input
                             type="text"
@@ -150,7 +152,7 @@ export default function ContactPage() {
                             required
                             value={formData.fullName}
                             onChange={handleChange}
-                            placeholder="Your full name"
+                            placeholder={t("contact.form.fullNamePlaceholder")}
                             className={inputClasses}
                           />
                         </div>
@@ -161,7 +163,7 @@ export default function ContactPage() {
                             htmlFor="email"
                             className="block text-deep-green font-semibold text-sm mb-1.5"
                           >
-                            Email <span className="text-red-500">*</span>
+                            {t("contact.form.emailLabel")} <span className="text-red-500">*</span>
                           </label>
                           <input
                             type="email"
@@ -170,7 +172,7 @@ export default function ContactPage() {
                             required
                             value={formData.email}
                             onChange={handleChange}
-                            placeholder="your@email.com"
+                            placeholder={t("contact.form.emailPlaceholder")}
                             className={inputClasses}
                           />
                         </div>
@@ -181,9 +183,9 @@ export default function ContactPage() {
                             htmlFor="phone"
                             className="block text-deep-green font-semibold text-sm mb-1.5"
                           >
-                            Phone{" "}
+                            {t("contact.form.phoneLabel")}{" "}
                             <span className="text-deep-green/40 font-normal">
-                              (optional)
+                              {t("contact.form.phoneOptional")}
                             </span>
                           </label>
                           <input
@@ -192,7 +194,7 @@ export default function ContactPage() {
                             name="phone"
                             value={formData.phone}
                             onChange={handleChange}
-                            placeholder="Your phone number"
+                            placeholder={t("contact.form.phonePlaceholder")}
                             className={inputClasses}
                           />
                         </div>
@@ -203,7 +205,7 @@ export default function ContactPage() {
                             htmlFor="subject"
                             className="block text-deep-green font-semibold text-sm mb-1.5"
                           >
-                            Subject <span className="text-red-500">*</span>
+                            {t("contact.form.subjectLabel")} <span className="text-red-500">*</span>
                           </label>
                           <select
                             id="subject"
@@ -214,18 +216,18 @@ export default function ContactPage() {
                             className={`${inputClasses} appearance-none bg-[url('data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2224%22%20height%3D%2224%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22%23183D2D%22%20stroke-width%3D%222%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpolyline%20points%3D%226%209%2012%2015%2018%209%22%3E%3C%2Fpolyline%3E%3C%2Fsvg%3E')] bg-no-repeat bg-[position:right_12px_center] bg-[length:20px]`}
                           >
                             <option value="" disabled>
-                              Select a subject
+                              {t("contact.form.subject.select")}
                             </option>
-                            <option value="general">General Enquiry</option>
-                            <option value="order">Order Issue</option>
+                            <option value="general">{t("contact.form.subject.general")}</option>
+                            <option value="order">{t("contact.form.subject.order")}</option>
                             <option value="subscription">
-                              Subscription Help
+                              {t("contact.form.subject.subscription")}
                             </option>
-                            <option value="product">Product Question</option>
+                            <option value="product">{t("contact.form.subject.product")}</option>
                             <option value="partnership">
-                              Partnership Opportunity
+                              {t("contact.form.subject.partnership")}
                             </option>
-                            <option value="other">Other</option>
+                            <option value="other">{t("contact.form.subject.other")}</option>
                           </select>
                         </div>
 
@@ -235,9 +237,9 @@ export default function ContactPage() {
                             htmlFor="orderNumber"
                             className="block text-deep-green font-semibold text-sm mb-1.5"
                           >
-                            Order Number{" "}
+                            {t("contact.form.orderLabel")}{" "}
                             <span className="text-deep-green/40 font-normal">
-                              (optional)
+                              {t("contact.form.phoneOptional")}
                             </span>
                           </label>
                           <input
@@ -246,7 +248,7 @@ export default function ContactPage() {
                             name="orderNumber"
                             value={formData.orderNumber}
                             onChange={handleChange}
-                            placeholder="e.g. #PP-12345"
+                            placeholder={t("contact.form.orderPlaceholder")}
                             className={inputClasses}
                           />
                         </div>
@@ -257,7 +259,7 @@ export default function ContactPage() {
                             htmlFor="message"
                             className="block text-deep-green font-semibold text-sm mb-1.5"
                           >
-                            Message <span className="text-red-500">*</span>
+                            {t("contact.form.messageLabel")} <span className="text-red-500">*</span>
                           </label>
                           <textarea
                             id="message"
@@ -266,7 +268,7 @@ export default function ContactPage() {
                             rows={4}
                             value={formData.message}
                             onChange={handleChange}
-                            placeholder="Tell us how we can help..."
+                            placeholder={t("contact.form.messagePlaceholder")}
                             className={`${inputClasses} resize-y`}
                           />
                         </div>
@@ -283,7 +285,7 @@ export default function ContactPage() {
                           disabled={submitting}
                           className="w-full bg-gold text-deep-green font-bold rounded-xl hover:bg-yellow-400 transition-colors py-3.5 text-lg mt-2 disabled:opacity-60 disabled:cursor-not-allowed"
                         >
-                          {submitting ? "Sending..." : "Send Message"}
+                          {submitting ? t("contact.form.submitting") : t("contact.form.submitBtn")}
                         </button>
                       </form>
                     </>
@@ -296,7 +298,7 @@ export default function ContactPage() {
                 {/* Get in Touch */}
                 <div>
                   <h2 className="text-deep-green font-rubik font-bold text-2xl md:text-3xl mb-6">
-                    Get in Touch
+                    {t("contact.info.heading")}
                   </h2>
                   <div className="space-y-5">
                     {/* Email */}
@@ -325,7 +327,7 @@ export default function ContactPage() {
                       </div>
                       <div>
                         <p className="text-deep-green font-semibold text-sm mb-0.5">
-                          Email
+                          {t("contact.info.email")}
                         </p>
                         <a
                           href="mailto:hello@jeko.am"
@@ -355,7 +357,7 @@ export default function ContactPage() {
                       </div>
                       <div>
                         <p className="text-deep-green font-semibold text-sm mb-0.5">
-                          Phone
+                          {t("contact.info.phone")}
                         </p>
                         <a
                           href="tel:+37410000000"
@@ -386,7 +388,7 @@ export default function ContactPage() {
                       </div>
                       <div>
                         <p className="text-deep-green font-semibold text-sm mb-0.5">
-                          Business Hours
+                          {t("contact.info.hours")}
                         </p>
                         <p className="text-deep-green/70 text-sm leading-relaxed">
                           Mon&ndash;Fri: 9am&ndash;5pm
@@ -416,14 +418,14 @@ export default function ContactPage() {
                       </div>
                       <div>
                         <p className="text-deep-green font-semibold text-sm mb-0.5">
-                          Address
+                          {t("contact.info.address")}
                         </p>
                         <p className="text-deep-green/70 text-sm leading-relaxed">
                           Jeko
                           <br />
-                          Unit 5, Yorkshire Business Park
+                          <HyText en="Unit 5, Yorkshire Business Park" />
                           <br />
-                          Leeds, LS1 4AP
+                          <HyText en="Leeds, LS1 4AP" />
                         </p>
                       </div>
                     </div>
@@ -433,31 +435,25 @@ export default function ContactPage() {
                 {/* What to Expect */}
                 <div className="bg-white rounded-2xl shadow-lg p-6 md:p-8">
                   <h3 className="text-deep-green font-rubik font-bold text-xl mb-4">
-                    What to Expect
+                    {t("contact.expect.heading")}
                   </h3>
                   <div className="space-y-4">
                     <div className="flex items-start gap-3">
                       <div className="w-2 h-2 rounded-full bg-gold mt-2 flex-shrink-0" />
                       <p className="text-deep-green/70 text-sm leading-relaxed">
-                        We aim to respond to all enquiries{" "}
-                        <span className="font-semibold text-deep-green">
-                          within 24 hours
-                        </span>{" "}
-                        on business days.
+                        <HyText en="We aim to respond to all enquiries within 24 hours on business days." />
                       </p>
                     </div>
                     <div className="flex items-start gap-3">
                       <div className="w-2 h-2 rounded-full bg-gold mt-2 flex-shrink-0" />
                       <p className="text-deep-green/70 text-sm leading-relaxed">
-                        For urgent order issues, please include your order
-                        number for a faster resolution.
+                        <HyText en="For urgent order issues, please include your order number for a faster resolution." />
                       </p>
                     </div>
                     <div className="flex items-start gap-3">
                       <div className="w-2 h-2 rounded-full bg-gold mt-2 flex-shrink-0" />
                       <p className="text-deep-green/70 text-sm leading-relaxed">
-                        Weekend enquiries will be addressed on the next business
-                        day.
+                        <HyText en="Weekend enquiries will be addressed on the next business day." />
                       </p>
                     </div>
                   </div>
@@ -466,17 +462,16 @@ export default function ContactPage() {
                 {/* FAQ Callout */}
                 <div className="bg-gold/10 border-2 border-gold/30 rounded-2xl p-6 md:p-8">
                   <h3 className="text-deep-green font-rubik font-bold text-xl mb-2">
-                    Need a Quick Answer?
+                    {t("contact.faq.heading")}
                   </h3>
                   <p className="text-deep-green/70 text-sm mb-4 leading-relaxed">
-                    Check our FAQ section for quick answers to the most common
-                    questions about our products, delivery, and subscriptions.
+                    {t("contact.faq.body")}
                   </p>
                   <Link
                     href="/benefits"
                     className="inline-flex items-center gap-2 bg-gold text-deep-green font-bold rounded-xl px-5 py-2.5 hover:bg-yellow-400 transition-colors text-sm"
                   >
-                    Visit FAQ
+                    {t("contact.faq.cta")}
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       width="16"
@@ -522,19 +517,18 @@ export default function ContactPage() {
                     <line x1="15" x2="15" y1="6" y2="21" />
                   </svg>
                   <p className="text-deep-green/40 font-semibold text-sm">
-                    Yorkshire Business Park, Leeds
+                    <HyText en="Yorkshire Business Park, Leeds" />
                   </p>
                   <p className="text-deep-green/30 text-xs mt-1">
-                    Yerevan, Armenia
+                    <HyText en="Yerevan, Armenia" />
                   </p>
                 </div>
                 <div className="p-5">
                   <h4 className="text-deep-green font-rubik font-bold text-lg mb-1">
-                    Visit Us
+                    {t("contact.visit.heading")}
                   </h4>
                   <p className="text-deep-green/60 text-sm">
-                    Our kitchen is based in the heart of Yorkshire. Tours
-                    available by appointment.
+                    {t("contact.visit.body")}
                   </p>
                 </div>
               </div>
@@ -542,7 +536,7 @@ export default function ContactPage() {
               {/* Helpful Links */}
               <div className="bg-white rounded-2xl shadow-lg p-8">
                 <h4 className="text-deep-green font-rubik font-bold text-lg mb-6">
-                  Helpful Links
+                  {t("contact.links.heading")}
                 </h4>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <Link
@@ -568,7 +562,7 @@ export default function ContactPage() {
                       </svg>
                     </div>
                     <span className="text-deep-green font-semibold text-sm">
-                      Our Products
+                      {t("contact.links.products")}
                     </span>
                   </Link>
 
@@ -592,7 +586,7 @@ export default function ContactPage() {
                       </svg>
                     </div>
                     <span className="text-deep-green font-semibold text-sm">
-                      Customer Reviews
+                      {t("contact.links.reviews")}
                     </span>
                   </Link>
 
@@ -619,7 +613,7 @@ export default function ContactPage() {
                       </svg>
                     </div>
                     <span className="text-deep-green font-semibold text-sm">
-                      Our Story
+                      {t("contact.links.about")}
                     </span>
                   </Link>
 
@@ -643,7 +637,7 @@ export default function ContactPage() {
                       </svg>
                     </div>
                     <span className="text-deep-green font-semibold text-sm">
-                      Create a Plan
+                      {t("contact.links.plan")}
                     </span>
                   </Link>
                 </div>

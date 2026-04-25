@@ -3,6 +3,7 @@
 import { supabase } from '@/lib/supabase';
 import { useEffect, useState, useCallback } from 'react';
 import Link from 'next/link';
+import { useAdminEditLang } from '@/lib/i18n/AdminEditLang';
 
 // ---------------------------------------------------------------------------
 // Types
@@ -27,6 +28,7 @@ interface Bundle {
   is_active: boolean;
   is_featured: boolean;
   sort_order: number;
+  i18n?: { hy?: { name?: string; description?: string } } | null;
   created_at: string;
   products?: BundleProduct[];
 }
@@ -50,6 +52,7 @@ type BundleFormData = {
   is_featured: boolean;
   sort_order: number;
   selectedProducts: { product_id: string; quantity: number }[];
+  i18n: { hy?: { name?: string; description?: string } } | null;
 };
 
 // ---------------------------------------------------------------------------
@@ -67,6 +70,7 @@ const EMPTY_FORM: BundleFormData = {
   is_featured: false,
   sort_order: 0,
   selectedProducts: [],
+  i18n: null,
 };
 
 // ---------------------------------------------------------------------------
@@ -90,6 +94,38 @@ export default function BundlesAdminPage() {
   const [formData, setFormData] = useState<BundleFormData>(EMPTY_FORM);
   const [uploadingImage, setUploadingImage] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
+  const { editLang } = useAdminEditLang();
+
+  // Treat random placeholder services as missing so the admin sees the upload
+  // prompt and the card stops rotating images on refresh.
+  function safeBundleImage(url: string | null | undefined): string | null {
+    if (!url) return null;
+    if (/(placedog\.net|picsum\.photos|loremflickr|placeholder\.com|via\.placeholder)/i.test(url)) return null;
+    return url;
+  }
+
+  // Helper: read a translatable field based on editLang
+  function getLocField(key: 'name' | 'description'): string {
+    if (editLang === 'hy') {
+      return (formData.i18n as { hy?: Record<string, string> } | null)?.hy?.[key] ?? '';
+    }
+    return (formData[key] as string) ?? '';
+  }
+
+  // Helper: write a translatable field into EN column or i18n.hy.field
+  function setLocField(key: 'name' | 'description', value: string) {
+    if (editLang === 'hy') {
+      setFormData((prev) => {
+        const i18n = (prev.i18n as { hy?: Record<string, string> } | null) ?? {};
+        const hy = { ...(i18n.hy ?? {}) };
+        if (value && value.length > 0) hy[key] = value;
+        else delete hy[key];
+        return { ...prev, i18n: { ...i18n, hy } } as BundleFormData;
+      });
+    } else {
+      setFormData((prev) => ({ ...prev, [key]: value } as BundleFormData));
+    }
+  }
 
   // Fetch bundles and products
   useEffect(() => {
@@ -197,10 +233,11 @@ export default function BundlesAdminPage() {
         is_active: bundle.is_active,
         is_featured: bundle.is_featured,
         sort_order: bundle.sort_order,
-        selectedProducts: bundle.products?.map(p => ({ 
-          product_id: p.product_id, 
-          quantity: p.quantity 
+        selectedProducts: bundle.products?.map(p => ({
+          product_id: p.product_id,
+          quantity: p.quantity
         })) || [],
+        i18n: bundle.i18n ?? null,
       });
     } else {
       setEditingBundle(null);
@@ -280,7 +317,7 @@ export default function BundlesAdminPage() {
       return;
     }
 
-    const bundleData = {
+    const bundleData: Record<string, unknown> = {
       name: formData.name,
       description: formData.description || null,
       image_url: formData.image_url,
@@ -291,6 +328,9 @@ export default function BundlesAdminPage() {
       is_featured: formData.is_featured,
       sort_order: formData.sort_order,
     };
+    if (formData.i18n && Object.keys(formData.i18n).length > 0) {
+      bundleData.i18n = formData.i18n;
+    }
 
     if (editingBundle) {
       // Update existing bundle
@@ -432,9 +472,9 @@ export default function BundlesAdminPage() {
             >
               {/* Bundle Image */}
               <div className="aspect-video bg-gray-100 relative">
-                {bundle.image_url ? (
-                  <img 
-                    src={bundle.image_url} 
+                {safeBundleImage(bundle.image_url) ? (
+                  <img
+                    src={safeBundleImage(bundle.image_url)!}
                     alt={bundle.name}
                     className="w-full h-full object-cover"
                   />
@@ -551,13 +591,16 @@ export default function BundlesAdminPage() {
               {/* Basic Info */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-sm font-medium text-deep-green mb-1">Bundle Name *</label>
+                  <label className="block text-sm font-medium text-deep-green mb-1 flex items-center gap-2">
+                    <span>Bundle Name *</span>
+                    {editLang === 'hy' && <span className="text-[10px] font-semibold text-deep-green/70 px-1.5 py-0.5 bg-deep-green/10 rounded">HY</span>}
+                  </label>
                   <input
                     type="text"
-                    value={formData.name}
-                    onChange={e => setFormData(prev => ({ ...prev, name: e.target.value }))}
+                    value={getLocField('name')}
+                    onChange={e => setLocField('name', e.target.value)}
                     className="w-full px-3 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-deep-green/20"
-                    placeholder="e.g., Complete Nutrition Pack"
+                    placeholder={editLang === 'hy' ? (formData.name || 'e.g., Complete Nutrition Pack') : 'e.g., Complete Nutrition Pack'}
                   />
                 </div>
                 <div>
@@ -572,13 +615,16 @@ export default function BundlesAdminPage() {
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-deep-green mb-1">Description</label>
+                <label className="block text-sm font-medium text-deep-green mb-1 flex items-center gap-2">
+                  <span>Description</span>
+                  {editLang === 'hy' && <span className="text-[10px] font-semibold text-deep-green/70 px-1.5 py-0.5 bg-deep-green/10 rounded">HY</span>}
+                </label>
                 <textarea
-                  value={formData.description}
-                  onChange={e => setFormData(prev => ({ ...prev, description: e.target.value }))}
+                  value={getLocField('description')}
+                  onChange={e => setLocField('description', e.target.value)}
                   className="w-full px-3 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-deep-green/20"
                   rows={3}
-                  placeholder="Describe what's included in this bundle..."
+                  placeholder={editLang === 'hy' ? (formData.description || "Describe what's included in this bundle...") : "Describe what's included in this bundle..."}
                 />
               </div>
 

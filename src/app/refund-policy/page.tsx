@@ -2,8 +2,10 @@
 
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import { useT } from "@/lib/i18n/LangProvider";
 
 export default function RefundPolicyPage() {
+  const { t } = useT();
   return (
     <>
       <Header />
@@ -12,11 +14,10 @@ export default function RefundPolicyPage() {
         <section className="bg-deep-green py-16 text-center relative zigzag-bottom">
           <div className="max-w-[1200px] mx-auto px-6">
             <h1 className="font-rubik text-white text-[38px] md:text-[48px] font-bold leading-[1.15] mb-4">
-              Refund &amp; Returns <span className="text-gold">Policy</span>
+              {t("policy.refund.heading")} <span className="text-gold">{t("policy.refund.headingHighlight")}</span>
             </h1>
             <p className="text-white/80 max-w-2xl mx-auto text-lg leading-relaxed">
-              We want you and your dog to be completely happy with every order. If
-              something isn&apos;t right, we&apos;re here to make it better.
+              {t("policy.refund.subtitle")}
             </p>
           </div>
         </section>

@@ -3,8 +3,10 @@
 import { useState, FormEvent } from 'react';
 import Link from 'next/link';
 import { supabase } from '@/lib/supabase';
+import { useT } from '@/lib/i18n/LangProvider';
 
 export default function ForgotPasswordPage() {
+  const { t } = useT();
   const [email, setEmail] = useState('');
   const [submitting, setSubmitting] = useState(false);
   const [sent, setSent] = useState(false);
@@ -15,7 +17,7 @@ export default function ForgotPasswordPage() {
     setError(null);
 
     if (!email.trim()) {
-      setError('Please enter your email address.');
+      setError(t('auth.forgot.emailRequired'));
       return;
     }
 
@@ -33,7 +35,7 @@ export default function ForgotPasswordPage() {
 
       setSent(true);
     } catch {
-      setError('A network error occurred. Please try again.');
+      setError(t('auth.forgot.networkError'));
     } finally {
       setSubmitting(false);
     }
@@ -47,11 +49,11 @@ export default function ForgotPasswordPage() {
           <div className="inline-flex items-center justify-center w-16 h-16 bg-gold rounded-2xl mb-4 shadow-lg">
             <span className="text-deep-green font-bold text-2xl">PP</span>
           </div>
-          <h1 className="text-2xl font-bold text-white">Reset Password</h1>
+          <h1 className="text-2xl font-bold text-white">{t('auth.forgot.titleShort')}</h1>
           <p className="text-white/70 text-sm mt-1">
             {sent
-              ? 'Check your inbox for a reset link'
-              : "Enter your email and we'll send you a reset link"}
+              ? t('auth.forgot.checkInbox')
+              : t('auth.forgot.subtitleShort')}
           </p>
         </div>
 
@@ -64,13 +66,13 @@ export default function ForgotPasswordPage() {
                 </svg>
               </div>
               <p className="text-gray-700 text-sm">
-                If an account exists for <strong>{email}</strong>, you&apos;ll receive a password reset email shortly.
+                {t('auth.forgot.sentMessage', { email })}
               </p>
               <Link
                 href="/login"
                 className="inline-block mt-4 text-sm text-deep-green hover:text-green-700 font-medium transition-colors"
               >
-                Back to sign in
+                {t('auth.forgot.backToSignIn')}
               </Link>
             </div>
           ) : (
@@ -87,7 +89,7 @@ export default function ForgotPasswordPage() {
               <form onSubmit={handleSubmit} className="space-y-5">
                 <div>
                   <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1.5">
-                    Email address
+                    {t('auth.login.emailLabel')}
                   </label>
                   <input
                     id="email"
@@ -97,7 +99,7 @@ export default function ForgotPasswordPage() {
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     disabled={submitting}
-                    placeholder="your@email.com"
+                    placeholder={t('auth.forgot.emailPlaceholder')}
                     className="w-full px-4 py-3 border border-gray-300 rounded-xl text-gray-900 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-deep-green focus:border-transparent transition-shadow disabled:bg-gray-50 disabled:text-gray-500"
                   />
                 </div>
@@ -110,10 +112,10 @@ export default function ForgotPasswordPage() {
                   {submitting ? (
                     <>
                       <div className="w-5 h-5 border-2 border-deep-green/30 border-t-deep-green rounded-full animate-spin" />
-                      Sending...
+                      {t('auth.forgot.sending')}
                     </>
                   ) : (
-                    'Send Reset Link'
+                    t('auth.forgot.sendReset')
                   )}
                 </button>
               </form>
@@ -126,12 +128,12 @@ export default function ForgotPasswordPage() {
             href="/login"
             className="text-white/70 text-sm hover:text-white transition-colors"
           >
-            Back to sign in
+            {t('auth.forgot.backToSignIn')}
           </Link>
         </div>
 
         <p className="text-center text-white/30 text-xs mt-6">
-          Jeko &middot; Happy pets, happy owners
+          {t('auth.login.happyPets')}
         </p>
       </div>
     </div>

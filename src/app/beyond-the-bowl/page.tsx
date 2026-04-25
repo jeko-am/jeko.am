@@ -4,6 +4,7 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import Link from "next/link";
 import Image from "next/image";
+import { useT } from "@/lib/i18n/LangProvider";
 
 const articles = [
   {
@@ -51,6 +52,7 @@ const articles = [
 ];
 
 export default function BeyondTheBowlPage() {
+  const { t } = useT();
   return (
     <>
       <Header />
@@ -59,11 +61,10 @@ export default function BeyondTheBowlPage() {
         <section className="bg-deep-green py-16 text-center relative zigzag-bottom">
           <div className="max-w-[1200px] mx-auto px-6">
             <h1 className="font-rubik text-white text-[38px] md:text-[48px] font-bold leading-[1.15] mb-4">
-              Beyond the <span className="text-gold">Bowl</span>
+              {t("beyond.page.heading")} <span className="text-gold">{t("beyond.page.headingHighlight")}</span>
             </h1>
             <p className="text-white/80 max-w-2xl mx-auto text-lg leading-relaxed">
-              Tips, guides, and insights to help you give your dog the happiest,
-              healthiest life possible.
+              {t("beyond.page.subheading")}
             </p>
           </div>
         </section>
@@ -97,7 +98,7 @@ export default function BeyondTheBowlPage() {
                       {article.excerpt}
                     </p>
                     <span className="text-deep-green font-semibold text-sm hover:underline cursor-pointer">
-                      Read more &rarr;
+                      {t("beyond.readMore")} &rarr;
                     </span>
                   </div>
                 </div>
@@ -107,17 +108,16 @@ export default function BeyondTheBowlPage() {
             {/* Newsletter CTA */}
             <div className="mt-16 bg-deep-green rounded-2xl p-10 text-center">
               <h2 className="text-white font-rubik font-bold text-2xl mb-3">
-                Stay in the loop
+                {t("beyond.newsletter.heading")}
               </h2>
               <p className="text-white/80 max-w-lg mx-auto mb-6">
-                Get the latest articles, tips, and exclusive offers delivered
-                straight to your inbox.
+                {t("beyond.newsletter.body")}
               </p>
               <Link
                 href="/products"
                 className="inline-block bg-gold text-deep-green font-semibold px-8 py-3 rounded-full hover:bg-gold/90 transition-colors"
               >
-                Shop Jeko
+                {t("beyond.newsletter.cta")}
               </Link>
             </div>
           </div>

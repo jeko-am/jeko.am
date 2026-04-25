@@ -2,18 +2,20 @@
 
 import Image from "next/image";
 import { useSignupUrl } from "@/lib/useSignupUrl";
+import { useContentT } from "@/lib/i18n/useContentT";
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export default function HeroSection({ content }: { content?: Record<string, any> }) {
-  const heading = content?.heading || "The easiest way to feed healthy,";
-  const headingHighlight = content?.heading_highlight || "natural dog food";
-  const subheading = content?.subheading || "Enjoy fresh food without the fuss, from only 89p a day";
-  const buttonText = content?.button_text || "Get started today";
+  const { ct } = useContentT(content);
+  const heading = ct("heading", "home.hero.heading");
+  const headingHighlight = ct("heading_highlight", "home.hero.headingHighlight");
+  const subheading = ct("subheading", "home.hero.subheading");
+  const buttonText = ct("button_text", "home.hero.buttonText");
   const signupUrl = useSignupUrl();
   const buttonUrl = content?.button_url || signupUrl;
   const bgImage = content?.background_image || "https://images.unsplash.com/photo-1587300003388-59208cc962cb?auto=format&fit=crop&h=800&w=1920";
-  const trustpilotLabel = content?.trustpilot_label || "Excellent";
-  const trustpilotScoreText = content?.trustpilot_score_text || "4.6 out of 5";
+  const trustpilotLabel = ct("trustpilot_label", "home.hero.trustpilotLabel");
+  const trustpilotScoreText = ct("trustpilot_score_text", "home.hero.trustpilotScoreText");
   const trustpilotScore = parseFloat(content?.trustpilot_score || "4.6");
   const fullStars = Math.min(4, Math.floor(trustpilotScore));
   const partialFill = Math.round((trustpilotScore % 1) * 100);
@@ -32,8 +34,6 @@ export default function HeroSection({ content }: { content?: Record<string, any>
           priority
           unoptimized
         />
-        {/* Warm overlay to give a kitchen scene feel */}
-        <div className="absolute inset-0 bg-gradient-to-r from-off-white via-off-white/95 via-45% to-transparent" />
       </div>
 
       {/* Content */}

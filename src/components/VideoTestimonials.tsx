@@ -1,40 +1,41 @@
 "use client";
 
 import { useRef } from "react";
-
-const defaultVideos = [
-  { src: "https://pure-website.s3.eu-west-2.amazonaws.com/Product+Benefits+Social+9X16.mp4", duration: "0:55", title: "Jeko vs kibble & raw" },
-  { src: "https://pure-website.s3.eu-west-2.amazonaws.com/Preparing+Pure+9X16.mp4", duration: "0:38", title: "Feeding Jeko really is simple!" },
-  { src: "https://pure-website.s3.eu-west-2.amazonaws.com/Why+Pure+Works+Compressed.mp4", duration: "0:54", title: "We've done the research" },
-  { src: "https://pure-website.s3.eu-west-2.amazonaws.com/Ugc+April+Video+-+Why+Pure+Works.mp4", duration: "0:37", title: "Fully flexible to work around you" },
-  { src: "https://pure-website.s3.eu-west-2.amazonaws.com/Fussy+Eater+Ugc(2).mp4", duration: "0:38", title: "Rudy goes from fussy to foodie" },
-  { src: "https://pure-website.s3.eu-west-2.amazonaws.com/Julian+Social+H265.mp4", duration: "0:37", title: "Backed by The Yorkshire Vet" },
-];
-
-function getVideosFromContent(content?: Record<string, string>) {
-  if (!content) return defaultVideos;
-
-  const videos = [];
-  for (let i = 1; i <= 6; i++) {
-    const url = content[`video_${i}_url`];
-    if (url) {
-      videos.push({
-        src: url,
-        title: content[`video_${i}_title`] || defaultVideos[i - 1]?.title || '',
-        duration: content[`video_${i}_duration`] || defaultVideos[i - 1]?.duration || '',
-      });
-    } else if (defaultVideos[i - 1]) {
-      videos.push(defaultVideos[i - 1]);
-    }
-  }
-
-  return videos.length > 0 ? videos : defaultVideos;
-}
+import { useT } from "@/lib/i18n/LangProvider";
+import { useContentT } from "@/lib/i18n/useContentT";
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export default function VideoTestimonials({ content }: { content?: any }) {
   const scrollRef = useRef<HTMLDivElement>(null);
-  const videos = getVideosFromContent(content);
+  const { t } = useT();
+  const { ct } = useContentT(content);
+
+  const defaultVideos = [
+    { src: "https://pure-website.s3.eu-west-2.amazonaws.com/Product+Benefits+Social+9X16.mp4", duration: "0:55", title: t("home.videos.title1") },
+    { src: "https://pure-website.s3.eu-west-2.amazonaws.com/Preparing+Pure+9X16.mp4", duration: "0:38", title: t("home.videos.title2") },
+    { src: "https://pure-website.s3.eu-west-2.amazonaws.com/Why+Pure+Works+Compressed.mp4", duration: "0:54", title: t("home.videos.title3") },
+    { src: "https://pure-website.s3.eu-west-2.amazonaws.com/Ugc+April+Video+-+Why+Pure+Works.mp4", duration: "0:37", title: t("home.videos.title4") },
+    { src: "https://pure-website.s3.eu-west-2.amazonaws.com/Fussy+Eater+Ugc(2).mp4", duration: "0:38", title: t("home.videos.title5") },
+    { src: "https://pure-website.s3.eu-west-2.amazonaws.com/Julian+Social+H265.mp4", duration: "0:37", title: t("home.videos.title6") },
+  ];
+
+  const videos = (() => {
+    if (!content) return defaultVideos;
+    const out = [];
+    for (let i = 1; i <= 6; i++) {
+      const url = (content as Record<string, string>)[`video_${i}_url`];
+      if (url) {
+        out.push({
+          src: url,
+          title: (content as Record<string, string>)[`video_${i}_title`] || defaultVideos[i - 1]?.title || '',
+          duration: (content as Record<string, string>)[`video_${i}_duration`] || defaultVideos[i - 1]?.duration || '',
+        });
+      } else if (defaultVideos[i - 1]) {
+        out.push(defaultVideos[i - 1]);
+      }
+    }
+    return out.length > 0 ? out : defaultVideos;
+  })();
 
   const scroll = (direction: "left" | "right") => {
     if (scrollRef.current) {
@@ -48,10 +49,10 @@ export default function VideoTestimonials({ content }: { content?: any }) {
       <div className="max-w-container mx-auto px-6">
         <div className="text-center mb-10">
           <h2 className="text-[36px] md:text-[40px] font-medium text-deep-green tracking-wide mb-3">
-            {content?.heading || "Don't just take our word for it"}
+            {ct("heading", "home.videos.heading")}
           </h2>
           <p className="text-[18px] text-deep-green">
-            {content?.subheading || 'Listen to what others have to say about it'}
+            {ct("subheading", "home.videos.subheading")}
           </p>
         </div>
 

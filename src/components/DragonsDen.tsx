@@ -3,10 +3,12 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useSignupUrl } from "@/lib/useSignupUrl";
+import { useContentT } from "@/lib/i18n/useContentT";
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export default function DragonsDen({ content }: { content?: any }) {
   const signupUrl = useSignupUrl();
+  const { ct } = useContentT(content);
   return (
     <section className="relative overflow-hidden">
       <div className="flex flex-col md:flex-row min-h-[480px]">
@@ -42,16 +44,16 @@ export default function DragonsDen({ content }: { content?: any }) {
         <div className="w-full md:w-[57%] flex items-center" style={{ backgroundColor: content?.background_color || '#274C46' }}>
           <div className="px-8 md:px-16 lg:px-24 py-12">
             <h2 className="text-[32px] md:text-[40px] font-medium text-white tracking-wide leading-tight mb-6">
-              {content?.heading || "Dog food so good we ate it on Dragons\u2019 Den"}
+              {ct("heading", "home.dragons.heading")}
             </h2>
             <p className="text-off-white text-[18px] leading-relaxed mb-8">
-              {content?.description || "Jeko is complete nutrition from the inside out, and dogs totally love the taste! \u201cIt was possibly the best pitch I have seen in over 10 years of Dragons\u2019 Den\u201d - Duncan Bannatyne"}
+              {ct("description", "home.dragons.description")}
             </p>
             <Link
               href={content?.button_url || signupUrl}
               className="btn-gold inline-block font-semibold text-[18px] transition-colors duration-300"
             >
-              {content?.button_text || "Get started today"}
+              {ct("button_text", "home.faq.getStarted")}
             </Link>
           </div>
         </div>

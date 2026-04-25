@@ -6,6 +6,8 @@ import Link from 'next/link';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import { supabase } from '@/lib/supabase';
+import { useT } from '@/lib/i18n/LangProvider';
+import { localize } from '@/lib/i18n/localizeRecord';
 
 interface BlogPost {
   id: string;
@@ -18,6 +20,7 @@ interface BlogPost {
   tags: string[] | null;
   published_at: string | null;
   created_at: string;
+  i18n?: { hy?: { title?: string; body?: string; excerpt?: string } } | null;
 }
 
 function formatDate(dateStr: string): string {
@@ -29,6 +32,7 @@ function formatDate(dateStr: string): string {
 }
 
 export default function BlogPage() {
+  const { t, lang } = useT();
   const [posts, setPosts] = useState<BlogPost[]>([]);
   const [loading, setLoading] = useState(true);
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
@@ -37,7 +41,7 @@ export default function BlogPage() {
     async function fetchPosts() {
       const { data } = await supabase
         .from('blog_posts')
-        .select('id, title, slug, excerpt, featured_image, author_name, category, tags, published_at, created_at')
+        .select('id, title, slug, excerpt, featured_image, author_name, category, tags, published_at, created_at, i18n')
         .eq('status', 'published')
         .order('published_at', { ascending: false, nullsFirst: false });
 
@@ -60,10 +64,10 @@ export default function BlogPage() {
           {/* Title */}
           <div className="text-center mb-10 lg:mb-14">
             <h1 className="font-rubik font-bold text-deep-green text-3xl lg:text-5xl mb-3">
-              Blog
+              {t("blog.page.heading")}
             </h1>
             <p className="text-deep-green/60 text-[15px] lg:text-[17px] max-w-lg mx-auto leading-relaxed">
-              Tips, stories, and insights for pet parents who want the best for their furry friends.
+              {t("blog.page.subheading")}
             </p>
           </div>
 
@@ -78,7 +82,7 @@ export default function BlogPage() {
                     : 'bg-white text-deep-green border border-deep-green/20 hover:bg-deep-green/5'
                 }`}
               >
-                All
+                {t("blog.filter.all")}
               </button>
               {categories.map(cat => (
                 <button
@@ -109,9 +113,9 @@ export default function BlogPage() {
               <div className="w-20 h-20 mx-auto mb-6 bg-deep-green/10 rounded-full flex items-center justify-center text-4xl">
                 📝
               </div>
-              <h2 className="font-medium text-xl text-deep-green mb-2">No blog posts yet</h2>
+              <h2 className="font-medium text-xl text-deep-green mb-2">{t("blog.empty.heading")}</h2>
               <p className="text-deep-green/60 text-[15px]">
-                Check back soon for tips, stories, and pet care insights.
+                {t("blog.empty.body")}
               </p>
             </div>
           )}
@@ -161,11 +165,11 @@ export default function BlogPage() {
                       )}
                     </div>
                     <h2 className="font-rubik font-bold text-deep-green text-[17px] leading-snug mb-2 group-hover:text-gold transition-colors line-clamp-2">
-                      {post.title}
+                      {localize(post as unknown as Record<string, unknown>, 'title', lang) || post.title}
                     </h2>
-                    {post.excerpt && (
+                    {(localize(post as unknown as Record<string, unknown>, 'excerpt', lang) || post.excerpt) && (
                       <p className="text-deep-green/60 text-[14px] leading-relaxed line-clamp-3">
-                        {post.excerpt}
+                        {localize(post as unknown as Record<string, unknown>, 'excerpt', lang) || post.excerpt}
                       </p>
                     )}
                     {/* Tags */}

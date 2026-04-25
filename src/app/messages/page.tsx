@@ -1,4 +1,5 @@
 "use client";
+// Translations hook added below via import
 
 import {
   useState,
@@ -15,6 +16,7 @@ import Footer from "@/components/Footer";
 import { useAuth } from "@/lib/auth";
 import { useSignupUrl } from "@/lib/useSignupUrl";
 import { supabase } from "@/lib/supabase";
+import { useT } from "@/lib/i18n/LangProvider";
 
 /* ─── Types ──────────────────────────────────────────────────────────── */
 
@@ -116,6 +118,7 @@ function Avatar({
   profile: PetProfile | null;
   size?: number;
 }) {
+  const { t } = useT();
   const url = profile?.avatar_url || profile?.profile_photo_url;
   const name = profile?.display_name || profile?.pet_name;
 
@@ -127,7 +130,7 @@ function Avatar({
       >
         <Image
           src={url}
-          alt={name || "Avatar"}
+          alt={name || t("messages.avatar")}
           width={size}
           height={size}
           className="object-cover w-full h-full"
@@ -150,6 +153,7 @@ function Avatar({
 /* ─── Login CTA ──────────────────────────────────────────────────────── */
 
 function LoginCTA() {
+  const { t } = useT();
   const signupUrl = useSignupUrl();
   return (
     <div className="min-h-screen bg-off-white">
@@ -171,25 +175,24 @@ function LoginCTA() {
             </svg>
           </div>
           <h2 className="font-medium text-2xl text-deep-green mb-3 tracking-wide">
-            Sign in to view messages
+            {t("messages.login.title")}
           </h2>
           <p className="text-deep-green/60 mb-8 text-[15px] leading-relaxed">
-            Log in to your account to chat with other pet owners and manage your
-            conversations.
+            {t("messages.login.body")}
           </p>
           <Link
             href="/auth/login"
             className="inline-block bg-gold text-deep-green font-medium px-8 py-3 rounded-lg hover:bg-[#d99500] transition-colors text-[16px] tracking-wide"
           >
-            Log in
+            {t("messages.login.loginBtn")}
           </Link>
           <p className="mt-4 text-deep-green/50 text-sm">
-            Don&apos;t have an account?{" "}
+            {t("messages.login.noAccount")}{" "}
             <Link
               href={signupUrl}
               className="text-gold font-medium hover:underline"
             >
-              Sign up
+              {t("messages.login.signup")}
             </Link>
           </p>
         </div>
@@ -210,8 +213,9 @@ function DesktopConversationItem({
   isActive: boolean;
   onClick: () => void;
 }) {
+  const { t } = useT();
   const profile = convo.otherProfile;
-  const name = profile?.display_name || profile?.pet_name || "Unknown";
+  const name = profile?.display_name || profile?.pet_name || t("messages.unknown");
   const breed = profile?.breed;
 
   return (
@@ -242,7 +246,7 @@ function DesktopConversationItem({
         </div>
         <div className="flex items-center gap-2 mt-1">
           <p className="text-[13px] text-deep-green/50 truncate flex-1">
-            {convo.last_message_preview || "No messages yet"}
+            {convo.last_message_preview || t("messages.noMessagesYet")}
           </p>
           {convo.unreadCount > 0 && (
             <span className="flex-shrink-0 bg-gold text-deep-green text-[11px] font-medium w-5 h-5 rounded-full flex items-center justify-center tracking-wide">
@@ -264,8 +268,9 @@ function MobileConversationItem({
   convo: ConversationWithProfile;
   onClick: () => void;
 }) {
+  const { t } = useT();
   const profile = convo.otherProfile;
-  const name = profile?.display_name || profile?.pet_name || "Unknown";
+  const name = profile?.display_name || profile?.pet_name || t("messages.unknown");
 
   return (
     <button
@@ -284,7 +289,7 @@ function MobileConversationItem({
         </div>
         <div className="flex items-center gap-2 mt-0.5">
           <p className="text-[13px] text-deep-green/50 truncate flex-1 leading-snug">
-            {convo.last_message_preview || "No messages yet"}
+            {convo.last_message_preview || t("messages.noMessagesYet")}
           </p>
           {convo.unreadCount > 0 && (
             <span className="flex-shrink-0 bg-gold text-deep-green text-[11px] font-medium min-w-[20px] h-5 px-1.5 rounded-full flex items-center justify-center tracking-wide">
@@ -346,6 +351,7 @@ function DesktopMessageBubble({
   message: Message;
   isMine: boolean;
 }) {
+  const { t } = useT();
   return (
     <div
       className={`flex ${isMine ? "justify-end" : "justify-start"} px-6 mb-2`}
@@ -361,7 +367,7 @@ function DesktopMessageBubble({
           <div className="p-1.5 pb-0">
             <Image
               src={message.image_url}
-              alt="Shared image"
+              alt={t("messages.sharedImage")}
               width={300}
               height={300}
               className="rounded-xl max-w-[300px] w-full h-auto object-cover"
@@ -397,6 +403,7 @@ function MobileMessageBubble({
   isMine: boolean;
   showTail: boolean;
 }) {
+  const { t } = useT();
   return (
     <div
       className={`flex ${isMine ? "justify-end" : "justify-start"} px-4 mb-1.5`}
@@ -417,7 +424,7 @@ function MobileMessageBubble({
             <div className="p-1.5 pb-0">
               <Image
                 src={message.image_url}
-                alt="Shared image"
+                alt={t("messages.sharedImage")}
                 width={250}
                 height={250}
                 className="rounded-xl max-w-[250px] w-full h-auto object-cover"
@@ -452,6 +459,7 @@ function DesktopChatView({
   conversation: ConversationWithProfile;
   userId: string;
 }) {
+  const { t } = useT();
   const [messages, setMessages] = useState<Message[]>([]);
   const [loading, setLoading] = useState(true);
   const [body, setBody] = useState("");
@@ -464,7 +472,7 @@ function DesktopChatView({
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const profile = conversation.otherProfile;
-  const name = profile?.display_name || profile?.pet_name || "Unknown";
+  const name = profile?.display_name || profile?.pet_name || t("messages.unknown");
 
   const scrollToBottom = useCallback((behavior: ScrollBehavior = "smooth") => {
     setTimeout(() => {
@@ -750,7 +758,7 @@ function DesktopChatView({
           <div className="relative inline-block">
             <Image
               src={imageUrl}
-              alt="Attachment"
+              alt={t("messages.attachment")}
               width={80}
               height={80}
               className="rounded-lg object-cover w-20 h-20"
@@ -759,7 +767,7 @@ function DesktopChatView({
             <button
               onClick={() => setImageUrl(null)}
               className="absolute -top-2 -right-2 w-5 h-5 bg-red-500 text-white rounded-full flex items-center justify-center text-xs hover:bg-red-600"
-              aria-label="Remove image"
+              aria-label={t("messages.aria.removeImage")}
             >
               &times;
             </button>
@@ -780,7 +788,7 @@ function DesktopChatView({
           onClick={() => fileInputRef.current?.click()}
           disabled={uploading}
           className="flex-shrink-0 w-10 h-10 flex items-center justify-center rounded-full hover:bg-deep-green/5 transition-colors text-deep-green/40 hover:text-deep-green/60 disabled:opacity-40 mb-0.5"
-          aria-label="Attach image"
+          aria-label={t("messages.aria.attachImage")}
         >
           {uploading ? (
             <div className="w-5 h-5 border-2 border-deep-green/20 border-t-deep-green rounded-full animate-spin" />
@@ -807,7 +815,7 @@ function DesktopChatView({
           value={body}
           onChange={handleBodyChange}
           onKeyDown={handleKeyDown}
-          placeholder="Type a message..."
+          placeholder={t("messages.typePlaceholder")}
           rows={1}
           className="flex-1 resize-none bg-off-white/60 border border-deep-green/10 rounded-xl px-4 py-2.5 text-[14px] text-deep-green placeholder-deep-green/30 outline-none focus:border-deep-green/25 transition-colors leading-[22px]"
           style={{ maxHeight: 104 }}
@@ -817,7 +825,7 @@ function DesktopChatView({
           onClick={handleSend}
           disabled={!canSend}
           className="flex-shrink-0 w-10 h-10 flex items-center justify-center rounded-full bg-gold text-deep-green hover:bg-[#d99500] transition-colors disabled:opacity-40 disabled:cursor-not-allowed mb-0.5"
-          aria-label="Send message"
+          aria-label={t("messages.aria.sendMessage")}
         >
           <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
             <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z" />
@@ -839,6 +847,7 @@ function MobileChatView({
   userId: string;
   onBack: () => void;
 }) {
+  const { t } = useT();
   const [messages, setMessages] = useState<Message[]>([]);
   const [loading, setLoading] = useState(true);
   const [body, setBody] = useState("");
@@ -851,7 +860,7 @@ function MobileChatView({
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const profile = conversation.otherProfile;
-  const name = profile?.display_name || profile?.pet_name || "Unknown";
+  const name = profile?.display_name || profile?.pet_name || t("messages.unknown");
 
   const scrollToBottom = useCallback((behavior: ScrollBehavior = "smooth") => {
     setTimeout(() => {
@@ -1070,7 +1079,7 @@ function MobileChatView({
         <button
           onClick={onBack}
           className="flex-shrink-0 w-9 h-9 flex items-center justify-center rounded-full hover:bg-deep-green/5 active:bg-deep-green/10 transition-colors"
-          aria-label="Back to conversations"
+          aria-label={t("messages.aria.backConvos")}
         >
           <svg
             width="22"
@@ -1099,7 +1108,7 @@ function MobileChatView({
         {/* More options */}
         <button
           className="flex-shrink-0 w-9 h-9 flex items-center justify-center rounded-full hover:bg-deep-green/5 transition-colors"
-          aria-label="More options"
+          aria-label={t("messages.aria.moreOptions")}
         >
           <svg
             width="18"
@@ -1177,7 +1186,7 @@ function MobileChatView({
           <div className="relative inline-block">
             <Image
               src={imageUrl}
-              alt="Attachment"
+              alt={t("messages.attachment")}
               width={64}
               height={64}
               className="rounded-lg object-cover w-16 h-16"
@@ -1186,7 +1195,7 @@ function MobileChatView({
             <button
               onClick={() => setImageUrl(null)}
               className="absolute -top-2 -right-2 w-5 h-5 bg-red-500 text-white rounded-full flex items-center justify-center text-xs hover:bg-red-600"
-              aria-label="Remove image"
+              aria-label={t("messages.aria.removeImage")}
             >
               &times;
             </button>
@@ -1207,7 +1216,7 @@ function MobileChatView({
           onClick={() => fileInputRef.current?.click()}
           disabled={uploading}
           className="flex-shrink-0 w-9 h-9 flex items-center justify-center rounded-full hover:bg-deep-green/5 active:bg-deep-green/10 transition-colors text-deep-green/40 disabled:opacity-40 mb-0.5"
-          aria-label="Attach image"
+          aria-label={t("messages.aria.attachImage")}
         >
           {uploading ? (
             <div className="w-5 h-5 border-2 border-deep-green/20 border-t-deep-green rounded-full animate-spin" />
@@ -1234,7 +1243,7 @@ function MobileChatView({
           value={body}
           onChange={handleBodyChange}
           onKeyDown={handleKeyDown}
-          placeholder="Type a message..."
+          placeholder={t("messages.typePlaceholder")}
           rows={1}
           className="flex-1 resize-none bg-off-white/70 border border-deep-green/10 rounded-2xl px-4 py-2.5 text-[14px] text-deep-green placeholder-deep-green/30 outline-none focus:border-deep-green/20 transition-colors leading-[22px]"
           style={{ maxHeight: 82 }}
@@ -1244,7 +1253,7 @@ function MobileChatView({
           onClick={handleSend}
           disabled={!canSend}
           className="flex-shrink-0 w-10 h-10 flex items-center justify-center rounded-full bg-gold text-deep-green active:bg-[#d99500] transition-colors disabled:opacity-40 disabled:cursor-not-allowed mb-0.5"
-          aria-label="Send message"
+          aria-label={t("messages.aria.sendMessage")}
         >
           <svg
             width="18"
@@ -1270,6 +1279,7 @@ function MobileChatView({
 /* ═══════════════════════════════════════════════════════════════════════ */
 
 export default function MessagesPage() {
+  const { t } = useT();
   const { user, loading: authLoading } = useAuth();
   const [conversations, setConversations] = useState<ConversationWithProfile[]>(
     []
@@ -1431,7 +1441,7 @@ export default function MessagesPage() {
           {/* Page Title - desktop only */}
           <div className="hidden lg:flex items-center gap-3 mb-6 mt-2">
             <h1 className="font-medium text-deep-green text-2xl tracking-wide">
-              Messages
+              {t("messages.titleAlt")}
             </h1>
             {totalUnread > 0 && (
               <span className="bg-gold text-deep-green text-[12px] font-medium min-w-[22px] h-[22px] px-2 rounded-full flex items-center justify-center tracking-wide">
@@ -1522,10 +1532,10 @@ export default function MessagesPage() {
                       </svg>
                     </div>
                     <p className="text-deep-green/40 text-[17px] font-medium mb-2 tracking-wide">
-                      Select a conversation
+                      {t("messages.selectConversation")}
                     </p>
                     <p className="text-deep-green/30 text-[14px]">
-                      Choose a chat from the list to start messaging
+                      {t("messages.chooseChat")}
                     </p>
                   </div>
                 </div>
@@ -1543,7 +1553,7 @@ export default function MessagesPage() {
                   <div className="flex items-center justify-between mb-4">
                     <div className="flex items-center gap-2.5">
                       <h1 className="font-medium text-deep-green text-[22px] tracking-wide">
-                        Messages
+                        {t("messages.titleAlt")}
                       </h1>
                       {totalUnread > 0 && (
                         <span className="bg-gold text-deep-green text-[12px] font-medium min-w-[22px] h-[22px] px-1.5 rounded-full flex items-center justify-center tracking-wide">
@@ -1573,7 +1583,7 @@ export default function MessagesPage() {
                     </div>
                     <input
                       type="text"
-                      placeholder="Search conversations..."
+                      placeholder={t("messages.search.placeholder")}
                       className="w-full bg-off-white/60 border border-deep-green/8 rounded-xl pl-9 pr-4 py-2.5 text-[14px] text-deep-green placeholder-deep-green/30 outline-none focus:border-deep-green/15 transition-colors"
                       readOnly
                     />
@@ -1605,14 +1615,13 @@ export default function MessagesPage() {
                           </svg>
                         </div>
                         <p className="text-deep-green/50 text-[15px] leading-relaxed mb-4">
-                          No messages yet. Match with other pet owners to start
-                          chatting!
+                          {t("messages.empty.body")}
                         </p>
                         <Link
                           href="/swipe"
                           className="inline-block bg-gold text-deep-green font-medium px-6 py-2.5 rounded-lg hover:bg-[#d99500] transition-colors text-[14px] tracking-wide"
                         >
-                          Find matches
+                          {t("messages.findMatches")}
                         </Link>
                       </div>
                     </div>

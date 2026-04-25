@@ -1,0 +1,242 @@
+- generic [active] [ref=e1]:
+  - banner [ref=e2]:
+    - generic [ref=e4]:
+      - link "JEKO" [ref=e5] [cursor=pointer]:
+        - /url: /
+        - generic [ref=e6]: JEKO
+      - navigation [ref=e7]:
+        - link "Մեր մասին" [ref=e9] [cursor=pointer]:
+          - /url: /about
+          - text: Մեր մասին
+          - img [ref=e10]
+        - link "Համայնք" [ref=e13] [cursor=pointer]:
+          - /url: /community
+          - text: Համայնք
+          - img [ref=e14]
+        - link "Խանութ" [ref=e17] [cursor=pointer]:
+          - /url: /products
+        - link "Կարծիքներ" [ref=e19] [cursor=pointer]:
+          - /url: /reviews
+        - link "Առողջապահական օգուտներ" [ref=e21] [cursor=pointer]:
+          - /url: /benefits
+          - text: Առողջապահական օգուտներ
+          - img [ref=e22]
+      - generic [ref=e24]:
+        - button "Switch language" [ref=e26] [cursor=pointer]:
+          - generic [ref=e27]: 🇦🇲
+          - generic [ref=e28]: HY
+          - img [ref=e29]
+        - button "Shopping cart" [ref=e31] [cursor=pointer]:
+          - img [ref=e32]
+        - link "Օգնություն" [ref=e36] [cursor=pointer]:
+          - /url: /contact
+        - generic [ref=e259]:
+          - link "Ադմին վահանակ" [ref=e260] [cursor=pointer]:
+            - /url: /admin/dashboard
+            - img [ref=e261]
+            - text: Ադմին վահանակ
+          - button "Ելք" [ref=e264] [cursor=pointer]:
+            - img [ref=e265]
+            - text: Ելք
+  - main [ref=e39]:
+    - generic [ref=e41]:
+      - img "Delicious natural dog food ingredients" [ref=e43]
+      - generic [ref=e46]:
+        - heading "Իսկական բարություն Իսկական սնունդ" [level=1] [ref=e267]:
+          - text: Իսկական բարություն
+          - text: Իսկական սնունդ
+        - paragraph [ref=e48]: "Ի վերջո, ձեր ընտանի կենդանուն նույնպես պետք է ուտի այնպես, ինչպես ընտանիքի անդամներից որևէ մեկը:"
+        - generic [ref=e49]:
+          - combobox [ref=e50] [cursor=pointer]:
+            - option "Ինչով ես ներկայումս կերակրում քո շանը" [selected]
+            - option "Չոր կեր"
+            - option "Թաց/պահածոյացված սնունդ"
+            - option "Հում սնունդ"
+            - option "Տնային եփած"
+            - option "Այլ"
+          - button "Տեսնել մեր առողջարար տարբերակները" [ref=e51] [cursor=pointer]
+        - generic [ref=e52]:
+          - generic [ref=e53]:
+            - img [ref=e55]
+            - img [ref=e58]
+            - img [ref=e61]
+            - img [ref=e64]
+            - img [ref=e68]
+          - generic [ref=e70]: Գերազանց
+          - generic [ref=e71]: 4.7 հինգից
+          - generic [ref=e72]: Trustpilot
+    - link "25% զեղչ ձեր առաջին տուփի համար+10% զեղչ ձեր հաջորդ տուփի համար" [ref=e268] [cursor=pointer]:
+      - /url: /signup
+      - paragraph [ref=e75]: 25% զեղչ ձեր առաջին տուփի համար+10% զեղչ ձեր հաջորդ տուփի համար
+    - generic [ref=e78]:
+      - img "Personalised dog food" [ref=e80]
+      - generic [ref=e83]:
+        - heading "Անհատականացված" [level=2] [ref=e269]
+        - paragraph [ref=e85]: ձեր շան համար
+        - paragraph [ref=e86]: "Մենք կստեղծենք ձեր շան համար հարմարեցված մենյու:"
+    - generic [ref=e89]:
+      - generic [ref=e91]:
+        - heading "Բնական առողջություն" [level=2] [ref=e270]
+        - paragraph [ref=e93]: պարզապես ջուր ավելացնել
+        - paragraph [ref=e94]: "Սիրով պատրաստված Յորքշիրում:"
+      - img "Natural healthy dog food" [ref=e96]
+    - generic [ref=e100]:
+      - generic [ref=e101]:
+        - heading "Բաղադրատոմսերի մեր ճաշացանկը" [level=2] [ref=e271]
+        - paragraph [ref=e103]: "Մենք կհարմարեցնենք ձեր ճաշացանկը հատուկ ձեր կարիքներին:"
+      - generic [ref=e104]:
+        - button "Գեներալ" [ref=e272] [cursor=pointer]: Գեներալ
+        - button "Զգայուն" [ref=e273] [cursor=pointer]
+        - button "Երիկամային" [ref=e274] [cursor=pointer]
+      - generic [ref=e109]:
+        - generic [ref=e110]:
+          - img "Chicken" [ref=e112]
+          - generic [ref=e114]:
+            - heading "Հավ" [level=3] [ref=e275]
+            - paragraph [ref=e116]: պարտեզի կանաչիներով և ելակի կտորներով
+            - link "Ավելի շատ" [ref=e117] [cursor=pointer]:
+              - /url: /auth/signup
+        - generic [ref=e118]:
+          - img "Duck" [ref=e120]
+          - generic [ref=e122]:
+            - heading "Բադիկ" [level=3] [ref=e276]
+            - paragraph [ref=e124]: բանջարեղենի և հապալասի խառնուրդով
+            - link "Ավելի շատ" [ref=e125] [cursor=pointer]:
+              - /url: /auth/signup
+        - generic [ref=e126]:
+          - img "Game" [ref=e128]
+          - generic [ref=e130]:
+            - heading "Խաղ" [level=3] [ref=e277]
+            - paragraph [ref=e132]: բադով, հնդկահավով և կանաչի եռյակով
+            - link "Ավելի շատ" [ref=e133] [cursor=pointer]:
+              - /url: /auth/signup
+        - generic [ref=e134]:
+          - img "Herring" [ref=e136]
+          - generic [ref=e138]:
+            - heading "Ծովատառեխ" [level=3] [ref=e278]
+            - paragraph [ref=e140]: սպիտակ ձկներով և պարտեզի կանաչիների խառնուրդով
+            - link "Ավելի շատ" [ref=e141] [cursor=pointer]:
+              - /url: /auth/signup
+        - generic [ref=e142]:
+          - img "Lamb" [ref=e144]
+          - generic [ref=e146]:
+            - heading "Գառան" [level=3] [ref=e279]
+            - paragraph [ref=e148]: կոկոսի և քաղցր կարտոֆիլի նրբերանգով
+            - link "Ավելի շատ" [ref=e149] [cursor=pointer]:
+              - /url: /auth/signup
+        - generic [ref=e150]:
+          - img "Salmon" [ref=e152]
+          - generic [ref=e154]:
+            - heading "Սաղմոն" [level=3] [ref=e280]
+            - paragraph [ref=e156]: սպիտակ ձկներով և այգիների կանաչիներով
+            - link "Ավելի շատ" [ref=e157] [cursor=pointer]:
+              - /url: /auth/signup
+        - generic [ref=e158]:
+          - img "Turkey" [ref=e160]
+          - generic [ref=e162]:
+            - heading "Թուրքիա" [level=3] [ref=e281]
+            - paragraph [ref=e164]: բրոկկոլիով, սպանախով և համեղ մրգերով
+            - link "Ավելի շատ" [ref=e165] [cursor=pointer]:
+              - /url: /auth/signup
+    - generic [ref=e169]:
+      - img "Carefully prepared dog food" [ref=e171]
+      - generic [ref=e173]:
+        - heading "Զգուշորեն պատրաստված" [level=2] [ref=e282]
+        - paragraph [ref=e175]: ձեր շան մտքում ունենալով
+        - generic [ref=e176]:
+          - paragraph [ref=e177]: Մենք ընդունում ենք համեղ, բնական բաղադրիչներ։
+          - paragraph [ref=e178]: Սննդի մեջ պարունակվող սնուցիչները խնամքով պաշտպանված են։
+    - generic [ref=e181]:
+      - heading "Շներն ավելի լավին են արժանի" [level=2] [ref=e283]
+      - paragraph [ref=e183]: "Կենդանիների համար նախատեսված այլ սննդամթերքները պարունակում են հավելումներ և կոնսերվանտներ:"
+    - generic [ref=e186]:
+      - heading "Իսկ եթե իմ չոր շան սնունդը լավ բաղադրիչներ ունի:" [level=2] [ref=e284]
+      - generic [ref=e188]:
+        - paragraph [ref=e189]: "Լավ բաղադրիչները լավ սննդի հիմքում են:"
+        - paragraph [ref=e190]: "Բաղադրիչները մշակվում են անճանաչելի:"
+        - paragraph [ref=e191]: "Նրբորեն օդով չորացրած մեր պրոցեսը պարունակում է մինչև 5 անգամ ավելի շատ սննդանյութեր:"
+    - generic [ref=e194]:
+      - generic [ref=e196]:
+        - heading "Անհատականացրեք ձեր" [level=2] [ref=e285]
+        - paragraph [ref=e198]: շան սնունդ
+        - paragraph [ref=e199]: "Ակտիվորեն ներդրումներ կատարեք ձեր ընտանի կենդանու առողջության համար:"
+        - link "Բացահայտեք ձեր շան ճաշացանկը" [ref=e286] [cursor=pointer]:
+          - /url: /signup
+      - img "Personalise your dog's food" [ref=e202]
+  - contentinfo [ref=e204]:
+    - generic [ref=e205]:
+      - generic [ref=e206]:
+        - generic [ref=e207]:
+          - heading "Միացիր մեր VIP ցանկին" [level=4] [ref=e208]
+          - paragraph [ref=e209]: Առաջինը իմացիր նոր ապրանքների մասին, մասնակցիր բացառիկ մրցույթների և ստացիր օգտակար խորհուրդներ ընտանի կենդանիների խնամքի մասին։
+          - generic [ref=e210]:
+            - textbox "Մուտքագրիր քո էլ. փոստի հասցեն" [ref=e211]
+            - button "Գրանցվել" [ref=e212] [cursor=pointer]
+        - generic [ref=e213]:
+          - generic [ref=e214]:
+            - heading "Jeko" [level=4] [ref=e215]
+            - list [ref=e216]:
+              - listitem [ref=e217]:
+                - link "Մեր պատմությունը" [ref=e218] [cursor=pointer]:
+                  - /url: /about
+              - listitem [ref=e219]:
+                - link "Կարծիքներ" [ref=e220] [cursor=pointer]:
+                  - /url: /reviews
+              - listitem [ref=e221]:
+                - link "Բաղադրատոմսեր" [ref=e222] [cursor=pointer]:
+                  - /url: /recipes
+              - listitem [ref=e223]:
+                - link "Ավելին քան ամանը" [ref=e224] [cursor=pointer]:
+                  - /url: /beyond-the-bowl
+              - listitem [ref=e225]:
+                - link "Խանութ" [ref=e226] [cursor=pointer]:
+                  - /url: /products
+              - listitem [ref=e227]:
+                - link "Համայնք" [ref=e228] [cursor=pointer]:
+                  - /url: /community
+          - generic [ref=e229]:
+            - heading "Օգնություն" [level=4] [ref=e230]
+            - list [ref=e231]:
+              - listitem [ref=e232]:
+                - link "Իմ հաշիվը" [ref=e233] [cursor=pointer]:
+                  - /url: /profile
+              - listitem [ref=e234]:
+                - link "Կապ մեզ հետ" [ref=e235] [cursor=pointer]:
+                  - /url: /contact
+              - listitem [ref=e236]:
+                - link "Առաքման տեղեկատվություն" [ref=e237] [cursor=pointer]:
+                  - /url: /delivery-information
+              - listitem [ref=e238]:
+                - link "Վերադարձներ" [ref=e239] [cursor=pointer]:
+                  - /url: /returns
+              - listitem [ref=e240]:
+                - link "Կայքի քարտեզ" [ref=e241] [cursor=pointer]:
+                  - /url: /sitemap-page
+          - generic [ref=e242]:
+            - heading "Տեղեկատվություն" [level=4] [ref=e243]
+            - list [ref=e244]:
+              - listitem [ref=e245]:
+                - link "Գաղտնիության քաղաքականություն" [ref=e246] [cursor=pointer]:
+                  - /url: /privacy-policy
+              - listitem [ref=e247]:
+                - link "Պայմաններ և դրույթներ" [ref=e248] [cursor=pointer]:
+                  - /url: /terms-of-use
+              - listitem [ref=e249]:
+                - link "Jeko-ի քաղաքականություն" [ref=e250] [cursor=pointer]:
+                  - /url: /pure-policies
+              - listitem [ref=e251]:
+                - link "Կայքի անվտանգություն" [ref=e252] [cursor=pointer]:
+                  - /url: /site-security
+              - listitem [ref=e253]:
+                - link "Cookie-ների քաղաքականություն" [ref=e254] [cursor=pointer]:
+                  - /url: /cookie-policy
+      - generic [ref=e255]:
+        - generic [ref=e257]: JEKO
+        - paragraph [ref=e258]: © Jeko 2020-2026
+  - generic [ref=e287]:
+    - generic [ref=e288]:
+      - paragraph [ref=e289]: Հաու՜ 🐾
+      - paragraph [ref=e290]: Գտիր ընկեր քո կենդանու համար։
+    - button "Find pet matches" [ref=e292] [cursor=pointer]:
+      - img "Jeko dog" [ref=e293]
+  - alert [ref=e294]

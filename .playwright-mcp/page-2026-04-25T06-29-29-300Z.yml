@@ -1,0 +1,225 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e2]:
+    - banner [ref=e3]:
+      - generic [ref=e5]:
+        - link "JEKO" [ref=e6] [cursor=pointer]:
+          - /url: /
+          - generic [ref=e7]: JEKO
+        - navigation [ref=e8]:
+          - link "Մեր մասին" [ref=e10] [cursor=pointer]:
+            - /url: /about
+            - text: Մեր մասին
+            - img [ref=e11]
+          - link "Համայնք" [ref=e14] [cursor=pointer]:
+            - /url: /community
+            - text: Համայնք
+            - img [ref=e15]
+          - link "Խանութ" [ref=e18] [cursor=pointer]:
+            - /url: /products
+          - link "Կարծիքներ" [ref=e20] [cursor=pointer]:
+            - /url: /reviews
+          - link "Առողջապահական օգուտներ" [ref=e22] [cursor=pointer]:
+            - /url: /benefits
+            - text: Առողջապահական օգուտներ
+            - img [ref=e23]
+        - generic [ref=e25]:
+          - button "Switch language" [ref=e27] [cursor=pointer]:
+            - generic [ref=e28]: 🇦🇲
+            - generic [ref=e29]: HY
+            - img [ref=e30]
+          - button "Shopping cart" [ref=e32] [cursor=pointer]:
+            - img [ref=e33]
+          - link "Օգնություն" [ref=e37] [cursor=pointer]:
+            - /url: /contact
+          - link "Մուտք" [ref=e38] [cursor=pointer]:
+            - /url: /login
+          - link "Գրանցվել" [ref=e39] [cursor=pointer]:
+            - /url: /auth/signup
+    - main [ref=e40]:
+      - generic [ref=e42]:
+        - heading "Կապվեք մեզ հետ" [level=1] [ref=e43]
+        - paragraph [ref=e44]: Ունե՞ք հարց ձեր պատվերի, մեր բաղադրատոմսերի մասին, կամ պարզապես ցանկանու՞մ եք բարևել։ Մենք ուրախ կլինենք լսել ձեզանից։
+      - generic [ref=e47]:
+        - generic [ref=e49]:
+          - heading "Ուղարկեք մեզ հաղորդագրություն" [level=2] [ref=e50]
+          - paragraph [ref=e51]: Լրացրեք ներքևում գտնվող ձևը, և մեր թիմը կապ կհաստատի ձեզ հետ։
+          - generic [ref=e52]:
+            - generic [ref=e53]:
+              - generic [ref=e54]: Լրիվ անուն *
+              - textbox "Լրիվ անուն *" [ref=e55]:
+                - /placeholder: Ձեր լրիվ անունը
+            - generic [ref=e56]:
+              - generic [ref=e57]: Էլ. փոստ *
+              - textbox "Էլ. փոստ *" [ref=e58]:
+                - /placeholder: your@email.com
+            - generic [ref=e59]:
+              - generic [ref=e60]: Հեռախոս (ոչ պարտադիր)
+              - textbox "Հեռախոս (ոչ պարտադիր)" [ref=e61]:
+                - /placeholder: Ձեր հեռախոսահամարը
+            - generic [ref=e62]:
+              - generic [ref=e63]: Թեմա *
+              - combobox "Թեմա *" [ref=e64]:
+                - option "Ընտրեք թեմա" [disabled] [selected]
+                - option "Ընդհանուր հարցում"
+                - option "Պատվերի խնդիր"
+                - option "Բաժանորդագրության օգնություն"
+                - option "Ապրանքի վերաբերյալ հարց"
+                - option "Գործընկերության հնարավորություն"
+                - option "Այլ"
+            - generic [ref=e65]:
+              - generic [ref=e66]: Պատվերի համար (ոչ պարտադիր)
+              - textbox "Պատվերի համար (ոչ պարտադիր)" [ref=e67]:
+                - /placeholder: "օրինակ՝ #PP-12345"
+            - generic [ref=e68]:
+              - generic [ref=e69]: Հաղորդագրություն *
+              - textbox "Հաղորդագրություն *" [ref=e70]:
+                - /placeholder: Պատմեք մեզ, թե ինչպես կարող ենք օգնել...
+            - button "Ուղարկել հաղորդագրությունը" [ref=e71] [cursor=pointer]
+        - generic [ref=e72]:
+          - generic [ref=e73]:
+            - heading "Կապվիր մեզ հետ" [level=2] [ref=e74]
+            - generic [ref=e75]:
+              - generic [ref=e76]:
+                - img [ref=e78]
+                - generic [ref=e81]:
+                  - paragraph [ref=e82]: Էլ. փոստ
+                  - link "hello@jeko.am" [ref=e83] [cursor=pointer]:
+                    - /url: mailto:hello@jeko.am
+              - generic [ref=e84]:
+                - img [ref=e86]
+                - generic [ref=e88]:
+                  - paragraph [ref=e89]: Հեռախոս
+                  - link "+374 10 000 000" [ref=e90] [cursor=pointer]:
+                    - /url: tel:+37410000000
+              - generic [ref=e91]:
+                - img [ref=e93]
+                - generic [ref=e96]:
+                  - paragraph [ref=e97]: Աշխատանքային ժամեր
+                  - paragraph [ref=e98]:
+                    - text: "Mon–Fri: 9am–5pm"
+                    - text: "Sat: 10am–2pm"
+              - generic [ref=e99]:
+                - img [ref=e101]
+                - generic [ref=e104]:
+                  - paragraph [ref=e105]: Հասցե
+                  - paragraph [ref=e106]:
+                    - text: Jeko
+                    - text: Unit 5, Yorkshire Business Park
+                    - text: Leeds, LS1 4AP
+          - generic [ref=e107]:
+            - heading "Ինչ ակնկալել" [level=3] [ref=e108]
+            - generic [ref=e109]:
+              - paragraph [ref=e112]: We aim to respond to all enquiries within 24 hours on business days.
+              - paragraph [ref=e115]: For urgent order issues, please include your order number for a faster resolution.
+              - paragraph [ref=e118]: Weekend enquiries will be addressed on the next business day.
+          - generic [ref=e119]:
+            - heading "Արագ պատասխա՞ն ես ուզում" [level=3] [ref=e120]
+            - paragraph [ref=e121]: Ստուգիր մեր FAQ բաժինը՝ արագ պատասխաններ ստանալու ամենատարածված հարցերին մեր ապրանքների, առաքման և բաժանորդագրությունների մասին։
+            - link "Տեսնել FAQ-ն" [ref=e122] [cursor=pointer]:
+              - /url: /benefits
+              - text: Տեսնել FAQ-ն
+              - img [ref=e123]
+      - generic [ref=e127]:
+        - generic [ref=e128]:
+          - generic [ref=e129]:
+            - img [ref=e130]
+            - paragraph [ref=e132]: Yorkshire Business Park, Leeds
+            - paragraph [ref=e133]: Yerevan, Armenia
+          - generic [ref=e134]:
+            - heading "Այցելիր մեզ" [level=4] [ref=e135]
+            - paragraph [ref=e136]: Մեր խոհանոցը գտնվում է Յորքշիրի սրտում։ Շրջագայությունները հասանելի են նախնական պայմանավորվածությամբ։
+        - generic [ref=e137]:
+          - heading "Օգտակար հղումներ" [level=4] [ref=e138]
+          - generic [ref=e139]:
+            - link "Մեր ապրանքները" [ref=e140] [cursor=pointer]:
+              - /url: /products
+              - img [ref=e142]
+              - generic [ref=e146]: Մեր ապրանքները
+            - link "Հաճախորդների կարծիքներ" [ref=e147] [cursor=pointer]:
+              - /url: /reviews
+              - img [ref=e149]
+              - generic [ref=e151]: Հաճախորդների կարծիքներ
+            - link "Մեր պատմությունը" [ref=e152] [cursor=pointer]:
+              - /url: /about
+              - img [ref=e154]
+              - generic [ref=e159]: Մեր պատմությունը
+            - link "Ստեղծել պլան" [ref=e160] [cursor=pointer]:
+              - /url: /auth/signup
+              - img [ref=e162]
+              - generic [ref=e164]: Ստեղծել պլան
+    - contentinfo [ref=e165]:
+      - generic [ref=e166]:
+        - generic [ref=e167]:
+          - generic [ref=e168]:
+            - heading "Միացիր մեր VIP ցանկին" [level=4] [ref=e169]
+            - paragraph [ref=e170]: Առաջինը իմացիր նոր ապրանքների մասին, մասնակցիր բացառիկ մրցույթների և ստացիր օգտակար խորհուրդներ ընտանի կենդանիների խնամքի մասին։
+            - generic [ref=e171]:
+              - textbox "Մուտքագրիր քո էլ. փոստի հասցեն" [ref=e172]
+              - button "Գրանցվել" [ref=e173] [cursor=pointer]
+          - generic [ref=e174]:
+            - generic [ref=e175]:
+              - heading "Jeko" [level=4] [ref=e176]
+              - list [ref=e177]:
+                - listitem [ref=e178]:
+                  - link "Մեր պատմությունը" [ref=e179] [cursor=pointer]:
+                    - /url: /about
+                - listitem [ref=e180]:
+                  - link "Կարծիքներ" [ref=e181] [cursor=pointer]:
+                    - /url: /reviews
+                - listitem [ref=e182]:
+                  - link "Բաղադրատոմսեր" [ref=e183] [cursor=pointer]:
+                    - /url: /recipes
+                - listitem [ref=e184]:
+                  - link "Ավելին քան ամանը" [ref=e185] [cursor=pointer]:
+                    - /url: /beyond-the-bowl
+                - listitem [ref=e186]:
+                  - link "Խանութ" [ref=e187] [cursor=pointer]:
+                    - /url: /products
+                - listitem [ref=e188]:
+                  - link "Համայնք" [ref=e189] [cursor=pointer]:
+                    - /url: /community
+            - generic [ref=e190]:
+              - heading "Օգնություն" [level=4] [ref=e191]
+              - list [ref=e192]:
+                - listitem [ref=e193]:
+                  - link "Իմ հաշիվը" [ref=e194] [cursor=pointer]:
+                    - /url: /profile
+                - listitem [ref=e195]:
+                  - link "Կապ մեզ հետ" [ref=e196] [cursor=pointer]:
+                    - /url: /contact
+                - listitem [ref=e197]:
+                  - link "Առաքման տեղեկատվություն" [ref=e198] [cursor=pointer]:
+                    - /url: /delivery-information
+                - listitem [ref=e199]:
+                  - link "Վերադարձներ" [ref=e200] [cursor=pointer]:
+                    - /url: /returns
+                - listitem [ref=e201]:
+                  - link "Կայքի քարտեզ" [ref=e202] [cursor=pointer]:
+                    - /url: /sitemap-page
+            - generic [ref=e203]:
+              - heading "Տեղեկատվություն" [level=4] [ref=e204]
+              - list [ref=e205]:
+                - listitem [ref=e206]:
+                  - link "Գաղտնիության քաղաքականություն" [ref=e207] [cursor=pointer]:
+                    - /url: /privacy-policy
+                - listitem [ref=e208]:
+                  - link "Պայմաններ և դրույթներ" [ref=e209] [cursor=pointer]:
+                    - /url: /terms-of-use
+                - listitem [ref=e210]:
+                  - link "Jeko-ի քաղաքականություն" [ref=e211] [cursor=pointer]:
+                    - /url: /pure-policies
+                - listitem [ref=e212]:
+                  - link "Կայքի անվտանգություն" [ref=e213] [cursor=pointer]:
+                    - /url: /site-security
+                - listitem [ref=e214]:
+                  - link "Cookie-ների քաղաքականություն" [ref=e215] [cursor=pointer]:
+                    - /url: /cookie-policy
+        - generic [ref=e216]:
+          - generic [ref=e218]: JEKO
+          - paragraph [ref=e219]: © Jeko 2020-2026
+  - generic:
+    - generic:
+      - paragraph: Հաու՜ 🐾
+      - paragraph: Գտիր ընկեր քո կենդանու համար։
+    - button "Find pet matches":
+      - img "Jeko dog"

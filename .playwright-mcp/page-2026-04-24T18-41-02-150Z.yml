@@ -1,0 +1,21 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e4]:
+    - img [ref=e6]
+    - heading "Ձեր զամբյուղը դատարկ է" [level=1] [ref=e8]
+    - paragraph [ref=e9]: Մուտք գործեք՝ ձեր պահպանված ապրանքները տեսնելու համար։
+    - generic [ref=e10]:
+      - link "Շարունակել գնումները" [ref=e11] [cursor=pointer]:
+        - /url: /products
+      - link "Վերադառնալ գլխավոր" [ref=e12] [cursor=pointer]:
+        - /url: /
+  - link "Home":
+    - /url: /
+    - img
+    - text: Home
+  - generic:
+    - generic:
+      - paragraph: Bow Wow! 🐾
+      - paragraph: Find a friend for your pup!
+    - button "Find pet matches":
+      - img "Jeko dog"
+  - alert [ref=e13]

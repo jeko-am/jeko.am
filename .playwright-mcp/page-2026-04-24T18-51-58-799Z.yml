@@ -1,0 +1,12 @@
+- generic [active] [ref=e1]:
+  - link "Home":
+    - /url: /
+    - img
+    - text: Home
+  - generic:
+    - generic:
+      - paragraph: Bow Wow! 🐾
+      - paragraph: Find a friend for your pup!
+    - button "Find pet matches":
+      - img "Jeko dog"
+  - alert [ref=e4]

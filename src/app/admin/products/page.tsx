@@ -2,6 +2,7 @@
 
 import { supabase } from '@/lib/supabase';
 import { useEffect, useState, useCallback, useMemo, useRef } from 'react';
+import { useAdminEditLang } from '@/lib/i18n/AdminEditLang';
 
 // ---------------------------------------------------------------------------
 // Types
@@ -25,6 +26,7 @@ interface Product {
   images: string[] | null;
   weight: number | null;
   weight_unit: string | null;
+  i18n?: { hy?: { name?: string; short_description?: string; description?: string } } | null;
   created_at: string;
   updated_at: string;
 }
@@ -85,6 +87,7 @@ const EMPTY_FORM: ProductFormData = {
   images: null,
   weight: null,
   weight_unit: 'kg',
+  i18n: null,
 };
 
 // ---------------------------------------------------------------------------
@@ -183,6 +186,68 @@ export default function AdminProductsPage() {
   const [editingId, setEditingId] = useState<string | null>(null);
   const [form, setForm] = useState<ProductFormData>({ ...EMPTY_FORM });
   const [slugManuallyEdited, setSlugManuallyEdited] = useState(false);
+  const { editLang } = useAdminEditLang();
+
+  // Helper: read a translatable field based on editLang (en → form.field, hy → form.i18n.hy.field)
+  function getLocField(key: 'name' | 'short_description' | 'description'): string {
+    if (editLang === 'hy') {
+      return (form.i18n as { hy?: Record<string, string> } | null)?.hy?.[key] ?? '';
+    }
+    return (form[key] as string) ?? '';
+  }
+
+  // Helper: write a translatable field into EN column or i18n.hy.field
+  function setLocField(key: 'name' | 'short_description' | 'description', value: string) {
+    if (editLang === 'hy') {
+      setForm((prev) => {
+        const i18n = (prev.i18n as { hy?: Record<string, string> } | null) ?? {};
+        const hy = { ...(i18n.hy ?? {}) };
+        if (value && value.length > 0) hy[key] = value;
+        else delete hy[key];
+        return { ...prev, i18n: { ...i18n, hy } } as ProductFormData;
+      });
+    } else {
+      setForm((prev) => ({ ...prev, [key]: value }));
+    }
+  }
+
+  const [translating, setTranslating] = useState<Record<string, boolean>>({});
+
+  async function autoTranslate(key: 'name' | 'short_description' | 'description') {
+    const source = (form[key] as string) ?? '';
+    if (!source.trim()) return;
+    setTranslating((s) => ({ ...s, [key]: true }));
+    try {
+      const res = await fetch('/api/translate', {
+        method: 'POST',
+        headers: { 'content-type': 'application/json' },
+        body: JSON.stringify({ text: source, target: 'hy' }),
+      });
+      const json = (await res.json()) as { translated?: string; error?: string };
+      if (res.ok && json.translated) setLocField(key, json.translated);
+      else addToast('error', json.error || 'Translation failed');
+    } catch (e) {
+      addToast('error', e instanceof Error ? e.message : 'Translation failed');
+    } finally {
+      setTranslating((s) => ({ ...s, [key]: false }));
+    }
+  }
+
+  // When admin switches to HY mode on an open form, auto-fill any empty HY fields
+  // with machine-translated Armenian so they have an editable starting point.
+  useEffect(() => {
+    if (!showForm || editLang !== 'hy') return;
+    const hy = (form.i18n as { hy?: Record<string, string> } | null)?.hy ?? {};
+    const keys: Array<'name' | 'short_description' | 'description'> = ['name', 'short_description', 'description'];
+    for (const k of keys) {
+      const has = typeof hy[k] === 'string' && hy[k]!.length > 0;
+      const src = (form[k] as string) ?? '';
+      if (!has && src.trim() && !translating[k]) {
+        autoTranslate(k);
+      }
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [editLang, showForm, editingId]);
 
   // Image upload state
   const [uploading, setUploading] = useState(false);
@@ -312,6 +377,7 @@ export default function AdminProductsPage() {
       images: product.images ?? null,
       weight: product.weight,
       weight_unit: product.weight_unit ?? 'kg',
+      i18n: product.i18n ?? null,
     });
     setSlugManuallyEdited(true);
     setShowForm(true);
@@ -411,7 +477,7 @@ export default function AdminProductsPage() {
 
     setSaving(true);
     try {
-      const payload = {
+      const payload: Record<string, unknown> = {
         name: form.name.trim(),
         slug: form.slug.trim(),
         description: form.description || null,
@@ -430,18 +496,41 @@ export default function AdminProductsPage() {
         weight_unit: form.weight_unit || null,
         updated_at: new Date().toISOString(),
       };
+      // Only include i18n if the column exists / value is set. If the DB table
+      // doesn't yet have the column, the insert/update will reject — we catch
+      // that error and retry without i18n so admins can keep working pre-migration.
+      if (form.i18n && Object.keys(form.i18n).length > 0) {
+        payload.i18n = form.i18n;
+      }
 
       let productId = editingId;
 
-      if (editingId) {
-        const { error } = await supabase.from('products').update(payload).eq('id', editingId);
-        if (error) throw error;
-        addToast('success', 'Product updated successfully.');
-      } else {
-        const { data: inserted, error } = await supabase.from('products').insert([payload]).select('id').single();
-        if (error) throw error;
-        productId = inserted.id;
-        addToast('success', 'Product created successfully.');
+      const tryWrite = async (p: Record<string, unknown>): Promise<{ id?: string } | null> => {
+        if (editingId) {
+          const { error } = await supabase.from('products').update(p).eq('id', editingId);
+          if (error) throw error;
+          return null;
+        } else {
+          const { data: inserted, error } = await supabase.from('products').insert([p]).select('id').single();
+          if (error) throw error;
+          return inserted;
+        }
+      };
+      try {
+        const inserted = await tryWrite(payload);
+        if (inserted?.id) productId = inserted.id;
+        addToast('success', editingId ? 'Product updated successfully.' : 'Product created successfully.');
+      } catch (err) {
+        const msg = err instanceof Error ? err.message : String(err);
+        // If the column doesn't exist yet (migration not run), retry without i18n
+        if (/column .*i18n.* does not exist|i18n/i.test(msg) && 'i18n' in payload) {
+          delete payload.i18n;
+          const inserted = await tryWrite(payload);
+          if (inserted?.id) productId = inserted.id;
+          addToast('error', 'Saved without Armenian translations — run the i18n migration (supabase/migrations/20260425_i18n_columns.sql) to enable them.');
+        } else {
+          throw err;
+        }
       }
 
       // Save variants
@@ -769,13 +858,26 @@ export default function AdminProductsPage() {
               {/* Name & Slug */}
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Name <span className="text-red-500">*</span></label>
+                  <label className="block text-sm font-medium text-gray-700 mb-1 flex items-center gap-2">
+                    <span>Name {editLang === 'en' && <span className="text-red-500">*</span>}</span>
+                    {editLang === 'hy' && <span className="text-[10px] font-semibold text-deep-green/70 px-1.5 py-0.5 bg-deep-green/10 rounded">HY</span>}
+                    {editLang === 'hy' && (
+                      <button
+                        type="button"
+                        onClick={() => autoTranslate('name')}
+                        disabled={!form.name || !!translating.name}
+                        className="ml-auto text-[10px] font-medium text-deep-green hover:underline disabled:opacity-50"
+                      >
+                        {translating.name ? 'Translating…' : 'Auto-translate'}
+                      </button>
+                    )}
+                  </label>
                   <input
                     type="text"
-                    value={form.name}
-                    onChange={(e) => updateField('name', e.target.value)}
+                    value={getLocField('name')}
+                    onChange={(e) => setLocField('name', e.target.value)}
                     className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-deep-green/30 focus:border-deep-green"
-                    placeholder="e.g. Turkey & Sweet Potato"
+                    placeholder={editLang === 'hy' ? (translating.name ? 'Թարգմանվում է…' : 'Հայերեն թարգմանություն') : 'e.g. Turkey & Sweet Potato'}
                   />
                 </div>
                 <div>
@@ -795,26 +897,52 @@ export default function AdminProductsPage() {
 
               {/* Short Description */}
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Short Description</label>
+                <label className="block text-sm font-medium text-gray-700 mb-1 flex items-center gap-2">
+                  <span>Short Description</span>
+                  {editLang === 'hy' && <span className="text-[10px] font-semibold text-deep-green/70 px-1.5 py-0.5 bg-deep-green/10 rounded">HY</span>}
+                  {editLang === 'hy' && (
+                    <button
+                      type="button"
+                      onClick={() => autoTranslate('short_description')}
+                      disabled={!form.short_description || !!translating.short_description}
+                      className="ml-auto text-[10px] font-medium text-deep-green hover:underline disabled:opacity-50"
+                    >
+                      {translating.short_description ? 'Translating…' : 'Auto-translate'}
+                    </button>
+                  )}
+                </label>
                 <input
                   type="text"
-                  value={form.short_description ?? ''}
-                  onChange={(e) => updateField('short_description', e.target.value)}
+                  value={getLocField('short_description')}
+                  onChange={(e) => setLocField('short_description', e.target.value)}
                   maxLength={255}
                   className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-deep-green/30 focus:border-deep-green"
-                  placeholder="Brief one-liner about the product"
+                  placeholder={editLang === 'hy' ? (translating.short_description ? 'Թարգմանվում է…' : 'Հայերեն կարճ նկարագրություն') : 'Brief one-liner about the product'}
                 />
               </div>
 
               {/* Description */}
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Description</label>
+                <label className="block text-sm font-medium text-gray-700 mb-1 flex items-center gap-2">
+                  <span>Description</span>
+                  {editLang === 'hy' && <span className="text-[10px] font-semibold text-deep-green/70 px-1.5 py-0.5 bg-deep-green/10 rounded">HY</span>}
+                  {editLang === 'hy' && (
+                    <button
+                      type="button"
+                      onClick={() => autoTranslate('description')}
+                      disabled={!form.description || !!translating.description}
+                      className="ml-auto text-[10px] font-medium text-deep-green hover:underline disabled:opacity-50"
+                    >
+                      {translating.description ? 'Translating…' : 'Auto-translate'}
+                    </button>
+                  )}
+                </label>
                 <textarea
-                  value={form.description ?? ''}
-                  onChange={(e) => updateField('description', e.target.value)}
+                  value={getLocField('description')}
+                  onChange={(e) => setLocField('description', e.target.value)}
                   rows={4}
                   className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-deep-green/30 focus:border-deep-green resize-y"
-                  placeholder="Full product description..."
+                  placeholder={editLang === 'hy' ? (translating.description ? 'Թարգմանվում է…' : 'Հայերեն ամբողջական նկարագրություն') : 'Full product description...'}
                 />
               </div>
 

@@ -2,7 +2,7 @@ import HealthConditionPage from "@/components/HealthConditionPage";
 
 export default function WeightManagementPage() {
   return (
-    <HealthConditionPage
+    <HealthConditionPage pageSlug="/benefits/weight-management"
       condition="Weight management"
       tagline="for dogs"
       heroImage="https://images.unsplash.com/photo-1544568100-847a948585b9?w=1600&h=800&fit=crop"

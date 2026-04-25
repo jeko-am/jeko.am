@@ -1,0 +1,218 @@
+- generic [active] [ref=e1]:
+  - banner [ref=e2]:
+    - generic [ref=e4]:
+      - link "JEKO" [ref=e5] [cursor=pointer]:
+        - /url: /
+        - generic [ref=e6]: JEKO
+      - navigation [ref=e7]:
+        - link "Մեր մասին" [ref=e9] [cursor=pointer]:
+          - /url: /about
+          - text: Մեր մասին
+          - img [ref=e10]
+        - link "Համայնք" [ref=e13] [cursor=pointer]:
+          - /url: /community
+          - text: Համայնք
+          - img [ref=e14]
+        - link "Խանութ" [ref=e17] [cursor=pointer]:
+          - /url: /products
+        - link "Կարծիքներ" [ref=e19] [cursor=pointer]:
+          - /url: /reviews
+        - link "Առողջապահական օգուտներ" [ref=e21] [cursor=pointer]:
+          - /url: /benefits
+          - text: Առողջապահական օգուտներ
+          - img [ref=e22]
+      - generic [ref=e24]:
+        - button "Switch language" [ref=e26] [cursor=pointer]:
+          - generic [ref=e27]: 🇦🇲
+          - generic [ref=e28]: HY
+          - img [ref=e29]
+        - button "Shopping cart" [ref=e31] [cursor=pointer]:
+          - img [ref=e32]
+        - link "Օգնություն" [ref=e36] [cursor=pointer]:
+          - /url: /contact
+        - generic [ref=e215]:
+          - link "Ադմին վահանակ" [ref=e216] [cursor=pointer]:
+            - /url: /admin/dashboard
+            - img [ref=e217]
+            - text: Ադմին վահանակ
+          - button "Ելք" [ref=e220] [cursor=pointer]:
+            - img [ref=e221]
+            - text: Ելք
+  - main [ref=e39]:
+    - generic [ref=e40]:
+      - img "Hypoallergenic" [ref=e42]
+      - generic [ref=e45]:
+        - paragraph [ref=e46]: Առողջություն և սնուցում
+        - heading "Հիպոալերգենիկ շան սնունդ" [level=1] [ref=e223]
+        - paragraph [ref=e48]: "Սննդային ալերգիաներն ու անհանդուրժողականությունը ազդում են ավելի շատ շների վրա, քան դուք կարող եք մտածել: Բնական, հիպոալերգենային դիետան սահմանափակ բաղադրիչներով կարող է երկարատև թեթևացում բերել:"
+        - link "Ստեղծել քո շան պլանը" [ref=e49] [cursor=pointer]:
+          - /url: /auth/signup
+    - generic [ref=e51]:
+      - heading "Ի՞նչ է նշանակում հիպոալերգենիկ շների համար:" [level=2] [ref=e224]
+      - generic [ref=e53]:
+        - paragraph [ref=e54]: "Հիպոալերգենային դիետան նախատեսված է նվազագույնի հասցնելու ալերգիկ ռեակցիա առաջացնելու վտանգը: Շների մոտ սննդային ալերգիաները սովորաբար ռեակցիա են հատուկ սպիտակուցների նկատմամբ՝ առավել հաճախ տավարի, կաթնամթերքի, ցորենի, հավի և սոյայի նկատմամբ: Այս ռեակցիաները ժամանակի ընթացքում զարգանում են կրկնակի բացահայտմամբ:"
+        - paragraph [ref=e55]: "Արժե նշել, թե որն է իրական սննդային ալերգիայի (իմունային համակարգի արձագանք) և սննդի անհանդուրժողականության (մարսողական խնդիր) տարբերությունը: Երկուսն էլ կարող են անհանգստություն առաջացնել, բայց ալերգիան հակված է նաև ազդել մաշկի և ականջների վրա, մինչդեռ անհանդուրժողականությունը սովորաբար սահմանափակվում է աղիքների ախտանիշներով:"
+        - paragraph [ref=e56]: "Սննդի հետ կապված ալերգիաները կառավարելու լավագույն մոտեցումը վերացման դիետան է՝ օգտագործելով նոր կամ սահմանափակ բաղադրիչներ, որոնց ձեր շունը նախկինում չի ենթարկվել՝ զուգորդված խուսափելով արհեստական հավելումներից և լցոնիչներից, որոնք կարող են վատթարացնել բորբոքային ռեակցիաները:"
+    - generic [ref=e58]:
+      - heading "Ուշադրություն դարձրու այս նշաններին" [level=2] [ref=e59]
+      - paragraph [ref=e60]: Եթե քո շունը ցույց է տալիս այս ախտանիշներից որևէ մեկը, ճիշտ սնունդը կարող է մեծ փոփոխություն բերել։
+      - generic [ref=e61]:
+        - generic [ref=e62]:
+          - generic [ref=e63]: 🐾
+          - heading "Մաշկի և թաթերի քոր առաջացում" [level=3] [ref=e225]
+          - paragraph [ref=e65]: "Անընդհատ քորելը, թաթերը լիզելը կամ դեմքը կահույքին քսելը սննդային ալերգիայի դասական նշաններ են:"
+        - generic [ref=e66]:
+          - generic [ref=e67]: 👂
+          - heading "Կրկնվող ականջի վարակներ" [level=3] [ref=e226]
+          - paragraph [ref=e69]: "Ականջի քրոնիկ ինֆեկցիաները, որոնք անընդհատ հայտնվում են, նույնիսկ բուժման դեպքում, հաճախ կապված են սննդի նկատմամբ զգայունության հետ:"
+        - generic [ref=e70]:
+          - generic [ref=e71]: 🔴
+          - heading "Կարմիր, բորբոքված մաշկ" [level=3] [ref=e227]
+          - paragraph [ref=e73]: "Թեժ կետեր, ցան կամ կարմրած մաշկ, հատկապես որովայնի, աճուկի և թեւատակերի շրջանում:"
+        - generic [ref=e74]:
+          - generic [ref=e75]: 💩
+          - heading "Մարսողական խանգարում" [level=3] [ref=e228]
+          - paragraph [ref=e77]: "Կղանքը, ավելորդ գազը կամ փսխումը մաշկային ախտանիշների հետ մեկտեղ կարող են վկայել սննդային ալերգիայի մասին:"
+        - generic [ref=e78]:
+          - generic [ref=e79]: 🦠
+          - heading "Մաշկի վարակներ" [level=3] [ref=e229]
+          - paragraph [ref=e81]: "Կրկնվող բակտերիալ կամ խմորիչ մաշկի վարակները կարող են պայմանավորված լինել սննդի նկատմամբ հիմքում ընկած ալերգիկ արձագանքով:"
+        - generic [ref=e82]:
+          - generic [ref=e83]: 😿
+          - heading "Ձանձրալի, շերտավոր վերարկու" [level=3] [ref=e230]
+          - paragraph [ref=e85]: "Վերարկուն, որը կորցրել է իր փայլը, թեփով կամ չափից դուրս թափվելով, կարող է մատնանշել դիետիկ խնդիրները:"
+    - generic [ref=e87]:
+      - img "Natural dog food" [ref=e89]
+      - generic [ref=e91]:
+        - heading "Relief միջոցով" [level=2] [ref=e231]
+        - paragraph [ref=e93]: ճիշտ սնուցման միջոցով
+        - paragraph [ref=e94]: "Շատ առևտրային շների կերակուրներ պարունակում են բաղադրիչների երկար ցուցակ, որոնցից որևէ մեկը կարող է ռեակցիա առաջացնել: Բնական, սահմանափակ բաղադրիչներով դիետան հեշտացնում է խնդրահարույց մթերքների հայտնաբերումը և վերացումը՝ միաժամանակ ապահովելով ամբողջական, հավասարակշռված սնուցում:"
+        - generic [ref=e95]:
+          - generic [ref=e96]:
+            - img [ref=e98]
+            - generic [ref=e100]:
+              - paragraph [ref=e101]: Սահմանափակ, թափանցիկ բաղադրիչներ
+              - paragraph [ref=e102]: "Ավելի քիչ բաղադրիչներ նշանակում են ավելի քիչ պոտենցիալ հրահրողներ: Յուրաքանչյուր բաղադրիչ նշված է հստակ՝ առանց թաքնված տհաճությունների:"
+          - generic [ref=e103]:
+            - img [ref=e105]
+            - generic [ref=e107]:
+              - paragraph [ref=e108]: Սպիտակուցի նոր տարբերակներ
+              - paragraph [ref=e109]: "Սպիտակուցներ, ինչպիսիք են բադը, որսը և սաղմոնը, որոնք շատ շներ նախկինում չէին կերել, ինչը նվազեցնում է առկա զգայունության հավանականությունը:"
+          - generic [ref=e110]:
+            - img [ref=e112]
+            - generic [ref=e114]:
+              - paragraph [ref=e115]: Ընդհանուր ալերգեններ չկան
+              - paragraph [ref=e116]: "Բաղադրատոմսեր, որոնք զերծ են ընդհանուր խթանիչներից, ինչպիսիք են տավարի միսը, կաթնամթերքը, ցորենը, սոյան և արհեստական հավելումները:"
+          - generic [ref=e117]:
+            - img [ref=e119]
+            - generic [ref=e121]:
+              - paragraph [ref=e122]: Հակաբորբոքային սնուցիչներ
+              - paragraph [ref=e123]: "Բնական օմեգա ճարպաթթուները և իրական բաղադրիչներից ստացված հակաօքսիդանտները օգնում են հանգստացնել բորբոքային պատասխանները:"
+    - generic [ref=e125]:
+      - img "Sophie & Lola" [ref=e127]
+      - blockquote [ref=e128]: "“Մեր ֆրանսիական բուլդոգը անընդհատ քորում էր և մի քանի շաբաթը մեկ ականջի ինֆեկցիա էր ունենում: Անասնաբույժը կասկածում էր սննդային ալերգիայի մասին, սակայն դեղատոմսով նախատեսված դիետաները լիովին չլուծեցին այն: Մենք անցանք բադի բնական բաղադրատոմսին և մեկ ամսվա ընթացքում քորը դադարեց, և նրա ականջները մաքրվեցին: Այդ ժամանակվանից նա վարակ չի ունեցել:”"
+      - paragraph [ref=e129]: Sophie & Lola
+    - generic [ref=e131]:
+      - heading "Հաճախակի տրվող հարցեր" [level=2] [ref=e132]
+      - generic [ref=e133]:
+        - group [ref=e134]:
+          - generic "Ինչպե՞ս պարզել, թե որ բաղադրիչից է իմ շունը ալերգիկ:" [ref=e232] [cursor=pointer]:
+            - text: "Ինչպե՞ս պարզել, թե որ բաղադրիչից է իմ շունը ալերգիկ:"
+            - img [ref=e136]
+        - group [ref=e138]:
+          - generic "Արդյո՞ք հացահատիկը շների մեջ ամենատարածված ալերգենն է:" [ref=e233] [cursor=pointer]:
+            - text: "Արդյո՞ք հացահատիկը շների մեջ ամենատարածված ալերգենն է:"
+            - img [ref=e140]
+        - group [ref=e142]:
+          - generic "Կարո՞ղ է իմ շունը հետագայում ալերգիա զարգացնել:" [ref=e234] [cursor=pointer]:
+            - text: "Կարո՞ղ է իմ շունը հետագայում ալերգիա զարգացնել:"
+            - img [ref=e144]
+        - group [ref=e146]:
+          - generic "Ո՞րն է տարբերությունը հիպոալերգենային և առանց հացահատիկի սննդի միջև:" [ref=e235] [cursor=pointer]:
+            - text: "Ո՞րն է տարբերությունը հիպոալերգենային և առանց հացահատիկի սննդի միջև:"
+            - img [ref=e148]
+    - generic [ref=e151]:
+      - generic [ref=e153]:
+        - heading "Պատրա՞ստ եք օգնել ձեր" [level=2] [ref=e154]
+        - paragraph [ref=e155]: շանը լավ զգալու
+        - paragraph [ref=e156]: Պատմեք մեզ ձեր շան մասին, և մենք կստեղծենք անհատական ճաշացանկ՝ նախատեսված նրա հատուկ կարիքները հոգալու համար։ Անասնաբույժի հաստատմամբ, վստահված հազարավորների կողմից։
+        - link "Բացահայտել քո շան ճաշացանկը" [ref=e157] [cursor=pointer]:
+          - /url: /products
+      - img "Happy healthy dog" [ref=e159]
+  - contentinfo [ref=e160]:
+    - generic [ref=e161]:
+      - generic [ref=e162]:
+        - generic [ref=e163]:
+          - heading "Միացիր մեր VIP ցանկին" [level=4] [ref=e164]
+          - paragraph [ref=e165]: Առաջինը իմացիր նոր ապրանքների մասին, մասնակցիր բացառիկ մրցույթների և ստացիր օգտակար խորհուրդներ ընտանի կենդանիների խնամքի մասին։
+          - generic [ref=e166]:
+            - textbox "Մուտքագրիր քո էլ. փոստի հասցեն" [ref=e167]
+            - button "Գրանցվել" [ref=e168] [cursor=pointer]
+        - generic [ref=e169]:
+          - generic [ref=e170]:
+            - heading "Jeko" [level=4] [ref=e171]
+            - list [ref=e172]:
+              - listitem [ref=e173]:
+                - link "Մեր պատմությունը" [ref=e174] [cursor=pointer]:
+                  - /url: /about
+              - listitem [ref=e175]:
+                - link "Կարծիքներ" [ref=e176] [cursor=pointer]:
+                  - /url: /reviews
+              - listitem [ref=e177]:
+                - link "Բաղադրատոմսեր" [ref=e178] [cursor=pointer]:
+                  - /url: /recipes
+              - listitem [ref=e179]:
+                - link "Ավելին քան ամանը" [ref=e180] [cursor=pointer]:
+                  - /url: /beyond-the-bowl
+              - listitem [ref=e181]:
+                - link "Խանութ" [ref=e182] [cursor=pointer]:
+                  - /url: /products
+              - listitem [ref=e183]:
+                - link "Համայնք" [ref=e184] [cursor=pointer]:
+                  - /url: /community
+          - generic [ref=e185]:
+            - heading "Օգնություն" [level=4] [ref=e186]
+            - list [ref=e187]:
+              - listitem [ref=e188]:
+                - link "Իմ հաշիվը" [ref=e189] [cursor=pointer]:
+                  - /url: /profile
+              - listitem [ref=e190]:
+                - link "Կապ մեզ հետ" [ref=e191] [cursor=pointer]:
+                  - /url: /contact
+              - listitem [ref=e192]:
+                - link "Առաքման տեղեկատվություն" [ref=e193] [cursor=pointer]:
+                  - /url: /delivery-information
+              - listitem [ref=e194]:
+                - link "Վերադարձներ" [ref=e195] [cursor=pointer]:
+                  - /url: /returns
+              - listitem [ref=e196]:
+                - link "Կայքի քարտեզ" [ref=e197] [cursor=pointer]:
+                  - /url: /sitemap-page
+          - generic [ref=e198]:
+            - heading "Տեղեկատվություն" [level=4] [ref=e199]
+            - list [ref=e200]:
+              - listitem [ref=e201]:
+                - link "Գաղտնիության քաղաքականություն" [ref=e202] [cursor=pointer]:
+                  - /url: /privacy-policy
+              - listitem [ref=e203]:
+                - link "Պայմաններ և դրույթներ" [ref=e204] [cursor=pointer]:
+                  - /url: /terms-of-use
+              - listitem [ref=e205]:
+                - link "Jeko-ի քաղաքականություն" [ref=e206] [cursor=pointer]:
+                  - /url: /pure-policies
+              - listitem [ref=e207]:
+                - link "Կայքի անվտանգություն" [ref=e208] [cursor=pointer]:
+                  - /url: /site-security
+              - listitem [ref=e209]:
+                - link "Cookie-ների քաղաքականություն" [ref=e210] [cursor=pointer]:
+                  - /url: /cookie-policy
+      - generic [ref=e211]:
+        - generic [ref=e213]: JEKO
+        - paragraph [ref=e214]: © Jeko 2020-2026
+  - generic [ref=e236]:
+    - generic [ref=e237]:
+      - paragraph [ref=e238]: Հաու՜ 🐾
+      - paragraph [ref=e239]: Գտիր ընկեր քո կենդանու համար։
+    - button "Find pet matches" [ref=e241] [cursor=pointer]:
+      - img "Jeko dog" [ref=e242]
+  - alert [ref=e243]

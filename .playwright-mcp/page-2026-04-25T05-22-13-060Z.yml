@@ -1,0 +1,415 @@
+- generic [active] [ref=e1]:
+  - banner [ref=e2]:
+    - generic [ref=e4]:
+      - link "JEKO" [ref=e5] [cursor=pointer]:
+        - /url: /
+        - generic [ref=e6]: JEKO
+      - navigation [ref=e7]:
+        - link "Մեր մասին" [ref=e9] [cursor=pointer]:
+          - /url: /about
+          - text: Մեր մասին
+          - img [ref=e10]
+        - link "Համայնք" [ref=e13] [cursor=pointer]:
+          - /url: /community
+          - text: Համայնք
+          - img [ref=e14]
+        - link "Խանութ" [ref=e17] [cursor=pointer]:
+          - /url: /products
+        - link "Կարծիքներ" [ref=e19] [cursor=pointer]:
+          - /url: /reviews
+        - link "Առողջապահական օգուտներ" [ref=e21] [cursor=pointer]:
+          - /url: /benefits
+          - text: Առողջապահական օգուտներ
+          - img [ref=e22]
+      - generic [ref=e24]:
+        - button "Switch language" [ref=e26] [cursor=pointer]:
+          - generic [ref=e27]: 🇦🇲
+          - generic [ref=e28]: HY
+          - img [ref=e29]
+        - button "Shopping cart" [ref=e31] [cursor=pointer]:
+          - img [ref=e32]
+        - link "Օգնություն" [ref=e36] [cursor=pointer]:
+          - /url: /contact
+        - generic [ref=e103]:
+          - link "Ադմին վահանակ" [ref=e104] [cursor=pointer]:
+            - /url: /admin/dashboard
+            - img [ref=e105]
+            - text: Ադմին վահանակ
+          - button "Ելք" [ref=e108] [cursor=pointer]:
+            - img [ref=e109]
+            - text: Ելք
+  - main [ref=e39]:
+    - generic [ref=e113]:
+      - img "Beef + Rice + Veggies" [ref=e116]
+      - generic [ref=e117]:
+        - heading "Տավարի միս + բրինձ + բանջարեղեն" [level=1] [ref=e118]
+        - link "1 Reviews" [ref=e119] [cursor=pointer]:
+          - /url: "#reviews"
+          - generic [ref=e120]:
+            - img [ref=e121]
+            - img [ref=e123]
+            - img [ref=e125]
+            - img [ref=e127]
+            - img [ref=e129]
+          - generic [ref=e131]: 1 Reviews
+        - generic [ref=e132]: £10.00
+        - paragraph [ref=e133]: Shipping calculated at checkout.
+        - generic [ref=e134]:
+          - paragraph [ref=e135]: Premium nutrition — nothing hidden.
+          - paragraph [ref=e136]: "Սրտալի տավարի միս շագանակագույն բրնձով, սպանախով, ոլոռով և գազարով — ~520 կկալ: Լավագույնն էներգիայի և մկանների աջակցության համար:"
+        - generic [ref=e137]:
+          - heading "Value Bundles" [level=3] [ref=e138]
+          - generic [ref=e141]:
+            - img "Complete Nutrition Pack" [ref=e143]
+            - generic [ref=e144]:
+              - heading "Complete Nutrition Pack" [level=4] [ref=e145]
+              - paragraph [ref=e146]: Perfect starter bundle with all essential nutrients for optimal health
+              - generic [ref=e147]:
+                - generic [ref=e148]:
+                  - text: £0.00
+                  - generic [ref=e149]: Save 20%
+                - button "Add Bundle" [ref=e150] [cursor=pointer]
+        - generic [ref=e151]:
+          - generic [ref=e152]:
+            - button "−" [disabled] [ref=e153]
+            - generic [ref=e154]: "1"
+            - button "+" [ref=e155] [cursor=pointer]
+          - button "Add to Cart" [ref=e156] [cursor=pointer]
+        - generic [ref=e157]:
+          - heading "Perfect Pairings" [level=3] [ref=e158]
+          - generic [ref=e159]:
+            - generic [ref=e161]:
+              - img "Chicken + Quinoa + Greens" [ref=e163]
+              - generic [ref=e164]:
+                - heading "Chicken + Quinoa + Greens" [level=4] [ref=e165]
+                - paragraph [ref=e166]: Lean chicken with quinoa, zucchini & green beans — ~480 kcal. Best for lean protein and weight control.
+                - generic [ref=e167]:
+                  - generic [ref=e168]: £15.00
+                  - button "Add to Cart" [ref=e169] [cursor=pointer]
+            - generic [ref=e171]:
+              - img "Tuna + Rice Bowl" [ref=e173]
+              - generic [ref=e174]:
+                - heading "Tuna + Rice Bowl" [level=4] [ref=e175]
+                - paragraph [ref=e176]: Omega-rich tuna with brown rice, spinach, peas & carrots — ~430 kcal. Best for coat health and light digestion.
+                - generic [ref=e177]:
+                  - generic [ref=e178]: £20.00
+                  - button "Add to Cart" [ref=e179] [cursor=pointer]
+        - generic [ref=e180]:
+          - img [ref=e182]
+          - generic [ref=e184]:
+            - paragraph [ref=e185]: Vet Approved & Lab Tested 2026
+            - paragraph [ref=e186]: All ingredients tested for quality & safety →
+        - generic [ref=e187]:
+          - button "Բաղադրիչներ" [ref=e188] [cursor=pointer]:
+            - heading "Բաղադրիչներ" [level=2] [ref=e189]
+            - img [ref=e190]
+          - generic [ref=e194]:
+            - text: "Սրտաճմլիկ, հավասարակշռված կերակուր, որը համադրում է նիհար տավարի միսը շագանակագույն բրնձի և սննդարար բանջարեղենի խառնուրդի հետ: Շագանակագույն բրինձը (150 գ եփած) ապահովում է կայուն էներգիա, իսկ սպանախը (30 գ), ոլոռը (80 գ) և գազարը (80 գ) ապահովում են անհրաժեշտ վիտամիններ և մանրաթելեր: Զուգորդվում է 120 գ եփած տավարի մսով ՝ բարձրորակ սպիտակուցի և երկաթի համար: Մոտավորապես 520 կկալ մեկ ծառայությունում Կալորիականության ճեղքվածք ՝"
+            - text: • շագանակագույն բրինձ (150 գ) — 165 կկալ
+            - text: • սպանախ (30գ) — 7 կկալ
+            - text: • Ոլոռ (80 գ) — 65 կկալ
+            - text: • գազար (80 գ) — 30 կկալ
+            - text: • տավարի միս (120 գ) — 250 կկա
+        - generic [ref=e195]:
+          - button "Feeding Guide" [ref=e196] [cursor=pointer]:
+            - heading "Feeding Guide" [level=2] [ref=e197]
+            - img [ref=e198]
+          - generic [ref=e200]:
+            - paragraph [ref=e201]: "Serve based on your dog's weight:"
+            - list [ref=e202]:
+              - listitem [ref=e203]:
+                - strong [ref=e204]: "Small dogs (up to 10kg):"
+                - text: 100-200g per day
+              - listitem [ref=e205]:
+                - strong [ref=e206]: "Medium dogs (10-25kg):"
+                - text: 200-400g per day
+              - listitem [ref=e207]:
+                - strong [ref=e208]: "Large dogs (25kg+):"
+                - text: 400-600g per day
+            - paragraph [ref=e209]: Always ensure fresh water is available. Transition gradually over 7-10 days.
+        - generic [ref=e210]:
+          - button "Shipping & Returns" [ref=e211] [cursor=pointer]:
+            - heading "Shipping & Returns" [level=2] [ref=e212]
+            - img [ref=e213]
+          - generic [ref=e215]:
+            - paragraph [ref=e216]:
+              - strong [ref=e217]: Free UK delivery
+              - text: on all orders. Orders placed before 2pm are dispatched same day.
+            - paragraph [ref=e218]: "Standard delivery: 2-3 working days. Express delivery available at checkout."
+            - paragraph [ref=e219]: Not happy? Full refund within 30 days — no questions asked.
+    - generic [ref=e221]:
+      - heading "The Jeko Difference" [level=2] [ref=e222]
+      - generic [ref=e223]:
+        - generic [ref=e224]:
+          - img [ref=e225]
+          - generic [ref=e227]: Vet Approved
+        - generic [ref=e228]:
+          - img [ref=e229]
+          - generic [ref=e231]: Natural Ingredients
+        - generic [ref=e232]:
+          - img [ref=e233]
+          - generic [ref=e235]: Grain-Free Options
+        - generic [ref=e236]:
+          - img [ref=e237]
+          - generic [ref=e239]: Lab Tested
+        - generic [ref=e240]:
+          - img [ref=e241]
+          - generic [ref=e243]: Human Grade
+        - generic [ref=e244]:
+          - img [ref=e245]
+          - generic [ref=e247]: Gentle on Tummies
+        - generic [ref=e248]:
+          - img [ref=e249]
+          - generic [ref=e251]: Nutrient-Rich
+    - generic [ref=e253]:
+      - img "Fresh food in bowl" [ref=e255]
+      - generic [ref=e258]:
+        - heading "Fresh. Balanced. Irresistible." [level=2] [ref=e259]
+        - generic [ref=e260]:
+          - paragraph [ref=e261]:
+            - strong [ref=e262]: "Protein Profile:"
+            - text: High-quality, single-source animal protein for lean muscle maintenance and sustained energy.
+          - paragraph [ref=e263]:
+            - strong [ref=e264]: "Nutrition Highlights:"
+            - text: Rich in omega-3 fatty acids for a glossy coat, prebiotics for gut health, and essential vitamins for immune support.
+          - paragraph [ref=e265]:
+            - strong [ref=e266]: "Preparation:"
+            - text: Gently air-dried to lock in nutrients. Just add warm water, stir, and serve — ready in 10 seconds.
+    - generic [ref=e268]:
+      - generic [ref=e270]:
+        - heading "Learn The Science Behind Jeko" [level=2] [ref=e271]
+        - paragraph [ref=e272]: Developed with veterinary nutritionists, every recipe is backed by science to deliver optimal nutrition.
+        - link "Learn More" [ref=e273] [cursor=pointer]:
+          - /url: /benefits
+      - img "Science lab research" [ref=e275]
+    - generic [ref=e278]:
+      - generic [ref=e279]:
+        - heading "Trusted by Vets & Nutritionists" [level=2] [ref=e280]
+        - generic [ref=e281]:
+          - button [ref=e282] [cursor=pointer]:
+            - img [ref=e283]
+          - button [ref=e285] [cursor=pointer]:
+            - img [ref=e286]
+      - generic [ref=e288]:
+        - generic [ref=e289]:
+          - generic [ref=e290]:
+            - heading "Dr. Sarah Wilson, BVSc" [level=4] [ref=e291]
+            - text: Veterinary Nutritionist
+          - paragraph [ref=e292]: As a veterinary nutritionist, I emphasize the importance of choosing food that supports a dog's overall balance. This is why I trust and confidently recommend Jeko to my patients. Their commitment to natural ingredients and rigorous quality testing provides a clean, supportive feeding experience.
+          - link "Beef + Rice + Veggies" [ref=e293] [cursor=pointer]:
+            - /url: /products/beef-rice-veggies
+            - generic [ref=e294]: Beef + Rice + Veggies
+        - generic [ref=e295]:
+          - generic [ref=e296]:
+            - heading "Dr. James Chen, DVM" [level=4] [ref=e297]
+            - text: Veterinary Dermatologist
+          - paragraph [ref=e298]: I've seen remarkable improvements in skin and coat conditions since recommending Jeko to my patients. The natural, hypoallergenic recipes are a game-changer for dogs with sensitivities.
+          - link "Salmon & Potato Grain-Free" [ref=e299] [cursor=pointer]:
+            - /url: /products/salmon-potato-grain-free
+            - generic [ref=e300]: Salmon & Potato Grain-Free
+        - generic [ref=e301]:
+          - generic [ref=e302]:
+            - heading "Emma Richards" [level=4] [ref=e303]
+            - text: Canine Behaviourist
+          - paragraph [ref=e304]: As a canine behaviourist, I see the link between nutrition and behaviour daily. Dogs on Jeko are calmer, more focused, and have better energy regulation throughout the day. It makes a real difference.
+          - link "Beef + Rice + Veggies" [ref=e305] [cursor=pointer]:
+            - /url: /products/beef-rice-veggies
+            - generic [ref=e306]: Beef + Rice + Veggies
+        - generic [ref=e307]:
+          - generic [ref=e308]:
+            - heading "Dr. Hannah Brooks, MRCVS" [level=4] [ref=e309]
+            - text: Small Animal Vet
+          - paragraph [ref=e310]: It is extremely important to me to recommend clean products. Jeko is a brand I can trust is clean and has the research to back it up. The flavour quality is outstanding — dogs genuinely love it. I recommend it to all my patients!
+          - link "Puppy Growth Formula" [ref=e311] [cursor=pointer]:
+            - /url: /products/puppy-growth-formula
+            - generic [ref=e312]: Puppy Growth Formula
+        - generic [ref=e313]:
+          - generic [ref=e314]:
+            - heading "Dr. Oliver Patel, BVM&S" [level=4] [ref=e315]
+            - text: Holistic Veterinarian
+          - paragraph [ref=e316]: As a holistic vet, I greatly appreciate having a food I can recommend to clients managing chronic conditions. Jeko's careful ingredient sourcing and gentle processing is exactly what these dogs need.
+          - link "Beef + Rice + Veggies" [ref=e317] [cursor=pointer]:
+            - /url: /products/beef-rice-veggies
+            - generic [ref=e318]: Beef + Rice + Veggies
+    - generic [ref=e320]:
+      - img "Happy dog lifestyle" [ref=e322]
+      - generic [ref=e325]:
+        - heading "Food that fuels their best days" [level=2] [ref=e326]
+        - generic [ref=e327]:
+          - paragraph [ref=e328]:
+            - strong [ref=e329]: "At Jeko, the mission is simple:"
+          - paragraph [ref=e330]: Create food that makes your dog feel as good as it tastes.
+          - paragraph [ref=e331]: Always fresh, natural & vet-approved.
+          - paragraph [ref=e332]: It's the kind they love, crave, and sprint to the bowl for every single time — for boundless energy, a shiny coat, and a happier, healthier life.
+          - paragraph [ref=e333]: Jeko is for the devoted pet parents simply seeking more for their best friend.
+        - link "Try Jeko" [ref=e334] [cursor=pointer]:
+          - /url: /profile
+    - generic [ref=e336]:
+      - generic [ref=e338]:
+        - heading "Why We Started Jeko" [level=2] [ref=e339]
+        - generic [ref=e340]:
+          - paragraph [ref=e341]: We didn't start this brand for the trend.
+          - paragraph [ref=e342]: We started Jeko because our own dogs deserved better — and so does yours.
+          - paragraph [ref=e343]: When we looked at what was in most commercial dog food, we were shocked. Fillers, preservatives, mysterious “meat derivatives” — making our dogs worse, not better.
+          - paragraph [ref=e344]: They needed a better option — so we created one.
+        - link "Learn More" [ref=e345] [cursor=pointer]:
+          - /url: /about
+      - img "The Jeko team" [ref=e347]
+    - generic [ref=e350]:
+      - heading "Our Mission" [level=2] [ref=e351]
+      - paragraph [ref=e352]: “To create food that helps your dog feel their best, so they can keep doing what they love — being your best friend.”
+    - generic [ref=e353]:
+      - img "Happy healthy dogs" [ref=e354]
+      - heading "Boundless Energy, Shiny Coat, Happier Days" [level=2] [ref=e357]
+    - generic [ref=e359]:
+      - heading "Customer Reviews" [level=2] [ref=e360]
+      - generic [ref=e361]:
+        - generic [ref=e362]:
+          - generic [ref=e363]:
+            - img [ref=e364]
+            - img [ref=e366]
+            - img [ref=e368]
+            - img [ref=e370]
+            - img [ref=e372]
+          - generic [ref=e374]: 1 Reviews
+        - button "Write a review" [ref=e375] [cursor=pointer]
+      - generic [ref=e377]:
+        - generic [ref=e379]: Test Reviewer
+        - generic [ref=e380]: 14/04/2026
+        - generic [ref=e381]:
+          - img [ref=e382]
+          - img [ref=e384]
+          - img [ref=e386]
+          - img [ref=e388]
+          - img [ref=e390]
+        - paragraph [ref=e392]: Amazing food
+        - paragraph [ref=e393]: My dog absolutely loves this food. His coat is shinier and he has so much more energy since switching to Jeko
+        - paragraph [ref=e394]: "Item type: Beef + Rice + Veggies"
+    - generic [ref=e396]:
+      - heading "You May Also Like" [level=2] [ref=e397]
+      - generic [ref=e398]:
+        - link "Chicken + Quinoa + Greens Տեսնել ապրանքը Chicken + Quinoa + Greens Lean chicken with quinoa, zucchini & green beans — ~480 kcal. Best for lean protein and weight control. £15.00 Ավելացնել զամբյուղ" [ref=e400] [cursor=pointer]:
+          - /url: /products/chicken-quinoa-greens
+          - generic [ref=e401]:
+            - generic [ref=e402]:
+              - img "Chicken + Quinoa + Greens" [ref=e403]
+              - generic [ref=e405]: Տեսնել ապրանքը
+            - generic [ref=e406]:
+              - heading "Chicken + Quinoa + Greens" [level=3] [ref=e407]
+              - paragraph [ref=e408]: Lean chicken with quinoa, zucchini & green beans — ~480 kcal. Best for lean protein and weight control.
+              - generic [ref=e410]: £15.00
+              - button "Ավելացնել զամբյուղ" [ref=e411]
+        - link "Tuna + Rice Bowl Տեսնել ապրանքը Tuna + Rice Bowl Omega-rich tuna with brown rice, spinach, peas & carrots — ~430 kcal. Best for coat health and light digestion. £20.00 Ավելացնել զամբյուղ" [ref=e413] [cursor=pointer]:
+          - /url: /products/tuna-rice-bowl
+          - generic [ref=e414]:
+            - generic [ref=e415]:
+              - img "Tuna + Rice Bowl" [ref=e416]
+              - generic [ref=e418]: Տեսնել ապրանքը
+            - generic [ref=e419]:
+              - heading "Tuna + Rice Bowl" [level=3] [ref=e420]
+              - paragraph [ref=e421]: Omega-rich tuna with brown rice, spinach, peas & carrots — ~430 kcal. Best for coat health and light digestion.
+              - generic [ref=e423]: £20.00
+              - button "Ավելացնել զամբյուղ" [ref=e424]
+        - link "Cod + Rice + Veggies Տեսնել ապրանքը Cod + Rice + Veggies Mild cod with white rice, green beans & carrots — ~360 kcal. Best for sensitive stomachs and low-fat diets. £20.00 Ավելացնել զամբյուղ" [ref=e426] [cursor=pointer]:
+          - /url: /products/cod-rice-veggies
+          - generic [ref=e427]:
+            - generic [ref=e428]:
+              - img "Cod + Rice + Veggies" [ref=e429]
+              - generic [ref=e431]: Տեսնել ապրանքը
+            - generic [ref=e432]:
+              - heading "Cod + Rice + Veggies" [level=3] [ref=e433]
+              - paragraph [ref=e434]: Mild cod with white rice, green beans & carrots — ~360 kcal. Best for sensitive stomachs and low-fat diets.
+              - generic [ref=e436]: £20.00
+              - button "Ավելացնել զամբյուղ" [ref=e437]
+        - link "Chickpea + Quinoa Plant Mix Տեսնել ապրանքը Chickpea + Quinoa Plant Mix Plant-based quinoa & chickpea mix with spinach, peas & flaxseed — ~510 kcal. Best for plant-based protein, fiber, and digestion. £10.00 Ավելացնել զամբյուղ" [ref=e439] [cursor=pointer]:
+          - /url: /products/chickpea-quinoa-plant-mix
+          - generic [ref=e440]:
+            - generic [ref=e441]:
+              - img "Chickpea + Quinoa Plant Mix" [ref=e442]
+              - generic [ref=e444]: Տեսնել ապրանքը
+            - generic [ref=e445]:
+              - heading "Chickpea + Quinoa Plant Mix" [level=3] [ref=e446]
+              - paragraph [ref=e447]: Plant-based quinoa & chickpea mix with spinach, peas & flaxseed — ~510 kcal. Best for plant-based protein, fiber, and digestion.
+              - generic [ref=e449]: £10.00
+              - button "Ավելացնել զամբյուղ" [ref=e450]
+  - contentinfo [ref=e48]:
+    - generic [ref=e49]:
+      - generic [ref=e50]:
+        - generic [ref=e51]:
+          - heading "Միացիր մեր VIP ցանկին" [level=4] [ref=e52]
+          - paragraph [ref=e53]: Առաջինը իմացիր նոր ապրանքների մասին, մասնակցիր բացառիկ մրցույթների և ստացիր օգտակար խորհուրդներ ընտանի կենդանիների խնամքի մասին։
+          - generic [ref=e54]:
+            - textbox "Մուտքագրիր քո էլ. փոստի հասցեն" [ref=e55]
+            - button "Գրանցվել" [ref=e56] [cursor=pointer]
+        - generic [ref=e57]:
+          - generic [ref=e58]:
+            - heading "Jeko" [level=4] [ref=e59]
+            - list [ref=e60]:
+              - listitem [ref=e61]:
+                - link "Մեր պատմությունը" [ref=e62] [cursor=pointer]:
+                  - /url: /about
+              - listitem [ref=e63]:
+                - link "Կարծիքներ" [ref=e64] [cursor=pointer]:
+                  - /url: /reviews
+              - listitem [ref=e65]:
+                - link "Բաղադրատոմսեր" [ref=e66] [cursor=pointer]:
+                  - /url: /recipes
+              - listitem [ref=e67]:
+                - link "Ավելին քան ամանը" [ref=e68] [cursor=pointer]:
+                  - /url: /beyond-the-bowl
+              - listitem [ref=e69]:
+                - link "Խանութ" [ref=e70] [cursor=pointer]:
+                  - /url: /products
+              - listitem [ref=e71]:
+                - link "Համայնք" [ref=e72] [cursor=pointer]:
+                  - /url: /community
+          - generic [ref=e73]:
+            - heading "Օգնություն" [level=4] [ref=e74]
+            - list [ref=e75]:
+              - listitem [ref=e76]:
+                - link "Իմ հաշիվը" [ref=e77] [cursor=pointer]:
+                  - /url: /profile
+              - listitem [ref=e78]:
+                - link "Կապ մեզ հետ" [ref=e79] [cursor=pointer]:
+                  - /url: /contact
+              - listitem [ref=e80]:
+                - link "Առաքման տեղեկատվություն" [ref=e81] [cursor=pointer]:
+                  - /url: /delivery-information
+              - listitem [ref=e82]:
+                - link "Վերադարձներ" [ref=e83] [cursor=pointer]:
+                  - /url: /returns
+              - listitem [ref=e84]:
+                - link "Կայքի քարտեզ" [ref=e85] [cursor=pointer]:
+                  - /url: /sitemap-page
+          - generic [ref=e86]:
+            - heading "Տեղեկատվություն" [level=4] [ref=e87]
+            - list [ref=e88]:
+              - listitem [ref=e89]:
+                - link "Գաղտնիության քաղաքականություն" [ref=e90] [cursor=pointer]:
+                  - /url: /privacy-policy
+              - listitem [ref=e91]:
+                - link "Պայմաններ և դրույթներ" [ref=e92] [cursor=pointer]:
+                  - /url: /terms-of-use
+              - listitem [ref=e93]:
+                - link "Jeko-ի քաղաքականություն" [ref=e94] [cursor=pointer]:
+                  - /url: /pure-policies
+              - listitem [ref=e95]:
+                - link "Կայքի անվտանգություն" [ref=e96] [cursor=pointer]:
+                  - /url: /site-security
+              - listitem [ref=e97]:
+                - link "Cookie-ների քաղաքականություն" [ref=e98] [cursor=pointer]:
+                  - /url: /cookie-policy
+      - generic [ref=e99]:
+        - generic [ref=e101]: JEKO
+        - paragraph [ref=e102]: © Jeko 2020-2026
+  - link "Home":
+    - /url: /
+    - img
+    - text: Home
+  - generic [ref=e451]:
+    - generic [ref=e452]:
+      - paragraph [ref=e453]: Հաու՜ 🐾
+      - paragraph [ref=e454]: Գտիր ընկեր քո կենդանու համար։
+    - button "Find pet matches" [ref=e456] [cursor=pointer]:
+      - img "Jeko dog" [ref=e457]
+  - alert [ref=e458]

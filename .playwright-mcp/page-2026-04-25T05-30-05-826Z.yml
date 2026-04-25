@@ -1,0 +1,132 @@
+- generic [active] [ref=e1]:
+  - banner [ref=e2]:
+    - generic [ref=e4]:
+      - link "JEKO" [ref=e5] [cursor=pointer]:
+        - /url: /
+        - generic [ref=e6]: JEKO
+      - navigation [ref=e7]:
+        - link "Մեր մասին" [ref=e9] [cursor=pointer]:
+          - /url: /about
+          - text: Մեր մասին
+          - img [ref=e10]
+        - link "Համայնք" [ref=e13] [cursor=pointer]:
+          - /url: /community
+          - text: Համայնք
+          - img [ref=e14]
+        - link "Խանութ" [ref=e17] [cursor=pointer]:
+          - /url: /products
+        - link "Կարծիքներ" [ref=e19] [cursor=pointer]:
+          - /url: /reviews
+        - link "Առողջապահական օգուտներ" [ref=e21] [cursor=pointer]:
+          - /url: /benefits
+          - text: Առողջապահական օգուտներ
+          - img [ref=e22]
+      - generic [ref=e24]:
+        - button "Switch language" [ref=e26] [cursor=pointer]:
+          - generic [ref=e27]: 🇦🇲
+          - generic [ref=e28]: HY
+          - img [ref=e29]
+        - button "Shopping cart" [ref=e31] [cursor=pointer]:
+          - img [ref=e32]
+        - link "Օգնություն" [ref=e36] [cursor=pointer]:
+          - /url: /contact
+        - link "Մուտք" [ref=e37] [cursor=pointer]:
+          - /url: /login
+        - link "Գրանցվել" [ref=e38] [cursor=pointer]:
+          - /url: /auth/signup
+  - main [ref=e39]:
+    - generic [ref=e41]:
+      - heading "Թարմ, բնական սնունդ՝ ձեր կենդանու համար" [level=1] [ref=e42]
+      - paragraph [ref=e43]: Յուրաքանչյուր բաղադրատոմս անասնաբույժի հաստատմամբ, թեթև եփված, տան դռան մոտ։
+    - generic [ref=e45]:
+      - generic [ref=e46]:
+        - generic [ref=e47]:
+          - img [ref=e48]
+          - textbox "Որոնել ապրանքներ..." [ref=e50]
+        - button "Բոլորը" [ref=e52] [cursor=pointer]
+        - combobox [ref=e53] [cursor=pointer]:
+          - option "Նորագույն" [selected]
+          - option "Գին՝ ցածրից բարձր"
+          - option "Գին՝ բարձրից ցածր"
+          - option "Անուն՝ Ա-ից Ֆ"
+      - paragraph [ref=e55]: Ապրանքները բեռնվում են...
+  - contentinfo [ref=e105]:
+    - generic [ref=e106]:
+      - generic [ref=e107]:
+        - generic [ref=e108]:
+          - heading "Միացիր մեր VIP ցանկին" [level=4] [ref=e109]
+          - paragraph [ref=e110]: Առաջինը իմացիր նոր ապրանքների մասին, մասնակցիր բացառիկ մրցույթների և ստացիր օգտակար խորհուրդներ ընտանի կենդանիների խնամքի մասին։
+          - generic [ref=e111]:
+            - textbox "Մուտքագրիր քո էլ. փոստի հասցեն" [ref=e112]
+            - button "Գրանցվել" [ref=e113] [cursor=pointer]
+        - generic [ref=e114]:
+          - generic [ref=e115]:
+            - heading "Jeko" [level=4] [ref=e116]
+            - list [ref=e117]:
+              - listitem [ref=e118]:
+                - link "Մեր պատմությունը" [ref=e119] [cursor=pointer]:
+                  - /url: /about
+              - listitem [ref=e120]:
+                - link "Կարծիքներ" [ref=e121] [cursor=pointer]:
+                  - /url: /reviews
+              - listitem [ref=e122]:
+                - link "Բաղադրատոմսեր" [ref=e123] [cursor=pointer]:
+                  - /url: /recipes
+              - listitem [ref=e124]:
+                - link "Ավելին քան ամանը" [ref=e125] [cursor=pointer]:
+                  - /url: /beyond-the-bowl
+              - listitem [ref=e126]:
+                - link "Խանութ" [ref=e127] [cursor=pointer]:
+                  - /url: /products
+              - listitem [ref=e128]:
+                - link "Համայնք" [ref=e129] [cursor=pointer]:
+                  - /url: /community
+          - generic [ref=e130]:
+            - heading "Օգնություն" [level=4] [ref=e131]
+            - list [ref=e132]:
+              - listitem [ref=e133]:
+                - link "Իմ հաշիվը" [ref=e134] [cursor=pointer]:
+                  - /url: /profile
+              - listitem [ref=e135]:
+                - link "Կապ մեզ հետ" [ref=e136] [cursor=pointer]:
+                  - /url: /contact
+              - listitem [ref=e137]:
+                - link "Առաքման տեղեկատվություն" [ref=e138] [cursor=pointer]:
+                  - /url: /delivery-information
+              - listitem [ref=e139]:
+                - link "Վերադարձներ" [ref=e140] [cursor=pointer]:
+                  - /url: /returns
+              - listitem [ref=e141]:
+                - link "Կայքի քարտեզ" [ref=e142] [cursor=pointer]:
+                  - /url: /sitemap-page
+          - generic [ref=e143]:
+            - heading "Տեղեկատվություն" [level=4] [ref=e144]
+            - list [ref=e145]:
+              - listitem [ref=e146]:
+                - link "Գաղտնիության քաղաքականություն" [ref=e147] [cursor=pointer]:
+                  - /url: /privacy-policy
+              - listitem [ref=e148]:
+                - link "Պայմաններ և դրույթներ" [ref=e149] [cursor=pointer]:
+                  - /url: /terms-of-use
+              - listitem [ref=e150]:
+                - link "Jeko-ի քաղաքականություն" [ref=e151] [cursor=pointer]:
+                  - /url: /pure-policies
+              - listitem [ref=e152]:
+                - link "Կայքի անվտանգություն" [ref=e153] [cursor=pointer]:
+                  - /url: /site-security
+              - listitem [ref=e154]:
+                - link "Cookie-ների քաղաքականություն" [ref=e155] [cursor=pointer]:
+                  - /url: /cookie-policy
+      - generic [ref=e156]:
+        - generic [ref=e158]: JEKO
+        - paragraph [ref=e159]: © Jeko 2020-2026
+  - link "Home":
+    - /url: /
+    - img
+    - text: Home
+  - generic:
+    - generic:
+      - paragraph: Հաու՜ 🐾
+      - paragraph: Գտիր ընկեր քո կենդանու համար։
+    - button "Find pet matches":
+      - img "Jeko dog"

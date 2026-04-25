@@ -8,6 +8,7 @@ import Footer from "@/components/Footer";
 import { useAuth } from "@/lib/auth";
 import { useSignupUrl } from "@/lib/useSignupUrl";
 import { supabase } from "@/lib/supabase";
+import { useT } from "@/lib/i18n/LangProvider";
 
 interface PetCandidate {
   id: number;
@@ -114,29 +115,30 @@ function PawIcon({ size=48 }: { size?: number }) {
 function MatchModal({ myPet, theirPet, onMessage, onKeepSwiping }: {
   myPet: PetCandidate|null; theirPet: PetCandidate; onMessage: ()=>void; onKeepSwiping: ()=>void;
 }) {
+  const { t } = useT();
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
       <div className="absolute inset-0 bg-black/70 backdrop-blur-md" onClick={onKeepSwiping}/>
       <ConfettiOverlay/>
       <div className="relative z-10 bg-white rounded-3xl p-8 max-w-md w-full text-center shadow-2xl" style={{animation:"fade-in-up 0.5s ease-out"}}>
         <h2 className="font-medium text-3xl text-emerald-500 mb-2 tracking-wide" style={{animation:"pulse-match 1.5s ease-in-out infinite"}}>
-          It&apos;s a Match! 🎉
+          {t("swipe.matchHeading")} 🎉
         </h2>
-        <p className="text-gray-500 mb-6">You and {theirPet.pet_name} like each other!</p>
+        <p className="text-gray-500 mb-6">{t("swipe.matchBody", { name: theirPet.pet_name })}</p>
         <div className="flex items-center justify-center gap-4 mb-6">
           <div className="flex flex-col items-center">
             <div className="w-24 h-24 rounded-full overflow-hidden border-4 border-emerald-400 shadow-lg bg-gray-100">
               {(myPet?.profile_photo_url||myPet?.avatar_url) ? (
-                <Image src={(myPet.profile_photo_url||myPet.avatar_url)!} alt={myPet.pet_name||"My pet"} width={96} height={96} className="w-full h-full object-cover" unoptimized/>
+                <Image src={(myPet.profile_photo_url||myPet.avatar_url)!} alt={myPet.pet_name||t("swipe.myPetFallback")} width={96} height={96} className="w-full h-full object-cover" unoptimized/>
               ) : (<div className="w-full h-full flex items-center justify-center"><PawIcon size={40}/></div>)}
             </div>
-            <span className="text-sm font-medium text-gray-700 mt-2 tracking-wide">{myPet?.pet_name||"Your pet"}</span>
+            <span className="text-sm font-medium text-gray-700 mt-2 tracking-wide">{myPet?.pet_name||t("swipe.yourPetFallback")}</span>
           </div>
           <div className="text-3xl" style={{animation:"pulse-match 1s ease-in-out infinite"}}>❤️</div>
           <div className="flex flex-col items-center">
             <div className="w-24 h-24 rounded-full overflow-hidden border-4 border-emerald-400 shadow-lg bg-gray-100">
               {(theirPet.profile_photo_url||theirPet.avatar_url) ? (
-                <Image src={(theirPet.profile_photo_url||theirPet.avatar_url)!} alt={theirPet.pet_name||"Their pet"} width={96} height={96} className="w-full h-full object-cover" unoptimized/>
+                <Image src={(theirPet.profile_photo_url||theirPet.avatar_url)!} alt={theirPet.pet_name||t("swipe.theirPetFallback")} width={96} height={96} className="w-full h-full object-cover" unoptimized/>
               ) : (<div className="w-full h-full flex items-center justify-center"><PawIcon size={40}/></div>)}
             </div>
             <span className="text-sm font-medium text-gray-700 mt-2 tracking-wide">{theirPet.pet_name}</span>
@@ -144,10 +146,10 @@ function MatchModal({ myPet, theirPet, onMessage, onKeepSwiping }: {
         </div>
         <div className="flex flex-col gap-3">
           <button onClick={onMessage} className="w-full bg-emerald-500 text-white font-medium text-lg py-3 rounded-xl hover:bg-emerald-600 transition-colors shadow-md tracking-wide">
-            Send a Message
+            {t("swipe.sendMessage")}
           </button>
           <button onClick={onKeepSwiping} className="w-full bg-gray-100 text-gray-700 font-medium text-lg py-3 rounded-xl hover:bg-gray-200 transition-colors tracking-wide">
-            Keep Swiping
+            {t("swipe.keepSwiping")}
           </button>
         </div>
       </div>
@@ -159,6 +161,7 @@ function MatchModal({ myPet, theirPet, onMessage, onKeepSwiping }: {
 const SwipeCard = memo(function SwipeCard({ candidate, isTop, onSwipe, onLove: _onLove, likesToday: _likesToday }: {
   candidate: PetCandidate; isTop: boolean; onSwipe: (d:"left"|"right")=>void; onLove: ()=>void; likesToday: number;
 }) {
+  const { t } = useT();
   const cardRef = useRef<HTMLDivElement>(null);
   const [dragState, setDragState] = useState({isDragging:false, startX:0, currentX:0, dx:0});
   const [flyDirection, setFlyDirection] = useState<"left"|"right"|null>(null);
@@ -174,8 +177,8 @@ const SwipeCard = memo(function SwipeCard({ candidate, isTop, onSwipe, onLove: _
     return photos;
   })();
   const photoUrl = allPhotos[photoIndex] || null;
-  const sizeLabel = candidate.weight_kg ? (candidate.weight_kg<10?"Small":candidate.weight_kg<25?"Medium":"Large") : null;
-  const distanceLabel = candidate.city||"Nearby";
+  const sizeLabel = candidate.weight_kg ? (candidate.weight_kg<10?t("swipe.size.small"):candidate.weight_kg<25?t("swipe.size.medium"):t("swipe.size.large")) : null;
+  const distanceLabel = candidate.city||t("swipe.nearby");
 
   const handleStart = useCallback((clientX:number)=>{
     if(!isTop||animatingRef.current) return;
@@ -251,26 +254,26 @@ const SwipeCard = memo(function SwipeCard({ candidate, isTop, onSwipe, onLove: _
         {isTop && (
           <>
             <div className="absolute top-6 left-5 z-30 border-[3px] border-emerald-400 text-emerald-400 font-black text-2xl sm:text-3xl px-4 py-1 rounded-xl -rotate-12 bg-white/80 backdrop-blur-sm"
-              style={{opacity:likeOpacity,transition:dragState.isDragging?"none":"opacity 0.15s ease-out"}}>LIKE</div>
+              style={{opacity:likeOpacity,transition:dragState.isDragging?"none":"opacity 0.15s ease-out"}}>{t("swipe.label.like")}</div>
             <div className="absolute top-6 right-5 z-30 border-[3px] border-red-400 text-red-400 font-black text-2xl sm:text-3xl px-4 py-1 rounded-xl rotate-12 bg-white/80 backdrop-blur-sm"
-              style={{opacity:nopeOpacity,transition:dragState.isDragging?"none":"opacity 0.15s ease-out"}}>NOPE</div>
+              style={{opacity:nopeOpacity,transition:dragState.isDragging?"none":"opacity 0.15s ease-out"}}>{t("swipe.label.nope")}</div>
           </>
         )}
         <div className="relative flex-1 min-h-0 bg-gradient-to-br from-amber-100 to-orange-50">
           {photoUrl ? (
-            <Image src={photoUrl} alt={candidate.pet_name||"Pet"} fill className="object-cover" unoptimized sizes="(max-width:640px) 95vw, 420px"
+            <Image src={photoUrl} alt={candidate.pet_name||t("swipe.petFallback")} fill className="object-cover" unoptimized sizes="(max-width:640px) 95vw, 420px"
               onError={(e)=>{(e.target as HTMLImageElement).style.display="none";}}/>
           ) : (
             <div className="w-full h-full flex items-center justify-center">
-              <div className="text-center"><PawIcon size={80}/><p className="text-gray-400 text-sm mt-2">No photo yet</p></div>
+              <div className="text-center"><PawIcon size={80}/><p className="text-gray-400 text-sm mt-2">{t("swipe.noPhoto")}</p></div>
             </div>
           )}
           {/* Tap zones for photo navigation */}
           {allPhotos.length > 1 && isTop && (
             <>
-              <button className="absolute top-0 left-0 w-1/3 h-2/3 z-20" aria-label="Previous photo"
+              <button className="absolute top-0 left-0 w-1/3 h-2/3 z-20" aria-label={t("swipe.aria.prevPhoto")}
                 onClick={(e)=>{e.stopPropagation();setPhotoIndex(i=>Math.max(0,i-1));}} />
-              <button className="absolute top-0 right-0 w-1/3 h-2/3 z-20" aria-label="Next photo"
+              <button className="absolute top-0 right-0 w-1/3 h-2/3 z-20" aria-label={t("swipe.aria.nextPhoto")}
                 onClick={(e)=>{e.stopPropagation();setPhotoIndex(i=>Math.min(allPhotos.length-1,i+1));}} />
             </>
           )}
@@ -309,15 +312,15 @@ const SwipeCard = memo(function SwipeCard({ candidate, isTop, onSwipe, onLove: _
         {isTop && (
           <div className="flex items-center justify-center gap-3 px-5 pb-4 pt-2">
             <button onClick={(e)=>{e.stopPropagation();triggerSwipe("left");}}
-              className="w-12 h-12 rounded-full bg-gray-800 flex items-center justify-center text-white hover:bg-gray-700 active:scale-90 transition-all shadow-lg" aria-label="Pass">
+              className="w-12 h-12 rounded-full bg-gray-800 flex items-center justify-center text-white hover:bg-gray-700 active:scale-90 transition-all shadow-lg" aria-label={t("swipe.aria.pass")}>
               <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M14 9V5a3 3 0 00-5.12-2.12L3.46 8.3A2 2 0 003 9.74V18a2 2 0 002 2h7.12a2 2 0 001.94-1.5l1.88-7.5A1 1 0 0015 10h-1z"/></svg>
             </button>
             <button onClick={(e)=>{e.stopPropagation();triggerSwipe("right");}}
-              className="w-14 h-14 rounded-full bg-emerald-500 hover:bg-emerald-600 active:scale-90 flex items-center justify-center text-white shadow-lg transition-all" aria-label="Love">
+              className="w-14 h-14 rounded-full bg-emerald-500 hover:bg-emerald-600 active:scale-90 flex items-center justify-center text-white shadow-lg transition-all" aria-label={t("swipe.aria.love")}>
               <svg className="w-7 h-7" fill="currentColor" viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
             </button>
             <button onClick={(e)=>{e.stopPropagation();triggerSwipe("left");}}
-              className="w-12 h-12 rounded-full bg-gray-800 flex items-center justify-center text-white hover:bg-gray-700 active:scale-90 transition-all shadow-lg" aria-label="Next">
+              className="w-12 h-12 rounded-full bg-gray-800 flex items-center justify-center text-white hover:bg-gray-700 active:scale-90 transition-all shadow-lg" aria-label={t("swipe.aria.next")}>
               <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth={2.5} viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6"/></svg>
             </button>
           </div>
@@ -328,16 +331,17 @@ const SwipeCard = memo(function SwipeCard({ candidate, isTop, onSwipe, onLove: _
 });
 
 function NotLoggedInCTA() {
+  const { t } = useT();
   const signupUrl = useSignupUrl();
   return (
     <div className="flex-1 flex items-center justify-center px-4 py-12">
       <div className="bg-white rounded-3xl shadow-xl p-8 max-w-md w-full text-center">
         <div className="w-20 h-20 mx-auto mb-6 bg-emerald-100 rounded-full flex items-center justify-center text-4xl">🐾</div>
-        <h2 className="font-medium text-2xl sm:text-3xl text-gray-900 mb-4 tracking-wide">Find Playmates for Your Pup</h2>
-        <p className="text-gray-500 mb-8 leading-relaxed">Swipe through local pets, match with compatible playmates, and set up the perfect date!</p>
+        <h2 className="font-medium text-2xl sm:text-3xl text-gray-900 mb-4 tracking-wide">{t("swipe.cta.login.title")}</h2>
+        <p className="text-gray-500 mb-8 leading-relaxed">{t("swipe.cta.login.body")}</p>
         <div className="flex flex-col sm:flex-row gap-3">
-          <Link href="/auth/login" className="flex-1 bg-emerald-500 text-white font-medium text-lg py-3 rounded-xl hover:bg-emerald-600 transition-colors text-center tracking-wide">Log In</Link>
-          <Link href={signupUrl} className="flex-1 bg-gray-900 text-white font-medium text-lg py-3 rounded-xl hover:bg-gray-800 transition-colors text-center tracking-wide">Sign Up</Link>
+          <Link href="/auth/login" className="flex-1 bg-emerald-500 text-white font-medium text-lg py-3 rounded-xl hover:bg-emerald-600 transition-colors text-center tracking-wide">{t("swipe.cta.login.login")}</Link>
+          <Link href={signupUrl} className="flex-1 bg-gray-900 text-white font-medium text-lg py-3 rounded-xl hover:bg-gray-800 transition-colors text-center tracking-wide">{t("swipe.cta.login.signup")}</Link>
         </div>
       </div>
     </div>
@@ -345,22 +349,23 @@ function NotLoggedInCTA() {
 }
 
 function NotEnoughPhotosCTA({ photoCount }: { photoCount: number }) {
+  const { t } = useT();
   return (
     <div className="flex-1 flex items-center justify-center px-4 py-12">
       <div className="bg-white rounded-3xl shadow-xl p-8 max-w-md w-full text-center">
         <div className="w-20 h-20 mx-auto mb-6 bg-amber-100 rounded-full flex items-center justify-center text-4xl">📸</div>
-        <h2 className="font-medium text-2xl sm:text-3xl text-gray-900 mb-3 tracking-wide">Add More Photos First</h2>
+        <h2 className="font-medium text-2xl sm:text-3xl text-gray-900 mb-3 tracking-wide">{t("swipe.cta.morePhotos.title")}</h2>
         <p className="text-gray-500 mb-4 leading-relaxed">
-          You need at least <strong>1 photo</strong> of your pet before you can start matching. Go to your profile and upload a pet photo!
+          {t("swipe.cta.morePhotos.body")}
         </p>
         <div className="flex items-center justify-center gap-2 mb-8">
           <div className={`w-10 h-10 rounded-full flex items-center justify-center text-lg font-medium border-2 ${photoCount > 0 ? "bg-emerald-100 border-emerald-400 text-emerald-600" : "bg-gray-100 border-gray-300 text-gray-400"}`}>
             {photoCount > 0 ? "✓" : "1"}
           </div>
         </div>
-        <p className="text-sm text-gray-400 mb-6">{photoCount}/1 photo added</p>
+        <p className="text-sm text-gray-400 mb-6">{t("swipe.cta.morePhotos.counter", { n: photoCount })}</p>
         <Link href="/profile" className="inline-block w-full bg-emerald-500 text-white font-medium text-lg py-3 rounded-xl hover:bg-emerald-600 transition-colors tracking-wide">
-          Upload Photos in Profile →
+          {t("swipe.cta.morePhotos.cta")} →
         </Link>
       </div>
     </div>
@@ -368,32 +373,35 @@ function NotEnoughPhotosCTA({ photoCount }: { photoCount: number }) {
 }
 
 function NoPetProfileCTA() {
+  const { t } = useT();
   return (
     <div className="flex-1 flex items-center justify-center px-4 py-12">
       <div className="bg-white rounded-3xl shadow-xl p-8 max-w-md w-full text-center">
         <div className="w-20 h-20 mx-auto mb-6 bg-amber-100 rounded-full flex items-center justify-center text-4xl">🐶</div>
-        <h2 className="font-medium text-2xl sm:text-3xl text-gray-900 mb-4 tracking-wide">Complete Your Pet Profile</h2>
-        <p className="text-gray-500 mb-8 leading-relaxed">Before swiping, add photos and details about your pet. Go to your profile to upload swipe photos!</p>
-        <Link href="/profile" className="inline-block bg-emerald-500 text-white font-medium text-lg px-8 py-3 rounded-xl hover:bg-emerald-600 transition-colors tracking-wide">Set Up Profile</Link>
+        <h2 className="font-medium text-2xl sm:text-3xl text-gray-900 mb-4 tracking-wide">{t("swipe.cta.noProfile.title")}</h2>
+        <p className="text-gray-500 mb-8 leading-relaxed">{t("swipe.cta.noProfile.body")}</p>
+        <Link href="/profile" className="inline-block bg-emerald-500 text-white font-medium text-lg px-8 py-3 rounded-xl hover:bg-emerald-600 transition-colors tracking-wide">{t("swipe.cta.noProfile.cta")}</Link>
       </div>
     </div>
   );
 }
 
 function EmptyState() {
+  const { t } = useT();
   return (
     <div className="flex-1 flex items-center justify-center px-4 py-12">
       <div className="bg-white rounded-3xl shadow-xl p-8 max-w-md w-full text-center">
         <div className="w-20 h-20 mx-auto mb-6 bg-gray-100 rounded-full flex items-center justify-center text-4xl">🐾</div>
-        <h2 className="font-medium text-2xl sm:text-3xl text-gray-900 mb-4 tracking-wide">No More Pets Nearby!</h2>
-        <p className="text-gray-500 mb-8 leading-relaxed">You&apos;ve seen all available pets. Check back later for new friends!</p>
-        <Link href="/community" className="inline-block bg-emerald-500 text-white font-medium text-lg px-8 py-3 rounded-xl hover:bg-emerald-600 transition-colors tracking-wide">Explore Community</Link>
+        <h2 className="font-medium text-2xl sm:text-3xl text-gray-900 mb-4 tracking-wide">{t("swipe.cta.empty.title")}</h2>
+        <p className="text-gray-500 mb-8 leading-relaxed">{t("swipe.cta.empty.body")}</p>
+        <Link href="/community" className="inline-block bg-emerald-500 text-white font-medium text-lg px-8 py-3 rounded-xl hover:bg-emerald-600 transition-colors tracking-wide">{t("swipe.cta.empty.cta")}</Link>
       </div>
     </div>
   );
 }
 
 export default function SwipePage() {
+  const { t } = useT();
   const { user, loading: authLoading } = useAuth();
   const [myPetProfile, setMyPetProfile] = useState<PetCandidate|null>(null);
   const [hasProfile, setHasProfile] = useState<boolean|null>(null);
@@ -629,7 +637,7 @@ export default function SwipePage() {
                 <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
                 </svg>
-                <span className="text-sm font-medium">Profile</span>
+                <span className="text-sm font-medium">{t("swipe.profile")}</span>
               </Link>
               <div className="flex items-center gap-3 text-sm">
                 <span className="flex items-center gap-1 text-gray-500"><span>❤️</span><span className="font-medium text-gray-700 tracking-wide">{likesToday}</span></span>
@@ -640,7 +648,7 @@ export default function SwipePage() {
                 <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/>
                 </svg>
-                <span className="text-sm font-medium">Matches</span>
+                <span className="text-sm font-medium">{t("swipe.matchesLink")}</span>
                 {matchCount>0 && (
                   <span className="absolute -top-1 -right-2 w-5 h-5 bg-red-500 text-white text-[10px] font-medium rounded-full flex items-center justify-center tracking-wide">{matchCount>9?"9+":matchCount}</span>
                 )}
@@ -670,7 +678,7 @@ export default function SwipePage() {
               <div className="flex-1 flex items-center justify-center">
                 <div className="text-center">
                   <div className="w-12 h-12 border-4 border-emerald-400 border-t-transparent rounded-full animate-spin mx-auto mb-4"/>
-                  <p className="text-gray-500 text-lg">Finding pets near you...</p>
+                  <p className="text-gray-500 text-lg">{t("swipe.findingPets")}</p>
                 </div>
               </div>
             )}

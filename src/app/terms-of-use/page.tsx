@@ -3,8 +3,10 @@
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import Link from "next/link";
+import { useT } from "@/lib/i18n/LangProvider";
 
 export default function TermsOfUsePage() {
+  const { t } = useT();
   return (
     <>
       <Header />
@@ -13,10 +15,10 @@ export default function TermsOfUsePage() {
         <section className="bg-deep-green py-16 text-center relative zigzag-bottom">
           <div className="max-w-[900px] mx-auto px-6">
             <h1 className="text-4xl md:text-5xl font-bold text-white font-rubik mb-4">
-              Terms of Use
+              {t("policy.terms.title")}
             </h1>
             <p className="text-white/80 text-lg md:text-xl font-rubik">
-              Please read these terms carefully before using our website and services.
+              {t("policy.terms.subtitle")}
             </p>
           </div>
         </section>

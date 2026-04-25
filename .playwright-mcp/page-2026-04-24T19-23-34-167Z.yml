@@ -1,0 +1,59 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e2]:
+    - banner [ref=e3]:
+      - generic [ref=e5]:
+        - link "JEKO" [ref=e6] [cursor=pointer]:
+          - /url: /
+          - generic [ref=e7]: JEKO
+        - navigation [ref=e8]:
+          - link "Մեր մասին" [ref=e10] [cursor=pointer]:
+            - /url: /about
+            - text: Մեր մասին
+            - img [ref=e11]
+          - link "Համայնք" [ref=e14] [cursor=pointer]:
+            - /url: /community
+            - text: Համայնք
+            - img [ref=e15]
+          - link "Խանութ" [ref=e18] [cursor=pointer]:
+            - /url: /products
+          - link "Կարծիքներ" [ref=e20] [cursor=pointer]:
+            - /url: /reviews
+          - link "Առողջապահական օգուտներ" [ref=e22] [cursor=pointer]:
+            - /url: /benefits
+            - text: Առողջապահական օգուտներ
+            - img [ref=e23]
+        - generic [ref=e25]:
+          - button "Switch language" [ref=e27] [cursor=pointer]:
+            - generic [ref=e28]: 🇦🇲
+            - generic [ref=e29]: HY
+            - img [ref=e30]
+          - button "Shopping cart" [ref=e32] [cursor=pointer]:
+            - img [ref=e33]
+          - link "Օգնություն" [ref=e37] [cursor=pointer]:
+            - /url: /contact
+          - link "Մուտք" [ref=e38] [cursor=pointer]:
+            - /url: /login
+          - link "Գրանցվել" [ref=e39] [cursor=pointer]:
+            - /url: /auth/signup
+    - main [ref=e40]:
+      - generic [ref=e42]:
+        - paragraph [ref=e55]: 🚀 Եկեք սկսենք։
+        - generic [ref=e56]:
+          - heading "Ի՞նչ տեսակի ընտանի կենդանի ունեք" [level=1] [ref=e57]
+          - paragraph [ref=e58]: Եկեք սկսենք հիմունքներից
+          - generic [ref=e59]:
+            - button "Շուն" [ref=e60] [cursor=pointer]:
+              - img [ref=e62]
+              - generic [ref=e68]: Շուն
+            - button "Կատու" [ref=e69] [cursor=pointer]:
+              - img [ref=e71]
+              - generic [ref=e76]: Կատու
+            - button "Այլ" [ref=e77] [cursor=pointer]:
+              - img [ref=e79]
+              - generic [ref=e85]: Այլ
+          - button "Շարունակել" [disabled] [ref=e86]
+  - link "Home" [ref=e87] [cursor=pointer]:
+    - /url: /
+    - img [ref=e88]
+    - text: Home
+  - alert [ref=e90]

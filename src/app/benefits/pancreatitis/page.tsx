@@ -2,7 +2,7 @@ import HealthConditionPage from "@/components/HealthConditionPage";
 
 export default function PancreatitisPage() {
   return (
-    <HealthConditionPage
+    <HealthConditionPage pageSlug="/benefits/pancreatitis"
       condition="Pancreatitis"
       tagline="& your dog's diet"
       heroImage="https://images.unsplash.com/photo-1522276498395-f4f68f7f8454?w=1600&h=800&fit=crop"

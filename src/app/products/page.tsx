@@ -5,6 +5,7 @@ import { supabase } from '@/lib/supabase';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import ProductCard from '@/components/ProductCard';
+import { useT } from '@/lib/i18n/LangProvider';
 
 interface Product {
   id: string;
@@ -23,6 +24,7 @@ interface Category {
 }
 
 export default function ProductsPage() {
+  const { t } = useT();
   const [products, setProducts] = useState<Product[]>([]);
   const [categories, setCategories] = useState<Category[]>([]);
   const [loading, setLoading] = useState(true);
@@ -87,10 +89,10 @@ export default function ProductsPage() {
         <section className="bg-deep-green py-16 text-center relative zigzag-bottom">
           <div className="max-w-[1200px] mx-auto px-4">
             <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">
-              Shop Our <span className="text-gold">Products</span>
+              {t("products.hero.titlePrefix")} <span className="text-gold">{t("products.hero.titleHighlight")}</span>
             </h1>
             <p className="text-white/70 max-w-xl mx-auto text-lg">
-              Everything your furry friend needs. Premium food, treats, and accessories made with love.
+              {t("products.hero.subtitle")}
             </p>
           </div>
         </section>
@@ -107,7 +109,7 @@ export default function ProductsPage() {
                 </svg>
                 <input
                   type="text"
-                  placeholder="Search products..."
+                  placeholder={t("products.search.placeholder")}
                   value={search}
                   onChange={(e) => setSearch(e.target.value)}
                   className="w-full pl-10 pr-4 py-2.5 rounded-xl bg-beige-light border-2 border-transparent focus:border-gold focus:outline-none text-sm"
@@ -124,7 +126,7 @@ export default function ProductsPage() {
                       : 'bg-beige-light text-deep-green hover:bg-deep-green/10'
                   }`}
                 >
-                  All
+                  {t("products.filter.all")}
                 </button>
                 {categories.map((cat) => (
                   <button
@@ -147,17 +149,17 @@ export default function ProductsPage() {
                 onChange={(e) => setSortBy(e.target.value)}
                 className="px-4 py-2.5 rounded-xl bg-beige-light border-2 border-transparent focus:border-gold focus:outline-none text-sm text-deep-green cursor-pointer"
               >
-                <option value="newest">Newest</option>
-                <option value="price-asc">Price: Low to High</option>
-                <option value="price-desc">Price: High to Low</option>
-                <option value="name">Name A-Z</option>
+                <option value="newest">{t("products.sort.newest")}</option>
+                <option value="price-asc">{t("products.sort.priceAsc")}</option>
+                <option value="price-desc">{t("products.sort.priceDesc")}</option>
+                <option value="name">{t("products.sort.nameAsc")}</option>
               </select>
             </div>
 
             {/* Results Count */}
             <div className="flex justify-between items-center mb-6">
               <p className="text-sm text-deep-green/60">
-                {loading ? 'Loading...' : `${products.length} product${products.length !== 1 ? 's' : ''} found`}
+                {loading ? t("products.loading") : t(products.length === 1 ? "products.resultsFound.one" : "products.resultsFound.many", { n: products.length })}
               </p>
             </div>
 
@@ -178,8 +180,8 @@ export default function ProductsPage() {
             ) : products.length === 0 ? (
               <div className="text-center py-20">
                 <div className="text-6xl mb-4">🐾</div>
-                <h3 className="text-xl font-semibold text-deep-green mb-2">No products found</h3>
-                <p className="text-deep-green/60">Try changing your filters or search term.</p>
+                <h3 className="text-xl font-semibold text-deep-green mb-2">{t("products.empty.title")}</h3>
+                <p className="text-deep-green/60">{t("products.empty.body")}</p>
               </div>
             ) : (
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">

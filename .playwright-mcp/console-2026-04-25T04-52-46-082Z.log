@@ -1,0 +1,58 @@
+[    1859ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:3000/admin/community:0
+[    2349ms] [INFO] %cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold @ webpack-internal:///./node_modules/react-dom/cjs/react-dom.development.js:29889
+[    2406ms] Error: Cannot find module './8948.js'
+Require stack:
+- /Users/admin/Desktop/claude code armen/pure-pet-clone/.next/server/webpack-runtime.js
+- /Users/admin/Desktop/claude code armen/pure-pet-clone/.next/server/app/_not-found/page.js
+- /Users/admin/Desktop/claude code armen/pure-pet-clone/node_modules/next/dist/server/require.js
+- /Users/admin/Desktop/claude code armen/pure-pet-clone/node_modules/next/dist/server/load-components.js
+- /Users/admin/Desktop/claude code armen/pure-pet-clone/node_modules/next/dist/build/utils.js
+- /Users/admin/Desktop/claude code armen/pure-pet-clone/node_modules/next/dist/server/dev/hot-middleware.js
+- /Users/admin/Desktop/claude code armen/pure-pet-clone/node_modules/next/dist/server/dev/hot-reloader-webpack.js
+- /Users/admin/Desktop/claude code armen/pure-pet-clone/node_modules/next/dist/server/lib/router-utils/setup-dev-bundler.js
+- /Users/admin/Desktop/claude code armen/pure-pet-clone/node_modules/next/dist/server/lib/router-server.js
+- /Users/admin/Desktop/claude code armen/pure-pet-clone/node_modules/next/dist/server/lib/start-server.js
+    at Module._resolveFilename (node:internal/modules/cjs/loader:1475:15)
+    at <unknown> (file:///Users/admin/Desktop/claude code armen/pure-pet-clone/node_modules/next/dist/server/require-hook.js:55:36)
+    at wrapResolveFilename (node:internal/modules/cjs/loader:1048:27)
+    at defaultResolveImplForCJSLoading (node:internal/modules/cjs/loader:1072:10)
+    at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1093:12)
+    at Module._load (node:internal/modules/cjs/loader:1261:25)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:255:19)
+    at Module.require (node:internal/modules/cjs/loader:1575:12)
+    at mod.require (file:///Users/admin/Desktop/claude code armen/pure-pet-clone/node_modules/next/dist/server/require-hook.js:65:28)
+    at require (node:internal/modules/helpers:191:16)
+    at __webpack_require__.f.require (file:///Users/admin/Desktop/claude code armen/pure-pet-clone/.next/server/webpack-runtime.js:198:28)
+    at <unknown> (file:///Users/admin/Desktop/claude code armen/pure-pet-clone/.next/server/webpack-runtime.js:111:40)
+    at Array.reduce (<anonymous>)
+    at __webpack_require__.e (file:///Users/admin/Desktop/claude code armen/pure-pet-clone/.next/server/webpack-runtime.js:110:67)
+    at Array.map (<anonymous>)
+    at __webpack_require__.X (file:///Users/admin/Desktop/claude code armen/pure-pet-clone/.next/server/webpack-runtime.js:162:22)
+    at <unknown> (file:///Users/admin/Desktop/claude code armen/pure-pet-clone/.next/server/app/admin/community/page.js:1:12679)
+    at Object.<anonymous> (file:///Users/admin/Desktop/claude code armen/pure-pet-clone/.next/server/app/admin/community/page.js:1:12741)
+    at Module._compile (node:internal/modules/cjs/loader:1831:14)
+    at Module._extensions..js (node:internal/modules/cjs/loader:1971:10)
+    at Module.load (node:internal/modules/cjs/loader:1552:32)
+    at Module._load (node:internal/modules/cjs/loader:1354:12)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:255:19)
+    at Module.require (node:internal/modules/cjs/loader:1575:12)
+    at mod.require (file:///Users/admin/Desktop/claude code armen/pure-pet-clone/node_modules/next/dist/server/require-hook.js:65:28)
+    at require (node:internal/modules/helpers:191:16)
+    at requirePage (file:///Users/admin/Desktop/claude code armen/pure-pet-clone/node_modules/next/dist/server/require.js:109:84)
+    at <unknown> (file:///Users/admin/Desktop/claude code armen/pure-pet-clone/node_modules/next/dist/server/load-components.js:103:84)
+    at async loadComponentsImpl (file:///Users/admin/Desktop/claude code armen/pure-pet-clone/node_modules/next/dist/server/load-components.js:103:26)
+    at async DevServer.findPageComponentsImpl (file:///Users/admin/Desktop/claude code armen/pure-pet-clone/node_modules/next/dist/server/next-server.js:714:36)
+    at async DevServer.findPageComponents (file:///Users/admin/Desktop/claude code armen/pure-pet-clone/node_modules/next/dist/server/dev/next-dev-server.js:577:20)
+    at async DevServer.renderPageComponent (file:///Users/admin/Desktop/claude code armen/pure-pet-clone/node_modules/next/dist/server/base-server.js:1910:24)
+    at async DevServer.renderToResponseImpl (file:///Users/admin/Desktop/claude code armen/pure-pet-clone/node_modules/next/dist/server/base-server.js:1962:32)
+    at async DevServer.pipeImpl (file:///Users/admin/Desktop/claude code armen/pure-pet-clone/node_modules/next/dist/server/base-server.js:922:25)
+    at async NextNodeServer.handleCatchallRenderRequest (file:///Users/admin/Desktop/claude code armen/pure-pet-clone/node_modules/next/dist/server/next-server.js:272:17)
+    at async DevServer.handleRequestImpl (file:///Users/admin/Desktop/claude code armen/pure-pet-clone/node_modules/next/dist/server/base-server.js:818:17)
+    at async (file:///Users/admin/Desktop/claude code armen/pure-pet-clone/node_modules/next/dist/server/dev/next-dev-server.js:339:20)
+    at async Span.traceAsyncFn (file:///Users/admin/Desktop/claude code armen/pure-pet-clone/node_modules/next/dist/trace/trace.js:154:20)
+    at async DevServer.handleRequest (file:///Users/admin/Desktop/claude code armen/pure-pet-clone/node_modules/next/dist/server/dev/next-dev-server.js:336:24)
+    at async invokeRender (file:///Users/admin/Desktop/claude code armen/pure-pet-clone/node_modules/next/dist/server/lib/router-server.js:179:21)
+    at async handleRequest (file:///Users/admin/Desktop/claude code armen/pure-pet-clone/node_modules/next/dist/server/lib/router-server.js:359:24)
+    at async requestHandlerImpl (file:///Users/admin/Desktop/claude code armen/pure-pet-clone/node_modules/next/dist/server/lib/router-server.js:383:13)
+    at async Server.requestListener (file:///Users/admin/Desktop/claude code armen/pure-pet-clone/node_modules/next/dist/server/lib/start-server.js:141:13)
+[    2405ms] [LOG] [HMR] connected @ webpack-internal:///./node_modules/next/dist/client/components/react-dev-overlay/pages/websocket.js:38

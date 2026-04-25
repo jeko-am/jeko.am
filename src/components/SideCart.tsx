@@ -4,12 +4,14 @@ import { useCart } from '@/lib/cart-context';
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useRouter, usePathname } from 'next/navigation';
+import { useT } from '@/lib/i18n/LangProvider';
 
 function formatPrice(value: number): string {
   return new Intl.NumberFormat('en-GB', { style: 'currency', currency: 'GBP' }).format(value);
 }
 
 export default function SideCart() {
+  const { t } = useT();
   const { items, isOpen, closeCart, totalItems, totalPrice, removeItem, updateQuantity } = useCart();
   const [isCheckingOut, setIsCheckingOut] = useState(false);
   const router = useRouter();
@@ -44,7 +46,7 @@ export default function SideCart() {
           {/* Header */}
           <div className="flex items-center justify-between p-4 border-b border-gray-200">
             <h2 className="text-lg font-semibold text-gray-900">
-              Shopping Cart ({totalItems})
+              {t("sidecart.title")} ({totalItems})
             </h2>
             <button
               onClick={closeCart}
@@ -63,13 +65,13 @@ export default function SideCart() {
                 <svg className="w-16 h-16 mx-auto text-gray-400 mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
                 </svg>
-                <h3 className="text-lg font-medium text-gray-900 mb-2">Your cart is empty</h3>
-                <p className="text-gray-500 mb-6">Looks like you haven&apos;t added anything yet.</p>
+                <h3 className="text-lg font-medium text-gray-900 mb-2">{t("sidecart.empty.title")}</h3>
+                <p className="text-gray-500 mb-6">{t("sidecart.empty.body")}</p>
                 <button
                   onClick={closeCart}
                   className="btn-gold"
                 >
-                  Continue Shopping
+                  {t("cart.continue")}
                 </button>
               </div>
             ) : (
@@ -146,7 +148,7 @@ export default function SideCart() {
                           onClick={() => removeItem(item.id, item.variant_id)}
                           className="text-xs text-red-600 hover:text-red-700 transition-colors"
                         >
-                          Remove
+                          {t("sidecart.removeAction")}
                         </button>
                       </div>
                     </div>
@@ -161,7 +163,7 @@ export default function SideCart() {
             <div className="border-t border-gray-200 p-4 space-y-4">
               {/* Subtotal */}
               <div className="flex justify-between items-center">
-                <span className="text-gray-600">Subtotal</span>
+                <span className="text-gray-600">{t("cart.subtotal")}</span>
                 <span className="text-lg font-semibold text-gray-900">
                   {formatPrice(totalPrice)}
                 </span>
@@ -169,7 +171,7 @@ export default function SideCart() {
 
               {/* Shipping Note */}
               <p className="text-xs text-gray-500">
-                Shipping and taxes calculated at checkout
+                {t("sidecart.shippingNote")}
               </p>
 
               {/* Checkout Button */}
@@ -181,9 +183,9 @@ export default function SideCart() {
                 {isCheckingOut ? (
                   <>
                     <div className="w-5 h-5 border-2 border-deep-green/30 border-t-deep-green rounded-full animate-spin" />
-                    Processing...
+                    {t("sidecart.processing")}
                   </>
-                ) : 'Checkout'}
+                ) : t("sidecart.checkout")}
               </button>
 
               {/* Continue Shopping */}
@@ -191,7 +193,7 @@ export default function SideCart() {
                 onClick={closeCart}
                 className="w-full text-center text-sm text-gray-600 hover:text-gray-900 transition-colors"
               >
-                Continue Shopping
+                {t("cart.continue")}
               </button>
             </div>
           )}

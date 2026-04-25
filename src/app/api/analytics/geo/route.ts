@@ -36,19 +36,53 @@ function isPrivateIp(ip: string): boolean {
   );
 }
 
-async function lookupGeo(ip: string): Promise<{
+async function resolveSelfPublicIp(): Promise<string | null> {
+  try {
+    const r = await fetch("https://api.ipify.org?format=json", { cache: "no-store" });
+    if (!r.ok) return null;
+    const j = (await r.json()) as { ip?: string };
+    return j.ip ?? null;
+  } catch {
+    return null;
+  }
+}
+
+async function lookupGeo(ip: string | null): Promise<{
+  ip: string | null;
   city: string | null;
   region: string | null;
   country: string | null;
 } | null> {
+  const target = ip || (await resolveSelfPublicIp());
+  if (!target) return null;
+
+  // Primary: ip-api.com (free, no key, HTTP only on free tier — fine server-side).
   try {
-    const res = await fetch(`https://ipwho.is/${ip}`, {
-      next: { revalidate: 60 * 60 * 24 },
-    });
+    const res = await fetch(
+      `http://ip-api.com/json/${target}?fields=status,country,regionName,city,query`,
+      { cache: "no-store" }
+    );
+    if (res.ok) {
+      const data = (await res.json()) as { status?: string; country?: string; regionName?: string; city?: string; query?: string };
+      if (data?.status === "success") {
+        return {
+          ip: data.query ?? target,
+          city: data.city || null,
+          region: data.regionName || null,
+          country: data.country || null,
+        };
+      }
+    }
+  } catch { /* fall through */ }
+
+  // Fallback: ipwho.is (works without key but sometimes returns 403 from cloud egress).
+  try {
+    const res = await fetch(`https://ipwho.is/${target}`, { cache: "no-store" });
     if (!res.ok) return null;
     const data = await res.json();
     if (data?.success === false) return null;
     return {
+      ip: data.ip ?? target,
       city: data.city ?? null,
       region: data.region ?? null,
       country: data.country ?? null,
@@ -74,15 +108,17 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ ok: false, error: "session_id required" }, { status: 400 });
   }
 
-  const ip = extractIp(req);
-  const geo = ip && !isPrivateIp(ip) ? await lookupGeo(ip) : null;
+  const headerIp = extractIp(req);
+  const usableIp = headerIp && !isPrivateIp(headerIp) ? headerIp : null;
+  const geo = await lookupGeo(usableIp);
+  const finalIp = geo?.ip ?? usableIp;
 
   const admin = createClient(SUPABASE_URL, SERVICE_KEY, {
     auth: { persistSession: false, autoRefreshToken: false },
   });
 
   const update: Record<string, string | null> = {
-    ip_address: ip,
+    ip_address: finalIp,
     city: geo?.city ?? null,
     region: geo?.region ?? null,
     country: geo?.country ?? null,
@@ -96,5 +132,5 @@ export async function POST(req: NextRequest) {
   if (error) {
     return NextResponse.json({ ok: false, error: error.message }, { status: 500 });
   }
-  return NextResponse.json({ ok: true, ip, ...geo });
+  return NextResponse.json({ ok: true, ip: finalIp, ...geo });
 }

@@ -12,6 +12,7 @@ import ImageUpload from "@/components/ImageUpload";
 import PetPhotoGallery from "@/components/PetPhotoGallery";
 import MatchingPreferences from "@/components/MatchingPreferences";
 import BreedCombobox from "@/components/BreedCombobox";
+import { useT } from "@/lib/i18n/LangProvider";
 
 /* ─── Types ──────────────────────────────────────────────────────────── */
 
@@ -50,6 +51,7 @@ interface PetProfile {
 /* ─── Profile Page Component ─────────────────────────────────────────────── */
 
 export default function ProfilePage() {
+  const { t } = useT();
   const router = useRouter();
   const { user, loading: authLoading } = useAuth();
   const [loading, setLoading] = useState(true);
@@ -302,8 +304,8 @@ export default function ProfilePage() {
         <div className="bg-white rounded-xl shadow-sm border border-gray-200">
           {/* Header */}
           <div className="border-b border-gray-200 p-6">
-            <h1 className="text-2xl font-medium text-gray-900 tracking-wide">My Profile</h1>
-            <p className="text-gray-600 mt-1">Manage your personal information and pet profile</p>
+            <h1 className="text-2xl font-medium text-gray-900 tracking-wide">{t('profile.page.title')}</h1>
+            <p className="text-gray-600 mt-1">{t('profile.page.subtitle')}</p>
           </div>
 
           {/* Tabs */}
@@ -319,7 +321,7 @@ export default function ProfilePage() {
                       : "text-gray-500 hover:text-gray-700"
                   }`}
                 >
-                  {tab === "profile" ? "Your Profile" : tab === "pet" ? "Pet Profile" : tab === "gallery" ? "Swipe Photos" : "Match Preferences"}
+                  {tab === "profile" ? t('profile.tabs.profile') : tab === "pet" ? t('profile.tabs.pet') : tab === "gallery" ? t('profile.tabs.gallery') : t('profile.tabs.preferences')}
                 </button>
               ))}
             </div>
@@ -355,15 +357,15 @@ export default function ProfilePage() {
                     alt="Profile"
                   />
                   <div>
-                    <h3 className="text-lg font-medium text-gray-900 tracking-wide">Profile Photo</h3>
-                    <p className="text-sm text-gray-500">Upload a photo to help others recognize you</p>
+                    <h3 className="text-lg font-medium text-gray-900 tracking-wide">{t('profile.user.photoTitle')}</h3>
+                    <p className="text-sm text-gray-500">{t('profile.user.photoSub')}</p>
                   </div>
                 </div>
 
                 {/* Profile Form */}
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">Display Name</label>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">{t('profile.user.displayName')}</label>
                     <input
                       type="text"
                       value={displayName}
@@ -372,7 +374,7 @@ export default function ProfilePage() {
                     />
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">Email</label>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">{t('profile.user.email')}</label>
                     <input
                       type="email"
                       value={user?.email || ""}
@@ -381,7 +383,7 @@ export default function ProfilePage() {
                     />
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">City</label>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">{t('profile.user.city')}</label>
                     <input
                       type="text"
                       value={city}
@@ -390,7 +392,7 @@ export default function ProfilePage() {
                     />
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">Country</label>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">{t('profile.user.country')}</label>
                     <input
                       type="text"
                       value={country}
@@ -401,13 +403,13 @@ export default function ProfilePage() {
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Bio</label>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">{t('profile.user.bio')}</label>
                   <textarea
                     value={bio}
                     onChange={(e) => setBio(e.target.value)}
                     rows={4}
                     className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-gold focus:border-transparent"
-                    placeholder="Tell us about yourself..."
+                    placeholder={t('profile.user.bioPlaceholder')}
                   />
                 </div>
 
@@ -417,7 +419,7 @@ export default function ProfilePage() {
                     disabled={saving}
                     className="bg-gold hover:bg-yellow-500 text-white font-medium py-2 px-6 rounded-lg transition-colors disabled:opacity-50"
                   >
-                    {saving ? "Saving..." : "Save Profile"}
+                    {saving ? t('profile.user.saving') : t('profile.user.save')}
                   </button>
                 </div>
               </div>
@@ -432,7 +434,7 @@ export default function ProfilePage() {
                     currentImage={petProfile?.profile_photo_url}
                     onImageChange={async (url) => {
                       if (!petProfile) {
-                        alert("Please save your pet profile first before uploading a photo.");
+                        alert(t('profile.pet.photoAlertSaveFirst'));
                         return;
                       }
                       if (url) {
@@ -442,7 +444,7 @@ export default function ProfilePage() {
                           .eq("user_id", user!.id);
                         if (error) {
                           console.error("Error updating pet photo:", error);
-                          alert("Failed to save pet photo. Please try again.");
+                          alert(t('profile.pet.photoSaveFail'));
                           return;
                         }
                         setPetProfile(prev => prev ? { ...prev, profile_photo_url: url } : null);
@@ -460,15 +462,15 @@ export default function ProfilePage() {
                     alt="Pet"
                   />
                   <div>
-                    <h3 className="text-lg font-medium text-gray-900 tracking-wide">Pet Photo</h3>
-                    <p className="text-sm text-gray-500">Add a photo of your furry friend</p>
+                    <h3 className="text-lg font-medium text-gray-900 tracking-wide">{t('profile.pet.photoTitle')}</h3>
+                    <p className="text-sm text-gray-500">{t('profile.pet.photoSub')}</p>
                   </div>
                 </div>
 
                 {/* Pet Form */}
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">Pet Name</label>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">{t('profile.pet.nameLabel')}</label>
                     <input
                       type="text"
                       value={petName}
@@ -477,7 +479,7 @@ export default function ProfilePage() {
                     />
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">Breed</label>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">{t('profile.pet.breedLabel')}</label>
                     <BreedCombobox
                       value={petBreed}
                       onChange={setPetBreed}
@@ -485,17 +487,17 @@ export default function ProfilePage() {
                     />
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">City</label>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">{t('profile.pet.cityLabel')}</label>
                     <input
                       type="text"
                       value={petCity}
                       onChange={(e) => setPetCity(e.target.value)}
-                      placeholder="e.g. Yerevan"
+                      placeholder={t('profile.pet.cityPlaceholder')}
                       className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-gold focus:border-transparent"
                     />
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">Age (years)</label>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">{t('profile.pet.ageLabel')}</label>
                     <input
                       type="number"
                       value={petAge}
@@ -504,7 +506,7 @@ export default function ProfilePage() {
                     />
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">Weight (kg)</label>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">{t('profile.pet.weightLabel')}</label>
                     <input
                       type="number"
                       value={petWeight}
@@ -513,83 +515,83 @@ export default function ProfilePage() {
                     />
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">Gender</label>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">{t('profile.pet.genderLabel')}</label>
                     <select
                       value={petGender}
                       onChange={(e) => setPetGender(e.target.value)}
                       className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-gold focus:border-transparent"
                     >
-                      <option value="">Select gender</option>
-                      <option value="Male">Male</option>
-                      <option value="Female">Female</option>
+                      <option value="">{t('profile.pet.selectGender')}</option>
+                      <option value="Male">{t('profile.pet.genderMale')}</option>
+                      <option value="Female">{t('profile.pet.genderFemale')}</option>
                     </select>
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">Temperament</label>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">{t('profile.pet.temperamentLabel')}</label>
                     <select
                       value={petTemperament}
                       onChange={(e) => setPetTemperament(e.target.value)}
                       className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-gold focus:border-transparent"
                     >
-                      <option value="">Select temperament</option>
-                      <option value="Calm">Calm</option>
-                      <option value="Playful">Playful</option>
-                      <option value="Energetic">Energetic</option>
-                      <option value="Shy">Shy</option>
-                      <option value="Protective">Protective</option>
-                      <option value="Friendly">Friendly</option>
+                      <option value="">{t('profile.pet.selectTemperament')}</option>
+                      <option value="Calm">{t('profile.pet.temp.calm')}</option>
+                      <option value="Playful">{t('profile.pet.temp.playful')}</option>
+                      <option value="Energetic">{t('profile.pet.temp.energetic')}</option>
+                      <option value="Shy">{t('profile.pet.temp.shy')}</option>
+                      <option value="Protective">{t('profile.pet.temp.protective')}</option>
+                      <option value="Friendly">{t('profile.pet.temp.friendly')}</option>
                     </select>
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">Activity Level</label>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">{t('profile.pet.activityLabel')}</label>
                     <select
                       value={petActivityLevel}
                       onChange={(e) => setPetActivityLevel(e.target.value)}
                       className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-gold focus:border-transparent"
                     >
-                      <option value="">Select level</option>
-                      <option value="Low">Low</option>
-                      <option value="Moderate">Moderate</option>
-                      <option value="High">High</option>
-                      <option value="Very High">Very High</option>
+                      <option value="">{t('profile.pet.selectLevel')}</option>
+                      <option value="Low">{t('profile.pet.activity.low')}</option>
+                      <option value="Moderate">{t('profile.pet.activity.moderate')}</option>
+                      <option value="High">{t('profile.pet.activity.high')}</option>
+                      <option value="Very High">{t('profile.pet.activity.veryHigh')}</option>
                     </select>
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">Walk Preference</label>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">{t('profile.pet.walkLabel')}</label>
                     <select
                       value={petWalkPreference}
                       onChange={(e) => setPetWalkPreference(e.target.value)}
                       className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-gold focus:border-transparent"
                     >
-                      <option value="">Select preference</option>
-                      <option value="Morning">Morning</option>
-                      <option value="Evening">Evening</option>
-                      <option value="Both">Both</option>
-                      <option value="Anytime">Anytime</option>
+                      <option value="">{t('profile.pet.selectPreference')}</option>
+                      <option value="Morning">{t('profile.pet.walk.morning')}</option>
+                      <option value="Evening">{t('profile.pet.walk.evening')}</option>
+                      <option value="Both">{t('profile.pet.walk.both')}</option>
+                      <option value="Anytime">{t('profile.pet.walk.anytime')}</option>
                     </select>
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">Favorite Activity</label>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">{t('profile.pet.activityFavLabel')}</label>
                     <select
                       value={petFavoriteActivity}
                       onChange={(e) => setPetFavoriteActivity(e.target.value)}
                       className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-gold focus:border-transparent"
                     >
-                      <option value="">Select activity</option>
-                      <option value="Fetch">Fetch</option>
-                      <option value="Swimming">Swimming</option>
-                      <option value="Hiking">Hiking</option>
-                      <option value="Cuddling">Cuddling</option>
-                      <option value="Agility">Agility</option>
-                      <option value="Running">Running</option>
-                      <option value="Playing with other dogs">Playing with other dogs</option>
-                      <option value="Chasing squirrels">Chasing squirrels</option>
-                      <option value="Napping">Napping</option>
-                      <option value="Car rides">Car rides</option>
+                      <option value="">{t('profile.pet.selectActivity')}</option>
+                      <option value="Fetch">{t('profile.pet.fav.fetch')}</option>
+                      <option value="Swimming">{t('profile.pet.fav.swimming')}</option>
+                      <option value="Hiking">{t('profile.pet.fav.hiking')}</option>
+                      <option value="Cuddling">{t('profile.pet.fav.cuddling')}</option>
+                      <option value="Agility">{t('profile.pet.fav.agility')}</option>
+                      <option value="Running">{t('profile.pet.fav.running')}</option>
+                      <option value="Playing with other dogs">{t('profile.pet.fav.playOther')}</option>
+                      <option value="Chasing squirrels">{t('profile.pet.fav.squirrels')}</option>
+                      <option value="Napping">{t('profile.pet.fav.napping')}</option>
+                      <option value="Car rides">{t('profile.pet.fav.carRides')}</option>
                     </select>
                   </div>
                   <div className="md:col-span-2">
-                    <label className="block text-sm font-medium text-gray-700 mb-2">Diet Preference</label>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">{t('profile.pet.dietLabel')}</label>
                     <div className="flex flex-wrap gap-2">
                       {['Raw', 'Kibble', 'Mixed', 'Homemade', 'Natural', 'Chicken', 'Beef', 'Lamb', 'Vegetables'].map(diet => (
                         <button
@@ -613,7 +615,7 @@ export default function ProfilePage() {
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">Disabilities</label>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">{t('profile.pet.disabilitiesLabel')}</label>
                     <div className="flex flex-wrap gap-2">
                       {['None', 'Blind', 'Deaf', 'Mobility Issues', 'Amputee', 'Epilepsy', 'Anxiety', 'Other'].map(item => (
                         <button
@@ -636,7 +638,7 @@ export default function ProfilePage() {
                     </div>
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">Allergies</label>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">{t('profile.pet.allergiesLabel')}</label>
                     <div className="flex flex-wrap gap-2">
                       {['None', 'Chicken', 'Beef', 'Grain', 'Dairy', 'Eggs', 'Soy', 'Fish', 'Pollen', 'Dust', 'Flea', 'Other'].map(item => (
                         <button
@@ -661,13 +663,13 @@ export default function ProfilePage() {
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Pet Bio</label>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">{t('profile.pet.bioLabel')}</label>
                   <textarea
                     value={petBio}
                     onChange={(e) => setPetBio(e.target.value)}
                     rows={4}
                     className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-gold focus:border-transparent"
-                    placeholder="Tell us about your pet..."
+                    placeholder={t('profile.pet.bioPlaceholder')}
                   />
                 </div>
 
@@ -679,7 +681,7 @@ export default function ProfilePage() {
                       onChange={(e) => setPetGetsAlongWithDogs(e.target.checked)}
                       className="mr-2 h-4 w-4 text-gold focus:ring-gold border-gray-300 rounded"
                     />
-                    <span className="text-sm text-gray-700">My pet gets along with other dogs</span>
+                    <span className="text-sm text-gray-700">{t('profile.pet.getsAlong')}</span>
                   </label>
                   <label className="flex items-center">
                     <input
@@ -688,7 +690,7 @@ export default function ProfilePage() {
                       onChange={(e) => setPetLookingForMate(e.target.checked)}
                       className="mr-2 h-4 w-4 text-gold focus:ring-gold border-gray-300 rounded"
                     />
-                    <span className="text-sm text-gray-700">Looking for a mate for my pet</span>
+                    <span className="text-sm text-gray-700">{t('profile.pet.lookingForMate')}</span>
                   </label>
                 </div>
 
@@ -698,7 +700,7 @@ export default function ProfilePage() {
                     disabled={saving}
                     className="bg-gold hover:bg-yellow-500 text-white font-medium py-2 px-6 rounded-lg transition-colors disabled:opacity-50"
                   >
-                    {saving ? "Saving..." : "Save Pet Profile"}
+                    {saving ? t('profile.user.saving') : t('profile.pet.savePet')}
                   </button>
                 </div>
               </div>
@@ -707,8 +709,8 @@ export default function ProfilePage() {
             {activeTab === "gallery" && (
               <div className="space-y-4">
                 <div className="bg-emerald-50 border border-emerald-200 rounded-xl p-4">
-                  <h3 className="font-medium text-emerald-800 mb-1 tracking-wide">Swipe Card Photos</h3>
-                  <p className="text-sm text-emerald-600">Upload up to 6 photos that will appear on your pet&apos;s swipe card. The primary photo shows first.</p>
+                  <h3 className="font-medium text-emerald-800 mb-1 tracking-wide">{t('profile.gallery.heading')}</h3>
+                  <p className="text-sm text-emerald-600">{t('profile.gallery.body')}</p>
                 </div>
                 <PetPhotoGallery
                   petProfileId={petProfile?.id}
@@ -719,8 +721,8 @@ export default function ProfilePage() {
             {activeTab === "preferences" && (
               <div className="space-y-4">
                 <div className="bg-amber-50 border border-amber-200 rounded-xl p-4">
-                  <h3 className="font-medium text-amber-800 mb-1 tracking-wide">Matching Preferences</h3>
-                  <p className="text-sm text-amber-600">Set your preferences to find the best matches. These filters help us show you more relevant pets.</p>
+                  <h3 className="font-medium text-amber-800 mb-1 tracking-wide">{t('profile.preferences.heading')}</h3>
+                  <p className="text-sm text-amber-600">{t('profile.preferences.body')}</p>
                 </div>
                 <MatchingPreferences
                   petProfileId={petProfile?.id}

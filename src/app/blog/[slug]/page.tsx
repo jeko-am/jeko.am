@@ -7,6 +7,8 @@ import { useParams } from 'next/navigation';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import { supabase } from '@/lib/supabase';
+import { useT } from '@/lib/i18n/LangProvider';
+import { localize } from '@/lib/i18n/localizeRecord';
 
 interface BlogPost {
   id: string;
@@ -22,6 +24,7 @@ interface BlogPost {
   seo_description: string | null;
   published_at: string | null;
   created_at: string;
+  i18n?: { hy?: { title?: string; body?: string; excerpt?: string } } | null;
 }
 
 function formatDate(dateStr: string): string {
@@ -33,6 +36,7 @@ function formatDate(dateStr: string): string {
 }
 
 export default function BlogPostPage() {
+  const { t, lang } = useT();
   const { slug } = useParams<{ slug: string }>();
   const [post, setPost] = useState<BlogPost | null>(null);
   const [loading, setLoading] = useState(true);
@@ -82,10 +86,10 @@ export default function BlogPostPage() {
             <div className="w-20 h-20 mx-auto mb-6 bg-deep-green/10 rounded-full flex items-center justify-center text-4xl">
               🔍
             </div>
-            <h1 className="font-rubik font-bold text-deep-green text-2xl mb-3">Post not found</h1>
-            <p className="text-deep-green/60 mb-6">This blog post doesn&apos;t exist or hasn&apos;t been published yet.</p>
+            <h1 className="font-rubik font-bold text-deep-green text-2xl mb-3">{t("blog.post.notFound.heading")}</h1>
+            <p className="text-deep-green/60 mb-6">{t("blog.post.notFound.body")}</p>
             <Link href="/blog" className="inline-block bg-gold text-deep-green font-semibold px-6 py-3 rounded-lg hover:bg-[#d99500] transition-colors">
-              Back to Blog
+              {t("blog.post.backButton")}
             </Link>
           </div>
         </main>
@@ -103,7 +107,7 @@ export default function BlogPostPage() {
           <div className="relative w-full max-w-[1100px] mx-auto aspect-[21/9] mb-8 rounded-xl overflow-hidden mx-4 lg:mx-auto">
             <Image
               src={post.featured_image}
-              alt={post.title}
+              alt={localize(post as unknown as Record<string, unknown>, 'title', lang) || post.title}
               fill
               unoptimized
               className="object-cover"
@@ -118,7 +122,7 @@ export default function BlogPostPage() {
             <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
               <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
             </svg>
-            Back to Blog
+            {t("blog.post.backButton")}
           </Link>
 
           {/* Meta */}
@@ -142,13 +146,13 @@ export default function BlogPostPage() {
 
           {/* Title */}
           <h1 className="font-rubik font-bold text-deep-green text-3xl lg:text-4xl leading-tight mb-6">
-            {post.title}
+            {localize(post as unknown as Record<string, unknown>, 'title', lang) || post.title}
           </h1>
 
           {/* Excerpt */}
-          {post.excerpt && (
+          {(localize(post as unknown as Record<string, unknown>, 'excerpt', lang) || post.excerpt) && (
             <p className="text-deep-green/70 text-[17px] leading-relaxed mb-8 border-l-4 border-gold pl-4">
-              {post.excerpt}
+              {localize(post as unknown as Record<string, unknown>, 'excerpt', lang) || post.excerpt}
             </p>
           )}
 
@@ -163,7 +167,7 @@ export default function BlogPostPage() {
               prose-li:text-[16px] prose-li:leading-relaxed
               prose-img:rounded-xl prose-img:shadow-md
               prose-blockquote:border-gold prose-blockquote:text-deep-green/70"
-            dangerouslySetInnerHTML={{ __html: post.body }}
+            dangerouslySetInnerHTML={{ __html: localize(post as unknown as Record<string, unknown>, 'body', lang) || post.body }}
           />
 
           {/* Tags */}

@@ -7,6 +7,9 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import EditorOverlay from "@/components/EditorOverlay";
 import { useSignupUrl } from "@/lib/useSignupUrl";
+import { useT } from "@/lib/i18n/LangProvider";
+import { useContentT } from "@/lib/i18n/useContentT";
+import HyText from "@/components/HyText";
 
 const reviews = [
   {
@@ -174,6 +177,13 @@ interface ReviewsPageClientProps {
 }
 
 export default function ReviewsPageClient({ sections }: ReviewsPageClientProps) {
+  const { t, lang } = useT();
+  void lang;
+  const heroCt = useContentT(sections[0]);
+  const offerCt = useContentT(sections[1]);
+  const luluCt = useContentT(sections[3]);
+  const vetsCt = useContentT(sections[4]);
+  const nellyCt = useContentT(sections[5]);
   const signupUrl = useSignupUrl();
   const [activeCategory, setActiveCategory] = useState("Fussy dogs");
 
@@ -237,17 +247,17 @@ export default function ReviewsPageClient({ sections }: ReviewsPageClientProps) 
             <div className="relative z-10 max-w-container mx-auto px-6 py-16 md:py-24">
               <div className="max-w-[520px]">
                 <h1 className="font-rubik text-white text-[40px] md:text-[52px] font-bold leading-[1.1] mb-6">
-                  {sections[0]?.heading ?? "Pet's lives we've"}{" "}
-                  <span className="text-gold">{sections[0]?.heading_highlight ?? "changed for the better"}</span>
+                  {heroCt.ct("heading", "reviews.hero.heading")}{" "}
+                  <span className="text-gold">{heroCt.ct("heading_highlight", "reviews.hero.headingHighlight")}</span>
                 </h1>
                 <p className="text-white/90 text-[17px] leading-relaxed mb-8 max-w-[420px]">
-                  {sections[0]?.subheading ?? "Investing in your pet's diet can have a transformational impact on their health and happiness."}
+                  {heroCt.ct("subheading", "reviews.hero.subheading")}
                 </p>
                 <Link
                   href={sections[0]?.button_url ?? signupUrl}
                   className="inline-block bg-gold text-deep-green px-8 py-3.5 rounded-[5px] font-bold text-[16px] hover:bg-[#d99500] transition-colors"
                 >
-                  {sections[0]?.button_text ?? "Create a tailored plan"}
+                  {heroCt.ct("button_text", "reviews.hero.button")}
                 </Link>
               </div>
             </div>
@@ -261,10 +271,10 @@ export default function ReviewsPageClient({ sections }: ReviewsPageClientProps) 
             className="block w-full bg-[#E65A1E] hover:bg-[#D04E15] transition-colors duration-200 py-3 text-center text-white"
           >
             <p className="text-[15px] leading-snug tracking-wide">
-              <span className="font-bold">{sections[1]?.primary_text ?? "25% off your first box"}</span>
+              <span className="font-bold">{offerCt.ct("primary_text", "home.offer.primaryText")}</span>
               <span className="mx-2">+</span>
               <span className="font-medium text-[14px] text-white/90">
-                {sections[1]?.secondary_text ?? "10% off your next box"}
+                {offerCt.ct("secondary_text", "home.offer.secondaryText")}
               </span>
             </p>
           </Link>
@@ -295,10 +305,10 @@ export default function ReviewsPageClient({ sections }: ReviewsPageClientProps) 
                     <TrustpilotBadge />
                   </div>
                   <h3 className="font-bold text-deep-green text-[15px] mb-1.5 leading-snug">
-                    {review.title}
+                    <HyText en={review.title} />
                   </h3>
                   <p className="text-deep-green/75 text-[13px] leading-[1.6] line-clamp-4">
-                    {review.text}
+                    <HyText en={review.text} />
                   </p>
                 </div>
               ))}
@@ -314,17 +324,17 @@ export default function ReviewsPageClient({ sections }: ReviewsPageClientProps) 
               <div className="w-full md:w-[58%] bg-off-white flex items-center">
                 <div className="px-8 md:px-14 lg:px-20 py-12 max-w-[560px]">
                   <h2 className="text-[34px] md:text-[42px] font-bold text-deep-green font-rubik leading-[1.1] mb-1">
-                    {sections[3]?.heading ?? "Lulu is now"}
+                    {luluCt.ct("heading", "reviews.lulu.heading")}
                   </h2>
                   <p className="text-gold text-[32px] md:text-[40px] font-bold font-rubik mb-6">
-                    {sections[3]?.subtitle ?? "a different dog"}
+                    {luluCt.ct("subtitle", "reviews.lulu.subtitle")}
                   </p>
                   <div className="space-y-4">
                     <p className="text-deep-green/90 text-[15px] leading-[1.7]">
-                      {sections[3]?.text_1 ?? "We rescued Lulu from the Pro Dogs Direct charity, who were great. She came to us with a whole host of stomach and digestive issues. They were so bad that euthanasia was discussed twice by our vets."}
+                      <HyText en={luluCt.ct("text_1") || "We rescued Lulu from the Pro Dogs Direct charity, who were great. She came to us with a whole host of stomach and digestive issues. They were so bad that euthanasia was discussed twice by our vets."} />
                     </p>
                     <p className="text-deep-green/90 text-[15px] leading-[1.7]">
-                      {sections[3]?.text_2 ?? "We tried tablets, gels, and prescription kibble diets, and by this point, we were at our wits end. We found Jeko after seeing a review online, within just 2 days her issues had eased, and now 3 months on she\u2019s a different dog. Thank you so much for saving our dog\u2019s life!"}
+                      <HyText en={luluCt.ct("text_2") || "We tried tablets, gels, and prescription kibble diets, and by this point, we were at our wits end. We found Jeko after seeing a review online, within just 2 days her issues had eased, and now 3 months on she\u2019s a different dog. Thank you so much for saving our dog\u2019s life!"} />
                     </p>
                   </div>
                 </div>
@@ -356,10 +366,10 @@ export default function ReviewsPageClient({ sections }: ReviewsPageClientProps) 
             <div className="max-w-[1100px] mx-auto px-6">
               <div className="text-center mb-12">
                 <h2 className="text-[32px] md:text-[40px] font-bold text-white font-rubik mb-1">
-                  {sections[4]?.heading ?? "Backed by vets"}
+                  {vetsCt.ct("heading", "reviews.vets.heading")}
                 </h2>
                 <p className="text-gold text-[26px] md:text-[34px] font-bold font-rubik">
-                  {sections[4]?.subtitle ?? "Formulated by nutritionists"}
+                  {vetsCt.ct("subtitle", "reviews.vets.subtitle")}
                 </p>
               </div>
 
@@ -377,7 +387,7 @@ export default function ReviewsPageClient({ sections }: ReviewsPageClientProps) 
                   </div>
                   <div className="flex-1">
                     <p className="text-white/90 text-[14px] leading-[1.7] mb-3 italic">
-                      &ldquo;{sections[4]?.vet_1_quote ?? "I\u2019ve been a vet for over 30 years and for about the last 5 years I\u2019ve been suggesting Jeko to my patients. I\u2019ve found it to be incredibly helpful and some of the dogs have responded dramatically well."}&rdquo;
+                      &ldquo;<HyText en={vetsCt.ct("vet_1_quote") || "I\u2019ve been a vet for over 30 years and for about the last 5 years I\u2019ve been suggesting Jeko to my patients. I\u2019ve found it to be incredibly helpful and some of the dogs have responded dramatically well."} />&rdquo;
                     </p>
                     <p className="text-white font-bold text-[13px]">
                       {sections[4]?.vet_1_name ?? "Dr Julian Norton MA VetMB GPcertSAP MRCVS, Partner"}
@@ -398,7 +408,7 @@ export default function ReviewsPageClient({ sections }: ReviewsPageClientProps) 
                   </div>
                   <div className="flex-1">
                     <p className="text-white/90 text-[14px] leading-[1.7] mb-3 italic">
-                      &ldquo;{sections[4]?.vet_2_quote ?? "When owners are asked what makes a healthy pet food, they often mention ingredients. But what is often not considered is how the food is processed, and this is possibly the most significant factor when choosing a dog food."}&rdquo;
+                      &ldquo;<HyText en={vetsCt.ct("vet_2_quote") || "When owners are asked what makes a healthy pet food, they often mention ingredients. But what is often not considered is how the food is processed, and this is possibly the most significant factor when choosing a dog food."} />&rdquo;
                     </p>
                     <p className="text-white font-bold text-[13px]">
                       {sections[4]?.vet_2_name ?? "Dr Brendan Clark MRCVS"}
@@ -434,17 +444,17 @@ export default function ReviewsPageClient({ sections }: ReviewsPageClientProps) 
               <div className="w-full md:w-[58%] bg-off-white flex items-center">
                 <div className="px-8 md:px-14 lg:px-20 py-12 max-w-[560px]">
                   <h2 className="text-[34px] md:text-[42px] font-bold text-deep-green font-rubik leading-[1.1] mb-6">
-                    {sections[5]?.heading ?? "Meet Nelly & Polly"}
+                    {nellyCt.ct("heading", "reviews.nellyPolly.heading")}
                   </h2>
                   <div className="space-y-4">
                     <p className="text-deep-green/90 text-[15px] leading-[1.7]">
-                      {sections[5]?.text_1 ?? "I rescued Nelly two years ago. She came to me with alopecia; she would itch so much that she had scabs and whiteheads covering her whole body."}
+                      <HyText en={nellyCt.ct("text_1") || "I rescued Nelly two years ago. She came to me with alopecia; she would itch so much that she had scabs and whiteheads covering her whole body."} />
                     </p>
                     <p className="text-deep-green/90 text-[15px] leading-[1.7]">
-                      {sections[5]?.text_2 ?? "I couldn\u2019t even stroke her, which was heart-breaking."}
+                      <HyText en={nellyCt.ct("text_2") || "I couldn\u2019t even stroke her, which was heart-breaking."} />
                     </p>
                     <p className="text-deep-green/90 text-[15px] leading-[1.7]">
-                      {sections[5]?.text_3 ?? "We switched from brown biscuits to Jeko, and after just a week she completely stopped itching, and her skin cleared up. Thank you Jeko for giving Nelly her life back."}
+                      <HyText en={nellyCt.ct("text_3") || "We switched from brown biscuits to Jeko, and after just a week she completely stopped itching, and her skin cleared up. Thank you Jeko for giving Nelly her life back."} />
                     </p>
                   </div>
                 </div>
@@ -459,10 +469,10 @@ export default function ReviewsPageClient({ sections }: ReviewsPageClientProps) 
             <div className="max-w-[1100px] mx-auto px-6">
               <div className="text-center mb-8">
                 <h2 className="text-[32px] md:text-[40px] font-bold text-deep-green font-rubik mb-0">
-                  {sections[6]?.heading ?? "We've helped"}
+                  <HyText en={sections[6]?.heading ?? t("reviews.helped.heading")} />
                 </h2>
                 <p className="text-gold text-[30px] md:text-[38px] font-bold font-rubik">
-                  {sections[6]?.subtitle ?? "1000's of dogs"}
+                  <HyText en={sections[6]?.subtitle ?? t("reviews.helped.subtitle")} />
                 </p>
               </div>
 
@@ -504,10 +514,10 @@ export default function ReviewsPageClient({ sections }: ReviewsPageClientProps) 
                         {item.name}
                       </p>
                       <p className="text-deep-green/75 text-[13px] leading-[1.6] line-clamp-4">
-                        {item.text}
+                        <HyText en={item.text} />
                       </p>
                       <button className="text-gold font-bold text-[13px] mt-2 hover:underline">
-                        Show more
+                        {t("reviews.showMore")}
                       </button>
                     </div>
                   </div>
@@ -524,14 +534,14 @@ export default function ReviewsPageClient({ sections }: ReviewsPageClientProps) 
               <div className="w-full md:w-[58%] bg-deep-green flex items-center">
                 <div className="px-8 md:px-14 lg:px-20 py-12 max-w-[560px]">
                   <h2 className="text-[34px] md:text-[42px] font-bold text-white font-rubik leading-[1.1] mb-6">
-                    {sections[7]?.heading ?? "Diesel's much healthier"}
+                    <HyText en={(sections[7] as Record<string, unknown> | undefined)?.heading as string | undefined ?? t("reviews.diesel.heading")} />
                   </h2>
                   <div className="space-y-4">
                     <p className="text-white/85 text-[15px] leading-[1.7]">
-                      {sections[7]?.text_1 ?? "This is Diesel. For the first two years, he was a happy and healthy pup, it wasn\u2019t until just after his 2nd birthday that he started to develop skin, stomach and bladder problems."}
+                      <HyText en={(sections[7] as Record<string, unknown> | undefined)?.text_1 as string | undefined ?? "This is Diesel. For the first two years, he was a happy and healthy pup, it wasn\u2019t until just after his 2nd birthday that he started to develop skin, stomach and bladder problems."} />
                     </p>
                     <p className="text-white/85 text-[15px] leading-[1.7]">
-                      {sections[7]?.text_2 ?? "We switched to Jeko as it\u2019s nutritious and doesn\u2019t have any of the nasty stuff in it. We\u2019ve realised by investing in Diesel\u2019s health we can give him a healthy, happy life."}
+                      <HyText en={(sections[7] as Record<string, unknown> | undefined)?.text_2 as string | undefined ?? "We switched to Jeko as it\u2019s nutritious and doesn\u2019t have any of the nasty stuff in it. We\u2019ve realised by investing in Diesel\u2019s health we can give him a healthy, happy life."} />
                     </p>
                   </div>
                 </div>
@@ -562,13 +572,13 @@ export default function ReviewsPageClient({ sections }: ReviewsPageClientProps) 
           <section className="bg-off-white py-16">
             <div className="max-w-[1200px] mx-auto px-6 text-center">
               <h2 className="text-[34px] md:text-[40px] font-bold text-deep-green font-rubik mb-2">
-                {sections[8]?.heading ?? "We've delivered"}
+                <HyText en={sections[8]?.heading ?? t("reviews.stats.heading")} />
               </h2>
               <div className="text-[52px] md:text-[72px] font-bold text-gold font-rubik mb-3 leading-[1]">
                 {sections[8]?.number ?? "92,871,751"}
               </div>
               <p className="text-[16px] text-deep-green/80 max-w-lg mx-auto mb-12">
-                {sections[8]?.description ?? "meals and changed the lives of thousands of pets for the better"}
+                <HyText en={sections[8]?.description ?? t("reviews.stats.description")} />
               </p>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-3xl mx-auto">
                 <div className="bg-beige-light rounded-xl p-6 flex items-center gap-5">
@@ -576,7 +586,7 @@ export default function ReviewsPageClient({ sections }: ReviewsPageClientProps) 
                     {sections[8]?.stat_1_value ?? "94%"}
                   </span>
                   <p className="text-left text-[15px] font-semibold text-deep-green leading-snug">
-                    {sections[8]?.stat_1_label ?? "of customers have seen an improvement in their dog's ailment"}
+                    <HyText en={sections[8]?.stat_1_label ?? t("home.stats.stat1Label")} />
                   </p>
                 </div>
                 <div className="bg-beige-light rounded-xl p-6 flex items-center gap-5">
@@ -584,7 +594,7 @@ export default function ReviewsPageClient({ sections }: ReviewsPageClientProps) 
                     {sections[8]?.stat_2_value ?? "91%"}
                   </span>
                   <p className="text-left text-[15px] font-semibold text-deep-green leading-snug">
-                    {sections[8]?.stat_2_label ?? "of customers have seen overall health improvements since switching to Jeko"}
+                    <HyText en={sections[8]?.stat_2_label ?? t("home.stats.stat2Label")} />
                   </p>
                 </div>
               </div>

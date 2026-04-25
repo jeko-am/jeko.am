@@ -8,6 +8,7 @@ import { useAuth } from "@/lib/auth";
 import { useSignupUrl } from "@/lib/useSignupUrl";
 import { supabase } from "@/lib/supabase";
 import { getBreedsByPetType } from "@/lib/constants";
+import { useT } from "@/lib/i18n/LangProvider";
 
 /* ─── Types ─────────────────────────────────────────────────────────── */
 
@@ -109,7 +110,8 @@ function PetTypeIcon({ type }: { type: string }) {
 
 /* ─── Login CTA ─────────────────────────────────────────────────────── */
 
-function LoginCTA() {
+function LoginCTA() {  const { t } = useT();
+
   const signupUrl = useSignupUrl();
   return (
     <div className="flex flex-col items-center justify-center text-center py-10 lg:py-16">
@@ -126,22 +128,21 @@ function LoginCTA() {
           </div>
         </div>
         <h2 className="font-medium text-2xl text-deep-green mb-3 tracking-wide">
-          Find Pet Owners Near You
+          {t("findOwners.login.title")}
         </h2>
         <p className="text-deep-green/70 text-[15px] leading-relaxed mb-8">
-          Connect with owners of the same breed in your area. Share tips,
-          arrange playdates, and build a community around your pet.
+          {t("findOwners.login.body")}
         </p>
         <Link
           href="/auth/login"
           className="inline-block bg-gold text-deep-green font-medium text-[16px] px-8 py-3 rounded-lg hover:bg-[#d99500] transition-colors tracking-wide"
         >
-          Log in to get started
+          {t("findOwners.login.loginCta")}
         </Link>
         <p className="mt-4 text-deep-green/50 text-[13px]">
-          Don&apos;t have an account?{" "}
+          {t("findOwners.login.noAccount")}{" "}
           <Link href={signupUrl} className="text-gold hover:underline font-medium">
-            Sign up
+            {t("findOwners.login.signup")}
           </Link>
         </p>
       </div>
@@ -162,6 +163,7 @@ function ProfilePrompt({
   userId: string;
   onComplete: (profile: PetProfile) => void;
 }) {
+  const { t } = useT();
   const [petName, setPetName] = useState(existingProfile?.pet_name || "");
   const [breed, setBreed] = useState(existingProfile?.breed || "");
   const [petType, setPetType] = useState(existingProfile?.pet_type || "dog");
@@ -243,7 +245,7 @@ function ProfilePrompt({
         onComplete(data as PetProfile);
       }
     } catch (err: unknown) {
-      const message = err instanceof Error ? err.message : "Something went wrong. Please try again.";
+      const message = err instanceof Error ? err.message : t("findOwners.profile.saveErr");
       setError(message);
     } finally {
       setSaving(false);
@@ -265,10 +267,10 @@ function ProfilePrompt({
             </svg>
           </div>
           <h2 className="font-medium text-xl text-deep-green tracking-wide">
-            {existingProfile ? "Update Your Pet Profile" : "Set Up Your Pet Profile"}
+            {existingProfile ? t("findOwners.profile.updateTitle") : t("findOwners.profile.createTitle")}
           </h2>
           <p className="text-deep-green/60 text-[14px] mt-2">
-            Tell us about your pet so we can match you with nearby owners of the same breed.
+            {t("findOwners.profile.subtitle")}
           </p>
         </div>
 
@@ -288,7 +290,7 @@ function ProfilePrompt({
               type="text"
               value={petName}
               onChange={(e) => setPetName(e.target.value)}
-              placeholder="e.g. Buddy"
+              placeholder={t("findOwners.profile.petNamePh")}
               className="w-full px-4 py-2.5 rounded-lg border border-deep-green/20 text-deep-green text-[15px] placeholder-deep-green/30 focus:outline-none focus:ring-2 focus:ring-gold/50 focus:border-gold transition-colors"
             />
           </div>
@@ -307,7 +309,7 @@ function ProfilePrompt({
                 setShowBreedSuggestions(true);
               }}
               onFocus={() => setShowBreedSuggestions(true)}
-              placeholder="Start typing a breed..."
+              placeholder={t("findOwners.profile.breedPh")}
               className="w-full px-4 py-2.5 rounded-lg border border-deep-green/20 text-deep-green text-[15px] placeholder-deep-green/30 focus:outline-none focus:ring-2 focus:ring-gold/50 focus:border-gold transition-colors"
               autoComplete="off"
             />
@@ -360,7 +362,7 @@ function ProfilePrompt({
               type="text"
               value={city}
               onChange={(e) => setCity(e.target.value)}
-              placeholder="e.g. London"
+              placeholder={t("findOwners.profile.cityPh")}
               className="w-full px-4 py-2.5 rounded-lg border border-deep-green/20 text-deep-green text-[15px] placeholder-deep-green/30 focus:outline-none focus:ring-2 focus:ring-gold/50 focus:border-gold transition-colors"
             />
           </div>
@@ -374,7 +376,7 @@ function ProfilePrompt({
               type="tel"
               value={contactPhone}
               onChange={(e) => setContactPhone(e.target.value)}
-              placeholder="e.g. +44 7700 900000"
+              placeholder={t("findOwners.profile.phonePh")}
               className="w-full px-4 py-2.5 rounded-lg border border-deep-green/20 text-deep-green text-[15px] placeholder-deep-green/30 focus:outline-none focus:ring-2 focus:ring-gold/50 focus:border-gold transition-colors"
             />
           </div>
@@ -389,10 +391,10 @@ function ProfilePrompt({
             />
             <div>
               <span className="text-deep-green text-[14px] font-medium">
-                Share my contact info with connections
+                {t("findOwners.profile.shareContact")}
               </span>
               <p className="text-deep-green/50 text-[13px] mt-0.5">
-                Your email and phone will be visible to matched owners.
+                {t("findOwners.profile.shareBody")}
               </p>
             </div>
           </label>
@@ -403,7 +405,7 @@ function ProfilePrompt({
             disabled={saving}
             className="w-full bg-gold text-deep-green font-medium text-[16px] px-6 py-3 rounded-lg hover:bg-[#d99500] transition-colors disabled:opacity-60 disabled:cursor-not-allowed tracking-wide"
           >
-            {saving ? "Saving..." : existingProfile ? "Update Profile" : "Create Profile"}
+            {saving ? t("findOwners.profile.saving") : existingProfile ? t("findOwners.profile.updateBtn") : t("findOwners.profile.createBtn")}
           </button>
         </form>
       </div>
@@ -426,6 +428,7 @@ function MatchCard({
   onAccept: () => void;
   connecting: boolean;
 }) {
+  const { t } = useT();
   return (
     <div className="bg-white rounded-xl border border-deep-green/10 p-5 hover:shadow-md transition-shadow">
       {/* Header row */}
@@ -467,7 +470,7 @@ function MatchCard({
           disabled={connecting}
           className="w-full bg-deep-green text-white font-medium text-[14px] py-2.5 rounded-lg hover:bg-deep-green/90 transition-colors disabled:opacity-60 disabled:cursor-not-allowed tracking-wide"
         >
-          {connecting ? "Sending..." : "Connect"}
+          {connecting ? t("findOwners.match.sending") : t("findOwners.match.connect")}
         </button>
       )}
       {connectionStatus === "sent" && (
@@ -475,7 +478,7 @@ function MatchCard({
           disabled
           className="w-full bg-gray-100 text-deep-green/40 font-medium text-[14px] py-2.5 rounded-lg cursor-not-allowed tracking-wide"
         >
-          Request Sent
+          {t("findOwners.match.requestSent")}
         </button>
       )}
       {connectionStatus === "received" && (
@@ -484,12 +487,12 @@ function MatchCard({
           disabled={connecting}
           className="w-full bg-gold text-deep-green font-medium text-[14px] py-2.5 rounded-lg hover:bg-[#d99500] transition-colors disabled:opacity-60 disabled:cursor-not-allowed tracking-wide"
         >
-          {connecting ? "Accepting..." : "Accept Request"}
+          {connecting ? t("findOwners.match.accepting") : t("findOwners.match.accept")}
         </button>
       )}
       {connectionStatus === "matched" && (
         <div className="w-full text-center text-deep-green font-medium text-[14px] py-2.5 tracking-wide">
-          Connected &#10003;
+          {t("findOwners.match.connected")} &#10003;
         </div>
       )}
     </div>
@@ -505,6 +508,7 @@ function ConnectionCard({
   profile: PetProfile;
   matchedAt: string;
 }) {
+  const { t } = useT();
   return (
     <div className="bg-white rounded-xl border border-deep-green/10 p-5 hover:shadow-md transition-shadow">
       {/* Header row */}
@@ -577,7 +581,7 @@ function ConnectionCard({
             <rect width="18" height="11" x="3" y="11" rx="2" ry="2" />
             <path d="M7 11V7a5 5 0 0 1 10 0v4" />
           </svg>
-          Contact info not shared
+          {t("findOwners.connection.notShared")}
         </div>
       )}
     </div>
@@ -586,7 +590,8 @@ function ConnectionCard({
 
 /* ─── Main Match Page ───────────────────────────────────────────────── */
 
-function MatchPage({ user }: { user: NonNullable<ReturnType<typeof useAuth>["user"]> }) {
+function MatchPage({ user }: { user: NonNullable<ReturnType<typeof useAuth>["user"]> }) {  const { t } = useT();
+
   const [profile, setProfile] = useState<PetProfile | null>(null);
   const [profileLoading, setProfileLoading] = useState(true);
   const [profileComplete, setProfileComplete] = useState(false);
@@ -852,8 +857,8 @@ function MatchPage({ user }: { user: NonNullable<ReturnType<typeof useAuth>["use
 
   /* ── Profile complete → show tabs ── */
   const tabs = [
-    { key: "nearby" as const, label: "Owners Near You" },
-    { key: "connections" as const, label: "My Connections" },
+    { key: "nearby" as const, label: t("findOwners.tabs.nearby") },
+    { key: "connections" as const, label: t("findOwners.tabs.connections") },
   ];
 
   return (
@@ -862,7 +867,7 @@ function MatchPage({ user }: { user: NonNullable<ReturnType<typeof useAuth>["use
         {/* Page header */}
         <div className="text-center mb-3">
           <h1 className="font-medium text-3xl text-deep-green mb-3 tracking-wide">
-            Breed Match
+            {t("findOwners.heading")}
           </h1>
           <p className="text-deep-green/60 text-[15px] leading-relaxed">
             Find {profile!.breed} owners in {profile!.city} and connect.
@@ -877,7 +882,7 @@ function MatchPage({ user }: { user: NonNullable<ReturnType<typeof useAuth>["use
             }}
             className="text-gold hover:text-[#d99500] text-[13px] font-medium transition-colors"
           >
-            Edit profile
+            {t("findOwners.editProfile")}
           </button>
         </div>
 
@@ -915,7 +920,7 @@ function MatchPage({ user }: { user: NonNullable<ReturnType<typeof useAuth>["use
                   </svg>
                 </div>
                 <h3 className="font-medium text-deep-green text-lg mb-2 tracking-wide">
-                  No matches found in your area
+                  {t("findOwners.empty.nearby.title")}
                 </h3>
                 <p className="text-deep-green/50 text-[14px] max-w-sm mx-auto">
                   We couldn&apos;t find other {profile!.breed} owners in {profile!.city} yet.
@@ -958,17 +963,16 @@ function MatchPage({ user }: { user: NonNullable<ReturnType<typeof useAuth>["use
                   </svg>
                 </div>
                 <h3 className="font-medium text-deep-green text-lg mb-2 tracking-wide">
-                  No connections yet
+                  {t("findOwners.empty.conn.title")}
                 </h3>
                 <p className="text-deep-green/50 text-[14px] max-w-sm mx-auto">
-                  When you and another owner both connect, you&apos;ll see them here
-                  with their contact details.
+                  {t("findOwners.empty.conn.body")}
                 </p>
                 <button
                   onClick={() => setActiveTab("nearby")}
                   className="mt-6 bg-gold text-deep-green font-medium text-[14px] px-6 py-2.5 rounded-lg hover:bg-[#d99500] transition-colors tracking-wide"
                 >
-                  Find owners nearby
+                  {t("findOwners.empty.conn.cta")}
                 </button>
               </div>
             ) : (

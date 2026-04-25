@@ -4,34 +4,35 @@ import Link from "next/link";
 import Image from "next/image";
 import { useState } from "react";
 import { supabase } from "@/lib/supabase";
-
-const jekoLinks = [
-  { label: "Our story", href: "/about" },
-  { label: "Reviews", href: "/reviews" },
-  { label: "Recipes", href: "/recipes" },
-  { label: "Beyond the bowl", href: "/beyond-the-bowl" },
-  { label: "Shop", href: "/products" },
-  { label: "Community", href: "/community" },
-];
-
-const helpLinks = [
-  { label: "My account", href: "/profile" },
-  { label: "Contact us", href: "/contact" },
-  { label: "Delivery information", href: "/delivery-information" },
-  { label: "Returns", href: "/returns" },
-  { label: "Sitemap", href: "/sitemap-page" },
-];
-
-const infoLinks = [
-  { label: "Privacy policy", href: "/privacy-policy" },
-  { label: "Terms & conditions", href: "/terms-of-use" },
-  { label: "Jeko policies", href: "/pure-policies" },
-  { label: "Site security", href: "/site-security" },
-  { label: "Cookie policy", href: "/cookie-policy" },
-];
+import { useT } from "@/lib/i18n/LangProvider";
+import { useContentT } from "@/lib/i18n/useContentT";
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export default function Footer({ content }: { content?: any }) {
+  const { t } = useT();
+  const { ct } = useContentT(content);
+  const jekoLinks = [
+    { label: t("footer.links.ourStory"), href: "/about" },
+    { label: t("footer.links.reviews"), href: "/reviews" },
+    { label: t("footer.links.recipes"), href: "/recipes" },
+    { label: t("footer.links.beyond"), href: "/beyond-the-bowl" },
+    { label: t("footer.links.shop"), href: "/products" },
+    { label: t("footer.links.community"), href: "/community" },
+  ];
+  const helpLinks = [
+    { label: t("footer.links.myAccount"), href: "/profile" },
+    { label: t("footer.links.contact"), href: "/contact" },
+    { label: t("footer.links.delivery"), href: "/delivery-information" },
+    { label: t("footer.links.returns"), href: "/returns" },
+    { label: t("footer.links.sitemap"), href: "/sitemap-page" },
+  ];
+  const infoLinks = [
+    { label: t("footer.links.privacy"), href: "/privacy-policy" },
+    { label: t("footer.links.terms"), href: "/terms-of-use" },
+    { label: t("footer.links.jekoPolicies"), href: "/pure-policies" },
+    { label: t("footer.links.security"), href: "/site-security" },
+    { label: t("footer.links.cookies"), href: "/cookie-policy" },
+  ];
   const [email, setEmail] = useState("");
   const [status, setStatus] = useState<"idle" | "saving" | "success" | "error">("idle");
 
@@ -62,17 +63,17 @@ export default function Footer({ content }: { content?: any }) {
         <div className="flex flex-col lg:flex-row gap-12 mb-12">
           {/* VIP + Social */}
           <div className="lg:w-[35%]">
-            <h4 className="text-white font-semibold text-[18px] mb-3">{content?.vip_heading || "Join our VIP list"}</h4>
+            <h4 className="text-white font-semibold text-[18px] mb-3">{ct("vip_heading", "footer.vip.heading")}</h4>
             <p className="text-off-white/80 text-[15px] mb-5 leading-relaxed">
-              {content?.vip_description || "Be the first to hear about new product launches, exclusive competitions and helpful dog content."}
+              {ct("vip_description", "footer.vip.description")}
             </p>
             {status === "success" ? (
-              <p className="text-gold font-semibold text-[15px] mb-8">Thanks for subscribing!</p>
+              <p className="text-gold font-semibold text-[15px] mb-8">{t("footer.vip.thanks")}</p>
             ) : (
               <div className="flex gap-2 mb-8">
                 <input
                   type="email"
-                  placeholder="Enter your email address"
+                  placeholder={t("footer.vip.emailPlaceholder")}
                   value={email}
                   onChange={(e) => { setEmail(e.target.value); if (status === "error") setStatus("idle"); }}
                   onKeyDown={(e) => e.key === "Enter" && handleSubscribe()}
@@ -83,15 +84,15 @@ export default function Footer({ content }: { content?: any }) {
                   disabled={status === "saving"}
                   className="px-5 py-3 bg-white text-deep-green font-semibold rounded-[5px] hover:bg-off-white transition-colors text-[15px] disabled:opacity-50"
                 >
-                  {status === "saving" ? "..." : content?.signup_button_text || "Sign up"}
+                  {status === "saving" ? "..." : ct("signup_button_text", "footer.vip.signup")}
                 </button>
               </div>
             )}
-            {status === "error" && <p className="text-red-400 text-sm -mt-6 mb-6">Something went wrong. Please try again.</p>}
+            {status === "error" && <p className="text-red-400 text-sm -mt-6 mb-6">{t("footer.vip.error")}</p>}
 
             {hasSocials && (
               <>
-                <h4 className="text-white font-semibold text-[18px] mb-3">{content?.social_heading || "Follow us on social media"}</h4>
+                <h4 className="text-white font-semibold text-[18px] mb-3">{ct("social_heading", "footer.social.heading")}</h4>
                 <div className="flex gap-4 items-center">
                   {hasInstagram && (
                     <a href={content.instagram_url} className="opacity-80 hover:opacity-100 transition-opacity" target="_blank" rel="noopener noreferrer">
@@ -131,7 +132,7 @@ export default function Footer({ content }: { content?: any }) {
           <div className="lg:w-[65%] grid grid-cols-2 md:grid-cols-3 gap-8">
             {/* Jeko Column */}
             <div>
-              <h4 className="text-white font-semibold text-[18px] mb-4">{content?.col1_heading || "Jeko"}</h4>
+              <h4 className="text-white font-semibold text-[18px] mb-4">{ct("col1_heading", "footer.col1.heading")}</h4>
               <ul className="space-y-2.5">
                 {jekoLinks.map((link) => (
                   <li key={link.label}>
@@ -145,7 +146,7 @@ export default function Footer({ content }: { content?: any }) {
 
             {/* Help Column */}
             <div>
-              <h4 className="text-white font-semibold text-[18px] mb-4">{content?.col2_heading || "Help"}</h4>
+              <h4 className="text-white font-semibold text-[18px] mb-4">{ct("col2_heading", "footer.col2.heading")}</h4>
               <ul className="space-y-2.5">
                 {helpLinks.map((link) => (
                   <li key={link.label}>
@@ -159,7 +160,7 @@ export default function Footer({ content }: { content?: any }) {
 
             {/* Information Column */}
             <div>
-              <h4 className="text-white font-semibold text-[18px] mb-4">{content?.col3_heading || "Information"}</h4>
+              <h4 className="text-white font-semibold text-[18px] mb-4">{ct("col3_heading", "footer.col3.heading")}</h4>
               <ul className="space-y-2.5">
                 {infoLinks.map((link) => (
                   <li key={link.label}>
@@ -190,7 +191,7 @@ export default function Footer({ content }: { content?: any }) {
             </span>
           </div>
           <p className="text-off-white/60 text-[14px]">
-            {content?.copyright_text || "\u00a9 Jeko 2020-2026"}
+            {ct("copyright_text", "footer.copyrightDefault")}
           </p>
         </div>
       </div>

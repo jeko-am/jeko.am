@@ -7,6 +7,27 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { useAuth } from "@/lib/auth";
 import { supabase } from "@/lib/supabase";
+import { useT } from "@/lib/i18n/LangProvider";
+
+// In-memory cache so each EN caption is only translated once per session.
+const __captionTranslationCache = new Map<string, string>();
+async function getOrTranslateCaption(text: string): Promise<string | null> {
+  const cached = __captionTranslationCache.get(text);
+  if (cached) return cached;
+  try {
+    const r = await fetch('/api/translate', {
+      method: 'POST',
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify({ text, target: 'hy' }),
+    });
+    const j = (await r.json()) as { translated?: string };
+    if (r.ok && j.translated) {
+      __captionTranslationCache.set(text, j.translated);
+      return j.translated;
+    }
+  } catch { /* swallow */ }
+  return null;
+}
 
 // ---------------------------------------------------------------------------
 // Types
@@ -26,6 +47,7 @@ interface Post {
   share_count: number;
   is_flagged: boolean;
   is_deleted: boolean;
+  i18n?: { hy?: { caption?: string } } | null;
   created_at: string;
 }
 
@@ -249,6 +271,7 @@ function PostCreator({
   variant?: "inline" | "modal";
   onClose?: () => void;
 }) {
+  const { t } = useT();
   const [caption, setCaption] = useState("");
   const [imageFile, setImageFile] = useState<File | null>(null);
   const [imagePreview, setImagePreview] = useState<string | null>(null);
@@ -256,7 +279,7 @@ function PostCreator({
   const [error, setError] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
-  const authorName = petProfile?.display_name || userEmail?.split('@')[0] || "Guest";
+  const authorName = petProfile?.display_name || userEmail?.split('@')[0] || t("community.guestName");
   const avatarUrl = petProfile?.avatar_url || petProfile?.profile_photo_url || null;
 
   function handleFileSelect(e: React.ChangeEvent<HTMLInputElement>) {
@@ -302,7 +325,7 @@ function PostCreator({
 
         if (!res.ok) {
           const data = await res.json();
-          throw new Error(data.error || "Image upload failed");
+          throw new Error(data.error || t("community.uploadFailed"));
         }
 
         const data = await res.json();
@@ -330,7 +353,7 @@ function PostCreator({
       if (onClose) onClose();
     } catch (err: unknown) {
       const message =
-        err instanceof Error ? err.message : "Something went wrong";
+        err instanceof Error ? err.message : t("community.somethingWrong");
       setError(message);
     } finally {
       setSubmitting(false);
@@ -361,13 +384,13 @@ function PostCreator({
           >
             <CloseIcon size={22} />
           </button>
-          <h2 className="font-rubik font-bold text-deep-green text-[17px]">New Post</h2>
+          <h2 className="font-rubik font-bold text-deep-green text-[17px]">{t("community.newPost")}</h2>
           <button
             type="submit"
             disabled={!canSubmit}
             className="bg-gold hover:bg-[#d99500] disabled:bg-gray-200 disabled:text-gray-400 text-deep-green font-rubik font-semibold px-5 py-2 rounded-full text-sm transition-all"
           >
-            {submitting ? <Spinner /> : "Post"}
+            {submitting ? <Spinner /> : t("community.post")}
           </button>
         </div>
       )}
@@ -395,7 +418,7 @@ function PostCreator({
         <textarea
           value={caption}
           onChange={(e) => setCaption(e.target.value.slice(0, 500))}
-          placeholder="Share something about your pet..."
+          placeholder={t("community.sharePlaceholder")}
           rows={isModal ? 5 : 3}
           className="w-full resize-none rounded-xl border border-gray-200 px-4 py-3 text-[15px] text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-deep-green/30 focus:border-deep-green/40 transition-all"
         />
@@ -416,7 +439,7 @@ function PostCreator({
           <div className="relative mb-4 rounded-xl overflow-hidden">
             <Image
               src={imagePreview}
-              alt="Upload preview"
+              alt={t("community.uploadPreview")}
               width={600}
               height={400}
               className="w-full h-auto rounded-xl"
@@ -426,7 +449,7 @@ function PostCreator({
               type="button"
               onClick={clearImage}
               className="absolute top-2 right-2 bg-black/60 hover:bg-black/80 text-white rounded-full w-8 h-8 flex items-center justify-center text-lg transition-colors"
-              aria-label="Remove image"
+              aria-label={t("community.removeImage")}
             >
               &times;
             </button>
@@ -475,7 +498,7 @@ function PostCreator({
             {submitting ? (
               <span className="flex items-center gap-2">
                 <Spinner />
-                Posting...
+                {t("community.posting")}
               </span>
             ) : (
               "Post"
@@ -502,6 +525,7 @@ function CommentThread({
   userId: string | null;
   onCommentAdded: () => void;
 }) {
+  const { t } = useT();
   const [comments, setComments] = useState<Comment[]>([]);
   const [loading, setLoading] = useState(true);
   const [body, setBody] = useState("");
@@ -547,7 +571,7 @@ function CommentThread({
         .eq("user_id", userId)
         .single();
 
-      const authorName = profile?.display_name || profile?.full_name || profile?.email?.split('@')[0] || "Guest";
+      const authorName = profile?.display_name || profile?.full_name || profile?.email?.split('@')[0] || t("community.guestName");
 
       const { data: newComment, error: insertError } = await supabase
         .from("post_comments")
@@ -581,7 +605,7 @@ function CommentThread({
       onCommentAdded();
     } catch (err: unknown) {
       const message =
-        err instanceof Error ? err.message : "Failed to add comment";
+        err instanceof Error ? err.message : t("community.commentFailed");
       setError(message);
     } finally {
       setSubmitting(false);
@@ -644,7 +668,7 @@ function CommentThread({
             type="text"
             value={body}
             onChange={(e) => setBody(e.target.value)}
-            placeholder="Write a comment..."
+            placeholder={t("community.commentPlaceholder")}
             maxLength={500}
             className="flex-1 min-w-0 rounded-lg border border-gray-200 px-3 py-2 text-[13px] text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-deep-green/20 focus:border-deep-green/30 transition-all"
           />
@@ -653,13 +677,13 @@ function CommentThread({
             disabled={!body.trim() || submitting}
             className="bg-deep-green hover:bg-deep-green/90 disabled:bg-gray-200 disabled:text-gray-400 text-white font-medium px-4 py-2 rounded-lg text-[13px] transition-all flex-shrink-0"
           >
-            {submitting ? "..." : "Reply"}
+            {submitting ? "..." : t("community.reply")}
           </button>
         </form>
       ) : (
         <p className="text-center text-gray-400 text-xs mt-3 py-2">
           <Link href="/auth/login" className="text-deep-green underline">
-            Log in
+            {t("community.logIn")}
           </Link>{" "}
           to comment
         </p>
@@ -683,6 +707,7 @@ function DesktopPostCard({
   onLikeToggle,
   onFollowToggle,
   onDelete,
+  onPostUpdated,
 }: {
   post: Post;
   userId: string | null;
@@ -692,7 +717,9 @@ function DesktopPostCard({
   onLikeToggle: (postId: number, currentlyLiked: boolean) => void;
   onFollowToggle: (targetUserId: string, currentlyFollowing: boolean) => void;
   onDelete: (postId: number) => void;
+  onPostUpdated: (postId: number, updates: Partial<Post>) => void;
 }) {
+  const { t, lang } = useT();
   const [showComments, setShowComments] = useState(false);
   const [localCommentsCount, setLocalCommentsCount] = useState(
     post.comments_count
@@ -705,11 +732,57 @@ function DesktopPostCard({
   const [showCopied, setShowCopied] = useState(false);
   const [loginTooltip, setLoginTooltip] = useState<string | null>(null);
   const [postImgError, setPostImgError] = useState(false);
+  const [translating, setTranslating] = useState(false);
   const loginTooltipTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const isAuthor = userId === post.user_id;
   const canDelete = isAuthor || isAdmin;
   const showFollowButton = userId && !isAuthor;
+  const canTranslate = (isAuthor || isAdmin) && post.caption && !post.i18n?.hy?.caption;
+
+  const savedHy = post.i18n?.hy?.caption || null;
+  const [autoHy, setAutoHy] = useState<string | null>(null);
+  useEffect(() => {
+    let cancelled = false;
+    if (lang === 'hy' && post.caption && !savedHy) {
+      getOrTranslateCaption(post.caption).then((tx) => { if (!cancelled && tx) setAutoHy(tx); });
+    } else {
+      setAutoHy(null);
+    }
+    return () => { cancelled = true; };
+  }, [lang, post.caption, savedHy, post.id]);
+
+  const displayCaption = lang === 'hy'
+    ? (savedHy || autoHy || post.caption)
+    : post.caption;
+  const showAutoHyBadge = lang === 'hy' && !savedHy && !!autoHy;
+
+  async function handleTranslate() {
+    if (!post.caption || translating) return;
+    setTranslating(true);
+    try {
+      const res = await fetch('/api/translate', {
+        method: 'POST',
+        headers: { 'content-type': 'application/json' },
+        body: JSON.stringify({ text: post.caption, target: 'hy' }),
+      });
+      const json = (await res.json()) as { translated?: string; error?: string };
+      if (res.ok && json.translated) {
+        const nextI18n = { ...(post.i18n ?? {}), hy: { ...(post.i18n?.hy ?? {}), caption: json.translated } };
+        const { error: updErr } = await supabase
+          .from('posts')
+          .update({ i18n: nextI18n })
+          .eq('id', post.id);
+        if (!updErr) {
+          onPostUpdated(post.id, { i18n: nextI18n });
+        }
+      }
+    } catch {
+      // silently fail — user can retry
+    } finally {
+      setTranslating(false);
+    }
+  }
 
   function flashLoginTooltip(action: string) {
     setLoginTooltip(`Log in to ${action}`);
@@ -797,7 +870,7 @@ function DesktopPostCard({
   }
 
   const captionNeedsClamp =
-    post.caption && post.caption.length > 150 && !captionExpanded;
+    displayCaption && displayCaption.length > 150 && !captionExpanded;
 
   return (
     <article className="break-inside-avoid mb-6 bg-white rounded-xl shadow-sm hover:shadow-md transition-shadow border border-gray-100 overflow-hidden">
@@ -815,14 +888,17 @@ function DesktopPostCard({
       )}
 
       {/* Caption */}
-      {post.caption && (
+      {displayCaption && (
         <div className="px-4 pt-3 pb-1">
           <p
             className={`text-gray-800 text-[14px] leading-relaxed whitespace-pre-wrap break-words ${
               captionNeedsClamp ? "line-clamp-3" : ""
             }`}
           >
-            {post.caption}
+            {displayCaption}
+            {lang === 'hy' && (post.i18n?.hy?.caption || autoHy) && (
+              <span className="ml-1.5 inline-flex items-center text-[10px] font-semibold text-deep-green/70 px-1.5 py-0.5 bg-deep-green/10 rounded">{showAutoHyBadge ? 'HY · auto' : 'HY'}</span>
+            )}
           </p>
           {captionNeedsClamp && (
             <button
@@ -830,6 +906,15 @@ function DesktopPostCard({
               className="text-deep-green text-[13px] font-medium mt-0.5 hover:underline"
             >
               more
+            </button>
+          )}
+          {canTranslate && (
+            <button
+              onClick={handleTranslate}
+              disabled={translating}
+              className="block mt-1.5 text-[11px] text-deep-green/60 hover:text-deep-green font-medium transition-colors"
+            >
+              {translating ? 'Translating…' : 'Add Armenian Translation'}
             </button>
           )}
         </div>
@@ -862,7 +947,7 @@ function DesktopPostCard({
                 : "bg-deep-green text-white hover:bg-deep-green/90"
             }`}
           >
-            {isFollowing ? "Following" : "Follow"}
+            {isFollowing ? t("community.following") : t("community.follow")}
           </button>
         )}
         {!userId && (
@@ -890,21 +975,21 @@ function DesktopPostCard({
                     disabled={deleting}
                     className="text-red-500 hover:bg-red-50 text-xs font-medium px-2 py-1 rounded-lg transition-colors"
                   >
-                    {deleting ? "..." : "Confirm"}
+                    {deleting ? "..." : t("community.confirm")}
                   </button>
                   <button
                     onClick={() => setShowDeleteConfirm(false)}
                     className="text-gray-400 hover:bg-gray-50 text-xs px-2 py-1 rounded-lg transition-colors"
                   >
-                    Cancel
+                    {t("community.cancel")}
                   </button>
                 </div>
               ) : (
                 <button
                   onClick={() => setShowDeleteConfirm(true)}
                   className="text-gray-400 hover:text-red-500 hover:bg-red-50 p-1.5 rounded-lg transition-colors"
-                  aria-label="Delete post"
-                  title={isAdmin && !isAuthor ? "Delete (Admin)" : "Delete post"}
+                  aria-label={t("community.deletePost")}
+                  title={isAdmin && !isAuthor ? t("community.deleteAdmin") : t("community.deletePost")}
                 >
                   <TrashIcon />
                 </button>
@@ -920,11 +1005,11 @@ function DesktopPostCard({
                   ? "text-orange-400 cursor-default"
                   : "text-gray-400 hover:text-orange-500 hover:bg-orange-50"
               }`}
-              aria-label="Report post"
-              title={reported ? "Reported" : "Report post"}
+              aria-label={t("community.reportPost")}
+              title={reported ? t("community.reported") : t("community.reportPost")}
             >
               {reported ? (
-                <span className="text-[10px] font-medium">Reported</span>
+                <span className="text-[10px] font-medium">{t("community.reported")}</span>
               ) : (
                 <FlagIcon />
               )}
@@ -1029,6 +1114,7 @@ function MobilePostCard({
   onLikeToggle,
   onFollowToggle,
   onDelete,
+  onPostUpdated,
 }: {
   post: Post;
   userId: string | null;
@@ -1038,7 +1124,9 @@ function MobilePostCard({
   onLikeToggle: (postId: number, currentlyLiked: boolean) => void;
   onFollowToggle: (targetUserId: string, currentlyFollowing: boolean) => void;
   onDelete: (postId: number) => void;
+  onPostUpdated: (postId: number, updates: Partial<Post>) => void;
 }) {
+  const { t, lang } = useT();
   const [showComments, setShowComments] = useState(false);
   const [localCommentsCount, setLocalCommentsCount] = useState(
     post.comments_count
@@ -1051,11 +1139,57 @@ function MobilePostCard({
   const [showCopied, setShowCopied] = useState(false);
   const [loginTooltip, setLoginTooltip] = useState<string | null>(null);
   const [postImgError, setPostImgError] = useState(false);
+  const [translating, setTranslating] = useState(false);
   const loginTooltipTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const isAuthor = userId === post.user_id;
   const canDelete = isAuthor || isAdmin;
   const showFollowButton = userId && !isAuthor;
+  const canTranslate = (isAuthor || isAdmin) && post.caption && !post.i18n?.hy?.caption;
+
+  const savedHy = post.i18n?.hy?.caption || null;
+  const [autoHy, setAutoHy] = useState<string | null>(null);
+  useEffect(() => {
+    let cancelled = false;
+    if (lang === 'hy' && post.caption && !savedHy) {
+      getOrTranslateCaption(post.caption).then((tx) => { if (!cancelled && tx) setAutoHy(tx); });
+    } else {
+      setAutoHy(null);
+    }
+    return () => { cancelled = true; };
+  }, [lang, post.caption, savedHy, post.id]);
+
+  const displayCaption = lang === 'hy'
+    ? (savedHy || autoHy || post.caption)
+    : post.caption;
+  const showAutoHyBadge = lang === 'hy' && !savedHy && !!autoHy;
+
+  async function handleTranslate() {
+    if (!post.caption || translating) return;
+    setTranslating(true);
+    try {
+      const res = await fetch('/api/translate', {
+        method: 'POST',
+        headers: { 'content-type': 'application/json' },
+        body: JSON.stringify({ text: post.caption, target: 'hy' }),
+      });
+      const json = (await res.json()) as { translated?: string; error?: string };
+      if (res.ok && json.translated) {
+        const nextI18n = { ...(post.i18n ?? {}), hy: { ...(post.i18n?.hy ?? {}), caption: json.translated } };
+        const { error: updErr } = await supabase
+          .from('posts')
+          .update({ i18n: nextI18n })
+          .eq('id', post.id);
+        if (!updErr) {
+          onPostUpdated(post.id, { i18n: nextI18n });
+        }
+      }
+    } catch {
+      // silently fail — user can retry
+    } finally {
+      setTranslating(false);
+    }
+  }
 
   function flashLoginTooltip(action: string) {
     setLoginTooltip(`Log in to ${action}`);
@@ -1143,7 +1277,7 @@ function MobilePostCard({
   }
 
   const captionNeedsClamp =
-    post.caption && post.caption.length > 150 && !captionExpanded;
+    displayCaption && displayCaption.length > 150 && !captionExpanded;
 
   return (
     <article className="bg-white border-b border-gray-100">
@@ -1179,7 +1313,7 @@ function MobilePostCard({
                 : "bg-deep-green text-white"
             }`}
           >
-            {isFollowing ? "Following" : "Follow"}
+            {isFollowing ? t("community.following") : t("community.follow")}
           </button>
         )}
         {!userId && (
@@ -1202,7 +1336,7 @@ function MobilePostCard({
                     disabled={deleting}
                     className="text-red-500 text-[11px] font-medium px-2 py-1 rounded-lg"
                   >
-                    {deleting ? "..." : "Delete"}
+                    {deleting ? "..." : t("community.delete")}
                   </button>
                   <button
                     onClick={() => setShowDeleteConfirm(false)}
@@ -1215,7 +1349,7 @@ function MobilePostCard({
                 <button
                   onClick={() => setShowDeleteConfirm(true)}
                   className="text-gray-400 hover:text-red-500 p-1.5 rounded-lg transition-colors"
-                  aria-label="Delete post"
+                  aria-label={t("community.deletePost")}
                 >
                   <TrashIcon />
                 </button>
@@ -1231,7 +1365,7 @@ function MobilePostCard({
                   ? "text-orange-400"
                   : "text-gray-400 hover:text-orange-500"
               }`}
-              aria-label="Report post"
+              aria-label={t("community.reportPost")}
             >
               {reported ? (
                 <span className="text-[10px] font-medium">!</span>
@@ -1321,7 +1455,7 @@ function MobilePostCard({
       </div>
 
       {/* Caption below actions */}
-      {post.caption && (
+      {displayCaption && (
         <div className="px-4 pb-2">
           <p
             className={`text-gray-800 text-[14px] leading-relaxed whitespace-pre-wrap break-words ${
@@ -1329,7 +1463,10 @@ function MobilePostCard({
             }`}
           >
             <span className="font-semibold text-deep-green mr-1.5">{post.author_name}</span>
-            {post.caption}
+            {displayCaption}
+            {lang === 'hy' && (post.i18n?.hy?.caption || autoHy) && (
+              <span className="ml-1.5 inline-flex items-center text-[10px] font-semibold text-deep-green/70 px-1.5 py-0.5 bg-deep-green/10 rounded">{showAutoHyBadge ? 'HY · auto' : 'HY'}</span>
+            )}
           </p>
           {captionNeedsClamp && (
             <button
@@ -1337,6 +1474,15 @@ function MobilePostCard({
               className="text-gray-400 text-[13px] mt-0.5"
             >
               more
+            </button>
+          )}
+          {canTranslate && (
+            <button
+              onClick={handleTranslate}
+              disabled={translating}
+              className="block mt-1 text-[11px] text-deep-green/60 hover:text-deep-green font-medium transition-colors"
+            >
+              {translating ? 'Translating…' : 'Add Armenian Translation'}
             </button>
           )}
         </div>
@@ -1388,10 +1534,11 @@ function DesktopFeedTabs({
   onTabChange: (tab: FeedTab) => void;
   isLoggedIn: boolean;
 }) {
+  const { t } = useT();
   const tabs: { key: FeedTab; label: string }[] = [
-    { key: "all", label: "All Posts" },
-    { key: "following", label: "Following" },
-    { key: "trending", label: "Trending" },
+    { key: "all", label: t("community.tabs.all") },
+    { key: "following", label: t("community.tabs.following") },
+    { key: "trending", label: t("community.tabs.trending") },
   ];
 
   return (
@@ -1439,10 +1586,11 @@ function MobileFeedTabs({
   onTabChange: (tab: FeedTab) => void;
   isLoggedIn: boolean;
 }) {
+  const { t } = useT();
   const tabs: { key: FeedTab; label: string }[] = [
     { key: "all", label: "All" },
-    { key: "following", label: "Following" },
-    { key: "trending", label: "Trending" },
+    { key: "following", label: t("community.tabs.following") },
+    { key: "trending", label: t("community.tabs.trending") },
   ];
 
   return (
@@ -1479,6 +1627,7 @@ function MobileFeedTabs({
 // ---------------------------------------------------------------------------
 
 function DesktopGuestBanner() {
+
   return (
     <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-8 mb-10 text-center max-w-[640px] mx-auto">
       <div className="w-14 h-14 mx-auto mb-4 rounded-full bg-gold/20 flex items-center justify-center">
@@ -1513,6 +1662,7 @@ function DesktopGuestBanner() {
 // ---------------------------------------------------------------------------
 
 function MobileGuestBanner() {
+
   return (
     <div className="bg-white border-b border-gray-100 px-4 py-6 text-center">
       <div className="w-12 h-12 mx-auto mb-3 rounded-full bg-gold/20 flex items-center justify-center">
@@ -1673,7 +1823,8 @@ function MobileSkeleton() {
 // EmptyState
 // ---------------------------------------------------------------------------
 
-function EmptyState({ activeTab }: { activeTab: FeedTab }) {
+function EmptyState({ activeTab }: { activeTab: FeedTab }) {  const { t } = useT();
+
   return (
     <div className="px-4 py-16 text-center lg:bg-white lg:rounded-xl lg:shadow-sm lg:border lg:border-gray-100 lg:p-12">
       <div className="w-14 h-14 lg:w-16 lg:h-16 mx-auto mb-4 rounded-full bg-deep-green/5 flex items-center justify-center">
@@ -1681,10 +1832,10 @@ function EmptyState({ activeTab }: { activeTab: FeedTab }) {
       </div>
       <h3 className="font-rubik font-semibold text-deep-green text-base lg:text-lg mb-1">
         {activeTab === "following"
-          ? "No posts from people you follow"
+          ? t("community.empty.following")
           : activeTab === "trending"
-          ? "No trending posts this week"
-          : "No posts yet"}
+          ? t("community.empty.trending")
+          : t("community.empty.all")}
       </h3>
       <p className="text-gray-500 text-sm">
         {activeTab === "following"
@@ -1699,8 +1850,13 @@ function EmptyState({ activeTab }: { activeTab: FeedTab }) {
 // FeedPage (main export)
 // ---------------------------------------------------------------------------
 
-export default function FeedPage() {
+export default function FeedPage() {  const { t } = useT();
+
   const { user, isAdmin, loading: authLoading } = useAuth();
+  // Gate auth-dependent UI until after hydration so the server-rendered tree
+  // and the first client render match (PostCreator is client-only).
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => { setMounted(true); }, []);
 
   const [posts, setPosts] = useState<Post[]>([]);
   const [likedPostIds, setLikedPostIds] = useState<Set<number>>(new Set());
@@ -2019,6 +2175,15 @@ export default function FeedPage() {
   }
 
   // -----------------------------------------------------------------------
+  // Post update handler (e.g. after adding Armenian translation)
+  // -----------------------------------------------------------------------
+  function handlePostUpdated(postId: number, updates: Partial<Post>) {
+    setPosts((prev) =>
+      prev.map((p) => (p.id === postId ? { ...p, ...updates } : p))
+    );
+  }
+
+  // -----------------------------------------------------------------------
   // New post handler
   // -----------------------------------------------------------------------
   function handlePostCreated(post: Post) {
@@ -2059,7 +2224,7 @@ export default function FeedPage() {
           </div>
 
           {/* Auth banner for guests */}
-          {!authLoading && !user && (
+          {mounted && !authLoading && !user && (
             <>
               <div className="hidden lg:block">
                 <DesktopGuestBanner />
@@ -2071,7 +2236,7 @@ export default function FeedPage() {
           )}
 
           {/* Post creator (logged-in only) */}
-          {!authLoading && user && (
+          {mounted && !authLoading && user && (
             <>
               {/* Desktop: inline post creator */}
               <div className="hidden lg:block max-w-[640px] mx-auto">
@@ -2090,7 +2255,7 @@ export default function FeedPage() {
                   className="w-full bg-white border border-gray-200 rounded-xl px-4 py-3 flex items-center gap-3 text-left shadow-sm hover:bg-gray-50 transition-colors"
                 >
                   <AvatarCircle
-                    name={petProfile?.display_name || "Anonymous"}
+                    name={petProfile?.display_name || t("community.anonymous")}
                     avatarUrl={petProfile?.avatar_url || petProfile?.profile_photo_url || null}
                     size="sm"
                   />
@@ -2105,14 +2270,14 @@ export default function FeedPage() {
             <DesktopFeedTabs
               activeTab={activeTab}
               onTabChange={handleTabChange}
-              isLoggedIn={!!user}
+              isLoggedIn={mounted && !!user}
             />
           </div>
           <div className="lg:hidden">
             <MobileFeedTabs
               activeTab={activeTab}
               onTabChange={handleTabChange}
-              isLoggedIn={!!user}
+              isLoggedIn={mounted && !!user}
             />
           </div>
 
@@ -2161,6 +2326,7 @@ export default function FeedPage() {
                         onLikeToggle={handleLikeToggle}
                         onFollowToggle={handleFollowToggle}
                         onDelete={handleDelete}
+                        onPostUpdated={handlePostUpdated}
                       />
                     ))}
                   </div>
@@ -2177,6 +2343,7 @@ export default function FeedPage() {
                         onLikeToggle={handleLikeToggle}
                         onFollowToggle={handleFollowToggle}
                         onDelete={handleDelete}
+                        onPostUpdated={handlePostUpdated}
                       />
                     ))}
                   </div>
@@ -2197,7 +2364,7 @@ export default function FeedPage() {
                         Loading...
                       </span>
                     ) : (
-                      "Load more posts"
+                      t("community.loadMore")
                     )}
                   </button>
                 </div>

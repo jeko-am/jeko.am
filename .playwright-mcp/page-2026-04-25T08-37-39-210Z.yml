@@ -1,0 +1,408 @@
+- generic [active] [ref=e1]:
+  - alert [ref=e6]
+  - generic [ref=e7]:
+    - complementary [ref=e8]:
+      - generic [ref=e10]:
+        - heading "Jeko" [level=1] [ref=e11]
+        - paragraph [ref=e12]: Admin Panel
+      - navigation [ref=e13]:
+        - link "Dashboard" [ref=e14] [cursor=pointer]:
+          - /url: /admin/dashboard
+          - img [ref=e15]
+          - text: Dashboard
+        - link "Store Editor" [ref=e17] [cursor=pointer]:
+          - /url: /admin/store-editor
+          - img [ref=e18]
+          - text: Store Editor
+        - link "Translations" [ref=e20] [cursor=pointer]:
+          - /url: /admin/translations
+          - img [ref=e21]
+          - text: Translations
+        - link "Products" [ref=e23] [cursor=pointer]:
+          - /url: /admin/products
+          - img [ref=e24]
+          - text: Products
+        - link "Bundles" [ref=e26] [cursor=pointer]:
+          - /url: /admin/bundles
+          - img [ref=e27]
+          - text: Bundles
+        - link "Upsells" [ref=e29] [cursor=pointer]:
+          - /url: /admin/upsells
+          - img [ref=e30]
+          - text: Upsells
+        - link "Categories" [ref=e32] [cursor=pointer]:
+          - /url: /admin/categories
+          - img [ref=e33]
+          - text: Categories
+        - link "Orders" [ref=e35] [cursor=pointer]:
+          - /url: /admin/orders
+          - img [ref=e36]
+          - text: Orders
+        - link "Customers" [ref=e38] [cursor=pointer]:
+          - /url: /admin/customers
+          - img [ref=e39]
+          - text: Customers
+        - link "Reviews" [ref=e41] [cursor=pointer]:
+          - /url: /admin/reviews
+          - img [ref=e42]
+          - text: Reviews
+        - link "Community" [ref=e44] [cursor=pointer]:
+          - /url: /admin/community
+          - img [ref=e45]
+          - text: Community
+        - link "Discounts" [ref=e47] [cursor=pointer]:
+          - /url: /admin/discounts
+          - img [ref=e48]
+          - text: Discounts
+        - link "Pages" [ref=e50] [cursor=pointer]:
+          - /url: /admin/pages
+          - img [ref=e51]
+          - text: Pages
+        - link "Blog" [ref=e53] [cursor=pointer]:
+          - /url: /admin/blog
+          - img [ref=e54]
+          - text: Blog
+        - link "Settings" [ref=e56] [cursor=pointer]:
+          - /url: /admin/settings
+          - img [ref=e57]
+          - text: Settings
+        - link "Analytics" [ref=e59] [cursor=pointer]:
+          - /url: /admin/analytics
+          - img [ref=e60]
+          - text: Analytics
+        - link "Support" [ref=e62] [cursor=pointer]:
+          - /url: /admin/support
+          - img [ref=e63]
+          - text: Support
+      - generic [ref=e65]:
+        - link "View Store" [ref=e66] [cursor=pointer]:
+          - /url: /
+          - img [ref=e67]
+          - text: View Store
+        - button "Sign Out" [ref=e69] [cursor=pointer]:
+          - img [ref=e70]
+          - text: Sign Out
+    - generic [ref=e72]:
+      - banner [ref=e73]:
+        - button [ref=e74] [cursor=pointer]:
+          - img [ref=e75]
+        - generic [ref=e77]:
+          - generic [ref=e78]:
+            - generic [ref=e79]: "Editing:"
+            - generic [ref=e80]:
+              - button "Edit English content" [ref=e81] [cursor=pointer]:
+                - generic [ref=e82]: 🇬🇧
+                - generic [ref=e83]: EN
+              - button "Edit Armenian content" [ref=e84] [cursor=pointer]:
+                - generic [ref=e85]: 🇦🇲
+                - generic [ref=e86]: HY
+          - generic [ref=e88]: admin@purepet.test
+          - generic [ref=e89]: A
+      - main [ref=e90]:
+        - generic [ref=e91]:
+          - generic [ref=e92]:
+            - generic [ref=e324]:
+              - img [ref=e326]
+              - generic [ref=e328]:
+                - heading "Online Store" [level=1] [ref=e329]
+                - paragraph [ref=e330]: "Health & Breeds: Colitis"
+            - generic [ref=e331]:
+              - generic [ref=e332]:
+                - button "Mobile (390px)" [ref=e333] [cursor=pointer]:
+                  - img [ref=e334]
+                - button "Tablet (768px)" [ref=e336] [cursor=pointer]:
+                  - img [ref=e337]
+                - button "Desktop" [ref=e339] [cursor=pointer]:
+                  - img [ref=e340]
+              - button "Refresh preview" [ref=e342] [cursor=pointer]:
+                - img [ref=e343]
+              - link "View Store" [ref=e345] [cursor=pointer]:
+                - /url: /benefits/colitis
+                - img [ref=e346]
+                - text: View Store
+          - generic [ref=e348]:
+            - generic [ref=e350]:
+              - generic [ref=e351]:
+                - generic [ref=e352]: Page
+                - combobox [ref=e353] [cursor=pointer]:
+                  - option "Homepage"
+                  - option "About"
+                  - option "Benefits"
+                  - 'option "Health & Breeds: Colitis" [selected]'
+                  - 'option "Health & Breeds: Digestion Issues"'
+                  - 'option "Health & Breeds: Hypoallergenic"'
+                  - 'option "Health & Breeds: Pancreatitis"'
+                  - 'option "Health & Breeds: Weight Management"'
+                  - option "Recipes"
+                  - option "Reviews"
+                  - option "Signup"
+                  - option "Beyond the Bowl"
+                  - option "Contact"
+                  - option "Community"
+                  - option "Blog"
+                  - option "Cart"
+                  - option "Checkout"
+                  - option "Profile"
+                  - option "Find Pet Owners"
+                  - option "Swipe"
+                  - option "Matches"
+                  - option "Messages"
+                  - option "Login"
+                  - option "Signup (Auth)"
+                  - option "Privacy Policy"
+                  - option "Terms of Use"
+                  - option "Cookie Policy"
+                  - option "Refund Policy"
+                  - option "Shipping Policy"
+                  - option "Returns"
+                  - option "Delivery Information"
+                  - option "Site Security"
+                  - option "Pure Policies"
+                  - option "Sitemap"
+                  - option "Matching Preferences"
+                  - option "SEO"
+                  - option "Beef + Rice + Veggies"
+                  - option "Chicken + Quinoa + Greens"
+                  - option "Chickpea + Quinoa Plant Mix"
+                  - option "Cod + Rice + Veggies"
+                  - option "Tuna + Rice Bowl"
+              - paragraph [ref=e355]: Sections
+              - generic [ref=e356]:
+                - generic [ref=e357] [cursor=pointer]:
+                  - img [ref=e359]
+                  - generic [ref=e361]: Hero
+                  - generic [ref=e362]:
+                    - button "Hide" [ref=e363]:
+                      - img [ref=e364]
+                    - img [ref=e367]
+                - generic [ref=e369] [cursor=pointer]:
+                  - img [ref=e371]
+                  - generic [ref=e373]: What Is
+                  - generic [ref=e374]:
+                    - button "Hide" [ref=e375]:
+                      - img [ref=e376]
+                    - img [ref=e379]
+                - generic [ref=e381] [cursor=pointer]:
+                  - img [ref=e383]
+                  - generic [ref=e385]: Symptoms / Signs
+                  - generic [ref=e386]:
+                    - button "Hide" [ref=e387]:
+                      - img [ref=e388]
+                    - img [ref=e391]
+                - generic [ref=e393] [cursor=pointer]:
+                  - img [ref=e395]
+                  - generic [ref=e397]: How Diet Helps
+                  - generic [ref=e398]:
+                    - button "Hide" [ref=e399]:
+                      - img [ref=e400]
+                    - img [ref=e403]
+                - generic [ref=e405] [cursor=pointer]:
+                  - img [ref=e407]
+                  - generic [ref=e409]: Testimonial
+                  - generic [ref=e410]:
+                    - button "Hide" [ref=e411]:
+                      - img [ref=e412]
+                    - img [ref=e415]
+                - generic [ref=e417] [cursor=pointer]:
+                  - img [ref=e419]
+                  - generic [ref=e421]: FAQs
+                  - generic [ref=e422]:
+                    - button "Hide" [ref=e423]:
+                      - img [ref=e424]
+                    - img [ref=e427]
+                - generic [ref=e429] [cursor=pointer]:
+                  - img [ref=e431]
+                  - generic [ref=e433]: CTA Block
+                  - generic [ref=e434]:
+                    - button "Hide" [ref=e435]:
+                      - img [ref=e436]
+                    - img [ref=e439]
+            - generic [ref=e441]:
+              - generic [ref=e443]: Full Width — Desktop
+              - iframe [ref=e446]:
+                - generic [active] [ref=f4e1]:
+                  - banner [ref=f4e2]:
+                    - generic [ref=f4e4]:
+                      - link "JEKO" [ref=f4e5] [cursor=pointer]:
+                        - /url: /
+                        - generic [ref=f4e6]: JEKO
+                      - button "Open menu" [ref=f4e7] [cursor=pointer]:
+                        - img [ref=f4e8]
+                  - main [ref=f4e10]:
+                    - generic [ref=f4e11]:
+                      - img "Colitis in dogs" [ref=f4e13]
+                      - generic [ref=f4e16]:
+                        - paragraph [ref=f4e17]: Health & Nutrition
+                        - heading "Colitis in dogs & how diet can help" [level=1] [ref=f4e18]
+                        - paragraph [ref=f4e19]: Colitis is one of the most common digestive conditions in dogs. The right nutrition can reduce flare-ups and support your dog's gut health naturally.
+                        - link "Create your dog's plan" [ref=f4e186] [cursor=pointer]:
+                          - /url: /auth/signup
+                    - generic [ref=f4e22]:
+                      - heading "What is colitis in dogs?" [level=2] [ref=f4e23]
+                      - generic [ref=f4e24]:
+                        - paragraph [ref=f4e25]: Colitis refers to inflammation of the colon (large intestine). It can be acute, meaning it comes on suddenly and resolves quickly, or chronic, where symptoms persist over weeks or months. It affects dogs of all ages and breeds.
+                        - paragraph [ref=f4e26]: The condition disrupts normal water absorption in the colon, leading to loose stools, urgency, and discomfort. While it can have many triggers — from stress and infections to dietary intolerances — what your dog eats plays a central role in managing it.
+                        - paragraph [ref=f4e27]: Many dogs with colitis see significant improvement simply by switching to a gentle, natural diet that avoids common inflammatory ingredients found in highly processed kibble.
+                    - generic [ref=f4e29]:
+                      - heading "Signs to look out for" [level=2] [ref=f4e187]
+                      - paragraph [ref=f4e31]: If your dog is showing any of these symptoms, their diet could make a real difference.
+                      - generic [ref=f4e32]:
+                        - generic [ref=f4e33]:
+                          - generic [ref=f4e34]: 💩
+                          - heading "Soft or watery stools" [level=3] [ref=f4e35]
+                          - paragraph [ref=f4e36]: Frequent loose stools, often with mucus or small amounts of bright red blood, are the hallmark sign of colitis.
+                        - generic [ref=f4e37]:
+                          - generic [ref=f4e38]: 😣
+                          - heading "Straining to go" [level=3] [ref=f4e39]
+                          - paragraph [ref=f4e40]: Your dog may strain or take longer than usual when going to the toilet, even if very little is produced.
+                        - generic [ref=f4e41]:
+                          - generic [ref=f4e42]: 🚨
+                          - heading "Increased urgency" [level=3] [ref=f4e43]
+                          - paragraph [ref=f4e44]: Needing to go outside more frequently or having accidents indoors can indicate colon inflammation.
+                        - generic [ref=f4e45]:
+                          - generic [ref=f4e46]: 😔
+                          - heading "Flatulence & discomfort" [level=3] [ref=f4e47]
+                          - paragraph [ref=f4e48]: Excessive gas, rumbling stomach sounds, and general signs of tummy discomfort are common.
+                        - generic [ref=f4e49]:
+                          - generic [ref=f4e50]: 🍽️
+                          - heading "Reduced appetite" [level=3] [ref=f4e51]
+                          - paragraph [ref=f4e52]: Some dogs may eat less or show reluctance at mealtimes when experiencing a flare-up.
+                        - generic [ref=f4e53]:
+                          - generic [ref=f4e54]: 😴
+                          - heading "Lethargy" [level=3] [ref=f4e55]
+                          - paragraph [ref=f4e56]: During episodes, your dog may seem more tired than usual and less interested in play or walks.
+                    - generic [ref=f4e58]:
+                      - img "Natural dog food" [ref=f4e60]
+                      - generic [ref=f4e62]:
+                        - heading "Managing colitis with" [level=2] [ref=f4e63]
+                        - paragraph [ref=f4e64]: the right nutrition
+                        - paragraph [ref=f4e65]: Diet is considered one of the most important factors in managing colitis. Highly processed foods with artificial additives, fillers, and low-quality proteins can aggravate the colon lining. A natural, gently prepared diet is far easier on the gut.
+                        - generic [ref=f4e66]:
+                          - generic [ref=f4e67]:
+                            - img [ref=f4e69]
+                            - generic [ref=f4e71]:
+                              - paragraph [ref=f4e72]: Highly digestible ingredients
+                              - paragraph [ref=f4e73]: Natural whole foods are gentler on inflamed gut tissue than heavily processed alternatives.
+                          - generic [ref=f4e74]:
+                            - img [ref=f4e76]
+                            - generic [ref=f4e78]:
+                              - paragraph [ref=f4e79]: No artificial additives
+                              - paragraph [ref=f4e80]: Removing preservatives, colourings, and flavour enhancers eliminates common irritation triggers.
+                          - generic [ref=f4e81]:
+                            - img [ref=f4e83]
+                            - generic [ref=f4e85]:
+                              - paragraph [ref=f4e86]: Quality single-source protein
+                              - paragraph [ref=f4e87]: Single protein recipes help identify and avoid specific ingredients that may cause reactions.
+                          - generic [ref=f4e88]:
+                            - img [ref=f4e90]
+                            - generic [ref=f4e92]:
+                              - paragraph [ref=f4e93]: Natural fibre balance
+                              - paragraph [ref=f4e94]: The right blend of soluble and insoluble fibre supports healthy colon function and stool consistency.
+                    - generic [ref=f4e96]:
+                      - img "Rachel & Poppy" [ref=f4e98]
+                      - blockquote [ref=f4e99]: “Our Labrador suffered with colitis for over a year. We tried multiple prescription diets with little improvement. Within two weeks of switching to natural food, the difference was remarkable. No more runny stools, no more midnight dashes to the garden. She's like a different dog.”
+                      - paragraph [ref=f4e100]: Rachel & Poppy
+                    - generic [ref=f4e102]:
+                      - heading "Frequently asked questions" [level=2] [ref=f4e188]
+                      - generic [ref=f4e104]:
+                        - group [ref=f4e105]:
+                          - generic "Can diet alone cure colitis in dogs?" [ref=f4e106] [cursor=pointer]:
+                            - text: Can diet alone cure colitis in dogs?
+                            - img [ref=f4e107]
+                        - group [ref=f4e109]:
+                          - generic "What proteins are best for dogs with colitis?" [ref=f4e110] [cursor=pointer]:
+                            - text: What proteins are best for dogs with colitis?
+                            - img [ref=f4e111]
+                        - group [ref=f4e113]:
+                          - generic "How quickly will I see improvement after a diet change?" [ref=f4e114] [cursor=pointer]:
+                            - text: How quickly will I see improvement after a diet change?
+                            - img [ref=f4e115]
+                        - group [ref=f4e117]:
+                          - generic "Should I avoid grain in my dog's food if they have colitis?" [ref=f4e118] [cursor=pointer]:
+                            - text: Should I avoid grain in my dog's food if they have colitis?
+                            - img [ref=f4e119]
+                    - generic [ref=f4e122]:
+                      - generic [ref=f4e124]:
+                        - heading "Ready to help your" [level=2] [ref=f4e189]
+                        - paragraph [ref=f4e126]: dog feel better?
+                        - paragraph [ref=f4e127]: Tell us about your dog and we'll create a tailored meal plan designed to support their specific needs. Vet-approved, trusted by thousands.
+                        - link "Discover your dog's menu" [ref=f4e190] [cursor=pointer]:
+                          - /url: /products
+                      - img "Happy healthy dog" [ref=f4e130]
+                  - contentinfo [ref=f4e131]:
+                    - generic [ref=f4e132]:
+                      - generic [ref=f4e133]:
+                        - generic [ref=f4e134]:
+                          - heading "Join our VIP list" [level=4] [ref=f4e191]
+                          - paragraph [ref=f4e136]: Be the first to hear about new product launches, exclusive competitions and helpful pet content.
+                          - generic [ref=f4e137]:
+                            - textbox "Enter your email address" [ref=f4e192]
+                            - button "Sign up" [ref=f4e193] [cursor=pointer]
+                        - generic [ref=f4e140]:
+                          - generic [ref=f4e141]:
+                            - heading "Jeko" [level=4] [ref=f4e142]
+                            - list [ref=f4e143]:
+                              - listitem [ref=f4e194]:
+                                - link "Our story" [ref=f4e195] [cursor=pointer]:
+                                  - /url: /about
+                              - listitem [ref=f4e196]:
+                                - link "Reviews" [ref=f4e197] [cursor=pointer]:
+                                  - /url: /reviews
+                              - listitem [ref=f4e198]:
+                                - link "Recipes" [ref=f4e199] [cursor=pointer]:
+                                  - /url: /recipes
+                              - listitem [ref=f4e200]:
+                                - link "Beyond the bowl" [ref=f4e201] [cursor=pointer]:
+                                  - /url: /beyond-the-bowl
+                              - listitem [ref=f4e202]:
+                                - link "Shop" [ref=f4e203] [cursor=pointer]:
+                                  - /url: /products
+                              - listitem [ref=f4e204]:
+                                - link "Community" [ref=f4e205] [cursor=pointer]:
+                                  - /url: /community
+                          - generic [ref=f4e156]:
+                            - heading "Help" [level=4] [ref=f4e206]
+                            - list [ref=f4e158]:
+                              - listitem [ref=f4e207]:
+                                - link "My account" [ref=f4e208] [cursor=pointer]:
+                                  - /url: /profile
+                              - listitem [ref=f4e209]:
+                                - link "Contact us" [ref=f4e210] [cursor=pointer]:
+                                  - /url: /contact
+                              - listitem [ref=f4e211]:
+                                - link "Delivery information" [ref=f4e212] [cursor=pointer]:
+                                  - /url: /delivery-information
+                              - listitem [ref=f4e213]:
+                                - link "Returns" [ref=f4e214] [cursor=pointer]:
+                                  - /url: /returns
+                              - listitem [ref=f4e215]:
+                                - link "Sitemap" [ref=f4e216] [cursor=pointer]:
+                                  - /url: /sitemap-page
+                          - generic [ref=f4e169]:
+                            - heading "Information" [level=4] [ref=f4e217]
+                            - list [ref=f4e171]:
+                              - listitem [ref=f4e218]:
+                                - link "Privacy policy" [ref=f4e219] [cursor=pointer]:
+                                  - /url: /privacy-policy
+                              - listitem [ref=f4e220]:
+                                - link "Terms & conditions" [ref=f4e221] [cursor=pointer]:
+                                  - /url: /terms-of-use
+                              - listitem [ref=f4e222]:
+                                - link "Jeko policies" [ref=f4e223] [cursor=pointer]:
+                                  - /url: /pure-policies
+                              - listitem [ref=f4e224]:
+                                - link "Site security" [ref=f4e225] [cursor=pointer]:
+                                  - /url: /site-security
+                              - listitem [ref=f4e226]:
+                                - link "Cookie policy" [ref=f4e227] [cursor=pointer]:
+                                  - /url: /cookie-policy
+                      - generic [ref=f4e182]:
+                        - generic [ref=f4e184]: JEKO
+                        - paragraph [ref=f4e185]: © Jeko 2020-2026
+                  - generic [ref=f4e228]:
+                    - generic [ref=f4e229]:
+                      - paragraph [ref=f4e230]: Bow Wow! 🐾
+                      - paragraph [ref=f4e231]: Find a friend for your pup!
+                    - button "Find pet matches" [ref=f4e233] [cursor=pointer]:
+                      - img "Jeko dog" [ref=f4e234]
+                  - alert [ref=f4e235]

@@ -1,0 +1,330 @@
+- generic [ref=e1]:
+  - alert [ref=e2]
+  - generic [ref=e3]:
+    - complementary [ref=e4]:
+      - generic [ref=e6]:
+        - heading "Jeko" [level=1] [ref=e7]
+        - paragraph [ref=e8]: Admin Panel
+      - navigation [ref=e9]:
+        - link "Dashboard" [ref=e10] [cursor=pointer]:
+          - /url: /admin/dashboard
+          - img [ref=e11]
+          - text: Dashboard
+        - link "Store Editor" [ref=e13] [cursor=pointer]:
+          - /url: /admin/store-editor
+          - img [ref=e14]
+          - text: Store Editor
+        - link "Translations" [ref=e16] [cursor=pointer]:
+          - /url: /admin/translations
+          - img [ref=e17]
+          - text: Translations
+        - link "Products" [ref=e19] [cursor=pointer]:
+          - /url: /admin/products
+          - img [ref=e20]
+          - text: Products
+        - link "Bundles" [ref=e22] [cursor=pointer]:
+          - /url: /admin/bundles
+          - img [ref=e23]
+          - text: Bundles
+        - link "Upsells" [ref=e25] [cursor=pointer]:
+          - /url: /admin/upsells
+          - img [ref=e26]
+          - text: Upsells
+        - link "Categories" [ref=e28] [cursor=pointer]:
+          - /url: /admin/categories
+          - img [ref=e29]
+          - text: Categories
+        - link "Orders" [ref=e31] [cursor=pointer]:
+          - /url: /admin/orders
+          - img [ref=e32]
+          - text: Orders
+        - link "Customers" [ref=e34] [cursor=pointer]:
+          - /url: /admin/customers
+          - img [ref=e35]
+          - text: Customers
+        - link "Reviews" [ref=e37] [cursor=pointer]:
+          - /url: /admin/reviews
+          - img [ref=e38]
+          - text: Reviews
+        - link "Community" [ref=e40] [cursor=pointer]:
+          - /url: /admin/community
+          - img [ref=e41]
+          - text: Community
+        - link "Discounts" [ref=e43] [cursor=pointer]:
+          - /url: /admin/discounts
+          - img [ref=e44]
+          - text: Discounts
+        - link "Pages" [ref=e46] [cursor=pointer]:
+          - /url: /admin/pages
+          - img [ref=e47]
+          - text: Pages
+        - link "Blog" [ref=e49] [cursor=pointer]:
+          - /url: /admin/blog
+          - img [ref=e50]
+          - text: Blog
+        - link "Settings" [ref=e52] [cursor=pointer]:
+          - /url: /admin/settings
+          - img [ref=e53]
+          - text: Settings
+        - link "Analytics" [ref=e55] [cursor=pointer]:
+          - /url: /admin/analytics
+          - img [ref=e56]
+          - text: Analytics
+        - link "Support" [ref=e58] [cursor=pointer]:
+          - /url: /admin/support
+          - img [ref=e59]
+          - text: Support
+      - generic [ref=e61]:
+        - link "View Store" [ref=e62] [cursor=pointer]:
+          - /url: /
+          - img [ref=e63]
+          - text: View Store
+        - button "Sign Out" [ref=e65] [cursor=pointer]:
+          - img [ref=e66]
+          - text: Sign Out
+    - generic [ref=e68]:
+      - banner [ref=e69]:
+        - button [ref=e70] [cursor=pointer]:
+          - img [ref=e71]
+        - generic [ref=e73]:
+          - generic [ref=e74]:
+            - generic [ref=e75]: "Editing:"
+            - generic [ref=e76]:
+              - button "Edit English content" [ref=e77] [cursor=pointer]:
+                - generic [ref=e78]: 🇬🇧
+                - generic [ref=e79]: EN
+              - button "Edit Armenian content" [ref=e80] [cursor=pointer]:
+                - generic [ref=e81]: 🇦🇲
+                - generic [ref=e82]: HY
+            - generic [ref=e83]: Armenian edits only
+          - generic [ref=e85]: admin@purepet.test
+          - generic [ref=e86]: A
+      - main [ref=e87]:
+        - generic [ref=e88]:
+          - generic [ref=e89]:
+            - generic [ref=e90]:
+              - heading "Products" [level=1] [ref=e91]
+              - paragraph [ref=e92]: 6 products total
+            - button "Add Product" [ref=e93] [cursor=pointer]:
+              - img [ref=e94]
+              - text: Add Product
+          - generic [ref=e96]:
+            - img [ref=e97]
+            - textbox "Search products by name..." [ref=e99]
+          - table [ref=e102]:
+            - rowgroup [ref=e103]:
+              - row "Image Name Category Price Stock Status Created Actions" [ref=e104]:
+                - columnheader "Image" [ref=e105]
+                - columnheader "Name" [ref=e106]
+                - columnheader "Category" [ref=e107]
+                - columnheader "Price" [ref=e108]
+                - columnheader "Stock" [ref=e109]
+                - columnheader "Status" [ref=e110]
+                - columnheader "Created" [ref=e111]
+                - columnheader "Actions" [ref=e112]
+            - rowgroup [ref=e113]:
+              - row "test test Sensitive £22.00 Not tracked Draft 22 Apr 2026" [ref=e250]:
+                - cell "test" [ref=e251]:
+                  - img "test" [ref=e252]
+                - cell "test" [ref=e253]:
+                  - generic [ref=e254]: test
+                - cell "Sensitive" [ref=e255]
+                - cell "£22.00" [ref=e256]
+                - cell "Not tracked" [ref=e257]
+                - cell "Draft" [ref=e258]:
+                  - generic [ref=e259]: Draft
+                - cell "22 Apr 2026" [ref=e261]
+                - cell [ref=e262]:
+                  - generic [ref=e263]:
+                    - button "Edit" [ref=e264] [cursor=pointer]:
+                      - img [ref=e265]
+                    - button "Delete" [ref=e267] [cursor=pointer]:
+                      - img [ref=e268]
+              - row "Beef + Rice + Veggies Beef + Rice + Veggies Food £10.00 Not tracked Active 9 Apr 2026" [ref=e270]:
+                - cell "Beef + Rice + Veggies" [ref=e271]:
+                  - img "Beef + Rice + Veggies" [ref=e272]
+                - cell "Beef + Rice + Veggies" [ref=e273]:
+                  - generic [ref=e274]: Beef + Rice + Veggies
+                - cell "Food" [ref=e275]
+                - cell "£10.00" [ref=e276]
+                - cell "Not tracked" [ref=e277]
+                - cell "Active" [ref=e278]:
+                  - generic [ref=e279]: Active
+                - cell "9 Apr 2026" [ref=e281]
+                - cell [ref=e282]:
+                  - generic [ref=e283]:
+                    - button "Edit" [active] [ref=e284] [cursor=pointer]:
+                      - img [ref=e285]
+                    - button "Delete" [ref=e287] [cursor=pointer]:
+                      - img [ref=e288]
+              - row "Chicken + Quinoa + Greens Chicken + Quinoa + Greens Food £15.00 Not tracked Active 9 Apr 2026" [ref=e290]:
+                - cell "Chicken + Quinoa + Greens" [ref=e291]:
+                  - img "Chicken + Quinoa + Greens" [ref=e292]
+                - cell "Chicken + Quinoa + Greens" [ref=e293]:
+                  - generic [ref=e294]: Chicken + Quinoa + Greens
+                - cell "Food" [ref=e295]
+                - cell "£15.00" [ref=e296]
+                - cell "Not tracked" [ref=e297]
+                - cell "Active" [ref=e298]:
+                  - generic [ref=e299]: Active
+                - cell "9 Apr 2026" [ref=e301]
+                - cell [ref=e302]:
+                  - generic [ref=e303]:
+                    - button "Edit" [ref=e304] [cursor=pointer]:
+                      - img [ref=e305]
+                    - button "Delete" [ref=e307] [cursor=pointer]:
+                      - img [ref=e308]
+              - row "Tuna + Rice Bowl Tuna + Rice Bowl Food £20.00 Not tracked Active 9 Apr 2026" [ref=e310]:
+                - cell "Tuna + Rice Bowl" [ref=e311]:
+                  - img "Tuna + Rice Bowl" [ref=e312]
+                - cell "Tuna + Rice Bowl" [ref=e313]:
+                  - generic [ref=e314]: Tuna + Rice Bowl
+                - cell "Food" [ref=e315]
+                - cell "£20.00" [ref=e316]
+                - cell "Not tracked" [ref=e317]
+                - cell "Active" [ref=e318]:
+                  - generic [ref=e319]: Active
+                - cell "9 Apr 2026" [ref=e321]
+                - cell [ref=e322]:
+                  - generic [ref=e323]:
+                    - button "Edit" [ref=e324] [cursor=pointer]:
+                      - img [ref=e325]
+                    - button "Delete" [ref=e327] [cursor=pointer]:
+                      - img [ref=e328]
+              - row "Cod + Rice + Veggies Cod + Rice + Veggies Food £20.00 Not tracked Active 9 Apr 2026" [ref=e330]:
+                - cell "Cod + Rice + Veggies" [ref=e331]:
+                  - img "Cod + Rice + Veggies" [ref=e332]
+                - cell "Cod + Rice + Veggies" [ref=e333]:
+                  - generic [ref=e334]: Cod + Rice + Veggies
+                - cell "Food" [ref=e335]
+                - cell "£20.00" [ref=e336]
+                - cell "Not tracked" [ref=e337]
+                - cell "Active" [ref=e338]:
+                  - generic [ref=e339]: Active
+                - cell "9 Apr 2026" [ref=e341]
+                - cell [ref=e342]:
+                  - generic [ref=e343]:
+                    - button "Edit" [ref=e344] [cursor=pointer]:
+                      - img [ref=e345]
+                    - button "Delete" [ref=e347] [cursor=pointer]:
+                      - img [ref=e348]
+              - row "Chickpea + Quinoa Plant Mix Chickpea + Quinoa Plant Mix Food £10.00 Not tracked Active 9 Apr 2026" [ref=e350]:
+                - cell "Chickpea + Quinoa Plant Mix" [ref=e351]:
+                  - img "Chickpea + Quinoa Plant Mix" [ref=e352]
+                - cell "Chickpea + Quinoa Plant Mix" [ref=e353]:
+                  - generic [ref=e354]: Chickpea + Quinoa Plant Mix
+                - cell "Food" [ref=e355]
+                - cell "£10.00" [ref=e356]
+                - cell "Not tracked" [ref=e357]
+                - cell "Active" [ref=e358]:
+                  - generic [ref=e359]: Active
+                - cell "9 Apr 2026" [ref=e361]
+                - cell [ref=e362]:
+                  - generic [ref=e363]:
+                    - button "Edit" [ref=e364] [cursor=pointer]:
+                      - img [ref=e365]
+                    - button "Delete" [ref=e367] [cursor=pointer]:
+                      - img [ref=e368]
+          - generic [ref=e469]:
+            - generic [ref=e470]:
+              - heading "Edit Product" [level=2] [ref=e471]
+              - button [ref=e472] [cursor=pointer]:
+                - img [ref=e473]
+            - generic [ref=e475]:
+              - generic [ref=e476]:
+                - generic [ref=e477]:
+                  - generic [ref=e478]:
+                    - generic [ref=e479]: Name
+                    - generic [ref=e480]: HY
+                  - textbox "Beef + Rice + Veggies" [ref=e481]
+                - generic [ref=e482]:
+                  - generic [ref=e483]: Slug *
+                  - textbox "auto-generated-from-name" [ref=e484]: beef-rice-veggies
+              - generic [ref=e485]:
+                - generic [ref=e486]:
+                  - generic [ref=e487]: Short Description
+                  - generic [ref=e488]: HY
+                - textbox "Hearty beef with brown rice, spinach, peas & carrots — ~520 kcal. Best for energy and muscle support." [ref=e489]
+              - generic [ref=e490]:
+                - generic [ref=e491]:
+                  - generic [ref=e492]: Description
+                  - generic [ref=e493]: HY
+                - 'textbox "A hearty, balanced meal combining lean beef with brown rice and a mix of nutritious vegetables. Brown rice (150g cooked) provides sustained energy, while spinach (30g), peas (80g), and carrots (80g) deliver essential vitamins and fiber. Paired with 120g of cooked beef for high-quality protein and iron. Approximately 520 kcal per serving Calorie Breakdown: • Brown rice (150g) — 165 kcal • Spinach (30g) — 7 kcal • Peas (80g) — 65 kcal • Carrots (80g) — 30 kcal • Beef (120g) — 250 kcal" [ref=e494]':
+                  - /placeholder: "A hearty, balanced meal combining lean beef with brown rice and a mix of nutritious vegetables. Brown rice (150g cooked) provides sustained energy, while spinach (30g), peas (80g), and carrots (80g) deliver essential vitamins and fiber. Paired with 120g of cooked beef for high-quality protein and iron. Approximately 520 kcal per serving\n\nCalorie Breakdown:\n• Brown rice (150g) — 165 kcal\n• Spinach (30g) — 7 kcal\n• Peas (80g) — 65 kcal\n• Carrots (80g) — 30 kcal\n• Beef (120g) — 250 kcal"
+              - group "Pricing" [ref=e495]:
+                - generic [ref=e496]: Pricing
+                - generic [ref=e497]:
+                  - generic [ref=e498]:
+                    - generic [ref=e499]: Price (GBP) *
+                    - spinbutton [ref=e500]: "10"
+                  - generic [ref=e501]:
+                    - generic [ref=e502]: Compare-at Price
+                    - spinbutton [ref=e503]
+              - group "Inventory" [ref=e504]:
+                - generic [ref=e505]: Inventory
+                - generic [ref=e506]:
+                  - generic [ref=e507]:
+                    - generic [ref=e508]:
+                      - generic [ref=e509]: SKU
+                      - textbox "e.g. PP-TRK-001" [ref=e510]
+                    - generic [ref=e511]:
+                      - generic [ref=e512]: Barcode
+                      - textbox "UPC / EAN / ISBN" [ref=e513]
+                  - generic [ref=e514]:
+                    - checkbox [ref=e516]
+                    - generic [ref=e518]: Track inventory
+              - group "Shipping" [ref=e519]:
+                - generic [ref=e520]: Shipping
+                - generic [ref=e521]:
+                  - generic [ref=e522]:
+                    - generic [ref=e523]: Weight
+                    - spinbutton [ref=e524]: "460"
+                  - generic [ref=e525]:
+                    - generic [ref=e526]: Unit
+                    - combobox [ref=e527]:
+                      - option "kg"
+                      - option "g" [selected]
+                      - option "lb"
+                      - option "oz"
+              - group "Organisation" [ref=e528]:
+                - generic [ref=e529]: Organisation
+                - generic [ref=e530]:
+                  - generic [ref=e531]:
+                    - generic [ref=e532]: Category
+                    - combobox [ref=e533]:
+                      - option "No category"
+                      - option "day food"
+                      - option "Food" [selected]
+                      - option "Renal"
+                      - option "Sensitive"
+                  - generic [ref=e534]:
+                    - generic [ref=e535]: Brand
+                    - combobox [ref=e536]:
+                      - option "No brand" [selected]
+                      - option "Pure Pet Food"
+                - generic [ref=e537]:
+                  - generic [ref=e538]: Status
+                  - combobox [ref=e539]:
+                    - option "Draft"
+                    - option "Active" [selected]
+                    - option "Archived"
+              - group "Product Images" [ref=e540]:
+                - generic [ref=e541]: Product Images
+                - generic [ref=e543] [cursor=pointer]:
+                  - img [ref=e544]
+                  - paragraph [ref=e546]: Click to upload or drag and drop
+                  - paragraph [ref=e547]: JPG, PNG, WebP, GIF, SVG (max 10MB each)
+                - generic [ref=e549]:
+                  - img "Product image 1" [ref=e550]
+                  - generic [ref=e551]: Main
+                  - button "Remove image" [ref=e552] [cursor=pointer]:
+                    - img [ref=e553]
+              - group "Variants" [ref=e555]:
+                - generic [ref=e556]: Variants
+                - paragraph [ref=e557]: Add size, weight, flavour, or colour options for this product.
+                - button "Add Variant" [ref=e558] [cursor=pointer]:
+                  - img [ref=e559]
+                  - text: Add Variant
+            - generic [ref=e561]:
+              - button "Cancel" [ref=e562] [cursor=pointer]
+              - button "Update Product" [ref=e563] [cursor=pointer]

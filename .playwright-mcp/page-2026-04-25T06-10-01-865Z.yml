@@ -1,0 +1,395 @@
+- generic [active] [ref=e1]:
+  - banner [ref=e2]:
+    - generic [ref=e4]:
+      - link "JEKO" [ref=e5] [cursor=pointer]:
+        - /url: /
+        - generic [ref=e6]: JEKO
+      - navigation [ref=e7]:
+        - link "Մեր մասին" [ref=e9] [cursor=pointer]:
+          - /url: /about
+          - text: Մեր մասին
+          - img [ref=e10]
+        - link "Համայնք" [ref=e13] [cursor=pointer]:
+          - /url: /community
+          - text: Համայնք
+          - img [ref=e14]
+        - link "Խանութ" [ref=e17] [cursor=pointer]:
+          - /url: /products
+        - link "Կարծիքներ" [ref=e19] [cursor=pointer]:
+          - /url: /reviews
+        - link "Առողջապահական օգուտներ" [ref=e21] [cursor=pointer]:
+          - /url: /benefits
+          - text: Առողջապահական օգուտներ
+          - img [ref=e22]
+      - generic [ref=e24]:
+        - button "Switch language" [ref=e26] [cursor=pointer]:
+          - generic [ref=e27]: 🇦🇲
+          - generic [ref=e28]: HY
+          - img [ref=e29]
+        - button "Shopping cart" [ref=e31] [cursor=pointer]:
+          - img [ref=e32]
+        - link "Օգնություն" [ref=e36] [cursor=pointer]:
+          - /url: /contact
+        - generic [ref=e103]:
+          - link "Ադմին վահանակ" [ref=e104] [cursor=pointer]:
+            - /url: /admin/dashboard
+            - img [ref=e105]
+            - text: Ադմին վահանակ
+          - button "Ելք" [ref=e108] [cursor=pointer]:
+            - img [ref=e109]
+            - text: Ելք
+  - main [ref=e39]:
+    - generic [ref=e113]:
+      - img "Beef + Rice + Veggies" [ref=e116]
+      - generic [ref=e117]:
+        - heading "Տավարի միս + բրինձ + բանջարեղեն" [level=1] [ref=e118]
+        - link "1 Կարծիքներ" [ref=e119] [cursor=pointer]:
+          - /url: "#reviews"
+          - generic [ref=e120]:
+            - img [ref=e121]
+            - img [ref=e123]
+            - img [ref=e125]
+            - img [ref=e127]
+            - img [ref=e129]
+          - generic [ref=e131]: 1 Կարծիքներ
+        - generic [ref=e132]: £10.00
+        - paragraph [ref=e133]: Առաքման արժեքը հաշվարկվում է վճարման ժամանակ։
+        - generic [ref=e134]:
+          - paragraph [ref=e135]: Պրեմիում սնունդ — ոչինչ չի թաքցվում։
+          - paragraph [ref=e136]: "Սրտալի տավարի միս շագանակագույն բրնձով, սպանախով, ոլոռով և գազարով — ~520 կկալ: Լավագույնն էներգիայի և մկանների աջակցության համար:"
+        - generic [ref=e137]:
+          - heading "Շահութաբեր փաթեթներ" [level=3] [ref=e138]
+          - generic [ref=e141]:
+            - img "Complete Nutrition Pack" [ref=e143]
+            - generic [ref=e144]:
+              - heading "Սնուցման ամբողջական փաթեթ" [level=4] [ref=e145]
+              - paragraph [ref=e146]: Կատարյալ նախուտեստի փաթեթ՝ բոլոր անհրաժեշտ սննդանյութերով՝ օպտիմալ առողջության համար
+              - generic [ref=e147]:
+                - generic [ref=e148]: £0.00Խնայեք 20%
+                - button "Ավելացնել փաթեթը" [ref=e149] [cursor=pointer]
+        - generic [ref=e150]:
+          - generic [ref=e151]:
+            - button "−" [disabled] [ref=e152]
+            - generic [ref=e153]: "1"
+            - button "+" [ref=e154] [cursor=pointer]
+          - button "Ավելացնել զամբյուղ" [ref=e155] [cursor=pointer]
+        - generic [ref=e156]:
+          - heading "Կատարյալ զուգորդումներ" [level=3] [ref=e157]
+          - generic [ref=e158]:
+            - generic [ref=e160]:
+              - img "Chicken + Quinoa + Greens" [ref=e162]
+              - generic [ref=e163]:
+                - heading "Հավի միս + Քինոա + Կանաչի" [level=4] [ref=e164]
+                - paragraph [ref=e165]: "Անյուղ հավ քինոայով, ցուկկինիով և կանաչ լոբիով — ~ 480 կկալ։ Լավագույնը նիհար սպիտակուցի և քաշի վերահսկման համար:"
+                - generic [ref=e166]:
+                  - generic [ref=e167]: £15.00
+                  - button "Ավելացնել զամբյուղ" [ref=e168] [cursor=pointer]
+            - generic [ref=e170]:
+              - img "Tuna + Rice Bowl" [ref=e172]
+              - generic [ref=e173]:
+                - heading "Թունա + բրինձ գունդ" [level=4] [ref=e174]
+                - paragraph [ref=e175]: "Օմեգա հարուստ թունա շագանակագույն բրնձով, սպանախով, ոլոռով և գազարով — ~430 կկալ: Լավագույնը վերարկուի առողջության և թեթև մարսողության համար:"
+                - generic [ref=e176]:
+                  - generic [ref=e177]: £20.00
+                  - button "Ավելացնել զամբյուղ" [ref=e178] [cursor=pointer]
+        - generic [ref=e179]:
+          - img [ref=e181]
+          - generic [ref=e183]:
+            - paragraph [ref=e184]: Անասնաբույժի կողմից հաստատված և լաբորատոր փորձարկված 2026
+            - paragraph [ref=e185]: Բոլոր բաղադրիչները փորձարկված են որակի և անվտանգության համար →
+        - generic [ref=e186]:
+          - button "Բաղադրիչներ" [ref=e187] [cursor=pointer]:
+            - heading "Բաղադրիչներ" [level=2] [ref=e188]
+            - img [ref=e189]
+          - generic [ref=e193]:
+            - text: "Սրտաճմլիկ, հավասարակշռված կերակուր, որը համադրում է նիհար տավարի միսը շագանակագույն բրնձի և սննդարար բանջարեղենի խառնուրդի հետ: Շագանակագույն բրինձը (150 գ եփած) ապահովում է կայուն էներգիա, իսկ սպանախը (30 գ), ոլոռը (80 գ) և գազարը (80 գ) ապահովում են անհրաժեշտ վիտամիններ և մանրաթելեր: Զուգորդվում է 120 գ եփած տավարի մսով ՝ բարձրորակ սպիտակուցի և երկաթի համար: Մոտավորապես 520 կկալ մեկ ծառայությունում Կալորիականության ճեղքվածք ՝"
+            - text: • շագանակագույն բրինձ (150 գ) — 165 կկալ
+            - text: • սպանախ (30գ) — 7 կկալ
+            - text: • Ոլոռ (80 գ) — 65 կկալ
+            - text: • գազար (80 գ) — 30 կկալ
+            - text: • տավարի միս (120 գ) — 250 կկա
+        - generic [ref=e194]:
+          - button "Կերակրման ուղեցույց" [ref=e195] [cursor=pointer]:
+            - heading "Կերակրման ուղեցույց" [level=2] [ref=e196]
+            - img [ref=e197]
+          - generic [ref=e199]:
+            - paragraph [ref=e200]: Մատուցեք ըստ ձեր շան քաշի՝
+            - list [ref=e201]:
+              - listitem [ref=e202]: Փոքր շներ (մինչև 10 կգ)՝ օրական 100-200 գ
+              - listitem [ref=e203]: Միջին շներ (10-25 կգ)՝ օրական 200-400 գ
+              - listitem [ref=e204]: Մեծ շներ (25 կգ+)՝ օրական 400-600 գ
+            - paragraph [ref=e205]: Միշտ ապահովեք թարմ ջուր։ Անցումը կատարեք աստիճանաբար 7-10 օրվա ընթացքում։
+        - generic [ref=e206]:
+          - button "Առաքում և վերադարձ" [ref=e207] [cursor=pointer]:
+            - heading "Առաքում և վերադարձ" [level=2] [ref=e208]
+            - img [ref=e209]
+          - generic [ref=e211]:
+            - paragraph [ref=e212]: Անվճար առաքում Հայաստանում բոլոր պատվերների համար։ Մինչև 14:00 տրված պատվերներն ուղարկվում են նույն օրը։
+            - paragraph [ref=e213]: Ստանդարտ առաքում՝ 2-3 աշխատանքային օր։ Արագ առաքումը հասանելի է վճարման ժամանակ։
+            - paragraph [ref=e214]: Գոհ չե՞ք։ Ամբողջական վերադարձ 30 օրվա ընթացքում — առանց հարցերի։
+    - generic [ref=e216]:
+      - heading "Jeko-ի առանձնահատկությունը" [level=2] [ref=e217]
+      - generic [ref=e218]:
+        - generic [ref=e219]:
+          - img [ref=e220]
+          - generic [ref=e222]: Անասնաբույժի կողմից հաստատված
+        - generic [ref=e223]:
+          - img [ref=e224]
+          - generic [ref=e226]: Բնական բաղադրիչներ
+        - generic [ref=e227]:
+          - img [ref=e228]
+          - generic [ref=e230]: Առանց հացահատիկի տարբերակներ
+        - generic [ref=e231]:
+          - img [ref=e232]
+          - generic [ref=e234]: Լաբորատոր փորձարկված
+        - generic [ref=e235]:
+          - img [ref=e236]
+          - generic [ref=e238]: Մարդկանց համար պիտանի որակ
+        - generic [ref=e239]:
+          - img [ref=e240]
+          - generic [ref=e242]: Մեղմ ստամոքսների համար
+        - generic [ref=e243]:
+          - img [ref=e244]
+          - generic [ref=e246]: Սննդանյութերով հարուստ
+    - generic [ref=e248]:
+      - img "Fresh food in bowl" [ref=e250]
+      - generic [ref=e253]:
+        - heading "Թարմ։ Հավասարակշռված։ Անդիմադրելի։" [level=2] [ref=e254]
+        - generic [ref=e255]:
+          - paragraph [ref=e256]: Սպիտակուցի պրոֆիլ՝ բարձրորակ, մեկ աղբյուրից կենդանական սպիտակուց՝ նիհար մկանների պահպանման և կայուն էներգիայի համար։
+          - paragraph [ref=e257]: Սնուցման հիմնական առավելությունները՝ հարուստ Օմեգա-3 ճարպաթթուներով՝ փայլուն մորթի համար, պրեբիոտիկներով՝ աղիքների առողջության համար, և անհրաժեշտ վիտամիններով՝ իմունիտետի պաշտպանության համար։
+          - paragraph [ref=e258]: Պատրաստում՝ Մեղմորեն օդի վրա չորացված՝ սննդանյութերը պահպանելու համար։ Ավելացրեք տաք ջուր, խառնեք և մատուցեք — պատրաստ է 10 վայրկյանում։
+    - generic [ref=e260]:
+      - generic [ref=e262]:
+        - heading "Իմացեք Jeko-ի գիտությունը" [level=2] [ref=e263]
+        - paragraph [ref=e264]: Մշակված անասնաբուժական դիետոլոգների հետ, յուրաքանչյուր բաղադրատոմս հիմնված է գիտության վրա՝ օպտիմալ սնուցում ապահովելու համար։
+        - link "Իմանալ ավելին" [ref=e265] [cursor=pointer]:
+          - /url: /benefits
+      - img "Science lab research" [ref=e267]
+    - generic [ref=e270]:
+      - generic [ref=e271]:
+        - heading "Վստահված է անասնաբույժների և դիետոլոգների կողմից" [level=2] [ref=e272]
+        - generic [ref=e273]:
+          - button [ref=e274] [cursor=pointer]:
+            - img [ref=e275]
+          - button [ref=e277] [cursor=pointer]:
+            - img [ref=e278]
+      - generic [ref=e280]:
+        - generic [ref=e281]:
+          - generic [ref=e282]:
+            - heading "Դոկտոր Սառա Ուիլսոն, BVSc" [level=4] [ref=e283]
+            - text: Անասնաբուժական սննդաբան
+          - paragraph [ref=e284]: "Որպես անասնաբուժական սննդաբան՝ ես ընդգծում եմ շան ընդհանուր հավասարակշռությունը պահպանող սննդի ընտրության կարևորությունը: Ահա թե ինչու ես վստահում և վստահորեն խորհուրդ եմ տալիս Ջեկոյին իմ հիվանդներին: Նրանց նվիրվածությունը բնական բաղադրիչներին և որակի խիստ փորձարկումներին ապահովում է մաքուր, աջակցող կերակրման փորձ:"
+          - link "Տավարի միս + բրինձ + բանջարեղեն" [ref=e285] [cursor=pointer]:
+            - /url: /products/beef-rice-veggies
+            - generic [ref=e286]: Տավարի միս + բրինձ + բանջարեղեն
+        - generic [ref=e287]:
+          - generic [ref=e288]:
+            - heading "Դոկտոր Ջեյմս Չեն, DVM" [level=4] [ref=e289]
+            - text: Անասնաբուժական մաշկաբան
+          - paragraph [ref=e290]: "Ես տեսել եմ մաշկի և վերարկուի վիճակի զգալի բարելավումներ այն պահից, երբ իմ հիվանդներին Ջեկոյին խորհուրդ տվեցի: Բնական, հիպոալերգենային բաղադրատոմսերը խաղը փոխում են զգայուն շների համար:"
+          - link "Սաղմոն և կարտոֆիլ առանց հացահատիկի" [ref=e291] [cursor=pointer]:
+            - /url: /products/salmon-potato-grain-free
+            - generic [ref=e292]: Սաղմոն և կարտոֆիլ առանց հացահատիկի
+        - generic [ref=e293]:
+          - generic [ref=e294]:
+            - heading "Էմմա Ռիչարդս" [level=4] [ref=e295]
+            - text: Շների վարքաբան
+          - paragraph [ref=e296]: "Որպես շների վարքագծեր, ես ամեն օր տեսնում եմ սննդի և վարքի միջև կապը: Ջեկոյի շները ավելի հանգիստ են, ավելի կենտրոնացած և էներգիայի ավելի լավ կարգավորում ամբողջ օրվա ընթացքում: Դա իրական տարբերություն է ստեղծում:"
+          - link "Տավարի միս + բրինձ + բանջարեղեն" [ref=e297] [cursor=pointer]:
+            - /url: /products/beef-rice-veggies
+            - generic [ref=e298]: Տավարի միս + բրինձ + բանջարեղեն
+        - generic [ref=e299]:
+          - generic [ref=e300]:
+            - heading "Դոկտոր Հաննա Բրուքս, MRCVS" [level=4] [ref=e301]
+            - text: Փոքր կենդանիների անասնաբույժ
+          - paragraph [ref=e302]: "Ինձ համար չափազանց կարևոր է մաքուր արտադրանք առաջարկելը: Jeko-ն այն ապրանքանիշն է, որին ես կարող եմ վստահել, որ մաքուր է և ունի հետազոտություն, որը կաջակցի այն: Համի որակը ակնառու է. շներն իսկապես սիրում են այն: Ես դա խորհուրդ եմ տալիս իմ բոլոր հիվանդներին:"
+          - link "Puppy Growth Formula" [ref=e303] [cursor=pointer]:
+            - /url: /products/puppy-growth-formula
+            - generic [ref=e304]: Puppy Growth Formula
+        - generic [ref=e305]:
+          - generic [ref=e306]:
+            - heading "Բժիշկ Օլիվեր Պատել, BVM&S" [level=4] [ref=e307]
+            - text: Ամբողջական անասնաբույժ
+          - paragraph [ref=e308]: "Որպես ամբողջական անասնաբույժ, ես մեծապես գնահատում եմ ուտելիք ունենալը, որը կարող եմ խորհուրդ տալ քրոնիկ հիվանդությունները կառավարող հաճախորդներին: Ջեկոյի բաղադրիչների մանրակրկիտ մատակարարումը և նուրբ մշակումը հենց այն է, ինչ այս շներին անհրաժեշտ է:"
+          - link "Տավարի միս + բրինձ + բանջարեղեն" [ref=e309] [cursor=pointer]:
+            - /url: /products/beef-rice-veggies
+            - generic [ref=e310]: Տավարի միս + բրինձ + բանջարեղեն
+    - generic [ref=e312]:
+      - img "Happy dog lifestyle" [ref=e314]
+      - generic [ref=e317]:
+        - heading "Մթերք, որը սնուցում է նրանց լավագույն օրերը" [level=2] [ref=e318]
+        - generic [ref=e319]:
+          - paragraph [ref=e320]:
+            - strong [ref=e321]: Jeko-ում առաքելությունը պարզ է.
+          - paragraph [ref=e322]: "Ստեղծեք կերակուր, որը կստիպի ձեր շունն իրեն նույնքան լավ զգա, որքան ճաշակը:"
+          - paragraph [ref=e323]: "Միշտ թարմ, բնական և անասնաբույժի կողմից հաստատված:"
+          - paragraph [ref=e324]: "Դա այն տեսակն է, որը նրանք սիրում են, փափագում են և վազում դեպի ամանի մեջ ամեն անգամ՝ անսահման էներգիայի, փայլուն վերարկուի և ավելի երջանիկ, առողջ կյանքի համար:"
+          - paragraph [ref=e325]: "Ջեկոն նվիրված է ընտանի կենդանիների ծնողներին, ովքեր պարզապես ավելին են փնտրում իրենց լավագույն ընկերոջ համար:"
+        - link "Փորձեք Ջեկոյին" [ref=e326] [cursor=pointer]:
+          - /url: /profile
+    - generic [ref=e328]:
+      - generic [ref=e330]:
+        - heading "Ինչու մենք սկսեցինք Jeko-ն" [level=2] [ref=e331]
+        - generic [ref=e332]:
+          - paragraph [ref=e333]: "Մենք չենք սկսել այս ապրանքանիշը միտումի համար:"
+          - paragraph [ref=e334]: "Մենք սկսել ենք Jeko-ն, քանի որ մեր շներն ավելի լավին էին արժանի, և ձերը նույնպես:"
+          - paragraph [ref=e335]: "Երբ մենք նայեցինք, թե ինչ կա շների առևտրային սննդի մեջ, մենք ցնցվեցինք: Լցոնիչներ, կոնսերվանտներ, առեղծվածային «մսի ածանցյալներ»՝ վատթարացնում են մեր շներին, ոչ թե լավացնում:"
+          - paragraph [ref=e336]: "Նրանց ավելի լավ տարբերակ էր պետք, ուստի մենք ստեղծեցինք մեկը:"
+        - link "Իմանալ ավելին" [ref=e337] [cursor=pointer]:
+          - /url: /about
+      - img "The Jeko team" [ref=e339]
+    - generic [ref=e342]:
+      - heading "Մեր առաքելությունը" [level=2] [ref=e343]
+      - paragraph [ref=e344]: “Սնունդ ստեղծելու համար, որն օգնում է ձեր շանը զգալ իրեն լավագույնը, որպեսզի նա կարողանա շարունակել անել այն, ինչ սիրում է՝ լինել ձեր լավագույն ընկերը:”
+    - generic [ref=e345]:
+      - img "Happy healthy dogs" [ref=e346]
+      - heading "Անսահման էներգիա, փայլուն վերարկու, ավելի երջանիկ օրեր" [level=2] [ref=e349]
+    - generic [ref=e351]:
+      - heading "Հաճախորդների կարծիքներ" [level=2] [ref=e352]
+      - generic [ref=e353]:
+        - generic [ref=e354]:
+          - generic [ref=e355]:
+            - img [ref=e356]
+            - img [ref=e358]
+            - img [ref=e360]
+            - img [ref=e362]
+            - img [ref=e364]
+          - generic [ref=e366]: 1 Կարծիքներ
+        - button "Գրեք կարծիք" [ref=e367] [cursor=pointer]
+      - generic [ref=e369]:
+        - generic [ref=e371]: Test Reviewer
+        - generic [ref=e372]: 14/04/2026
+        - generic [ref=e373]:
+          - img [ref=e374]
+          - img [ref=e376]
+          - img [ref=e378]
+          - img [ref=e380]
+          - img [ref=e382]
+        - paragraph [ref=e384]: Զարմանալի սնունդ
+        - paragraph [ref=e385]: "Իմ շունը բացարձակապես սիրում է այս սնունդը: Նրա վերարկուն ավելի փայլուն է, և նա շատ ավելի էներգիա ունի Ջեկոյին անցնելուց հետո"
+        - paragraph [ref=e386]: "Նյութի տեսակը: Տավարի միս + բրինձ + բանջարեղեն"
+    - generic [ref=e388]:
+      - heading "You May Also Like" [level=2] [ref=e389]
+      - generic [ref=e390]:
+        - 'link "Chicken + Quinoa + Greens Տեսնել ապրանքը Հավի միս + Քինոա + Կանաչի Անյուղ հավ քինոայով, ցուկկինիով և կանաչ լոբիով — ~ 480 կկալ։ Լավագույնը նիհար սպիտակուցի և քաշի վերահսկման համար: £15.00 Ավելացնել զամբյուղ" [ref=e392] [cursor=pointer]':
+          - /url: /products/chicken-quinoa-greens
+          - generic [ref=e393]:
+            - generic [ref=e394]:
+              - img "Chicken + Quinoa + Greens" [ref=e395]
+              - generic [ref=e397]: Տեսնել ապրանքը
+            - generic [ref=e398]:
+              - heading "Հավի միս + Քինոա + Կանաչի" [level=3] [ref=e399]
+              - paragraph [ref=e400]: "Անյուղ հավ քինոայով, ցուկկինիով և կանաչ լոբիով — ~ 480 կկալ։ Լավագույնը նիհար սպիտակուցի և քաշի վերահսկման համար:"
+              - generic [ref=e402]: £15.00
+              - button "Ավելացնել զամբյուղ" [ref=e403]
+        - 'link "Tuna + Rice Bowl Տեսնել ապրանքը Թունա + բրինձ գունդ Օմեգա հարուստ թունա շագանակագույն բրնձով, սպանախով, ոլոռով և գազարով — ~430 կկալ: Լավագույնը վերարկուի առողջության և թեթև մարսողության համար: £20.00 Ավելացնել զամբյուղ" [ref=e405] [cursor=pointer]':
+          - /url: /products/tuna-rice-bowl
+          - generic [ref=e406]:
+            - generic [ref=e407]:
+              - img "Tuna + Rice Bowl" [ref=e408]
+              - generic [ref=e410]: Տեսնել ապրանքը
+            - generic [ref=e411]:
+              - heading "Թունա + բրինձ գունդ" [level=3] [ref=e412]
+              - paragraph [ref=e413]: "Օմեգա հարուստ թունա շագանակագույն բրնձով, սպանախով, ոլոռով և գազարով — ~430 կկալ: Լավագույնը վերարկուի առողջության և թեթև մարսողության համար:"
+              - generic [ref=e415]: £20.00
+              - button "Ավելացնել զամբյուղ" [ref=e416]
+        - 'link "Cod + Rice + Veggies Տեսնել ապրանքը Ձողաձուկ + բրինձ + բանջարեղեն Թեթև ձողաձուկ սպիտակ բրնձով, կանաչ լոբի և գազարով — ~ 360 կկալ: Լավագույնը զգայուն ստամոքսի և ցածր յուղայնությամբ դիետաների համար: £20.00 Ավելացնել զամբյուղ" [ref=e418] [cursor=pointer]':
+          - /url: /products/cod-rice-veggies
+          - generic [ref=e419]:
+            - generic [ref=e420]:
+              - img "Cod + Rice + Veggies" [ref=e421]
+              - generic [ref=e423]: Տեսնել ապրանքը
+            - generic [ref=e424]:
+              - heading "Ձողաձուկ + բրինձ + բանջարեղեն" [level=3] [ref=e425]
+              - paragraph [ref=e426]: "Թեթև ձողաձուկ սպիտակ բրնձով, կանաչ լոբի և գազարով — ~ 360 կկալ: Լավագույնը զգայուն ստամոքսի և ցածր յուղայնությամբ դիետաների համար:"
+              - generic [ref=e428]: £20.00
+              - button "Ավելացնել զամբյուղ" [ref=e429]
+        - 'link "Chickpea + Quinoa Plant Mix Տեսնել ապրանքը Chickpea + Quinoa բույսերի խառնուրդ Բուսական հիմքով քինոայի և սիսեռի խառնուրդ սպանախի, ոլոռի և կտավատի սերմի հետ — ~510 կկալ: Լավագույնը բուսական սպիտակուցի, մանրաթելերի և մարսողության համար: £10.00 Ավելացնել զամբյուղ" [ref=e431] [cursor=pointer]':
+          - /url: /products/chickpea-quinoa-plant-mix
+          - generic [ref=e432]:
+            - generic [ref=e433]:
+              - img "Chickpea + Quinoa Plant Mix" [ref=e434]
+              - generic [ref=e436]: Տեսնել ապրանքը
+            - generic [ref=e437]:
+              - heading "Chickpea + Quinoa բույսերի խառնուրդ" [level=3] [ref=e438]
+              - paragraph [ref=e439]: "Բուսական հիմքով քինոայի և սիսեռի խառնուրդ սպանախի, ոլոռի և կտավատի սերմի հետ — ~510 կկալ: Լավագույնը բուսական սպիտակուցի, մանրաթելերի և մարսողության համար:"
+              - generic [ref=e441]: £10.00
+              - button "Ավելացնել զամբյուղ" [ref=e442]
+  - contentinfo [ref=e48]:
+    - generic [ref=e49]:
+      - generic [ref=e50]:
+        - generic [ref=e51]:
+          - heading "Միացիր մեր VIP ցանկին" [level=4] [ref=e52]
+          - paragraph [ref=e53]: Առաջինը իմացիր նոր ապրանքների մասին, մասնակցիր բացառիկ մրցույթների և ստացիր օգտակար խորհուրդներ ընտանի կենդանիների խնամքի մասին։
+          - generic [ref=e54]:
+            - textbox "Մուտքագրիր քո էլ. փոստի հասցեն" [ref=e55]
+            - button "Գրանցվել" [ref=e56] [cursor=pointer]
+        - generic [ref=e57]:
+          - generic [ref=e58]:
+            - heading "Jeko" [level=4] [ref=e59]
+            - list [ref=e60]:
+              - listitem [ref=e61]:
+                - link "Մեր պատմությունը" [ref=e62] [cursor=pointer]:
+                  - /url: /about
+              - listitem [ref=e63]:
+                - link "Կարծիքներ" [ref=e64] [cursor=pointer]:
+                  - /url: /reviews
+              - listitem [ref=e65]:
+                - link "Բաղադրատոմսեր" [ref=e66] [cursor=pointer]:
+                  - /url: /recipes
+              - listitem [ref=e67]:
+                - link "Ավելին քան ամանը" [ref=e68] [cursor=pointer]:
+                  - /url: /beyond-the-bowl
+              - listitem [ref=e69]:
+                - link "Խանութ" [ref=e70] [cursor=pointer]:
+                  - /url: /products
+              - listitem [ref=e71]:
+                - link "Համայնք" [ref=e72] [cursor=pointer]:
+                  - /url: /community
+          - generic [ref=e73]:
+            - heading "Օգնություն" [level=4] [ref=e74]
+            - list [ref=e75]:
+              - listitem [ref=e76]:
+                - link "Իմ հաշիվը" [ref=e77] [cursor=pointer]:
+                  - /url: /profile
+              - listitem [ref=e78]:
+                - link "Կապ մեզ հետ" [ref=e79] [cursor=pointer]:
+                  - /url: /contact
+              - listitem [ref=e80]:
+                - link "Առաքման տեղեկատվություն" [ref=e81] [cursor=pointer]:
+                  - /url: /delivery-information
+              - listitem [ref=e82]:
+                - link "Վերադարձներ" [ref=e83] [cursor=pointer]:
+                  - /url: /returns
+              - listitem [ref=e84]:
+                - link "Կայքի քարտեզ" [ref=e85] [cursor=pointer]:
+                  - /url: /sitemap-page
+          - generic [ref=e86]:
+            - heading "Տեղեկատվություն" [level=4] [ref=e87]
+            - list [ref=e88]:
+              - listitem [ref=e89]:
+                - link "Գաղտնիության քաղաքականություն" [ref=e90] [cursor=pointer]:
+                  - /url: /privacy-policy
+              - listitem [ref=e91]:
+                - link "Պայմաններ և դրույթներ" [ref=e92] [cursor=pointer]:
+                  - /url: /terms-of-use
+              - listitem [ref=e93]:
+                - link "Jeko-ի քաղաքականություն" [ref=e94] [cursor=pointer]:
+                  - /url: /pure-policies
+              - listitem [ref=e95]:
+                - link "Կայքի անվտանգություն" [ref=e96] [cursor=pointer]:
+                  - /url: /site-security
+              - listitem [ref=e97]:
+                - link "Cookie-ների քաղաքականություն" [ref=e98] [cursor=pointer]:
+                  - /url: /cookie-policy
+      - generic [ref=e99]:
+        - generic [ref=e101]: JEKO
+        - paragraph [ref=e102]: © Jeko 2020-2026
+  - generic [ref=e443]:
+    - generic [ref=e444]:
+      - paragraph [ref=e445]: Հաու՜ 🐾
+      - paragraph [ref=e446]: Գտիր ընկեր քո կենդանու համար։
+    - button "Find pet matches" [ref=e448] [cursor=pointer]:
+      - img "Jeko dog" [ref=e449]
+  - alert [ref=e450]
