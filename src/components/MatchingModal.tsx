@@ -3,11 +3,13 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useSignupUrl } from '@/lib/useSignupUrl';
+import { supabase } from '@/lib/supabase';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export default function MatchingModal({ content }: { content?: Record<string, any> }) {
   const [isOpen, setIsOpen] = useState(false);
   const [isMounted, setIsMounted] = useState(false);
+  const [userCount, setUserCount] = useState<number | null>(null);
 
   const enabled = content?.enabled !== false;
   const heading = content?.heading || 'Register Your Pet & Save!';
@@ -17,6 +19,19 @@ export default function MatchingModal({ content }: { content?: Record<string, an
   const signupUrl = useSignupUrl();
   const ctaUrl = content?.cta_url || signupUrl;
   const closeText = content?.close_text || 'Maybe later';
+  const communityCountTemplate = content?.community_count_text || 'Join {count}+ pet parents already in our community!';
+
+  useEffect(() => {
+    let cancelled = false;
+    supabase
+      .from('user_profiles')
+      .select('user_id', { count: 'exact', head: true })
+      .then(({ count, error }) => {
+        if (cancelled || error || count == null) return;
+        setUserCount(count);
+      });
+    return () => { cancelled = true; };
+  }, []);
 
   useEffect(() => {
     setIsMounted(true);
@@ -100,6 +115,14 @@ export default function MatchingModal({ content }: { content?: Record<string, an
               <p className="text-deep-green/60 text-[11px] sm:text-sm leading-tight sm:leading-relaxed mb-2 sm:mb-4">
                 {description}
               </p>
+              {userCount != null && communityCountTemplate && (
+                <div className="flex items-center gap-1.5 sm:gap-2 bg-gold/10 border border-gold/30 rounded-lg sm:rounded-xl px-2 sm:px-3 py-1.5 sm:py-2 mb-2 sm:mb-4">
+                  <span className="text-sm sm:text-lg" aria-hidden="true">🐾</span>
+                  <p className="text-deep-green text-[11px] sm:text-sm font-semibold leading-tight">
+                    {communityCountTemplate.replace('{count}', userCount.toLocaleString())}
+                  </p>
+                </div>
+              )}
             </div>
 
             {/* Buttons */}

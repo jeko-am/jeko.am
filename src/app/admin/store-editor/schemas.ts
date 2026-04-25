@@ -347,6 +347,7 @@ const HOMEPAGE_SECTIONS: SectionSchema[] = [
       { key: 'cta_text', label: 'CTA Button Text', type: 'text' },
       { key: 'cta_url', label: 'CTA Button URL', type: 'url' },
       { key: 'close_text', label: 'Close Button Text', type: 'text' },
+      { key: 'community_count_text', label: 'Community Count Text (use {count})', type: 'text', placeholder: 'Join {count}+ pet parents already in our community!' },
     ],
     defaultContent: {
       enabled: true,
@@ -356,6 +357,7 @@ const HOMEPAGE_SECTIONS: SectionSchema[] = [
       cta_text: 'Start Matching',
       cta_url: '/auth/signup',
       close_text: 'Close',
+      community_count_text: 'Join {count}+ pet parents already in our community!',
     },
   },
 ];
