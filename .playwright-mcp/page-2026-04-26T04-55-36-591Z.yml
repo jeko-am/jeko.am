@@ -1,0 +1,11 @@
+- generic [active] [ref=e1]:
+  - paragraph [ref=e5]:
+    - generic [ref=e6]: Checking session...
+  - generic:
+    - generic:
+      - paragraph:
+        - generic: Wow! 🐾
+      - paragraph:
+        - generic: Find a friend for your pet.
+    - button "Find pet matches":
+      - img "Jack the dog"

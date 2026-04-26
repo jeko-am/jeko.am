@@ -208,9 +208,10 @@ const SwipeCard = memo(function SwipeCard({ candidate, isTop, onSwipe, onLove: _
   useEffect(()=>{
     if(!isTop) return;
     const card=cardRef.current; if(!card) return;
-    const onTS=(e:TouchEvent)=>{e.preventDefault();e.stopPropagation();handleStart(e.touches[0].clientX);};
-    const onTM=(e:TouchEvent)=>{e.preventDefault();e.stopPropagation();handleMove(e.touches[0].clientX);};
-    const onTE=(e:TouchEvent)=>{e.preventDefault();e.stopPropagation();handleEnd();};
+    let dragging=false;
+    const onTS=(e:TouchEvent)=>{if((e.target as HTMLElement).closest('button')){dragging=false;return;}e.preventDefault();e.stopPropagation();dragging=true;handleStart(e.touches[0].clientX);};
+    const onTM=(e:TouchEvent)=>{if(!dragging)return;e.preventDefault();e.stopPropagation();handleMove(e.touches[0].clientX);};
+    const onTE=(e:TouchEvent)=>{if(!dragging)return;e.preventDefault();e.stopPropagation();dragging=false;handleEnd();};
     card.addEventListener("touchstart",onTS,{passive:false});
     card.addEventListener("touchmove",onTM,{passive:false});
     card.addEventListener("touchend",onTE,{passive:false});
@@ -249,7 +250,7 @@ const SwipeCard = memo(function SwipeCard({ candidate, isTop, onSwipe, onLove: _
   return (
     <div ref={cardRef} className="absolute inset-0 select-none touch-none" style={{...cardStyle,zIndex:isTop?10:5}}
       onMouseDown={(e)=>{const t=e.target as HTMLElement;if(!t.closest('button')){e.preventDefault();handleStart(e.clientX);}}}
-      onTouchStart={(e)=>{const t=e.target as HTMLElement;if(!t.closest('button')){e.preventDefault();handleStart(e.touches[0].clientX);}}}>
+>
       <div className="w-full h-full rounded-3xl shadow-2xl overflow-hidden flex flex-col bg-white relative">
         {isTop && (
           <>

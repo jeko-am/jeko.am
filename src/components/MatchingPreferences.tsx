@@ -3,7 +3,7 @@ import { useState, useEffect, useRef } from "react";
 import { useAuth } from "@/lib/auth";
 import { supabase } from "@/lib/supabase";
 import type { MatchingPreferences as MatchPrefsType } from "@/lib/matching-types";
-import { getBreedsByPetType, ARMENIAN_CITIES } from "@/lib/constants";
+import { getBreedsByPetType, CITIES_BY_COUNTRY } from "@/lib/constants";
 import { useT } from "@/lib/i18n/LangProvider";
 
 interface MatchingPreferencesProps {
@@ -32,8 +32,6 @@ interface PreferencesState extends Partial<MatchPrefsType> {
   exclude_already_disliked?: boolean;
 }
 
-
-const COMMON_CITIES = ARMENIAN_CITIES;
 
 export default function MatchingPreferences({ petProfileId, petType, onPreferencesChange }: MatchingPreferencesProps) {
   const { t } = useT();
@@ -72,6 +70,9 @@ export default function MatchingPreferences({ petProfileId, petType, onPreferenc
     exclude_already_liked: false,
     exclude_already_disliked: true,
   });
+
+  const [selectedCountry, setSelectedCountry] = useState("Armenia");
+  const citiesForCountry = CITIES_BY_COUNTRY[selectedCountry] ?? [];
 
   const [breedSearch, setBreedSearch] = useState("");
   const [breedDropdownOpen, setBreedDropdownOpen] = useState(false);
@@ -136,9 +137,13 @@ export default function MatchingPreferences({ petProfileId, petType, onPreferenc
       // (city, breed, gender, weight, age) from signup data.
       const { data: petProfile } = await supabase
         .from("pet_profiles")
-        .select("breed, gender, city, weight_kg, dog_age_years")
+        .select("breed, gender, city, country, weight_kg, dog_age_years")
         .eq("id", petProfileId)
         .maybeSingle();
+
+      if (petProfile?.country) {
+        setSelectedCountry(petProfile.country);
+      }
 
       const { data } = await supabase
         .from("matching_preferences")
@@ -289,22 +294,24 @@ export default function MatchingPreferences({ petProfileId, petType, onPreferenc
                 />
               </div>
 
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">{t("prefs.location.preferredCities")}</label>
-                <div className="grid grid-cols-2 gap-2">
-                  {COMMON_CITIES.map(city => (
-                    <label key={city} className="flex items-center text-sm">
-                      <input
-                        type="checkbox"
-                        checked={(preferences.preferred_cities || []).includes(city)}
-                        onChange={() => toggleArrayItem("preferred_cities", city)}
-                        className="mr-2 h-4 w-4 text-gold focus:ring-gold border-gray-300 rounded"
-                      />
-                      {city}
-                    </label>
-                  ))}
+              {citiesForCountry.length > 0 && (
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">{t("prefs.location.preferredCities")}</label>
+                  <div className="grid grid-cols-2 gap-2 max-h-60 overflow-y-auto pr-1">
+                    {citiesForCountry.map(city => (
+                      <label key={city} className="flex items-center text-sm">
+                        <input
+                          type="checkbox"
+                          checked={(preferences.preferred_cities || []).includes(city)}
+                          onChange={() => toggleArrayItem("preferred_cities", city)}
+                          className="mr-2 h-4 w-4 text-gold focus:ring-gold border-gray-300 rounded"
+                        />
+                        {city}
+                      </label>
+                    ))}
+                  </div>
                 </div>
-              </div>
+              )}
             </>
           )}
         </div>

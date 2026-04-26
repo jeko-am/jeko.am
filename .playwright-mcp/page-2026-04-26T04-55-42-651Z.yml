@@ -1,0 +1,9 @@
+- generic [active] [ref=e1]:
+  - paragraph [ref=e5]: Տեղափոխվում է...
+  - generic:
+    - generic:
+      - paragraph: Հաու՜ 🐾
+      - paragraph: Գտիր ընկեր քո կենդանու համար։
+    - button "Find pet matches":
+      - img "Jeko dog"
+  - alert [ref=e6]
