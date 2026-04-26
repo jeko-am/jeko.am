@@ -163,12 +163,13 @@ const SwipeCard = memo(function SwipeCard({ candidate, isTop, onSwipe, onLove: _
 }) {
   const { t } = useT();
   const cardRef = useRef<HTMLDivElement>(null);
-  const [dragState, setDragState] = useState({isDragging:false, startX:0, currentX:0, dx:0});
-  const [flyDirection, setFlyDirection] = useState<"left"|"right"|null>(null);
+  const likeRef = useRef<HTMLDivElement>(null);
+  const nopeRef = useRef<HTMLDivElement>(null);
+  // All drag state lives in a ref — no React re-renders during drag
+  const dragRef = useRef({active:false, startX:0, dx:0});
   const animatingRef = useRef(false);
   const [photoIndex, setPhotoIndex] = useState(0);
 
-  // Build photos array: gallery photos first, then fallback to profile photo
   const allPhotos = (() => {
     const photos: string[] = [];
     if (candidate.photos && candidate.photos.length > 0) photos.push(...candidate.photos);
@@ -180,30 +181,75 @@ const SwipeCard = memo(function SwipeCard({ candidate, isTop, onSwipe, onLove: _
   const sizeLabel = candidate.weight_kg ? (candidate.weight_kg<10?t("swipe.size.small"):candidate.weight_kg<25?t("swipe.size.medium"):t("swipe.size.large")) : null;
   const distanceLabel = candidate.city||t("swipe.nearby");
 
+  // Play entry animation once when this card becomes the top card
+  useEffect(()=>{
+    const card=cardRef.current; if(!card||!isTop) return;
+    card.style.animation="card-enter 0.5s cubic-bezier(0.22,0.68,0.35,1)";
+    const tid=setTimeout(()=>{ if(cardRef.current) cardRef.current.style.animation=""; },500);
+    return()=>clearTimeout(tid);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  },[isTop]);
+
+  // Fly the card out — continues smoothly from current drag offset (no snap)
+  const flyOut = useCallback((dir:"left"|"right")=>{
+    if(animatingRef.current) return;
+    animatingRef.current=true;
+    const card=cardRef.current;
+    if(card){
+      const w=window.innerWidth||800;
+      const targetX=dir==="right"?w*1.2:-w*1.2;
+      const targetRot=dir==="right"?20:-20;
+      // Use a transition from the current transform — guarantees no jump
+      card.style.animation="";
+      card.style.transition="transform 0.5s cubic-bezier(0.22,0.68,0.35,1), opacity 0.5s ease-out";
+      card.style.transform=`translateX(${targetX}px) rotate(${targetRot}deg) scale(0.85)`;
+      card.style.opacity="0";
+    }
+    setTimeout(()=>{ animatingRef.current=false; onSwipe(dir); },500);
+  },[onSwipe]);
+
   const handleStart = useCallback((clientX:number)=>{
     if(!isTop||animatingRef.current) return;
-    setDragState({isDragging:true,startX:clientX,currentX:clientX,dx:0});
+    dragRef.current={active:true, startX:clientX, dx:0};
+    const card=cardRef.current; if(card){ card.style.transition="none"; card.style.cursor="grabbing"; }
   },[isTop]);
 
   const handleMove = useCallback((clientX:number)=>{
-    setDragState(prev=>{
-      if(!prev.isDragging) return prev;
-      return {...prev, currentX:clientX, dx:clientX-prev.startX};
-    });
+    const d=dragRef.current; if(!d.active) return;
+    const dx=clientX-d.startX;
+    d.dx=dx;
+    const card=cardRef.current; if(!card) return;
+    // Dead zone: suppress micro-jitter from taps — only show movement after 8px
+    if(Math.abs(dx)<8){
+      card.style.transform="";
+      if(likeRef.current) likeRef.current.style.opacity="0";
+      if(nopeRef.current) nopeRef.current.style.opacity="0";
+      return;
+    }
+    card.style.transform=`translateX(${dx}px) rotate(${dx*0.04}deg)`;
+    const likeOp=Math.min(Math.max((dx-8)/SWIPE_THRESHOLD,0),1);
+    const nopeOp=Math.min(Math.max((-dx-8)/SWIPE_THRESHOLD,0),1);
+    if(likeRef.current) likeRef.current.style.opacity=String(likeOp);
+    if(nopeRef.current) nopeRef.current.style.opacity=String(nopeOp);
   },[]);
 
   const handleEnd = useCallback(()=>{
-    setDragState(prev=>{
-      if(!prev.isDragging) return prev;
-      const dx=prev.dx;
-      if(Math.abs(dx)>SWIPE_THRESHOLD){
-        const dir=dx>0?"right":"left";
-        setFlyDirection(dir); animatingRef.current=true;
-        setTimeout(()=>{onSwipe(dir);animatingRef.current=false;setFlyDirection(null);},600);
+    const d=dragRef.current; if(!d.active) return;
+    const dx=d.dx;
+    d.active=false;
+    if(Math.abs(dx)>SWIPE_THRESHOLD){
+      flyOut(dx>0?"right":"left");
+    } else {
+      const card=cardRef.current;
+      if(card){
+        card.style.transition="transform 0.35s cubic-bezier(0.22,0.68,0.35,1)";
+        card.style.transform="translateX(0) rotate(0deg)";
+        card.style.cursor="grab";
       }
-      return {isDragging:false,startX:0,currentX:0,dx:0};
-    });
-  },[onSwipe]);
+      if(likeRef.current){likeRef.current.style.transition="opacity 0.2s ease-out";likeRef.current.style.opacity="0";}
+      if(nopeRef.current){nopeRef.current.style.transition="opacity 0.2s ease-out";nopeRef.current.style.opacity="0";}
+    }
+  },[flyOut]);
 
   useEffect(()=>{
     if(!isTop) return;
@@ -218,46 +264,35 @@ const SwipeCard = memo(function SwipeCard({ candidate, isTop, onSwipe, onLove: _
     return()=>{card.removeEventListener("touchstart",onTS);card.removeEventListener("touchmove",onTM);card.removeEventListener("touchend",onTE);};
   },[isTop,handleStart,handleMove,handleEnd]);
 
-  useEffect(()=>{
-    if(!isTop||!dragState.isDragging) return;
-    const onMM=(e:MouseEvent)=>{e.preventDefault();e.stopPropagation();handleMove(e.clientX);};
-    const onMU=(e:MouseEvent)=>{e.preventDefault();e.stopPropagation();handleEnd();};
-    window.addEventListener("mousemove",onMM); window.addEventListener("mouseup",onMU);
-    return()=>{window.removeEventListener("mousemove",onMM);window.removeEventListener("mouseup",onMU);};
-  },[isTop,dragState.isDragging,handleMove,handleEnd]);
-
-  const triggerSwipe = useCallback((dir:"left"|"right")=>{
-    if(animatingRef.current) return;
-    setFlyDirection(dir); animatingRef.current=true;
-    setTimeout(()=>{onSwipe(dir);animatingRef.current=false;setFlyDirection(null);},600);
-  },[onSwipe]);
+  const triggerSwipe = useCallback((dir:"left"|"right")=>{ flyOut(dir); },[flyOut]);
 
   useEffect(()=>{
     const card=cardRef.current; if(!card||!isTop) return;
     (card as HTMLDivElement&{triggerSwipe?:(d:"left"|"right")=>void}).triggerSwipe=triggerSwipe;
   },[isTop,triggerSwipe]);
 
-  const dx=dragState.isDragging?dragState.dx:0;
-  const likeOpacity=Math.min(Math.max(dx/SWIPE_THRESHOLD,0),1);
-  const nopeOpacity=Math.min(Math.max(-dx/SWIPE_THRESHOLD,0),1);
-
-  let cardStyle: React.CSSProperties;
-  if(flyDirection) cardStyle={animation:`card-fly-${flyDirection} 0.6s cubic-bezier(0.22,0.68,0.35,1) forwards`, willChange:"transform"};
-  else if(dragState.isDragging) cardStyle={transform:`translateX(${dx}px) rotate(${dx*0.05}deg)`,transition:"none",cursor:"grabbing", willChange:"transform"};
-  else if(isTop) cardStyle={transform:"translateX(0) rotate(0deg)",transition:"transform 0.2s ease-out",cursor:"grab",animation:"card-enter 0.5s cubic-bezier(0.22,0.68,0.35,1)", willChange:"transform"};
-  else cardStyle={transform:"scale(0.9) translateY(10px)",opacity:0.6,transition:"all 0.5s cubic-bezier(0.22,0.68,0.35,1)", willChange:"transform"};
+  const cardStyle: React.CSSProperties = isTop
+    ? {transform:"translateX(0) rotate(0deg)",transition:"transform 0.2s ease-out",cursor:"grab",willChange:"transform"}
+    : {transform:"scale(0.9) translateY(10px)",opacity:0.6,transition:"all 0.5s cubic-bezier(0.22,0.68,0.35,1)",willChange:"transform"};
 
   return (
     <div ref={cardRef} className="absolute inset-0 select-none touch-none" style={{...cardStyle,zIndex:isTop?10:5}}
-      onMouseDown={(e)=>{const t=e.target as HTMLElement;if(!t.closest('button')){e.preventDefault();handleStart(e.clientX);}}}
->
+      onMouseDown={(e)=>{
+        const tgt=e.target as HTMLElement;
+        if(!tgt.closest('button')&&isTop&&!animatingRef.current){
+          e.preventDefault();
+          handleStart(e.clientX);
+          const onMM=(me:MouseEvent)=>{me.preventDefault();handleMove(me.clientX);};
+          const onMU=()=>{window.removeEventListener("mousemove",onMM);window.removeEventListener("mouseup",onMU);handleEnd();};
+          window.addEventListener("mousemove",onMM);
+          window.addEventListener("mouseup",onMU);
+        }
+      }}>
       <div className="w-full h-full rounded-3xl shadow-2xl overflow-hidden flex flex-col bg-white relative">
         {isTop && (
           <>
-            <div className="absolute top-6 left-5 z-30 border-[3px] border-emerald-400 text-emerald-400 font-black text-2xl sm:text-3xl px-4 py-1 rounded-xl -rotate-12 bg-white/80 backdrop-blur-sm"
-              style={{opacity:likeOpacity,transition:dragState.isDragging?"none":"opacity 0.15s ease-out"}}>{t("swipe.label.like")}</div>
-            <div className="absolute top-6 right-5 z-30 border-[3px] border-red-400 text-red-400 font-black text-2xl sm:text-3xl px-4 py-1 rounded-xl rotate-12 bg-white/80 backdrop-blur-sm"
-              style={{opacity:nopeOpacity,transition:dragState.isDragging?"none":"opacity 0.15s ease-out"}}>{t("swipe.label.nope")}</div>
+            <div ref={likeRef} className="absolute top-6 left-5 z-30 border-[3px] border-emerald-400 text-emerald-400 font-black text-2xl sm:text-3xl px-4 py-1 rounded-xl -rotate-12 bg-white/80 backdrop-blur-sm" style={{opacity:0,transition:"none"}}>{t("swipe.label.like")}</div>
+            <div ref={nopeRef} className="absolute top-6 right-5 z-30 border-[3px] border-red-400 text-red-400 font-black text-2xl sm:text-3xl px-4 py-1 rounded-xl rotate-12 bg-white/80 backdrop-blur-sm" style={{opacity:0,transition:"none"}}>{t("swipe.label.nope")}</div>
           </>
         )}
         <div className="relative flex-1 min-h-0 bg-gradient-to-br from-amber-100 to-orange-50">
@@ -691,16 +726,6 @@ export default function SwipePage() {
               <div ref={topCardContainerRef}
                 className="relative w-full max-w-[360px] sm:max-w-[400px] lg:max-w-[420px]"
                 style={{aspectRatio:"3/4.3", willChange:"transform"}}>
-                {nextCandidate && (
-                  <>
-                    <div className="absolute -left-3 sm:-left-5 top-3 bottom-3 w-[calc(100%-1rem)] rounded-3xl bg-gray-300/40 shadow" style={{zIndex:1, willChange:"transform"}}/>
-                    <div className="absolute -right-2 sm:-right-4 top-2 bottom-2 w-[calc(100%-0.5rem)] rounded-3xl bg-white/60 shadow-md overflow-hidden" style={{zIndex:2, willChange:"transform"}}>
-                      {(nextCandidate.profile_photo_url||nextCandidate.avatar_url) && (
-                        <Image src={(nextCandidate.profile_photo_url||nextCandidate.avatar_url)!} alt="" fill className="object-cover opacity-50" unoptimized/>
-                      )}
-                    </div>
-                  </>
-                )}
                 {nextCandidate && (
                   <SwipeCard key={`card-${nextCandidate.user_id}`} candidate={nextCandidate} isTop={false} onSwipe={()=>{}} onLove={()=>{}} likesToday={0}/>
                 )}

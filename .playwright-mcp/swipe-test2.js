@@ -1,0 +1,1 @@
+"{\"cardCount\":0,\"allStyles\":[],\"topCardFound\":false,\"topCardStyle\":null}"
