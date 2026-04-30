@@ -6,6 +6,13 @@ import { useContentT } from "@/lib/i18n/useContentT";
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export default function YorkshireVet({ content }: { content?: any }) {
   const { ct } = useContentT(content);
+  // ct() returns the i18n fallback when content[key] is missing. To let the
+  // client clear a field from the store editor we treat an explicit empty
+  // string in `content` as "hide this line".
+  const hasOwn = (k: string) => Object.prototype.hasOwnProperty.call(content ?? {}, k);
+  const heading = hasOwn("heading") ? content!.heading : ct("heading", "home.vet.heading");
+  const author = hasOwn("author") ? content!.author : ct("author", "home.vet.authorName");
+  const quote = hasOwn("quote") ? content!.quote : ct("quote", "home.vet.quoteText");
   return (
     <section className="relative overflow-hidden">
       <div className="flex flex-col md:flex-row min-h-[480px]">
@@ -30,15 +37,21 @@ export default function YorkshireVet({ content }: { content?: any }) {
           </div>
 
           <div className="px-12 md:px-16 lg:px-24 py-12 relative z-10">
-            <h2 className="text-[32px] md:text-[40px] font-medium text-deep-green tracking-wide leading-tight mb-2">
-              {ct("heading", "home.vet.heading")}
-            </h2>
-            <p className="text-[#6B8E3A] text-[32px] md:text-[38px] font-medium tracking-wide mb-6">
-              {ct("author", "home.vet.author")}
-            </p>
-            <p className="text-deep-green text-[18px] leading-relaxed max-w-md italic">
-              \u201c{ct("quote", "home.vet.quoteText")}\u201d
-            </p>
+            {heading ? (
+              <h2 className="text-[32px] md:text-[40px] font-medium text-deep-green tracking-wide leading-tight mb-2">
+                {heading}
+              </h2>
+            ) : null}
+            {author ? (
+              <p className="text-[#6B8E3A] text-[32px] md:text-[38px] font-medium tracking-wide mb-6">
+                {author}
+              </p>
+            ) : null}
+            {quote ? (
+              <p className="text-deep-green text-[18px] leading-relaxed max-w-md italic">
+                {"\u201c"}{quote}{"\u201d"}
+              </p>
+            ) : null}
           </div>
         </div>
 

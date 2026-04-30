@@ -1,0 +1,26 @@
+- generic [active] [ref=e1]:
+  - alert [ref=e6]
+  - generic [ref=e409]:
+    - link "JEKO" [ref=e412] [cursor=pointer]:
+      - /url: /
+      - generic [ref=e413]: JEKO
+    - generic [ref=e415]:
+      - generic [ref=e416]:
+        - heading "Welcome back!" [level=1] [ref=e417]
+        - paragraph [ref=e418]: Sign in to your Jeko account
+      - generic [ref=e420]:
+        - generic [ref=e421]:
+          - generic [ref=e422]: Email
+          - textbox "Email" [ref=e423]:
+            - /placeholder: admin@jeko.am
+            - text: admin@purepet.test
+        - generic [ref=e424]:
+          - generic [ref=e425]: Password
+          - generic [ref=e426]:
+            - textbox "Password" [ref=e427]:
+              - /placeholder: Enter your password
+              - text: admin123
+            - button [ref=e428] [cursor=pointer]:
+              - img [ref=e429]
+        - button "Sign in" [ref=e432] [cursor=pointer]
+      - paragraph [ref=e433]: Jeko Pet Matching · Secure login

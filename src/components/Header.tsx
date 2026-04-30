@@ -152,14 +152,16 @@ export default function Header({ content }: { content?: any }) {
   const helpUrl = content?.help_url ?? "/contact";
   const loginUrl = content?.login_url ?? "/login";
 
+  // Treat undefined as visible (legacy rows). Only an explicit `false` hides the item.
+  const visible = (v: unknown) => v !== false;
   const navItems = content
     ? [
-        { label: ct("nav_1_label", "header.nav.about"), href: content.nav_1_url ?? "/about", hasDropdown: true, dropdown: aboutDropdown },
-        { label: ct("nav_2_label", "header.nav.community"), href: content.nav_2_url ?? "/community", hasDropdown: true, dropdown: communityDropdown },
-        { label: ct("nav_3_label", "header.nav.shop"), href: content.nav_3_url ?? "/products", hasDropdown: false, dropdown: [] as { label: string; href: string }[] },
-        { label: ct("nav_4_label", "header.nav.reviews"), href: content.nav_4_url ?? "/reviews", hasDropdown: false, dropdown: [] as { label: string; href: string }[] },
-        { label: ct("nav_5_label", "benefits.title"), href: content.nav_5_url ?? "/benefits", hasDropdown: true, dropdown: healthDropdown },
-      ]
+        { label: ct("nav_1_label", "header.nav.about"), href: content.nav_1_url ?? "/about", hasDropdown: true, dropdown: aboutDropdown, visible: visible(content.nav_1_visible) },
+        { label: ct("nav_2_label", "header.nav.community"), href: content.nav_2_url ?? "/community", hasDropdown: true, dropdown: communityDropdown, visible: visible(content.nav_2_visible) },
+        { label: ct("nav_3_label", "header.nav.shop"), href: content.nav_3_url ?? "/products", hasDropdown: false, dropdown: [] as { label: string; href: string }[], visible: visible(content.nav_3_visible) },
+        { label: ct("nav_4_label", "header.nav.reviews"), href: content.nav_4_url ?? "/reviews", hasDropdown: false, dropdown: [] as { label: string; href: string }[], visible: visible(content.nav_4_visible) },
+        { label: ct("nav_5_label", "benefits.title"), href: content.nav_5_url ?? "/benefits", hasDropdown: true, dropdown: healthDropdown, visible: visible(content.nav_5_visible) },
+      ].filter((item) => item.visible)
     : defaultNavItems;
 
   useEffect(() => {

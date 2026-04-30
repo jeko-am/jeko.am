@@ -4,6 +4,7 @@ export const dynamic = "force-dynamic";
 export const revalidate = 0;
 import Header from "@/components/Header";
 import HeroSection from "@/components/HeroSection";
+import PlayfulSignupCTA from "@/components/PlayfulSignupCTA";
 import OfferBanner from "@/components/OfferBanner";
 import WhatIsPure from "@/components/WhatIsPure";
 import BenefitsBar from "@/components/BenefitsBar";
@@ -97,6 +98,11 @@ export default async function Home() {
         {show(1) && (
           <div data-section-index="1" data-section-name="Hero Section">
             <HeroSection content={sectionData.get(1)} />
+          </div>
+        )}
+        {show(16) && (
+          <div data-section-index="16" data-section-name="Playful Signup CTA">
+            <PlayfulSignupCTA content={sectionData.get(16)} />
           </div>
         )}
         {show(2) && (

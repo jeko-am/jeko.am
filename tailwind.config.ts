@@ -17,8 +17,12 @@ const config: Config = {
         'beige-light': '#f5f1eb',
       },
       fontFamily: {
-        rubik: ['Rubik', 'Helvetica', 'Arial', 'sans-serif'],
-        sofia: ['Sofia Pro', 'Rubik', 'Arial', 'sans-serif'],
+        // Site-wide default rounded font (VAG Rounded Next Heavy stand-in)
+        sans: ['Fredoka', 'Rubik', 'Helvetica', 'Arial', 'sans-serif'],
+        rubik: ['Fredoka', 'Rubik', 'Helvetica', 'Arial', 'sans-serif'],
+        fredoka: ['Fredoka', 'Rubik', 'Helvetica', 'Arial', 'sans-serif'],
+        sofia: ['Fredoka', 'Sofia Pro', 'Rubik', 'Arial', 'sans-serif'],
+        // Frankfurter retained for the JEKO logo / specific accents only
         frankfurter: ['Frankfurter', 'Rubik', 'Arial', 'sans-serif'],
       },
       maxWidth: {

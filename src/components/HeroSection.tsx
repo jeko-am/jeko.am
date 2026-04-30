@@ -14,6 +14,7 @@ export default function HeroSection({ content }: { content?: Record<string, any>
   const signupUrl = useSignupUrl();
   const buttonUrl = content?.button_url || signupUrl;
   const bgImage = content?.background_image || "https://images.unsplash.com/photo-1587300003388-59208cc962cb?auto=format&fit=crop&h=800&w=1920";
+  const bgImageMobile = content?.background_image_mobile || bgImage;
   const trustpilotLabel = ct("trustpilot_label", "home.hero.trustpilotLabel");
   const trustpilotScoreText = ct("trustpilot_score_text", "home.hero.trustpilotScoreText");
   const trustpilotScore = parseFloat(content?.trustpilot_score || "4.6");
@@ -24,28 +25,46 @@ export default function HeroSection({ content }: { content?: Record<string, any>
     <section
       className="relative w-full overflow-hidden min-h-[480px] lg:min-h-[600px]"
     >
-      {/* Background image - fills entire section */}
+      {/* Background image - fills entire section. Separate mobile/desktop sources. */}
       <div className="absolute inset-0">
-        <Image
-          src={bgImage}
-          alt="Happy golden retriever dog enjoying fresh food"
-          fill
-          className="object-cover object-center"
-          priority
-          unoptimized
-        />
+        {/* Mobile image */}
+        <div className="absolute inset-0 md:hidden">
+          <Image
+            src={bgImageMobile}
+            alt="Happy golden retriever dog enjoying fresh food"
+            fill
+            className="object-cover object-center"
+            priority
+            unoptimized
+          />
+        </div>
+        {/* Desktop image */}
+        <div className="absolute inset-0 hidden md:block">
+          <Image
+            src={bgImage}
+            alt="Happy golden retriever dog enjoying fresh food"
+            fill
+            className="object-cover object-center"
+            priority
+            unoptimized
+          />
+        </div>
+        {/* Subtle tint overlay for text readability */}
+        <div className="absolute inset-0 bg-black/10" />
       </div>
 
       {/* Content */}
       <div className="relative z-10 mx-auto flex min-h-[520px] max-w-container items-center px-6 lg:px-8">
         <div className="w-full max-w-[560px] py-12 md:py-16">
-          {/* H1 Heading */}
+          {/* H1 Heading - milky white per client */}
           <h1
-            className="font-frankfurter text-deep-green"
+            className="font-frankfurter"
             style={{
               fontSize: "50px",
               fontWeight: "normal",
               lineHeight: "52px",
+              color: "#F5F1EB",
+              textShadow: "0 2px 12px rgba(0,0,0,0.25)",
             }}
           >
             {heading}
@@ -55,11 +74,13 @@ export default function HeroSection({ content }: { content?: Record<string, any>
 
           {/* Subtitle */}
           <p
-            className="mt-6 font-rubik text-deep-green"
+            className="mt-6 font-rubik"
             style={{
               fontSize: "20px",
               fontWeight: 600,
               lineHeight: "28px",
+              color: "#F5F1EB",
+              textShadow: "0 1px 8px rgba(0,0,0,0.25)",
             }}
           >
             {subheading}
@@ -126,10 +147,10 @@ export default function HeroSection({ content }: { content?: Record<string, any>
 
             {/* Rating text */}
             <div className="flex items-center gap-1.5">
-              <span className="text-sm font-semibold text-deep-green">
+              <span className="text-sm font-semibold" style={{ color: "#F5F1EB" }}>
                 {trustpilotLabel}
               </span>
-              <span className="text-sm text-deep-green/70">
+              <span className="text-sm" style={{ color: "rgba(245,241,235,0.85)" }}>
                 {trustpilotScoreText}
               </span>
               {/* Trustpilot logo */}
@@ -145,7 +166,7 @@ export default function HeroSection({ content }: { content?: Record<string, any>
                   fill="#00B67A"
                 />
               </svg>
-              <span className="text-xs font-medium text-deep-green/60">
+              <span className="text-xs font-medium" style={{ color: "rgba(245,241,235,0.75)" }}>
                 Trustpilot
               </span>
             </div>

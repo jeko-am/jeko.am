@@ -2,7 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
-@import url('https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;600;700&family=Caveat:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;600;700&family=Caveat:wght@400;500;600;700&family=Fredoka:wght@400;500;600;700&display=swap');
 
 @font-face {
   font-family: 'Frankfurter';
@@ -48,21 +48,23 @@ html {
   scroll-behavior: smooth;
 }
 
+/* Site default — Fredoka stands in for VAG Rounded Next Heavy (closest free Google Font).
+   Replace with the licensed VAG Rounded ttf via @font-face if/when client provides it. */
 body {
-  font-family: 'Rubik', Arial, Helvetica, sans-serif;
+  font-family: 'Fredoka', 'Rubik', Arial, Helvetica, sans-serif;
   background-color: var(--off-white);
   color: var(--deep-green);
   overflow-x: hidden;
 }
 
 h1, h2, h3 {
-  font-family: 'Frankfurter', 'Rubik', Helvetica, Arial, sans-serif;
-  font-weight: normal;
+  font-family: 'Fredoka', 'Frankfurter', 'Rubik', Helvetica, Arial, sans-serif;
+  font-weight: 700;
   color: var(--deep-green);
 }
 
 h4, h5, h6 {
-  font-family: 'Rubik', Helvetica, Arial, sans-serif;
+  font-family: 'Fredoka', 'Rubik', Helvetica, Arial, sans-serif;
   font-weight: 600;
   color: var(--deep-green);
 }
