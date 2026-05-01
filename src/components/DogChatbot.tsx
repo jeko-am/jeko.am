@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import { useRouter, usePathname } from "next/navigation";
 import { useT } from "@/lib/i18n/LangProvider";
+import { supabase } from "@/lib/supabase";
 
 export default function DogChatbot() {
   const { t } = useT();
@@ -11,6 +12,27 @@ export default function DogChatbot() {
   const [visible, setVisible] = useState(false);
   const [bubbleVisible, setBubbleVisible] = useState(false);
   const [isAdminRoute, setIsAdminRoute] = useState(false);
+  const [userCount, setUserCount] = useState<number | null>(null);
+
+  useEffect(() => {
+    let cancelled = false;
+    supabase
+      .from('user_profiles')
+      .select('user_id', { count: 'exact', head: true })
+      .then(({ count, error }) => {
+        if (cancelled || error || count == null) return;
+        setUserCount(count);
+      });
+    const channel = supabase
+      .channel('chatbot-user-count-live')
+      .on(
+        'postgres_changes',
+        { event: 'INSERT', schema: 'public', table: 'user_profiles' },
+        () => { if (!cancelled) setUserCount(prev => (prev != null ? prev + 1 : prev)); }
+      )
+      .subscribe();
+    return () => { cancelled = true; supabase.removeChannel(channel); };
+  }, []);
 
   useEffect(() => {
     // Check if current path is an admin route
@@ -88,6 +110,19 @@ export default function DogChatbot() {
           className="w-16 h-16 lg:w-20 lg:h-20 object-contain"
         />
       </button>
+
+      {/* Live registered-pets counter */}
+      {userCount != null && (
+        <div className="bg-white rounded-full shadow-lg border border-blue-200 px-3 py-1.5 flex items-center gap-1.5 mt-1">
+          <span aria-hidden="true">🐾</span>
+          <span className="font-mono font-bold text-blue-600 text-[15px] tabular-nums tracking-wider">
+            {String(userCount).padStart(4, '0')}
+          </span>
+          <span className="text-deep-green/70 text-[10px] font-semibold whitespace-nowrap">
+            {t('chatbot.counter.label') || 'pets registered'}
+          </span>
+        </div>
+      )}
 
       <style>{`
         @keyframes dogBounce {

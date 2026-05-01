@@ -805,6 +805,7 @@ export const en: Dict = {
   "home.faq.a7": "Yes! Every Jeko recipe is nutritionally complete and balanced, meeting all FEDIAF guidelines for adult dogs and puppies.",
   "chatbot.bubble.greeting": "Bow Wow! 🐾",
   "chatbot.bubble.subtext": "Find a friend for your pup!",
+  "chatbot.counter.label": "pets registered",
 
   // ─── Home: Product highlights (ProductHighlights component) ────────
   "home.highlights.badge": "Our Products",
@@ -2175,6 +2176,7 @@ export const hy: Dict = {
   "home.faq.a7": "Այո։ Յուրաքանչյուր Jeko բաղադրատոմս սննդարարորեն ամբողջական և հավասարակշռված է՝ համապատասխան մեծահասակ շների և լակոտների FEDIAF ուղեցույցներին։",
   "chatbot.bubble.greeting": "Հաու՜ 🐾",
   "chatbot.bubble.subtext": "Գտիր ընկեր քո կենդանու համար։",
+  "chatbot.counter.label": "գրանցված ընտանի կենդանի",
 
   // ─── Home: Product highlights (ProductHighlights component) ────────
   "home.highlights.badge": "Մեր ապրանքները",

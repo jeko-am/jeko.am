@@ -3,6 +3,7 @@ import "./globals.css";
 import { AuthProvider } from "@/lib/auth";
 import { CartProvider } from "@/lib/cart-context";
 import { CurrencyProvider } from "@/lib/currency";
+import SiteThemeBootstrap from "@/components/SiteThemeBootstrap";
 import MobileNavWrapper from "@/components/MobileNavWrapper";
 import SideCart from "@/components/SideCart";
 import ConditionalDogChatbot from "@/components/ConditionalDogChatbot";
@@ -39,6 +40,7 @@ export default async function RootLayout({
         <GTMNoScript />
         <LangProvider initialLang={lang}>
           <TranslationsBootstrap />
+          <SiteThemeBootstrap />
           <AuthProvider>
             <CurrencyProvider>
               <CartProvider>

@@ -31,7 +31,7 @@
 @font-face {
   font-family: 'VAG Rounded Next';
   src: url('/VAG%20Rounded%20Next%20Regular.ttf') format('truetype');
-  font-weight: 400;
+  font-weight: 100 900;
   font-style: normal;
   font-display: swap;
 }
@@ -42,6 +42,37 @@
 }
 .admin-panel .font-vag {
   font-family: 'VAG Rounded Next', 'Fredoka', 'Rubik', Helvetica, Arial, sans-serif !important;
+}
+
+/* Site-wide text colour override applied by SiteThemeBootstrap when an admin
+   has set a custom colour in /admin/store-editor/theme. Targets primary copy
+   colours used across sections; preserves accents (gold), inverted bars
+   (white on dark green), and form-state colours (red errors, etc.). */
+body[data-site-text] {
+  color: var(--site-text-color);
+}
+body[data-site-text] h1,
+body[data-site-text] h2,
+body[data-site-text] h3,
+body[data-site-text] h4,
+body[data-site-text] h5,
+body[data-site-text] h6,
+body[data-site-text] p,
+body[data-site-text] li,
+body[data-site-text] .text-deep-green,
+body[data-site-text] .text-gray-900,
+body[data-site-text] .text-gray-800,
+body[data-site-text] .text-gray-700 {
+  color: var(--site-text-color) !important;
+}
+/* Faded variants keep their relative opacity but tint to the new base. */
+body[data-site-text] .text-deep-green\/80,
+body[data-site-text] .text-deep-green\/70,
+body[data-site-text] .text-deep-green\/60,
+body[data-site-text] .text-deep-green\/50,
+body[data-site-text] .text-deep-green\/40 {
+  color: var(--site-text-color) !important;
+  opacity: 0.7;
 }
 
 :root {
