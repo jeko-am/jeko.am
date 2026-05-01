@@ -8,6 +8,7 @@ import { createOrder, OrderData, calculateOrderTotals, CreatedOrder } from '@/li
 import { useAuth } from '@/lib/auth';
 import { trackInitiateCheckout, trackPurchase } from '@/lib/tracking';
 import { useT } from '@/lib/i18n/LangProvider';
+import { useCurrency } from '@/lib/currency';
 
 interface CheckoutForm {
   email: string;
@@ -22,12 +23,9 @@ interface CheckoutForm {
   saveInfo: boolean;
 }
 
-function formatPrice(value: number): string {
-  return new Intl.NumberFormat('en-GB', { style: 'currency', currency: 'GBP' }).format(value);
-}
-
 export default function CheckoutPage() {
   const { t } = useT();
+  const { formatPrice } = useCurrency();
   const { items, totalPrice, clearCart, isHydrated } = useCart();
   const { user } = useAuth();
   const router = useRouter();

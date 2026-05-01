@@ -2,6 +2,7 @@
 
 import { supabase } from '@/lib/supabase';
 import { useEffect, useState, useCallback } from 'react';
+import { SUPPORTED_CURRENCIES, useCurrency, type CurrencyCode } from '@/lib/currency';
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
@@ -52,10 +53,11 @@ interface MenuItem {
   sort_order: number;
 }
 
-type TabId = 'shipping' | 'analytics' | 'menus' | 'subscribers';
+type TabId = 'shipping' | 'analytics' | 'menus' | 'subscribers' | 'currency';
 
 const TABS: { id: TabId; label: string; icon: string }[] = [
   { id: 'shipping', label: 'Shipping', icon: 'M8.25 18.75a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m3 0h6m-9 0H3.375a1.125 1.125 0 01-1.125-1.125V14.25m17.25 4.5a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m3 0h1.125c.621 0 1.129-.504 1.09-1.124a17.902 17.902 0 00-3.213-9.193 2.056 2.056 0 00-1.58-.86H14.25M16.5 18.75h-2.25m0-11.177v-.958c0-.568-.422-1.048-.987-1.106a48.554 48.554 0 00-10.026 0 1.106 1.106 0 00-.987 1.106v7.635m12-6.677v6.677m0 4.5v-4.5m0 0h-12' },
+  { id: 'currency', label: 'Currency', icon: 'M12 8c-1.657 0-3 1.343-3 3s1.343 3 3 3 3 1.343 3 3-1.343 3-3 3m0-12V4m0 16v-1m0-15a8 8 0 100 16 8 8 0 000-16z' },
   { id: 'analytics', label: 'Pixels & Tags', icon: 'M3 13.125C3 12.504 3.504 12 4.125 12h2.25c.621 0 1.125.504 1.125 1.125v6.75C7.5 20.496 6.996 21 6.375 21h-2.25A1.125 1.125 0 013 19.875v-6.75zM9.75 8.625c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125v11.25c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V8.625zM16.5 4.125c0-.621.504-1.125 1.125-1.125h2.25C20.496 3 21 3.504 21 4.125v15.75c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V4.125z' },
   { id: 'menus', label: 'Menus', icon: 'M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5' },
   { id: 'subscribers', label: 'Subscribers', icon: 'M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75' },
@@ -71,6 +73,10 @@ export default function AdminSettingsPage() {
   const [activeTab, setActiveTab] = useState<TabId>('shipping');
   const [error, setError] = useState<string | null>(null);
   const [successMsg, setSuccessMsg] = useState<string | null>(null);
+
+  // Currency
+  const { currency, rates, fetchedAt, setCurrency, refreshRates, formatPrice } = useCurrency();
+  const [currencyBusy, setCurrencyBusy] = useState(false);
 
   // Shipping
   const [shippingZones, setShippingZones] = useState<ShippingZone[]>([]);
@@ -873,13 +879,106 @@ export default function AdminSettingsPage() {
     );
   };
 
+  // ─── Currency ─────────────────────────────────────────────────────────────
+
+  const renderCurrency = () => {
+    const sample = 100; // base GBP
+    const lastUpdated = fetchedAt ? new Date(fetchedAt) : null;
+    const rate = currency.code === 'GBP' ? 1 : (rates?.[currency.code] ?? null);
+
+    return (
+      <div className="space-y-6 max-w-2xl">
+        <div>
+          <h3 className="text-sm font-semibold text-gray-800 mb-1">Display Currency</h3>
+          <p className="text-xs text-gray-500 mb-3">
+            Prices are stored in GBP and converted at render time using daily FX rates.
+            Changing this updates the storefront for every visitor.
+          </p>
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
+            {SUPPORTED_CURRENCIES.map(c => {
+              const selected = currency.code === c.code;
+              return (
+                <button
+                  key={c.code}
+                  disabled={currencyBusy}
+                  onClick={async () => {
+                    setCurrencyBusy(true);
+                    setError(null);
+                    try {
+                      await setCurrency(c.code as CurrencyCode);
+                      setSuccessMsg(`Currency set to ${c.code}`);
+                    } catch (err) {
+                      setError(err instanceof Error ? err.message : 'Failed to save currency');
+                    } finally {
+                      setCurrencyBusy(false);
+                    }
+                  }}
+                  className={`p-3 rounded-lg border text-left transition-colors ${
+                    selected
+                      ? 'border-deep-green bg-deep-green/5'
+                      : 'border-gray-200 hover:border-gray-300'
+                  }`}
+                >
+                  <div className="flex items-center gap-2">
+                    <span className="text-lg font-semibold text-gray-900">{c.symbol}</span>
+                    <span className="text-sm font-medium text-gray-900">{c.code}</span>
+                  </div>
+                  <div className="text-xs text-gray-500 mt-0.5">{c.label}</div>
+                </button>
+              );
+            })}
+          </div>
+        </div>
+
+        <div className="bg-gray-50 border border-gray-200 rounded-xl p-4 space-y-2">
+          <div className="flex items-center justify-between">
+            <h4 className="text-sm font-semibold text-gray-800">Daily FX Rates</h4>
+            <button
+              disabled={currencyBusy}
+              onClick={async () => {
+                setCurrencyBusy(true);
+                setError(null);
+                try {
+                  await refreshRates();
+                  setSuccessMsg('Rates refreshed');
+                } catch (err) {
+                  setError(err instanceof Error ? err.message : 'Failed to refresh rates');
+                } finally {
+                  setCurrencyBusy(false);
+                }
+              }}
+              className="text-xs px-3 py-1.5 bg-deep-green text-white rounded-lg hover:opacity-90 disabled:opacity-50"
+            >
+              Refresh now
+            </button>
+          </div>
+          <div className="text-xs text-gray-500">
+            Last fetched: {lastUpdated ? lastUpdated.toLocaleString() : '—'}
+          </div>
+          <div className="text-xs text-gray-500">
+            Source: open.er-api.com (free, no key, daily). Cached server-side and refreshed every 24h
+            via the <code>currency-rates</code> Supabase Edge Function.
+          </div>
+          <div className="pt-2 border-t border-gray-200 mt-2 grid grid-cols-2 gap-y-1 text-xs text-gray-700">
+            <span>1 GBP =</span>
+            <span className="text-right font-mono">
+              {rate !== null && Number.isFinite(rate) ? rate.toFixed(4) : '—'} {currency.code}
+            </span>
+            <span>Sample: GBP {sample.toFixed(2)} →</span>
+            <span className="text-right font-medium text-gray-900">{formatPrice(sample)}</span>
+          </div>
+        </div>
+      </div>
+    );
+  };
+
   // ─── Main Render ──────────────────────────────────────────────────────────
 
   return (
     <div>
       {/* Header */}
       <div className="mb-6">
-        <h1 className="text-2xl font-bold text-gray-900">Settings</h1>
+        <h1 className="text-2xl font-bold text-gray-900 font-vag">Settings</h1>
         <p className="text-sm text-gray-500 mt-1">Configure your store settings, theme, shipping, and more</p>
       </div>
 
@@ -924,6 +1023,7 @@ export default function AdminSettingsPage() {
 
         <div className="p-6">
           {activeTab === 'shipping' && renderShipping()}
+          {activeTab === 'currency' && renderCurrency()}
           {activeTab === 'analytics' && renderAnalytics()}
           {activeTab === 'menus' && renderMenus()}
           {activeTab === 'subscribers' && (

@@ -1,0 +1,52 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e2]:
+    - banner [ref=e3]:
+      - generic [ref=e5]:
+        - link "JEKO" [ref=e6] [cursor=pointer]:
+          - /url: /
+          - generic [ref=e7]: JEKO
+        - navigation [ref=e8]:
+          - link "About" [ref=e10] [cursor=pointer]:
+            - /url: /about
+            - text: About
+            - img [ref=e11]
+          - link "Community" [ref=e14] [cursor=pointer]:
+            - /url: /community
+            - text: Community
+            - img [ref=e15]
+          - link "Shop" [ref=e18] [cursor=pointer]:
+            - /url: /products
+          - link "Reviews" [ref=e20] [cursor=pointer]:
+            - /url: /reviews
+          - link "Health benefits" [ref=e22] [cursor=pointer]:
+            - /url: /benefits
+            - text: Health benefits
+            - img [ref=e23]
+        - generic [ref=e25]:
+          - button "Switch language" [ref=e27] [cursor=pointer]:
+            - generic [ref=e28]: 🇬🇧
+            - generic [ref=e29]: EN
+            - img [ref=e30]
+          - button "Shopping cart" [ref=e32] [cursor=pointer]:
+            - img [ref=e33]
+          - link "Help" [ref=e37] [cursor=pointer]:
+            - /url: /contact
+          - link "Login" [ref=e38] [cursor=pointer]:
+            - /url: /login
+          - link "Sign up" [ref=e39] [cursor=pointer]:
+            - /url: /auth/signup
+    - main [ref=e40]:
+      - generic [ref=e42]:
+        - paragraph [ref=e55]: 🚀 Let's get started!
+        - generic [ref=e56]:
+          - heading "What type of pet do you have?" [level=1] [ref=e57]
+          - paragraph [ref=e58]: Let's get started with the basics
+          - generic [ref=e59]:
+            - button "Dog" [ref=e60] [cursor=pointer]:
+              - img [ref=e62]
+              - generic [ref=e68]: Dog
+            - button "Cat" [ref=e69] [cursor=pointer]:
+              - img [ref=e71]
+              - generic [ref=e76]: Cat
+          - button "Continue" [disabled] [ref=e77]
+  - alert [ref=e78]

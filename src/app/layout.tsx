@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import { AuthProvider } from "@/lib/auth";
 import { CartProvider } from "@/lib/cart-context";
+import { CurrencyProvider } from "@/lib/currency";
 import MobileNavWrapper from "@/components/MobileNavWrapper";
 import SideCart from "@/components/SideCart";
 import ConditionalDogChatbot from "@/components/ConditionalDogChatbot";
@@ -39,13 +40,15 @@ export default async function RootLayout({
         <LangProvider initialLang={lang}>
           <TranslationsBootstrap />
           <AuthProvider>
-            <CartProvider>
-              <AnalyticsInit />
-              {children}
-              <MobileNavWrapper />
-              <SideCart />
-              <ConditionalDogChatbot />
-            </CartProvider>
+            <CurrencyProvider>
+              <CartProvider>
+                <AnalyticsInit />
+                {children}
+                <MobileNavWrapper />
+                <SideCart />
+                <ConditionalDogChatbot />
+              </CartProvider>
+            </CurrencyProvider>
           </AuthProvider>
         </LangProvider>
       </body>

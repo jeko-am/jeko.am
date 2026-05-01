@@ -5,13 +5,11 @@ import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useRouter, usePathname } from 'next/navigation';
 import { useT } from '@/lib/i18n/LangProvider';
-
-function formatPrice(value: number): string {
-  return new Intl.NumberFormat('en-GB', { style: 'currency', currency: 'GBP' }).format(value);
-}
+import { useCurrency } from '@/lib/currency';
 
 export default function SideCart() {
   const { t } = useT();
+  const { formatPrice } = useCurrency();
   const { items, isOpen, closeCart, totalItems, totalPrice, removeItem, updateQuantity } = useCart();
   const [isCheckingOut, setIsCheckingOut] = useState(false);
   const router = useRouter();

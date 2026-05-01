@@ -12,6 +12,7 @@ import { useSignupUrl } from '@/lib/useSignupUrl';
 import { trackViewContent } from '@/lib/tracking';
 import { useT } from '@/lib/i18n/LangProvider';
 import HyText, { useHyAuto } from '@/components/HyText';
+import { useCurrency } from '@/lib/currency';
 
 interface Product {
   id: string;
@@ -92,9 +93,6 @@ function ProductLongDesc({ en, savedHy }: { en: string | null | undefined; saved
   return <div dangerouslySetInnerHTML={{ __html: (value || '').replace(/\n/g, '<br/>') }} />;
 }
 
-function formatPrice(value: number): string {
-  return new Intl.NumberFormat('en-GB', { style: 'currency', currency: 'GBP' }).format(value);
-}
 
 /* ------------------------------------------------------------------ */
 /* Accordion                                                          */
@@ -121,6 +119,7 @@ function Accordion({ title, children, defaultOpen = false }: { title: string; ch
 /* ------------------------------------------------------------------ */
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 function UpsellCard({ item, lang, t, addItem }: { item: any; lang: string; t: (k: string) => string; addItem: (p: any) => void }) {
+  const { formatPrice } = useCurrency();
   const isUpsell = 'target_product' in item;
   const product = isUpsell ? item.target_product : item;
   const enTitle: string = isUpsell ? (item.title || 'Recommended for You') : product.name;
@@ -243,6 +242,7 @@ function ReviewCard({ review }: { review: { name: string; date: string; rating: 
 /* ================================================================== */
 export default function ProductDetailPage() {
   const { t, lang } = useT();
+  const { formatPrice } = useCurrency();
   const signupUrl = useSignupUrl();
   const params = useParams();
   const slug = params.slug as string;

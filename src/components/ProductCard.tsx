@@ -8,6 +8,7 @@ import { useAuth } from '@/lib/auth';
 import { recordProductView } from '@/lib/product-history';
 import { useT } from '@/lib/i18n/LangProvider';
 import { localize } from '@/lib/i18n/localizeRecord';
+import { useCurrency } from '@/lib/currency';
 
 // Per-session memo for machine translations so each EN string only hits the API once.
 const __cardTranslationCache = new Map<string, string>();
@@ -41,12 +42,9 @@ interface Product {
   i18n?: { hy?: { name?: string; short_description?: string; description?: string } } | null;
 }
 
-function formatPrice(value: number): string {
-  return new Intl.NumberFormat('en-GB', { style: 'currency', currency: 'GBP' }).format(value);
-}
-
 export default function ProductCard({ product }: { product: Product }) {
   const { t, lang } = useT();
+  const { formatPrice } = useCurrency();
   const [imgError, setImgError] = useState(false);
   const savedHyName = product.i18n?.hy?.name;
   const savedHyShort = product.i18n?.hy?.short_description;

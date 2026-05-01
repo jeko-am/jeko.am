@@ -48,7 +48,6 @@ type ConnectionStatus = "none" | "sent" | "received" | "matched";
 const PET_TYPES = [
   { value: "dog", label: "Dog" },
   { value: "cat", label: "Cat" },
-  { value: "other", label: "Other" },
 ];
 
 /* ─── Helpers ───────────────────────────────────────────────────────── */

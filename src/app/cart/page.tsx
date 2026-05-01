@@ -3,14 +3,11 @@
 import { useCart } from '@/lib/cart-context';
 import Link from 'next/link';
 import { useT } from '@/lib/i18n/LangProvider';
-
-
-function formatPrice(value: number): string {
-  return new Intl.NumberFormat('en-GB', { style: 'currency', currency: 'GBP' }).format(value);
-}
+import { useCurrency } from '@/lib/currency';
 
 export default function CartPage() {
   const { t } = useT();
+  const { formatPrice } = useCurrency();
   const { items, totalPrice, removeItem, updateQuantity, clearCart } = useCart();
 
   if (items.length === 0) {

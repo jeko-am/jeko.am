@@ -35,7 +35,7 @@ export function getBreedsByPetType(petType: string): string[] {
   return DOG_BREEDS;
 }
 
-export const PET_TYPES = ["Dog", "Cat", "Other"] as const;
+export const PET_TYPES = ["Dog", "Cat"] as const;
 
 export const DIET_PREFERENCES = ["Raw", "Kibble", "Mixed", "Homemade", "Natural", "Chicken", "Beef", "Lamb", "Vegetables"] as const;
 
