@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { useSignupUrl } from "@/lib/useSignupUrl";
 import { useContentT } from "@/lib/i18n/useContentT";
+import { dynFontStyle, dynFontClass } from "@/lib/dynamic-font-size";
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export default function HeroSection({ content }: { content?: Record<string, any> }) {
@@ -58,29 +59,36 @@ export default function HeroSection({ content }: { content?: Record<string, any>
         <div className="w-full max-w-[560px] py-12 md:py-16">
           {/* H1 Heading - milky white per client */}
           <h1
-            className="font-frankfurter"
+            className={`font-frankfurter ${dynFontClass(content, "heading")}`}
             style={{
               fontSize: "50px",
               fontWeight: "normal",
-              lineHeight: "52px",
+              lineHeight: "1.04",
               color: "#F5F1EB",
               textShadow: "0 2px 12px rgba(0,0,0,0.25)",
+              ...dynFontStyle(content, "heading"),
             }}
           >
             {heading}
             <br />
-            <span className="text-gold">{headingHighlight}</span>
+            <span
+              className={`text-gold ${dynFontClass(content, "heading_highlight")}`}
+              style={dynFontStyle(content, "heading_highlight")}
+            >
+              {headingHighlight}
+            </span>
           </h1>
 
           {/* Subtitle */}
           <p
-            className="mt-6 font-rubik"
+            className={`mt-6 font-rubik ${dynFontClass(content, "subheading")}`}
             style={{
               fontSize: "20px",
               fontWeight: 600,
-              lineHeight: "28px",
+              lineHeight: "1.4",
               color: "#F5F1EB",
               textShadow: "0 1px 8px rgba(0,0,0,0.25)",
+              ...dynFontStyle(content, "subheading"),
             }}
           >
             {subheading}
@@ -90,7 +98,8 @@ export default function HeroSection({ content }: { content?: Record<string, any>
           <div className="mt-8">
             <a
               href={buttonUrl}
-              className="btn-gold inline-block font-rubik transition-all duration-300 hover:shadow-lg"
+              className={`btn-gold inline-block font-rubik transition-all duration-300 hover:shadow-lg ${dynFontClass(content, "button_text")}`}
+              style={dynFontStyle(content, "button_text")}
             >
               {buttonText}
             </a>

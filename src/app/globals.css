@@ -2,6 +2,19 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Admin-editor dynamic font sizes — driven by --fs-mobile / --fs-desktop CSS vars
+   set inline by the dynFontStyle() helper. When neither var is defined the
+   var() reference resolves to invalid, the declaration is dropped, and the
+   element keeps its existing (inline / utility) font-size unchanged. */
+.dyn-fs {
+  font-size: var(--fs-mobile) !important;
+}
+@media (min-width: 768px) {
+  .dyn-fs {
+    font-size: var(--fs-desktop, var(--fs-mobile)) !important;
+  }
+}
+
 @import url('https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;600;700&family=Caveat:wght@400;500;600;700&family=Fredoka:wght@400;500;600;700&display=swap');
 
 @font-face {

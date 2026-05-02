@@ -7,6 +7,11 @@ export interface FieldDef {
   placeholder?: string;
   /** Static dictionary key for translation fallback when in HY edit mode and no DB override exists. */
   i18nKey?: string;
+  /** Default font size shown as a placeholder hint when the admin hasn't set one. Px. */
+  defaultFontSizeDesktop?: number;
+  defaultFontSizeMobile?: number;
+  /** Default font family slug (must match a value in FONT_OPTIONS) shown next to "Default" in the dropdown. */
+  defaultFontFamily?: string;
 }
 
 export interface SectionSchema {

@@ -6,6 +6,7 @@ import { ALL_PAGE_CONFIGS, PRODUCT_PAGE_SECTIONS, type SectionSchema, type PageC
 import { useAdminEditLang } from '@/lib/i18n/AdminEditLang';
 import { dictionaries } from '@/lib/i18n/translations';
 import { memoTranslateHy } from '@/components/HyText';
+import { FONT_OPTIONS } from '@/lib/font-options';
 
 /** Build the HY default value map for a section's translatable fields from the static dictionary. */
 function buildHyDefaults(schema: SectionSchema): Record<string, unknown> {
@@ -255,6 +256,194 @@ function ListField({
           Add
         </button>
       </div>
+    </div>
+  );
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   FIELD DEFAULT FONT INFERENCE
+   When a schema field doesn't declare explicit defaults, pick reasonable ones
+   from the key/label so admins always see *some* indication of the current
+   font instead of an empty input.
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+function inferFieldFontDefaults(field: FieldDef): {
+  desktop: number;
+  mobile: number;
+  family: string;
+} {
+  const k = `${field.key} ${field.label}`.toLowerCase();
+  // Order matters: more-specific matches first (sub/description before "heading",
+  // since "subheading" contains "heading").
+  if (/sub|description|tagline|paragraph|body_text|caption|quote/.test(k)) {
+    return { desktop: 18, mobile: 16, family: "rubik" };
+  }
+  // Buttons / CTAs / link text
+  if (/button|cta|action|link.*text/.test(k)) {
+    return { desktop: 16, mobile: 15, family: "rubik" };
+  }
+  // Nav / menu labels (before heading match — "nav label" must not be heading)
+  if (/nav|menu|category|tab.*label/.test(k)) {
+    return { desktop: 14, mobile: 14, family: "rubik" };
+  }
+  // Trustpilot / score-style labels (small inline text)
+  if (/trustpilot.*label|score.*text|score_text|label$/.test(k)) {
+    return { desktop: 14, mobile: 13, family: "rubik" };
+  }
+  // Logos / brand text
+  if (/logo|brand/.test(k)) {
+    return { desktop: 32, mobile: 24, family: "frankfurter" };
+  }
+  // Stats / numbers / scores (numeric display text)
+  if (/^stat|^score|count|number|metric|trustpilot.*score$/.test(k)) {
+    return { desktop: 36, mobile: 28, family: "frankfurter" };
+  }
+  // Headings / titles — large display text
+  if (/heading|title|^hero$/.test(k)) {
+    return { desktop: 50, mobile: 28, family: "frankfurter" };
+  }
+  // Default body / generic text
+  return { desktop: 16, mobile: 14, family: "rubik" };
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   FONT FAMILY CONTROL (rendered next to every text/textarea field)
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+function FontFamilyControl({
+  fieldKey,
+  value,
+  defaultFamily,
+  setEditValues,
+  setHasChanges,
+}: {
+  fieldKey: string;
+  value: unknown;
+  defaultFamily?: string;
+  setEditValues: React.Dispatch<React.SetStateAction<Record<string, unknown>>>;
+  setHasChanges: (v: boolean) => void;
+}) {
+  const storageKey = `${fieldKey}_font_family`;
+  const current = typeof value === "string" && value ? value : "default";
+  // When no override is saved, show the resolved default in the label so the
+  // admin can see which font this text actually uses.
+  const defaultOpt = defaultFamily
+    ? FONT_OPTIONS.find(o => o.value === defaultFamily)
+    : undefined;
+  const defaultLabel = defaultOpt
+    ? `Default (${defaultOpt.label})`
+    : "Default (inherit)";
+  return (
+    <div className="flex items-center gap-1 flex-shrink-0" title="Font family">
+      <svg className="w-3 h-3 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+        <path strokeLinecap="round" strokeLinejoin="round" d="M4 7V5h16v2M9 5v14M15 5v14M7 19h4M13 19h4" />
+      </svg>
+      <select
+        value={current}
+        onChange={(e) => {
+          const raw = e.target.value;
+          setEditValues(prev => {
+            const next = { ...prev };
+            if (raw === "default") delete next[storageKey];
+            else next[storageKey] = raw;
+            return next;
+          });
+          setHasChanges(true);
+        }}
+        className="px-1.5 py-1 text-[11px] text-gray-700 border border-gray-200 rounded-md focus:ring-2 focus:ring-deep-green/20 focus:border-deep-green outline-none bg-white max-w-[140px]"
+      >
+        {FONT_OPTIONS.map(opt => (
+          <option key={opt.value} value={opt.value}>
+            {opt.value === "default" ? defaultLabel : opt.label}
+          </option>
+        ))}
+      </select>
+    </div>
+  );
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   FONT SIZE CONTROL (rendered next to every text/textarea field)
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+function FontSizeControl({
+  fieldKey,
+  desktopValue,
+  mobileValue,
+  legacyValue,
+  defaultDesktop,
+  defaultMobile,
+  setEditValues,
+  setHasChanges,
+}: {
+  fieldKey: string;
+  desktopValue: unknown;
+  mobileValue: unknown;
+  legacyValue: unknown;
+  defaultDesktop?: number;
+  defaultMobile?: number;
+  setEditValues: React.Dispatch<React.SetStateAction<Record<string, unknown>>>;
+  setHasChanges: (v: boolean) => void;
+}) {
+  const desktopKey = `${fieldKey}_font_size_desktop`;
+  const mobileKey = `${fieldKey}_font_size_mobile`;
+  const legacyKey = `${fieldKey}_font_size`;
+
+  const toNum = (v: unknown): number | '' => {
+    if (typeof v === 'number') return v;
+    if (typeof v === 'string' && v !== '') return Number(v);
+    return '';
+  };
+  const desktop = toNum(desktopValue) !== '' ? toNum(desktopValue) : toNum(legacyValue);
+  const mobile = toNum(mobileValue);
+
+  const updateOne = (storageKey: string, raw: string) => {
+    setEditValues(prev => {
+      const next = { ...prev };
+      if (raw === '') delete next[storageKey];
+      else next[storageKey] = Number(raw);
+      // Migrate legacy single-value key to desktop on any edit
+      if (legacyKey in next) delete next[legacyKey];
+      return next;
+    });
+    setHasChanges(true);
+  };
+
+  return (
+    <div className="flex items-center gap-1.5 flex-shrink-0" title="Font size (px) — desktop / mobile">
+      <div className="flex items-center gap-0.5" title="Desktop font size">
+        <svg className="w-3 h-3 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+          <rect x="3" y="4" width="18" height="12" rx="1.5" />
+          <path strokeLinecap="round" d="M9 20h6M12 16v4" />
+        </svg>
+        <input
+          type="number"
+          min={8}
+          max={200}
+          value={desktop}
+          onChange={(e) => updateOne(desktopKey, e.target.value)}
+          placeholder={defaultDesktop ? String(defaultDesktop) : "D"}
+          title={defaultDesktop ? `Default desktop size: ${defaultDesktop}px` : "Desktop font size"}
+          className="w-12 px-1 py-1 text-[11px] text-gray-700 border border-gray-200 rounded-md focus:ring-2 focus:ring-deep-green/20 focus:border-deep-green outline-none placeholder:text-gray-400"
+        />
+      </div>
+      <div className="flex items-center gap-0.5" title="Mobile font size">
+        <svg className="w-3 h-3 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+          <rect x="7" y="3" width="10" height="18" rx="1.5" />
+          <path strokeLinecap="round" d="M11 18h2" />
+        </svg>
+        <input
+          type="number"
+          min={8}
+          max={200}
+          value={mobile}
+          onChange={(e) => updateOne(mobileKey, e.target.value)}
+          placeholder={defaultMobile ? String(defaultMobile) : "M"}
+          title={defaultMobile ? `Default mobile size: ${defaultMobile}px` : "Mobile font size"}
+          className="w-12 px-1 py-1 text-[11px] text-gray-700 border border-gray-200 rounded-md focus:ring-2 focus:ring-deep-green/20 focus:border-deep-green outline-none placeholder:text-gray-400"
+        />
+      </div>
+      <span className="text-[10px] text-gray-400">px</span>
     </div>
   );
 }
@@ -1092,10 +1281,36 @@ export default function AdminStoreEditorPage() {
                     const hyPlaceholder = editLang === 'hy' && enValue ? String(enValue) : field.placeholder;
                     return (
                       <div key={field.key}>
-                        <label className="block text-[13px] font-medium text-gray-700 mb-1.5 flex items-center gap-2">
-                          <span>{field.label}</span>
-                          {editLang === 'hy' && <span className="text-[10px] font-semibold text-deep-green/70 px-1.5 py-0.5 bg-deep-green/10 rounded">HY</span>}
-                        </label>
+                        <div className="flex items-center justify-between gap-2 mb-1.5">
+                          <label className="text-[13px] font-medium text-gray-700 flex items-center gap-2 min-w-0">
+                            <span className="truncate">{field.label}</span>
+                            {editLang === 'hy' && <span className="text-[10px] font-semibold text-deep-green/70 px-1.5 py-0.5 bg-deep-green/10 rounded flex-shrink-0">HY</span>}
+                          </label>
+                          {(() => {
+                            const inferred = inferFieldFontDefaults(field);
+                            return (
+                              <div className="flex items-center gap-2 flex-shrink-0">
+                                <FontFamilyControl
+                                  fieldKey={field.key}
+                                  value={editValues[`${field.key}_font_family`]}
+                                  defaultFamily={field.defaultFontFamily ?? inferred.family}
+                                  setEditValues={setEditValues}
+                                  setHasChanges={setHasChanges}
+                                />
+                                <FontSizeControl
+                                  fieldKey={field.key}
+                                  desktopValue={editValues[`${field.key}_font_size_desktop`]}
+                                  mobileValue={editValues[`${field.key}_font_size_mobile`]}
+                                  legacyValue={editValues[`${field.key}_font_size`]}
+                                  defaultDesktop={field.defaultFontSizeDesktop ?? inferred.desktop}
+                                  defaultMobile={field.defaultFontSizeMobile ?? inferred.mobile}
+                                  setEditValues={setEditValues}
+                                  setHasChanges={setHasChanges}
+                                />
+                              </div>
+                            );
+                          })()}
+                        </div>
                         <textarea
                           value={String(value || '')}
                           onChange={(e) => updateField(field.key, e.target.value)}
@@ -1171,10 +1386,36 @@ export default function AdminStoreEditorPage() {
                   const textHyPlaceholder = editLang === 'hy' && field.type === 'text' && enValue ? String(enValue) : field.placeholder;
                   return (
                     <div key={field.key}>
-                      <label className="block text-[13px] font-medium text-gray-700 mb-1.5 flex items-center gap-2">
-                        <span>{field.label}</span>
-                        {editLang === 'hy' && field.type === 'text' && <span className="text-[10px] font-semibold text-deep-green/70 px-1.5 py-0.5 bg-deep-green/10 rounded">HY</span>}
-                      </label>
+                      <div className="flex items-center justify-between gap-2 mb-1.5">
+                        <label className="text-[13px] font-medium text-gray-700 flex items-center gap-2 min-w-0">
+                          <span className="truncate">{field.label}</span>
+                          {editLang === 'hy' && field.type === 'text' && <span className="text-[10px] font-semibold text-deep-green/70 px-1.5 py-0.5 bg-deep-green/10 rounded flex-shrink-0">HY</span>}
+                        </label>
+                        {field.type === 'text' && (() => {
+                          const inferred = inferFieldFontDefaults(field);
+                          return (
+                            <div className="flex items-center gap-2 flex-shrink-0">
+                              <FontFamilyControl
+                                fieldKey={field.key}
+                                value={editValues[`${field.key}_font_family`]}
+                                defaultFamily={field.defaultFontFamily ?? inferred.family}
+                                setEditValues={setEditValues}
+                                setHasChanges={setHasChanges}
+                              />
+                              <FontSizeControl
+                                fieldKey={field.key}
+                                desktopValue={editValues[`${field.key}_font_size_desktop`]}
+                                mobileValue={editValues[`${field.key}_font_size_mobile`]}
+                                legacyValue={editValues[`${field.key}_font_size`]}
+                                defaultDesktop={field.defaultFontSizeDesktop ?? inferred.desktop}
+                                defaultMobile={field.defaultFontSizeMobile ?? inferred.mobile}
+                                setEditValues={setEditValues}
+                                setHasChanges={setHasChanges}
+                              />
+                            </div>
+                          );
+                        })()}
+                      </div>
                       <input
                         type={field.type === 'url' ? 'url' : 'text'}
                         value={String(value || '')}

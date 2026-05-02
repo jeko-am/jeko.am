@@ -1,0 +1,814 @@
+- generic [ref=e1]:
+  - alert [ref=e6]
+  - generic [ref=e7]:
+    - complementary [ref=e8]:
+      - generic [ref=e10]:
+        - heading "Jeko" [level=1] [ref=e11]
+        - paragraph [ref=e12]: Admin Panel
+      - navigation [ref=e13]:
+        - link "Dashboard" [ref=e14] [cursor=pointer]:
+          - /url: /admin/dashboard
+          - img [ref=e15]
+          - text: Dashboard
+        - link "Store Editor" [ref=e17] [cursor=pointer]:
+          - /url: /admin/store-editor
+          - img [ref=e18]
+          - text: Store Editor
+        - link "Translations" [ref=e20] [cursor=pointer]:
+          - /url: /admin/translations
+          - img [ref=e21]
+          - text: Translations
+        - link "Products" [ref=e23] [cursor=pointer]:
+          - /url: /admin/products
+          - img [ref=e24]
+          - text: Products
+        - link "Bundles" [ref=e26] [cursor=pointer]:
+          - /url: /admin/bundles
+          - img [ref=e27]
+          - text: Bundles
+        - link "Upsells" [ref=e29] [cursor=pointer]:
+          - /url: /admin/upsells
+          - img [ref=e30]
+          - text: Upsells
+        - link "Categories" [ref=e32] [cursor=pointer]:
+          - /url: /admin/categories
+          - img [ref=e33]
+          - text: Categories
+        - link "Orders" [ref=e35] [cursor=pointer]:
+          - /url: /admin/orders
+          - img [ref=e36]
+          - text: Orders
+        - link "Customers" [ref=e38] [cursor=pointer]:
+          - /url: /admin/customers
+          - img [ref=e39]
+          - text: Customers
+        - link "Reviews" [ref=e41] [cursor=pointer]:
+          - /url: /admin/reviews
+          - img [ref=e42]
+          - text: Reviews
+        - link "Community" [ref=e44] [cursor=pointer]:
+          - /url: /admin/community
+          - img [ref=e45]
+          - text: Community
+        - link "Discounts" [ref=e47] [cursor=pointer]:
+          - /url: /admin/discounts
+          - img [ref=e48]
+          - text: Discounts
+        - link "Pages" [ref=e50] [cursor=pointer]:
+          - /url: /admin/pages
+          - img [ref=e51]
+          - text: Pages
+        - link "Blog" [ref=e53] [cursor=pointer]:
+          - /url: /admin/blog
+          - img [ref=e54]
+          - text: Blog
+        - link "Settings" [ref=e56] [cursor=pointer]:
+          - /url: /admin/settings
+          - img [ref=e57]
+          - text: Settings
+        - link "Analytics" [ref=e59] [cursor=pointer]:
+          - /url: /admin/analytics
+          - img [ref=e60]
+          - text: Analytics
+        - link "Support" [ref=e62] [cursor=pointer]:
+          - /url: /admin/support
+          - img [ref=e63]
+          - text: Support
+      - generic [ref=e65]:
+        - link "View Store" [ref=e66] [cursor=pointer]:
+          - /url: /
+          - img [ref=e67]
+          - text: View Store
+        - button "Sign Out" [ref=e69] [cursor=pointer]:
+          - img [ref=e70]
+          - text: Sign Out
+    - generic [ref=e72]:
+      - banner [ref=e73]:
+        - button [ref=e74] [cursor=pointer]:
+          - img [ref=e75]
+        - generic [ref=e77]:
+          - generic [ref=e78]:
+            - generic [ref=e79]: "Editing:"
+            - generic [ref=e80]:
+              - button "Edit English content" [ref=e81] [cursor=pointer]:
+                - generic [ref=e82]: 🇬🇧
+                - generic [ref=e83]: EN
+              - button "Edit Armenian content" [ref=e84] [cursor=pointer]:
+                - generic [ref=e85]: 🇦🇲
+                - generic [ref=e86]: HY
+          - generic [ref=e88]: admin@purepet.test
+          - generic [ref=e89]: A
+      - main [ref=e90]:
+        - generic [ref=e91]:
+          - generic [ref=e92]:
+            - generic [ref=e94]:
+              - img [ref=e96]
+              - generic [ref=e98]:
+                - heading "Online Store" [level=1] [ref=e99]
+                - paragraph [ref=e100]: Homepage
+            - generic [ref=e101]:
+              - generic [ref=e102]:
+                - button "Mobile (390px)" [active] [ref=e103] [cursor=pointer]:
+                  - img [ref=e104]
+                - button "Tablet (768px)" [ref=e106] [cursor=pointer]:
+                  - img [ref=e107]
+                - button "Desktop" [ref=e109] [cursor=pointer]:
+                  - img [ref=e110]
+              - button "Refresh preview" [ref=e112] [cursor=pointer]:
+                - img [ref=e113]
+              - link "Signup Card Icons" [ref=e115] [cursor=pointer]:
+                - /url: /admin/store-editor/signup-icons
+                - img [ref=e116]
+                - text: Signup Card Icons
+              - link "Theme Colours" [ref=e118] [cursor=pointer]:
+                - /url: /admin/store-editor/theme
+                - img [ref=e119]
+                - text: Theme Colours
+              - link "View Store" [ref=e121] [cursor=pointer]:
+                - /url: /
+                - img [ref=e122]
+                - text: View Store
+          - generic [ref=e124]:
+            - generic [ref=e126]:
+              - generic [ref=e127]:
+                - button [ref=e330] [cursor=pointer]:
+                  - img [ref=e331]
+                - img [ref=e334]
+                - generic [ref=e336]: Hero Section
+              - generic [ref=e337]:
+                - button "🇬🇧 English" [ref=e338] [cursor=pointer]:
+                  - generic [ref=e339]: 🇬🇧
+                  - generic [ref=e340]: English
+                - button "🇦🇲 Հայերեն" [ref=e341] [cursor=pointer]:
+                  - generic [ref=e342]: 🇦🇲
+                  - generic [ref=e343]: Հայերեն
+              - generic [ref=e132]:
+                - generic [ref=e344]:
+                  - generic [ref=e345]:
+                    - generic:
+                      - generic: Heading
+                    - generic [ref=e346]:
+                      - generic "Font family" [ref=e347]:
+                        - img [ref=e348]
+                        - combobox [ref=e350]:
+                          - option "Default (inherit)"
+                          - option "Fredoka"
+                          - option "Rubik"
+                          - option "Frankfurter"
+                          - option "Frankfurter Highlight"
+                          - option "TR Frankfurter"
+                          - option "VAG Rounded Next"
+                          - option "Caveat" [selected]
+                          - option "Sofia Pro"
+                          - option "Helvetica"
+                          - option "Arial"
+                          - option "System UI"
+                      - generic "Font size (px) — desktop / mobile" [ref=e351]:
+                        - generic "Desktop font size" [ref=e352]:
+                          - img [ref=e353]
+                          - spinbutton [ref=e356]: "80"
+                        - generic "Mobile font size" [ref=e357]:
+                          - img [ref=e358]
+                          - spinbutton [ref=e360]: "28"
+                        - generic [ref=e361]: px
+                  - textbox "Main headline..." [ref=e362]: "JEKO: Welcome to your PET's personal page"
+                - generic [ref=e363]:
+                  - generic [ref=e364]:
+                    - generic:
+                      - generic: Highlighted Text (Gold)
+                    - generic [ref=e365]:
+                      - generic "Font family" [ref=e366]:
+                        - img [ref=e367]
+                        - combobox [ref=e369]:
+                          - option "Default (inherit)" [selected]
+                          - option "Fredoka"
+                          - option "Rubik"
+                          - option "Frankfurter"
+                          - option "Frankfurter Highlight"
+                          - option "TR Frankfurter"
+                          - option "VAG Rounded Next"
+                          - option "Caveat"
+                          - option "Sofia Pro"
+                          - option "Helvetica"
+                          - option "Arial"
+                          - option "System UI"
+                      - generic "Font size (px) — desktop / mobile" [ref=e370]:
+                        - generic "Desktop font size" [ref=e371]:
+                          - img [ref=e372]
+                          - spinbutton [ref=e375]
+                        - generic "Mobile font size" [ref=e376]:
+                          - img [ref=e377]
+                          - spinbutton [ref=e379]
+                        - generic [ref=e380]: px
+                  - textbox "Text shown in gold..." [ref=e381]: Also one of the helthiest foods in market
+                - generic [ref=e382]:
+                  - generic [ref=e383]:
+                    - generic:
+                      - generic: Subheading
+                    - generic [ref=e384]:
+                      - generic "Font family" [ref=e385]:
+                        - img [ref=e386]
+                        - combobox [ref=e388]:
+                          - option "Default (inherit)" [selected]
+                          - option "Fredoka"
+                          - option "Rubik"
+                          - option "Frankfurter"
+                          - option "Frankfurter Highlight"
+                          - option "TR Frankfurter"
+                          - option "VAG Rounded Next"
+                          - option "Caveat"
+                          - option "Sofia Pro"
+                          - option "Helvetica"
+                          - option "Arial"
+                          - option "System UI"
+                      - generic "Font size (px) — desktop / mobile" [ref=e389]:
+                        - generic "Desktop font size" [ref=e390]:
+                          - img [ref=e391]
+                          - spinbutton [ref=e394]
+                        - generic "Mobile font size" [ref=e395]:
+                          - img [ref=e396]
+                          - spinbutton [ref=e398]
+                        - generic [ref=e399]: px
+                  - textbox "Supporting text..." [ref=e400]: Natural ingredients, based on your Pet's preferences
+                - generic [ref=e401]:
+                  - generic [ref=e402]:
+                    - generic:
+                      - generic: Button Text
+                    - generic [ref=e403]:
+                      - generic "Font family" [ref=e404]:
+                        - img [ref=e405]
+                        - combobox [ref=e407]:
+                          - option "Default (inherit)" [selected]
+                          - option "Fredoka"
+                          - option "Rubik"
+                          - option "Frankfurter"
+                          - option "Frankfurter Highlight"
+                          - option "TR Frankfurter"
+                          - option "VAG Rounded Next"
+                          - option "Caveat"
+                          - option "Sofia Pro"
+                          - option "Helvetica"
+                          - option "Arial"
+                          - option "System UI"
+                      - generic "Font size (px) — desktop / mobile" [ref=e408]:
+                        - generic "Desktop font size" [ref=e409]:
+                          - img [ref=e410]
+                          - spinbutton [ref=e413]
+                        - generic "Mobile font size" [ref=e414]:
+                          - img [ref=e415]
+                          - spinbutton [ref=e417]
+                        - generic [ref=e418]: px
+                  - textbox "Get started today" [ref=e419]: Register Your Pet
+                - generic [ref=e420]:
+                  - generic [ref=e423]: Button URL
+                  - textbox "/auth/signup" [ref=e424]
+                - generic [ref=e425]:
+                  - generic [ref=e426]: Hero Image (Desktop)
+                  - generic [ref=e428]:
+                    - img "Hero Image (Desktop)" [ref=e429]
+                    - generic [ref=e430]:
+                      - button "Replace" [ref=e431] [cursor=pointer]
+                      - button "Remove" [ref=e432] [cursor=pointer]
+                  - textbox "Or paste image URL..." [ref=e434]: https://res.cloudinary.com/dppatx2f4/image/upload/v1777649971/pure-pet-products/mqpbi8rswzoa1soqy2hu.png
+                - generic [ref=e435]:
+                  - generic [ref=e436]: Hero Image (Mobile)
+                  - generic [ref=e438]:
+                    - img "Hero Image (Mobile)" [ref=e439]
+                    - generic [ref=e440]:
+                      - button "Replace" [ref=e441] [cursor=pointer]
+                      - button "Remove" [ref=e442] [cursor=pointer]
+                  - textbox "Or paste image URL..." [ref=e444]: https://res.cloudinary.com/dppatx2f4/image/upload/v1777649957/pure-pet-products/iiescdzw9r9lbzvjlq2b.png
+                - generic [ref=e445]:
+                  - generic [ref=e446]:
+                    - generic:
+                      - generic: Trustpilot Label
+                    - generic [ref=e447]:
+                      - generic "Font family" [ref=e448]:
+                        - img [ref=e449]
+                        - combobox [ref=e451]:
+                          - option "Default (inherit)" [selected]
+                          - option "Fredoka"
+                          - option "Rubik"
+                          - option "Frankfurter"
+                          - option "Frankfurter Highlight"
+                          - option "TR Frankfurter"
+                          - option "VAG Rounded Next"
+                          - option "Caveat"
+                          - option "Sofia Pro"
+                          - option "Helvetica"
+                          - option "Arial"
+                          - option "System UI"
+                      - generic "Font size (px) — desktop / mobile" [ref=e452]:
+                        - generic "Desktop font size" [ref=e453]:
+                          - img [ref=e454]
+                          - spinbutton [ref=e457]
+                        - generic "Mobile font size" [ref=e458]:
+                          - img [ref=e459]
+                          - spinbutton [ref=e461]
+                        - generic [ref=e462]: px
+                  - textbox "Excellent" [ref=e463]
+                - generic [ref=e464]:
+                  - generic [ref=e465]:
+                    - generic:
+                      - generic: Trustpilot Score (e.g. 4.6)
+                    - generic [ref=e466]:
+                      - generic "Font family" [ref=e467]:
+                        - img [ref=e468]
+                        - combobox [ref=e470]:
+                          - option "Default (inherit)" [selected]
+                          - option "Fredoka"
+                          - option "Rubik"
+                          - option "Frankfurter"
+                          - option "Frankfurter Highlight"
+                          - option "TR Frankfurter"
+                          - option "VAG Rounded Next"
+                          - option "Caveat"
+                          - option "Sofia Pro"
+                          - option "Helvetica"
+                          - option "Arial"
+                          - option "System UI"
+                      - generic "Font size (px) — desktop / mobile" [ref=e471]:
+                        - generic "Desktop font size" [ref=e472]:
+                          - img [ref=e473]
+                          - spinbutton [ref=e476]
+                        - generic "Mobile font size" [ref=e477]:
+                          - img [ref=e478]
+                          - spinbutton [ref=e480]
+                        - generic [ref=e481]: px
+                  - textbox "4.6" [ref=e482]: "5.0"
+                - generic [ref=e483]:
+                  - generic [ref=e484]:
+                    - generic:
+                      - generic: Trustpilot Score Text
+                    - generic [ref=e485]:
+                      - generic "Font family" [ref=e486]:
+                        - img [ref=e487]
+                        - combobox [ref=e489]:
+                          - option "Default (inherit)" [selected]
+                          - option "Fredoka"
+                          - option "Rubik"
+                          - option "Frankfurter"
+                          - option "Frankfurter Highlight"
+                          - option "TR Frankfurter"
+                          - option "VAG Rounded Next"
+                          - option "Caveat"
+                          - option "Sofia Pro"
+                          - option "Helvetica"
+                          - option "Arial"
+                          - option "System UI"
+                      - generic "Font size (px) — desktop / mobile" [ref=e490]:
+                        - generic "Desktop font size" [ref=e491]:
+                          - img [ref=e492]
+                          - spinbutton [ref=e495]
+                        - generic "Mobile font size" [ref=e496]:
+                          - img [ref=e497]
+                          - spinbutton [ref=e499]
+                        - generic [ref=e500]: px
+                  - textbox "4.6 out of 5" [ref=e501]: 5.0 out of 5
+              - button "No changes" [disabled] [ref=e509]
+            - generic [ref=e324]:
+              - generic [ref=e326]: 390px — Mobile
+              - iframe [ref=e510]:
+                - generic [active] [ref=f2e1]:
+                  - banner [ref=f2e2] [cursor=pointer]:
+                    - generic [ref=f2e4]:
+                      - link "JEKO" [ref=f2e5]:
+                        - /url: /
+                        - generic [ref=f2e6]: JEKO
+                      - button "Open menu" [ref=f2e7]:
+                        - img [ref=f2e8]
+                  - main [ref=f2e10]:
+                    - generic [ref=f2e12] [cursor=pointer]:
+                      - img "Happy golden retriever dog enjoying fresh food" [ref=f2e639]
+                      - generic [ref=f2e18]:
+                        - 'heading "JEKO: Welcome to your PET''s personal page Also one of the helthiest foods in market" [level=1] [ref=f2e19]':
+                          - text: "JEKO: Welcome to your PET's personal page"
+                          - text: Also one of the helthiest foods in market
+                        - paragraph [ref=f2e20]: Natural ingredients, based on your Pet's preferences
+                        - link "Register Your Pet" [ref=f2e22]:
+                          - /url: /auth/signup
+                        - generic [ref=f2e23]:
+                          - generic [ref=f2e24]:
+                            - img [ref=f2e26]
+                            - img [ref=f2e29]
+                            - img [ref=f2e32]
+                            - img [ref=f2e35]
+                          - generic [ref=f2e37]:
+                            - generic [ref=f2e38]: Excellent
+                            - generic [ref=f2e39]: 5.0 out of 5
+                            - img [ref=f2e40]
+                            - generic [ref=f2e42]: Trustpilot
+                    - generic [ref=f2e45] [cursor=pointer]:
+                      - heading "Ready to spoil them?" [level=2] [ref=f2e46]
+                      - paragraph [ref=f2e47]: Join thousands of happy pets — get a tailored plan in under 2 minutes.
+                      - link "Sign me up" [ref=f2e48]:
+                        - /url: /auth/signup
+                        - text: Sign me up
+                        - img [ref=f2e49]
+                    - link "15% off for all registered users+Sign up for automatic delivery" [ref=f2e52] [cursor=pointer]:
+                      - /url: /auth/signup
+                      - generic [ref=f2e53]:
+                        - img [ref=f2e54]
+                        - paragraph [ref=f2e56]: 15% off for all registered users+Sign up for automatic delivery
+                        - img [ref=f2e57]
+                    - generic [ref=f2e61] [cursor=pointer]:
+                      - generic [ref=f2e62]:
+                        - img "Preparing Jeko pet food" [ref=f2e63]
+                        - img [ref=f2e65]
+                        - img [ref=f2e68]
+                      - generic [ref=f2e71]:
+                        - heading "What is jeko.am?" [level=2] [ref=f2e72]
+                        - paragraph [ref=f2e74]: This website connects registered pets by matching them and giving owners a safe way to contact each other and arrange breeding.
+                        - link "Click to register your DOG or CAT" [ref=f2e75]:
+                          - /url: /auth/signup
+                    - generic [ref=f2e79] [cursor=pointer]:
+                      - generic [ref=f2e80]:
+                        - img "Store in the cupboard" [ref=f2e82]
+                        - paragraph [ref=f2e83]: Store in the cupboard
+                      - generic [ref=f2e84]:
+                        - img "From only 89p per day" [ref=f2e86]
+                        - paragraph [ref=f2e87]: From only 89p per day
+                      - generic [ref=f2e88]:
+                        - img "Just add water and serve" [ref=f2e90]
+                        - paragraph [ref=f2e91]: Just add water and serve
+                      - generic [ref=f2e92]:
+                        - img "Ready in 10 seconds" [ref=f2e94]
+                        - paragraph [ref=f2e95]: Ready in 10 seconds
+                    - generic [ref=f2e98] [cursor=pointer]:
+                      - generic [ref=f2e99]:
+                        - generic [ref=f2e100]: Our Products
+                        - heading "Fresh Food from JEKO" [level=2] [ref=f2e101]
+                        - paragraph [ref=f2e102]: Our 5 person specialized team has made current foods. No chemicals added, unique in market
+                      - generic [ref=f2e103]:
+                        - link "Beef + Rice + Veggies View product Beef + Rice + Veggies Hearty beef with brown rice, spinach, peas & carrots — ~520 kcal. Best for energy and muscle support. £10.00 (1) Add to cart" [ref=f2e495]:
+                          - /url: /products/beef-rice-veggies
+                          - generic [ref=f2e496]:
+                            - generic [ref=f2e497]:
+                              - img "Beef + Rice + Veggies" [ref=f2e498]
+                              - generic [ref=f2e500]: View product
+                            - generic [ref=f2e501]:
+                              - heading "Beef + Rice + Veggies" [level=3] [ref=f2e502]
+                              - paragraph [ref=f2e503]: Hearty beef with brown rice, spinach, peas & carrots — ~520 kcal. Best for energy and muscle support.
+                              - generic [ref=f2e505]: £10.00
+                              - generic [ref=f2e506]:
+                                - img [ref=f2e507]
+                                - img [ref=f2e509]
+                                - img [ref=f2e511]
+                                - img [ref=f2e513]
+                                - img [ref=f2e515]
+                                - generic [ref=f2e517]: (1)
+                              - button "Add to cart" [ref=f2e518]
+                        - link "Chicken + Quinoa + Greens View product Chicken + Quinoa + Greens Lean chicken with quinoa, zucchini & green beans — ~480 kcal. Best for lean protein and weight control. £15.00 Add to cart" [ref=f2e519]:
+                          - /url: /products/chicken-quinoa-greens
+                          - generic [ref=f2e520]:
+                            - generic [ref=f2e521]:
+                              - img "Chicken + Quinoa + Greens" [ref=f2e522]
+                              - generic [ref=f2e524]: View product
+                            - generic [ref=f2e525]:
+                              - heading "Chicken + Quinoa + Greens" [level=3] [ref=f2e526]
+                              - paragraph [ref=f2e527]: Lean chicken with quinoa, zucchini & green beans — ~480 kcal. Best for lean protein and weight control.
+                              - generic [ref=f2e529]: £15.00
+                              - button "Add to cart" [ref=f2e530]
+                        - link "Tuna + Rice Bowl View product Tuna + Rice Bowl Omega-rich tuna with brown rice, spinach, peas & carrots — ~430 kcal. Best for coat health and light digestion. £20.00 Add to cart" [ref=f2e531]:
+                          - /url: /products/tuna-rice-bowl
+                          - generic [ref=f2e532]:
+                            - generic [ref=f2e533]:
+                              - img "Tuna + Rice Bowl" [ref=f2e534]
+                              - generic [ref=f2e536]: View product
+                            - generic [ref=f2e537]:
+                              - heading "Tuna + Rice Bowl" [level=3] [ref=f2e538]
+                              - paragraph [ref=f2e539]: Omega-rich tuna with brown rice, spinach, peas & carrots — ~430 kcal. Best for coat health and light digestion.
+                              - generic [ref=f2e541]: £20.00
+                              - button "Add to cart" [ref=f2e542]
+                        - link "Cod + Rice + Veggies View product Cod + Rice + Veggies Mild cod with white rice, green beans & carrots — ~360 kcal. Best for sensitive stomachs and low-fat diets. £20.00 Add to cart" [ref=f2e543]:
+                          - /url: /products/cod-rice-veggies
+                          - generic [ref=f2e544]:
+                            - generic [ref=f2e545]:
+                              - img "Cod + Rice + Veggies" [ref=f2e546]
+                              - generic [ref=f2e548]: View product
+                            - generic [ref=f2e549]:
+                              - heading "Cod + Rice + Veggies" [level=3] [ref=f2e550]
+                              - paragraph [ref=f2e551]: Mild cod with white rice, green beans & carrots — ~360 kcal. Best for sensitive stomachs and low-fat diets.
+                              - generic [ref=f2e553]: £20.00
+                              - button "Add to cart" [ref=f2e554]
+                      - link "Shop All Products" [ref=f2e129]:
+                        - /url: /products
+                        - text: Shop All Products
+                        - img [ref=f2e130]
+                    - generic [ref=f2e134] [cursor=pointer]:
+                      - generic [ref=f2e136]:
+                        - generic [ref=f2e137]: Trending Now
+                        - heading "What Pet Parents Love" [level=2] [ref=f2e138]
+                        - paragraph [ref=f2e139]: Our most popular picks, loved by thousands of happy dogs.
+                      - generic [ref=f2e140]:
+                        - link "Beef + Rice + Veggies View product Beef + Rice + Veggies Hearty beef with brown rice, spinach, peas & carrots — ~520 kcal. Best for energy and muscle support. £10.00 (1) Add to cart" [ref=f2e563]:
+                          - /url: /products/beef-rice-veggies
+                          - generic [ref=f2e564]:
+                            - generic [ref=f2e565]:
+                              - img "Beef + Rice + Veggies" [ref=f2e566]
+                              - generic [ref=f2e568]: View product
+                            - generic [ref=f2e569]:
+                              - heading "Beef + Rice + Veggies" [level=3] [ref=f2e570]
+                              - paragraph [ref=f2e571]: Hearty beef with brown rice, spinach, peas & carrots — ~520 kcal. Best for energy and muscle support.
+                              - generic [ref=f2e573]: £10.00
+                              - generic [ref=f2e574]:
+                                - img [ref=f2e575]
+                                - img [ref=f2e577]
+                                - img [ref=f2e579]
+                                - img [ref=f2e581]
+                                - img [ref=f2e583]
+                                - generic [ref=f2e585]: (1)
+                              - button "Add to cart" [ref=f2e586]
+                        - link "Chicken + Quinoa + Greens View product Chicken + Quinoa + Greens Lean chicken with quinoa, zucchini & green beans — ~480 kcal. Best for lean protein and weight control. £15.00 Add to cart" [ref=f2e588]:
+                          - /url: /products/chicken-quinoa-greens
+                          - generic [ref=f2e589]:
+                            - generic [ref=f2e590]:
+                              - img "Chicken + Quinoa + Greens" [ref=f2e591]
+                              - generic [ref=f2e593]: View product
+                            - generic [ref=f2e594]:
+                              - heading "Chicken + Quinoa + Greens" [level=3] [ref=f2e595]
+                              - paragraph [ref=f2e596]: Lean chicken with quinoa, zucchini & green beans — ~480 kcal. Best for lean protein and weight control.
+                              - generic [ref=f2e598]: £15.00
+                              - button "Add to cart" [ref=f2e599]
+                        - link "Chickpea + Quinoa Plant Mix View product Chickpea + Quinoa Plant Mix Plant-based quinoa & chickpea mix with spinach, peas & flaxseed — ~510 kcal. Best for plant-based protein, fiber, and digestion. £10.00 Add to cart" [ref=f2e601]:
+                          - /url: /products/chickpea-quinoa-plant-mix
+                          - generic [ref=f2e602]:
+                            - generic [ref=f2e603]:
+                              - img "Chickpea + Quinoa Plant Mix" [ref=f2e604]
+                              - generic [ref=f2e606]: View product
+                            - generic [ref=f2e607]:
+                              - heading "Chickpea + Quinoa Plant Mix" [level=3] [ref=f2e608]
+                              - paragraph [ref=f2e609]: Plant-based quinoa & chickpea mix with spinach, peas & flaxseed — ~510 kcal. Best for plant-based protein, fiber, and digestion.
+                              - generic [ref=f2e611]: £10.00
+                              - button "Add to cart" [ref=f2e612]
+                        - link "Cod + Rice + Veggies View product Cod + Rice + Veggies Mild cod with white rice, green beans & carrots — ~360 kcal. Best for sensitive stomachs and low-fat diets. £20.00 Add to cart" [ref=f2e614]:
+                          - /url: /products/cod-rice-veggies
+                          - generic [ref=f2e615]:
+                            - generic [ref=f2e616]:
+                              - img "Cod + Rice + Veggies" [ref=f2e617]
+                              - generic [ref=f2e619]: View product
+                            - generic [ref=f2e620]:
+                              - heading "Cod + Rice + Veggies" [level=3] [ref=f2e621]
+                              - paragraph [ref=f2e622]: Mild cod with white rice, green beans & carrots — ~360 kcal. Best for sensitive stomachs and low-fat diets.
+                              - generic [ref=f2e624]: £20.00
+                              - button "Add to cart" [ref=f2e625]
+                    - generic [ref=f2e163] [cursor=pointer]:
+                      - generic [ref=f2e164]:
+                        - heading "Don't just take our word for it" [level=2] [ref=f2e165]
+                        - paragraph [ref=f2e166]: Listen to what others have to say about it
+                      - generic [ref=f2e171]:
+                        - generic [ref=f2e172]:
+                          - generic [ref=f2e173]:
+                            - img [ref=f2e177]
+                            - generic [ref=f2e179]: 0:55
+                          - paragraph [ref=f2e180]: Jeko vs kibble & raw
+                        - generic [ref=f2e181]:
+                          - generic [ref=f2e182]:
+                            - img [ref=f2e186]
+                            - generic [ref=f2e188]: 0:38
+                          - paragraph [ref=f2e189]: Feeding Jeko really is simple!
+                        - generic [ref=f2e190]:
+                          - generic [ref=f2e191]:
+                            - img [ref=f2e195]
+                            - generic [ref=f2e197]: 0:54
+                          - paragraph [ref=f2e198]: We've done the research
+                        - generic [ref=f2e199]:
+                          - generic [ref=f2e200]:
+                            - img [ref=f2e204]
+                            - generic [ref=f2e206]: 0:37
+                          - paragraph [ref=f2e207]: Fully flexible to work around you
+                        - generic [ref=f2e208]:
+                          - generic [ref=f2e209]:
+                            - img [ref=f2e213]
+                            - generic [ref=f2e215]: 0:38
+                          - paragraph [ref=f2e216]: Rudy goes from fussy to foodie
+                        - generic [ref=f2e217]:
+                          - generic [ref=f2e218]:
+                            - img [ref=f2e222]
+                            - generic [ref=f2e224]: 0:37
+                          - paragraph [ref=f2e225]: Backed by The Yorkshire Vet
+                    - generic [ref=f2e231] [cursor=pointer]:
+                      - heading "How does a Jeko plan work?" [level=2] [ref=f2e232]
+                      - generic [ref=f2e233]:
+                        - generic [ref=f2e234]:
+                          - img "Tell us about your dog" [ref=f2e236]
+                          - paragraph [ref=f2e237]: Step 1
+                          - paragraph [ref=f2e238]: Tell us about your dog
+                        - generic [ref=f2e239]:
+                          - img "Choose your tailored recipes" [ref=f2e241]
+                          - paragraph [ref=f2e242]: Step 2
+                          - paragraph [ref=f2e243]: Choose your tailored recipes
+                        - generic [ref=f2e244]:
+                          - img "Delivered to your door for free" [ref=f2e246]
+                          - paragraph [ref=f2e247]: Step 3
+                          - paragraph [ref=f2e248]: Delivered to your door for free
+                        - generic [ref=f2e249]:
+                          - img "Try it and transition to Jeko" [ref=f2e251]
+                          - paragraph [ref=f2e252]: Step 4
+                          - paragraph [ref=f2e253]: Try it and transition to Jeko
+                      - link "Create a tailored plan today" [ref=f2e255]:
+                        - /url: /auth/signup
+                    - generic [ref=f2e258] [cursor=pointer]:
+                      - heading "We've delivered" [level=2] [ref=f2e259]
+                      - generic [ref=f2e260]: "0"
+                      - paragraph [ref=f2e261]: meals and changed the lives of tens of thousands of dogs for the better
+                      - generic [ref=f2e262]:
+                        - generic [ref=f2e263]:
+                          - generic [ref=f2e264]: 94%
+                          - paragraph [ref=f2e265]: of customers have seen an improvement in their dog's ailment
+                        - generic [ref=f2e266]:
+                          - generic [ref=f2e267]: 91%
+                          - paragraph [ref=f2e268]: of customers have seen overall health improvements since switching to Jeko
+                    - generic [ref=f2e271] [cursor=pointer]:
+                      - heading "How Jeko compares" [level=2] [ref=f2e272]
+                      - generic [ref=f2e273]:
+                        - generic [ref=f2e274]:
+                          - generic [ref=f2e276]: JEKO
+                          - generic [ref=f2e277]: Dry & wet
+                          - generic [ref=f2e278]: Raw & fresh
+                        - generic [ref=f2e279]:
+                          - generic [ref=f2e281]: Cost
+                          - generic [ref=f2e283]: ££
+                          - generic [ref=f2e285]: £
+                          - generic [ref=f2e287]: £££
+                        - generic [ref=f2e288]:
+                          - generic [ref=f2e290]: No/low processing
+                          - img [ref=f2e292]
+                          - img [ref=f2e297]
+                          - img [ref=f2e303]
+                        - generic [ref=f2e307]:
+                          - generic [ref=f2e309]: High quality ingredients
+                          - img [ref=f2e311]
+                          - img [ref=f2e316]
+                          - img [ref=f2e322]
+                        - generic [ref=f2e326]:
+                          - generic [ref=f2e328]: Easy to store
+                          - img [ref=f2e330]
+                          - img [ref=f2e335]
+                          - img [ref=f2e340]
+                        - generic [ref=f2e345]:
+                          - generic [ref=f2e347]: No risk of harmful pathogens
+                          - img [ref=f2e349]
+                          - img [ref=f2e354]
+                          - img [ref=f2e359]
+                    - generic [ref=f2e366] [cursor=pointer]:
+                      - generic [ref=f2e367]:
+                        - generic:
+                          - img
+                        - generic [ref=f2e368]:
+                          - heading "Our Product as a Premium Food" [level=2] [ref=f2e369]
+                          - paragraph [ref=f2e370]: “Most kibble relies on trust—owners can’t truly see what’s inside and must believe the label, even when it may not fully reflect the real ingredients—while fresh food offers visible, transparent nutrition you can recognize and trust.”
+                      - img "Julian Norton - The Yorkshire Vet with Jeko" [ref=f2e372]
+                    - generic [ref=f2e376] [cursor=pointer]:
+                      - img "Jeko on Dragons Den" [ref=f2e378]
+                      - generic [ref=f2e381]:
+                        - heading "Dog food so good we ate it on Dragons' Den" [level=2] [ref=f2e382]
+                        - paragraph [ref=f2e383]: Jeko is complete nutrition from the inside out, and dogs totally love the taste! "It was possibly the best pitch I have seen in over 10 years of Dragons' Den" - Duncan Bannatyne
+                        - link "Get started today" [ref=f2e384]:
+                          - /url: /auth/signup
+                    - generic [ref=f2e387] [cursor=pointer]:
+                      - generic [ref=f2e389]:
+                        - heading "Frequently Asked Questions" [level=2] [ref=f2e390]
+                        - paragraph [ref=f2e391]: Everything else you need to know about Jeko
+                        - generic [ref=f2e392]:
+                          - generic [ref=f2e393]:
+                            - button "Am I tied into a subscription?" [ref=f2e394]:
+                              - heading "Am I tied into a subscription?" [level=4] [ref=f2e395]
+                              - img [ref=f2e396]
+                            - paragraph [ref=f2e398]: Not at all! You can pause, change, or cancel your plan at any time. We believe in our food so much that we don't need to lock you in.
+                          - generic [ref=f2e399]:
+                            - button "Is Jeko expensive compared to other foods?" [ref=f2e400]:
+                              - heading "Is Jeko expensive compared to other foods?" [level=4] [ref=f2e401]
+                              - img [ref=f2e402]
+                            - paragraph [ref=f2e404]: Jeko starts from only 89p per day. When you consider the health benefits, it's great value compared to vet bills and other premium foods.
+                          - generic [ref=f2e405]:
+                            - button "Do I pay for delivery?" [ref=f2e406]:
+                              - heading "Do I pay for delivery?" [level=4] [ref=f2e407]
+                              - img [ref=f2e408]
+                            - paragraph [ref=f2e410]: No! Delivery is completely free on all orders. We deliver right to your doorstep.
+                          - generic [ref=f2e411]:
+                            - button "What is the nutritional value, and is it good for my dog?" [ref=f2e412]:
+                              - heading "What is the nutritional value, and is it good for my dog?" [level=4] [ref=f2e413]
+                              - img [ref=f2e414]
+                            - paragraph [ref=f2e416]: Jeko is a complete, balanced meal developed with veterinary nutritionists. Every recipe meets FEDIAF guidelines for complete nutrition.
+                          - generic [ref=f2e417]:
+                            - button "What if my dog doesn’t like it?" [ref=f2e418]:
+                              - heading "What if my dog doesn’t like it?" [level=4] [ref=f2e419]
+                              - img [ref=f2e420]
+                            - paragraph [ref=f2e422]: We offer a full money-back guarantee. If your dog doesn't love Jeko, we'll refund your first box in full.
+                          - generic [ref=f2e423]:
+                            - button "Is Jeko suitable for my dogs health concern?" [ref=f2e424]:
+                              - heading "Is Jeko suitable for my dogs health concern?" [level=4] [ref=f2e425]
+                              - img [ref=f2e426]
+                            - paragraph [ref=f2e428]: Jeko is often recommended for dogs with health concerns. Our recipes are gentle and made with natural, high-quality ingredients.
+                          - generic [ref=f2e429]:
+                            - button "Is Jeko complete dog food?" [ref=f2e430]:
+                              - heading "Is Jeko complete dog food?" [level=4] [ref=f2e431]
+                              - img [ref=f2e432]
+                            - paragraph [ref=f2e434]: Yes! Every Jeko recipe is nutritionally complete and balanced, meeting all FEDIAF guidelines for adult dogs and puppies.
+                        - link "Get started today" [ref=f2e436]:
+                          - /url: /auth/signup
+                      - img "Happy healthy dog" [ref=f2e438]
+                  - contentinfo [ref=f2e440] [cursor=pointer]:
+                    - generic [ref=f2e441]:
+                      - generic [ref=f2e442]:
+                        - generic [ref=f2e443]:
+                          - heading "Join our VIP list" [level=4] [ref=f2e444]
+                          - paragraph [ref=f2e445]: Be the first to hear about new product launches, exclusive competitions and helpful dog content.
+                          - generic [ref=f2e446]:
+                            - textbox "Enter your email address" [ref=f2e447]
+                            - button "Sign up" [ref=f2e448]
+                        - generic [ref=f2e449]:
+                          - generic [ref=f2e450]:
+                            - heading "Jeko" [level=4] [ref=f2e451]
+                            - list [ref=f2e452]:
+                              - listitem [ref=f2e453]:
+                                - link "Our story" [ref=f2e454]:
+                                  - /url: /about
+                              - listitem [ref=f2e455]:
+                                - link "Reviews" [ref=f2e456]:
+                                  - /url: /reviews
+                              - listitem [ref=f2e457]:
+                                - link "Recipes" [ref=f2e458]:
+                                  - /url: /recipes
+                              - listitem [ref=f2e459]:
+                                - link "Beyond the bowl" [ref=f2e460]:
+                                  - /url: /beyond-the-bowl
+                              - listitem [ref=f2e461]:
+                                - link "Shop" [ref=f2e462]:
+                                  - /url: /products
+                              - listitem [ref=f2e463]:
+                                - link "Community" [ref=f2e464]:
+                                  - /url: /community
+                          - generic [ref=f2e465]:
+                            - heading "Help" [level=4] [ref=f2e466]
+                            - list [ref=f2e467]:
+                              - listitem [ref=f2e468]:
+                                - link "My account" [ref=f2e469]:
+                                  - /url: /profile
+                              - listitem [ref=f2e470]:
+                                - link "Contact us" [ref=f2e471]:
+                                  - /url: /contact
+                              - listitem [ref=f2e472]:
+                                - link "Delivery information" [ref=f2e473]:
+                                  - /url: /delivery-information
+                              - listitem [ref=f2e474]:
+                                - link "Returns" [ref=f2e475]:
+                                  - /url: /returns
+                              - listitem [ref=f2e476]:
+                                - link "Sitemap" [ref=f2e477]:
+                                  - /url: /sitemap-page
+                          - generic [ref=f2e478]:
+                            - heading "Information" [level=4] [ref=f2e479]
+                            - list [ref=f2e480]:
+                              - listitem [ref=f2e481]:
+                                - link "Privacy policy" [ref=f2e482]:
+                                  - /url: /privacy-policy
+                              - listitem [ref=f2e483]:
+                                - link "Terms & conditions" [ref=f2e484]:
+                                  - /url: /terms-of-use
+                              - listitem [ref=f2e485]:
+                                - link "Jeko policies" [ref=f2e486]:
+                                  - /url: /pure-policies
+                              - listitem [ref=f2e487]:
+                                - link "Site security" [ref=f2e488]:
+                                  - /url: /site-security
+                              - listitem [ref=f2e489]:
+                                - link "Cookie policy" [ref=f2e490]:
+                                  - /url: /cookie-policy
+                      - generic [ref=f2e491]:
+                        - generic [ref=f2e493]: JEKO
+                        - paragraph [ref=f2e494]: © Jeko 2020-2026
+                  - navigation [ref=f2e640]:
+                    - generic [ref=f2e641]:
+                      - link "Home" [ref=f2e642] [cursor=pointer]:
+                        - /url: /
+                        - img [ref=f2e643]
+                        - generic [ref=f2e646]: Home
+                      - link "Swipe" [ref=f2e647] [cursor=pointer]:
+                        - /url: /swipe
+                        - img [ref=f2e648]
+                        - generic [ref=f2e650]: Swipe
+                      - link "Matches" [ref=f2e651] [cursor=pointer]:
+                        - /url: /matches
+                        - img [ref=f2e652]
+                        - generic [ref=f2e657]: Matches
+                      - link "Chat" [ref=f2e658] [cursor=pointer]:
+                        - /url: /messages
+                        - img [ref=f2e659]
+                        - generic [ref=f2e661]: Chat
+                      - link "Profile" [ref=f2e662] [cursor=pointer]:
+                        - /url: /auth/login
+                        - img [ref=f2e663]
+                        - generic [ref=f2e666]: Profile
+                  - generic [ref=f2e626]:
+                    - generic [ref=f2e627]:
+                      - paragraph [ref=f2e628]: Bow Wow! 🐾
+                      - paragraph [ref=f2e629]: Find a friend for your pup!
+                    - button "Find pet matches" [ref=f2e631] [cursor=pointer]:
+                      - img "Jeko dog" [ref=f2e632]
+                    - generic [ref=f2e633]:
+                      - generic [ref=f2e634]: 🐾
+                      - generic [ref=f2e635]: "0024"
+                      - generic [ref=f2e636]: pets registered
+                  - alert [ref=f2e637]
