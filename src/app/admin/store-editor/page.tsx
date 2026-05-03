@@ -6,7 +6,7 @@ import { ALL_PAGE_CONFIGS, PRODUCT_PAGE_SECTIONS, type SectionSchema, type PageC
 import { useAdminEditLang } from '@/lib/i18n/AdminEditLang';
 import { dictionaries } from '@/lib/i18n/translations';
 import { memoTranslateHy } from '@/components/HyText';
-import { FONT_OPTIONS, useFontOptions, type FontOption } from '@/lib/font-options';
+import { useFontOptions, type FontOption } from '@/lib/font-options';
 import Link from 'next/link';
 
 /** Build the HY default value map for a section's translatable fields from the static dictionary. */
