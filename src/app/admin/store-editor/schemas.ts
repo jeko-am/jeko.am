@@ -64,6 +64,9 @@ const HOMEPAGE_SECTIONS: SectionSchema[] = [
     name: 'Header', icon: ICON_PATHS.header, color: 'bg-deep-green',
     fields: [
       { key: 'logo_text', label: 'Logo Text', type: 'text', placeholder: 'JEKO' },
+      { key: 'logo_image', label: 'Logo Image (overrides text)', type: 'image' },
+      { key: 'logo_image_height', label: 'Logo Image Height (px)', type: 'number', placeholder: '40' },
+      { key: 'logo_url', label: 'Logo Link URL', type: 'url', placeholder: '/' },
       { key: 'cta_text', label: 'CTA Button Text', type: 'text', placeholder: 'Create plan', i18nKey: 'header.cta.buildPlan' },
       { key: 'cta_url', label: 'CTA Button URL', type: 'url', placeholder: '/auth/signup' },
       { key: 'nav_1_label', label: 'Nav Item 1 — Label', type: 'text', placeholder: 'About', i18nKey: 'header.nav.about' },
@@ -127,7 +130,7 @@ const HOMEPAGE_SECTIONS: SectionSchema[] = [
       { key: 'nav_5_dd_5_visible', label: 'Health Dropdown 5 — Show', type: 'toggle' },
     ],
     defaultContent: {
-      logo_text: 'JEKO', cta_text: 'Create plan', cta_url: '/auth/signup',
+      logo_text: 'JEKO', logo_image: '', logo_image_height: 40, logo_url: '/', cta_text: 'Create plan', cta_url: '/auth/signup',
       nav_1_label: 'About', nav_1_url: '/about', nav_1_visible: true,
       nav_2_label: 'Our dog food', nav_2_url: '/recipes', nav_2_visible: true,
       nav_3_label: 'Shop', nav_3_url: '/products', nav_3_visible: true,
@@ -493,6 +496,22 @@ const HOMEPAGE_SECTIONS: SectionSchema[] = [
       cta_url: '/auth/signup',
       close_text: 'Close',
       community_count_text: 'Join {count}+ pet parents already in our community!',
+    },
+  },
+  // ── 16 ── Playful Signup CTA
+  {
+    name: 'Playful Signup CTA', icon: ICON_PATHS.heart, color: 'bg-gold',
+    fields: [
+      { key: 'heading', label: 'Heading', type: 'text', placeholder: 'Ready to spoil them?' },
+      { key: 'subheading', label: 'Subheading', type: 'textarea', placeholder: 'Join thousands of happy pets — get a tailored plan in under 2 minutes.' },
+      { key: 'button_text', label: 'Button Text', type: 'text', placeholder: 'Sign me up' },
+      { key: 'button_url', label: 'Button URL', type: 'url', placeholder: '/auth/signup' },
+    ],
+    defaultContent: {
+      heading: 'Ready to spoil them?',
+      subheading: 'Join thousands of happy pets — get a tailored plan in under 2 minutes.',
+      button_text: 'Sign me up',
+      button_url: '/auth/signup',
     },
   },
 ];

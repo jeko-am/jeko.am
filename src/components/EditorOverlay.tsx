@@ -87,9 +87,11 @@ function EditorOverlayInner() {
       });
 
       section.addEventListener('click', (e) => {
-        // Let interactive elements (modal close, CTAs, inputs) keep working inside the preview
+        // Let interactive controls (modal close, inputs) keep working inside the preview,
+        // but always intercept <a> clicks so the editor can select sections that are
+        // themselves wrapped in a Link (e.g. Offer Banner -> /auth/signup).
         const target = e.target as HTMLElement | null;
-        if (target && target.closest('button, a, input, select, textarea, label, [role="button"]')) {
+        if (target && target.closest('button, input, select, textarea, label, [role="button"]')) {
           return;
         }
         e.preventDefault();

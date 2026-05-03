@@ -166,6 +166,9 @@ export default function Header({ content }: { content?: any }) {
   };
 
   const logoText = content?.logo_text ?? "JEKO";
+  const logoImage = content?.logo_image as string | undefined;
+  const logoImageHeight = Number(content?.logo_image_height) || 40;
+  const logoUrl = (content?.logo_url as string | undefined) || "/";
   const ctaText = ct("cta_text", "common.signUp");
   const signupUrl = useSignupUrl();
   // Gate the dynamic signup→profile swap until after hydration.
@@ -199,19 +202,28 @@ export default function Header({ content }: { content?: any }) {
       <div className="bg-deep-green h-[64px] lg:h-[80px] header-zigzag-bottom">
         <div className="max-w-[1400px] mx-auto h-full px-5 lg:px-8 flex items-center justify-between">
           {/* Logo */}
-          <Link href="/" className="flex-shrink-0" translate="no">
-            <span
-              className="text-[32px] lg:text-[36px] xl:text-[40px] leading-none select-none notranslate"
-              translate="no"
-              style={{
-                fontFamily: "'TR Frankfurter', 'Rubik', sans-serif",
-                color: '#F2A900',
-                transform: 'rotate(-6deg)',
-                display: 'inline-block',
-              }}
-            >
-              {logoText}
-            </span>
+          <Link href={logoUrl} className="flex-shrink-0" translate="no">
+            {logoImage ? (
+              <img
+                src={logoImage}
+                alt={logoText}
+                style={{ height: `${logoImageHeight}px`, width: 'auto' }}
+                className="select-none"
+              />
+            ) : (
+              <span
+                className="text-[32px] lg:text-[36px] xl:text-[40px] leading-none select-none notranslate"
+                translate="no"
+                style={{
+                  fontFamily: "'TR Frankfurter', 'Rubik', sans-serif",
+                  color: '#F2A900',
+                  transform: 'rotate(-6deg)',
+                  display: 'inline-block',
+                }}
+              >
+                {logoText}
+              </span>
+            )}
           </Link>
 
           {/* Desktop Navigation - Center (iPad landscape and larger shows hamburger until xl) */}
