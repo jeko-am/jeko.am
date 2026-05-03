@@ -7,7 +7,7 @@ import { dynFontStyle, dynFontClass } from "@/lib/dynamic-font-size";
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export default function HeroSection({ content }: { content?: Record<string, any> }) {
-  const { ct } = useContentT(content);
+  const { ct, lang } = useContentT(content);
   const heading = ct("heading", "home.hero.heading");
   const headingHighlight = ct("heading_highlight", "home.hero.headingHighlight");
   const subheading = ct("subheading", "home.hero.subheading");
@@ -66,14 +66,14 @@ export default function HeroSection({ content }: { content?: Record<string, any>
               lineHeight: "1.04",
               color: "#F5F1EB",
               textShadow: "0 2px 12px rgba(0,0,0,0.25)",
-              ...dynFontStyle(content, "heading"),
+              ...dynFontStyle(content, "heading", lang),
             }}
           >
             {heading}
             <br />
             <span
               className={`text-gold ${dynFontClass(content, "heading_highlight")}`}
-              style={dynFontStyle(content, "heading_highlight")}
+              style={dynFontStyle(content, "heading_highlight", lang)}
             >
               {headingHighlight}
             </span>
@@ -88,7 +88,7 @@ export default function HeroSection({ content }: { content?: Record<string, any>
               lineHeight: "1.4",
               color: "#F5F1EB",
               textShadow: "0 1px 8px rgba(0,0,0,0.25)",
-              ...dynFontStyle(content, "subheading"),
+              ...dynFontStyle(content, "subheading", lang),
             }}
           >
             {subheading}
@@ -99,7 +99,7 @@ export default function HeroSection({ content }: { content?: Record<string, any>
             <a
               href={buttonUrl}
               className={`btn-gold inline-block font-rubik transition-all duration-300 hover:shadow-lg ${dynFontClass(content, "button_text")}`}
-              style={dynFontStyle(content, "button_text")}
+              style={dynFontStyle(content, "button_text", lang)}
             >
               {buttonText}
             </a>

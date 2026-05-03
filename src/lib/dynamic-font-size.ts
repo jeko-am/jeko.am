@@ -10,7 +10,7 @@
 // --fs-mobile and --fs-desktop at the md breakpoint.
 
 import type { CSSProperties } from "react";
-import { fontFamilyFor } from "./font-options";
+import { fontFamilyFor, fontFamilyForLang } from "./font-options";
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type Content = Record<string, any> | null | undefined;
@@ -22,13 +22,19 @@ function toPx(v: unknown): string | null {
   return `${n}px`;
 }
 
-export function dynFontStyle(content: Content, fieldKey: string): CSSProperties | undefined {
+export function dynFontStyle(content: Content, fieldKey: string, lang: string = "en"): CSSProperties | undefined {
   if (!content) return undefined;
   const desktop =
     toPx(content[`${fieldKey}_font_size_desktop`]) ??
     toPx(content[`${fieldKey}_font_size`]);
   const mobile = toPx(content[`${fieldKey}_font_size_mobile`]);
-  const family = fontFamilyFor(content[`${fieldKey}_font_family`]);
+  const family = fontFamilyForLang(
+    content[`${fieldKey}_font_family`],
+    content[`${fieldKey}_font_family_hy`],
+    lang
+  );
+  // Defensive: keep the standalone helper available for other callers.
+  void fontFamilyFor;
 
   if (!desktop && !mobile && !family) return undefined;
   // Both vars default to each other so partial config still works.

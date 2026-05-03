@@ -4,6 +4,7 @@ import { AuthProvider } from "@/lib/auth";
 import { CartProvider } from "@/lib/cart-context";
 import { CurrencyProvider } from "@/lib/currency";
 import SiteThemeBootstrap from "@/components/SiteThemeBootstrap";
+import CustomFontsBootstrap from "@/components/CustomFontsBootstrap";
 import MobileNavWrapper from "@/components/MobileNavWrapper";
 import SideCart from "@/components/SideCart";
 import ConditionalDogChatbot from "@/components/ConditionalDogChatbot";
@@ -41,6 +42,7 @@ export default async function RootLayout({
         <LangProvider initialLang={lang}>
           <TranslationsBootstrap />
           <SiteThemeBootstrap />
+          <CustomFontsBootstrap />
           <AuthProvider>
             <CurrencyProvider>
               <CartProvider>

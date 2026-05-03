@@ -6,7 +6,8 @@ import { ALL_PAGE_CONFIGS, PRODUCT_PAGE_SECTIONS, type SectionSchema, type PageC
 import { useAdminEditLang } from '@/lib/i18n/AdminEditLang';
 import { dictionaries } from '@/lib/i18n/translations';
 import { memoTranslateHy } from '@/components/HyText';
-import { FONT_OPTIONS } from '@/lib/font-options';
+import { FONT_OPTIONS, useFontOptions, type FontOption } from '@/lib/font-options';
+import Link from 'next/link';
 
 /** Build the HY default value map for a section's translatable fields from the static dictionary. */
 function buildHyDefaults(schema: SectionSchema): Record<string, unknown> {
@@ -314,32 +315,59 @@ function FontFamilyControl({
   fieldKey,
   value,
   defaultFamily,
+  lang,
   setEditValues,
   setHasChanges,
 }: {
   fieldKey: string;
   value: unknown;
   defaultFamily?: string;
+  lang: 'en' | 'hy';
   setEditValues: React.Dispatch<React.SetStateAction<Record<string, unknown>>>;
   setHasChanges: (v: boolean) => void;
 }) {
-  const storageKey = `${fieldKey}_font_family`;
+  // Per-language storage key. HY choice never overwrites the EN choice.
+  const storageKey = lang === 'hy' ? `${fieldKey}_font_family_hy` : `${fieldKey}_font_family`;
+  const allFonts = useFontOptions();
   const current = typeof value === "string" && value ? value : "default";
-  // When no override is saved, show the resolved default in the label so the
-  // admin can see which font this text actually uses.
+
+  // In HY mode, only show fonts that actually contain Armenian glyphs.
+  const visibleFonts: FontOption[] = lang === 'hy'
+    ? allFonts.filter(f => f.supportsArmenian)
+    : allFonts;
+
   const defaultOpt = defaultFamily
-    ? FONT_OPTIONS.find(o => o.value === defaultFamily)
+    ? allFonts.find(o => o.value === defaultFamily)
     : undefined;
-  const defaultLabel = defaultOpt
-    ? `Default (${defaultOpt.label})`
-    : "Default (inherit)";
+  const defaultLabel = defaultOpt ? `Default (${defaultOpt.label})` : "Default (inherit)";
+
+  // One-time per-session warning when admin first opens font dropdown in HY mode.
+  // Stored on window so it survives re-renders without React state plumbing.
+  function maybeWarnHy(): boolean {
+    if (lang !== 'hy') return true;
+    const w = window as unknown as { __hyFontWarned?: boolean };
+    if (w.__hyFontWarned) return true;
+    const ok = window.confirm(
+      "Heads up: Latin fonts (like Fredoka or Frankfurter) don't include Armenian " +
+      "glyphs, so Armenian text falls back to your OS default. Only fonts marked " +
+      "Armenian-safe are shown below.\n\n" +
+      "To use a custom Armenian font, upload it under Store Editor → Fonts. " +
+      "Continue?"
+    );
+    if (ok) w.__hyFontWarned = true;
+    return ok;
+  }
+
   return (
-    <div className="flex items-center gap-1 flex-shrink-0" title="Font family">
+    <div className="flex items-center gap-1 flex-shrink-0" title={lang === 'hy' ? "Armenian font (Latin-only fonts hidden)" : "Font family"}>
       <svg className="w-3 h-3 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
         <path strokeLinecap="round" strokeLinejoin="round" d="M4 7V5h16v2M9 5v14M15 5v14M7 19h4M13 19h4" />
       </svg>
       <select
         value={current}
+        onMouseDown={(e) => {
+          if (!maybeWarnHy()) e.preventDefault();
+        }}
         onChange={(e) => {
           const raw = e.target.value;
           setEditValues(prev => {
@@ -350,14 +378,25 @@ function FontFamilyControl({
           });
           setHasChanges(true);
         }}
-        className="px-1.5 py-1 text-[11px] text-gray-700 border border-gray-200 rounded-md focus:ring-2 focus:ring-deep-green/20 focus:border-deep-green outline-none bg-white max-w-[140px]"
+        className="px-1.5 py-1 text-[11px] text-gray-700 border border-gray-200 rounded-md focus:ring-2 focus:ring-deep-green/20 focus:border-deep-green outline-none bg-white min-w-0 max-w-full"
       >
-        {FONT_OPTIONS.map(opt => (
+        {visibleFonts.map(opt => (
           <option key={opt.value} value={opt.value}>
             {opt.value === "default" ? defaultLabel : opt.label}
           </option>
         ))}
       </select>
+      {lang === 'hy' && (
+        <Link
+          href="/admin/store-editor/fonts"
+          target="_blank"
+          rel="noopener"
+          title="Upload an Armenian font"
+          className="text-[11px] text-deep-green hover:underline whitespace-nowrap"
+        >
+          + font
+        </Link>
+      )}
     </div>
   );
 }
@@ -671,6 +710,47 @@ export default function AdminStoreEditorPage() {
   // Global admin-wide language toggle controls which language is being edited.
   const { editLang, setEditLang } = useAdminEditLang();
   const [hasChanges, setHasChanges] = useState(false);
+
+  // Resizable left sidebar. Persisted to localStorage so admins keep their
+  // preferred width between sessions. Min 260px keeps controls usable; max
+  // 640px keeps the preview area visible.
+  const SIDEBAR_MIN = 260;
+  const SIDEBAR_MAX = 640;
+  const [sidebarWidth, setSidebarWidth] = useState<number>(320);
+  useEffect(() => {
+    const saved = Number(localStorage.getItem('store_editor_sidebar_width'));
+    if (saved >= SIDEBAR_MIN && saved <= SIDEBAR_MAX) setSidebarWidth(saved);
+  }, []);
+  const dragStateRef = useRef<{ startX: number; startW: number } | null>(null);
+  const onSidebarDragStart = (e: React.MouseEvent) => {
+    e.preventDefault();
+    dragStateRef.current = { startX: e.clientX, startW: sidebarWidth };
+    const move = (ev: MouseEvent) => {
+      const s = dragStateRef.current;
+      if (!s) return;
+      const next = Math.min(SIDEBAR_MAX, Math.max(SIDEBAR_MIN, s.startW + (ev.clientX - s.startX)));
+      setSidebarWidth(next);
+    };
+    const up = () => {
+      const s = dragStateRef.current;
+      if (s) {
+        try { localStorage.setItem('store_editor_sidebar_width', String(sidebarWidth)); } catch {}
+      }
+      dragStateRef.current = null;
+      window.removeEventListener('mousemove', move);
+      window.removeEventListener('mouseup', up);
+      document.body.style.cursor = '';
+      document.body.style.userSelect = '';
+    };
+    document.body.style.cursor = 'col-resize';
+    document.body.style.userSelect = 'none';
+    window.addEventListener('mousemove', move);
+    window.addEventListener('mouseup', up);
+  };
+  // Persist on each width change too (fires after drag-end as well).
+  useEffect(() => {
+    try { localStorage.setItem('store_editor_sidebar_width', String(sidebarWidth)); } catch {}
+  }, [sidebarWidth]);
 
   // All products for product_picker fields
   const [allProducts, setAllProducts] = useState<{ id: string; name: string }[]>([]);
@@ -1152,8 +1232,17 @@ export default function AdminStoreEditorPage() {
       {/* ━━━ MAIN BODY ━━━ */}
       <div className="flex flex-1 overflow-hidden">
 
-        {/* ━━━ LEFT SIDEBAR ━━━ */}
-        <div className="w-[300px] bg-white border-r border-gray-200 flex flex-col overflow-hidden flex-shrink-0">
+        {/* ━━━ LEFT SIDEBAR (resizable) ━━━ */}
+        <div
+          className="bg-white border-r border-gray-200 flex flex-col overflow-hidden flex-shrink-0 relative"
+          style={{ width: sidebarWidth }}
+        >
+          {/* Drag handle on the right edge */}
+          <div
+            onMouseDown={onSidebarDragStart}
+            title="Drag to resize"
+            className="absolute top-0 right-0 h-full w-1.5 cursor-col-resize z-20 hover:bg-deep-green/20 active:bg-deep-green/40 transition-colors"
+          />
 
           {selectedIndex !== null && selectedSchema ? (
             /* ── SECTION SETTINGS PANEL ── */
@@ -1281,7 +1370,7 @@ export default function AdminStoreEditorPage() {
                     const hyPlaceholder = editLang === 'hy' && enValue ? String(enValue) : field.placeholder;
                     return (
                       <div key={field.key}>
-                        <div className="flex items-center justify-between gap-2 mb-1.5">
+                        <div className="flex flex-col gap-1.5 mb-1.5">
                           <label className="text-[13px] font-medium text-gray-700 flex items-center gap-2 min-w-0">
                             <span className="truncate">{field.label}</span>
                             {editLang === 'hy' && <span className="text-[10px] font-semibold text-deep-green/70 px-1.5 py-0.5 bg-deep-green/10 rounded flex-shrink-0">HY</span>}
@@ -1289,11 +1378,12 @@ export default function AdminStoreEditorPage() {
                           {(() => {
                             const inferred = inferFieldFontDefaults(field);
                             return (
-                              <div className="flex items-center gap-2 flex-shrink-0">
+                              <div className="flex flex-wrap items-center gap-2">
                                 <FontFamilyControl
                                   fieldKey={field.key}
-                                  value={editValues[`${field.key}_font_family`]}
+                                  value={editLang === 'hy' ? editValues[`${field.key}_font_family_hy`] : editValues[`${field.key}_font_family`]}
                                   defaultFamily={field.defaultFontFamily ?? inferred.family}
+                                  lang={editLang}
                                   setEditValues={setEditValues}
                                   setHasChanges={setHasChanges}
                                 />
@@ -1386,7 +1476,7 @@ export default function AdminStoreEditorPage() {
                   const textHyPlaceholder = editLang === 'hy' && field.type === 'text' && enValue ? String(enValue) : field.placeholder;
                   return (
                     <div key={field.key}>
-                      <div className="flex items-center justify-between gap-2 mb-1.5">
+                      <div className="flex flex-col gap-1.5 mb-1.5">
                         <label className="text-[13px] font-medium text-gray-700 flex items-center gap-2 min-w-0">
                           <span className="truncate">{field.label}</span>
                           {editLang === 'hy' && field.type === 'text' && <span className="text-[10px] font-semibold text-deep-green/70 px-1.5 py-0.5 bg-deep-green/10 rounded flex-shrink-0">HY</span>}
@@ -1394,11 +1484,12 @@ export default function AdminStoreEditorPage() {
                         {field.type === 'text' && (() => {
                           const inferred = inferFieldFontDefaults(field);
                           return (
-                            <div className="flex items-center gap-2 flex-shrink-0">
+                            <div className="flex flex-wrap items-center gap-2">
                               <FontFamilyControl
                                 fieldKey={field.key}
-                                value={editValues[`${field.key}_font_family`]}
+                                value={editLang === 'hy' ? editValues[`${field.key}_font_family_hy`] : editValues[`${field.key}_font_family`]}
                                 defaultFamily={field.defaultFontFamily ?? inferred.family}
+                                lang={editLang}
                                 setEditValues={setEditValues}
                                 setHasChanges={setHasChanges}
                               />
