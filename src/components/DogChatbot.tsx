@@ -5,7 +5,20 @@ import { useRouter, usePathname } from "next/navigation";
 import { useT } from "@/lib/i18n/LangProvider";
 import { supabase } from "@/lib/supabase";
 
-export default function DogChatbot() {
+export type ChatbotContent = {
+  enabled?: boolean;
+  icon_image?: string;
+  link_url?: string;
+  aria_label?: string;
+  bubble_enabled?: boolean;
+  bubble_greeting?: string;
+  bubble_subtext?: string;
+  counter_enabled?: boolean;
+  counter_label?: string;
+  background_color?: string;
+};
+
+export default function DogChatbot({ content }: { content?: ChatbotContent }) {
   const { t } = useT();
   const router = useRouter();
   const pathname = usePathname();
@@ -13,6 +26,16 @@ export default function DogChatbot() {
   const [bubbleVisible, setBubbleVisible] = useState(false);
   const [isAdminRoute, setIsAdminRoute] = useState(false);
   const [userCount, setUserCount] = useState<number | null>(null);
+
+  const iconSrc = content?.icon_image || "/WhatsApp_Image_2026-04-11_at_09.54.12-removebg-preview.png";
+  const linkUrl = content?.link_url || "/matches";
+  const ariaLabel = content?.aria_label || "Find pet matches";
+  const bubbleEnabled = content?.bubble_enabled !== false;
+  const counterEnabled = content?.counter_enabled !== false;
+  const bgColor = content?.background_color || "#F2A900";
+  const greeting = content?.bubble_greeting || t("chatbot.bubble.greeting");
+  const subtext = content?.bubble_subtext || t("chatbot.bubble.subtext");
+  const counterLabel = content?.counter_label || t("chatbot.counter.label") || "pets registered";
 
   useEffect(() => {
     let cancelled = false;
@@ -69,57 +92,59 @@ export default function DogChatbot() {
       }}
     >
       {/* Speech bubble */}
-      <div
-        style={{
-          opacity: bubbleVisible ? 1 : 0,
-          transform: bubbleVisible ? 'scale(1) translateY(0)' : 'scale(0.7) translateY(10px)',
-          transition: 'opacity 0.4s ease, transform 0.4s ease',
-          transformOrigin: 'bottom right',
-        }}
-        className="relative bg-white rounded-2xl px-4 py-2.5 shadow-lg border border-gray-100 mr-2"
-      >
-        <p
-          className="text-deep-green font-bold text-[15px] whitespace-nowrap"
-          style={{ fontFamily: "'TR Frankfurter', 'Rubik', sans-serif" }}
-        >
-          {t("chatbot.bubble.greeting")}
-        </p>
-        <p className="text-deep-green/60 text-[11px] font-rubik">{t("chatbot.bubble.subtext")}</p>
-        {/* Tail pointing down-right */}
+      {bubbleEnabled && (
         <div
-          className="absolute -bottom-2 right-6 w-4 h-4 bg-white border-r border-b border-gray-100"
-          style={{ transform: 'rotate(45deg)' }}
-        />
-      </div>
+          style={{
+            opacity: bubbleVisible ? 1 : 0,
+            transform: bubbleVisible ? 'scale(1) translateY(0)' : 'scale(0.7) translateY(10px)',
+            transition: 'opacity 0.4s ease, transform 0.4s ease',
+            transformOrigin: 'bottom right',
+          }}
+          className="relative bg-white rounded-2xl px-4 py-2.5 shadow-lg border border-gray-100 mr-2"
+        >
+          <p
+            className="text-deep-green font-bold text-[15px] whitespace-nowrap"
+            style={{ fontFamily: "'TR Frankfurter', 'Rubik', sans-serif" }}
+          >
+            {greeting}
+          </p>
+          <p className="text-deep-green/60 text-[11px] font-rubik">{subtext}</p>
+          {/* Tail pointing down-right */}
+          <div
+            className="absolute -bottom-2 right-6 w-4 h-4 bg-white border-r border-b border-gray-100"
+            style={{ transform: 'rotate(45deg)' }}
+          />
+        </div>
+      )}
 
       {/* Dog button */}
       <button
-        onClick={() => router.push("/matches")}
-        aria-label="Find pet matches"
+        onClick={() => router.push(linkUrl)}
+        aria-label={ariaLabel}
         className="w-20 h-20 lg:w-24 lg:h-24 rounded-full shadow-2xl flex items-center justify-center cursor-pointer border-4 border-white hover:scale-110 active:scale-95 transition-transform"
         style={{
-          background: 'linear-gradient(135deg, #F2A900 0%, #e09400 100%)',
+          background: `linear-gradient(135deg, ${bgColor} 0%, ${bgColor} 100%)`,
           animation: 'dogBounce 2.5s ease-in-out infinite',
         }}
       >
         {/* Dog face photo */}
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
-          src="/WhatsApp_Image_2026-04-11_at_09.54.12-removebg-preview.png"
-          alt="Jeko dog"
+          src={iconSrc}
+          alt="Chatbot icon"
           className="w-16 h-16 lg:w-20 lg:h-20 object-contain"
         />
       </button>
 
       {/* Live registered-pets counter */}
-      {userCount != null && (
+      {counterEnabled && userCount != null && (
         <div className="bg-white rounded-full shadow-lg border border-blue-200 px-3 py-1.5 flex items-center gap-1.5 mt-1">
           <span aria-hidden="true">🐾</span>
           <span className="font-mono font-bold text-blue-600 text-[15px] tabular-nums tracking-wider">
             {String(userCount).padStart(4, '0')}
           </span>
           <span className="text-deep-green/70 text-[10px] font-semibold whitespace-nowrap">
-            {t('chatbot.counter.label') || 'pets registered'}
+            {counterLabel}
           </span>
         </div>
       )}

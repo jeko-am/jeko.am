@@ -94,24 +94,46 @@ export default function Header({ content }: { content?: any }) {
   const ctaCls = `text-white ${isHy ? "text-[14px] xl:text-[16px]" : "text-[15px] xl:text-[17px]"} font-rubik font-medium hover:opacity-80 transition-opacity`;
   const logoutCls = `bg-red-500/20 backdrop-blur-sm text-white ${isHy ? "text-[13px] xl:text-[14px]" : "text-[14px] xl:text-[15px]"} font-rubik font-medium px-3 py-1.5 rounded-lg hover:bg-red-500/30 transition-all duration-200 flex items-center gap-1.5 disabled:opacity-50 disabled:cursor-not-allowed whitespace-nowrap`;
   const signupCls = `bg-gold text-deep-green ${isHy ? "text-[14px] xl:text-[16px]" : "text-[15px] xl:text-[17px]"} font-rubik font-semibold px-5 py-2 rounded-lg hover:bg-[#d99500] transition-colors whitespace-nowrap`;
-  const aboutDropdown = [
+  // Treat undefined as visible (legacy rows). Only an explicit `false` hides the item.
+  const ddVisible = (v: unknown) => v !== false;
+  const buildDropdown = (
+    prefix: string,
+    fallbacks: { label: string; href: string }[],
+  ): { label: string; href: string }[] => {
+    if (!content) return fallbacks;
+    return fallbacks
+      .map((fb, i) => {
+        const idx = i + 1;
+        const lblKey = `${prefix}_${idx}_label`;
+        const urlKey = `${prefix}_${idx}_url`;
+        const visKey = `${prefix}_${idx}_visible`;
+        const c = content as Record<string, unknown>;
+        if (!ddVisible(c[visKey])) return null;
+        return {
+          label: ct(lblKey, '') || fb.label,
+          href: (c[urlKey] as string) ?? fb.href,
+        };
+      })
+      .filter((x): x is { label: string; href: string } => x !== null);
+  };
+  const aboutDropdown = buildDropdown('nav_1_dd', [
     { label: t("footer.link.ourStory"), href: "/about" },
-  ];
-  const communityDropdown = [
+  ]);
+  const communityDropdown = buildDropdown('nav_2_dd', [
     { label: t("header.nav.community"), href: "/community" },
     { label: t("header.nav.blog"), href: "/blog" },
     { label: t("header.nav.swipe"), href: "/swipe" },
     { label: t("header.nav.matches"), href: "/matches" },
     { label: t("header.nav.findOwners"), href: "/find-owners" },
     { label: t("header.nav.messages"), href: "/messages" },
-  ];
-  const healthDropdown = [
+  ]);
+  const healthDropdown = buildDropdown('nav_5_dd', [
     { label: t("benefits.colitis.title"), href: "/benefits/colitis" },
     { label: t("benefits.digestion.title"), href: "/benefits/digestion-issues" },
     { label: t("benefits.hypoallergenic.title"), href: "/benefits/hypoallergenic" },
     { label: t("benefits.pancreatitis.title"), href: "/benefits/pancreatitis" },
     { label: t("benefits.weight.title"), href: "/benefits/weight-management" },
-  ];
+  ]);
   const defaultNavItems = [
     { label: t("header.nav.about"), href: "/about", hasDropdown: true, dropdown: aboutDropdown },
     { label: t("header.nav.community"), href: "/community", hasDropdown: true, dropdown: communityDropdown },

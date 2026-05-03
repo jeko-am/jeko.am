@@ -1,0 +1,1272 @@
+- generic [active] [ref=e1]:
+  - alert [ref=e2]
+  - generic [ref=e3]:
+    - complementary [ref=e4]:
+      - generic [ref=e6]:
+        - heading "Jeko" [level=1] [ref=e7]
+        - paragraph [ref=e8]: Admin Panel
+      - navigation [ref=e9]:
+        - link "Dashboard" [ref=e10] [cursor=pointer]:
+          - /url: /admin/dashboard
+          - img [ref=e11]
+          - text: Dashboard
+        - link "Store Editor" [ref=e13] [cursor=pointer]:
+          - /url: /admin/store-editor
+          - img [ref=e14]
+          - text: Store Editor
+        - link "Translations" [ref=e16] [cursor=pointer]:
+          - /url: /admin/translations
+          - img [ref=e17]
+          - text: Translations
+        - link "Products" [ref=e19] [cursor=pointer]:
+          - /url: /admin/products
+          - img [ref=e20]
+          - text: Products
+        - link "Bundles" [ref=e22] [cursor=pointer]:
+          - /url: /admin/bundles
+          - img [ref=e23]
+          - text: Bundles
+        - link "Upsells" [ref=e25] [cursor=pointer]:
+          - /url: /admin/upsells
+          - img [ref=e26]
+          - text: Upsells
+        - link "Categories" [ref=e28] [cursor=pointer]:
+          - /url: /admin/categories
+          - img [ref=e29]
+          - text: Categories
+        - link "Orders" [ref=e31] [cursor=pointer]:
+          - /url: /admin/orders
+          - img [ref=e32]
+          - text: Orders
+        - link "Customers" [ref=e34] [cursor=pointer]:
+          - /url: /admin/customers
+          - img [ref=e35]
+          - text: Customers
+        - link "Reviews" [ref=e37] [cursor=pointer]:
+          - /url: /admin/reviews
+          - img [ref=e38]
+          - text: Reviews
+        - link "Community" [ref=e40] [cursor=pointer]:
+          - /url: /admin/community
+          - img [ref=e41]
+          - text: Community
+        - link "Discounts" [ref=e43] [cursor=pointer]:
+          - /url: /admin/discounts
+          - img [ref=e44]
+          - text: Discounts
+        - link "Pages" [ref=e46] [cursor=pointer]:
+          - /url: /admin/pages
+          - img [ref=e47]
+          - text: Pages
+        - link "Blog" [ref=e49] [cursor=pointer]:
+          - /url: /admin/blog
+          - img [ref=e50]
+          - text: Blog
+        - link "Settings" [ref=e52] [cursor=pointer]:
+          - /url: /admin/settings
+          - img [ref=e53]
+          - text: Settings
+        - link "Analytics" [ref=e55] [cursor=pointer]:
+          - /url: /admin/analytics
+          - img [ref=e56]
+          - text: Analytics
+        - link "Support" [ref=e58] [cursor=pointer]:
+          - /url: /admin/support
+          - img [ref=e59]
+          - text: Support
+      - generic [ref=e61]:
+        - link "View Store" [ref=e62] [cursor=pointer]:
+          - /url: /
+          - img [ref=e63]
+          - text: View Store
+        - button "Sign Out" [ref=e65] [cursor=pointer]:
+          - img [ref=e66]
+          - text: Sign Out
+    - generic [ref=e68]:
+      - banner [ref=e69]:
+        - button [ref=e70] [cursor=pointer]:
+          - img [ref=e71]
+        - generic [ref=e73]:
+          - generic [ref=e74]:
+            - generic [ref=e75]: "Editing:"
+            - generic [ref=e76]:
+              - button "Edit English content" [ref=e77] [cursor=pointer]:
+                - generic [ref=e78]: 🇬🇧
+                - generic [ref=e79]: EN
+              - button "Edit Armenian content" [ref=e80] [cursor=pointer]:
+                - generic [ref=e81]: 🇦🇲
+                - generic [ref=e82]: HY
+          - generic [ref=e84]: admin@purepet.test
+          - generic [ref=e85]: A
+      - main [ref=e86]:
+        - generic [ref=e87]:
+          - generic [ref=e88]:
+            - generic [ref=e91]:
+              - img [ref=e93]
+              - generic [ref=e95]:
+                - heading "Online Store" [level=1] [ref=e96]
+                - paragraph [ref=e97]: Homepage
+            - generic [ref=e98]:
+              - generic [ref=e99]:
+                - button "Mobile (390px)" [ref=e100] [cursor=pointer]:
+                  - img [ref=e101]
+                - button "Tablet (768px)" [ref=e103] [cursor=pointer]:
+                  - img [ref=e104]
+                - button "Desktop" [ref=e106] [cursor=pointer]:
+                  - img [ref=e107]
+              - button "Refresh preview" [ref=e109] [cursor=pointer]:
+                - img [ref=e110]
+              - link "Signup Card Icons" [ref=e112] [cursor=pointer]:
+                - /url: /admin/store-editor/signup-icons
+                - img [ref=e113]
+                - text: Signup Card Icons
+              - link "Theme Colours" [ref=e115] [cursor=pointer]:
+                - /url: /admin/store-editor/theme
+                - img [ref=e116]
+                - text: Theme Colours
+              - link "View Store" [ref=e118] [cursor=pointer]:
+                - /url: /
+                - img [ref=e119]
+                - text: View Store
+          - generic [ref=e121]:
+            - generic [ref=e123]:
+              - generic [ref=e124]:
+                - button [ref=e327] [cursor=pointer]:
+                  - img [ref=e328]
+                - img [ref=e331]
+                - generic [ref=e333]: Header
+              - generic [ref=e334]:
+                - button "🇬🇧 English" [ref=e335] [cursor=pointer]:
+                  - generic [ref=e336]: 🇬🇧
+                  - generic [ref=e337]: English
+                - button "🇦🇲 Հայերեն" [ref=e338] [cursor=pointer]:
+                  - generic [ref=e339]: 🇦🇲
+                  - generic [ref=e340]: Հայերեն
+              - generic [ref=e129]:
+                - generic [ref=e341]:
+                  - generic [ref=e342]:
+                    - generic:
+                      - generic: Logo Text
+                    - generic [ref=e343]:
+                      - generic "Font family" [ref=e344]:
+                        - img [ref=e345]
+                        - combobox [ref=e347]:
+                          - option "Default (Frankfurter)" [selected]
+                          - option "Fredoka"
+                          - option "Rubik"
+                          - option "Frankfurter"
+                          - option "Frankfurter Highlight"
+                          - option "TR Frankfurter"
+                          - option "VAG Rounded Next"
+                          - option "Caveat"
+                          - option "Sofia Pro"
+                          - option "Helvetica"
+                          - option "Arial"
+                          - option "System UI"
+                      - generic "Font size (px) — desktop / mobile" [ref=e348]:
+                        - generic "Desktop font size" [ref=e349]:
+                          - img [ref=e350]
+                          - 'spinbutton "Default desktop size: 32px" [ref=e353]'
+                        - generic "Mobile font size" [ref=e354]:
+                          - img [ref=e355]
+                          - 'spinbutton "Default mobile size: 24px" [ref=e357]'
+                        - generic [ref=e358]: px
+                  - textbox "JEKO" [ref=e359]: PURE
+                - generic [ref=e360]:
+                  - generic [ref=e361]:
+                    - generic:
+                      - generic: CTA Button Text
+                    - generic [ref=e362]:
+                      - generic "Font family" [ref=e363]:
+                        - img [ref=e364]
+                        - combobox [ref=e366]:
+                          - option "Default (Rubik)" [selected]
+                          - option "Fredoka"
+                          - option "Rubik"
+                          - option "Frankfurter"
+                          - option "Frankfurter Highlight"
+                          - option "TR Frankfurter"
+                          - option "VAG Rounded Next"
+                          - option "Caveat"
+                          - option "Sofia Pro"
+                          - option "Helvetica"
+                          - option "Arial"
+                          - option "System UI"
+                      - generic "Font size (px) — desktop / mobile" [ref=e367]:
+                        - generic "Desktop font size" [ref=e368]:
+                          - img [ref=e369]
+                          - 'spinbutton "Default desktop size: 16px" [ref=e372]'
+                        - generic "Mobile font size" [ref=e373]:
+                          - img [ref=e374]
+                          - 'spinbutton "Default mobile size: 15px" [ref=e376]'
+                        - generic [ref=e377]: px
+                  - textbox "Create plan" [ref=e378]: Sign up
+                - generic [ref=e379]:
+                  - generic [ref=e382]: CTA Button URL
+                  - textbox "/auth/signup" [ref=e383]
+                - generic [ref=e384]:
+                  - generic [ref=e385]:
+                    - generic:
+                      - generic: Nav Item 1 — Label
+                    - generic [ref=e386]:
+                      - generic "Font family" [ref=e387]:
+                        - img [ref=e388]
+                        - combobox [ref=e390]:
+                          - option "Default (Rubik)" [selected]
+                          - option "Fredoka"
+                          - option "Rubik"
+                          - option "Frankfurter"
+                          - option "Frankfurter Highlight"
+                          - option "TR Frankfurter"
+                          - option "VAG Rounded Next"
+                          - option "Caveat"
+                          - option "Sofia Pro"
+                          - option "Helvetica"
+                          - option "Arial"
+                          - option "System UI"
+                      - generic "Font size (px) — desktop / mobile" [ref=e391]:
+                        - generic "Desktop font size" [ref=e392]:
+                          - img [ref=e393]
+                          - 'spinbutton "Default desktop size: 14px" [ref=e396]'
+                        - generic "Mobile font size" [ref=e397]:
+                          - img [ref=e398]
+                          - 'spinbutton "Default mobile size: 14px" [ref=e400]'
+                        - generic [ref=e401]: px
+                  - textbox "About" [ref=e402]
+                - generic [ref=e403]:
+                  - generic [ref=e406]: Nav Item 1 — URL
+                  - textbox "/about" [ref=e407]
+                - generic [ref=e409]:
+                  - generic [ref=e410]: Nav Item 1 — Show in menu
+                  - button
+                - generic [ref=e411]:
+                  - generic [ref=e412]:
+                    - generic:
+                      - generic: Nav Item 2 — Label
+                    - generic [ref=e413]:
+                      - generic "Font family" [ref=e414]:
+                        - img [ref=e415]
+                        - combobox [ref=e417]:
+                          - option "Default (Rubik)" [selected]
+                          - option "Fredoka"
+                          - option "Rubik"
+                          - option "Frankfurter"
+                          - option "Frankfurter Highlight"
+                          - option "TR Frankfurter"
+                          - option "VAG Rounded Next"
+                          - option "Caveat"
+                          - option "Sofia Pro"
+                          - option "Helvetica"
+                          - option "Arial"
+                          - option "System UI"
+                      - generic "Font size (px) — desktop / mobile" [ref=e418]:
+                        - generic "Desktop font size" [ref=e419]:
+                          - img [ref=e420]
+                          - 'spinbutton "Default desktop size: 14px" [ref=e423]'
+                        - generic "Mobile font size" [ref=e424]:
+                          - img [ref=e425]
+                          - 'spinbutton "Default mobile size: 14px" [ref=e427]'
+                        - generic [ref=e428]: px
+                  - textbox "Our dog food" [ref=e429]: Community
+                - generic [ref=e430]:
+                  - generic [ref=e433]: Nav Item 2 — URL
+                  - textbox "/recipes" [ref=e434]: /community
+                - generic [ref=e436]:
+                  - generic [ref=e437]: Nav Item 2 — Show in menu
+                  - button
+                - generic [ref=e438]:
+                  - generic [ref=e439]:
+                    - generic:
+                      - generic: Nav Item 3 — Label
+                    - generic [ref=e440]:
+                      - generic "Font family" [ref=e441]:
+                        - img [ref=e442]
+                        - combobox [ref=e444]:
+                          - option "Default (Rubik)" [selected]
+                          - option "Fredoka"
+                          - option "Rubik"
+                          - option "Frankfurter"
+                          - option "Frankfurter Highlight"
+                          - option "TR Frankfurter"
+                          - option "VAG Rounded Next"
+                          - option "Caveat"
+                          - option "Sofia Pro"
+                          - option "Helvetica"
+                          - option "Arial"
+                          - option "System UI"
+                      - generic "Font size (px) — desktop / mobile" [ref=e445]:
+                        - generic "Desktop font size" [ref=e446]:
+                          - img [ref=e447]
+                          - 'spinbutton "Default desktop size: 14px" [ref=e450]'
+                        - generic "Mobile font size" [ref=e451]:
+                          - img [ref=e452]
+                          - 'spinbutton "Default mobile size: 14px" [ref=e454]'
+                        - generic [ref=e455]: px
+                  - textbox "Shop" [ref=e456]: TEST SHOP NAV
+                - generic [ref=e457]:
+                  - generic [ref=e460]: Nav Item 3 — URL
+                  - textbox "/products" [ref=e461]: /test-shop-url
+                - generic [ref=e463]:
+                  - generic [ref=e464]: Nav Item 3 — Show in menu
+                  - button
+                - generic [ref=e465]:
+                  - generic [ref=e466]:
+                    - generic:
+                      - generic: Nav Item 4 — Label
+                    - generic [ref=e467]:
+                      - generic "Font family" [ref=e468]:
+                        - img [ref=e469]
+                        - combobox [ref=e471]:
+                          - option "Default (Rubik)" [selected]
+                          - option "Fredoka"
+                          - option "Rubik"
+                          - option "Frankfurter"
+                          - option "Frankfurter Highlight"
+                          - option "TR Frankfurter"
+                          - option "VAG Rounded Next"
+                          - option "Caveat"
+                          - option "Sofia Pro"
+                          - option "Helvetica"
+                          - option "Arial"
+                          - option "System UI"
+                      - generic "Font size (px) — desktop / mobile" [ref=e472]:
+                        - generic "Desktop font size" [ref=e473]:
+                          - img [ref=e474]
+                          - 'spinbutton "Default desktop size: 14px" [ref=e477]'
+                        - generic "Mobile font size" [ref=e478]:
+                          - img [ref=e479]
+                          - 'spinbutton "Default mobile size: 14px" [ref=e481]'
+                        - generic [ref=e482]: px
+                  - textbox "Reviews" [ref=e483]
+                - generic [ref=e484]:
+                  - generic [ref=e487]: Nav Item 4 — URL
+                  - textbox "/reviews" [ref=e488]
+                - generic [ref=e490]:
+                  - generic [ref=e491]: Nav Item 4 — Show in menu
+                  - button
+                - generic [ref=e492]:
+                  - generic [ref=e493]:
+                    - generic:
+                      - generic: Nav Item 5 — Label
+                    - generic [ref=e494]:
+                      - generic "Font family" [ref=e495]:
+                        - img [ref=e496]
+                        - combobox [ref=e498]:
+                          - option "Default (Rubik)" [selected]
+                          - option "Fredoka"
+                          - option "Rubik"
+                          - option "Frankfurter"
+                          - option "Frankfurter Highlight"
+                          - option "TR Frankfurter"
+                          - option "VAG Rounded Next"
+                          - option "Caveat"
+                          - option "Sofia Pro"
+                          - option "Helvetica"
+                          - option "Arial"
+                          - option "System UI"
+                      - generic "Font size (px) — desktop / mobile" [ref=e499]:
+                        - generic "Desktop font size" [ref=e500]:
+                          - img [ref=e501]
+                          - 'spinbutton "Default desktop size: 14px" [ref=e504]'
+                        - generic "Mobile font size" [ref=e505]:
+                          - img [ref=e506]
+                          - 'spinbutton "Default mobile size: 14px" [ref=e508]'
+                        - generic [ref=e509]: px
+                  - textbox "Health & breeds" [ref=e510]
+                - generic [ref=e511]:
+                  - generic [ref=e514]: Nav Item 5 — URL
+                  - textbox "/benefits" [ref=e515]
+                - generic [ref=e517]:
+                  - generic [ref=e518]: Nav Item 5 — Show in menu
+                  - button
+                - generic [ref=e519]:
+                  - generic [ref=e522]: Help Link URL
+                  - textbox "/help" [ref=e523]
+                - generic [ref=e524]:
+                  - generic [ref=e527]: Login Link URL
+                  - textbox "/login" [ref=e528]
+                - generic [ref=e529]:
+                  - generic [ref=e530]:
+                    - generic:
+                      - generic: About Dropdown 1 — Label
+                    - generic [ref=e531]:
+                      - generic "Font family" [ref=e532]:
+                        - img [ref=e533]
+                        - combobox [ref=e535]:
+                          - option "Default (Rubik)" [selected]
+                          - option "Fredoka"
+                          - option "Rubik"
+                          - option "Frankfurter"
+                          - option "Frankfurter Highlight"
+                          - option "TR Frankfurter"
+                          - option "VAG Rounded Next"
+                          - option "Caveat"
+                          - option "Sofia Pro"
+                          - option "Helvetica"
+                          - option "Arial"
+                          - option "System UI"
+                      - generic "Font size (px) — desktop / mobile" [ref=e536]:
+                        - generic "Desktop font size" [ref=e537]:
+                          - img [ref=e538]
+                          - 'spinbutton "Default desktop size: 14px" [ref=e541]'
+                        - generic "Mobile font size" [ref=e542]:
+                          - img [ref=e543]
+                          - 'spinbutton "Default mobile size: 14px" [ref=e545]'
+                        - generic [ref=e546]: px
+                  - textbox "Our story" [ref=e547]
+                - generic [ref=e548]:
+                  - generic [ref=e551]: About Dropdown 1 — URL
+                  - textbox "/about" [ref=e552]
+                - generic [ref=e554]:
+                  - generic [ref=e555]: About Dropdown 1 — Show
+                  - button
+                - generic [ref=e556]:
+                  - generic [ref=e557]:
+                    - generic:
+                      - generic: Community Dropdown 1 — Label
+                    - generic [ref=e558]:
+                      - generic "Font family" [ref=e559]:
+                        - img [ref=e560]
+                        - combobox [ref=e562]:
+                          - option "Default (Rubik)" [selected]
+                          - option "Fredoka"
+                          - option "Rubik"
+                          - option "Frankfurter"
+                          - option "Frankfurter Highlight"
+                          - option "TR Frankfurter"
+                          - option "VAG Rounded Next"
+                          - option "Caveat"
+                          - option "Sofia Pro"
+                          - option "Helvetica"
+                          - option "Arial"
+                          - option "System UI"
+                      - generic "Font size (px) — desktop / mobile" [ref=e563]:
+                        - generic "Desktop font size" [ref=e564]:
+                          - img [ref=e565]
+                          - 'spinbutton "Default desktop size: 14px" [ref=e568]'
+                        - generic "Mobile font size" [ref=e569]:
+                          - img [ref=e570]
+                          - 'spinbutton "Default mobile size: 14px" [ref=e572]'
+                        - generic [ref=e573]: px
+                  - textbox "Community" [ref=e574]
+                - generic [ref=e575]:
+                  - generic [ref=e578]: Community Dropdown 1 — URL
+                  - textbox "/community" [ref=e579]
+                - generic [ref=e581]:
+                  - generic [ref=e582]: Community Dropdown 1 — Show
+                  - button
+                - generic [ref=e583]:
+                  - generic [ref=e584]:
+                    - generic:
+                      - generic: Community Dropdown 2 — Label
+                    - generic [ref=e585]:
+                      - generic "Font family" [ref=e586]:
+                        - img [ref=e587]
+                        - combobox [ref=e589]:
+                          - option "Default (Rubik)" [selected]
+                          - option "Fredoka"
+                          - option "Rubik"
+                          - option "Frankfurter"
+                          - option "Frankfurter Highlight"
+                          - option "TR Frankfurter"
+                          - option "VAG Rounded Next"
+                          - option "Caveat"
+                          - option "Sofia Pro"
+                          - option "Helvetica"
+                          - option "Arial"
+                          - option "System UI"
+                      - generic "Font size (px) — desktop / mobile" [ref=e590]:
+                        - generic "Desktop font size" [ref=e591]:
+                          - img [ref=e592]
+                          - 'spinbutton "Default desktop size: 14px" [ref=e595]'
+                        - generic "Mobile font size" [ref=e596]:
+                          - img [ref=e597]
+                          - 'spinbutton "Default mobile size: 14px" [ref=e599]'
+                        - generic [ref=e600]: px
+                  - textbox "Blog" [ref=e601]: TEST BLOG
+                - generic [ref=e602]:
+                  - generic [ref=e605]: Community Dropdown 2 — URL
+                  - textbox "/blog" [ref=e606]: /test-blog-url
+                - generic [ref=e608]:
+                  - generic [ref=e609]: Community Dropdown 2 — Show
+                  - button
+                - generic [ref=e610]:
+                  - generic [ref=e611]:
+                    - generic:
+                      - generic: Community Dropdown 3 — Label
+                    - generic [ref=e612]:
+                      - generic "Font family" [ref=e613]:
+                        - img [ref=e614]
+                        - combobox [ref=e616]:
+                          - option "Default (Rubik)" [selected]
+                          - option "Fredoka"
+                          - option "Rubik"
+                          - option "Frankfurter"
+                          - option "Frankfurter Highlight"
+                          - option "TR Frankfurter"
+                          - option "VAG Rounded Next"
+                          - option "Caveat"
+                          - option "Sofia Pro"
+                          - option "Helvetica"
+                          - option "Arial"
+                          - option "System UI"
+                      - generic "Font size (px) — desktop / mobile" [ref=e617]:
+                        - generic "Desktop font size" [ref=e618]:
+                          - img [ref=e619]
+                          - 'spinbutton "Default desktop size: 14px" [ref=e622]'
+                        - generic "Mobile font size" [ref=e623]:
+                          - img [ref=e624]
+                          - 'spinbutton "Default mobile size: 14px" [ref=e626]'
+                        - generic [ref=e627]: px
+                  - textbox "Swipe" [ref=e628]
+                - generic [ref=e629]:
+                  - generic [ref=e632]: Community Dropdown 3 — URL
+                  - textbox "/swipe" [ref=e633]
+                - generic [ref=e635]:
+                  - generic [ref=e636]: Community Dropdown 3 — Show
+                  - button
+                - generic [ref=e637]:
+                  - generic [ref=e638]:
+                    - generic:
+                      - generic: Community Dropdown 4 — Label
+                    - generic [ref=e639]:
+                      - generic "Font family" [ref=e640]:
+                        - img [ref=e641]
+                        - combobox [ref=e643]:
+                          - option "Default (Rubik)" [selected]
+                          - option "Fredoka"
+                          - option "Rubik"
+                          - option "Frankfurter"
+                          - option "Frankfurter Highlight"
+                          - option "TR Frankfurter"
+                          - option "VAG Rounded Next"
+                          - option "Caveat"
+                          - option "Sofia Pro"
+                          - option "Helvetica"
+                          - option "Arial"
+                          - option "System UI"
+                      - generic "Font size (px) — desktop / mobile" [ref=e644]:
+                        - generic "Desktop font size" [ref=e645]:
+                          - img [ref=e646]
+                          - 'spinbutton "Default desktop size: 14px" [ref=e649]'
+                        - generic "Mobile font size" [ref=e650]:
+                          - img [ref=e651]
+                          - 'spinbutton "Default mobile size: 14px" [ref=e653]'
+                        - generic [ref=e654]: px
+                  - textbox "Matches" [ref=e655]
+                - generic [ref=e656]:
+                  - generic [ref=e659]: Community Dropdown 4 — URL
+                  - textbox "/matches" [ref=e660]
+                - generic [ref=e662]:
+                  - generic [ref=e663]: Community Dropdown 4 — Show
+                  - button
+                - generic [ref=e664]:
+                  - generic [ref=e665]:
+                    - generic:
+                      - generic: Community Dropdown 5 — Label
+                    - generic [ref=e666]:
+                      - generic "Font family" [ref=e667]:
+                        - img [ref=e668]
+                        - combobox [ref=e670]:
+                          - option "Default (Rubik)" [selected]
+                          - option "Fredoka"
+                          - option "Rubik"
+                          - option "Frankfurter"
+                          - option "Frankfurter Highlight"
+                          - option "TR Frankfurter"
+                          - option "VAG Rounded Next"
+                          - option "Caveat"
+                          - option "Sofia Pro"
+                          - option "Helvetica"
+                          - option "Arial"
+                          - option "System UI"
+                      - generic "Font size (px) — desktop / mobile" [ref=e671]:
+                        - generic "Desktop font size" [ref=e672]:
+                          - img [ref=e673]
+                          - 'spinbutton "Default desktop size: 14px" [ref=e676]'
+                        - generic "Mobile font size" [ref=e677]:
+                          - img [ref=e678]
+                          - 'spinbutton "Default mobile size: 14px" [ref=e680]'
+                        - generic [ref=e681]: px
+                  - textbox "Find owners" [ref=e682]
+                - generic [ref=e683]:
+                  - generic [ref=e686]: Community Dropdown 5 — URL
+                  - textbox "/find-owners" [ref=e687]
+                - generic [ref=e689]:
+                  - generic [ref=e690]: Community Dropdown 5 — Show
+                  - button
+                - generic [ref=e691]:
+                  - generic [ref=e692]:
+                    - generic:
+                      - generic: Community Dropdown 6 — Label
+                    - generic [ref=e693]:
+                      - generic "Font family" [ref=e694]:
+                        - img [ref=e695]
+                        - combobox [ref=e697]:
+                          - option "Default (Rubik)" [selected]
+                          - option "Fredoka"
+                          - option "Rubik"
+                          - option "Frankfurter"
+                          - option "Frankfurter Highlight"
+                          - option "TR Frankfurter"
+                          - option "VAG Rounded Next"
+                          - option "Caveat"
+                          - option "Sofia Pro"
+                          - option "Helvetica"
+                          - option "Arial"
+                          - option "System UI"
+                      - generic "Font size (px) — desktop / mobile" [ref=e698]:
+                        - generic "Desktop font size" [ref=e699]:
+                          - img [ref=e700]
+                          - 'spinbutton "Default desktop size: 14px" [ref=e703]'
+                        - generic "Mobile font size" [ref=e704]:
+                          - img [ref=e705]
+                          - 'spinbutton "Default mobile size: 14px" [ref=e707]'
+                        - generic [ref=e708]: px
+                  - textbox "Messages" [ref=e709]
+                - generic [ref=e710]:
+                  - generic [ref=e713]: Community Dropdown 6 — URL
+                  - textbox "/messages" [ref=e714]
+                - generic [ref=e716]:
+                  - generic [ref=e717]: Community Dropdown 6 — Show
+                  - button
+                - generic [ref=e718]:
+                  - generic [ref=e719]:
+                    - generic:
+                      - generic: Health Dropdown 1 — Label
+                    - generic [ref=e720]:
+                      - generic "Font family" [ref=e721]:
+                        - img [ref=e722]
+                        - combobox [ref=e724]:
+                          - option "Default (Rubik)" [selected]
+                          - option "Fredoka"
+                          - option "Rubik"
+                          - option "Frankfurter"
+                          - option "Frankfurter Highlight"
+                          - option "TR Frankfurter"
+                          - option "VAG Rounded Next"
+                          - option "Caveat"
+                          - option "Sofia Pro"
+                          - option "Helvetica"
+                          - option "Arial"
+                          - option "System UI"
+                      - generic "Font size (px) — desktop / mobile" [ref=e725]:
+                        - generic "Desktop font size" [ref=e726]:
+                          - img [ref=e727]
+                          - 'spinbutton "Default desktop size: 14px" [ref=e730]'
+                        - generic "Mobile font size" [ref=e731]:
+                          - img [ref=e732]
+                          - 'spinbutton "Default mobile size: 14px" [ref=e734]'
+                        - generic [ref=e735]: px
+                  - textbox "Colitis" [ref=e736]
+                - generic [ref=e737]:
+                  - generic [ref=e740]: Health Dropdown 1 — URL
+                  - textbox "/benefits/colitis" [ref=e741]
+                - generic [ref=e743]:
+                  - generic [ref=e744]: Health Dropdown 1 — Show
+                  - button
+                - generic [ref=e745]:
+                  - generic [ref=e746]:
+                    - generic:
+                      - generic: Health Dropdown 2 — Label
+                    - generic [ref=e747]:
+                      - generic "Font family" [ref=e748]:
+                        - img [ref=e749]
+                        - combobox [ref=e751]:
+                          - option "Default (Rubik)" [selected]
+                          - option "Fredoka"
+                          - option "Rubik"
+                          - option "Frankfurter"
+                          - option "Frankfurter Highlight"
+                          - option "TR Frankfurter"
+                          - option "VAG Rounded Next"
+                          - option "Caveat"
+                          - option "Sofia Pro"
+                          - option "Helvetica"
+                          - option "Arial"
+                          - option "System UI"
+                      - generic "Font size (px) — desktop / mobile" [ref=e752]:
+                        - generic "Desktop font size" [ref=e753]:
+                          - img [ref=e754]
+                          - 'spinbutton "Default desktop size: 14px" [ref=e757]'
+                        - generic "Mobile font size" [ref=e758]:
+                          - img [ref=e759]
+                          - 'spinbutton "Default mobile size: 14px" [ref=e761]'
+                        - generic [ref=e762]: px
+                  - textbox "Digestion issues" [ref=e763]
+                - generic [ref=e764]:
+                  - generic [ref=e767]: Health Dropdown 2 — URL
+                  - textbox "/benefits/digestion-issues" [ref=e768]
+                - generic [ref=e770]:
+                  - generic [ref=e771]: Health Dropdown 2 — Show
+                  - button
+                - generic [ref=e772]:
+                  - generic [ref=e773]:
+                    - generic:
+                      - generic: Health Dropdown 3 — Label
+                    - generic [ref=e774]:
+                      - generic "Font family" [ref=e775]:
+                        - img [ref=e776]
+                        - combobox [ref=e778]:
+                          - option "Default (Rubik)" [selected]
+                          - option "Fredoka"
+                          - option "Rubik"
+                          - option "Frankfurter"
+                          - option "Frankfurter Highlight"
+                          - option "TR Frankfurter"
+                          - option "VAG Rounded Next"
+                          - option "Caveat"
+                          - option "Sofia Pro"
+                          - option "Helvetica"
+                          - option "Arial"
+                          - option "System UI"
+                      - generic "Font size (px) — desktop / mobile" [ref=e779]:
+                        - generic "Desktop font size" [ref=e780]:
+                          - img [ref=e781]
+                          - 'spinbutton "Default desktop size: 14px" [ref=e784]'
+                        - generic "Mobile font size" [ref=e785]:
+                          - img [ref=e786]
+                          - 'spinbutton "Default mobile size: 14px" [ref=e788]'
+                        - generic [ref=e789]: px
+                  - textbox "Hypoallergenic" [ref=e790]
+                - generic [ref=e791]:
+                  - generic [ref=e794]: Health Dropdown 3 — URL
+                  - textbox "/benefits/hypoallergenic" [ref=e795]
+                - generic [ref=e797]:
+                  - generic [ref=e798]: Health Dropdown 3 — Show
+                  - button
+                - generic [ref=e799]:
+                  - generic [ref=e800]:
+                    - generic:
+                      - generic: Health Dropdown 4 — Label
+                    - generic [ref=e801]:
+                      - generic "Font family" [ref=e802]:
+                        - img [ref=e803]
+                        - combobox [ref=e805]:
+                          - option "Default (Rubik)" [selected]
+                          - option "Fredoka"
+                          - option "Rubik"
+                          - option "Frankfurter"
+                          - option "Frankfurter Highlight"
+                          - option "TR Frankfurter"
+                          - option "VAG Rounded Next"
+                          - option "Caveat"
+                          - option "Sofia Pro"
+                          - option "Helvetica"
+                          - option "Arial"
+                          - option "System UI"
+                      - generic "Font size (px) — desktop / mobile" [ref=e806]:
+                        - generic "Desktop font size" [ref=e807]:
+                          - img [ref=e808]
+                          - 'spinbutton "Default desktop size: 14px" [ref=e811]'
+                        - generic "Mobile font size" [ref=e812]:
+                          - img [ref=e813]
+                          - 'spinbutton "Default mobile size: 14px" [ref=e815]'
+                        - generic [ref=e816]: px
+                  - textbox "Pancreatitis" [ref=e817]
+                - generic [ref=e818]:
+                  - generic [ref=e821]: Health Dropdown 4 — URL
+                  - textbox "/benefits/pancreatitis" [ref=e822]
+                - generic [ref=e824]:
+                  - generic [ref=e825]: Health Dropdown 4 — Show
+                  - button
+                - generic [ref=e826]:
+                  - generic [ref=e827]:
+                    - generic:
+                      - generic: Health Dropdown 5 — Label
+                    - generic [ref=e828]:
+                      - generic "Font family" [ref=e829]:
+                        - img [ref=e830]
+                        - combobox [ref=e832]:
+                          - option "Default (Rubik)" [selected]
+                          - option "Fredoka"
+                          - option "Rubik"
+                          - option "Frankfurter"
+                          - option "Frankfurter Highlight"
+                          - option "TR Frankfurter"
+                          - option "VAG Rounded Next"
+                          - option "Caveat"
+                          - option "Sofia Pro"
+                          - option "Helvetica"
+                          - option "Arial"
+                          - option "System UI"
+                      - generic "Font size (px) — desktop / mobile" [ref=e833]:
+                        - generic "Desktop font size" [ref=e834]:
+                          - img [ref=e835]
+                          - 'spinbutton "Default desktop size: 14px" [ref=e838]'
+                        - generic "Mobile font size" [ref=e839]:
+                          - img [ref=e840]
+                          - 'spinbutton "Default mobile size: 14px" [ref=e842]'
+                        - generic [ref=e843]: px
+                  - textbox "Weight management" [ref=e844]
+                - generic [ref=e845]:
+                  - generic [ref=e848]: Health Dropdown 5 — URL
+                  - textbox "/benefits/weight-management" [ref=e849]
+                - generic [ref=e851]:
+                  - generic [ref=e852]: Health Dropdown 5 — Show
+                  - button
+              - button "No changes" [disabled] [ref=e860]
+            - generic [ref=e321]:
+              - generic [ref=e323]: Full Width — Desktop
+              - iframe [ref=e861]:
+                - generic [active] [ref=f5e1]:
+                  - banner [ref=f5e2] [cursor=pointer]:
+                    - generic [ref=f5e4]:
+                      - link "JEKO" [ref=f5e5]:
+                        - /url: /
+                        - generic [ref=f5e6]: JEKO
+                      - button "Open menu" [ref=f5e7]:
+                        - img [ref=f5e8]
+                  - main [ref=f5e10]:
+                    - generic [ref=f5e12] [cursor=pointer]:
+                      - img "Happy golden retriever dog enjoying fresh food" [ref=f5e15]
+                      - generic [ref=f5e18]:
+                        - 'heading "JEKO: Welcome to your PET''s personal page Also one of the helthiest foods in market" [level=1] [ref=f5e19]':
+                          - text: "JEKO: Welcome to your PET's personal page"
+                          - text: Also one of the helthiest foods in market
+                        - paragraph [ref=f5e20]: Natural ingredients, based on your Pet's preferences
+                        - link "Register Your Pet" [ref=f5e22]:
+                          - /url: /auth/signup
+                        - generic [ref=f5e23]:
+                          - generic [ref=f5e24]:
+                            - img [ref=f5e26]
+                            - img [ref=f5e29]
+                            - img [ref=f5e32]
+                            - img [ref=f5e35]
+                          - generic [ref=f5e37]:
+                            - generic [ref=f5e38]: Excellent
+                            - generic [ref=f5e39]: 5.0 out of 5
+                            - img [ref=f5e40]
+                            - generic [ref=f5e42]: Trustpilot
+                    - generic [ref=f5e45] [cursor=pointer]:
+                      - heading "Ready to spoil them?" [level=2] [ref=f5e46]
+                      - paragraph [ref=f5e47]: Join thousands of happy pets — get a tailored plan in under 2 minutes.
+                      - link "Sign me up" [ref=f5e48]:
+                        - /url: /auth/signup
+                        - text: Sign me up
+                        - img [ref=f5e49]
+                    - link "15% off for all registered users+Sign up for automatic delivery" [ref=f5e52] [cursor=pointer]:
+                      - /url: /auth/signup
+                      - generic [ref=f5e53]:
+                        - img [ref=f5e54]
+                        - paragraph [ref=f5e56]: 15% off for all registered users+Sign up for automatic delivery
+                        - img [ref=f5e57]
+                    - generic [ref=f5e60] [cursor=pointer]:
+                      - generic [ref=f5e61]:
+                        - generic [ref=f5e62]:
+                          - img "Preparing Jeko pet food" [ref=f5e63]
+                          - img [ref=f5e65]
+                          - img [ref=f5e68]
+                        - generic [ref=f5e71]:
+                          - heading "What is jeko.am?" [level=2] [ref=f5e72]
+                          - paragraph [ref=f5e74]: This website connects registered pets by matching them and giving owners a safe way to contact each other and arrange breeding.
+                          - link "Click to register your DOG or CAT" [ref=f5e75]:
+                            - /url: /auth/signup
+                      - generic:
+                        - img
+                    - generic [ref=f5e77] [cursor=pointer]:
+                      - generic:
+                        - img
+                      - generic:
+                        - img
+                      - generic [ref=f5e79]:
+                        - generic [ref=f5e80]:
+                          - img "Store in the cupboard" [ref=f5e82]
+                          - paragraph [ref=f5e83]: Store in the cupboard
+                        - generic [ref=f5e84]:
+                          - img "From only 89p per day" [ref=f5e86]
+                          - paragraph [ref=f5e87]: From only 89p per day
+                        - generic [ref=f5e88]:
+                          - img "Just add water and serve" [ref=f5e90]
+                          - paragraph [ref=f5e91]: Just add water and serve
+                        - generic [ref=f5e92]:
+                          - img "Ready in 10 seconds" [ref=f5e94]
+                          - paragraph [ref=f5e95]: Ready in 10 seconds
+                    - generic [ref=f5e98] [cursor=pointer]:
+                      - generic [ref=f5e99]:
+                        - generic [ref=f5e100]: Our Products
+                        - heading "Fresh Food from JEKO" [level=2] [ref=f5e101]
+                        - paragraph [ref=f5e102]: Our 5 person specialized team has made current foods. No chemicals added, unique in market
+                      - generic [ref=f5e103]:
+                        - link "Beef + Rice + Veggies View product Beef + Rice + Veggies Hearty beef with brown rice, spinach, peas & carrots — ~520 kcal. Best for energy and muscle support. £10.00 (1) Add to cart" [ref=f5e495]:
+                          - /url: /products/beef-rice-veggies
+                          - generic [ref=f5e496]:
+                            - generic [ref=f5e497]:
+                              - img "Beef + Rice + Veggies" [ref=f5e498]
+                              - generic [ref=f5e500]: View product
+                            - generic [ref=f5e501]:
+                              - heading "Beef + Rice + Veggies" [level=3] [ref=f5e502]
+                              - paragraph [ref=f5e503]: Hearty beef with brown rice, spinach, peas & carrots — ~520 kcal. Best for energy and muscle support.
+                              - generic [ref=f5e505]: £10.00
+                              - generic [ref=f5e506]:
+                                - img [ref=f5e507]
+                                - img [ref=f5e509]
+                                - img [ref=f5e511]
+                                - img [ref=f5e513]
+                                - img [ref=f5e515]
+                                - generic [ref=f5e517]: (1)
+                              - button "Add to cart" [ref=f5e518]
+                        - link "Chicken + Quinoa + Greens View product Chicken + Quinoa + Greens Lean chicken with quinoa, zucchini & green beans — ~480 kcal. Best for lean protein and weight control. £15.00 Add to cart" [ref=f5e519]:
+                          - /url: /products/chicken-quinoa-greens
+                          - generic [ref=f5e520]:
+                            - generic [ref=f5e521]:
+                              - img "Chicken + Quinoa + Greens" [ref=f5e522]
+                              - generic [ref=f5e524]: View product
+                            - generic [ref=f5e525]:
+                              - heading "Chicken + Quinoa + Greens" [level=3] [ref=f5e526]
+                              - paragraph [ref=f5e527]: Lean chicken with quinoa, zucchini & green beans — ~480 kcal. Best for lean protein and weight control.
+                              - generic [ref=f5e529]: £15.00
+                              - button "Add to cart" [ref=f5e530]
+                        - link "Tuna + Rice Bowl View product Tuna + Rice Bowl Omega-rich tuna with brown rice, spinach, peas & carrots — ~430 kcal. Best for coat health and light digestion. £20.00 Add to cart" [ref=f5e531]:
+                          - /url: /products/tuna-rice-bowl
+                          - generic [ref=f5e532]:
+                            - generic [ref=f5e533]:
+                              - img "Tuna + Rice Bowl" [ref=f5e534]
+                              - generic [ref=f5e536]: View product
+                            - generic [ref=f5e537]:
+                              - heading "Tuna + Rice Bowl" [level=3] [ref=f5e538]
+                              - paragraph [ref=f5e539]: Omega-rich tuna with brown rice, spinach, peas & carrots — ~430 kcal. Best for coat health and light digestion.
+                              - generic [ref=f5e541]: £20.00
+                              - button "Add to cart" [ref=f5e542]
+                        - link "Cod + Rice + Veggies View product Cod + Rice + Veggies Mild cod with white rice, green beans & carrots — ~360 kcal. Best for sensitive stomachs and low-fat diets. £20.00 Add to cart" [ref=f5e543]:
+                          - /url: /products/cod-rice-veggies
+                          - generic [ref=f5e544]:
+                            - generic [ref=f5e545]:
+                              - img "Cod + Rice + Veggies" [ref=f5e546]
+                              - generic [ref=f5e548]: View product
+                            - generic [ref=f5e549]:
+                              - heading "Cod + Rice + Veggies" [level=3] [ref=f5e550]
+                              - paragraph [ref=f5e551]: Mild cod with white rice, green beans & carrots — ~360 kcal. Best for sensitive stomachs and low-fat diets.
+                              - generic [ref=f5e553]: £20.00
+                              - button "Add to cart" [ref=f5e554]
+                      - link "Shop All Products" [ref=f5e129]:
+                        - /url: /products
+                        - text: Shop All Products
+                        - img [ref=f5e130]
+                    - generic [ref=f5e134] [cursor=pointer]:
+                      - generic [ref=f5e135]:
+                        - generic [ref=f5e136]:
+                          - generic [ref=f5e137]: Trending Now
+                          - heading "What Pet Parents Love" [level=2] [ref=f5e138]
+                          - paragraph [ref=f5e139]: Our most popular picks, loved by thousands of happy dogs.
+                        - generic [ref=f5e555]:
+                          - button [disabled] [ref=f5e556]:
+                            - img [ref=f5e557]
+                          - button [ref=f5e559]:
+                            - img [ref=f5e560]
+                      - generic [ref=f5e140]:
+                        - link "Beef + Rice + Veggies View product Beef + Rice + Veggies Hearty beef with brown rice, spinach, peas & carrots — ~520 kcal. Best for energy and muscle support. £10.00 (1) Add to cart" [ref=f5e563]:
+                          - /url: /products/beef-rice-veggies
+                          - generic [ref=f5e564]:
+                            - generic [ref=f5e565]:
+                              - img "Beef + Rice + Veggies" [ref=f5e566]
+                              - generic [ref=f5e568]: View product
+                            - generic [ref=f5e569]:
+                              - heading "Beef + Rice + Veggies" [level=3] [ref=f5e570]
+                              - paragraph [ref=f5e571]: Hearty beef with brown rice, spinach, peas & carrots — ~520 kcal. Best for energy and muscle support.
+                              - generic [ref=f5e573]: £10.00
+                              - generic [ref=f5e574]:
+                                - img [ref=f5e575]
+                                - img [ref=f5e577]
+                                - img [ref=f5e579]
+                                - img [ref=f5e581]
+                                - img [ref=f5e583]
+                                - generic [ref=f5e585]: (1)
+                              - button "Add to cart" [ref=f5e586]
+                        - link "Chicken + Quinoa + Greens View product Chicken + Quinoa + Greens Lean chicken with quinoa, zucchini & green beans — ~480 kcal. Best for lean protein and weight control. £15.00 Add to cart" [ref=f5e588]:
+                          - /url: /products/chicken-quinoa-greens
+                          - generic [ref=f5e589]:
+                            - generic [ref=f5e590]:
+                              - img "Chicken + Quinoa + Greens" [ref=f5e591]
+                              - generic [ref=f5e593]: View product
+                            - generic [ref=f5e594]:
+                              - heading "Chicken + Quinoa + Greens" [level=3] [ref=f5e595]
+                              - paragraph [ref=f5e596]: Lean chicken with quinoa, zucchini & green beans — ~480 kcal. Best for lean protein and weight control.
+                              - generic [ref=f5e598]: £15.00
+                              - button "Add to cart" [ref=f5e599]
+                        - link "Chickpea + Quinoa Plant Mix View product Chickpea + Quinoa Plant Mix Plant-based quinoa & chickpea mix with spinach, peas & flaxseed — ~510 kcal. Best for plant-based protein, fiber, and digestion. £10.00 Add to cart" [ref=f5e601]:
+                          - /url: /products/chickpea-quinoa-plant-mix
+                          - generic [ref=f5e602]:
+                            - generic [ref=f5e603]:
+                              - img "Chickpea + Quinoa Plant Mix" [ref=f5e604]
+                              - generic [ref=f5e606]: View product
+                            - generic [ref=f5e607]:
+                              - heading "Chickpea + Quinoa Plant Mix" [level=3] [ref=f5e608]
+                              - paragraph [ref=f5e609]: Plant-based quinoa & chickpea mix with spinach, peas & flaxseed — ~510 kcal. Best for plant-based protein, fiber, and digestion.
+                              - generic [ref=f5e611]: £10.00
+                              - button "Add to cart" [ref=f5e612]
+                        - link "Cod + Rice + Veggies View product Cod + Rice + Veggies Mild cod with white rice, green beans & carrots — ~360 kcal. Best for sensitive stomachs and low-fat diets. £20.00 Add to cart" [ref=f5e614]:
+                          - /url: /products/cod-rice-veggies
+                          - generic [ref=f5e615]:
+                            - generic [ref=f5e616]:
+                              - img "Cod + Rice + Veggies" [ref=f5e617]
+                              - generic [ref=f5e619]: View product
+                            - generic [ref=f5e620]:
+                              - heading "Cod + Rice + Veggies" [level=3] [ref=f5e621]
+                              - paragraph [ref=f5e622]: Mild cod with white rice, green beans & carrots — ~360 kcal. Best for sensitive stomachs and low-fat diets.
+                              - generic [ref=f5e624]: £20.00
+                              - button "Add to cart" [ref=f5e625]
+                    - generic [ref=f5e163] [cursor=pointer]:
+                      - generic [ref=f5e164]:
+                        - heading "Don't just take our word for it" [level=2] [ref=f5e165]
+                        - paragraph [ref=f5e166]: Listen to what others have to say about it
+                      - generic [ref=f5e167]:
+                        - button "Scroll left" [ref=f5e168]:
+                          - img [ref=f5e169]
+                        - generic [ref=f5e171]:
+                          - generic [ref=f5e172]:
+                            - generic [ref=f5e173]:
+                              - img [ref=f5e177]
+                              - generic [ref=f5e179]: 0:55
+                            - paragraph [ref=f5e180]: Jeko vs kibble & raw
+                          - generic [ref=f5e181]:
+                            - generic [ref=f5e182]:
+                              - img [ref=f5e186]
+                              - generic [ref=f5e188]: 0:38
+                            - paragraph [ref=f5e189]: Feeding Jeko really is simple!
+                          - generic [ref=f5e190]:
+                            - generic [ref=f5e191]:
+                              - img [ref=f5e195]
+                              - generic [ref=f5e197]: 0:54
+                            - paragraph [ref=f5e198]: We've done the research
+                          - generic [ref=f5e199]:
+                            - generic [ref=f5e200]:
+                              - img [ref=f5e204]
+                              - generic [ref=f5e206]: 0:37
+                            - paragraph [ref=f5e207]: Fully flexible to work around you
+                          - generic [ref=f5e208]:
+                            - generic [ref=f5e209]:
+                              - img [ref=f5e213]
+                              - generic [ref=f5e215]: 0:38
+                            - paragraph [ref=f5e216]: Rudy goes from fussy to foodie
+                          - generic [ref=f5e217]:
+                            - generic [ref=f5e218]:
+                              - img [ref=f5e222]
+                              - generic [ref=f5e224]: 0:37
+                            - paragraph [ref=f5e225]: Backed by The Yorkshire Vet
+                        - button "Scroll right" [ref=f5e226]:
+                          - img [ref=f5e227]
+                    - generic [ref=f5e230] [cursor=pointer]:
+                      - generic:
+                        - img
+                      - generic:
+                        - img
+                      - generic [ref=f5e231]:
+                        - heading "How does a Jeko plan work?" [level=2] [ref=f5e232]
+                        - generic [ref=f5e233]:
+                          - generic [ref=f5e234]:
+                            - img "Tell us about your dog" [ref=f5e236]
+                            - paragraph [ref=f5e237]: Step 1
+                            - paragraph [ref=f5e238]: Tell us about your dog
+                          - generic [ref=f5e239]:
+                            - img "Choose your tailored recipes" [ref=f5e241]
+                            - paragraph [ref=f5e242]: Step 2
+                            - paragraph [ref=f5e243]: Choose your tailored recipes
+                          - generic [ref=f5e244]:
+                            - img "Delivered to your door for free" [ref=f5e246]
+                            - paragraph [ref=f5e247]: Step 3
+                            - paragraph [ref=f5e248]: Delivered to your door for free
+                          - generic [ref=f5e249]:
+                            - img "Try it and transition to Jeko" [ref=f5e251]
+                            - paragraph [ref=f5e252]: Step 4
+                            - paragraph [ref=f5e253]: Try it and transition to Jeko
+                        - link "Create a tailored plan today" [ref=f5e255]:
+                          - /url: /auth/signup
+                    - generic [ref=f5e257] [cursor=pointer]:
+                      - generic:
+                        - img
+                      - generic:
+                        - img
+                      - generic [ref=f5e258]:
+                        - heading "We've delivered" [level=2] [ref=f5e259]
+                        - generic [ref=f5e260]: "0"
+                        - paragraph [ref=f5e261]: meals and changed the lives of tens of thousands of dogs for the better
+                        - generic [ref=f5e262]:
+                          - generic [ref=f5e263]:
+                            - generic [ref=f5e264]: 94%
+                            - paragraph [ref=f5e265]: of customers have seen an improvement in their dog's ailment
+                          - generic [ref=f5e266]:
+                            - generic [ref=f5e267]: 91%
+                            - paragraph [ref=f5e268]: of customers have seen overall health improvements since switching to Jeko
+                    - generic [ref=f5e270] [cursor=pointer]:
+                      - generic:
+                        - img
+                      - generic:
+                        - img
+                      - generic [ref=f5e271]:
+                        - heading "How Jeko compares" [level=2] [ref=f5e272]
+                        - generic [ref=f5e273]:
+                          - generic [ref=f5e274]:
+                            - generic [ref=f5e276]: JEKO
+                            - generic [ref=f5e277]: Dry & wet
+                            - generic [ref=f5e278]: Raw & fresh
+                          - generic [ref=f5e279]:
+                            - generic [ref=f5e281]: Cost
+                            - generic [ref=f5e283]: ££
+                            - generic [ref=f5e285]: £
+                            - generic [ref=f5e287]: £££
+                          - generic [ref=f5e288]:
+                            - generic [ref=f5e290]: No/low processing
+                            - img [ref=f5e292]
+                            - img [ref=f5e297]
+                            - img [ref=f5e303]
+                          - generic [ref=f5e307]:
+                            - generic [ref=f5e309]: High quality ingredients
+                            - img [ref=f5e311]
+                            - img [ref=f5e316]
+                            - img [ref=f5e322]
+                          - generic [ref=f5e326]:
+                            - generic [ref=f5e328]: Easy to store
+                            - img [ref=f5e330]
+                            - img [ref=f5e335]
+                            - img [ref=f5e340]
+                          - generic [ref=f5e345]:
+                            - generic [ref=f5e347]: No risk of harmful pathogens
+                            - img [ref=f5e349]
+                            - img [ref=f5e354]
+                            - img [ref=f5e359]
+                    - generic [ref=f5e366] [cursor=pointer]:
+                      - generic [ref=f5e367]:
+                        - generic:
+                          - img
+                        - generic [ref=f5e368]:
+                          - heading "Our Product as a Premium Food" [level=2] [ref=f5e369]
+                          - paragraph [ref=f5e370]: “Most kibble relies on trust—owners can’t truly see what’s inside and must believe the label, even when it may not fully reflect the real ingredients—while fresh food offers visible, transparent nutrition you can recognize and trust.”
+                      - img "Julian Norton - The Yorkshire Vet with Jeko" [ref=f5e372]
+                    - generic [ref=f5e376] [cursor=pointer]:
+                      - generic [ref=f5e377]:
+                        - img "Jeko on Dragons Den" [ref=f5e378]
+                        - generic:
+                          - img
+                      - generic [ref=f5e381]:
+                        - heading "Dog food so good we ate it on Dragons' Den" [level=2] [ref=f5e382]
+                        - paragraph [ref=f5e383]: Jeko is complete nutrition from the inside out, and dogs totally love the taste! "It was possibly the best pitch I have seen in over 10 years of Dragons' Den" - Duncan Bannatyne
+                        - link "Get started today" [ref=f5e384]:
+                          - /url: /auth/signup
+                    - generic [ref=f5e387] [cursor=pointer]:
+                      - generic [ref=f5e388]:
+                        - generic:
+                          - img
+                        - generic [ref=f5e389]:
+                          - heading "Frequently Asked Questions" [level=2] [ref=f5e390]
+                          - paragraph [ref=f5e391]: Everything else you need to know about Jeko
+                          - generic [ref=f5e392]:
+                            - generic [ref=f5e393]:
+                              - button "Am I tied into a subscription?" [ref=f5e394]:
+                                - heading "Am I tied into a subscription?" [level=4] [ref=f5e395]
+                                - img [ref=f5e396]
+                              - paragraph [ref=f5e398]: Not at all! You can pause, change, or cancel your plan at any time. We believe in our food so much that we don't need to lock you in.
+                            - generic [ref=f5e399]:
+                              - button "Is Jeko expensive compared to other foods?" [ref=f5e400]:
+                                - heading "Is Jeko expensive compared to other foods?" [level=4] [ref=f5e401]
+                                - img [ref=f5e402]
+                              - paragraph [ref=f5e404]: Jeko starts from only 89p per day. When you consider the health benefits, it's great value compared to vet bills and other premium foods.
+                            - generic [ref=f5e405]:
+                              - button "Do I pay for delivery?" [ref=f5e406]:
+                                - heading "Do I pay for delivery?" [level=4] [ref=f5e407]
+                                - img [ref=f5e408]
+                              - paragraph [ref=f5e410]: No! Delivery is completely free on all orders. We deliver right to your doorstep.
+                            - generic [ref=f5e411]:
+                              - button "What is the nutritional value, and is it good for my dog?" [ref=f5e412]:
+                                - heading "What is the nutritional value, and is it good for my dog?" [level=4] [ref=f5e413]
+                                - img [ref=f5e414]
+                              - paragraph [ref=f5e416]: Jeko is a complete, balanced meal developed with veterinary nutritionists. Every recipe meets FEDIAF guidelines for complete nutrition.
+                            - generic [ref=f5e417]:
+                              - button "What if my dog doesn’t like it?" [ref=f5e418]:
+                                - heading "What if my dog doesn’t like it?" [level=4] [ref=f5e419]
+                                - img [ref=f5e420]
+                              - paragraph [ref=f5e422]: We offer a full money-back guarantee. If your dog doesn't love Jeko, we'll refund your first box in full.
+                            - generic [ref=f5e423]:
+                              - button "Is Jeko suitable for my dogs health concern?" [ref=f5e424]:
+                                - heading "Is Jeko suitable for my dogs health concern?" [level=4] [ref=f5e425]
+                                - img [ref=f5e426]
+                              - paragraph [ref=f5e428]: Jeko is often recommended for dogs with health concerns. Our recipes are gentle and made with natural, high-quality ingredients.
+                            - generic [ref=f5e429]:
+                              - button "Is Jeko complete dog food?" [ref=f5e430]:
+                                - heading "Is Jeko complete dog food?" [level=4] [ref=f5e431]
+                                - img [ref=f5e432]
+                              - paragraph [ref=f5e434]: Yes! Every Jeko recipe is nutritionally complete and balanced, meeting all FEDIAF guidelines for adult dogs and puppies.
+                          - link "Get started today" [ref=f5e436]:
+                            - /url: /auth/signup
+                      - img "Happy healthy dog" [ref=f5e438]
+                  - contentinfo [ref=f5e440] [cursor=pointer]:
+                    - generic [ref=f5e441]:
+                      - generic [ref=f5e442]:
+                        - generic [ref=f5e443]:
+                          - heading "Join our VIP list" [level=4] [ref=f5e444]
+                          - paragraph [ref=f5e445]: Be the first to hear about new product launches, exclusive competitions and helpful dog content.
+                          - generic [ref=f5e446]:
+                            - textbox "Enter your email address" [ref=f5e447]
+                            - button "Sign up" [ref=f5e448]
+                        - generic [ref=f5e449]:
+                          - generic [ref=f5e450]:
+                            - heading "Jeko" [level=4] [ref=f5e451]
+                            - list [ref=f5e452]:
+                              - listitem [ref=f5e453]:
+                                - link "Our story" [ref=f5e454]:
+                                  - /url: /about
+                              - listitem [ref=f5e455]:
+                                - link "Reviews" [ref=f5e456]:
+                                  - /url: /reviews
+                              - listitem [ref=f5e457]:
+                                - link "Recipes" [ref=f5e458]:
+                                  - /url: /recipes
+                              - listitem [ref=f5e459]:
+                                - link "Beyond the bowl" [ref=f5e460]:
+                                  - /url: /beyond-the-bowl
+                              - listitem [ref=f5e461]:
+                                - link "Shop" [ref=f5e462]:
+                                  - /url: /products
+                              - listitem [ref=f5e463]:
+                                - link "Community" [ref=f5e464]:
+                                  - /url: /community
+                          - generic [ref=f5e465]:
+                            - heading "Help" [level=4] [ref=f5e466]
+                            - list [ref=f5e467]:
+                              - listitem [ref=f5e468]:
+                                - link "My account" [ref=f5e469]:
+                                  - /url: /profile
+                              - listitem [ref=f5e470]:
+                                - link "Contact us" [ref=f5e471]:
+                                  - /url: /contact
+                              - listitem [ref=f5e472]:
+                                - link "Delivery information" [ref=f5e473]:
+                                  - /url: /delivery-information
+                              - listitem [ref=f5e474]:
+                                - link "Returns" [ref=f5e475]:
+                                  - /url: /returns
+                              - listitem [ref=f5e476]:
+                                - link "Sitemap" [ref=f5e477]:
+                                  - /url: /sitemap-page
+                          - generic [ref=f5e478]:
+                            - heading "Information" [level=4] [ref=f5e479]
+                            - list [ref=f5e480]:
+                              - listitem [ref=f5e481]:
+                                - link "Privacy policy" [ref=f5e482]:
+                                  - /url: /privacy-policy
+                              - listitem [ref=f5e483]:
+                                - link "Terms & conditions" [ref=f5e484]:
+                                  - /url: /terms-of-use
+                              - listitem [ref=f5e485]:
+                                - link "Jeko policies" [ref=f5e486]:
+                                  - /url: /pure-policies
+                              - listitem [ref=f5e487]:
+                                - link "Site security" [ref=f5e488]:
+                                  - /url: /site-security
+                              - listitem [ref=f5e489]:
+                                - link "Cookie policy" [ref=f5e490]:
+                                  - /url: /cookie-policy
+                      - generic [ref=f5e491]:
+                        - generic [ref=f5e493]: JEKO
+                        - paragraph [ref=f5e494]: © Jeko 2020-2026
+                  - generic [ref=f5e626]:
+                    - generic [ref=f5e627]:
+                      - paragraph [ref=f5e628]: TEST GREETING
+                      - paragraph [ref=f5e629]: Find your dog a friend
+                    - button "Find pet matches" [ref=f5e631] [cursor=pointer]:
+                      - img "Chatbot icon" [ref=f5e632]
+                    - generic [ref=f5e633]:
+                      - generic [ref=f5e634]: 🐾
+                      - generic [ref=f5e635]: "0024"
+                      - generic [ref=f5e636]: pets registered
+                  - alert [ref=f5e637]

@@ -11,28 +11,46 @@ import { useContentT } from "@/lib/i18n/useContentT";
 export default function Footer({ content }: { content?: any }) {
   const { t } = useT();
   const { ct } = useContentT(content);
-  const jekoLinks = [
+  const ddVisible = (v: unknown) => v !== false;
+  const buildLinks = (
+    prefix: string,
+    fallbacks: { label: string; href: string }[],
+  ): { label: string; href: string }[] => {
+    if (!content) return fallbacks;
+    const c = content as Record<string, unknown>;
+    return fallbacks
+      .map((fb, i) => {
+        const idx = i + 1;
+        if (!ddVisible(c[`${prefix}_${idx}_visible`])) return null;
+        return {
+          label: ct(`${prefix}_${idx}_label`, '') || fb.label,
+          href: (c[`${prefix}_${idx}_url`] as string) ?? fb.href,
+        };
+      })
+      .filter((x): x is { label: string; href: string } => x !== null);
+  };
+  const jekoLinks = buildLinks('col1_link', [
     { label: t("footer.links.ourStory"), href: "/about" },
     { label: t("footer.links.reviews"), href: "/reviews" },
     { label: t("footer.links.recipes"), href: "/recipes" },
     { label: t("footer.links.beyond"), href: "/beyond-the-bowl" },
     { label: t("footer.links.shop"), href: "/products" },
     { label: t("footer.links.community"), href: "/community" },
-  ];
-  const helpLinks = [
+  ]);
+  const helpLinks = buildLinks('col2_link', [
     { label: t("footer.links.myAccount"), href: "/profile" },
     { label: t("footer.links.contact"), href: "/contact" },
     { label: t("footer.links.delivery"), href: "/delivery-information" },
     { label: t("footer.links.returns"), href: "/returns" },
     { label: t("footer.links.sitemap"), href: "/sitemap-page" },
-  ];
-  const infoLinks = [
+  ]);
+  const infoLinks = buildLinks('col3_link', [
     { label: t("footer.links.privacy"), href: "/privacy-policy" },
     { label: t("footer.links.terms"), href: "/terms-of-use" },
     { label: t("footer.links.jekoPolicies"), href: "/pure-policies" },
     { label: t("footer.links.security"), href: "/site-security" },
     { label: t("footer.links.cookies"), href: "/cookie-policy" },
-  ];
+  ]);
   const [email, setEmail] = useState("");
   const [status, setStatus] = useState<"idle" | "saving" | "success" | "error">("idle");
 
