@@ -89,9 +89,25 @@ body[data-site-text] .text-deep-green\/40 {
 }
 
 :root {
+  /* Brand color hex (kept for any direct hex consumers). */
   --deep-green: #274C46;
   --off-white: #EAE5DC;
   --gold: #F2A900;
+  --gold-hover: #d99500;
+  --orange-brand: #E65A1E;
+  --purple-brand: #5F295E;
+  --beige-light: #f5f1eb;
+  --header-fg: #ffffff;
+  --social-instagram: #FF1493;
+  --social-facebook: #1877F2;
+  /* RGB triplets — consumed by Tailwind via rgb(var(--token-rgb) / <alpha>).
+     Updated at runtime by SiteThemeBootstrap when admins edit theme colors. */
+  --deep-green-rgb:   39 76 70;
+  --off-white-rgb:    234 229 220;
+  --gold-rgb:         242 169 0;
+  --orange-brand-rgb: 230 90 30;
+  --purple-brand-rgb: 95 41 94;
+  --beige-light-rgb:  245 241 235;
   --orange: #E65A1E;
   --purple: #5F295E;
   --white: #FFFFFF;
@@ -374,3 +390,58 @@ html.translated-ltr header a[class*="bg-gold"] {
 html.translated-ltr header .lg\:flex.items-center.gap-6 > a[href*="contact"] {
   display: none !important;
 }
+
+/* ──────────────────────────────────────────────────────────────────────────
+   .legal-prose — used by LegalPageRenderer and other CMS-driven HTML bodies.
+   Mirrors the typography of the original hand-coded policy pages so admin
+   edits via the store editor produce the same visual result.
+   ────────────────────────────────────────────────────────────────────────── */
+.legal-prose h2 {
+  color: var(--deep-green, #274C46);
+  font-family: 'Rubik', system-ui, sans-serif;
+  font-weight: 700;
+  font-size: 1.5rem;
+  line-height: 1.25;
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+}
+.legal-prose h3 {
+  color: var(--deep-green, #274C46);
+  font-family: 'Rubik', system-ui, sans-serif;
+  font-weight: 600;
+  font-size: 1.125rem;
+  line-height: 1.3;
+  margin-top: 1.5rem;
+  margin-bottom: 0.5rem;
+}
+.legal-prose p {
+  font-size: 16px;
+  line-height: 1.6;
+  margin-bottom: 1rem;
+}
+.legal-prose ul, .legal-prose ol {
+  padding-left: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+.legal-prose ul { list-style: disc; }
+.legal-prose ol { list-style: decimal; }
+.legal-prose li {
+  font-size: 16px;
+  line-height: 1.6;
+  margin-bottom: 0.5rem;
+}
+.legal-prose strong { font-weight: 700; }
+.legal-prose a {
+  color: var(--deep-green, #274C46);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+.legal-prose a:hover { color: #F2A900; }
+.legal-prose blockquote {
+  border-left: 4px solid #F2A900;
+  background: rgba(242, 169, 0, 0.08);
+  padding: 1rem;
+  border-radius: 4px;
+  margin: 1rem 0;
+}
+.legal-prose .section { margin-bottom: 3rem; }

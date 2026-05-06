@@ -12,71 +12,9 @@ import { useT } from "@/lib/i18n/LangProvider";
 import { useContentT } from "@/lib/i18n/useContentT";
 import HyText from "@/components/HyText";
 
-const reviews = [
-  {
-    name: "Stacey",
-    initial: "S",
-    rating: 5,
-    title: "New lease of life",
-    text: "Rosie has been on Jeko Food for 6 weeks now & OMG what a difference! You have given our 12 year old American Bulldog a whole new lease of life, her energy levels have raised & you can tell she is feeling better in herself. Her coat is so shiny her fur is really soft, looks like puppy fur again.",
-  },
-  {
-    name: "Dani",
-    initial: "D",
-    rating: 5,
-    title: "Thank you for changing our lives",
-    text: "We have a fussy almost 2-yr old GSD. Researched a ton about the right food for him, found Jeko and thought let's give it a try! He bloody loves it - breakfast & dinner are now his favourite part of the day. Thank you for changing our lives, we have struggled so much - his coat and weight is already better!",
-  },
-  {
-    name: "Sophie",
-    initial: "S",
-    rating: 5,
-    title: "The nutrition is excellent",
-    text: "Since swapping food my dogs coat has become less greasy. The nutrition is excellent and I like that there's variety in flavours to the food without causing stomach issues. Her stool is brilliant. Cannot fault the food. The pricing is slightly more expensive than some store providers but for the best nutrition it is certainly worth it.",
-  },
-  {
-    name: "Kelly",
-    initial: "K",
-    rating: 5,
-    title: "Back to his cheeky self",
-    text: "This food has been fantastic for my Sprocker Ruger. He was diagnosed with pancreatitis. He has been on Jeko for a while and his stools have firmed up and no longer contain blood. He is now back to his cheeky self which I am very thankful for as it was a horrible time.",
-  },
-  {
-    name: "Dottie",
-    initial: "D",
-    rating: 5,
-    title: "Highly recommended",
-    text: "My dog is in love with Jeko food I've never seen him lick the bowl clean everytime like he dose with Jeko dog food. His fur-skin and health have improved so much in a short space of time with eating Jeko food. I've highly recommended to other dog owners - that's how impressed I am.",
-  },
-  {
-    name: "Robyn",
-    initial: "R",
-    rating: 5,
-    title: "Their stomach has gotten so much better",
-    text: "My dog has always had a sensitive stomach but since switching to Jeko it has gotten so much better! I started a subscription initially due to the multiple good reviews for dogs with similar issues. Overall recommend Jeko and will be transitioning my second (less fussy) dog once his current food runs low.",
-  },
-  {
-    name: "Jean",
-    initial: "J",
-    rating: 5,
-    title: "So glad we gave it a go",
-    text: "I am so pleased with this food. Not only does my dog love to eat it, her stomach tolerates it really well. She gets bouts of colitis and this food has improved it dramatically. So glad we gave it a go.",
-  },
-  {
-    name: "Laura",
-    initial: "L",
-    rating: 5,
-    title: "Nothing but positive comments",
-    text: "They have now been on the food for two months and I have nothing but positive comments... Such a great idea to add water afterwards to reduce packaging and transport weight, best of both worlds for us as it is convenient plus the dogs get enough moisture, as one of ours is a very thirsty pup!",
-  },
-  {
-    name: "Jilly",
-    initial: "J",
-    rating: 5,
-    title: "Much much better quality",
-    text: "I did some research and started my boxer on Jeko, which he has been on for about 2 months now which doesn't cost me any more than the wet tray food but is much much better quality. His stomach has improved lots and his coat is nicer than it has ever been, it's soft, smooth and shiny! I would highly recommend.",
-  },
-];
+// Hardcoded review fallbacks removed — Reviews page section (index 2) in the
+// store editor is now the single source of truth for customer testimonials.
+const reviews: Array<{ name: string; initial: string; rating: number; title: string; text: string }> = [];
 
 const categories = [
   "Fussy dogs",
@@ -93,28 +31,9 @@ const categories = [
   "Weight management",
 ];
 
-const categoryTestimonials = [
-  {
-    name: "Janet & Bunty",
-    image: "https://www.datocms-assets.com/55536/1639735109-bunty-janet-cowie1.jpg?auto=format&fit=crop&h=400&w=400",
-    text: "My Maltese was becoming a fussy eater. The ad for Jeko popped up on Instagram and I placed an order. I'm so glad I did, I had to contact them for further advice and their customer service was brilliant.",
-  },
-  {
-    name: "Louise & Echo",
-    image: "https://www.datocms-assets.com/55536/1639744500-echo-web.jpg?auto=format&fit=crop&h=400&w=400",
-    text: "Was a tad sceptical at first that any dog will love this food, even the fussy ones as I have an extremely fussy dog! We tried the starter pack and Echo actually loved it from day one.",
-  },
-  {
-    name: "Julie & Alfie",
-    image: "https://www.datocms-assets.com/55536/1639668122-alfie-lauren.jpg?auto=format&fit=crop&h=400&w=400",
-    text: "Brilliant I was debating to try yet another food as my chi is very fussy, so glad I did. I have only had him a few months and he was originally on cheap horrible food.",
-  },
-  {
-    name: "Alejandra & Coco",
-    image: "https://www.datocms-assets.com/55536/1639739384-coco-1.jpg?auto=format&fit=crop&h=400&w=400",
-    text: "My dog is a very fussy eater and she loved loved loved this food straight away! Now she sits and happily waits for her food to be prepared. This food even smells good!",
-  },
-];
+// Category testimonial fallbacks removed — Reviews page section (index 6) in the
+// store editor drives these. Empty array yields a clean empty state if unset.
+const categoryTestimonials: Array<{ name: string; image: string; text: string }> = [];
 
 const TrustpilotBadge = () => (
   <div className="flex items-center gap-1.5">

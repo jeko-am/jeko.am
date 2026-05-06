@@ -1104,18 +1104,18 @@ export default function ProductDetailPage() {
                 </div>
 
                 <div className="mb-4">
-                  <label className="block text-sm font-medium text-deep-green mb-1">Title <span className="text-deep-green/40">(optional)</span></label>
-                  <input value={reviewForm.title} onChange={e => setReviewForm({ ...reviewForm, title: e.target.value })} className="w-full px-3 py-2.5 border border-deep-green/15 rounded-lg text-sm bg-white focus:ring-2 focus:ring-gold/30 focus:border-gold outline-none" placeholder="e.g. My dog loves it!" />
+                  <label className="block text-sm font-medium text-deep-green mb-1">{t("product.review.title")} <span className="text-deep-green/40">{t("product.review.optional")}</span></label>
+                  <input value={reviewForm.title} onChange={e => setReviewForm({ ...reviewForm, title: e.target.value })} className="w-full px-3 py-2.5 border border-deep-green/15 rounded-lg text-sm bg-white focus:ring-2 focus:ring-gold/30 focus:border-gold outline-none" placeholder={t("product.review.titlePlaceholder")} />
                 </div>
 
                 <div className="mb-4">
-                  <label className="block text-sm font-medium text-deep-green mb-1">Your Review *</label>
-                  <textarea value={reviewForm.text} onChange={e => setReviewForm({ ...reviewForm, text: e.target.value })} rows={4} className="w-full px-3 py-2.5 border border-deep-green/15 rounded-lg text-sm bg-white resize-none focus:ring-2 focus:ring-gold/30 focus:border-gold outline-none" placeholder="Tell us about your experience..." />
+                  <label className="block text-sm font-medium text-deep-green mb-1">{t("product.review.body")}</label>
+                  <textarea value={reviewForm.text} onChange={e => setReviewForm({ ...reviewForm, text: e.target.value })} rows={4} className="w-full px-3 py-2.5 border border-deep-green/15 rounded-lg text-sm bg-white resize-none focus:ring-2 focus:ring-gold/30 focus:border-gold outline-none" placeholder={t("product.review.bodyPlaceholder")} />
                 </div>
 
                 {/* Image upload */}
                 <div className="mb-5">
-                  <label className="block text-sm font-medium text-deep-green mb-2">Add Photos <span className="text-deep-green/40">(up to 5)</span></label>
+                  <label className="block text-sm font-medium text-deep-green mb-2">{t("product.review.addPhotos")} <span className="text-deep-green/40">{t("product.review.upTo5")}</span></label>
                   <div className="flex items-center gap-3 flex-wrap">
                     {reviewImages.map((img, i) => (
                       <div key={i} className="relative w-16 h-16 rounded-lg overflow-hidden border border-deep-green/10 group">
@@ -1140,9 +1140,9 @@ export default function ProductDetailPage() {
 
                 <button onClick={submitReview} disabled={reviewSubmitting || !reviewForm.name.trim() || !reviewForm.text.trim()} className="bg-deep-green text-white font-semibold py-3 px-8 rounded-full hover:bg-deep-green/90 transition text-sm disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2">
                   {reviewSubmitting ? (
-                    <><div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" /> Submitting...</>
+                    <><div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" /> {t("product.review.submitting")}</>
                   ) : (
-                    'Submit Review'
+                    t("product.review.submit")
                   )}
                 </button>
               </div>
@@ -1160,7 +1160,7 @@ export default function ProductDetailPage() {
         {related.length > 0 && (
           <section className="bg-off-white py-16">
             <div className="max-w-[1200px] mx-auto px-4">
-              <h2 className="text-2xl font-bold text-deep-green mb-8"><HyText en="You May Also Like" /></h2>
+              <h2 className="text-2xl font-bold text-deep-green mb-8">{t("product.relatedTitle")}</h2>
               {/* Mobile: horizontal scroll with 2 cards visible; Desktop: 4-column grid */}
               <div className="flex gap-4 overflow-x-auto pb-3 snap-x snap-mandatory scrollbar-hide lg:grid lg:grid-cols-4 lg:gap-6 lg:overflow-visible lg:pb-0">
                 {related.map(p => (

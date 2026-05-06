@@ -13,7 +13,7 @@ import Link from 'next/link';
 function buildHyDefaults(schema: SectionSchema): Record<string, unknown> {
   const out: Record<string, unknown> = {};
   for (const f of schema.fields) {
-    if ((f.type === 'text' || f.type === 'textarea') && f.i18nKey) {
+    if ((f.type === 'text' || f.type === 'textarea' || f.type === 'rich_text') && f.i18nKey) {
       const v = dictionaries.hy[f.i18nKey];
       if (v) out[f.key] = v;
     }
@@ -942,7 +942,7 @@ export default function AdminStoreEditorPage() {
     (async () => {
       const updates: Record<string, string> = {};
       for (const f of schema.fields) {
-        if (f.type !== 'text' && f.type !== 'textarea') continue;
+        if (f.type !== 'text' && f.type !== 'textarea' && f.type !== 'rich_text') continue;
         const existing = editValuesHy[f.key];
         if (typeof existing === 'string' && existing.length > 0) continue;
         if (f.i18nKey && dictionaries.hy[f.i18nKey]) continue;
@@ -987,7 +987,10 @@ export default function AdminStoreEditorPage() {
 
   function getFieldValue(key: string, fieldType: string): unknown {
     // Only text-like fields use Armenian overrides; others always English store
-    const translatable = fieldType === 'text' || fieldType === 'textarea';
+    // Per-language overrides extend to images and URLs so admins can swap
+    // localized hero photos and links per HY locale; toggles/colors/numbers
+    // remain language-agnostic.
+    const translatable = fieldType === 'text' || fieldType === 'textarea' || fieldType === 'rich_text' || fieldType === 'image' || fieldType === 'url';
     if (editLang === 'hy' && translatable) {
       const v = editValuesHy[key];
       if (v !== undefined && v !== null && v !== '') return v;
@@ -1301,7 +1304,15 @@ export default function AdminStoreEditorPage() {
                   const value = getFieldValue(field.key, field.type);
                   const enValue = editValues[field.key];
                   // In Armenian mode, hide non-translatable fields to keep the UX focused
-                  if (editLang === 'hy' && field.type !== 'text' && field.type !== 'textarea') return null;
+                  if (
+                    editLang === 'hy' &&
+                    field.type !== 'text' &&
+                    field.type !== 'textarea' &&
+                    field.type !== 'rich_text' &&
+                    field.type !== 'seo' &&
+                    field.type !== 'image' &&
+                    field.type !== 'url'
+                  ) return null;
 
                   if (field.type === 'image') {
                     return (
@@ -1361,6 +1372,71 @@ export default function AdminStoreEditorPage() {
                           value={String(value || '')}
                           onChange={(e) => updateField(field.key, Number(e.target.value))}
                           className="w-full px-3 py-2 text-sm border border-gray-200 rounded-lg focus:ring-2 focus:ring-deep-green/20 focus:border-deep-green outline-none"
+                        />
+                      </div>
+                    );
+                  }
+
+                  if (field.type === 'rich_text') {
+                    const hyPlaceholder = editLang === 'hy' && enValue ? String(enValue) : field.placeholder;
+                    return (
+                      <div key={field.key}>
+                        <div className="flex flex-col gap-1.5 mb-1.5">
+                          <label className="text-[13px] font-medium text-gray-700 flex items-center gap-2 min-w-0">
+                            <span className="truncate">{field.label}</span>
+                            <span className="text-[10px] font-semibold text-purple-700 px-1.5 py-0.5 bg-purple-100 rounded flex-shrink-0">HTML</span>
+                            {editLang === 'hy' && <span className="text-[10px] font-semibold text-deep-green/70 px-1.5 py-0.5 bg-deep-green/10 rounded flex-shrink-0">HY</span>}
+                          </label>
+                          <p className="text-[11px] text-gray-500 leading-relaxed">
+                            HTML supported. Use &lt;h2&gt;, &lt;h3&gt;, &lt;p&gt;, &lt;ul&gt;, &lt;li&gt;, &lt;strong&gt;, &lt;a&gt;, &lt;br&gt;.
+                          </p>
+                        </div>
+                        <textarea
+                          value={String(value || '')}
+                          onChange={(e) => updateField(field.key, e.target.value)}
+                          placeholder={hyPlaceholder}
+                          rows={20}
+                          spellCheck={false}
+                          className="w-full px-3 py-2 text-[12px] leading-[1.6] font-mono border border-gray-200 rounded-lg focus:ring-2 focus:ring-deep-green/20 focus:border-deep-green outline-none resize-y bg-gray-50"
+                        />
+                      </div>
+                    );
+                  }
+
+                  if (field.type === 'seo') {
+                    const seoVal = (value && typeof value === 'object') ? value as Record<string, string> : {};
+                    const updateSub = (k: string, v: string) => {
+                      updateField(field.key, { ...seoVal, [k]: v });
+                    };
+                    return (
+                      <div key={field.key} className="space-y-3 p-3 border border-gray-200 rounded-lg bg-gray-50">
+                        <label className="block text-[13px] font-semibold text-gray-700">{field.label}</label>
+                        <div>
+                          <label className="block text-[11px] font-medium text-gray-600 mb-1">Page Title (≤60 chars)</label>
+                          <input
+                            type="text"
+                            value={seoVal.title || ''}
+                            onChange={(e) => updateSub('title', e.target.value)}
+                            placeholder="e.g. Privacy Policy | Jeko"
+                            maxLength={70}
+                            className="w-full px-3 py-2 text-sm border border-gray-200 rounded-lg focus:ring-2 focus:ring-deep-green/20 focus:border-deep-green outline-none"
+                          />
+                        </div>
+                        <div>
+                          <label className="block text-[11px] font-medium text-gray-600 mb-1">Meta Description (≤160 chars)</label>
+                          <textarea
+                            value={seoVal.description || ''}
+                            onChange={(e) => updateSub('description', e.target.value)}
+                            placeholder="Short description shown in search results."
+                            maxLength={200}
+                            rows={3}
+                            className="w-full px-3 py-2 text-sm border border-gray-200 rounded-lg focus:ring-2 focus:ring-deep-green/20 focus:border-deep-green outline-none resize-y"
+                          />
+                        </div>
+                        <ImageField
+                          label="Open Graph Image (1200×630)"
+                          value={seoVal.og_image || ''}
+                          onChange={(url) => updateSub('og_image', url)}
                         />
                       </div>
                     );

@@ -9,12 +9,16 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        'deep-green': '#274C46',
-        'off-white': '#EAE5DC',
-        'gold': '#F2A900',
-        'orange-brand': '#E65A1E',
-        'purple-brand': '#5F295E',
-        'beige-light': '#f5f1eb',
+        // Brand colors driven by runtime CSS variables (see globals.css :root)
+        // so /admin/store-editor/theme can change them live without rebuild.
+        // The "<alpha-value>" placeholder preserves existing `bg-deep-green/80`
+        // and similar alpha utilities.
+        'deep-green':   'rgb(var(--deep-green-rgb) / <alpha-value>)',
+        'off-white':    'rgb(var(--off-white-rgb) / <alpha-value>)',
+        'gold':         'rgb(var(--gold-rgb) / <alpha-value>)',
+        'orange-brand': 'rgb(var(--orange-brand-rgb) / <alpha-value>)',
+        'purple-brand': 'rgb(var(--purple-brand-rgb) / <alpha-value>)',
+        'beige-light':  'rgb(var(--beige-light-rgb) / <alpha-value>)',
       },
       fontFamily: {
         // Site-wide default rounded font (VAG Rounded Next Heavy stand-in)

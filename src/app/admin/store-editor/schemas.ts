@@ -1,4 +1,4 @@
-export type FieldType = 'text' | 'textarea' | 'image' | 'color' | 'url' | 'toggle' | 'number' | 'list' | 'product_picker';
+export type FieldType = 'text' | 'textarea' | 'rich_text' | 'image' | 'color' | 'url' | 'toggle' | 'number' | 'list' | 'product_picker' | 'seo';
 
 export interface FieldDef {
   key: string;
@@ -1370,6 +1370,135 @@ const HEALTH_CONDITION_SECTIONS: SectionSchema[] = [
   },
 ];
 
+/* ═══════════════════════════════════════════════════════════════════════════
+   LEGAL BLOCKS — structured schema for long-form policy pages
+   Hero + N "Block" sections (heading + body) so admins edit plain text only.
+   No HTML knowledge required. Body paragraphs are separated by blank lines.
+   Used by /privacy-policy, /terms-of-use, /cookie-policy, /refund-policy,
+   /shipping-policy.
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+const makeBlock = (n: number): SectionSchema => ({
+  name: `Block ${n}`,
+  icon: ICON_PATHS.text,
+  color: 'bg-blue-500',
+  fields: [
+    { key: 'heading', label: `Block ${n} — Heading`, type: 'text', placeholder: `e.g. ${n}. Section title` },
+    { key: 'body', label: `Block ${n} — Body (paragraphs separated by blank line)`, type: 'textarea', placeholder: 'Write the body text here. Press Enter twice to start a new paragraph.' },
+  ],
+  defaultContent: { heading: '', body: '' },
+});
+
+const LEGAL_BLOCKS_SECTIONS: SectionSchema[] = [
+  {
+    name: 'Hero',
+    icon: ICON_PATHS.banner,
+    color: 'bg-deep-green',
+    fields: [
+      { key: 'heading', label: 'Heading', type: 'text', placeholder: 'Privacy Policy' },
+      { key: 'heading_highlight', label: 'Heading Highlight (gold)', type: 'text', placeholder: 'Policy' },
+      { key: 'subtitle', label: 'Subtitle', type: 'textarea', placeholder: 'Short intro line under the heading.' },
+      { key: 'last_updated', label: 'Last Updated Note', type: 'text', placeholder: 'Last updated: March 2026' },
+      { key: 'background_color', label: 'Hero Background Color', type: 'color' },
+    ],
+    defaultContent: { heading: '', heading_highlight: '', subtitle: '', last_updated: '', background_color: '#274C46' },
+  },
+  // 25 editable section blocks — covers the longest policy page (Terms of
+  // Use, ~19 sections). Empty blocks fall back to the in-code defaults.
+  ...Array.from({ length: 25 }, (_, i) => makeBlock(i + 1)),
+];
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   BEYOND THE BOWL (Articles index page)
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+const BEYOND_BOWL_SECTIONS: SectionSchema[] = [
+  {
+    name: 'Hero',
+    icon: ICON_PATHS.banner,
+    color: 'bg-deep-green',
+    fields: [
+      { key: 'heading', label: 'Heading', type: 'text', i18nKey: 'beyond.page.heading' },
+      { key: 'heading_highlight', label: 'Heading Highlight (gold)', type: 'text', i18nKey: 'beyond.page.headingHighlight' },
+      { key: 'subtitle', label: 'Subtitle', type: 'textarea', i18nKey: 'beyond.page.subheading' },
+    ],
+    defaultContent: { heading: '', heading_highlight: '', subtitle: '' },
+  },
+  {
+    name: 'Articles Grid',
+    icon: ICON_PATHS.grid,
+    color: 'bg-blue-500',
+    fields: ([1, 2, 3, 4, 5, 6] as const).flatMap((n) => ([
+      { key: `a${n}_title`, label: `Article ${n} — Title`, type: 'text' as FieldType },
+      { key: `a${n}_excerpt`, label: `Article ${n} — Excerpt`, type: 'textarea' as FieldType },
+      { key: `a${n}_image`, label: `Article ${n} — Image`, type: 'image' as FieldType },
+      { key: `a${n}_category`, label: `Article ${n} — Category`, type: 'text' as FieldType },
+      { key: `a${n}_url`, label: `Article ${n} — Link URL`, type: 'url' as FieldType, placeholder: '/blog/...' },
+    ])),
+    defaultContent: {
+      a1_title: '', a1_excerpt: '', a1_image: '', a1_category: '', a1_url: '#',
+      a2_title: '', a2_excerpt: '', a2_image: '', a2_category: '', a2_url: '#',
+      a3_title: '', a3_excerpt: '', a3_image: '', a3_category: '', a3_url: '#',
+      a4_title: '', a4_excerpt: '', a4_image: '', a4_category: '', a4_url: '#',
+      a5_title: '', a5_excerpt: '', a5_image: '', a5_category: '', a5_url: '#',
+      a6_title: '', a6_excerpt: '', a6_image: '', a6_category: '', a6_url: '#',
+    },
+  },
+  {
+    name: 'Newsletter CTA',
+    icon: ICON_PATHS.banner,
+    color: 'bg-deep-green',
+    fields: [
+      { key: 'heading', label: 'Heading', type: 'text', i18nKey: 'beyond.newsletter.heading' },
+      { key: 'body', label: 'Body', type: 'textarea', i18nKey: 'beyond.newsletter.body' },
+      { key: 'cta_text', label: 'CTA Button Text', type: 'text', i18nKey: 'beyond.newsletter.cta' },
+      { key: 'cta_url', label: 'CTA Button URL', type: 'url', placeholder: '/products' },
+    ],
+    defaultContent: { heading: '', body: '', cta_text: '', cta_url: '/products' },
+  },
+];
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   LEGAL / POLICY / INFO PAGES
+   Used for: privacy-policy, terms-of-use, cookie-policy, refund-policy,
+             shipping-policy, returns, delivery-information, site-security,
+             pure-policies, sitemap-page.
+   Each page has a Hero (heading + subtitle) and a Body (rich HTML).
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+const LEGAL_PAGE_SECTIONS: SectionSchema[] = [
+  {
+    name: 'Hero',
+    icon: ICON_PATHS.banner,
+    color: 'bg-deep-green',
+    fields: [
+      { key: 'heading', label: 'Heading', type: 'text', placeholder: 'Privacy Policy' },
+      { key: 'heading_highlight', label: 'Heading Highlight (gold)', type: 'text', placeholder: 'Policy' },
+      { key: 'subtitle', label: 'Subtitle', type: 'textarea', placeholder: 'Short intro line under the heading.' },
+      { key: 'background_color', label: 'Hero Background Color', type: 'color' },
+    ],
+    defaultContent: {
+      heading: '',
+      heading_highlight: '',
+      subtitle: '',
+      background_color: '#274C46',
+    },
+  },
+  {
+    name: 'Body Content',
+    icon: ICON_PATHS.text,
+    color: 'bg-blue-500',
+    fields: [
+      { key: 'last_updated', label: 'Last Updated Note', type: 'text', placeholder: 'Last updated: March 2026' },
+      { key: 'body_html', label: 'Body Content (HTML)', type: 'rich_text', placeholder: '<h2>1. Introduction</h2><p>...</p>' },
+    ],
+    defaultContent: {
+      last_updated: '',
+      body_html: '',
+    },
+  },
+];
+
 export const ALL_PAGE_CONFIGS: PageConfig[] = [
   { label: 'Homepage', slug: '/', previewPath: '/', indexKey: '_homepage_index', sections: HOMEPAGE_SECTIONS },
   { label: 'About', slug: '/about', previewPath: '/about', indexKey: '_section_index', sections: ABOUT_SECTIONS },
@@ -1382,7 +1511,7 @@ export const ALL_PAGE_CONFIGS: PageConfig[] = [
   { label: 'Recipes', slug: '/recipes', previewPath: '/recipes', indexKey: '_section_index', sections: RECIPES_SECTIONS },
   { label: 'Reviews', slug: '/reviews', previewPath: '/reviews', indexKey: '_section_index', sections: REVIEWS_SECTIONS },
   { label: 'Signup', slug: '/signup', previewPath: '/signup', indexKey: '_section_index', sections: SIGNUP_SECTIONS },
-  { label: 'Beyond the Bowl', slug: '/beyond-the-bowl', previewPath: '/beyond-the-bowl', indexKey: '_section_index', sections: SIGNUP_SECTIONS },
+  { label: 'Beyond the Bowl', slug: '/beyond-the-bowl', previewPath: '/beyond-the-bowl', indexKey: '_section_index', sections: BEYOND_BOWL_SECTIONS },
   { label: 'Contact', slug: '/contact', previewPath: '/contact', indexKey: '_section_index', sections: SIGNUP_SECTIONS },
   { label: 'Community', slug: '/community', previewPath: '/community', indexKey: '_section_index', sections: SIGNUP_SECTIONS },
   { label: 'Blog', slug: '/blog', previewPath: '/blog', indexKey: '_section_index', sections: SIGNUP_SECTIONS },
@@ -1395,16 +1524,16 @@ export const ALL_PAGE_CONFIGS: PageConfig[] = [
   { label: 'Messages', slug: '/messages', previewPath: '/messages', indexKey: '_section_index', sections: SIGNUP_SECTIONS },
   { label: 'Login', slug: '/auth/login', previewPath: '/auth/login', indexKey: '_section_index', sections: SIGNUP_SECTIONS },
   { label: 'Signup (Auth)', slug: '/auth/signup', previewPath: '/auth/signup', indexKey: '_section_index', sections: SIGNUP_SECTIONS },
-  { label: 'Privacy Policy', slug: '/privacy-policy', previewPath: '/privacy-policy', indexKey: '_section_index', sections: SIGNUP_SECTIONS },
-  { label: 'Terms of Use', slug: '/terms-of-use', previewPath: '/terms-of-use', indexKey: '_section_index', sections: SIGNUP_SECTIONS },
-  { label: 'Cookie Policy', slug: '/cookie-policy', previewPath: '/cookie-policy', indexKey: '_section_index', sections: SIGNUP_SECTIONS },
-  { label: 'Refund Policy', slug: '/refund-policy', previewPath: '/refund-policy', indexKey: '_section_index', sections: SIGNUP_SECTIONS },
-  { label: 'Shipping Policy', slug: '/shipping-policy', previewPath: '/shipping-policy', indexKey: '_section_index', sections: SIGNUP_SECTIONS },
-  { label: 'Returns', slug: '/returns', previewPath: '/returns', indexKey: '_section_index', sections: SIGNUP_SECTIONS },
-  { label: 'Delivery Information', slug: '/delivery-information', previewPath: '/delivery-information', indexKey: '_section_index', sections: SIGNUP_SECTIONS },
-  { label: 'Site Security', slug: '/site-security', previewPath: '/site-security', indexKey: '_section_index', sections: SIGNUP_SECTIONS },
-  { label: 'Pure Policies', slug: '/pure-policies', previewPath: '/pure-policies', indexKey: '_section_index', sections: SIGNUP_SECTIONS },
-  { label: 'Sitemap', slug: '/sitemap-page', previewPath: '/sitemap-page', indexKey: '_section_index', sections: SIGNUP_SECTIONS },
+  { label: 'Privacy Policy', slug: '/privacy-policy', previewPath: '/privacy-policy', indexKey: '_section_index', sections: LEGAL_BLOCKS_SECTIONS },
+  { label: 'Terms of Use', slug: '/terms-of-use', previewPath: '/terms-of-use', indexKey: '_section_index', sections: LEGAL_BLOCKS_SECTIONS },
+  { label: 'Cookie Policy', slug: '/cookie-policy', previewPath: '/cookie-policy', indexKey: '_section_index', sections: LEGAL_BLOCKS_SECTIONS },
+  { label: 'Refund Policy', slug: '/refund-policy', previewPath: '/refund-policy', indexKey: '_section_index', sections: LEGAL_BLOCKS_SECTIONS },
+  { label: 'Shipping Policy', slug: '/shipping-policy', previewPath: '/shipping-policy', indexKey: '_section_index', sections: LEGAL_BLOCKS_SECTIONS },
+  { label: 'Returns', slug: '/returns', previewPath: '/returns', indexKey: '_section_index', sections: LEGAL_PAGE_SECTIONS },
+  { label: 'Delivery Information', slug: '/delivery-information', previewPath: '/delivery-information', indexKey: '_section_index', sections: LEGAL_PAGE_SECTIONS },
+  { label: 'Site Security', slug: '/site-security', previewPath: '/site-security', indexKey: '_section_index', sections: LEGAL_PAGE_SECTIONS },
+  { label: 'Pure Policies', slug: '/pure-policies', previewPath: '/pure-policies', indexKey: '_section_index', sections: LEGAL_PAGE_SECTIONS },
+  { label: 'Sitemap', slug: '/sitemap-page', previewPath: '/sitemap-page', indexKey: '_section_index', sections: LEGAL_PAGE_SECTIONS },
   {
     label: 'Matching Preferences',
     slug: 'preferences-config',

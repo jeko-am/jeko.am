@@ -53,7 +53,7 @@ interface MenuItem {
   sort_order: number;
 }
 
-type TabId = 'shipping' | 'analytics' | 'menus' | 'subscribers' | 'currency';
+type TabId = 'shipping' | 'analytics' | 'menus' | 'subscribers' | 'currency' | 'account';
 
 const TABS: { id: TabId; label: string; icon: string }[] = [
   { id: 'shipping', label: 'Shipping', icon: 'M8.25 18.75a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m3 0h6m-9 0H3.375a1.125 1.125 0 01-1.125-1.125V14.25m17.25 4.5a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m3 0h1.125c.621 0 1.129-.504 1.09-1.124a17.902 17.902 0 00-3.213-9.193 2.056 2.056 0 00-1.58-.86H14.25M16.5 18.75h-2.25m0-11.177v-.958c0-.568-.422-1.048-.987-1.106a48.554 48.554 0 00-10.026 0 1.106 1.106 0 00-.987 1.106v7.635m12-6.677v6.677m0 4.5v-4.5m0 0h-12' },
@@ -61,6 +61,7 @@ const TABS: { id: TabId; label: string; icon: string }[] = [
   { id: 'analytics', label: 'Pixels & Tags', icon: 'M3 13.125C3 12.504 3.504 12 4.125 12h2.25c.621 0 1.125.504 1.125 1.125v6.75C7.5 20.496 6.996 21 6.375 21h-2.25A1.125 1.125 0 013 19.875v-6.75zM9.75 8.625c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125v11.25c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V8.625zM16.5 4.125c0-.621.504-1.125 1.125-1.125h2.25C20.496 3 21 3.504 21 4.125v15.75c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V4.125z' },
   { id: 'menus', label: 'Menus', icon: 'M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5' },
   { id: 'subscribers', label: 'Subscribers', icon: 'M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75' },
+  { id: 'account', label: 'Account', icon: 'M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z' },
 ];
 
 const PIXEL_TYPES = ['Google Analytics', 'Facebook Pixel', 'Google Tag Manager', 'TikTok Pixel', 'Hotjar', 'Custom'];
@@ -77,6 +78,84 @@ export default function AdminSettingsPage() {
   // Currency
   const { currency, rates, fetchedAt, setCurrency, refreshRates, formatPrice } = useCurrency();
   const [currencyBusy, setCurrencyBusy] = useState(false);
+
+  // ─── Account / password change ───────────────────────────────────────────
+  const [accountEmail, setAccountEmail] = useState<string>('');
+  const [pwdCurrent, setPwdCurrent] = useState('');
+  const [pwdNew, setPwdNew] = useState('');
+  const [pwdConfirm, setPwdConfirm] = useState('');
+  const [pwdBusy, setPwdBusy] = useState(false);
+  const [pwdError, setPwdError] = useState<string | null>(null);
+  const [pwdSuccess, setPwdSuccess] = useState<string | null>(null);
+
+  useEffect(() => {
+    let cancelled = false;
+    // Try the session first (instant — reads localStorage), then refresh
+    // from the server in case the cached session is stale.
+    supabase.auth.getSession().then(({ data }) => {
+      if (cancelled) return;
+      const email = data.session?.user?.email;
+      if (email) setAccountEmail(email);
+    });
+    supabase.auth.getUser().then(({ data }) => {
+      if (cancelled) return;
+      if (data.user?.email) setAccountEmail(data.user.email);
+    });
+    const { data: sub } = supabase.auth.onAuthStateChange((_event, session) => {
+      if (cancelled) return;
+      if (session?.user?.email) setAccountEmail(session.user.email);
+    });
+    return () => { cancelled = true; sub.subscription.unsubscribe(); };
+  }, []);
+
+  // Auto-clear messages after 4s
+  useEffect(() => {
+    if (!pwdSuccess && !pwdError) return;
+    const t = setTimeout(() => {
+      setPwdSuccess(null);
+      setPwdError(null);
+    }, 4000);
+    return () => clearTimeout(t);
+  }, [pwdSuccess, pwdError]);
+
+  async function handleChangePassword(e: React.FormEvent) {
+    e.preventDefault();
+    setPwdError(null);
+    setPwdSuccess(null);
+
+    if (!accountEmail) { setPwdError('No signed-in user found. Please log in again.'); return; }
+    if (!pwdCurrent)   { setPwdError('Current password is required.'); return; }
+    if (pwdNew.length < 8) { setPwdError('New password must be at least 8 characters.'); return; }
+    if (pwdNew !== pwdConfirm) { setPwdError('New passwords do not match.'); return; }
+    if (pwdNew === pwdCurrent) { setPwdError('New password must be different from the current one.'); return; }
+
+    setPwdBusy(true);
+    try {
+      // Step 1 — verify current password by re-auth.
+      const { error: signInErr } = await supabase.auth.signInWithPassword({
+        email: accountEmail,
+        password: pwdCurrent,
+      });
+      if (signInErr) {
+        setPwdError('Current password is incorrect.');
+        return;
+      }
+      // Step 2 — update password on the now-fresh session.
+      const { error: updateErr } = await supabase.auth.updateUser({ password: pwdNew });
+      if (updateErr) {
+        setPwdError(updateErr.message || 'Failed to update password.');
+        return;
+      }
+      setPwdSuccess('Password updated successfully.');
+      setPwdCurrent('');
+      setPwdNew('');
+      setPwdConfirm('');
+    } catch (err) {
+      setPwdError(err instanceof Error ? err.message : 'Unexpected error.');
+    } finally {
+      setPwdBusy(false);
+    }
+  }
 
   // Shipping
   const [shippingZones, setShippingZones] = useState<ShippingZone[]>([]);
@@ -1026,6 +1105,82 @@ export default function AdminSettingsPage() {
           {activeTab === 'currency' && renderCurrency()}
           {activeTab === 'analytics' && renderAnalytics()}
           {activeTab === 'menus' && renderMenus()}
+          {activeTab === 'account' && (
+            <div className="max-w-md space-y-5">
+              <div>
+                <h3 className="text-sm font-semibold text-gray-800">Account</h3>
+                <p className="text-xs text-gray-500 mt-1">Update the password for your admin account.</p>
+              </div>
+
+              <div>
+                <label className="block text-xs font-medium text-gray-600 mb-1">Email</label>
+                <input
+                  type="email"
+                  value={accountEmail}
+                  readOnly
+                  className="w-full px-3 py-2 text-sm border border-gray-200 rounded-lg bg-gray-50 text-gray-700 cursor-not-allowed"
+                />
+              </div>
+
+              {pwdError && (
+                <div className="p-3 bg-red-50 border border-red-200 rounded-lg text-red-700 text-sm">
+                  {pwdError}
+                </div>
+              )}
+              {pwdSuccess && (
+                <div className="p-3 bg-emerald-50 border border-emerald-200 rounded-lg text-emerald-700 text-sm">
+                  {pwdSuccess}
+                </div>
+              )}
+
+              <form onSubmit={handleChangePassword} className="space-y-4">
+                <div>
+                  <label className="block text-xs font-medium text-gray-600 mb-1">Current password</label>
+                  <input
+                    type="password"
+                    value={pwdCurrent}
+                    onChange={(e) => setPwdCurrent(e.target.value)}
+                    autoComplete="current-password"
+                    className="w-full px-3 py-2 text-sm border border-gray-200 rounded-lg focus:ring-2 focus:ring-deep-green/20 focus:border-deep-green outline-none"
+                    placeholder="Enter your current password"
+                  />
+                </div>
+                <div>
+                  <label className="block text-xs font-medium text-gray-600 mb-1">New password</label>
+                  <input
+                    type="password"
+                    value={pwdNew}
+                    onChange={(e) => setPwdNew(e.target.value)}
+                    autoComplete="new-password"
+                    className="w-full px-3 py-2 text-sm border border-gray-200 rounded-lg focus:ring-2 focus:ring-deep-green/20 focus:border-deep-green outline-none"
+                    placeholder="At least 8 characters"
+                  />
+                </div>
+                <div>
+                  <label className="block text-xs font-medium text-gray-600 mb-1">Confirm new password</label>
+                  <input
+                    type="password"
+                    value={pwdConfirm}
+                    onChange={(e) => setPwdConfirm(e.target.value)}
+                    autoComplete="new-password"
+                    className="w-full px-3 py-2 text-sm border border-gray-200 rounded-lg focus:ring-2 focus:ring-deep-green/20 focus:border-deep-green outline-none"
+                    placeholder="Re-enter the new password"
+                  />
+                </div>
+                <button
+                  type="submit"
+                  disabled={pwdBusy}
+                  className="px-4 py-2 bg-deep-green text-white text-sm font-semibold rounded-lg hover:bg-deep-green/90 disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
+                >
+                  {pwdBusy ? <><Spinner /> Updating…</> : 'Update password'}
+                </button>
+              </form>
+
+              <p className="text-[11px] text-gray-500 leading-relaxed pt-2 border-t border-gray-100">
+                Tip: your current password is verified by re-signing you in once before the new password is saved. If verification fails, no change is made.
+              </p>
+            </div>
+          )}
           {activeTab === 'subscribers' && (
             subscribersLoading ? <LoadingBlock /> : (
               <div className="space-y-4">

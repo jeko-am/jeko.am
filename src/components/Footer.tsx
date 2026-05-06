@@ -1,7 +1,6 @@
 "use client";
 
 import Link from "next/link";
-import Image from "next/image";
 import { useState } from "react";
 import { supabase } from "@/lib/supabase";
 import { useT } from "@/lib/i18n/LangProvider";
@@ -113,25 +112,13 @@ export default function Footer({ content }: { content?: any }) {
                 <h4 className="text-white font-semibold text-[18px] mb-3">{ct("social_heading", "footer.social.heading")}</h4>
                 <div className="flex gap-4 items-center">
                   {hasInstagram && (
-                    <a href={content.instagram_url} className="opacity-80 hover:opacity-100 transition-opacity" target="_blank" rel="noopener noreferrer">
-                      <Image
-                        src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='28' height='28'%3E%3Crect width='28' height='28' fill='%23FF1493'/%3E%3Ctext x='50%25' y='50%25' font-size='12' fill='white' text-anchor='middle' dy='.3em'%3EIG%3C/text%3E%3C/svg%3E"
-                        alt="Instagram"
-                        width={28}
-                        height={28}
-                        unoptimized
-                      />
+                    <a href={content.instagram_url} aria-label="Instagram" className="opacity-80 hover:opacity-100 transition-opacity inline-flex items-center justify-center w-7 h-7 rounded text-white text-[11px] font-bold" style={{ backgroundColor: "var(--social-instagram)" }} target="_blank" rel="noopener noreferrer">
+                      IG
                     </a>
                   )}
                   {hasFacebook && (
-                    <a href={content.facebook_url} className="opacity-80 hover:opacity-100 transition-opacity" target="_blank" rel="noopener noreferrer">
-                      <Image
-                        src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='28' height='28'%3E%3Crect width='28' height='28' fill='%231877F2'/%3E%3Ctext x='50%25' y='50%25' font-size='12' fill='white' text-anchor='middle' dy='.3em'%3EFB%3C/text%3E%3C/svg%3E"
-                        alt="Facebook"
-                        width={28}
-                        height={28}
-                        unoptimized
-                      />
+                    <a href={content.facebook_url} aria-label="Facebook" className="opacity-80 hover:opacity-100 transition-opacity inline-flex items-center justify-center w-7 h-7 rounded text-white text-[11px] font-bold" style={{ backgroundColor: "var(--social-facebook)" }} target="_blank" rel="noopener noreferrer">
+                      FB
                     </a>
                   )}
                   {hasTiktok && (

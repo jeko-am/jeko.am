@@ -1,8 +1,7 @@
 "use client";
 
-import Header from "@/components/Header";
-import Footer from "@/components/Footer";
 import Link from "next/link";
+import LegalPageRenderer from "@/components/LegalPageRenderer";
 import { useT } from "@/lib/i18n/LangProvider";
 
 export default function SitemapPage() {
@@ -62,49 +61,34 @@ export default function SitemapPage() {
   ];
 
   return (
-    <>
-      <Header />
-      <main style={{ paddingTop: "80px" }}>
-        {/* Hero Section */}
-        <section className="bg-deep-green py-16 text-center relative zigzag-bottom">
-          <div className="max-w-[1200px] mx-auto px-6">
-            <h1 className="font-rubik text-white text-[38px] md:text-[48px] font-bold leading-[1.15] mb-4">
-              {t("sitemap.heading")}<span className="text-gold">{t("sitemap.headingHighlight")}</span>
-            </h1>
-            <p className="text-white/80 max-w-2xl mx-auto text-lg leading-relaxed">
-              {t("sitemap.subtitle")}
-            </p>
-          </div>
-        </section>
-
-        {/* Sitemap Content */}
-        <section className="bg-off-white">
-          <div className="max-w-[900px] mx-auto px-6 py-16">
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
-              {sitemapSections.map((section) => (
-                <div key={section.title}>
-                  <h2 className="text-deep-green font-rubik font-bold text-xl mb-4 pb-2 border-b-2 border-gold/30">
-                    {section.title}
-                  </h2>
-                  <ul className="space-y-2.5">
-                    {section.links.map((link) => (
-                      <li key={link.href}>
-                        <Link
-                          href={link.href}
-                          className="text-deep-green/70 hover:text-deep-green transition-colors text-[15px]"
-                        >
-                          {link.label}
-                        </Link>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              ))}
+    <LegalPageRenderer
+      slug="/sitemap-page"
+      fallbackHeading={t("sitemap.heading")}
+      fallbackHeadingHighlight={t("sitemap.headingHighlight")}
+      fallbackSubtitle={t("sitemap.subtitle")}
+      fallbackBody={
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+          {sitemapSections.map((section) => (
+            <div key={section.title}>
+              <h2 className="text-deep-green font-rubik font-bold text-xl mb-4 pb-2 border-b-2 border-gold/30">
+                {section.title}
+              </h2>
+              <ul className="space-y-2.5">
+                {section.links.map((link) => (
+                  <li key={link.href}>
+                    <Link
+                      href={link.href}
+                      className="text-deep-green/70 hover:text-deep-green transition-colors text-[15px]"
+                    >
+                      {link.label}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
             </div>
-          </div>
-        </section>
-      </main>
-      <Footer />
-    </>
+          ))}
+        </div>
+      }
+    />
   );
 }

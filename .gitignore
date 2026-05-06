@@ -34,3 +34,17 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# MCP / local tool configuration — may contain access tokens, keep local only
+.mcp.json
+.claude/
+
+# Playwright MCP test artifacts (snapshots, console logs, screenshots)
+.playwright-mcp/
+/account-tab.png
+/editor-*.png
+/password-*.png
+/privacy-*.png
+/pure-policies-live.png
+/settings-tabs.png
+/theme-editor*.png
