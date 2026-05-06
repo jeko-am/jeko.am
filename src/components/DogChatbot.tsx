@@ -33,9 +33,10 @@ export default function DogChatbot({ content }: { content?: ChatbotContent }) {
   const bubbleEnabled = content?.bubble_enabled !== false;
   const counterEnabled = content?.counter_enabled !== false;
   const bgColor = content?.background_color || "#F2A900";
-  const greeting = content?.bubble_greeting || t("chatbot.bubble.greeting");
-  const subtext = content?.bubble_subtext || t("chatbot.bubble.subtext");
-  const counterLabel = content?.counter_label || t("chatbot.counter.label") || "pets registered";
+  const greeting = content?.bubble_greeting ?? t("chatbot.bubble.greeting");
+  const subtext = content?.bubble_subtext ?? t("chatbot.bubble.subtext");
+  const counterLabel = content?.counter_label ?? t("chatbot.counter.label") ?? "pets registered";
+  const hasBubbleText = Boolean((greeting && greeting.trim()) || (subtext && subtext.trim()));
 
   useEffect(() => {
     let cancelled = false;
@@ -92,7 +93,7 @@ export default function DogChatbot({ content }: { content?: ChatbotContent }) {
       }}
     >
       {/* Speech bubble */}
-      {bubbleEnabled && (
+      {bubbleEnabled && hasBubbleText && (
         <div
           style={{
             opacity: bubbleVisible ? 1 : 0,
@@ -102,13 +103,17 @@ export default function DogChatbot({ content }: { content?: ChatbotContent }) {
           }}
           className="relative bg-white rounded-2xl px-4 py-2.5 shadow-lg border border-gray-100 mr-2"
         >
-          <p
-            className="text-deep-green font-bold text-[15px] whitespace-nowrap"
-            style={{ fontFamily: "'TR Frankfurter', 'Rubik', sans-serif" }}
-          >
-            {greeting}
-          </p>
-          <p className="text-deep-green/60 text-[11px] font-rubik">{subtext}</p>
+          {greeting && greeting.trim() && (
+            <p
+              className="text-deep-green font-bold text-[15px] whitespace-nowrap"
+              style={{ fontFamily: "'TR Frankfurter', 'Rubik', sans-serif" }}
+            >
+              {greeting}
+            </p>
+          )}
+          {subtext && subtext.trim() && (
+            <p className="text-deep-green/60 text-[11px] font-rubik">{subtext}</p>
+          )}
           {/* Tail pointing down-right */}
           <div
             className="absolute -bottom-2 right-6 w-4 h-4 bg-white border-r border-b border-gray-100"
