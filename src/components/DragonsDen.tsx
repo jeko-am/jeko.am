@@ -1,5 +1,6 @@
 "use client";
 
+import type React from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { useSignupUrl } from "@/lib/useSignupUrl";
@@ -28,15 +29,12 @@ export default function DragonsDen({ content }: { content?: any }) {
               <path d="M20 170 Q40 155 55 170 Q45 190 25 185 Q10 180 20 170Z" fill="#E88B7D" opacity="0.6" />
             </svg>
           </div>
-          {/* Vertical zigzag on right edge - deep-green teeth pointing LEFT into image */}
+          {/* Vertical zigzag on right edge - teeth pointing LEFT into image, color follows section bg */}
           <div
-            className="hidden md:block absolute right-0 top-0 h-full z-10"
+            className="hidden md:block absolute right-0 top-0 h-full z-10 zigzag-vertical-right"
             style={{
-              width: '12px',
-              backgroundImage: "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 24'%3E%3Cpath d='M12,0 L0,12 L12,24 Z' fill='%23274C46'/%3E%3C/svg%3E\")",
-              backgroundSize: '12px 24px',
-              backgroundRepeat: 'repeat-y',
-            }}
+              ['--zigzag-color' as string]: content?.background_color || '#274C46',
+            } as React.CSSProperties}
           />
         </div>
 

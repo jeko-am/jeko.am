@@ -64,16 +64,8 @@ export default function YorkshireVet({ content }: { content?: any }) {
             unoptimized
             className="object-cover"
           />
-          {/* Vertical zigzag on left edge - off-white teeth pointing RIGHT into image */}
-          <div
-            className="hidden md:block absolute left-0 top-0 h-full z-10"
-            style={{
-              width: '12px',
-              backgroundImage: "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 24'%3E%3Cpath d='M0,0 L12,12 L0,24 Z' fill='%23EAE5DC'/%3E%3C/svg%3E\")",
-              backgroundSize: '12px 24px',
-              backgroundRepeat: 'repeat-y',
-            }}
-          />
+          {/* Vertical zigzag on left edge - teeth pointing RIGHT into image, color matches off-white text panel */}
+          <div className="hidden md:block absolute left-0 top-0 h-full z-10 zigzag-vertical-left" />
         </div>
       </div>
     </section>

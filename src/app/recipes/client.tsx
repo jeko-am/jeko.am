@@ -1,5 +1,6 @@
 "use client";
 
+import type React from "react";
 import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
@@ -214,15 +215,10 @@ export default function RecipesPageClient({ sections }: RecipesPageClientProps) 
                   unoptimized
                   className="object-cover"
                 />
-                {/* Vertical zigzag on right edge - off-white teeth pointing LEFT into image */}
+                {/* Vertical zigzag on right edge - teeth pointing LEFT, matches off-white text panel */}
                 <div
-                  className="hidden md:block absolute right-0 top-0 h-full z-10"
-                  style={{
-                    width: '12px',
-                    backgroundImage: "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 24'%3E%3Cpath d='M12,0 L0,12 L12,24 Z' fill='%23EAE5DC'/%3E%3C/svg%3E\")",
-                    backgroundSize: '12px 24px',
-                    backgroundRepeat: 'repeat-y',
-                  }}
+                  className="hidden md:block absolute right-0 top-0 h-full z-10 zigzag-vertical-right"
+                  style={{ ['--zigzag-color' as string]: '#EAE5DC' } as React.CSSProperties}
                 />
               </div>
               <div className="w-full md:w-[58%] flex items-center bg-off-white">
@@ -267,15 +263,10 @@ export default function RecipesPageClient({ sections }: RecipesPageClientProps) 
                   unoptimized
                   className="object-cover"
                 />
-                {/* Vertical zigzag on left edge - deep-green teeth pointing RIGHT into image */}
+                {/* Vertical zigzag on left edge - teeth pointing RIGHT, matches deep-green text panel */}
                 <div
-                  className="hidden md:block absolute left-0 top-0 h-full z-10"
-                  style={{
-                    width: '12px',
-                    backgroundImage: "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 24'%3E%3Cpath d='M0,0 L12,12 L0,24 Z' fill='%23274C46'/%3E%3C/svg%3E\")",
-                    backgroundSize: '12px 24px',
-                    backgroundRepeat: 'repeat-y',
-                  }}
+                  className="hidden md:block absolute left-0 top-0 h-full z-10 zigzag-vertical-left"
+                  style={{ ['--zigzag-color' as string]: '#274C46' } as React.CSSProperties}
                 />
               </div>
             </div>
@@ -457,15 +448,10 @@ export default function RecipesPageClient({ sections }: RecipesPageClientProps) 
                   unoptimized
                   className="object-cover"
                 />
-                {/* Vertical zigzag on left edge - purple teeth pointing RIGHT into image */}
+                {/* Vertical zigzag on left edge - teeth pointing RIGHT, matches purple text panel */}
                 <div
-                  className="hidden md:block absolute left-0 top-0 h-full z-10"
-                  style={{
-                    width: '12px',
-                    backgroundImage: "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 24'%3E%3Cpath d='M0,0 L12,12 L0,24 Z' fill='%235F295E'/%3E%3C/svg%3E\")",
-                    backgroundSize: '12px 24px',
-                    backgroundRepeat: 'repeat-y',
-                  }}
+                  className="hidden md:block absolute left-0 top-0 h-full z-10 zigzag-vertical-left"
+                  style={{ ['--zigzag-color' as string]: '#5F295E' } as React.CSSProperties}
                 />
               </div>
             </div>

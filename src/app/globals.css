@@ -143,6 +143,7 @@ h4, h5, h6 {
 /* ===== Header Zigzag - Smooth scallops pointing DOWN ===== */
 .header-zigzag-bottom {
   position: relative;
+  --zigzag-color: #274C46;
 }
 
 .header-zigzag-bottom::after {
@@ -152,15 +153,22 @@ h4, h5, h6 {
   left: 0;
   width: 100%;
   height: 12px;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 12'%3E%3Cpath d='M0,0 C5,0 5,12 10,12 C15,12 15,0 20,0 Z' fill='%23274C46'/%3E%3C/svg%3E");
-  background-size: 20px 12px;
-  background-repeat: repeat-x;
+  background-color: var(--zigzag-color);
+  -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 12'%3E%3Cpath d='M0,0 C5,0 5,12 10,12 C15,12 15,0 20,0 Z' fill='black'/%3E%3C/svg%3E");
+  mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 12'%3E%3Cpath d='M0,0 C5,0 5,12 10,12 C15,12 15,0 20,0 Z' fill='black'/%3E%3C/svg%3E");
+  -webkit-mask-size: 20px 12px;
+  mask-size: 20px 12px;
+  -webkit-mask-repeat: repeat-x;
+  mask-repeat: repeat-x;
   z-index: 10;
 }
 
-/* ===== Section Zigzag Bottom - Triangular teeth pointing DOWN, zero gap ===== */
+/* ===== Section Zigzag Bottom - Triangular teeth pointing DOWN, zero gap =====
+   Shape is masked, color comes from --zigzag-color (defaults to deep-green).
+   Section components can override --zigzag-color inline to match their bg. */
 .zigzag-bottom {
   position: relative;
+  --zigzag-color: #274C46;
 }
 
 .zigzag-bottom::after {
@@ -170,23 +178,28 @@ h4, h5, h6 {
   left: 0;
   width: 100%;
   height: 12px;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 14 7'%3E%3Cpath d='M0,0 L7,7 L14,0 Z' fill='%23274C46'/%3E%3C/svg%3E");
-  background-size: 24px 12px;
-  background-repeat: repeat-x;
+  background-color: var(--zigzag-color);
+  -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 14 7'%3E%3Cpath d='M0,0 L7,7 L14,0 Z' fill='black'/%3E%3C/svg%3E");
+  mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 14 7'%3E%3Cpath d='M0,0 L7,7 L14,0 Z' fill='black'/%3E%3C/svg%3E");
+  -webkit-mask-size: 24px 12px;
+  mask-size: 24px 12px;
+  -webkit-mask-repeat: repeat-x;
+  mask-repeat: repeat-x;
   z-index: 10;
 }
 
-.zigzag-bottom-purple::after {
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 14 7'%3E%3Cpath d='M0,0 L7,7 L14,0 Z' fill='%235F295E'/%3E%3C/svg%3E");
+.zigzag-bottom-purple {
+  --zigzag-color: #5F295E;
 }
 
-.zigzag-bottom-offwhite::after {
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 14 7'%3E%3Cpath d='M0,0 L7,7 L14,0 Z' fill='%23EAE5DC'/%3E%3C/svg%3E");
+.zigzag-bottom-offwhite {
+  --zigzag-color: #EAE5DC;
 }
 
 /* ===== Section Zigzag Top - Triangular teeth pointing UP, zero gap ===== */
 .zigzag-top {
   position: relative;
+  --zigzag-color: #274C46;
 }
 
 .zigzag-top::before {
@@ -196,18 +209,46 @@ h4, h5, h6 {
   left: 0;
   width: 100%;
   height: 12px;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 14 7'%3E%3Cpath d='M0,7 L7,0 L14,7 Z' fill='%23274C46'/%3E%3C/svg%3E");
-  background-size: 24px 12px;
-  background-repeat: repeat-x;
+  background-color: var(--zigzag-color);
+  -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 14 7'%3E%3Cpath d='M0,7 L7,0 L14,7 Z' fill='black'/%3E%3C/svg%3E");
+  mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 14 7'%3E%3Cpath d='M0,7 L7,0 L14,7 Z' fill='black'/%3E%3C/svg%3E");
+  -webkit-mask-size: 24px 12px;
+  mask-size: 24px 12px;
+  -webkit-mask-repeat: repeat-x;
+  mask-repeat: repeat-x;
   z-index: 10;
 }
 
-.zigzag-top-offwhite::before {
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 14 7'%3E%3Cpath d='M0,7 L7,0 L14,7 Z' fill='%23EAE5DC'/%3E%3C/svg%3E");
+.zigzag-top-offwhite {
+  --zigzag-color: #EAE5DC;
 }
 
-.zigzag-top-purple::before {
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 14 7'%3E%3Cpath d='M0,7 L7,0 L14,7 Z' fill='%235F295E'/%3E%3C/svg%3E");
+.zigzag-top-purple {
+  --zigzag-color: #5F295E;
+}
+
+/* ===== Vertical Zigzag - Triangular teeth pointing LEFT (sits on right edge) ===== */
+.zigzag-vertical-right {
+  width: 12px;
+  background-color: var(--zigzag-color, #274C46);
+  -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 24'%3E%3Cpath d='M12,0 L0,12 L12,24 Z' fill='black'/%3E%3C/svg%3E");
+  mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 24'%3E%3Cpath d='M12,0 L0,12 L12,24 Z' fill='black'/%3E%3C/svg%3E");
+  -webkit-mask-size: 12px 24px;
+  mask-size: 12px 24px;
+  -webkit-mask-repeat: repeat-y;
+  mask-repeat: repeat-y;
+}
+
+/* ===== Vertical Zigzag - Triangular teeth pointing RIGHT (sits on left edge) ===== */
+.zigzag-vertical-left {
+  width: 12px;
+  background-color: var(--zigzag-color, #EAE5DC);
+  -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 24'%3E%3Cpath d='M0,0 L12,12 L0,24 Z' fill='black'/%3E%3C/svg%3E");
+  mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 24'%3E%3Cpath d='M0,0 L12,12 L0,24 Z' fill='black'/%3E%3C/svg%3E");
+  -webkit-mask-size: 12px 24px;
+  mask-size: 12px 24px;
+  -webkit-mask-repeat: repeat-y;
+  mask-repeat: repeat-y;
 }
 
 /* Button styles */

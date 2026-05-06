@@ -1,5 +1,6 @@
 "use client";
 
+import type React from "react";
 import Image from "next/image";
 import Link from "next/link";
 import Header from "@/components/Header";
@@ -24,6 +25,7 @@ export default function BenefitsPageClient({ sections }: BenefitsPageClientProps
       image: sections[2]?.image || "https://www.datocms-assets.com/55536/1673605636-delicious-dog-food.jpg?auto=format&fit=crop&h=600&w=1000",
       imageLeft: true,
       bg: "bg-off-white",
+      bgColor: "#EAE5DC",
       cta: null,
       sectionIndex: 2,
     },
@@ -33,6 +35,7 @@ export default function BenefitsPageClient({ sections }: BenefitsPageClientProps
       image: sections[3]?.image || "https://www.datocms-assets.com/55536/1673605662-personalised-dog-food.jpg?auto=format&fit=crop&h=600&w=1000",
       imageLeft: false,
       bg: "bg-white",
+      bgColor: "#FFFFFF",
       cta: {
         label: sections[3]?.cta_label ?? t("benefits.readFood.cta"),
         href: sections[3]?.cta_href ?? "/recipes",
@@ -45,6 +48,7 @@ export default function BenefitsPageClient({ sections }: BenefitsPageClientProps
       image: sections[4]?.image || "https://www.datocms-assets.com/55536/1664894577-dog-walking.jpg?auto=format&fit=crop&h=600&w=1000",
       imageLeft: true,
       bg: "bg-off-white",
+      bgColor: "#EAE5DC",
       cta: null,
       sectionIndex: 4,
     },
@@ -197,26 +201,16 @@ export default function BenefitsPageClient({ sections }: BenefitsPageClientProps
                     unoptimized
                     className="object-cover"
                   />
-                  {/* Vertical zigzag divider */}
+                  {/* Vertical zigzag divider — color follows the adjacent text panel */}
                   {section.imageLeft ? (
                     <div
-                      className="hidden md:block absolute right-0 top-0 h-full z-10"
-                      style={{
-                        width: '12px',
-                        backgroundImage: "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 24'%3E%3Cpath d='M12,0 L0,12 L12,24 Z' fill='%23EAE5DC'/%3E%3C/svg%3E\")",
-                        backgroundSize: '12px 24px',
-                        backgroundRepeat: 'repeat-y',
-                      }}
+                      className="hidden md:block absolute right-0 top-0 h-full z-10 zigzag-vertical-right"
+                      style={{ ['--zigzag-color' as string]: section.bgColor } as React.CSSProperties}
                     />
                   ) : (
                     <div
-                      className="hidden md:block absolute left-0 top-0 h-full z-10"
-                      style={{
-                        width: '12px',
-                        backgroundImage: "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 24'%3E%3Cpath d='M0,0 L12,12 L0,24 Z' fill='%23FFFFFF'/%3E%3C/svg%3E\")",
-                        backgroundSize: '12px 24px',
-                        backgroundRepeat: 'repeat-y',
-                      }}
+                      className="hidden md:block absolute left-0 top-0 h-full z-10 zigzag-vertical-left"
+                      style={{ ['--zigzag-color' as string]: section.bgColor } as React.CSSProperties}
                     />
                   )}
                 </div>
@@ -375,15 +369,10 @@ export default function BenefitsPageClient({ sections }: BenefitsPageClientProps
                   unoptimized
                   className="object-cover"
                 />
-                {/* Vertical zigzag on left edge - purple teeth pointing RIGHT into image */}
+                {/* Vertical zigzag on left edge - teeth pointing RIGHT, matches purple text panel */}
                 <div
-                  className="hidden md:block absolute left-0 top-0 h-full z-10"
-                  style={{
-                    width: '12px',
-                    backgroundImage: "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 24'%3E%3Cpath d='M0,0 L12,12 L0,24 Z' fill='%235F295E'/%3E%3C/svg%3E\")",
-                    backgroundSize: '12px 24px',
-                    backgroundRepeat: 'repeat-y',
-                  }}
+                  className="hidden md:block absolute left-0 top-0 h-full z-10 zigzag-vertical-left"
+                  style={{ ['--zigzag-color' as string]: '#5F295E' } as React.CSSProperties}
                 />
               </div>
             </div>

@@ -1,5 +1,6 @@
 'use client';
 
+import type React from 'react';
 import { useEffect, useState, useRef, useCallback } from 'react';
 import { useParams } from 'next/navigation';
 import Link from 'next/link';
@@ -881,15 +882,10 @@ export default function ProductDetailPage() {
                 alt="Fresh food in bowl" 
                 className="w-full h-full object-cover"
               />
-              {/* Vertical zigzag on right edge - deep-green teeth pointing LEFT into image */}
+              {/* Vertical zigzag on right edge - teeth pointing LEFT, matches deep-green text panel */}
               <div
-                className="hidden md:block absolute right-0 top-0 h-full z-10"
-                style={{
-                  width: '12px',
-                  backgroundImage: "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 24'%3E%3Cpath d='M12,0 L0,12 L12,24 Z' fill='%23274C46'/%3E%3C/svg%3E\")",
-                  backgroundSize: '12px 24px',
-                  backgroundRepeat: 'repeat-y',
-                }}
+                className="hidden md:block absolute right-0 top-0 h-full z-10 zigzag-vertical-right"
+                style={{ ['--zigzag-color' as string]: '#274C46' } as React.CSSProperties}
               />
             </div>
 
@@ -934,16 +930,8 @@ export default function ProductDetailPage() {
                 alt="Science lab research"
                 className="w-full h-full object-cover"
               />
-              {/* Vertical zigzag on left edge - off-white teeth pointing RIGHT into image */}
-              <div
-                className="hidden md:block absolute left-0 top-0 h-full z-10"
-                style={{
-                  width: '12px',
-                  backgroundImage: "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 24'%3E%3Cpath d='M0,0 L12,12 L0,24 Z' fill='%23EAE5DC'/%3E%3C/svg%3E\")",
-                  backgroundSize: '12px 24px',
-                  backgroundRepeat: 'repeat-y',
-                }}
-              />
+              {/* Vertical zigzag on left edge - teeth pointing RIGHT, matches off-white text panel */}
+              <div className="hidden md:block absolute left-0 top-0 h-full z-10 zigzag-vertical-left" />
             </div>
           </div>
         </section>
@@ -978,15 +966,10 @@ export default function ProductDetailPage() {
                 alt="Happy dog lifestyle"
                 className="w-full h-full object-cover"
               />
-              {/* Vertical zigzag on right edge - off-white teeth pointing LEFT into image */}
+              {/* Vertical zigzag on right edge - teeth pointing LEFT, matches off-white text panel */}
               <div
-                className="hidden md:block absolute right-0 top-0 h-full z-10"
-                style={{
-                  width: '12px',
-                  backgroundImage: "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 24'%3E%3Cpath d='M12,0 L0,12 L12,24 Z' fill='%23EAE5DC'/%3E%3C/svg%3E\")",
-                  backgroundSize: '12px 24px',
-                  backgroundRepeat: 'repeat-y',
-                }}
+                className="hidden md:block absolute right-0 top-0 h-full z-10 zigzag-vertical-right"
+                style={{ ['--zigzag-color' as string]: '#EAE5DC' } as React.CSSProperties}
               />
             </div>
 
@@ -1037,15 +1020,10 @@ export default function ProductDetailPage() {
                 alt="The Jeko team" 
                 className="w-full h-full object-cover"
               />
-              {/* Vertical zigzag on left edge - white teeth pointing RIGHT into image */}
+              {/* Vertical zigzag on left edge - teeth pointing RIGHT, matches white text panel */}
               <div
-                className="hidden md:block absolute left-0 top-0 h-full z-10"
-                style={{
-                  width: '12px',
-                  backgroundImage: "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 24'%3E%3Cpath d='M0,0 L12,12 L0,24 Z' fill='%23FFFFFF'/%3E%3C/svg%3E\")",
-                  backgroundSize: '12px 24px',
-                  backgroundRepeat: 'repeat-y',
-                }}
+                className="hidden md:block absolute left-0 top-0 h-full z-10 zigzag-vertical-left"
+                style={{ ['--zigzag-color' as string]: '#FFFFFF' } as React.CSSProperties}
               />
             </div>
           </div>
