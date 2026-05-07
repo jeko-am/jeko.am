@@ -8,7 +8,7 @@ import { useT } from '@/lib/i18n/LangProvider';
 
 function LoginForm() {
   const { t } = useT();
-  const { signIn, user, isAdmin, loading } = useAuth();
+  const { signIn, signOut, user, isAdmin, loading } = useAuth();
   const router = useRouter();
   const searchParams = useSearchParams();
   const redirect = searchParams.get('redirect') || '/profile';
@@ -28,6 +28,14 @@ function LoginForm() {
     if (isAdminRedirect && !isAdmin) return;
     router.push(redirect);
   }, [user, isAdmin, loading, router, redirect, isAdminRedirect]);
+
+  // Logged-in non-admin landing on an admin redirect: stop hiding the form,
+  // tell them why, and let them sign out to use a different account.
+  const stuckOnAdminRedirect = !loading && !!user && isAdminRedirect && !isAdmin;
+
+  async function handleSignOut() {
+    await signOut();
+  }
 
   async function handleSubmit(e: FormEvent) {
     e.preventDefault();
@@ -81,7 +89,9 @@ function LoginForm() {
   }
 
   // If user is logged in, show redirect state (useEffect will handle)
-  if (user) {
+  // — except when they're stuck on an admin redirect without admin role:
+  //   render the login form below so they can sign out and re-auth.
+  if (user && !stuckOnAdminRedirect) {
     return (
       <div className="min-h-screen bg-deep-green flex items-center justify-center">
         <div className="flex flex-col items-center gap-3">
@@ -124,6 +134,23 @@ function LoginForm() {
 
         {/* Login Card */}
         <div className="bg-white rounded-2xl shadow-xl p-8">
+          {stuckOnAdminRedirect && (
+            <div className="mb-6 flex items-start gap-3 bg-amber-50 border border-amber-200 text-amber-800 px-4 py-3 rounded-xl text-sm">
+              <svg className="w-5 h-5 flex-shrink-0 mt-0.5 text-amber-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v3.75m9-.75a9 9 0 11-18 0 9 9 0 0118 0zm-9 3.75h.008v.008H12v-.008z" />
+              </svg>
+              <div className="flex-1">
+                <p>You&apos;re signed in as <strong>{user?.email}</strong>, but this account doesn&apos;t have admin access.</p>
+                <button
+                  type="button"
+                  onClick={handleSignOut}
+                  className="mt-2 text-amber-900 underline font-medium hover:text-amber-700"
+                >
+                  Sign out and use a different account
+                </button>
+              </div>
+            </div>
+          )}
           {/* Error Message */}
           {error && (
             <div className="mb-6 flex items-start gap-3 bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-xl text-sm">

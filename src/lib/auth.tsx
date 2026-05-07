@@ -38,9 +38,11 @@ function getCachedAuth(userId: string) {
     const admin = adminRaw ? JSON.parse(adminRaw) : null;
     // Only trust cache if it's for the same user
     if (profile?.userId === userId) {
+      const adminCached = admin?.userId === userId;
       return {
         profileVerified: profile.verified as boolean,
-        isAdmin: admin?.userId === userId ? (admin.isAdmin as boolean) : false,
+        isAdmin: adminCached ? (admin.isAdmin as boolean) : false,
+        adminCached,
       };
     }
   } catch { /* ignore corrupt cache */ }
@@ -113,12 +115,26 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       const cached = getCachedAuth(userId);
 
       // ── Fast path: cached and verified → no Supabase queries needed ──
-      if (cached && cached.profileVerified) {
+      // Only short-circuit if admin status is ALSO cached for this user.
+      // Otherwise we'd lock the user into isAdmin=false on the slow side and
+      // strand admins on /auth/login?redirect=/admin/* (stuck on "Redirecting...").
+      if (cached && cached.profileVerified && cached.adminCached) {
         setSession(session);
         setUser(session.user);
         setIsAdmin(cached.isAdmin);
         adminCheckRef.current = userId;
         setLoading(false);
+        return;
+      }
+
+      // Profile cached but admin role unknown → keep user signed in,
+      // skip the pet-profile lookup, but still resolve admin role.
+      if (cached && cached.profileVerified) {
+        setSession(session);
+        setUser(session.user);
+        checkAdmin(userId).finally(() => {
+          if (mounted) setLoading(false);
+        });
         return;
       }
 
