@@ -1,4 +1,4 @@
-export type FieldType = 'text' | 'textarea' | 'rich_text' | 'image' | 'color' | 'url' | 'toggle' | 'number' | 'list' | 'product_picker' | 'seo';
+export type FieldType = 'text' | 'textarea' | 'rich_text' | 'image' | 'color' | 'url' | 'toggle' | 'number' | 'list' | 'menu_builder' | 'product_picker' | 'seo';
 
 export interface FieldDef {
   key: string;
@@ -69,6 +69,7 @@ const HOMEPAGE_SECTIONS: SectionSchema[] = [
       { key: 'logo_url', label: 'Logo Link URL', type: 'url', placeholder: '/' },
       { key: 'cta_text', label: 'CTA Button Text', type: 'text', placeholder: 'Create plan', i18nKey: 'header.cta.buildPlan' },
       { key: 'cta_url', label: 'CTA Button URL', type: 'url', placeholder: '/auth/signup' },
+      { key: 'nav_items', label: 'Header Menu Items', type: 'menu_builder' },
       { key: 'nav_1_label', label: 'Nav Item 1 — Label', type: 'text', placeholder: 'About', i18nKey: 'header.nav.about' },
       { key: 'nav_1_url', label: 'Nav Item 1 — URL', type: 'url', placeholder: '/about' },
       { key: 'nav_1_visible', label: 'Nav Item 1 — Show in menu', type: 'toggle' },
@@ -131,6 +132,36 @@ const HOMEPAGE_SECTIONS: SectionSchema[] = [
     ],
     defaultContent: {
       logo_text: 'JEKO', logo_image: '', logo_image_height: 40, logo_url: '/', cta_text: 'Create plan', cta_url: '/auth/signup',
+      nav_items: [
+        { label: 'About', url: '/about', visible: true, children: [{ label: 'Our story', url: '/about', visible: true }] },
+        {
+          label: 'Community',
+          url: '/community',
+          visible: true,
+          children: [
+            { label: 'Community', url: '/community', visible: true },
+            { label: 'Blog', url: '/blog', visible: true },
+            { label: 'Swipe', url: '/swipe', visible: true },
+            { label: 'Matches', url: '/matches', visible: true },
+            { label: 'Find owners', url: '/find-owners', visible: true },
+            { label: 'Messages', url: '/messages', visible: true },
+          ],
+        },
+        { label: 'Shop', url: '/products', visible: true, children: [] },
+        { label: 'Reviews', url: '/reviews', visible: true, children: [] },
+        {
+          label: 'Health & breeds',
+          url: '/benefits',
+          visible: true,
+          children: [
+            { label: 'Colitis', url: '/benefits/colitis', visible: true },
+            { label: 'Digestion issues', url: '/benefits/digestion-issues', visible: true },
+            { label: 'Hypoallergenic', url: '/benefits/hypoallergenic', visible: true },
+            { label: 'Pancreatitis', url: '/benefits/pancreatitis', visible: true },
+            { label: 'Weight management', url: '/benefits/weight-management', visible: true },
+          ],
+        },
+      ],
       nav_1_label: 'About', nav_1_url: '/about', nav_1_visible: true,
       nav_2_label: 'Our dog food', nav_2_url: '/recipes', nav_2_visible: true,
       nav_3_label: 'Shop', nav_3_url: '/products', nav_3_visible: true,
@@ -383,16 +414,22 @@ const HOMEPAGE_SECTIONS: SectionSchema[] = [
   {
     name: 'Footer', icon: ICON_PATHS.footer, color: 'bg-gray-800',
     fields: [
+      { key: 'vip_visible', label: 'Show VIP Signup Section', type: 'toggle' },
       { key: 'vip_heading', label: 'VIP Section Heading', type: 'text', i18nKey: 'footer.vip.heading' },
       { key: 'vip_description', label: 'VIP Description', type: 'textarea', i18nKey: 'footer.vip.description' },
+      { key: 'newsletter_visible', label: 'Show Email Signup Form', type: 'toggle' },
       { key: 'signup_button_text', label: 'Sign Up Button Text', type: 'text', i18nKey: 'footer.vip.signup' },
+      { key: 'social_visible', label: 'Show Social Section', type: 'toggle' },
       { key: 'social_heading', label: 'Social Section Heading', type: 'text', i18nKey: 'footer.social.heading' },
       { key: 'instagram_url', label: 'Instagram URL', type: 'url' },
       { key: 'facebook_url', label: 'Facebook URL', type: 'url' },
       { key: 'tiktok_url', label: 'TikTok URL', type: 'url' },
+      { key: 'columns_visible', label: 'Show Footer Link Columns', type: 'toggle' },
+      { key: 'footer_columns', label: 'Footer Columns & Links', type: 'menu_builder' },
       { key: 'col1_heading', label: 'Column 1 Heading', type: 'text', i18nKey: 'footer.col1.heading' },
       { key: 'col2_heading', label: 'Column 2 Heading', type: 'text', i18nKey: 'footer.col2.heading' },
       { key: 'col3_heading', label: 'Column 3 Heading', type: 'text', i18nKey: 'footer.col3.heading' },
+      { key: 'bottom_visible', label: 'Show Footer Logo & Copyright', type: 'toggle' },
       { key: 'copyright_text', label: 'Copyright Text', type: 'text', i18nKey: 'footer.copyrightDefault' },
       { key: 'logo_image', label: 'Footer Logo', type: 'image' },
 
@@ -451,11 +488,51 @@ const HOMEPAGE_SECTIONS: SectionSchema[] = [
       { key: 'col3_link_5_visible', label: 'Col 3 Link 5 — Show', type: 'toggle' },
     ],
     defaultContent: {
+      vip_visible: true, newsletter_visible: true, social_visible: true, columns_visible: true, bottom_visible: true,
       vip_heading: 'Join our VIP list', vip_description: 'Be the first to hear about new product launches.',
       signup_button_text: 'Sign up', social_heading: 'Follow us on social media',
       instagram_url: '#', facebook_url: '#', tiktok_url: '#',
       col1_heading: 'Jeko', col2_heading: 'Help', col3_heading: 'Information',
       copyright_text: '© Jeko Ltd 2020-2026', logo_image: '',
+      footer_columns: [
+        {
+          label: 'Jeko',
+          url: '',
+          visible: true,
+          children: [
+            { label: 'Our story', url: '/about', visible: true },
+            { label: 'Reviews', url: '/reviews', visible: true },
+            { label: 'Recipes', url: '/recipes', visible: true },
+            { label: 'Beyond the bowl', url: '/beyond-the-bowl', visible: true },
+            { label: 'Shop', url: '/products', visible: true },
+            { label: 'Community', url: '/community', visible: true },
+          ],
+        },
+        {
+          label: 'Help',
+          url: '',
+          visible: true,
+          children: [
+            { label: 'My account', url: '/profile', visible: true },
+            { label: 'Contact', url: '/contact', visible: true },
+            { label: 'Delivery', url: '/delivery-information', visible: true },
+            { label: 'Returns', url: '/returns', visible: true },
+            { label: 'Sitemap', url: '/sitemap-page', visible: true },
+          ],
+        },
+        {
+          label: 'Information',
+          url: '',
+          visible: true,
+          children: [
+            { label: 'Privacy policy', url: '/privacy-policy', visible: true },
+            { label: 'Terms of use', url: '/terms-of-use', visible: true },
+            { label: 'Jeko policies', url: '/pure-policies', visible: true },
+            { label: 'Site security', url: '/site-security', visible: true },
+            { label: 'Cookie policy', url: '/cookie-policy', visible: true },
+          ],
+        },
+      ],
       col1_link_1_label: 'Our story', col1_link_1_url: '/about', col1_link_1_visible: true,
       col1_link_2_label: 'Reviews', col1_link_2_url: '/reviews', col1_link_2_visible: true,
       col1_link_3_label: 'Recipes', col1_link_3_url: '/recipes', col1_link_3_visible: true,

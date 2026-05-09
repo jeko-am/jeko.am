@@ -9,6 +9,46 @@ import LanguageSwitcher from "@/components/LanguageSwitcher";
 import { useT } from "@/lib/i18n/LangProvider";
 import { useContentT } from "@/lib/i18n/useContentT";
 
+type HeaderContent = Record<string, unknown>;
+type HeaderMenuItem = {
+  label: string;
+  href: string;
+  hasDropdown: boolean;
+  dropdown: { label: string; href: string }[];
+  visible: boolean;
+};
+
+function normalizeCustomNavItems(value: unknown): HeaderMenuItem[] | null {
+  if (!Array.isArray(value)) return null;
+  const items = value
+    .map((raw) => {
+      const item = raw && typeof raw === "object" ? raw as Record<string, unknown> : {};
+      const label = typeof item.label === "string" ? item.label.trim() : "";
+      const href = typeof item.url === "string" && item.url.trim() ? item.url : "/";
+      if (!label || item.visible === false) return null;
+      const dropdown = Array.isArray(item.children)
+        ? item.children
+            .map((rawChild) => {
+              const child = rawChild && typeof rawChild === "object" ? rawChild as Record<string, unknown> : {};
+              const childLabel = typeof child.label === "string" ? child.label.trim() : "";
+              const childHref = typeof child.url === "string" && child.url.trim() ? child.url : "/";
+              if (!childLabel || child.visible === false) return null;
+              return { label: childLabel, href: childHref };
+            })
+            .filter((child): child is { label: string; href: string } => child !== null)
+        : [];
+      return {
+        label,
+        href,
+        hasDropdown: dropdown.length > 0,
+        dropdown,
+        visible: true,
+      };
+    })
+    .filter((item): item is NonNullable<typeof item> => item !== null);
+  return items.length > 0 ? items : null;
+}
+
 const ChevronDown = () => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
@@ -84,8 +124,7 @@ const CloseIcon = () => (
   </svg>
 );
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export default function Header({ content }: { content?: any }) {
+export default function Header({ content }: { content?: HeaderContent }) {
   const { t, lang } = useT();
   const { ct } = useContentT(content);
   // Armenian labels are longer — tighten the nav at this lang so it fits on laptop widths.
@@ -109,8 +148,9 @@ export default function Header({ content }: { content?: any }) {
         const visKey = `${prefix}_${idx}_visible`;
         const c = content as Record<string, unknown>;
         if (!ddVisible(c[visKey])) return null;
+        const label = Object.prototype.hasOwnProperty.call(c, lblKey) ? ct(lblKey, '') : fb.label;
         return {
-          label: ct(lblKey, '') || fb.label,
+          label,
           href: (c[urlKey] as string) ?? fb.href,
         };
       })
@@ -165,7 +205,7 @@ export default function Header({ content }: { content?: any }) {
     }
   };
 
-  const logoText = content?.logo_text ?? "JEKO";
+  const logoText = typeof content?.logo_text === "string" ? content.logo_text : "JEKO";
   const logoImage = content?.logo_image as string | undefined;
   const logoImageHeight = Number(content?.logo_image_height) || 40;
   const logoUrl = (content?.logo_url as string | undefined) || "/";
@@ -178,15 +218,16 @@ export default function Header({ content }: { content?: any }) {
 
   // Treat undefined as visible (legacy rows). Only an explicit `false` hides the item.
   const visible = (v: unknown) => v !== false;
-  const navItems = content
+  const customNavItems = normalizeCustomNavItems(content?.nav_items);
+  const navItems = customNavItems ?? (content
     ? [
-        { label: ct("nav_1_label", "header.nav.about"), href: content.nav_1_url ?? "/about", hasDropdown: true, dropdown: aboutDropdown, visible: visible(content.nav_1_visible) },
-        { label: ct("nav_2_label", "header.nav.community"), href: content.nav_2_url ?? "/community", hasDropdown: true, dropdown: communityDropdown, visible: visible(content.nav_2_visible) },
+        { label: ct("nav_1_label", "header.nav.about"), href: content.nav_1_url ?? "/about", hasDropdown: aboutDropdown.length > 0, dropdown: aboutDropdown, visible: visible(content.nav_1_visible) },
+        { label: ct("nav_2_label", "header.nav.community"), href: content.nav_2_url ?? "/community", hasDropdown: communityDropdown.length > 0, dropdown: communityDropdown, visible: visible(content.nav_2_visible) },
         { label: ct("nav_3_label", "header.nav.shop"), href: content.nav_3_url ?? "/products", hasDropdown: false, dropdown: [] as { label: string; href: string }[], visible: visible(content.nav_3_visible) },
         { label: ct("nav_4_label", "header.nav.reviews"), href: content.nav_4_url ?? "/reviews", hasDropdown: false, dropdown: [] as { label: string; href: string }[], visible: visible(content.nav_4_visible) },
-        { label: ct("nav_5_label", "benefits.title"), href: content.nav_5_url ?? "/benefits", hasDropdown: true, dropdown: healthDropdown, visible: visible(content.nav_5_visible) },
+        { label: ct("nav_5_label", "benefits.title"), href: content.nav_5_url ?? "/benefits", hasDropdown: healthDropdown.length > 0, dropdown: healthDropdown, visible: visible(content.nav_5_visible) },
       ].filter((item) => item.visible)
-    : defaultNavItems;
+    : defaultNavItems);
 
   useEffect(() => {
     const handleScroll = () => {

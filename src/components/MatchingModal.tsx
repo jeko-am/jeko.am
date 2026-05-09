@@ -59,16 +59,19 @@ export default function MatchingModal({ content }: { content?: Record<string, an
   const [userCount, setUserCount] = useState<number | null>(null);
 
   const { ct } = useContentT(content);
+  const textOrFallback = (key: string, fallback: string) => (
+    content && Object.prototype.hasOwnProperty.call(content, key) ? ct(key) : fallback
+  );
 
   const enabled = content?.enabled !== false;
-  const heading = ct('heading') || 'Register Your Pet & Save!';
-  const description = ct('description') || 'Create a free account to unlock exclusive sales, personalised meal plans, and special care facilities for your furry friend.';
+  const heading = textOrFallback('heading', 'Register Your Pet & Save!');
+  const description = textOrFallback('description', 'Create a free account to unlock exclusive sales, personalised meal plans, and special care facilities for your furry friend.');
   const image = content?.image || '/WhatsApp Image 2026-04-11 at 09.54.12.jpeg';
-  const ctaText = ct('cta_text') || 'Register My Pet';
+  const ctaText = textOrFallback('cta_text', 'Register My Pet');
   const signupUrl = useSignupUrl();
   const ctaUrl = content?.cta_url || signupUrl;
-  const closeText = ct('close_text') || 'Maybe later';
-  const communityLabel = ct('community_count_text') || 'pet parents already in our community!';
+  const closeText = textOrFallback('close_text', 'Maybe later');
+  const communityLabel = textOrFallback('community_count_text', 'pet parents already in our community!');
 
   useEffect(() => {
     let cancelled = false;

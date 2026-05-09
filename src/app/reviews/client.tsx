@@ -35,6 +35,15 @@ const categories = [
 // store editor drives these. Empty array yields a clean empty state if unset.
 const categoryTestimonials: Array<{ name: string; image: string; text: string }> = [];
 
+function sectionText(
+  section: Record<string, unknown> | undefined,
+  key: string,
+  value: string,
+  fallback: string,
+) {
+  return section && Object.prototype.hasOwnProperty.call(section, key) ? value : fallback;
+}
+
 const TrustpilotBadge = () => (
   <div className="flex items-center gap-1.5">
     <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
@@ -251,10 +260,10 @@ export default function ReviewsPageClient({ sections }: ReviewsPageClientProps) 
                   </p>
                   <div className="space-y-4">
                     <p className="text-deep-green/90 text-[15px] leading-[1.7]">
-                      <HyText en={luluCt.ct("text_1") || "We rescued Lulu from the Pro Dogs Direct charity, who were great. She came to us with a whole host of stomach and digestive issues. They were so bad that euthanasia was discussed twice by our vets."} />
+                      <HyText en={sectionText(sections[3], "text_1", luluCt.ct("text_1"), "We rescued Lulu from the Pro Dogs Direct charity, who were great. She came to us with a whole host of stomach and digestive issues. They were so bad that euthanasia was discussed twice by our vets.")} />
                     </p>
                     <p className="text-deep-green/90 text-[15px] leading-[1.7]">
-                      <HyText en={luluCt.ct("text_2") || "We tried tablets, gels, and prescription kibble diets, and by this point, we were at our wits end. We found Jeko after seeing a review online, within just 2 days her issues had eased, and now 3 months on she\u2019s a different dog. Thank you so much for saving our dog\u2019s life!"} />
+                      <HyText en={sectionText(sections[3], "text_2", luluCt.ct("text_2"), "We tried tablets, gels, and prescription kibble diets, and by this point, we were at our wits end. We found Jeko after seeing a review online, within just 2 days her issues had eased, and now 3 months on she\u2019s a different dog. Thank you so much for saving our dog\u2019s life!")} />
                     </p>
                   </div>
                 </div>
@@ -299,7 +308,7 @@ export default function ReviewsPageClient({ sections }: ReviewsPageClientProps) 
                   </div>
                   <div className="flex-1">
                     <p className="text-white/90 text-[14px] leading-[1.7] mb-3 italic">
-                      &ldquo;<HyText en={vetsCt.ct("vet_1_quote") || "I\u2019ve been a vet for over 30 years and for about the last 5 years I\u2019ve been suggesting Jeko to my patients. I\u2019ve found it to be incredibly helpful and some of the dogs have responded dramatically well."} />&rdquo;
+                      &ldquo;<HyText en={sectionText(sections[4], "vet_1_quote", vetsCt.ct("vet_1_quote"), "I\u2019ve been a vet for over 30 years and for about the last 5 years I\u2019ve been suggesting Jeko to my patients. I\u2019ve found it to be incredibly helpful and some of the dogs have responded dramatically well.")} />&rdquo;
                     </p>
                     <p className="text-white font-bold text-[13px]">
                       <HyText en={sections[4]?.vet_1_name ?? "Dr Julian Norton MA VetMB GPcertSAP MRCVS, Partner"} />
@@ -320,7 +329,7 @@ export default function ReviewsPageClient({ sections }: ReviewsPageClientProps) 
                   </div>
                   <div className="flex-1">
                     <p className="text-white/90 text-[14px] leading-[1.7] mb-3 italic">
-                      &ldquo;<HyText en={vetsCt.ct("vet_2_quote") || "When owners are asked what makes a healthy pet food, they often mention ingredients. But what is often not considered is how the food is processed, and this is possibly the most significant factor when choosing a dog food."} />&rdquo;
+                      &ldquo;<HyText en={sectionText(sections[4], "vet_2_quote", vetsCt.ct("vet_2_quote"), "When owners are asked what makes a healthy pet food, they often mention ingredients. But what is often not considered is how the food is processed, and this is possibly the most significant factor when choosing a dog food.")} />&rdquo;
                     </p>
                     <p className="text-white font-bold text-[13px]">
                       <HyText en={sections[4]?.vet_2_name ?? "Dr Brendan Clark MRCVS"} />
@@ -355,13 +364,13 @@ export default function ReviewsPageClient({ sections }: ReviewsPageClientProps) 
                   </h2>
                   <div className="space-y-4">
                     <p className="text-deep-green/90 text-[15px] leading-[1.7]">
-                      <HyText en={nellyCt.ct("text_1") || "I rescued Nelly two years ago. She came to me with alopecia; she would itch so much that she had scabs and whiteheads covering her whole body."} />
+                      <HyText en={sectionText(sections[5], "text_1", nellyCt.ct("text_1"), "I rescued Nelly two years ago. She came to me with alopecia; she would itch so much that she had scabs and whiteheads covering her whole body.")} />
                     </p>
                     <p className="text-deep-green/90 text-[15px] leading-[1.7]">
-                      <HyText en={nellyCt.ct("text_2") || "I couldn\u2019t even stroke her, which was heart-breaking."} />
+                      <HyText en={sectionText(sections[5], "text_2", nellyCt.ct("text_2"), "I couldn\u2019t even stroke her, which was heart-breaking.")} />
                     </p>
                     <p className="text-deep-green/90 text-[15px] leading-[1.7]">
-                      <HyText en={nellyCt.ct("text_3") || "We switched from brown biscuits to Jeko, and after just a week she completely stopped itching, and her skin cleared up. Thank you Jeko for giving Nelly her life back."} />
+                      <HyText en={sectionText(sections[5], "text_3", nellyCt.ct("text_3"), "We switched from brown biscuits to Jeko, and after just a week she completely stopped itching, and her skin cleared up. Thank you Jeko for giving Nelly her life back.")} />
                     </p>
                   </div>
                 </div>

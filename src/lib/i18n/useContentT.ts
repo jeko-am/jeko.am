@@ -10,12 +10,12 @@ type AnyContent = Record<string, unknown> | null | undefined;
  *   { heading: "English...", hy: { heading: "Հայերեն..." }, ...rest }
  *
  * Lookup order when lang === "hy":
- *   1. content.hy.key (admin-provided Armenian) — wins if set
+ *   1. content.hy.key (admin-provided Armenian) — wins even when intentionally blank
  *   2. t(fallbackDictKey) from the static Armenian dictionary — wins over English content
- *   3. content.key (English fallback, only if no Armenian anywhere)
+ *   3. content.key (English fallback, only if no Armenian anywhere) — wins even when intentionally blank
  *
  * Lookup order when lang === "en":
- *   1. content.key (admin-provided English) — wins
+ *   1. content.key (admin-provided English) — wins even when intentionally blank
  *   2. t(fallbackDictKey) from the English dictionary
  */
 export function useContentT(content: AnyContent) {
@@ -25,8 +25,10 @@ export function useContentT(content: AnyContent) {
     if (lang === "hy") {
       if (content) {
         const hy = (content as { hy?: Record<string, unknown> }).hy;
-        const hyVal = hy?.[key];
-        if (typeof hyVal === "string" && hyVal.length > 0) return hyVal;
+        if (hy && Object.prototype.hasOwnProperty.call(hy, key)) {
+          const hyVal = hy[key];
+          if (typeof hyVal === "string") return hyVal;
+        }
       }
       if (fallbackDictKey) {
         const dict = t(fallbackDictKey);
@@ -35,13 +37,19 @@ export function useContentT(content: AnyContent) {
       }
       // No Armenian found anywhere — show English content as last resort
       if (content) {
-        const enVal = (content as Record<string, unknown>)[key];
-        if (typeof enVal === "string" && enVal.length > 0) return enVal;
+        const c = content as Record<string, unknown>;
+        if (Object.prototype.hasOwnProperty.call(c, key)) {
+          const enVal = c[key];
+          if (typeof enVal === "string") return enVal;
+        }
       }
     } else {
       if (content) {
-        const enVal = (content as Record<string, unknown>)[key];
-        if (typeof enVal === "string" && enVal.length > 0) return enVal;
+        const c = content as Record<string, unknown>;
+        if (Object.prototype.hasOwnProperty.call(c, key)) {
+          const enVal = c[key];
+          if (typeof enVal === "string") return enVal;
+        }
       }
       if (fallbackDictKey) return t(fallbackDictKey);
     }

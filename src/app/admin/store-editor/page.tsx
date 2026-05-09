@@ -261,6 +261,163 @@ function ListField({
   );
 }
 
+type MenuBuilderItem = {
+  label: string;
+  url: string;
+  visible: boolean;
+  children: MenuBuilderItem[];
+};
+
+function normalizeMenuBuilderItems(value: unknown): MenuBuilderItem[] {
+  if (!Array.isArray(value)) return [];
+  return value.map((raw) => {
+    const item = raw && typeof raw === 'object' ? raw as Record<string, unknown> : {};
+    return {
+      label: typeof item.label === 'string' ? item.label : '',
+      url: typeof item.url === 'string' ? item.url : '',
+      visible: item.visible !== false,
+      children: normalizeMenuBuilderItems(item.children),
+    };
+  });
+}
+
+function MenuBuilderField({
+  field,
+  value,
+  updateField,
+}: {
+  field: FieldDef;
+  value: unknown;
+  updateField: (key: string, value: unknown) => void;
+}) {
+  const items = normalizeMenuBuilderItems(value);
+  const isFooterColumns = field.key === 'footer_columns';
+  const itemNoun = isFooterColumns ? 'column' : 'menu item';
+  const childNoun = isFooterColumns ? 'link' : 'dropdown';
+  const saveItems = (next: MenuBuilderItem[]) => updateField(field.key, next);
+  const updateItem = (index: number, patch: Partial<MenuBuilderItem>) => {
+    saveItems(items.map((item, i) => i === index ? { ...item, ...patch } : item));
+  };
+  const updateChild = (itemIndex: number, childIndex: number, patch: Partial<MenuBuilderItem>) => {
+    saveItems(items.map((item, i) => {
+      if (i !== itemIndex) return item;
+      return {
+        ...item,
+        children: item.children.map((child, j) => j === childIndex ? { ...child, ...patch } : child),
+      };
+    }));
+  };
+  const moveItem = (index: number, direction: -1 | 1) => {
+    const target = index + direction;
+    if (target < 0 || target >= items.length) return;
+    const next = [...items];
+    [next[index], next[target]] = [next[target], next[index]];
+    saveItems(next);
+  };
+
+  return (
+    <div>
+      <div className="flex items-center justify-between mb-2">
+        <label className="block text-[13px] font-semibold text-gray-700">{field.label}</label>
+        <button
+          type="button"
+          onClick={() => saveItems([...items, { label: isFooterColumns ? 'New column' : 'New item', url: isFooterColumns ? '' : '/', visible: true, children: [] }])}
+          className="px-3 py-1.5 bg-deep-green text-white text-xs font-medium rounded-lg hover:bg-deep-green/90 transition-colors"
+        >
+          + Add {itemNoun}
+        </button>
+      </div>
+
+      <div className="space-y-3">
+        {items.map((item, index) => (
+          <div key={index} className="rounded-xl border border-gray-200 bg-gray-50 p-3 space-y-3">
+            <div className="grid grid-cols-[1fr_1fr_auto] gap-2 items-end">
+              <div>
+                <label className="block text-[11px] font-medium text-gray-600 mb-1">{isFooterColumns ? 'Column heading' : 'Label'}</label>
+                <input
+                  type="text"
+                  value={item.label}
+                  onChange={(e) => updateItem(index, { label: e.target.value })}
+                  className="w-full px-3 py-2 text-sm border border-gray-200 rounded-lg focus:ring-2 focus:ring-deep-green/20 focus:border-deep-green outline-none bg-white"
+                />
+              </div>
+              <div>
+                <label className="block text-[11px] font-medium text-gray-600 mb-1">{isFooterColumns ? 'Column URL (optional)' : 'URL'}</label>
+                <input
+                  type="text"
+                  value={item.url}
+                  onChange={(e) => updateItem(index, { url: e.target.value })}
+                  className="w-full px-3 py-2 text-sm border border-gray-200 rounded-lg focus:ring-2 focus:ring-deep-green/20 focus:border-deep-green outline-none bg-white"
+                />
+              </div>
+              <div className="flex items-center gap-1">
+                <button type="button" onClick={() => moveItem(index, -1)} disabled={index === 0} className="p-2 text-gray-500 hover:text-deep-green disabled:opacity-30" title="Move up">
+                  <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M5 15l7-7 7 7" /></svg>
+                </button>
+                <button type="button" onClick={() => moveItem(index, 1)} disabled={index === items.length - 1} className="p-2 text-gray-500 hover:text-deep-green disabled:opacity-30" title="Move down">
+                  <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" /></svg>
+                </button>
+                <button type="button" onClick={() => updateItem(index, { visible: !item.visible })} className={`p-2 rounded-lg ${item.visible ? 'text-deep-green bg-white' : 'text-gray-400 bg-white'}`} title={item.visible ? 'Hide item' : 'Show item'}>
+                  <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d={item.visible ? "M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.964-7.178z" : "M3.98 8.223A10.477 10.477 0 001.934 12C3.226 16.338 7.244 19.5 12 19.5c.993 0 1.953-.138 2.863-.395M6.228 6.228A10.45 10.45 0 0112 4.5c4.756 0 8.773 3.162 10.065 7.498a10.523 10.523 0 01-4.293 5.774M6.228 6.228L3 3m3.228 3.228l12.544 12.544M21 21l-3.228-3.228"} /></svg>
+                </button>
+                <button type="button" onClick={() => saveItems(items.filter((_, i) => i !== index))} className="p-2 text-gray-400 hover:text-red-500 bg-white rounded-lg" title="Remove item">
+                  <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" /></svg>
+                </button>
+              </div>
+            </div>
+
+            <div className="pl-3 border-l-2 border-gray-200 space-y-2">
+              <div className="flex items-center justify-between">
+                <span className="text-[11px] font-medium text-gray-500">{isFooterColumns ? 'Column links' : 'Dropdown items'}</span>
+                <button
+                  type="button"
+                  onClick={() => updateItem(index, { children: [...item.children, { label: isFooterColumns ? 'New link' : 'Dropdown item', url: '/', visible: true, children: [] }] })}
+                  className="text-xs font-medium text-deep-green hover:underline"
+                >
+                  + Add {childNoun}
+                </button>
+              </div>
+              {item.children.map((child, childIndex) => (
+                <div key={childIndex} className="grid grid-cols-[1fr_1fr_auto] gap-2 items-center">
+                  <input
+                    type="text"
+                    value={child.label}
+                    onChange={(e) => updateChild(index, childIndex, { label: e.target.value })}
+                    className="w-full px-2 py-1.5 text-xs border border-gray-200 rounded-lg outline-none bg-white"
+                    placeholder="Label"
+                  />
+                  <input
+                    type="text"
+                    value={child.url}
+                    onChange={(e) => updateChild(index, childIndex, { url: e.target.value })}
+                    className="w-full px-2 py-1.5 text-xs border border-gray-200 rounded-lg outline-none bg-white"
+                    placeholder="/url"
+                  />
+                  <div className="flex items-center gap-1">
+                    <button type="button" onClick={() => updateChild(index, childIndex, { visible: !child.visible })} className="p-1.5 text-gray-400 hover:text-deep-green" title={child.visible ? 'Hide dropdown item' : 'Show dropdown item'}>
+                      <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d={child.visible ? "M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.964-7.178z" : "M3.98 8.223A10.477 10.477 0 001.934 12C3.226 16.338 7.244 19.5 12 19.5c.993 0 1.953-.138 2.863-.395M6.228 6.228A10.45 10.45 0 0112 4.5c4.756 0 8.773 3.162 10.065 7.498a10.523 10.523 0 01-4.293 5.774M6.228 6.228L3 3m3.228 3.228l12.544 12.544M21 21l-3.228-3.228"} /></svg>
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => updateItem(index, { children: item.children.filter((_, i) => i !== childIndex) })}
+                      className="p-1.5 text-gray-400 hover:text-red-500"
+                      title="Remove dropdown item"
+                    >
+                      <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" /></svg>
+                    </button>
+                  </div>
+                </div>
+              ))}
+              {item.children.length === 0 && <p className="text-xs text-gray-400 italic">No {isFooterColumns ? 'links' : 'dropdown items'}</p>}
+            </div>
+          </div>
+        ))}
+        {items.length === 0 && <p className="text-xs text-gray-400 italic">No {itemNoun}s yet. Add one above.</p>}
+      </div>
+    </div>
+  );
+}
+
 /* ═══════════════════════════════════════════════════════════════════════════
    FIELD DEFAULT FONT INFERENCE
    When a schema field doesn't declare explicit defaults, pick reasonable ones
@@ -974,7 +1131,7 @@ export default function AdminStoreEditorPage() {
 
   // ─── Field change handler ─────────────────────────────────────────────
   // Writes to either the English store or the Armenian override store based on editLang.
-  // Non-text fields (image, color, toggle, list, product_picker, url) always write to EN;
+  // Non-text fields (image, color, toggle, list, menu_builder, product_picker, url) always write to EN;
   // Armenian mode is only meaningful for text/textarea so those are the only ones swapped.
   function updateField(key: string, value: unknown) {
     if (editLang === 'hy') {
@@ -982,6 +1139,11 @@ export default function AdminStoreEditorPage() {
     } else {
       setEditValues(prev => ({ ...prev, [key]: value }));
     }
+    setHasChanges(true);
+  }
+
+  function updateSharedField(key: string, value: unknown) {
+    setEditValues(prev => ({ ...prev, [key]: value }));
     setHasChanges(true);
   }
 
@@ -1047,10 +1209,11 @@ export default function AdminStoreEditorPage() {
       }
 
       const indexKey = activePageConfig.indexKey;
-      // Strip empty Armenian values so we don't store "" blanks
+      // Preserve empty Armenian strings: admins may intentionally clear a text field
+      // and expect the site to render it blank instead of falling back to the dictionary.
       const hyClean: Record<string, unknown> = {};
       for (const [k, v] of Object.entries(editValuesHy)) {
-        if (v !== undefined && v !== null && v !== '') hyClean[k] = v;
+        if (v !== undefined && v !== null) hyClean[k] = v;
       }
       const contentToSave: Record<string, unknown> = {
         ...editValues,
@@ -1303,6 +1466,12 @@ export default function AdminStoreEditorPage() {
                 {selectedSchema.fields.map(field => {
                   const value = getFieldValue(field.key, field.type);
                   const enValue = editValues[field.key];
+                  if (selectedSchema.name === 'Header' && /^nav_\d/.test(field.key)) {
+                    return null;
+                  }
+                  if (selectedSchema.name === 'Footer' && (/^col\d_link_/.test(field.key) || /^col\d_heading$/.test(field.key))) {
+                    return null;
+                  }
                   // In Armenian mode, hide non-translatable fields to keep the UX focused
                   if (
                     editLang === 'hy' &&
@@ -1311,7 +1480,8 @@ export default function AdminStoreEditorPage() {
                     field.type !== 'rich_text' &&
                     field.type !== 'seo' &&
                     field.type !== 'image' &&
-                    field.type !== 'url'
+                    field.type !== 'url' &&
+                    field.type !== 'menu_builder'
                   ) return null;
 
                   if (field.type === 'image') {
@@ -1544,6 +1714,17 @@ export default function AdminStoreEditorPage() {
                         field={field}
                         value={value}
                         updateField={updateField}
+                      />
+                    );
+                  }
+
+                  if (field.type === 'menu_builder') {
+                    return (
+                      <MenuBuilderField
+                        key={field.key}
+                        field={field}
+                        value={value}
+                        updateField={updateSharedField}
                       />
                     );
                   }
