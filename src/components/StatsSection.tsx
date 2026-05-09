@@ -45,7 +45,11 @@ export default function StatsSection({ content }: { content?: any }) {
   }, [hasAnimated, startAnimation]);
 
   return (
-    <section ref={sectionRef} className="section-spacing bg-off-white relative overflow-hidden">
+    <section
+      ref={sectionRef}
+      className="section-spacing relative overflow-hidden"
+      style={{ backgroundColor: content?.background_color || '#F8F2E8' }}
+    >
       {/* Decorative elements - right side */}
       <div className="absolute right-0 top-0 h-full pointer-events-none hidden md:block">
         <svg viewBox="0 0 160 400" className="absolute right-0 top-0 w-40 h-full">

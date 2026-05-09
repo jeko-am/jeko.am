@@ -45,7 +45,7 @@ export default function VideoTestimonials({ content }: { content?: any }) {
   };
 
   return (
-    <section className="bg-off-white py-16 pb-12">
+    <section className="py-16 pb-12" style={{ backgroundColor: content?.background_color || '#F8F2E8' }}>
       <div className="max-w-container mx-auto px-6">
         <div className="text-center mb-10">
           <h2 className="text-[36px] md:text-[40px] font-medium text-deep-green tracking-wide mb-3">

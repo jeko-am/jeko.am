@@ -75,7 +75,7 @@ export default function ProductHighlights({ content }: { content?: any }) {
   if (!loading && products.length === 0) return null;
 
   return (
-    <section className="py-16 bg-off-white relative">
+    <section className="py-16 relative" style={{ backgroundColor: content?.background_color || '#F8F2E8' }}>
       <div className="max-w-[1200px] mx-auto px-4">
         {/* Header */}
         <div className="text-center mb-12">

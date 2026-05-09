@@ -92,8 +92,16 @@ export default function TrendingProducts({ content }: { content?: any }) {
 
   if (!loading && products.length === 0) return null;
 
+  const backgroundColor = content?.background_color || '#274C46';
+
   return (
-    <section className="py-16 bg-deep-green relative zigzag-bottom zigzag-top">
+    <section
+      className="py-16 relative zigzag-bottom zigzag-top"
+      style={{
+        backgroundColor,
+        ['--zigzag-color' as string]: backgroundColor,
+      }}
+    >
       <div className="max-w-[1200px] mx-auto px-4">
         {/* Header */}
         <div className="flex items-end justify-between mb-10">

@@ -13,6 +13,7 @@ export default function FAQSection({ content }: { content?: any }) {
   const signupUrl = useSignupUrl();
   const { t } = useT();
   const { ct } = useContentT(content);
+  const backgroundColor = content?.background_color || "#F8F2E8";
 
   const faqs = [
     { question: t("home.faq.q1"), answer: t("home.faq.a1") },
@@ -28,7 +29,7 @@ export default function FAQSection({ content }: { content?: any }) {
     <section className="relative overflow-hidden">
       <div className="flex flex-col md:flex-row min-h-[600px]">
         {/* Left side with decorative elements + FAQ */}
-        <div className="w-full md:w-[55%] bg-off-white relative">
+        <div className="w-full md:w-[55%] relative" style={{ backgroundColor }}>
           {/* Decorative illustrations on far left */}
           <div className="absolute left-0 top-0 w-40 h-full pointer-events-none hidden md:block">
             <svg viewBox="0 0 160 700" className="w-full h-full">

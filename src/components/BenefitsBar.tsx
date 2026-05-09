@@ -6,22 +6,26 @@ import { useContentT } from "@/lib/i18n/useContentT";
 
 const defaultBenefits = [
   {
-    icon: "https://www.purepetfood.com/_next/static/media/box-with-red-hearts.d6dbf870.png",
+    icon: "/benefits-icons/box-with-red-hearts.webp",
+    iconKey: "benefit_1_icon",
     key: "benefit_1",
     dictKey: "home.benefits.storeCupboard",
   },
   {
-    icon: "https://www.purepetfood.com/_next/static/media/piggy-bank-pink.b9a77b6e.png",
+    icon: "/benefits-icons/piggy-bank-pink.webp",
+    iconKey: "benefit_2_icon",
     key: "benefit_2",
     dictKey: "home.benefits.from89p",
   },
   {
-    icon: "https://www.purepetfood.com/_next/static/media/droplet-blue.991caf56.png",
+    icon: "/benefits-icons/droplet-blue.webp",
+    iconKey: "benefit_3_icon",
     key: "benefit_3",
     dictKey: "home.benefits.addWater",
   },
   {
-    icon: "https://www.purepetfood.com/_next/static/media/bowl-with-white-scoop.1ea3ccfc.png",
+    icon: "/benefits-icons/bowl-with-white-scoop.webp",
+    iconKey: "benefit_4_icon",
     key: "benefit_4",
     dictKey: "home.benefits.ready10s",
   },
@@ -30,9 +34,15 @@ const defaultBenefits = [
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export default function BenefitsBar({ content }: { content?: Record<string, any> }) {
   const { ct } = useContentT(content);
+  const contentString = (key: string, fallback: string) => (
+    Object.prototype.hasOwnProperty.call(content || {}, key)
+      ? String(content?.[key] ?? "")
+      : fallback
+  );
 
   const benefits = defaultBenefits.map((benefit) => ({
     ...benefit,
+    icon: contentString(benefit.iconKey, benefit.icon),
     text: ct(benefit.key, benefit.dictKey),
   }));
 
@@ -71,15 +81,17 @@ export default function BenefitsBar({ content }: { content?: Record<string, any>
               key={index}
               className="flex flex-col items-center text-center bg-white/10 rounded-xl py-6 px-4"
             >
-              <div className="mb-3 w-16 h-16 relative">
-                <Image
-                  src={benefit.icon}
-                  alt={benefit.text}
-                  fill
-                  unoptimized
-                  className="object-contain"
-                />
-              </div>
+              {benefit.icon && (
+                <div className="mb-3 w-16 h-16 relative">
+                  <Image
+                    src={benefit.icon}
+                    alt={benefit.text}
+                    fill
+                    unoptimized
+                    className="object-contain"
+                  />
+                </div>
+              )}
               <p className="text-white font-semibold text-[16px] leading-tight">
                 {benefit.text}
               </p>

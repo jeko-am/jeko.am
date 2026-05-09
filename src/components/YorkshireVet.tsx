@@ -13,11 +13,12 @@ export default function YorkshireVet({ content }: { content?: any }) {
   const heading = hasOwn("heading") ? content!.heading : ct("heading", "home.vet.heading");
   const author = hasOwn("author") ? content!.author : ct("author", "home.vet.authorName");
   const quote = hasOwn("quote") ? content!.quote : ct("quote", "home.vet.quoteText");
+  const backgroundColor = content?.background_color || "#F8F2E8";
   return (
     <section className="relative overflow-hidden">
       <div className="flex flex-col md:flex-row min-h-[480px]">
         {/* Text Left Side - larger */}
-        <div className="w-full md:w-[58%] bg-off-white flex items-center relative">
+        <div className="w-full md:w-[58%] flex items-center relative" style={{ backgroundColor }}>
           {/* Decorative illustrations on left */}
           <div className="absolute left-0 top-0 w-full h-full pointer-events-none overflow-hidden">
             <svg viewBox="0 0 400 450" className="absolute left-0 top-0 w-48 h-full opacity-60">

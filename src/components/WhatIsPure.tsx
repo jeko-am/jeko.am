@@ -14,6 +14,7 @@ export default function WhatIsPure({ content }: { content?: Record<string, any> 
   const buttonText = ct("button_text", "home.whatIs.buttonText");
   const signupUrl = useSignupUrl();
   const buttonUrl = content?.button_url || signupUrl;
+  const backgroundColor = content?.background_color || "#F8F2E8";
 
   const paragraphs = description.split("\n\n");
 
@@ -43,7 +44,7 @@ export default function WhatIsPure({ content }: { content?: Record<string, any> 
         </div>
 
         {/* Text Right Side - larger */}
-        <div className="w-full md:w-[58%] flex items-center bg-off-white">
+        <div className="w-full md:w-[58%] flex items-center" style={{ backgroundColor }}>
           <div className="px-8 md:px-16 py-12 md:py-0 max-w-[560px]">
             <h2 className="text-[36px] md:text-[40px] font-medium text-deep-green leading-tight mb-6 tracking-wide">
               {heading}

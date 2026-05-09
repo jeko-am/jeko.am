@@ -20,36 +20,48 @@ export default function HowPlanWorks({ content }: { content?: any }) {
   const buttonText = ct("button_text", "home.howPlan.buttonText");
   const signupUrl = useSignupUrl();
   const buttonUrl = content?.button_url ?? signupUrl;
+  const backgroundColor = content?.background_color || "#274C46";
+  const contentString = (key: string, fallback: string) => (
+    Object.prototype.hasOwnProperty.call(content || {}, key)
+      ? String(content?.[key] ?? "")
+      : fallback
+  );
 
   const dynamicSteps = [
     {
       step: `${stepLabel} 1`,
       title: step1Title,
       description: step1Description,
-      icon: "https://www.purepetfood.com/_next/static/media/add-dog-yellow.d420b8ed.png",
+      icon: contentString("step_1_icon", "/how-plan-icons/add-dog-yellow.webp"),
     },
     {
       step: `${stepLabel} 2`,
       title: step2Title,
       description: step2Description,
-      icon: "https://www.purepetfood.com/_next/static/media/naturally-tasty.90dfdb2e.png",
+      icon: contentString("step_2_icon", "/how-plan-icons/naturally-tasty.webp"),
     },
     {
       step: `${stepLabel} 3`,
       title: step3Title,
       description: step3Description,
-      icon: "https://www.purepetfood.com/_next/static/media/free-delivery-truck.6102579b.png",
+      icon: contentString("step_3_icon", "/how-plan-icons/free-delivery-truck.webp"),
     },
     {
       step: `${stepLabel} 4`,
       title: step4Title,
       description: step4Title,
-      icon: "https://www.purepetfood.com/_next/static/media/bowl-with-yellow-scoop.5cef6df6.png",
+      icon: contentString("step_4_icon", "/how-plan-icons/bowl-with-yellow-scoop.webp"),
     },
   ];
 
   return (
-    <section className="bg-deep-green py-16 pb-20 zigzag-bottom relative z-[1]">
+    <section
+      className="py-16 pb-20 zigzag-bottom relative z-[1]"
+      style={{
+        backgroundColor,
+        ['--zigzag-color' as string]: backgroundColor,
+      }}
+    >
       {/* Decorative elements - right side */}
       <div className="absolute right-0 top-0 h-full pointer-events-none hidden md:block overflow-hidden">
         <svg viewBox="0 0 180 400" className="absolute right-0 top-0 w-44 h-full opacity-80">
@@ -82,17 +94,20 @@ export default function HowPlanWorks({ content }: { content?: any }) {
           {dynamicSteps.map((step, index) => (
             <div
               key={index}
-              className="bg-deep-green border border-white/20 rounded-2xl p-6 flex flex-col items-center text-center"
+              className="border border-white/20 rounded-2xl p-6 flex flex-col items-center text-center"
+              style={{ backgroundColor }}
             >
-              <div className="mb-4 w-14 h-14 relative">
-                <Image
-                  src={step.icon}
-                  alt={step.title}
-                  fill
-                  unoptimized
-                  className="object-contain"
-                />
-              </div>
+              {step.icon ? (
+                <div className="mb-4 w-14 h-14 relative">
+                  <Image
+                    src={step.icon}
+                    alt={step.title}
+                    fill
+                    unoptimized
+                    className="object-contain"
+                  />
+                </div>
+              ) : null}
               <p className="text-gold font-medium text-[14px] mb-1">{step.step}</p>
               <p className="text-white font-medium text-[16px] leading-tight tracking-wide">
                 {step.title}
