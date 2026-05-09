@@ -67,6 +67,8 @@ const HOMEPAGE_SECTIONS: SectionSchema[] = [
       { key: 'logo_image', label: 'Logo Image (overrides text)', type: 'image' },
       { key: 'logo_image_height', label: 'Logo Image Height (px)', type: 'number', placeholder: '40' },
       { key: 'logo_url', label: 'Logo Link URL', type: 'url', placeholder: '/' },
+      { key: 'background_color', label: 'Header Background Color', type: 'color' },
+      { key: 'dropdown_background_color', label: 'Dropdown / Mobile Menu Background Color', type: 'color' },
       { key: 'cta_text', label: 'CTA Button Text', type: 'text', placeholder: 'Create plan', i18nKey: 'header.cta.buildPlan' },
       { key: 'cta_url', label: 'CTA Button URL', type: 'url', placeholder: '/auth/signup' },
       { key: 'nav_items', label: 'Header Menu Items', type: 'menu_builder' },
@@ -131,7 +133,7 @@ const HOMEPAGE_SECTIONS: SectionSchema[] = [
       { key: 'nav_5_dd_5_visible', label: 'Health Dropdown 5 — Show', type: 'toggle' },
     ],
     defaultContent: {
-      logo_text: 'JEKO', logo_image: '', logo_image_height: 40, logo_url: '/', cta_text: 'Create plan', cta_url: '/auth/signup',
+      logo_text: 'JEKO', logo_image: '', logo_image_height: 40, logo_url: '/', background_color: '#274C46', dropdown_background_color: '#274C46', cta_text: 'Create plan', cta_url: '/auth/signup',
       nav_items: [
         { label: 'About', url: '/about', visible: true, children: [{ label: 'Our story', url: '/about', visible: true }] },
         {
@@ -415,6 +417,7 @@ const HOMEPAGE_SECTIONS: SectionSchema[] = [
     name: 'Footer', icon: ICON_PATHS.footer, color: 'bg-gray-800',
     fields: [
       { key: 'vip_visible', label: 'Show VIP Signup Section', type: 'toggle' },
+      { key: 'background_color', label: 'Footer Background Color', type: 'color' },
       { key: 'vip_heading', label: 'VIP Section Heading', type: 'text', i18nKey: 'footer.vip.heading' },
       { key: 'vip_description', label: 'VIP Description', type: 'textarea', i18nKey: 'footer.vip.description' },
       { key: 'newsletter_visible', label: 'Show Email Signup Form', type: 'toggle' },
@@ -489,6 +492,7 @@ const HOMEPAGE_SECTIONS: SectionSchema[] = [
     ],
     defaultContent: {
       vip_visible: true, newsletter_visible: true, social_visible: true, columns_visible: true, bottom_visible: true,
+      background_color: '#274C46',
       vip_heading: 'Join our VIP list', vip_description: 'Be the first to hear about new product launches.',
       signup_button_text: 'Sign up', social_heading: 'Follow us on social media',
       instagram_url: '#', facebook_url: '#', tiktok_url: '#',

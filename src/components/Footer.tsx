@@ -102,6 +102,7 @@ export default function Footer({ content }: { content?: any }) {
   const hasTiktok = showSocial && content?.tiktok_url && content.tiktok_url !== "#";
   const hasSocials = Boolean(hasInstagram || hasFacebook || hasTiktok);
   const showLeftColumn = showVip || hasSocials;
+  const footerBackgroundColor = (content?.background_color as string | undefined) || "#274C46";
 
   async function handleSubscribe() {
     if (!email.trim() || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return;
@@ -119,7 +120,7 @@ export default function Footer({ content }: { content?: any }) {
   }
 
   return (
-    <footer className="bg-deep-green text-off-white pt-12 pb-8">
+    <footer className="bg-deep-green text-off-white pt-12 pb-8" style={{ backgroundColor: footerBackgroundColor }}>
       <div className="max-w-[1200px] mx-auto px-6">
         {/* Top Section */}
         <div className={`flex flex-col lg:flex-row gap-12 ${showBottom ? "mb-12" : ""}`}>

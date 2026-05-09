@@ -209,6 +209,8 @@ export default function Header({ content }: { content?: HeaderContent }) {
   const logoImage = content?.logo_image as string | undefined;
   const logoImageHeight = Number(content?.logo_image_height) || 40;
   const logoUrl = (content?.logo_url as string | undefined) || "/";
+  const headerBackgroundColor = (content?.background_color as string | undefined) || "#274C46";
+  const dropdownBackgroundColor = (content?.dropdown_background_color as string | undefined) || headerBackgroundColor;
   const ctaText = ct("cta_text", "common.signUp");
   const signupUrl = useSignupUrl();
   // Gate the dynamic signup→profile swap until after hydration.
@@ -240,7 +242,13 @@ export default function Header({ content }: { content?: HeaderContent }) {
   return (
     <header className="fixed top-0 left-0 w-full z-50">
       {/* Main header bar */}
-      <div className="bg-deep-green h-[64px] lg:h-[80px] header-zigzag-bottom">
+      <div
+        className="bg-deep-green h-[64px] lg:h-[80px] header-zigzag-bottom"
+        style={{
+          backgroundColor: headerBackgroundColor,
+          ['--zigzag-color' as string]: headerBackgroundColor,
+        }}
+      >
         <div className="max-w-[1400px] mx-auto h-full px-5 lg:px-8 flex items-center justify-between">
           {/* Logo */}
           <Link href={logoUrl} className="flex-shrink-0" translate="no">
@@ -284,7 +292,10 @@ export default function Header({ content }: { content?: HeaderContent }) {
                   {item.hasDropdown && <ChevronDown />}
                 </Link>
                 {item.hasDropdown && activeDropdown === item.label && (
-                  <div className="absolute top-full left-0 bg-deep-green rounded-b-lg shadow-xl min-w-[220px] py-2 z-50">
+                  <div
+                    className="absolute top-full left-0 bg-deep-green rounded-b-lg shadow-xl min-w-[220px] py-2 z-50"
+                    style={{ backgroundColor: dropdownBackgroundColor }}
+                  >
                     {item.dropdown.map((sub) => (
                       <Link
                         key={sub.label}
@@ -398,7 +409,7 @@ export default function Header({ content }: { content?: HeaderContent }) {
 
       {/* Mobile Menu Overlay */}
       {mobileMenuOpen && (
-        <div className="xl:hidden bg-deep-green border-t border-white/10">
+        <div className="xl:hidden bg-deep-green border-t border-white/10" style={{ backgroundColor: dropdownBackgroundColor }}>
           <nav className="flex flex-col px-6 py-6 gap-0">
             {navItems.map((item) => (
               <div key={item.label}>
@@ -412,7 +423,7 @@ export default function Header({ content }: { content?: HeaderContent }) {
                       <ChevronDown />
                     </button>
                     {mobileActiveDropdown === item.label && (
-                      <div className="bg-deep-green/80 border-b border-white/10">
+                      <div className="bg-deep-green/80 border-b border-white/10" style={{ backgroundColor: dropdownBackgroundColor }}>
                         {item.dropdown.map((sub) => (
                           <Link
                             key={sub.label}
