@@ -215,7 +215,11 @@ export default function Header({ content }: { content?: HeaderContent }) {
   const signupUrl = useSignupUrl();
   // Gate the dynamic signup→profile swap until after hydration.
   const ctaUrl = content?.cta_url ?? (mounted ? signupUrl : '/auth/signup');
+  const helpText = Object.prototype.hasOwnProperty.call(content || {}, "help_text")
+    ? ct("help_text", "")
+    : t("common.help");
   const helpUrl = content?.help_url ?? "/contact";
+  const helpVisible = content?.help_visible !== false;
   const loginUrl = content?.login_url ?? "/login";
 
   // Treat undefined as visible (legacy rows). Only an explicit `false` hides the item.
@@ -331,12 +335,14 @@ export default function Header({ content }: { content?: HeaderContent }) {
             
             {!scrolled && (
               <>
-                <Link
-                  href={helpUrl}
-                  className={ctaCls}
-                >
-                  {t("common.help")}
-                </Link>
+                {helpVisible && helpText ? (
+                  <Link
+                    href={helpUrl}
+                    className={ctaCls}
+                  >
+                    {helpText}
+                  </Link>
+                ) : null}
                 {user ? (
                   <div className="flex items-center gap-3">
                     {isAdmin ? (
@@ -454,13 +460,15 @@ export default function Header({ content }: { content?: HeaderContent }) {
 
             <div className="border-b border-white/10" />
 
-            <Link
-              href={helpUrl}
-              className="text-white text-[18px] font-rubik font-medium py-3 hover:opacity-80 transition-opacity"
-              onClick={() => setMobileMenuOpen(false)}
-            >
-              {t("common.help")}
-            </Link>
+            {helpVisible && helpText ? (
+              <Link
+                href={helpUrl}
+                className="text-white text-[18px] font-rubik font-medium py-3 hover:opacity-80 transition-opacity"
+                onClick={() => setMobileMenuOpen(false)}
+              >
+                {helpText}
+              </Link>
+            ) : null}
 
             <div className="pt-2 pb-1">
               <LanguageSwitcher />

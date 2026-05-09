@@ -1130,11 +1130,18 @@ export default function AdminStoreEditorPage() {
   }
 
   // ─── Field change handler ─────────────────────────────────────────────
-  // Writes to either the English store or the Armenian override store based on editLang.
-  // Non-text fields (image, color, toggle, list, menu_builder, product_picker, url) always write to EN;
-  // Armenian mode is only meaningful for text/textarea so those are the only ones swapped.
+  // Writes localized fields to the Armenian override store in HY mode.
+  // Shared controls such as toggles/colors/numbers always write to EN content.
   function updateField(key: string, value: unknown) {
-    if (editLang === 'hy') {
+    const fieldType = activeSections[selectedIndex ?? -1]?.fields.find(f => f.key === key)?.type;
+    const localizedInHy =
+      fieldType === 'text' ||
+      fieldType === 'textarea' ||
+      fieldType === 'rich_text' ||
+      fieldType === 'image' ||
+      fieldType === 'url' ||
+      fieldType === 'seo';
+    if (editLang === 'hy' && localizedInHy) {
       setEditValuesHy(prev => ({ ...prev, [key]: value }));
     } else {
       setEditValues(prev => ({ ...prev, [key]: value }));
@@ -1455,7 +1462,7 @@ export default function AdminStoreEditorPage() {
                 </div>
                 {editLang === 'hy' && (
                   <p className="mt-2 text-[11px] text-gray-500 leading-relaxed">
-                    Editing Armenian translations. Only text fields are shown here — images, toggles and URLs are shared.
+                    Editing Armenian translations. Text, image, and URL fields can be localized; toggles and other controls are shared.
                     Placeholders show the English value.
                   </p>
                 )}
@@ -1481,6 +1488,7 @@ export default function AdminStoreEditorPage() {
                     field.type !== 'seo' &&
                     field.type !== 'image' &&
                     field.type !== 'url' &&
+                    field.type !== 'toggle' &&
                     field.type !== 'menu_builder'
                   ) return null;
 
@@ -1518,17 +1526,27 @@ export default function AdminStoreEditorPage() {
                   }
 
                   if (field.type === 'toggle') {
+                    const enabled = value !== false;
                     return (
                       <div key={field.key}>
-                        <div className="flex items-center justify-between">
-                          <label className="text-[13px] font-medium text-gray-700">{field.label}</label>
-                          <button
-                            onClick={() => updateField(field.key, !value)}
-                            className={`relative w-10 h-5.5 rounded-full transition-colors ${value ? 'bg-deep-green' : 'bg-gray-200'}`}
+                        <button
+                          type="button"
+                          onClick={() => updateField(field.key, !enabled)}
+                          className="w-full flex items-center justify-between rounded-xl border border-gray-200 bg-gray-50 px-3 py-2.5 text-left hover:border-deep-green/30 hover:bg-deep-green/5 transition-colors"
+                          aria-pressed={enabled}
+                        >
+                          <span className="text-[13px] font-medium text-gray-700">{field.label}</span>
+                          <span className="flex items-center gap-2">
+                            <span className={`text-xs font-semibold ${enabled ? 'text-deep-green' : 'text-gray-500'}`}>
+                              {enabled ? 'Visible' : 'Hidden'}
+                            </span>
+                            <span
+                              className={`relative w-11 h-6 rounded-full transition-colors ${enabled ? 'bg-deep-green' : 'bg-gray-300'}`}
                           >
-                            <span className={`absolute top-0.5 w-4.5 h-4.5 bg-white rounded-full shadow transition-transform ${value ? 'left-5' : 'left-0.5'}`} />
-                          </button>
-                        </div>
+                              <span className={`absolute top-0.5 w-5 h-5 bg-white rounded-full shadow transition-transform ${enabled ? 'translate-x-5' : 'translate-x-0.5'}`} />
+                            </span>
+                          </span>
+                        </button>
                       </div>
                     );
                   }

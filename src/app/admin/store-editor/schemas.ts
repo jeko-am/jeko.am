@@ -71,6 +71,9 @@ const HOMEPAGE_SECTIONS: SectionSchema[] = [
       { key: 'dropdown_background_color', label: 'Dropdown / Mobile Menu Background Color', type: 'color' },
       { key: 'cta_text', label: 'CTA Button Text', type: 'text', placeholder: 'Create plan', i18nKey: 'header.cta.buildPlan' },
       { key: 'cta_url', label: 'CTA Button URL', type: 'url', placeholder: '/auth/signup' },
+      { key: 'help_visible', label: 'Show / Hide Help Button', type: 'toggle' },
+      { key: 'help_text', label: 'Help Button Text', type: 'text', placeholder: 'Help', i18nKey: 'common.help' },
+      { key: 'help_url', label: 'Help Button URL', type: 'url', placeholder: '/help' },
       { key: 'nav_items', label: 'Header Menu Items', type: 'menu_builder' },
       { key: 'nav_1_label', label: 'Nav Item 1 — Label', type: 'text', placeholder: 'About', i18nKey: 'header.nav.about' },
       { key: 'nav_1_url', label: 'Nav Item 1 — URL', type: 'url', placeholder: '/about' },
@@ -87,7 +90,6 @@ const HOMEPAGE_SECTIONS: SectionSchema[] = [
       { key: 'nav_5_label', label: 'Nav Item 5 — Label', type: 'text', placeholder: 'Health & breeds', i18nKey: 'header.nav.benefits' },
       { key: 'nav_5_url', label: 'Nav Item 5 — URL', type: 'url', placeholder: '/benefits' },
       { key: 'nav_5_visible', label: 'Nav Item 5 — Show in menu', type: 'toggle' },
-      { key: 'help_url', label: 'Help Link URL', type: 'url', placeholder: '/help' },
       { key: 'login_url', label: 'Login Link URL', type: 'url', placeholder: '/login' },
 
       // ── Nav 1 (About) dropdown ──
@@ -169,7 +171,7 @@ const HOMEPAGE_SECTIONS: SectionSchema[] = [
       nav_3_label: 'Shop', nav_3_url: '/products', nav_3_visible: true,
       nav_4_label: 'Reviews', nav_4_url: '/reviews', nav_4_visible: true,
       nav_5_label: 'Health & breeds', nav_5_url: '/benefits', nav_5_visible: true,
-      help_url: '/help', login_url: '/login',
+      help_text: 'Help', help_url: '/help', help_visible: true, login_url: '/login',
       nav_1_dd_1_label: 'Our story', nav_1_dd_1_url: '/about', nav_1_dd_1_visible: true,
       nav_2_dd_1_label: 'Community', nav_2_dd_1_url: '/community', nav_2_dd_1_visible: true,
       nav_2_dd_2_label: 'Blog', nav_2_dd_2_url: '/blog', nav_2_dd_2_visible: true,
