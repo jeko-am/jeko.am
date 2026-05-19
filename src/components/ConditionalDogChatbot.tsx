@@ -52,8 +52,11 @@ export default function ConditionalDogChatbot() {
     return null;
   }
 
+  // Avoid flashing the built-in fallback image/text before admin content loads.
+  if (!loaded) return null;
+
   // Hide if explicitly disabled via admin
-  if (loaded && content && content.enabled === false) return null;
+  if (content && content.enabled === false) return null;
 
   return <DogChatbot content={content || undefined} />;
 }
