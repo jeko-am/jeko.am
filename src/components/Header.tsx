@@ -8,6 +8,7 @@ import { useSignupUrl } from "@/lib/useSignupUrl";
 import LanguageSwitcher from "@/components/LanguageSwitcher";
 import { useT } from "@/lib/i18n/LangProvider";
 import { useContentT } from "@/lib/i18n/useContentT";
+import { supabase } from "@/lib/supabase";
 
 type HeaderContent = Record<string, unknown>;
 type HeaderMenuItem = {
@@ -125,8 +126,10 @@ const CloseIcon = () => (
 );
 
 export default function Header({ content }: { content?: HeaderContent }) {
+  const [globalHeaderContent, setGlobalHeaderContent] = useState<HeaderContent | null>(null);
+  const effectiveContent = content ?? globalHeaderContent ?? undefined;
   const { t, lang } = useT();
-  const { ct } = useContentT(content);
+  const { ct } = useContentT(effectiveContent);
   // Armenian labels are longer — tighten the nav at this lang so it fits on laptop widths.
   const isHy = lang === "hy";
   const navItemCls = `text-white ${isHy ? "text-[14px] xl:text-[15px]" : "text-[15px] xl:text-[17px]"} font-vag font-medium hover:opacity-80 transition-opacity flex items-center whitespace-nowrap py-6`;
@@ -139,14 +142,14 @@ export default function Header({ content }: { content?: HeaderContent }) {
     prefix: string,
     fallbacks: { label: string; href: string }[],
   ): { label: string; href: string }[] => {
-    if (!content) return fallbacks;
+    if (!effectiveContent) return fallbacks;
     return fallbacks
       .map((fb, i) => {
         const idx = i + 1;
         const lblKey = `${prefix}_${idx}_label`;
         const urlKey = `${prefix}_${idx}_url`;
         const visKey = `${prefix}_${idx}_visible`;
-        const c = content as Record<string, unknown>;
+        const c = effectiveContent as Record<string, unknown>;
         if (!ddVisible(c[visKey])) return null;
         const label = Object.prototype.hasOwnProperty.call(c, lblKey) ? ct(lblKey, '') : fb.label;
         return {
@@ -205,35 +208,68 @@ export default function Header({ content }: { content?: HeaderContent }) {
     }
   };
 
-  const logoText = typeof content?.logo_text === "string" ? content.logo_text : "JEKO";
-  const logoImage = content?.logo_image as string | undefined;
-  const logoImageHeight = Number(content?.logo_image_height) || 40;
-  const logoUrl = (content?.logo_url as string | undefined) || "/";
-  const headerBackgroundColor = (content?.background_color as string | undefined) || "#274C46";
-  const dropdownBackgroundColor = (content?.dropdown_background_color as string | undefined) || headerBackgroundColor;
+  const logoText = typeof effectiveContent?.logo_text === "string" ? effectiveContent.logo_text : "JEKO";
+  const logoImage = effectiveContent?.logo_image as string | undefined;
+  const logoImageHeight = Number(effectiveContent?.logo_image_height) || 40;
+  const logoUrl = (effectiveContent?.logo_url as string | undefined) || "/";
+  const headerBackgroundColor = (effectiveContent?.background_color as string | undefined) || "#274C46";
+  const dropdownBackgroundColor = (effectiveContent?.dropdown_background_color as string | undefined) || headerBackgroundColor;
   const ctaText = ct("cta_text", "common.signUp");
   const signupUrl = useSignupUrl();
   // Gate the dynamic signup→profile swap until after hydration.
-  const ctaUrl = content?.cta_url ?? (mounted ? signupUrl : '/auth/signup');
-  const helpText = Object.prototype.hasOwnProperty.call(content || {}, "help_text")
+  const ctaUrl = effectiveContent?.cta_url ?? (mounted ? signupUrl : '/auth/signup');
+  const helpText = Object.prototype.hasOwnProperty.call(effectiveContent || {}, "help_text")
     ? ct("help_text", "")
     : t("common.help");
-  const helpUrl = content?.help_url ?? "/contact";
-  const helpVisible = content?.help_visible !== false;
-  const loginUrl = content?.login_url ?? "/login";
+  const helpUrl = effectiveContent?.help_url ?? "/contact";
+  const helpVisible = effectiveContent?.help_visible !== false;
+  const loginUrl = effectiveContent?.login_url ?? "/login";
 
   // Treat undefined as visible (legacy rows). Only an explicit `false` hides the item.
   const visible = (v: unknown) => v !== false;
-  const customNavItems = normalizeCustomNavItems(content?.nav_items);
-  const navItems = customNavItems ?? (content
+  const customNavItems = normalizeCustomNavItems(effectiveContent?.nav_items);
+  const navItems = customNavItems ?? (effectiveContent
     ? [
-        { label: ct("nav_1_label", "header.nav.about"), href: content.nav_1_url ?? "/about", hasDropdown: aboutDropdown.length > 0, dropdown: aboutDropdown, visible: visible(content.nav_1_visible) },
-        { label: ct("nav_2_label", "header.nav.community"), href: content.nav_2_url ?? "/community", hasDropdown: communityDropdown.length > 0, dropdown: communityDropdown, visible: visible(content.nav_2_visible) },
-        { label: ct("nav_3_label", "header.nav.shop"), href: content.nav_3_url ?? "/products", hasDropdown: false, dropdown: [] as { label: string; href: string }[], visible: visible(content.nav_3_visible) },
-        { label: ct("nav_4_label", "header.nav.reviews"), href: content.nav_4_url ?? "/reviews", hasDropdown: false, dropdown: [] as { label: string; href: string }[], visible: visible(content.nav_4_visible) },
-        { label: ct("nav_5_label", "benefits.title"), href: content.nav_5_url ?? "/benefits", hasDropdown: healthDropdown.length > 0, dropdown: healthDropdown, visible: visible(content.nav_5_visible) },
+        { label: ct("nav_1_label", "header.nav.about"), href: effectiveContent.nav_1_url ?? "/about", hasDropdown: aboutDropdown.length > 0, dropdown: aboutDropdown, visible: visible(effectiveContent.nav_1_visible) },
+        { label: ct("nav_2_label", "header.nav.community"), href: effectiveContent.nav_2_url ?? "/community", hasDropdown: communityDropdown.length > 0, dropdown: communityDropdown, visible: visible(effectiveContent.nav_2_visible) },
+        { label: ct("nav_3_label", "header.nav.shop"), href: effectiveContent.nav_3_url ?? "/products", hasDropdown: false, dropdown: [] as { label: string; href: string }[], visible: visible(effectiveContent.nav_3_visible) },
+        { label: ct("nav_4_label", "header.nav.reviews"), href: effectiveContent.nav_4_url ?? "/reviews", hasDropdown: false, dropdown: [] as { label: string; href: string }[], visible: visible(effectiveContent.nav_4_visible) },
+        { label: ct("nav_5_label", "benefits.title"), href: effectiveContent.nav_5_url ?? "/benefits", hasDropdown: healthDropdown.length > 0, dropdown: healthDropdown, visible: visible(effectiveContent.nav_5_visible) },
       ].filter((item) => item.visible)
     : defaultNavItems);
+
+  useEffect(() => {
+    if (content || globalHeaderContent) return;
+    let cancelled = false;
+    (async () => {
+      try {
+        const { data: pages } = await supabase
+          .from("pages")
+          .select("id")
+          .or("slug.eq.home,slug.eq.homepage,slug.eq./,slug.eq.")
+          .limit(1);
+        const pageId = pages?.[0]?.id;
+        if (!pageId) return;
+        const { data: sections } = await supabase
+          .from("page_sections")
+          .select("content, is_visible")
+          .eq("page_id", pageId);
+        const headerSection = sections?.find((section) => {
+          const sectionContent = section.content as HeaderContent | null;
+          const index = sectionContent?._homepage_index ?? sectionContent?._section_index;
+          return Number(index) === 0;
+        });
+        if (!cancelled && headerSection?.content) {
+          setGlobalHeaderContent(headerSection.content as HeaderContent);
+        }
+      } catch {
+        // Keep hardcoded header defaults if saved content cannot be loaded.
+      }
+    })();
+    return () => {
+      cancelled = true;
+    };
+  }, [content, globalHeaderContent]);
 
   useEffect(() => {
     const handleScroll = () => {

@@ -607,9 +607,9 @@ const HOMEPAGE_SECTIONS: SectionSchema[] = [
   {
     name: 'Playful Signup CTA', icon: ICON_PATHS.heart, color: 'bg-gold',
     fields: [
-      { key: 'heading', label: 'Heading', type: 'text', placeholder: 'Ready to spoil them?' },
-      { key: 'subheading', label: 'Subheading', type: 'textarea', placeholder: 'Join thousands of happy pets — get a tailored plan in under 2 minutes.' },
-      { key: 'button_text', label: 'Button Text', type: 'text', placeholder: 'Sign me up' },
+      { key: 'heading', label: 'Heading', type: 'text', placeholder: 'Ready to spoil them?', defaultFontFamily: 'fredoka', defaultFontSizeDesktop: 44, defaultFontSizeMobile: 28 },
+      { key: 'subheading', label: 'Subheading', type: 'textarea', placeholder: 'Join thousands of happy pets — get a tailored plan in under 2 minutes.', defaultFontFamily: 'fredoka', defaultFontSizeDesktop: 18, defaultFontSizeMobile: 15 },
+      { key: 'button_text', label: 'Button Text', type: 'text', placeholder: 'Sign me up', defaultFontFamily: 'fredoka', defaultFontSizeDesktop: 18, defaultFontSizeMobile: 18 },
       { key: 'button_url', label: 'Button URL', type: 'url', placeholder: '/auth/signup' },
       { key: 'background_color', label: 'Section Background Color', type: 'color' },
       { key: 'heading_color', label: 'Heading Text Color', type: 'color' },
