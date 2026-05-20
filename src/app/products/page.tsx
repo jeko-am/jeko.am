@@ -91,10 +91,10 @@ export default function ProductsPage() {
         {/* Hero Banner */}
         <section className="bg-deep-green py-16 text-center relative zigzag-bottom">
           <div className="max-w-[1200px] mx-auto px-4">
-            <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">
+            <h1 className="[font-family:'Rubik',Helvetica,Arial,sans-serif] text-3xl font-semibold leading-tight text-white md:text-5xl md:font-medium">
               {t("products.hero.titlePrefix")} <span className="text-gold">{t("products.hero.titleHighlight")}</span>
             </h1>
-            <p className="text-white/70 max-w-xl mx-auto text-lg">
+            <p className="mx-auto mt-4 max-w-xl [font-family:'Rubik',Helvetica,Arial,sans-serif] text-base font-normal leading-7 text-white/75 md:text-lg">
               {t("products.hero.subtitle")}
             </p>
           </div>

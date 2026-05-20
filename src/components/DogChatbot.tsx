@@ -105,14 +105,13 @@ export default function DogChatbot({ content }: { content?: ChatbotContent }) {
         >
           {greeting && greeting.trim() && (
             <p
-              className="text-deep-green font-bold text-[15px] whitespace-nowrap"
-              style={{ fontFamily: "'TR Frankfurter', 'Rubik', sans-serif" }}
+              className="text-deep-green font-vag font-bold text-[15px] whitespace-nowrap tracking-normal"
             >
               {greeting}
             </p>
           )}
           {subtext && subtext.trim() && (
-            <p className="text-deep-green/60 text-[11px] font-rubik">{subtext}</p>
+            <p className="text-deep-green/60 text-[11px] font-vag font-medium tracking-normal">{subtext}</p>
           )}
           {/* Tail pointing down-right */}
           <div
@@ -148,7 +147,7 @@ export default function DogChatbot({ content }: { content?: ChatbotContent }) {
           <span className="font-mono font-bold text-blue-600 text-[15px] tabular-nums tracking-wider">
             {String(userCount).padStart(4, '0')}
           </span>
-          <span className="text-deep-green/70 text-[10px] font-semibold whitespace-nowrap">
+          <span className="text-deep-green/70 text-[10px] font-vag font-semibold whitespace-nowrap tracking-normal">
             {counterLabel}
           </span>
         </div>

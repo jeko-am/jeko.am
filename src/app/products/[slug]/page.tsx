@@ -466,15 +466,7 @@ export default function ProductDetailPage() {
     );
   }
 
-  // Build display reviews: use dynamic from DB, fallback to hardcoded if none yet
-  const fallbackReviews = [
-    { name: 'Russell M.', date: '21/03/2026', rating: 5, text: 'My dog absolutely devours this! Great quality and you can tell the ingredients are fresh. Very fine product!', variant: product.name, verified: true },
-    { name: 'Trang H.', date: '20/03/2026', rating: 5, text: 'Quick delivery. My fussy eater actually finished the whole bowl. Will definitely order again.', variant: product.name, verified: true },
-    { name: 'Kelly W.', date: '02/03/2026', rating: 5, text: 'I love finding a quality dog food that my pup actually enjoys. His coat is shinier and he has more energy since we switched.', variant: product.name, verified: true },
-    { name: 'Susan S.', date: '28/02/2026', rating: 4, text: 'Doesn\'t upset my dog\'s sensitive stomach and the only food he can eat while on an elimination diet.', variant: product.name, verified: true },
-    { name: 'S S.', date: '26/02/2026', rating: 5, text: 'Fast delivery and very delicious - my dog cleaned the bowl in seconds. Smooth texture, great product.', variant: product.name, verified: true },
-  ];
-
+  // Only approved database reviews are shown. Do not render placeholder reviews.
   const dynamicReviews = productReviews.map(r => ({
     name: r.reviewer_name,
     date: new Date(r.created_at).toLocaleDateString('en-GB', { day: '2-digit', month: '2-digit', year: 'numeric' }),
@@ -486,14 +478,12 @@ export default function ProductDetailPage() {
     images: r.images,
   }));
 
-  const reviews = dynamicReviews.length > 0 ? dynamicReviews : fallbackReviews;
-
-  // Rating display: use admin override or calculated from dynamic reviews
-  const calcAvgRating = dynamicReviews.length > 0
-    ? dynamicReviews.reduce((s, r) => s + r.rating, 0) / dynamicReviews.length
-    : 4.8;
-  const displayRating = product.review_rating_override ?? calcAvgRating;
-  const displayReviewCount = product.review_count_override ?? (dynamicReviews.length > 0 ? dynamicReviews.length : 130);
+  const reviews = dynamicReviews;
+  const hasReviews = reviews.length > 0;
+  const displayRating = hasReviews
+    ? reviews.reduce((s, r) => s + r.rating, 0) / reviews.length
+    : 0;
+  const displayReviewCount = reviews.length;
 
   const vets = [
     { name: 'Dr. Sarah Wilson, BVSc', role: 'Veterinary Nutritionist', text: 'As a veterinary nutritionist, I emphasize the importance of choosing food that supports a dog\'s overall balance. This is why I trust and confidently recommend Jeko to my patients. Their commitment to natural ingredients and rigorous quality testing provides a clean, supportive feeding experience.', product: product.name, productSlug: product.slug },
@@ -560,17 +550,18 @@ export default function ProductDetailPage() {
               <div>
                 <h1 className="text-3xl md:text-4xl font-medium text-deep-green mb-2 leading-snug tracking-wide"><HyText en={product.name} savedHy={product.i18n?.hy?.name} /></h1>
 
-                {/* Rating summary */}
-                <a href="#reviews" onClick={(e) => { e.preventDefault(); document.getElementById('reviews')?.scrollIntoView({ behavior: 'smooth' }); }} className="inline-flex items-center gap-2 mb-4 group cursor-pointer">
-                  <div className="flex gap-0.5">
-                    {Array.from({ length: 5 }).map((_, i) => (
-                      <svg key={i} className={`w-5 h-5 ${i < Math.round(displayRating) ? 'text-gold' : 'text-deep-green/15'}`} fill="currentColor" viewBox="0 0 20 20">
-                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                      </svg>
-                    ))}
-                  </div>
-                  <span className="text-sm font-medium text-deep-green/60 group-hover:text-deep-green group-hover:underline transition">{displayReviewCount} {t("productDetail.reviews")}</span>
-                </a>
+                {hasReviews && (
+                  <a href="#reviews" onClick={(e) => { e.preventDefault(); document.getElementById('reviews')?.scrollIntoView({ behavior: 'smooth' }); }} className="inline-flex items-center gap-2 mb-4 group cursor-pointer">
+                    <div className="flex gap-0.5">
+                      {Array.from({ length: 5 }).map((_, i) => (
+                        <svg key={i} className={`w-5 h-5 ${i < Math.round(displayRating) ? 'text-gold' : 'text-deep-green/15'}`} fill="currentColor" viewBox="0 0 20 20">
+                          <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                        </svg>
+                      ))}
+                    </div>
+                    <span className="text-sm font-medium text-deep-green/60 group-hover:text-deep-green group-hover:underline transition">{displayReviewCount} {t("productDetail.reviews")}</span>
+                  </a>
+                )}
 
                 {/* Price */}
                 <div className="mb-2">
@@ -1058,10 +1049,14 @@ export default function ProductDetailPage() {
           <div className="max-w-[1200px] mx-auto px-4">
             <h2 className="text-3xl md:text-4xl font-bold text-deep-green text-center mb-10 italic">{t("productDetail.customerReviews")}</h2>
             <div className="flex items-center justify-between mb-6">
-              <div className="flex items-center gap-3">
-                <div className="flex">{Array.from({ length: 5 }).map((_, i) => <svg key={i} className={`w-6 h-6 ${i < Math.round(displayRating) ? 'text-gold' : 'text-deep-green/15'}`} fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" /></svg>)}</div>
-                <span className="text-deep-green font-medium">{displayReviewCount} {t("productDetail.reviews")}</span>
-              </div>
+              {hasReviews ? (
+                <div className="flex items-center gap-3">
+                  <div className="flex">{Array.from({ length: 5 }).map((_, i) => <svg key={i} className={`w-6 h-6 ${i < Math.round(displayRating) ? 'text-gold' : 'text-deep-green/15'}`} fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" /></svg>)}</div>
+                  <span className="text-deep-green font-medium">{displayReviewCount} {t("productDetail.reviews")}</span>
+                </div>
+              ) : (
+                <p className="text-sm text-deep-green/60"><HyText en="No reviews yet" /></p>
+              )}
               <button onClick={() => { setShowReviewForm(!showReviewForm); setReviewSuccess(false); }} className="btn-outline text-sm py-2 px-4">
                 {showReviewForm ? <HyText en="Cancel" /> : <HyText en="Write a review" />}
               </button>

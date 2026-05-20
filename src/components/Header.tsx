@@ -21,7 +21,7 @@ type HeaderMenuItem = {
 
 function normalizeCustomNavItems(value: unknown): HeaderMenuItem[] | null {
   if (!Array.isArray(value)) return null;
-  const items = value
+  return value
     .map((raw) => {
       const item = raw && typeof raw === "object" ? raw as Record<string, unknown> : {};
       const label = typeof item.label === "string" ? item.label.trim() : "";
@@ -47,7 +47,6 @@ function normalizeCustomNavItems(value: unknown): HeaderMenuItem[] | null {
       };
     })
     .filter((item): item is NonNullable<typeof item> => item !== null);
-  return items.length > 0 ? items : null;
 }
 
 const ChevronDown = () => (

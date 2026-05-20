@@ -330,7 +330,7 @@ function MenuBuilderField({
 
       <div className="space-y-3">
         {items.map((item, index) => (
-          <div key={index} className="rounded-xl border border-gray-200 bg-gray-50 p-3 space-y-3">
+          <div key={index} className={`rounded-xl border border-gray-200 p-3 space-y-3 ${item.visible ? 'bg-gray-50' : 'bg-gray-100 opacity-75'}`}>
             <div className="grid grid-cols-[1fr_1fr_auto] gap-2 items-end">
               <div>
                 <label className="block text-[11px] font-medium text-gray-600 mb-1">{isFooterColumns ? 'Column heading' : 'Label'}</label>
@@ -357,8 +357,16 @@ function MenuBuilderField({
                 <button type="button" onClick={() => moveItem(index, 1)} disabled={index === items.length - 1} className="p-2 text-gray-500 hover:text-deep-green disabled:opacity-30" title="Move down">
                   <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" /></svg>
                 </button>
-                <button type="button" onClick={() => updateItem(index, { visible: !item.visible })} className={`p-2 rounded-lg ${item.visible ? 'text-deep-green bg-white' : 'text-gray-400 bg-white'}`} title={item.visible ? 'Hide item' : 'Show item'}>
+                <button
+                  type="button"
+                  onClick={() => updateItem(index, { visible: !item.visible })}
+                  className={`inline-flex items-center gap-1.5 px-2 py-2 rounded-lg bg-white text-xs font-semibold ${item.visible ? 'text-deep-green' : 'text-gray-500'}`}
+                  title={item.visible ? 'Hide item' : 'Show item'}
+                  aria-label={item.visible ? `Hide ${item.label || itemNoun}` : `Show ${item.label || itemNoun}`}
+                  aria-pressed={item.visible}
+                >
                   <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d={item.visible ? "M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.964-7.178z" : "M3.98 8.223A10.477 10.477 0 001.934 12C3.226 16.338 7.244 19.5 12 19.5c.993 0 1.953-.138 2.863-.395M6.228 6.228A10.45 10.45 0 0112 4.5c4.756 0 8.773 3.162 10.065 7.498a10.523 10.523 0 01-4.293 5.774M6.228 6.228L3 3m3.228 3.228l12.544 12.544M21 21l-3.228-3.228"} /></svg>
+                  <span>{item.visible ? 'Visible' : 'Hidden'}</span>
                 </button>
                 <button type="button" onClick={() => saveItems(items.filter((_, i) => i !== index))} className="p-2 text-gray-400 hover:text-red-500 bg-white rounded-lg" title="Remove item">
                   <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" /></svg>
@@ -368,7 +376,10 @@ function MenuBuilderField({
 
             <div className="pl-3 border-l-2 border-gray-200 space-y-2">
               <div className="flex items-center justify-between">
-                <span className="text-[11px] font-medium text-gray-500">{isFooterColumns ? 'Column links' : 'Dropdown items'}</span>
+                <span className="text-[11px] font-medium text-gray-500">
+                  {isFooterColumns ? 'Column links' : 'Dropdown items'}
+                  {!item.visible && !isFooterColumns ? ' (hidden with parent)' : ''}
+                </span>
                 <button
                   type="button"
                   onClick={() => updateItem(index, { children: [...item.children, { label: isFooterColumns ? 'New link' : 'Dropdown item', url: '/', visible: true, children: [] }] })}
@@ -378,7 +389,7 @@ function MenuBuilderField({
                 </button>
               </div>
               {item.children.map((child, childIndex) => (
-                <div key={childIndex} className="grid grid-cols-[1fr_1fr_auto] gap-2 items-center">
+                <div key={childIndex} className={`grid grid-cols-[1fr_1fr_auto] gap-2 items-center ${child.visible ? '' : 'opacity-60'}`}>
                   <input
                     type="text"
                     value={child.label}
@@ -394,8 +405,16 @@ function MenuBuilderField({
                     placeholder="/url"
                   />
                   <div className="flex items-center gap-1">
-                    <button type="button" onClick={() => updateChild(index, childIndex, { visible: !child.visible })} className="p-1.5 text-gray-400 hover:text-deep-green" title={child.visible ? 'Hide dropdown item' : 'Show dropdown item'}>
+                    <button
+                      type="button"
+                      onClick={() => updateChild(index, childIndex, { visible: !child.visible })}
+                      className={`inline-flex items-center gap-1 px-1.5 py-1.5 rounded-md text-[11px] font-semibold ${child.visible ? 'text-deep-green bg-white' : 'text-gray-500 bg-white'}`}
+                      title={child.visible ? 'Hide dropdown item' : 'Show dropdown item'}
+                      aria-label={child.visible ? `Hide ${child.label || childNoun}` : `Show ${child.label || childNoun}`}
+                      aria-pressed={child.visible}
+                    >
                       <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d={child.visible ? "M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.964-7.178z" : "M3.98 8.223A10.477 10.477 0 001.934 12C3.226 16.338 7.244 19.5 12 19.5c.993 0 1.953-.138 2.863-.395M6.228 6.228A10.45 10.45 0 0112 4.5c4.756 0 8.773 3.162 10.065 7.498a10.523 10.523 0 01-4.293 5.774M6.228 6.228L3 3m3.228 3.228l12.544 12.544M21 21l-3.228-3.228"} /></svg>
+                      <span>{child.visible ? 'Visible' : 'Hidden'}</span>
                     </button>
                     <button
                       type="button"
