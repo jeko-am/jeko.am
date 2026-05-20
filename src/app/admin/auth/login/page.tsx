@@ -98,7 +98,6 @@ function AdminLoginForm() {
               style={{
                 fontFamily: "'TR Frankfurter', 'Rubik', sans-serif",
                 color: '#F2A900',
-                transform: 'rotate(-6deg)',
                 display: 'inline-block',
               }}
             >

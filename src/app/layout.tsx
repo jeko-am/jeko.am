@@ -26,7 +26,7 @@ import { getServerLang } from "@/lib/i18n/server";
  */
 export async function generateMetadata(): Promise<Metadata> {
   const fallback: Metadata = {
-    title: "Jeko - Personalised Healthy Natural Pet Food",
+    title: "Jeko.am",
     description: "The easiest way to feed healthy, natural pet food. Enjoy fresh food without the fuss.",
     icons: { icon: "/favicon.svg" },
   };
