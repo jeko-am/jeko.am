@@ -98,8 +98,16 @@ export default function HeroSection({ content }: { content?: Record<string, any>
           <div className="mt-8">
             <a
               href={buttonUrl}
-              className={`btn-gold inline-block font-rubik transition-all duration-300 hover:shadow-lg ${dynFontClass(content, "button_text")}`}
-              style={dynFontStyle(content, "button_text", lang)}
+              className="inline-flex min-h-[58px] min-w-[168px] items-center justify-center rounded-full border-2 border-gold bg-gold px-10 py-4 text-center font-rubik text-[18px] font-bold leading-none text-deep-green no-underline transition-all duration-300 hover:border-[#d99500] hover:bg-[#d99500] hover:shadow-lg md:min-h-[64px] md:min-w-[196px] md:px-12 md:text-[20px]"
+              style={{
+                ...dynFontStyle(content, "button_text", lang),
+                display: "inline-flex",
+                alignItems: "center",
+                justifyContent: "center",
+                borderRadius: "9999px",
+                fontSize: `max(var(--fs-desktop, 20px), 18px)`,
+                lineHeight: 1,
+              }}
             >
               {buttonText}
             </a>

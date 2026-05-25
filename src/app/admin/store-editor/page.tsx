@@ -1152,14 +1152,17 @@ export default function AdminStoreEditorPage() {
   // Writes localized fields to the Armenian override store in HY mode.
   // Shared controls such as toggles/colors/numbers always write to EN content.
   function updateField(key: string, value: unknown) {
-    const fieldType = activeSections[selectedIndex ?? -1]?.fields.find(f => f.key === key)?.type;
+    const field = activeSections[selectedIndex ?? -1]?.fields.find(f => f.key === key);
+    const fieldType = field?.type;
     const localizedInHy =
+      !field?.shared && (
       fieldType === 'text' ||
       fieldType === 'textarea' ||
       fieldType === 'rich_text' ||
       fieldType === 'image' ||
       fieldType === 'url' ||
-      fieldType === 'seo';
+      fieldType === 'seo'
+      );
     if (editLang === 'hy' && localizedInHy) {
       setEditValuesHy(prev => ({ ...prev, [key]: value }));
     } else {
@@ -1178,12 +1181,12 @@ export default function AdminStoreEditorPage() {
     // Per-language overrides extend to images and URLs so admins can swap
     // localized hero photos and links per HY locale; toggles/colors/numbers
     // remain language-agnostic.
-    const translatable = fieldType === 'text' || fieldType === 'textarea' || fieldType === 'rich_text' || fieldType === 'image' || fieldType === 'url';
+    const field = activeSections[selectedIndex ?? -1]?.fields.find(f => f.key === key);
+    const translatable = !field?.shared && (fieldType === 'text' || fieldType === 'textarea' || fieldType === 'rich_text' || fieldType === 'image' || fieldType === 'url');
     if (editLang === 'hy' && translatable) {
       const v = editValuesHy[key];
       if (v !== undefined && v !== null && v !== '') return v;
       // Static Armenian dictionary (when field has an i18nKey).
-      const field = activeSections[selectedIndex ?? -1]?.fields.find(f => f.key === key);
       if (field?.i18nKey && dictionaries.hy[field.i18nKey]) return dictionaries.hy[field.i18nKey];
       // No HY value yet — return empty so the auto-translate effect can
       // populate it. The English source is shown via the placeholder so the

@@ -5,6 +5,8 @@ export interface FieldDef {
   label: string;
   type: FieldType;
   placeholder?: string;
+  /** Keep this field shared across languages even when editing HY content. */
+  shared?: boolean;
   /** Static dictionary key for translation fallback when in HY edit mode and no DB override exists. */
   i18nKey?: string;
   /** Default font size shown as a placeholder hint when the admin hasn't set one. Px. */
@@ -611,6 +613,8 @@ const HOMEPAGE_SECTIONS: SectionSchema[] = [
       { key: 'subheading', label: 'Subheading', type: 'textarea', placeholder: 'Join thousands of happy pets — get a tailored plan in under 2 minutes.', defaultFontFamily: 'fredoka', defaultFontSizeDesktop: 18, defaultFontSizeMobile: 15 },
       { key: 'button_text', label: 'Button Text', type: 'text', placeholder: 'Sign me up', defaultFontFamily: 'fredoka', defaultFontSizeDesktop: 18, defaultFontSizeMobile: 18 },
       { key: 'button_url', label: 'Button URL', type: 'url', placeholder: '/auth/signup' },
+      { key: 'dog_badge_image', label: 'Left Badge Image', type: 'image', shared: true },
+      { key: 'paw_badge_image', label: 'Right Badge Image', type: 'image', shared: true },
       { key: 'background_color', label: 'Section Background Color', type: 'color' },
       { key: 'heading_color', label: 'Heading Text Color', type: 'color' },
       { key: 'subheading_color', label: 'Subheading Text Color', type: 'color' },
@@ -625,6 +629,8 @@ const HOMEPAGE_SECTIONS: SectionSchema[] = [
       subheading: 'Join thousands of happy pets — get a tailored plan in under 2 minutes.',
       button_text: 'Sign me up',
       button_url: '/auth/signup',
+      dog_badge_image: '/cta-assets/register-dog-badge.png?v=2',
+      paw_badge_image: '/cta-assets/register-paw-badge.png?v=2',
       background_color: '#F8F2E8',
       heading_color: '#274C46',
       subheading_color: '#274C46',

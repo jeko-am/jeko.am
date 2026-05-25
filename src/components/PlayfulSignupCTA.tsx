@@ -8,27 +8,46 @@ import { dynFontClass, dynFontStyle } from "@/lib/dynamic-font-size";
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export default function PlayfulSignupCTA({ content }: { content?: Record<string, any> }) {
-  // Hooks retained for future i18n wiring; no translation keys exist for this
-  // section yet, so use plain content overrides with literal fallbacks.
   const { lang } = useContentT(content);
   const signupUrl = useSignupUrl();
-  const contentString = (key: string, fallback: string) => (
+  const fallbackText = {
+    heading: lang === "hy" ? "Դեռ գրանցված չե՞ք JEKO.am-ում" : "Are you registered yet on JEKO.am?",
+    subheading: lang === "hy"
+      ? "Սեղմեք՝ գրանցվելու և նույն ցեղատեսակի նոր գրանցված ընտանի կենդանիներին հեշտությամբ գտնելու ու տեսնելու համար։ Որքան շատ լինենք, այնքան մեր ընտանի կենդանիները ավելի մեծ հնարավորություն կունենան գտնելու լավագույն համընկնումը։"
+      : "Click to register to easily match and see new registered pets of same breed. More we become more our pets will have more chance to match the best one!!",
+    button_text: lang === "hy" ? "Գրանցվել" : "Register Me",
+  };
+  const contentString = (key: string, fallback: string) => {
+    if (lang === "hy") {
+      const hy = content?.hy as Record<string, unknown> | undefined;
+      if (hy && Object.prototype.hasOwnProperty.call(hy, key)) {
+        return typeof hy[key] === "string" ? hy[key] : "";
+      }
+      return fallback;
+    }
+    return Object.prototype.hasOwnProperty.call(content || {}, key)
+      ? String(content?.[key] ?? "")
+      : fallback;
+  };
+  const sharedString = (key: string, fallback: string) => (
     Object.prototype.hasOwnProperty.call(content || {}, key)
       ? String(content?.[key] ?? "")
       : fallback
   );
-  const heading = contentString("heading", "Ready to spoil them?");
-  const subheading = contentString("subheading", "Join thousands of happy pets — get a tailored plan in under 2 minutes.");
-  const buttonText = contentString("button_text", "Sign me up");
+  const heading = contentString("heading", fallbackText.heading);
+  const subheading = contentString("subheading", fallbackText.subheading);
+  const buttonText = contentString("button_text", fallbackText.button_text);
   const buttonUrl = contentString("button_url", signupUrl);
-  const backgroundColor = contentString("background_color", "#F8F2E8");
-  const headingColor = contentString("heading_color", "#274C46");
-  const subheadingColor = contentString("subheading_color", "#274C46");
-  const buttonBackgroundColor = contentString("button_background_color", "#F2A900");
-  const buttonTextColor = contentString("button_text_color", "#274C46");
-  const accentColor1 = contentString("accent_color_1", "#F2A900");
-  const accentColor2 = contentString("accent_color_2", "#5F295E");
-  const accentColor3 = contentString("accent_color_3", "#E65A1E");
+  const backgroundColor = sharedString("background_color", "#F8F2E8");
+  const headingColor = sharedString("heading_color", "#274C46");
+  const subheadingColor = sharedString("subheading_color", "#274C46");
+  const buttonBackgroundColor = sharedString("button_background_color", "#F2A900");
+  const buttonTextColor = sharedString("button_text_color", "#274C46");
+  const dogBadgeImage = sharedString("dog_badge_image", "/cta-assets/register-dog-badge.png?v=2");
+  const pawBadgeImage = sharedString("paw_badge_image", "/cta-assets/register-paw-badge.png?v=2");
+  const accentColor1 = sharedString("accent_color_1", "#F2A900");
+  const accentColor2 = sharedString("accent_color_2", "#5F295E");
+  const accentColor3 = sharedString("accent_color_3", "#E65A1E");
 
   return (
     <section className="relative overflow-hidden py-14 md:py-20" style={{ backgroundColor }}>
@@ -97,7 +116,7 @@ export default function PlayfulSignupCTA({ content }: { content?: Record<string,
             style={{ borderColor: buttonBackgroundColor }}
           >
             <Image
-              src="/cta-assets/register-dog-badge.png?v=2"
+              src={dogBadgeImage}
               alt=""
               fill
               sizes="96px"
@@ -132,7 +151,7 @@ export default function PlayfulSignupCTA({ content }: { content?: Record<string,
             className="absolute right-2.5 top-1/2 h-[44px] w-[44px] -translate-y-1/2 overflow-hidden rounded-full bg-white shadow-[0_5px_12px_rgba(120,60,0,0.18)] sm:right-4 sm:h-[54px] sm:w-[54px]"
           >
             <Image
-              src="/cta-assets/register-paw-badge.png?v=2"
+              src={pawBadgeImage}
               alt=""
               fill
               sizes="54px"

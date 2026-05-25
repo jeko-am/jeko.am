@@ -38,6 +38,7 @@ const BUILT_IN_FONTS: FontOption[] = [
   { value: "frankfurter-hl",  label: "Frankfurter Highlight", family: "'Frankfurter Highlight', 'Frankfurter', Arial, sans-serif",                 supportsLatin: true,  supportsArmenian: false },
   { value: "tr-frankfurter",  label: "TR Frankfurter",        family: "'TR Frankfurter', 'Frankfurter', Arial, sans-serif",                        supportsLatin: true,  supportsArmenian: false },
   { value: "vag-rounded",     label: "VAG Rounded Next",      family: "'VAG Rounded Next', 'Fredoka', 'Rubik', Helvetica, Arial, sans-serif",      supportsLatin: true,  supportsArmenian: false },
+  { value: "jeko",            label: "JEKO",                  family: "'JEKO', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif", supportsLatin: true,  supportsArmenian: true  },
   { value: "caveat",          label: "Caveat",                family: "'Caveat', cursive",                                                         supportsLatin: true,  supportsArmenian: false },
   { value: "sofia",           label: "Sofia Pro",             family: "'Sofia Pro', 'Fredoka', 'Rubik', Arial, sans-serif",                        supportsLatin: true,  supportsArmenian: false },
   { value: "helvetica",       label: "Helvetica",             family: "Helvetica, Arial, sans-serif",                                              supportsLatin: true,  supportsArmenian: true  },
@@ -108,6 +109,9 @@ export const FONT_OPTIONS = BUILT_IN_FONTS;
 
 export function fontFamilyFor(value: unknown): string | null {
   if (typeof value !== "string" || !value || value === "default") return null;
+  if (value.toLowerCase() === "jeko" || value.toLowerCase() === "jeko-regular") {
+    return "'JEKO', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif";
+  }
   const found = snapshot.find((f) => f.value === value);
   return found?.family || null;
 }

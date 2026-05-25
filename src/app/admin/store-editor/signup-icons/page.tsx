@@ -83,6 +83,7 @@ const GROUPS: Group[] = [
   {
     title: 'Step 7 — Looking for a match',
     options: [
+      { key: 'matchIllustration', label: 'Main illustration', defaultKey: 'heart' },
       { key: 'matchYes', label: 'Yes',        defaultKey: 'heart' },
       { key: 'matchNo',  label: 'No, thanks', defaultKey: 'no'    },
     ],

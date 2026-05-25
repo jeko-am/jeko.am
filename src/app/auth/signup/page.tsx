@@ -21,6 +21,7 @@ import { QIcon } from '@/lib/signupIcons';
 /* ------------------------------------------------------------------ */
 
 const TOTAL_STEPS = 9;
+const OTHER_BREED_OPTION = 'N/A (Not in List)';
 
 /* ------------------------------------------------------------------ */
 /*  Tiny icons                                                         */
@@ -265,7 +266,7 @@ function BreedAutocomplete({
   const listRef = useRef<HTMLUListElement>(null);
 
   const filtered = useMemo(() => {
-    const breeds = getBreedsByPetType(petType);
+    const breeds = [...getBreedsByPetType(petType), OTHER_BREED_OPTION];
     if (!search.trim()) return breeds;
     const q = search.toLowerCase();
     return breeds.filter((b) => b.toLowerCase().includes(q));
@@ -1278,16 +1279,6 @@ function SignupPageInner() {
               {STEP_MESSAGES[step]}
             </p>
 
-            {/* Submit error */}
-            {submitError && (
-              <div className="mb-6 flex items-start gap-3 bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-xl text-sm max-w-md w-full">
-                <svg className="w-5 h-5 flex-shrink-0 mt-0.5 text-red-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v3.75m9-.75a9 9 0 11-18 0 9 9 0 0118 0zm-9 3.75h.008v.008H12v-.008z" />
-                </svg>
-                <span>{submitError}</span>
-              </div>
-            )}
-
             {/* ============ STEP 0: PET TYPE ============ */}
             {step === 0 && (
               <div className="w-full max-w-lg text-center">
@@ -1535,13 +1526,26 @@ function SignupPageInner() {
                   })}
                 </div>
 
-                <button
-                  type="button"
-                  onClick={goNext}
-                  className="bg-gold hover:bg-yellow-500 text-deep-green font-semibold py-3.5 px-10 rounded-2xl transition-all duration-200 shadow-sm hover:shadow-md text-lg"
-                >
-                  {t('auth.signup.continue')}
-                </button>
+                <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
+                  <button
+                    type="button"
+                    onClick={goNext}
+                    className="bg-gold hover:bg-yellow-500 text-deep-green font-semibold py-3.5 px-10 rounded-2xl transition-all duration-200 shadow-sm hover:shadow-md text-lg"
+                  >
+                    {t('auth.signup.continue')}
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setDisabilities([]);
+                      setAllergies([]);
+                      goNext();
+                    }}
+                    className="bg-white hover:bg-gray-50 text-deep-green font-semibold py-3.5 px-10 rounded-2xl border-2 border-deep-green/20 transition-all duration-200 shadow-sm hover:shadow-md text-lg"
+                  >
+                    Skip
+                  </button>
+                </div>
               </div>
             )}
 
@@ -1595,7 +1599,7 @@ function SignupPageInner() {
                 {/* Illustration */}
                 <div className="mb-8 flex justify-center">
                   <img
-                    src="/WhatsApp_Image_2026-04-11_at_09.54.12-removebg-preview.png"
+                    src={optionIcons.matchIllustration || '/cta-assets/register-dog-badge.png'}
                     alt="Pets looking for a match"
                     className="w-32 h-32 object-contain"
                   />
@@ -1830,7 +1834,7 @@ function SignupPageInner() {
                   <button
                     type="button"
                     onClick={() => setShowEmailForm(true)}
-                    className="text-sm text-deep-green/50 hover:text-deep-green transition-colors mb-6"
+                    className="text-base font-bold text-deep-green underline decoration-gold decoration-2 underline-offset-4 hover:text-gold transition-colors mb-6"
                   >
                     {t('auth.signup.orSignUpEmail')}
                   </button>
@@ -1946,11 +1950,11 @@ function SignupPageInner() {
                   <button
                     type="submit"
                     disabled={submitting}
-                    className="mt-6 w-full bg-deep-green hover:bg-deep-green/90 text-white font-semibold py-4 px-12 rounded-2xl transition-all duration-200 shadow-sm hover:shadow-md text-lg disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                    className="mt-6 w-full bg-gold hover:bg-yellow-500 text-deep-green font-semibold py-4 px-12 rounded-2xl transition-all duration-200 shadow-sm hover:shadow-md text-lg disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
                   >
                     {submitting ? (
                       <>
-                        <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                        <div className="w-5 h-5 border-2 border-deep-green/30 border-t-deep-green rounded-full animate-spin" />
                         {t('auth.signup.creating')}
                       </>
                     ) : (
@@ -1960,6 +1964,14 @@ function SignupPageInner() {
                       </>
                     )}
                   </button>
+                  {submitError && (
+                    <div className="mt-4 flex items-start gap-3 bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-xl text-sm w-full">
+                      <svg className="w-5 h-5 flex-shrink-0 mt-0.5 text-red-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v3.75m9-.75a9 9 0 11-18 0 9 9 0 0118 0zm-9 3.75h.008v.008H12v-.008z" />
+                      </svg>
+                      <span>{submitError}</span>
+                    </div>
+                  )}
                 </div>
                 )}
 

@@ -49,6 +49,14 @@
   font-display: swap;
 }
 
+@font-face {
+  font-family: 'JEKO';
+  src: url('/Jeko-Regular.ttf') format('truetype');
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
 .font-vag,
 .font-vag h1, .font-vag h2, .font-vag h3, .font-vag h4, .font-vag h5, .font-vag h6 {
   font-family: 'VAG Rounded Next', 'Fredoka', 'Rubik', Helvetica, Arial, sans-serif !important;
