@@ -1601,7 +1601,7 @@ function SignupPageInner() {
                   <img
                     src={optionIcons.matchIllustration || '/cta-assets/register-dog-badge.png'}
                     alt="Pets looking for a match"
-                    className="w-32 h-32 object-contain"
+                    className="h-32 w-32 rounded-full object-cover [clip-path:circle(42%_at_50%_50%)]"
                   />
                 </div>
 
