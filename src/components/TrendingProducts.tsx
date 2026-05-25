@@ -4,6 +4,7 @@ import { useEffect, useLayoutEffect, useState, useRef } from 'react';
 import { supabase } from '@/lib/supabase';
 import ProductCard from './ProductCard';
 import { useContentT } from '@/lib/i18n/useContentT';
+import { dynFontClass, dynFontStyle } from '@/lib/dynamic-font-size';
 
 interface Product {
   id: string;
@@ -18,7 +19,7 @@ interface Product {
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export default function TrendingProducts({ content }: { content?: any }) {
-  const { ct, t } = useContentT(content);
+  const { ct, t, lang } = useContentT(content);
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
   const [canScrollLeft, setCanScrollLeft] = useState(false);
@@ -109,10 +110,16 @@ export default function TrendingProducts({ content }: { content?: any }) {
             <span className="inline-block bg-gold/20 text-gold text-sm font-semibold px-4 py-1.5 rounded-full mb-4">
               {t("home.trending.eyebrow")}
             </span>
-            <h2 className="text-3xl md:text-4xl font-medium text-white mb-2 tracking-wide">
+            <h2
+              className={`text-3xl md:text-4xl font-medium text-white mb-2 tracking-wide ${dynFontClass(content, "heading")}`}
+              style={dynFontStyle(content, "heading", lang)}
+            >
               {ct("heading", "home.trending.heading")}
             </h2>
-            <p className="text-white/60 max-w-md">
+            <p
+              className={`text-white/60 max-w-md ${dynFontClass(content, "description")}`}
+              style={dynFontStyle(content, "description", lang)}
+            >
               {ct("description", "home.trending.description")}
             </p>
           </div>

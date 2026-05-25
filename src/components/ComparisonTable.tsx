@@ -1,6 +1,7 @@
 "use client";
 
 import { useContentT } from "@/lib/i18n/useContentT";
+import { dynFontClass, dynFontStyle } from "@/lib/dynamic-font-size";
 
 const CheckIcon = () => (
   <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" fill="none" viewBox="0 0 48 48">
@@ -29,7 +30,7 @@ const CrossIcon = () => (
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export default function ComparisonTable({ content }: { content?: any }) {
-  const { ct } = useContentT(content);
+  const { ct, lang } = useContentT(content);
   const heading = ct("heading", "home.compare.heading").replace(/\bPure\b/gi, "Jeko");
   const col1Header = ct("col_1_header", "home.compare.col1").replace(/\bPURE\b/gi, "JEKO").replace(/\bPure\b/g, "Jeko");
   const col2Header = ct("col_2_header", "home.compare.col2");
@@ -95,7 +96,10 @@ export default function ComparisonTable({ content }: { content?: any }) {
       </div>
 
       <div className="max-w-container mx-auto px-6">
-        <h2 className="text-[36px] md:text-[40px] font-medium text-white text-center tracking-wide mb-10">
+        <h2
+          className={`text-[36px] md:text-[40px] font-medium text-white text-center tracking-wide mb-10 ${dynFontClass(content, "heading")}`}
+          style={dynFontStyle(content, "heading", lang)}
+        >
           {heading}
         </h2>
 
@@ -103,13 +107,22 @@ export default function ComparisonTable({ content }: { content?: any }) {
           {/* Header Row */}
           <div className="grid grid-cols-4 gap-0 bg-[#4F194A] rounded-t-xl overflow-hidden">
             <div className="p-4"></div>
-            <div className="p-4 text-center text-white font-semibold text-[16px]">
+            <div
+              className={`p-4 text-center text-white font-semibold text-[16px] ${dynFontClass(content, "col_1_header")}`}
+              style={dynFontStyle(content, "col_1_header", lang)}
+            >
               {col1Header}
             </div>
-            <div className="p-4 text-center text-white font-semibold text-[16px] whitespace-pre-line">
+            <div
+              className={`p-4 text-center text-white font-semibold text-[16px] whitespace-pre-line ${dynFontClass(content, "col_2_header")}`}
+              style={dynFontStyle(content, "col_2_header", lang)}
+            >
               {col2Header}
             </div>
-            <div className="p-4 text-center text-white font-semibold text-[16px] whitespace-pre-line">
+            <div
+              className={`p-4 text-center text-white font-semibold text-[16px] whitespace-pre-line ${dynFontClass(content, "col_3_header")}`}
+              style={dynFontStyle(content, "col_3_header", lang)}
+            >
               {col3Header}
             </div>
           </div>
@@ -123,7 +136,10 @@ export default function ComparisonTable({ content }: { content?: any }) {
               } ${index === rows.length - 1 ? "rounded-b-xl" : ""}`}
             >
               <div className="p-4 flex items-center">
-                <span className="text-white font-semibold text-[15px]">
+                <span
+                  className={`text-white font-semibold text-[15px] ${dynFontClass(content, `row_${index + 1}_label`)}`}
+                  style={dynFontStyle(content, `row_${index + 1}_label`, lang)}
+                >
                   {row.label}
                 </span>
               </div>

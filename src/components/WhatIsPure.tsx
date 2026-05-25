@@ -4,16 +4,18 @@ import Link from "next/link";
 import Image from "next/image";
 import { useSignupUrl } from "@/lib/useSignupUrl";
 import { useContentT } from "@/lib/i18n/useContentT";
+import { dynFontClass, dynFontStyle } from "@/lib/dynamic-font-size";
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export default function WhatIsPure({ content }: { content?: Record<string, any> }) {
-  const { ct } = useContentT(content);
+  const { ct, lang } = useContentT(content);
   const heading = ct("heading", "home.whatIs.heading");
   const description = ct("description", "home.whatIs.description");
   const image = content?.image || "https://www.datocms-assets.com/55536/1689943504-healthy-dog-food-subscription.jpg?auto=format&fit=crop&h=600&w=1000";
   const buttonText = ct("button_text", "home.whatIs.buttonText");
   const signupUrl = useSignupUrl();
-  const buttonUrl = content?.button_url || signupUrl;
+  const buttonUrl = typeof content?.button_url === "string" ? content.button_url : signupUrl;
+  const showButton = content?.button_visible !== false && buttonText.trim() !== "" && buttonUrl.trim() !== "";
   const backgroundColor = content?.background_color || "#F8F2E8";
 
   const paragraphs = description.split("\n\n");
@@ -46,22 +48,38 @@ export default function WhatIsPure({ content }: { content?: Record<string, any> 
         {/* Text Right Side - larger */}
         <div className="w-full md:w-[58%] flex items-center" style={{ backgroundColor }}>
           <div className="px-8 md:px-16 py-12 md:py-0 max-w-[560px]">
-            <h2 className="text-[36px] md:text-[40px] font-medium text-deep-green leading-tight mb-6 tracking-wide">
-              {heading}
-            </h2>
+            {heading.trim() !== "" && (
+              <h2
+                className={`text-[36px] md:text-[40px] font-medium text-deep-green leading-tight mb-6 tracking-wide ${dynFontClass(content, "heading")}`}
+                style={dynFontStyle(content, "heading", lang)}
+              >
+                {heading}
+              </h2>
+            )}
+            {paragraphs.some((paragraph) => paragraph.trim() !== "") && (
             <div className="space-y-4 mb-8">
               {paragraphs.map((paragraph: string, index: number) => (
-                <p key={index} className="text-[18px] text-deep-green leading-relaxed">
+                paragraph.trim() === "" ? null : (
+                <p
+                  key={index}
+                  className={`text-[18px] text-deep-green leading-relaxed ${dynFontClass(content, "description")}`}
+                  style={dynFontStyle(content, "description", lang)}
+                >
                   {paragraph}
                 </p>
+                )
               ))}
             </div>
+            )}
+            {showButton && (
             <Link
               href={buttonUrl}
-              className="inline-block border-2 border-deep-green text-deep-green px-7 py-3 rounded-[5px] font-semibold text-[18px] hover:bg-deep-green hover:text-white transition-all duration-300"
+              className={`inline-block border-2 border-deep-green text-deep-green px-7 py-3 rounded-[5px] font-semibold text-[18px] hover:bg-deep-green hover:text-white transition-all duration-300 ${dynFontClass(content, "button_text")}`}
+              style={dynFontStyle(content, "button_text", lang)}
             >
               {buttonText}
             </Link>
+            )}
           </div>
         </div>
       </div>

@@ -13,7 +13,8 @@ export default function HeroSection({ content }: { content?: Record<string, any>
   const subheading = ct("subheading", "home.hero.subheading");
   const buttonText = ct("button_text", "home.hero.buttonText");
   const signupUrl = useSignupUrl();
-  const buttonUrl = content?.button_url || signupUrl;
+  const buttonUrl = typeof content?.button_url === "string" ? content.button_url : signupUrl;
+  const showButton = content?.button_visible !== false && buttonText.trim() !== "" && buttonUrl.trim() !== "";
   const bgImage = content?.background_image || "https://images.unsplash.com/photo-1587300003388-59208cc962cb?auto=format&fit=crop&h=800&w=1920";
   const bgImageMobile = content?.background_image_mobile || bgImage;
   const trustpilotLabel = ct("trustpilot_label", "home.hero.trustpilotLabel");
@@ -95,6 +96,7 @@ export default function HeroSection({ content }: { content?: Record<string, any>
           </p>
 
           {/* CTA Button */}
+          {showButton && (
           <div className="mt-8">
             <a
               href={buttonUrl}
@@ -112,6 +114,7 @@ export default function HeroSection({ content }: { content?: Record<string, any>
               {buttonText}
             </a>
           </div>
+          )}
 
           {/* Trustpilot-style badge */}
           <div className="mt-6 flex items-center gap-2">

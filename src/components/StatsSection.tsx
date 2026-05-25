@@ -2,10 +2,11 @@
 
 import { useEffect, useState, useCallback, useRef } from "react";
 import { useContentT } from "@/lib/i18n/useContentT";
+import { dynFontClass, dynFontStyle } from "@/lib/dynamic-font-size";
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export default function StatsSection({ content }: { content?: any }) {
-  const { ct } = useContentT(content);
+  const { ct, lang } = useContentT(content);
   const mealsServed = content?.meals_served ?? 92905251;
   const stat1Value = ct("stat_1_value", "home.stats.stat1Value");
   const stat1Label = ct("stat_1_label", "home.stats.stat1Label");
@@ -72,7 +73,10 @@ export default function StatsSection({ content }: { content?: any }) {
         </svg>
       </div>
       <div className="max-w-[1200px] mx-auto px-6 text-center relative z-10">
-        <h2 className="text-[36px] md:text-[40px] font-medium text-deep-green tracking-wide mb-4">
+        <h2
+          className={`text-[36px] md:text-[40px] font-medium text-deep-green tracking-wide mb-4 ${dynFontClass(content, "heading")}`}
+          style={dynFontStyle(content, "heading", lang)}
+        >
           {ct("heading", "home.stats.heading")}
         </h2>
 
@@ -80,25 +84,40 @@ export default function StatsSection({ content }: { content?: any }) {
           {count.toLocaleString()}
         </div>
 
-        <p className="text-[18px] text-deep-green max-w-xl mx-auto mb-10">
+        <p
+          className={`text-[18px] text-deep-green max-w-xl mx-auto mb-10 ${dynFontClass(content, "meals_label")}`}
+          style={dynFontStyle(content, "meals_label", lang)}
+        >
           {ct("meals_label", "home.stats.mealsLabel")}
         </p>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-3xl mx-auto">
           <div className="bg-beige-light rounded-xl p-6 flex items-center gap-4">
-            <span className="text-[42px] md:text-[48px] font-medium text-gold tracking-wide shrink-0">
+            <span
+              className={`text-[42px] md:text-[48px] font-medium text-gold tracking-wide shrink-0 ${dynFontClass(content, "stat_1_value")}`}
+              style={dynFontStyle(content, "stat_1_value", lang)}
+            >
               {stat1Value}
             </span>
-            <p className="text-left text-[16px] font-semibold text-deep-green leading-snug">
+            <p
+              className={`text-left text-[16px] font-semibold text-deep-green leading-snug ${dynFontClass(content, "stat_1_label")}`}
+              style={dynFontStyle(content, "stat_1_label", lang)}
+            >
               {stat1Label}
             </p>
           </div>
 
           <div className="bg-beige-light rounded-xl p-6 flex items-center gap-4">
-            <span className="text-[42px] md:text-[48px] font-medium text-gold tracking-wide shrink-0">
+            <span
+              className={`text-[42px] md:text-[48px] font-medium text-gold tracking-wide shrink-0 ${dynFontClass(content, "stat_2_value")}`}
+              style={dynFontStyle(content, "stat_2_value", lang)}
+            >
               {stat2Value}
             </span>
-            <p className="text-left text-[16px] font-semibold text-deep-green leading-snug">
+            <p
+              className={`text-left text-[16px] font-semibold text-deep-green leading-snug ${dynFontClass(content, "stat_2_label")}`}
+              style={dynFontStyle(content, "stat_2_label", lang)}
+            >
               {stat2Label}
             </p>
           </div>

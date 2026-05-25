@@ -60,7 +60,7 @@ export default function MatchingModal({ content }: { content?: Record<string, an
 
   const { ct } = useContentT(content);
   const textOrFallback = (key: string, fallback: string) => (
-    content && Object.prototype.hasOwnProperty.call(content, key) ? ct(key) : fallback
+    content ? ct(key) : fallback
   );
 
   const enabled = content?.enabled !== false;
@@ -69,7 +69,8 @@ export default function MatchingModal({ content }: { content?: Record<string, an
   const image = content?.image || '/WhatsApp Image 2026-04-11 at 09.54.12.jpeg';
   const ctaText = textOrFallback('cta_text', 'Register My Pet');
   const signupUrl = useSignupUrl();
-  const ctaUrl = content?.cta_url || signupUrl;
+  const ctaUrl = typeof content?.cta_url === "string" ? content.cta_url : signupUrl;
+  const showCta = content?.cta_visible !== false && ctaText.trim() !== "" && ctaUrl.trim() !== "";
   const closeText = textOrFallback('close_text', 'Maybe later');
   const communityLabel = textOrFallback('community_count_text', 'pet parents already in our community!');
 
@@ -195,13 +196,15 @@ export default function MatchingModal({ content }: { content?: Record<string, an
 
             {/* Buttons */}
             <div className="flex flex-col gap-1 sm:gap-2">
-              <Link
-                href={ctaUrl}
-                onClick={handleClose}
-                className="w-full bg-gold hover:bg-yellow-500 text-deep-green font-bold py-1.5 sm:py-3 px-3 sm:px-4 rounded-lg sm:rounded-2xl transition-all duration-200 shadow-sm hover:shadow-md text-center text-xs sm:text-base"
-              >
-                {ctaText}
-              </Link>
+              {showCta && (
+                <Link
+                  href={ctaUrl}
+                  onClick={handleClose}
+                  className="w-full bg-gold hover:bg-yellow-500 text-deep-green font-bold py-1.5 sm:py-3 px-3 sm:px-4 rounded-lg sm:rounded-2xl transition-all duration-200 shadow-sm hover:shadow-md text-center text-xs sm:text-base"
+                >
+                  {ctaText}
+                </Link>
+              )}
               <button
                 onClick={handleClose}
                 className="w-full text-deep-green font-semibold py-1 sm:py-2 px-3 sm:px-4 rounded-lg sm:rounded-2xl transition-colors duration-200 text-[11px] sm:text-sm hover:bg-gray-100"

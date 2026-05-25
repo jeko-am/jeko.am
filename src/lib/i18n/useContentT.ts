@@ -11,17 +11,19 @@ type AnyContent = Record<string, unknown> | null | undefined;
  *
  * Lookup order when lang === "hy":
  *   1. content.hy.key (admin-provided Armenian) — wins even when intentionally blank
- *   2. t(fallbackDictKey) from the static Armenian dictionary — wins over English content
- *   3. content.key (English fallback, only if no Armenian anywhere) — wins even when intentionally blank
+ *   2. content.key (English fallback, only if no Armenian field exists)
  *
  * Lookup order when lang === "en":
  *   1. content.key (admin-provided English) — wins even when intentionally blank
- *   2. t(fallbackDictKey) from the English dictionary
+ *
+ * The fallbackDictKey argument is kept for backwards-compatible call sites,
+ * but editor-controlled fields must not resurrect static copy after the admin
+ * clears a field.
  */
 export function useContentT(content: AnyContent) {
   const { lang, t } = useT();
 
-  function ct(key: string, fallbackDictKey?: string): string {
+  function ct(key: string, _fallbackDictKey?: string): string {
     if (lang === "hy") {
       if (content) {
         const hy = (content as { hy?: Record<string, unknown> }).hy;
@@ -29,14 +31,6 @@ export function useContentT(content: AnyContent) {
           const hyVal = hy[key];
           if (typeof hyVal === "string") return hyVal;
         }
-      }
-      if (fallbackDictKey) {
-        const dict = t(fallbackDictKey);
-        // dict returns the key itself if missing — only use it when we actually have a translation
-        if (dict && dict !== fallbackDictKey) return dict;
-      }
-      // No Armenian found anywhere — show English content as last resort
-      if (content) {
         const c = content as Record<string, unknown>;
         if (Object.prototype.hasOwnProperty.call(c, key)) {
           const enVal = c[key];
@@ -51,7 +45,6 @@ export function useContentT(content: AnyContent) {
           if (typeof enVal === "string") return enVal;
         }
       }
-      if (fallbackDictKey) return t(fallbackDictKey);
     }
     return "";
   }

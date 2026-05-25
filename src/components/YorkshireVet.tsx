@@ -2,17 +2,14 @@
 
 import Image from "next/image";
 import { useContentT } from "@/lib/i18n/useContentT";
+import { dynFontClass, dynFontStyle } from "@/lib/dynamic-font-size";
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export default function YorkshireVet({ content }: { content?: any }) {
-  const { ct } = useContentT(content);
-  // ct() returns the i18n fallback when content[key] is missing. To let the
-  // client clear a field from the store editor we treat an explicit empty
-  // string in `content` as "hide this line".
-  const hasOwn = (k: string) => Object.prototype.hasOwnProperty.call(content ?? {}, k);
-  const heading = hasOwn("heading") ? content!.heading : ct("heading", "home.vet.heading");
-  const author = hasOwn("author") ? content!.author : ct("author", "home.vet.authorName");
-  const quote = hasOwn("quote") ? content!.quote : ct("quote", "home.vet.quoteText");
+  const { ct, lang } = useContentT(content);
+  const heading = ct("heading", "home.vet.heading");
+  const author = ct("author", "home.vet.authorName");
+  const quote = ct("quote", "home.vet.quoteText");
   const backgroundColor = content?.background_color || "#F8F2E8";
   return (
     <section className="relative overflow-hidden">
@@ -39,17 +36,26 @@ export default function YorkshireVet({ content }: { content?: any }) {
 
           <div className="px-12 md:px-16 lg:px-24 py-12 relative z-10">
             {heading ? (
-              <h2 className="text-[32px] md:text-[40px] font-medium text-deep-green tracking-wide leading-tight mb-2">
+              <h2
+                className={`text-[32px] md:text-[40px] font-medium text-deep-green tracking-wide leading-tight mb-2 ${dynFontClass(content, "heading")}`}
+                style={dynFontStyle(content, "heading", lang)}
+              >
                 {heading}
               </h2>
             ) : null}
             {author ? (
-              <p className="text-[#6B8E3A] text-[32px] md:text-[38px] font-medium tracking-wide mb-6">
+              <p
+                className={`text-[#6B8E3A] text-[32px] md:text-[38px] font-medium tracking-wide mb-6 ${dynFontClass(content, "author")}`}
+                style={dynFontStyle(content, "author", lang)}
+              >
                 {author}
               </p>
             ) : null}
             {quote ? (
-              <p className="text-deep-green text-[18px] leading-relaxed max-w-md italic">
+              <p
+                className={`text-deep-green text-[18px] leading-relaxed max-w-md italic ${dynFontClass(content, "quote")}`}
+                style={dynFontStyle(content, "quote", lang)}
+              >
                 {"\u201c"}{quote}{"\u201d"}
               </p>
             ) : null}

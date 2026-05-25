@@ -4,10 +4,11 @@ import Link from "next/link";
 import Image from "next/image";
 import { useSignupUrl } from "@/lib/useSignupUrl";
 import { useContentT } from "@/lib/i18n/useContentT";
+import { dynFontClass, dynFontStyle } from "@/lib/dynamic-font-size";
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export default function HowPlanWorks({ content }: { content?: any }) {
-  const { ct, t } = useContentT(content);
+  const { ct, t, lang } = useContentT(content);
   const heading = ct("heading", "home.howPlan.heading").replace(/\bPure\b/gi, "Jeko");
   const stepLabel = t("home.howPlan.stepLabel");
   const step1Title = ct("step_1_title", "home.howPlan.step1Title");
@@ -16,10 +17,11 @@ export default function HowPlanWorks({ content }: { content?: any }) {
   const step2Description = ct("step_2_description", "home.howPlan.step2Title");
   const step3Title = ct("step_3_title", "home.howPlan.step3Title");
   const step3Description = ct("step_3_description", "home.howPlan.step3Title");
-  const step4Title = t("home.howPlan.step4Title");
+  const step4Title = ct("step_4_title", "home.howPlan.step4Title");
   const buttonText = ct("button_text", "home.howPlan.buttonText");
   const signupUrl = useSignupUrl();
-  const buttonUrl = content?.button_url ?? signupUrl;
+  const buttonUrl = typeof content?.button_url === "string" ? content.button_url : signupUrl;
+  const showButton = content?.button_visible !== false && buttonText.trim() !== "" && buttonUrl.trim() !== "";
   const backgroundColor = content?.background_color || "#274C46";
   const contentString = (key: string, fallback: string) => (
     Object.prototype.hasOwnProperty.call(content || {}, key)
@@ -86,7 +88,10 @@ export default function HowPlanWorks({ content }: { content?: any }) {
         </svg>
       </div>
       <div className="max-w-container mx-auto px-6 relative z-10">
-        <h2 className="text-[36px] md:text-[40px] font-medium text-white text-center tracking-wide mb-12">
+        <h2
+          className={`text-[36px] md:text-[40px] font-medium text-white text-center tracking-wide mb-12 ${dynFontClass(content, "heading")}`}
+          style={dynFontStyle(content, "heading", lang)}
+        >
           {heading}
         </h2>
 
@@ -109,21 +114,27 @@ export default function HowPlanWorks({ content }: { content?: any }) {
                 </div>
               ) : null}
               <p className="text-gold font-medium text-[14px] mb-1">{step.step}</p>
-              <p className="text-white font-medium text-[16px] leading-tight tracking-wide">
+              <p
+                className={`text-white font-medium text-[16px] leading-tight tracking-wide ${dynFontClass(content, `step_${index + 1}_title`)}`}
+                style={dynFontStyle(content, `step_${index + 1}_title`, lang)}
+              >
                 {step.title}
               </p>
             </div>
           ))}
         </div>
 
+        {showButton && (
         <div className="text-center">
           <Link
             href={buttonUrl}
-            className="inline-block bg-gold text-deep-green px-8 py-3.5 rounded-[5px] font-semibold text-[18px] hover:bg-[#d99500] transition-colors duration-300"
+            className={`inline-block bg-gold text-deep-green px-8 py-3.5 rounded-[5px] font-semibold text-[18px] hover:bg-[#d99500] transition-colors duration-300 ${dynFontClass(content, "button_text")}`}
+            style={dynFontStyle(content, "button_text", lang)}
           >
             {buttonText}
           </Link>
         </div>
+        )}
       </div>
     </section>
   );

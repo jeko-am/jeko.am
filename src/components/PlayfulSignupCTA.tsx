@@ -10,34 +10,27 @@ import { dynFontClass, dynFontStyle } from "@/lib/dynamic-font-size";
 export default function PlayfulSignupCTA({ content }: { content?: Record<string, any> }) {
   const { lang } = useContentT(content);
   const signupUrl = useSignupUrl();
-  const fallbackText = {
-    heading: lang === "hy" ? "Դեռ գրանցված չե՞ք JEKO.am-ում" : "Are you registered yet on JEKO.am?",
-    subheading: lang === "hy"
-      ? "Սեղմեք՝ գրանցվելու և նույն ցեղատեսակի նոր գրանցված ընտանի կենդանիներին հեշտությամբ գտնելու ու տեսնելու համար։ Որքան շատ լինենք, այնքան մեր ընտանի կենդանիները ավելի մեծ հնարավորություն կունենան գտնելու լավագույն համընկնումը։"
-      : "Click to register to easily match and see new registered pets of same breed. More we become more our pets will have more chance to match the best one!!",
-    button_text: lang === "hy" ? "Գրանցվել" : "Register Me",
-  };
-  const contentString = (key: string, fallback: string) => {
+  const contentString = (key: string) => {
     if (lang === "hy") {
       const hy = content?.hy as Record<string, unknown> | undefined;
       if (hy && Object.prototype.hasOwnProperty.call(hy, key)) {
         return typeof hy[key] === "string" ? hy[key] : "";
       }
-      return fallback;
     }
     return Object.prototype.hasOwnProperty.call(content || {}, key)
       ? String(content?.[key] ?? "")
-      : fallback;
+      : "";
   };
   const sharedString = (key: string, fallback: string) => (
     Object.prototype.hasOwnProperty.call(content || {}, key)
       ? String(content?.[key] ?? "")
       : fallback
   );
-  const heading = contentString("heading", fallbackText.heading);
-  const subheading = contentString("subheading", fallbackText.subheading);
-  const buttonText = contentString("button_text", fallbackText.button_text);
-  const buttonUrl = contentString("button_url", signupUrl);
+  const heading = contentString("heading");
+  const subheading = contentString("subheading");
+  const buttonText = contentString("button_text");
+  const buttonUrl = contentString("button_url") || signupUrl;
+  const showButton = content?.button_visible !== false && buttonText.trim() !== "" && buttonUrl.trim() !== "";
   const backgroundColor = sharedString("background_color", "#F8F2E8");
   const headingColor = sharedString("heading_color", "#274C46");
   const subheadingColor = sharedString("subheading_color", "#274C46");
@@ -69,6 +62,7 @@ export default function PlayfulSignupCTA({ content }: { content?: Record<string,
       />
 
       <div className="relative mx-auto flex max-w-container flex-col items-center px-6 text-center lg:px-8">
+        {heading.trim() !== "" && (
         <h2
           className={dynFontClass(content, "heading")}
           style={{
@@ -83,6 +77,8 @@ export default function PlayfulSignupCTA({ content }: { content?: Record<string,
         >
           {heading}
         </h2>
+        )}
+        {subheading.trim() !== "" && (
         <p
           className={`mt-4 max-w-2xl ${dynFontClass(content, "subheading")}`}
           style={{
@@ -95,7 +91,9 @@ export default function PlayfulSignupCTA({ content }: { content?: Record<string,
         >
           {subheading}
         </p>
+        )}
 
+        {showButton && (
         <Link
           href={buttonUrl}
           className={`group relative mt-8 flex h-[60px] w-full max-w-[390px] items-center justify-center rounded-full border-[4px] px-[72px] text-center shadow-[0_10px_18px_rgba(204,91,0,0.24)] transition-all duration-200 hover:-translate-y-0.5 hover:shadow-[0_14px_22px_rgba(204,91,0,0.28)] active:translate-y-0 active:shadow-[0_7px_14px_rgba(204,91,0,0.22)] sm:h-[68px] sm:max-w-[500px] sm:px-[98px] ${dynFontClass(content, "button_text")}`}
@@ -161,6 +159,7 @@ export default function PlayfulSignupCTA({ content }: { content?: Record<string,
             />
           </span>
         </Link>
+        )}
       </div>
     </section>
   );

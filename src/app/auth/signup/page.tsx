@@ -378,33 +378,78 @@ function BreedAutocomplete({
 /* ------------------------------------------------------------------ */
 
 function SignupPageInner() {
-  const { t } = useT();
+  const { t, lang } = useT();
   const { signUp, signInWithGoogle, user, loading: authLoading } = useAuth();
   const router = useRouter();
   const searchParams = useSearchParams();
+  const [signupContent, setSignupContent] = useState<Record<string, unknown> | null>(null);
+
+  useEffect(() => {
+    let alive = true;
+    (async () => {
+      const { data: pages } = await supabase
+        .from('pages')
+        .select('id')
+        .or('slug.eq./auth/signup,slug.eq.auth/signup')
+        .limit(1);
+      const pageId = pages?.[0]?.id;
+      if (!pageId) return;
+
+      const { data: sections } = await supabase
+        .from('page_sections')
+        .select('content')
+        .eq('page_id', pageId);
+      if (!alive || !sections) return;
+
+      const merged = sections
+        .map((section) => section.content as Record<string, unknown> | null)
+        .filter(Boolean)
+        .sort((a, b) => Number(a?._section_index ?? 0) - Number(b?._section_index ?? 0))
+        .reduce<Record<string, unknown>>((acc, content) => ({ ...acc, ...content }), {});
+      setSignupContent(merged);
+    })();
+    return () => { alive = false; };
+  }, []);
+
+  const signupText = (key: string, fallbackKey: string, vars?: Record<string, string | number | null | undefined>) => {
+    const hy = signupContent?.hy as Record<string, unknown> | undefined;
+    const raw =
+      lang === 'hy' && hy && Object.prototype.hasOwnProperty.call(hy, key)
+        ? hy[key]
+        : signupContent && Object.prototype.hasOwnProperty.call(signupContent, key)
+          ? signupContent[key]
+          : undefined;
+    const fallback = t(fallbackKey, vars as Record<string, string | number> | undefined);
+    const value = typeof raw === 'string' ? raw : fallback;
+    if (!vars) return value;
+    return Object.entries(vars).reduce(
+      (text, [name, val]) => text.replaceAll(`{${name}}`, String(val ?? '')),
+      value
+    );
+  };
 
   const STEP_TITLES = [
-    t('auth.signup.stepTitle0'),
-    t('auth.signup.stepTitle1'),
-    t('auth.signup.stepTitle2'),
-    t('auth.signup.stepTitle3'),
-    t('auth.signup.stepTitle4'),
-    t('auth.signup.stepTitle5'),
-    t('auth.signup.stepTitle6'),
-    t('auth.signup.stepTitle7'),
-    t('auth.signup.stepTitle8'),
+    signupText('stepTitle0', 'auth.signup.stepTitle0'),
+    signupText('stepTitle1', 'auth.signup.stepTitle1'),
+    signupText('stepTitle2', 'auth.signup.stepTitle2'),
+    signupText('stepTitle3', 'auth.signup.stepTitle3'),
+    signupText('stepTitle4', 'auth.signup.stepTitle4'),
+    signupText('stepTitle5', 'auth.signup.stepTitle5'),
+    signupText('stepTitle6', 'auth.signup.stepTitle6'),
+    signupText('stepTitle7', 'auth.signup.stepTitle7'),
+    signupText('stepTitle8', 'auth.signup.stepTitle8'),
   ];
 
   const STEP_MESSAGES = [
-    t('auth.signup.motivate1'),
-    t('auth.signup.motivate2'),
-    t('auth.signup.motivate3'),
-    t('auth.signup.motivate4'),
-    t('auth.signup.motivate5'),
-    t('auth.signup.motivate6'),
-    t('auth.signup.motivate7'),
-    t('auth.signup.motivate8'),
-    t('auth.signup.motivate9'),
+    signupText('motivate1', 'auth.signup.motivate1'),
+    signupText('motivate2', 'auth.signup.motivate2'),
+    signupText('motivate3', 'auth.signup.motivate3'),
+    signupText('motivate4', 'auth.signup.motivate4'),
+    signupText('motivate5', 'auth.signup.motivate5'),
+    signupText('motivate6', 'auth.signup.motivate6'),
+    signupText('motivate7', 'auth.signup.motivate7'),
+    signupText('motivate8', 'auth.signup.motivate8'),
+    signupText('motivate9', 'auth.signup.motivate9'),
   ];
 
   /* ---------- quiz state ---------- */
@@ -1285,7 +1330,7 @@ function SignupPageInner() {
                 <h1 className="text-2xl sm:text-3xl font-rubik font-bold text-gold mb-6">
                   {STEP_TITLES[0]}
                 </h1>
-                <p className="text-deep-green/50 text-sm mb-8">{t('auth.signup.step0Subtitle')}</p>
+                <p className="text-deep-green/50 text-sm mb-8">{signupText('step0Subtitle', 'auth.signup.step0Subtitle')}</p>
 
                 {/* Pet Type Selection */}
                 <div className="grid grid-cols-2 gap-4 mb-8 max-w-md mx-auto">
@@ -1336,7 +1381,7 @@ function SignupPageInner() {
                   disabled={!petType || !dogName.trim()}
                   className="mt-8 bg-gold hover:bg-yellow-500 text-deep-green font-semibold py-3.5 px-10 rounded-2xl transition-all duration-200 shadow-sm hover:shadow-md text-lg disabled:opacity-40 disabled:cursor-not-allowed"
                 >
-                  {t('auth.signup.continue')}
+                  {signupText('continue', 'auth.signup.continue')}
                 </button>
               </div>
             )}
@@ -1345,9 +1390,9 @@ function SignupPageInner() {
             {step === 1 && (
               <div className="w-full max-w-lg text-center">
                 <h1 className="text-2xl sm:text-3xl font-rubik font-bold text-gold mb-2">
-                  {t('auth.signup.step1Title', { name: petName })}
+                  {signupText('stepTitle1', 'auth.signup.step1Title', { name: petName })}
                 </h1>
-                <p className="text-deep-green/50 text-sm mb-8">{t('auth.signup.step1Subtitle')}</p>
+                <p className="text-deep-green/50 text-sm mb-8">{signupText('step1Subtitle', 'auth.signup.step1Subtitle')}</p>
 
                 {/* Breed */}
                 <div className="bg-white/80 border-2 border-deep-green/20 rounded-2xl p-5 max-w-md mx-auto mb-6">
@@ -1437,7 +1482,7 @@ function SignupPageInner() {
                   disabled={!breed.trim()}
                   className="mt-8 bg-gold hover:bg-yellow-500 text-deep-green font-semibold py-3.5 px-10 rounded-2xl transition-all duration-200 shadow-sm hover:shadow-md text-lg disabled:opacity-40 disabled:cursor-not-allowed"
                 >
-                  {t('auth.signup.continue')}
+                  {signupText('continue', 'auth.signup.continue')}
                 </button>
               </div>
             )}
@@ -1446,9 +1491,9 @@ function SignupPageInner() {
             {step === 2 && (
               <div className="w-full max-w-lg text-center">
                 <h1 className="text-2xl sm:text-3xl font-rubik font-bold text-gold mb-2">
-                  {t('auth.signup.step2Title', { name: petName })}
+                  {signupText('stepTitle2', 'auth.signup.step2Title', { name: petName })}
                 </h1>
-                <p className="text-deep-green/50 text-sm mb-6">{t('auth.signup.step2Subtitle')}</p>
+                <p className="text-deep-green/50 text-sm mb-6">{signupText('step2Subtitle', 'auth.signup.step2Subtitle')}</p>
 
                 <p className="text-sm font-medium text-deep-green mb-3">{t('auth.signup.personality')}</p>
                 <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 mb-8">
@@ -1474,7 +1519,7 @@ function SignupPageInner() {
                   onClick={goNext}
                   className="bg-gold hover:bg-yellow-500 text-deep-green font-semibold py-3.5 px-10 rounded-2xl transition-all duration-200 shadow-sm hover:shadow-md text-lg"
                 >
-                  {t('auth.signup.continue')}
+                  {signupText('continue', 'auth.signup.continue')}
                 </button>
               </div>
             )}
@@ -1483,9 +1528,9 @@ function SignupPageInner() {
             {step === 3 && (
               <div className="w-full max-w-lg text-center">
                 <h1 className="text-2xl sm:text-3xl font-rubik font-bold text-gold mb-2">
-                  {t('auth.signup.step3Title', { name: petName })}
+                  {signupText('stepTitle3', 'auth.signup.step3Title', { name: petName })}
                 </h1>
-                <p className="text-deep-green/50 text-sm mb-6">{t('auth.signup.step3Subtitle')}</p>
+                <p className="text-deep-green/50 text-sm mb-6">{signupText('step3Subtitle', 'auth.signup.step3Subtitle')}</p>
 
                 <p className="text-sm font-medium text-deep-green mb-3">{t('auth.signup.disabilitiesLabel')}</p>
                 <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-8">
@@ -1532,7 +1577,7 @@ function SignupPageInner() {
                     onClick={goNext}
                     className="bg-gold hover:bg-yellow-500 text-deep-green font-semibold py-3.5 px-10 rounded-2xl transition-all duration-200 shadow-sm hover:shadow-md text-lg"
                   >
-                    {t('auth.signup.continue')}
+                    {signupText('continue', 'auth.signup.continue')}
                   </button>
                   <button
                     type="button"
@@ -1553,9 +1598,9 @@ function SignupPageInner() {
             {step === 4 && (
               <div className="w-full max-w-lg text-center">
                 <h1 className="text-2xl sm:text-3xl font-rubik font-bold text-gold mb-2">
-                  {t('auth.signup.step4Title', { name: petName })}
+                  {signupText('stepTitle4', 'auth.signup.step4Title', { name: petName })}
                 </h1>
-                <p className="text-deep-green/50 text-sm mb-6">{t('auth.signup.step4Subtitle')}</p>
+                <p className="text-deep-green/50 text-sm mb-6">{signupText('step4Subtitle', 'auth.signup.step4Subtitle')}</p>
 
                 <p className="text-sm font-medium text-deep-green mb-3">{t('auth.signup.diet')}</p>
                 <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 mb-8">
@@ -1582,7 +1627,7 @@ function SignupPageInner() {
                   onClick={goNext}
                   className="bg-gold hover:bg-yellow-500 text-deep-green font-semibold py-3.5 px-10 rounded-2xl transition-all duration-200 shadow-sm hover:shadow-md text-lg"
                 >
-                  {t('auth.signup.continue')}
+                  {signupText('continue', 'auth.signup.continue')}
                 </button>
               </div>
             )}
@@ -1592,9 +1637,9 @@ function SignupPageInner() {
             {step === 5 && (
               <div className="w-full max-w-lg text-center">
                 <h1 className="text-2xl sm:text-3xl font-rubik font-bold text-gold mb-2">
-                  {t('auth.signup.step5Title')}
+                  {signupText('stepTitle5', 'auth.signup.step5Title')}
                 </h1>
-                <p className="text-deep-green/50 text-sm mb-6">{t('auth.signup.step5Subtitle', { name: petName })}</p>
+                <p className="text-deep-green/50 text-sm mb-6">{signupText('step5Subtitle', 'auth.signup.step5Subtitle', { name: petName })}</p>
 
                 {/* Illustration */}
                 <div className="mb-8 flex justify-center">
@@ -1627,7 +1672,7 @@ function SignupPageInner() {
                   disabled={lookingForMatch === null}
                   className="mt-6 bg-gold hover:bg-yellow-500 text-deep-green font-semibold py-3.5 px-10 rounded-2xl transition-all duration-200 shadow-sm hover:shadow-md text-lg disabled:opacity-40 disabled:cursor-not-allowed"
                 >
-                  {t('auth.signup.continue')}
+                  {signupText('continue', 'auth.signup.continue')}
                 </button>
               </div>
             )}
@@ -1636,9 +1681,9 @@ function SignupPageInner() {
             {step === 6 && (
               <div className="w-full max-w-md text-center">
                 <h1 className="text-2xl sm:text-3xl font-rubik font-bold text-gold mb-2">
-                  {t('auth.signup.step6Title', { name: petName })}
+                  {signupText('stepTitle6', 'auth.signup.step6Title', { name: petName })}
                 </h1>
-                <p className="text-deep-green/50 text-sm mb-8">{t('auth.signup.step6Subtitle')}</p>
+                <p className="text-deep-green/50 text-sm mb-8">{signupText('step6Subtitle', 'auth.signup.step6Subtitle')}</p>
 
                 {/* Photo upload — opens native file picker on click */}
                 <div
@@ -1736,7 +1781,7 @@ function SignupPageInner() {
                   onClick={goNext}
                   className="bg-gold hover:bg-yellow-500 text-deep-green font-semibold py-3.5 px-10 rounded-2xl transition-all duration-200 shadow-sm hover:shadow-md text-lg disabled:opacity-40 disabled:cursor-not-allowed"
                 >
-                  {t('auth.signup.continue')}
+                  {signupText('continue', 'auth.signup.continue')}
                 </button>
               </div>
             )}
@@ -1745,9 +1790,9 @@ function SignupPageInner() {
             {step === 7 && (
               <div className="w-full max-w-md text-center">
                 <h1 className="text-2xl sm:text-3xl font-rubik font-bold text-gold mb-2">
-                  {t('auth.signup.step7Title')}
+                  {signupText('stepTitle7', 'auth.signup.step7Title')}
                 </h1>
-                <p className="text-deep-green/50 text-sm mb-8">{t('auth.signup.step7Subtitle')}</p>
+                <p className="text-deep-green/50 text-sm mb-8">{signupText('step7Subtitle', 'auth.signup.step7Subtitle')}</p>
 
                 <div className="space-y-4 text-left">
                   {/* Country Dropdown */}
@@ -1796,7 +1841,7 @@ function SignupPageInner() {
                   onClick={goNext}
                   className="mt-8 bg-gold hover:bg-yellow-500 text-deep-green font-semibold py-3.5 px-10 rounded-2xl transition-all duration-200 shadow-sm hover:shadow-md text-lg"
                 >
-                  {t('auth.signup.continue')}
+                  {signupText('continue', 'auth.signup.continue')}
                 </button>
               </div>
             )}
@@ -1805,9 +1850,9 @@ function SignupPageInner() {
             {step === 8 && (
               <div className="w-full max-w-md text-center">
                 <h1 className="text-2xl sm:text-3xl font-rubik font-bold text-gold mb-2">
-                  {t('auth.signup.step8Title')}
+                  {signupText('stepTitle8', 'auth.signup.step8Title')}
                 </h1>
-                <p className="text-deep-green/50 text-sm mb-6">{t('auth.signup.step8Subtitle')}</p>
+                <p className="text-deep-green/50 text-sm mb-6">{signupText('step8Subtitle', 'auth.signup.step8Subtitle')}</p>
 
                 {/* Google OAuth — primary option */}
                 <button
@@ -1836,7 +1881,7 @@ function SignupPageInner() {
                     onClick={() => setShowEmailForm(true)}
                     className="text-base font-bold text-deep-green underline decoration-gold decoration-2 underline-offset-4 hover:text-gold transition-colors mb-6"
                   >
-                    {t('auth.signup.orSignUpEmail')}
+                    {signupText('orSignUpEmail', 'auth.signup.orSignUpEmail')}
                   </button>
                 ) : (
                   <div className="relative mb-6">
@@ -1844,7 +1889,7 @@ function SignupPageInner() {
                       <div className="w-full border-t border-gray-200" />
                     </div>
                     <div className="relative flex justify-center text-xs">
-                      <span className="bg-off-white px-3 text-gray-400">{t('auth.signup.orSignUpEmailDiv')}</span>
+                      <span className="bg-off-white px-3 text-gray-400">{signupText('orSignUpEmailDiv', 'auth.signup.orSignUpEmailDiv')}</span>
                     </div>
                   </div>
                 )}
@@ -1955,11 +2000,11 @@ function SignupPageInner() {
                     {submitting ? (
                       <>
                         <div className="w-5 h-5 border-2 border-deep-green/30 border-t-deep-green rounded-full animate-spin" />
-                        {t('auth.signup.creating')}
+                        {signupText('creating', 'auth.signup.creating')}
                       </>
                     ) : (
                       <>
-                        {t('auth.signup.joinPack')}
+                        {signupText('joinPack', 'auth.signup.joinPack')}
                         <PawIcon />
                       </>
                     )}

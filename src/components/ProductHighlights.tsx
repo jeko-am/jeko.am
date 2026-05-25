@@ -6,6 +6,7 @@ import { useAuth } from '@/lib/auth';
 import { getViewedProductIds } from '@/lib/product-history';
 import ProductCard from './ProductCard';
 import { useContentT } from '@/lib/i18n/useContentT';
+import { dynFontClass, dynFontStyle } from '@/lib/dynamic-font-size';
 
 interface Product {
   id: string;
@@ -20,11 +21,14 @@ interface Product {
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export default function ProductHighlights({ content }: { content?: any }) {
-  const { ct, t } = useContentT(content);
+  const { ct, t, lang } = useContentT(content);
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
   const [isPersonalized, setIsPersonalized] = useState(false);
   const { user } = useAuth();
+  const buttonText = ct("button_text", "home.productHighlights.shopAll");
+  const buttonUrl = typeof content?.button_url === "string" ? content.button_url : "/products";
+  const showButton = content?.button_visible !== false && buttonText.trim() !== "" && buttonUrl.trim() !== "";
 
   useEffect(() => {
     async function fetchProducts() {
@@ -82,10 +86,16 @@ export default function ProductHighlights({ content }: { content?: any }) {
           <span className="inline-block bg-gold/20 text-deep-green text-sm font-semibold px-4 py-1.5 rounded-full mb-4">
             {isPersonalized ? t("home.productHighlights.eyebrowPersonalized") : t("home.productHighlights.eyebrow")}
           </span>
-          <h2 className="text-3xl md:text-4xl font-medium text-deep-green mb-3 tracking-wide">
+          <h2
+            className={`text-3xl md:text-4xl font-medium text-deep-green mb-3 tracking-wide ${dynFontClass(content, "heading")}`}
+            style={dynFontStyle(content, "heading", lang)}
+          >
             {isPersonalized ? t("home.productHighlights.eyebrowPersonalized") : ct("heading", "home.productHighlights.heading")}
           </h2>
-          <p className="text-deep-green/60 max-w-lg mx-auto">
+          <p
+            className={`text-deep-green/60 max-w-lg mx-auto ${dynFontClass(content, "subheading")}`}
+            style={dynFontStyle(content, "subheading", lang)}
+          >
             {isPersonalized ? t("home.productHighlights.description") : ct("subheading", "home.productHighlights.description")}
           </p>
         </div>
@@ -113,17 +123,19 @@ export default function ProductHighlights({ content }: { content?: any }) {
         )}
 
         {/* CTA */}
+        {showButton && (
         <div className="text-center mt-10">
           <a
-            href="/products"
+            href={buttonUrl}
             className="btn-gold inline-flex items-center gap-2"
           >
-            {t("home.productHighlights.shopAll")}
+            {buttonText}
             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
             </svg>
           </a>
         </div>
+        )}
       </div>
     </section>
   );

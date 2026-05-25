@@ -3,6 +3,7 @@
 import type React from "react";
 import Image from "next/image";
 import { useContentT } from "@/lib/i18n/useContentT";
+import { dynFontClass, dynFontStyle } from "@/lib/dynamic-font-size";
 
 const defaultBenefits = [
   {
@@ -33,7 +34,7 @@ const defaultBenefits = [
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export default function BenefitsBar({ content }: { content?: Record<string, any> }) {
-  const { ct } = useContentT(content);
+  const { ct, lang } = useContentT(content);
   const contentString = (key: string, fallback: string) => (
     Object.prototype.hasOwnProperty.call(content || {}, key)
       ? String(content?.[key] ?? "")
@@ -92,7 +93,10 @@ export default function BenefitsBar({ content }: { content?: Record<string, any>
                   />
                 </div>
               )}
-              <p className="text-white font-semibold text-[16px] leading-tight">
+              <p
+                className={`text-white font-semibold text-[16px] leading-tight ${dynFontClass(content, benefit.key)}`}
+                style={dynFontStyle(content, benefit.key, lang)}
+              >
                 {benefit.text}
               </p>
             </div>

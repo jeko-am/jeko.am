@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useSignupUrl } from "@/lib/useSignupUrl";
 import { useContentT } from "@/lib/i18n/useContentT";
+import { dynFontClass, dynFontStyle } from "@/lib/dynamic-font-size";
 
 const Sparkle = () => (
   <svg
@@ -23,31 +24,49 @@ const Sparkle = () => (
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export default function OfferBanner({ content }: { content?: Record<string, any> }) {
-  const { ct } = useContentT(content);
+  const { ct, lang } = useContentT(content);
   const signupUrl = useSignupUrl();
 
   const primaryText = ct("primary_text", "home.offer.primaryText");
   const secondaryText = ct("secondary_text", "home.offer.secondaryText");
-  const linkUrl = content?.link_url || signupUrl;
+  const linkUrl = typeof content?.link_url === "string" ? content.link_url : signupUrl;
   const bgColor = content?.background_color || "#5F295E";
+  const showBanner = primaryText.trim() !== "" || secondaryText.trim() !== "";
+  const canLink = content?.link_visible !== false && linkUrl.trim() !== "";
+  if (!showBanner) return null;
 
-  return (
-    <Link
-      href={linkUrl}
-      className="block w-full hover:opacity-90 transition-colors duration-200 py-3 text-center text-white"
+  const inner = (
+    <div
+      className="block w-full py-3 text-center text-white"
       style={{ backgroundColor: bgColor }}
     >
       <div className="flex items-center justify-center gap-3 px-4">
         <Sparkle />
         <p className="text-lg leading-snug">
-          <span className="font-bold">{primaryText}</span>
+          <span
+            className={`font-bold ${dynFontClass(content, "primary_text")}`}
+            style={dynFontStyle(content, "primary_text", lang)}
+          >
+            {primaryText}
+          </span>
           <span className="mx-1.5">+</span>
-          <span className="font-medium text-base text-white/90">
+          <span
+            className={`font-medium text-base text-white/90 ${dynFontClass(content, "secondary_text")}`}
+            style={dynFontStyle(content, "secondary_text", lang)}
+          >
             {secondaryText}
           </span>
         </p>
         <Sparkle />
       </div>
+    </div>
+  );
+
+  if (!canLink) return inner;
+
+  return (
+    <Link href={linkUrl} className="block w-full hover:opacity-90 transition-colors duration-200">
+      {inner}
     </Link>
   );
 }

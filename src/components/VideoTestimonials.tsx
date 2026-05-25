@@ -3,12 +3,13 @@
 import { useRef } from "react";
 import { useT } from "@/lib/i18n/LangProvider";
 import { useContentT } from "@/lib/i18n/useContentT";
+import { dynFontClass, dynFontStyle } from "@/lib/dynamic-font-size";
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export default function VideoTestimonials({ content }: { content?: any }) {
   const scrollRef = useRef<HTMLDivElement>(null);
   const { t } = useT();
-  const { ct } = useContentT(content);
+  const { ct, lang } = useContentT(content);
 
   const defaultVideos = [
     { src: "https://pure-website.s3.eu-west-2.amazonaws.com/Product+Benefits+Social+9X16.mp4", duration: "0:55", title: t("home.videos.title1") },
@@ -27,7 +28,7 @@ export default function VideoTestimonials({ content }: { content?: any }) {
       if (url) {
         out.push({
           src: url,
-          title: (content as Record<string, string>)[`video_${i}_title`] || defaultVideos[i - 1]?.title || '',
+          title: ct(`video_${i}_title`) || defaultVideos[i - 1]?.title || '',
           duration: (content as Record<string, string>)[`video_${i}_duration`] || defaultVideos[i - 1]?.duration || '',
         });
       } else if (defaultVideos[i - 1]) {
@@ -48,10 +49,16 @@ export default function VideoTestimonials({ content }: { content?: any }) {
     <section className="py-16 pb-12" style={{ backgroundColor: content?.background_color || '#F8F2E8' }}>
       <div className="max-w-container mx-auto px-6">
         <div className="text-center mb-10">
-          <h2 className="text-[36px] md:text-[40px] font-medium text-deep-green tracking-wide mb-3">
+          <h2
+            className={`text-[36px] md:text-[40px] font-medium text-deep-green tracking-wide mb-3 ${dynFontClass(content, "heading")}`}
+            style={dynFontStyle(content, "heading", lang)}
+          >
             {ct("heading", "home.videos.heading")}
           </h2>
-          <p className="text-[18px] text-deep-green">
+          <p
+            className={`text-[18px] text-deep-green ${dynFontClass(content, "subheading")}`}
+            style={dynFontStyle(content, "subheading", lang)}
+          >
             {ct("subheading", "home.videos.subheading")}
           </p>
         </div>
@@ -101,7 +108,10 @@ export default function VideoTestimonials({ content }: { content?: any }) {
                     {video.duration}
                   </div>
                 </div>
-                <p className="text-deep-green font-medium text-[15px]">
+                <p
+                  className={`text-deep-green font-medium text-[15px] ${dynFontClass(content, `video_${index + 1}_title`)}`}
+                  style={dynFontStyle(content, `video_${index + 1}_title`, lang)}
+                >
                   {video.title}
                 </p>
               </div>

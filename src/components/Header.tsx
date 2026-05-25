@@ -213,10 +213,11 @@ export default function Header({ content }: { content?: HeaderContent }) {
   const logoUrl = (effectiveContent?.logo_url as string | undefined) || "/";
   const headerBackgroundColor = (effectiveContent?.background_color as string | undefined) || "#274C46";
   const dropdownBackgroundColor = (effectiveContent?.dropdown_background_color as string | undefined) || headerBackgroundColor;
-  const ctaText = ct("cta_text", "common.signUp");
+  const ctaText = effectiveContent ? ct("cta_text", "common.signUp") : t("common.signUp");
   const signupUrl = useSignupUrl();
   // Gate the dynamic signup→profile swap until after hydration.
   const ctaUrl = effectiveContent?.cta_url ?? (mounted ? signupUrl : '/auth/signup');
+  const ctaVisible = effectiveContent?.cta_visible !== false && ctaText.trim() !== "" && String(ctaUrl || "").trim() !== "";
   const helpText = Object.prototype.hasOwnProperty.call(effectiveContent || {}, "help_text")
     ? ct("help_text", "")
     : t("common.help");
@@ -426,7 +427,7 @@ export default function Header({ content }: { content?: HeaderContent }) {
                 )}
               </>
             )}
-            {!user && (
+            {!user && ctaVisible && (
               <Link
                 href={ctaUrl}
                 className={signupCls}

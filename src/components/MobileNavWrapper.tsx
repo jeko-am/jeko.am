@@ -8,7 +8,7 @@ import { useIsMobile } from "@/lib/useIsMobile";
 // Pages where the fixed mobile app nav should not render.
 const EXCLUDED_PATHS = ["/admin"];
 // Full-screen flows keep the nav, but should not add extra scrollable space below it.
-const NO_PADDING_PATHS = ["/auth", "/login", "/signup", "/checkout"];
+const NO_PADDING_PATHS = ["/auth", "/login", "/checkout"];
 
 export default function MobileNavWrapper() {
   const { isMobile, isLoaded } = useIsMobile();

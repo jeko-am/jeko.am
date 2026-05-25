@@ -5,11 +5,15 @@ import Image from "next/image";
 import Link from "next/link";
 import { useSignupUrl } from "@/lib/useSignupUrl";
 import { useContentT } from "@/lib/i18n/useContentT";
+import { dynFontClass, dynFontStyle } from "@/lib/dynamic-font-size";
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export default function DragonsDen({ content }: { content?: any }) {
   const signupUrl = useSignupUrl();
-  const { ct } = useContentT(content);
+  const { ct, lang } = useContentT(content);
+  const buttonText = ct("button_text", "home.faq.getStarted");
+  const buttonUrl = typeof content?.button_url === "string" ? content.button_url : signupUrl;
+  const showButton = content?.button_visible !== false && buttonText.trim() !== "" && buttonUrl.trim() !== "";
   return (
     <section className="relative overflow-hidden">
       <div className="flex flex-col md:flex-row min-h-[480px]">
@@ -41,18 +45,27 @@ export default function DragonsDen({ content }: { content?: any }) {
         {/* Text Right Side - ~57% */}
         <div className="w-full md:w-[57%] flex items-center" style={{ backgroundColor: content?.background_color || '#274C46' }}>
           <div className="px-8 md:px-16 lg:px-24 py-12">
-            <h2 className="text-[32px] md:text-[40px] font-medium text-white tracking-wide leading-tight mb-6">
+            <h2
+              className={`text-[32px] md:text-[40px] font-medium text-white tracking-wide leading-tight mb-6 ${dynFontClass(content, "heading")}`}
+              style={dynFontStyle(content, "heading", lang)}
+            >
               {ct("heading", "home.dragons.heading")}
             </h2>
-            <p className="text-off-white text-[18px] leading-relaxed mb-8">
+            <p
+              className={`text-off-white text-[18px] leading-relaxed mb-8 ${dynFontClass(content, "description")}`}
+              style={dynFontStyle(content, "description", lang)}
+            >
               {ct("description", "home.dragons.description")}
             </p>
-            <Link
-              href={content?.button_url || signupUrl}
-              className="btn-gold inline-block font-semibold text-[18px] transition-colors duration-300"
-            >
-              {ct("button_text", "home.faq.getStarted")}
-            </Link>
+            {showButton && (
+              <Link
+                href={buttonUrl}
+                className={`btn-gold inline-block font-semibold text-[18px] transition-colors duration-300 ${dynFontClass(content, "button_text")}`}
+                style={dynFontStyle(content, "button_text", lang)}
+              >
+                {buttonText}
+              </Link>
+            )}
           </div>
         </div>
       </div>

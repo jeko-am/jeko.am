@@ -6,14 +6,18 @@ import Image from "next/image";
 import { useSignupUrl } from "@/lib/useSignupUrl";
 import { useT } from "@/lib/i18n/LangProvider";
 import { useContentT } from "@/lib/i18n/useContentT";
+import { dynFontClass, dynFontStyle } from "@/lib/dynamic-font-size";
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export default function FAQSection({ content }: { content?: any }) {
   const [openIndex, setOpenIndex] = useState<number | null>(null);
   const signupUrl = useSignupUrl();
   const { t } = useT();
-  const { ct } = useContentT(content);
+  const { ct, lang } = useContentT(content);
   const backgroundColor = content?.background_color || "#F8F2E8";
+  const buttonText = ct("button_text", "home.faq.getStarted");
+  const buttonUrl = typeof content?.button_url === "string" ? content.button_url : signupUrl;
+  const showButton = content?.button_visible !== false && buttonText.trim() !== "" && buttonUrl.trim() !== "";
 
   const faqs = [
     { question: t("home.faq.q1"), answer: t("home.faq.a1") },
@@ -52,10 +56,16 @@ export default function FAQSection({ content }: { content?: any }) {
           </div>
 
           <div className="px-8 md:pl-48 md:pr-12 py-16">
-            <h2 className="text-[32px] md:text-[40px] font-medium text-deep-green tracking-wide leading-tight mb-3">
+            <h2
+              className={`text-[32px] md:text-[40px] font-medium text-deep-green tracking-wide leading-tight mb-3 ${dynFontClass(content, "heading")}`}
+              style={dynFontStyle(content, "heading", lang)}
+            >
               {ct("heading", "home.faq.heading")}
             </h2>
-            <p className="text-[18px] text-deep-green mb-8">
+            <p
+              className={`text-[18px] text-deep-green mb-8 ${dynFontClass(content, "subheading")}`}
+              style={dynFontStyle(content, "subheading", lang)}
+            >
               {ct("subheading", "home.faq.subheading")}
             </p>
 
@@ -98,14 +108,17 @@ export default function FAQSection({ content }: { content?: any }) {
               ))}
             </div>
 
+            {showButton && (
             <div className="mt-8">
               <Link
-                href={content?.button_url || signupUrl}
-                className="btn-gold inline-block font-semibold text-[18px] transition-colors duration-300"
+                href={buttonUrl}
+                className={`btn-gold inline-block font-semibold text-[18px] transition-colors duration-300 ${dynFontClass(content, "button_text")}`}
+                style={dynFontStyle(content, "button_text", lang)}
               >
-                {ct("button_text", "home.faq.getStarted")}
+                {buttonText}
               </Link>
             </div>
+            )}
           </div>
         </div>
 
