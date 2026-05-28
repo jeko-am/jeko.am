@@ -14,7 +14,7 @@ import {
 import { useRouter, useSearchParams } from 'next/navigation';
 import { FormEvent, useEffect, useMemo, useRef, useState } from 'react';
 import { useT } from '@/lib/i18n/LangProvider';
-import { QIcon } from '@/lib/signupIcons';
+import { DEFAULT_SIGNUP_OPTION_ICONS, QIcon } from '@/lib/signupIcons';
 
 /* ------------------------------------------------------------------ */
 /*  Quiz step definitions                                              */
@@ -455,21 +455,29 @@ function SignupPageInner() {
   /* ---------- quiz state ---------- */
   const [step, setStep] = useState(0);
   const stepRef = useRef(0);
+  const stepMountedAtRef = useRef(Date.now());
   const [direction, setDirection] = useState<'forward' | 'backward'>('forward');
   const [animating, setAnimating] = useState(false);
 
   /* ---------- admin-uploaded per-option icons ---------- */
-  const [optionIcons, setOptionIcons] = useState<Record<string, string>>({});
+  const [optionIcons, setOptionIcons] = useState<Record<string, string>>(DEFAULT_SIGNUP_OPTION_ICONS);
   useEffect(() => {
     let alive = true;
     (async () => {
-      const { data } = await supabase
-        .from('app_settings')
-        .select('value')
-        .eq('key', 'signup_option_icons')
-        .maybeSingle();
-      if (alive && data?.value && typeof data.value === 'object') {
-        setOptionIcons(data.value as Record<string, string>);
+      try {
+        const { data } = await supabase
+          .from('app_settings')
+          .select('value')
+          .eq('key', 'signup_option_icons')
+          .maybeSingle();
+        if (alive && data?.value && typeof data.value === 'object') {
+          setOptionIcons({
+            ...DEFAULT_SIGNUP_OPTION_ICONS,
+            ...(data.value as Record<string, string>),
+          });
+        }
+      } catch {
+        // Keep the bundled custom icon set if the settings request is slow or blocked.
       }
     })();
     return () => { alive = false; };
@@ -904,6 +912,7 @@ function SignupPageInner() {
   /* ---------- keep stepRef in sync ---------- */
   useEffect(() => {
     stepRef.current = step;
+    stepMountedAtRef.current = Date.now();
   }, [step]);
 
   /* ---------- fetch states from API when country changes ---------- */
@@ -1689,11 +1698,9 @@ function SignupPageInner() {
                 <div
                   role="button"
                   tabIndex={0}
-                  data-mount-time={Date.now()}
-                  onClick={(e) => {
+                  onClick={() => {
                     // Ignore clicks within 600ms of mount to prevent ghost triggers during step transitions
-                    const mountTime = parseInt(e.currentTarget.getAttribute('data-mount-time') || '0');
-                    if (Date.now() - mountTime < 600) return;
+                    if (Date.now() - stepMountedAtRef.current < 600) return;
                     const input = document.createElement('input');
                     input.type = 'file';
                     input.accept = 'image/jpeg,image/png,image/webp,image/gif';

@@ -1,5 +1,48 @@
 import React from 'react';
 
+export const DEFAULT_SIGNUP_OPTION_ICONS: Record<string, string> = {
+  Cat: "https://res.cloudinary.com/dppatx2f4/image/upload/v1779467456/pure-pet-products/jfkxymb7h4r2lwg1kczw.gif",
+  Dog: "https://res.cloudinary.com/dppatx2f4/image/upload/v1779467493/pure-pet-products/fcczvn99jia8lms6syuw.gif",
+  Male: "https://res.cloudinary.com/dppatx2f4/image/upload/v1779469629/pure-pet-products/dhu8qhth3ipnmvbrb99w.gif",
+  Female: "https://res.cloudinary.com/dppatx2f4/image/upload/v1779469636/pure-pet-products/ikkg5izdoxfhzoabsdms.gif",
+  Calm: "https://res.cloudinary.com/dppatx2f4/image/upload/v1779467706/pure-pet-products/vnrypihrycqgksvzfiiw.gif",
+  Playful: "https://res.cloudinary.com/dppatx2f4/image/upload/v1779468970/pure-pet-products/ag9kgnw3skweutczsqqy.gif",
+  Energetic: "https://res.cloudinary.com/dppatx2f4/image/upload/v1779468048/pure-pet-products/monr4ql6l2nvxo6uamnm.gif",
+  Shy: "https://res.cloudinary.com/dppatx2f4/image/upload/v1779467825/pure-pet-products/i4u0bnzrd2xs6udncebc.gif",
+  Protective: "https://res.cloudinary.com/dppatx2f4/image/upload/v1779468441/pure-pet-products/dr9vwekodbhbbiuhegzg.gif",
+  Friendly: "https://res.cloudinary.com/dppatx2f4/image/upload/v1779467808/pure-pet-products/h8dmj9wxgr1yvrluv3lb.gif",
+  "disability:None": "https://res.cloudinary.com/dppatx2f4/image/upload/v1779468235/pure-pet-products/auoxlqjuvik3yyzs2veb.gif",
+  "disability:Blind": "https://res.cloudinary.com/dppatx2f4/image/upload/v1779468100/pure-pet-products/evg7pdepzmtdi6j5ve7k.gif",
+  "disability:Deaf": "https://res.cloudinary.com/dppatx2f4/image/upload/v1779468079/pure-pet-products/zn73xjjuh1sm0hxi1o1n.gif",
+  "disability:Mobility Issues": "https://res.cloudinary.com/dppatx2f4/image/upload/v1779468159/pure-pet-products/w6rcnkmokewib012wi7t.gif",
+  "disability:Amputee": "https://res.cloudinary.com/dppatx2f4/image/upload/v1779468285/pure-pet-products/mjuclj4lulxpnmfoa2ca.gif",
+  "disability:Epilepsy": "https://res.cloudinary.com/dppatx2f4/image/upload/v1779468524/pure-pet-products/cvsz62jnxbxzjlskhq3g.gif",
+  "disability:Anxiety": "https://res.cloudinary.com/dppatx2f4/image/upload/v1779468329/pure-pet-products/c31tkqlkwmvjwcxnqw31.gif",
+  "disability:Other": "https://res.cloudinary.com/dppatx2f4/image/upload/v1779468410/pure-pet-products/kvauznynqxcv4q9nuwcf.gif",
+  "allergy:None": "https://res.cloudinary.com/dppatx2f4/image/upload/v1779468533/pure-pet-products/uswtgysdndrltxwvbolj.gif",
+  "allergy:Chicken": "https://res.cloudinary.com/dppatx2f4/image/upload/v1779469045/pure-pet-products/n1jgmgxtav9go1ansl5r.gif",
+  "allergy:Beef": "https://res.cloudinary.com/dppatx2f4/image/upload/v1779468580/pure-pet-products/m7zdeshbdcae6upxjrep.gif",
+  "allergy:Grain": "https://res.cloudinary.com/dppatx2f4/image/upload/v1779469041/pure-pet-products/cex8seszxrsrx5vvibwh.gif",
+  "allergy:Dairy": "https://res.cloudinary.com/dppatx2f4/image/upload/v1779469054/pure-pet-products/buphupd2cfz6ndhd0w2q.gif",
+  "allergy:Eggs": "https://res.cloudinary.com/dppatx2f4/image/upload/v1779469054/pure-pet-products/buphupd2cfz6ndhd0w2q.gif",
+  "allergy:Soy": "https://res.cloudinary.com/dppatx2f4/image/upload/v1779469092/pure-pet-products/j84zbak5fv87sffjcuwk.gif",
+  "allergy:Fish": "https://res.cloudinary.com/dppatx2f4/image/upload/v1779469036/pure-pet-products/u6zmrttomupjbjzwnwyl.gif",
+  "allergy:Pollen": "https://res.cloudinary.com/dppatx2f4/image/upload/v1779469121/pure-pet-products/m1wvmdavgaxvsw8c1u3r.gif",
+  "allergy:Dust": "https://res.cloudinary.com/dppatx2f4/image/upload/v1779469097/pure-pet-products/u0w6lclsdh5ibmj9z8e8.gif",
+  "allergy:Flea": "https://res.cloudinary.com/dppatx2f4/image/upload/v1779469164/pure-pet-products/owb1nwhyxsv1wgjtqfvh.png",
+  "allergy:Other": "https://res.cloudinary.com/dppatx2f4/image/upload/v1779469168/pure-pet-products/vyjbaklt3db9ngtro5xj.gif",
+  "diet:Raw": "https://res.cloudinary.com/dppatx2f4/image/upload/v1779468638/pure-pet-products/qllkos1xqyc2rqfqmrxx.gif",
+  "diet:Kibble": "https://res.cloudinary.com/dppatx2f4/image/upload/v1779468628/pure-pet-products/ifb7ebouikneaiy0rm5d.gif",
+  "diet:Mixed": "https://res.cloudinary.com/dppatx2f4/image/upload/v1779468663/pure-pet-products/ekpjrczrzo41lw4gedja.gif",
+  "diet:Homemade": "https://res.cloudinary.com/dppatx2f4/image/upload/v1779468696/pure-pet-products/vpzxawkti23fqbupoqsh.gif",
+  "diet:Chicken": "https://res.cloudinary.com/dppatx2f4/image/upload/v1779468711/pure-pet-products/fei9liabivltvxrwjg4z.gif",
+  "diet:Beef": "https://res.cloudinary.com/dppatx2f4/image/upload/v1779468715/pure-pet-products/bri8xja4iomoexsrcuij.gif",
+  "diet:Lamb": "https://res.cloudinary.com/dppatx2f4/image/upload/v1779468753/pure-pet-products/i7bbv6kricifnswqzl94.png",
+  "diet:Vegetables": "https://res.cloudinary.com/dppatx2f4/image/upload/v1779468778/pure-pet-products/fyqt7rubed7naar1ng8r.gif",
+  matchYes: "https://res.cloudinary.com/dppatx2f4/image/upload/v1779468805/pure-pet-products/kyeirrbofztvk90tutcu.gif",
+  matchNo: "https://res.cloudinary.com/dppatx2f4/image/upload/v1779468961/pure-pet-products/kawyinfoah6zduvfnlgm.gif",
+};
+
 export const QIcon = {
   dog: (
     <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
