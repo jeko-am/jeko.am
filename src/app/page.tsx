@@ -1,7 +1,5 @@
-import { createClient } from "@supabase/supabase-js";
-import { unstable_noStore as noStore } from "next/cache";
-export const dynamic = "force-dynamic";
-export const revalidate = 0;
+import { createSupabaseClientWithTimeout } from "@/lib/supabase-timeout";
+export const revalidate = 60;
 import Header from "@/components/Header";
 import HeroSection from "@/components/HeroSection";
 import PlayfulSignupCTA from "@/components/PlayfulSignupCTA";
@@ -38,13 +36,13 @@ function sanitizeBrand(content: SectionContent): SectionContent {
 }
 
 async function getSectionContents(): Promise<{ content: Map<number, SectionContent>; hidden: Set<number> }> {
-  noStore();
   const content = new Map<number, SectionContent>();
   const hidden = new Set<number>();
   try {
-    const supabase = createClient(
+    const supabase = createSupabaseClientWithTimeout(
       process.env.NEXT_PUBLIC_SUPABASE_URL!,
-      process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+      process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+      2500
     );
     const { data: pages } = await supabase
       .from("pages")

@@ -1,7 +1,6 @@
 import { getPageSections } from "@/lib/get-page-sections";
 import ReviewsPageClient from "./client";
-export const dynamic = "force-dynamic";
-export const revalidate = 0;
+export const revalidate = 60;
 
 export default async function ReviewsPage() {
   const sectionData = await getPageSections("/reviews");

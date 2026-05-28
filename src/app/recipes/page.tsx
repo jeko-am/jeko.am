@@ -1,8 +1,7 @@
 import { getPageSections } from "@/lib/get-page-sections";
 import RecipesPageClient from "./client";
 
-export const dynamic = "force-dynamic";
-export const revalidate = 0;
+export const revalidate = 60;
 
 export default async function RecipesPage() {
   const sectionData = await getPageSections("/recipes");

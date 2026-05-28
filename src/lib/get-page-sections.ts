@@ -1,16 +1,15 @@
-import { createClient } from "@supabase/supabase-js";
-import { unstable_noStore as noStore } from "next/cache";
+import { createSupabaseClientWithTimeout } from "@/lib/supabase-timeout";
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type SectionContent = Record<string, any>;
 
 export async function getPageSections(pageSlug: string): Promise<Map<number, SectionContent>> {
-  noStore();
   const map = new Map<number, SectionContent>();
   try {
-    const supabase = createClient(
+    const supabase = createSupabaseClientWithTimeout(
       process.env.NEXT_PUBLIC_SUPABASE_URL!,
-      process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+      process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+      2500
     );
 
     // Normalize slug — homepage can be multiple slugs

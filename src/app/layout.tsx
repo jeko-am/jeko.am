@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import { createClient } from "@supabase/supabase-js";
+import { createSupabaseClientWithTimeout } from "@/lib/supabase-timeout";
 import { AuthProvider } from "@/lib/auth";
 import { CartProvider } from "@/lib/cart-context";
 import { CurrencyProvider } from "@/lib/currency";
@@ -34,7 +34,7 @@ export async function generateMetadata(): Promise<Metadata> {
   const key = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
   if (!url || !key) return fallback;
   try {
-    const supa = createClient(url, key);
+    const supa = createSupabaseClientWithTimeout(url, key, 2000);
     const [settingsRes, seoPageRes] = await Promise.all([
       supa.from("site_settings").select("key,value"),
       supa.from("pages").select("id").eq("slug", "seo-tracking").maybeSingle(),

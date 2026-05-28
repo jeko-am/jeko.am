@@ -23,7 +23,8 @@ type AnyContent = Record<string, unknown> | null | undefined;
 export function useContentT(content: AnyContent) {
   const { lang, t } = useT();
 
-  function ct(key: string, _fallbackDictKey?: string): string {
+  function ct(key: string, fallbackDictKey?: string): string {
+    void fallbackDictKey;
     if (lang === "hy") {
       if (content) {
         const hy = (content as { hy?: Record<string, unknown> }).hy;

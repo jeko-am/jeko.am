@@ -1,8 +1,7 @@
 import { getPageSections } from "@/lib/get-page-sections";
 import BenefitsPageClient from "./client";
 
-export const dynamic = "force-dynamic";
-export const revalidate = 0;
+export const revalidate = 60;
 
 export default async function BenefitsPage() {
   const sectionData = await getPageSections("/benefits");

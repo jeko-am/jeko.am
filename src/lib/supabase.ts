@@ -1,4 +1,5 @@
-import { createClient, SupabaseClient } from '@supabase/supabase-js';
+import type { SupabaseClient } from '@supabase/supabase-js';
+import { createSupabaseClientWithTimeout } from './supabase-timeout';
 
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!;
 const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!;
@@ -9,4 +10,8 @@ const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!;
 const globalKey = '__supabase_client' as const;
 const globalStore = (typeof window !== 'undefined' ? window : globalThis) as unknown as Record<string, SupabaseClient>;
 
-export const supabase: SupabaseClient = globalStore[globalKey] ??= createClient(supabaseUrl, supabaseAnonKey);
+export const supabase: SupabaseClient = globalStore[globalKey] ??= createSupabaseClientWithTimeout(
+  supabaseUrl,
+  supabaseAnonKey,
+  10000
+);
