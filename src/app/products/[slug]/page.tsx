@@ -35,6 +35,34 @@ interface Product {
   i18n?: { hy?: { name?: string; short_description?: string; description?: string } } | null;
 }
 
+type HeaderContent = Record<string, unknown>;
+
+async function fetchGlobalHeaderContent(): Promise<HeaderContent | null> {
+  try {
+    const { data: pages } = await supabase
+      .from('pages')
+      .select('id')
+      .or('slug.eq.home,slug.eq.homepage,slug.eq./,slug.eq.')
+      .limit(1);
+    const pageId = pages?.[0]?.id;
+    if (!pageId) return null;
+
+    const { data: sections } = await supabase
+      .from('page_sections')
+      .select('content, is_visible')
+      .eq('page_id', pageId);
+    const headerSection = sections?.find((section) => {
+      const content = section.content as HeaderContent | null;
+      const index = content?._homepage_index ?? content?._section_index;
+      return Number(index) === 0;
+    });
+
+    return (headerSection?.content as HeaderContent | undefined) ?? null;
+  } catch {
+    return null;
+  }
+}
+
 interface ProductReview {
   id: string;
   product_id: string;
@@ -94,22 +122,79 @@ function ProductLongDesc({ en, savedHy }: { en: string | null | undefined; saved
   return <div dangerouslySetInnerHTML={{ __html: (value || '').replace(/\n/g, '<br/>') }} />;
 }
 
+type ProductSectionContent = Record<string, unknown> | undefined;
+
+type EditableColors = {
+  backgroundColor?: string;
+  headingColor?: string;
+  bodyColor?: string;
+  mutedTextColor?: string;
+  accentColor?: string;
+  buttonBackgroundColor?: string;
+  buttonTextColor?: string;
+};
+
+function cleanColor(value: unknown): string | undefined {
+  return typeof value === 'string' && value.trim() ? value.trim() : undefined;
+}
+
+function editableColors(section: ProductSectionContent): EditableColors {
+  return {
+    backgroundColor: cleanColor(section?.background_color),
+    headingColor: cleanColor(section?.heading_color),
+    bodyColor: cleanColor(section?.body_text_color),
+    mutedTextColor: cleanColor(section?.muted_text_color),
+    accentColor: cleanColor(section?.accent_color),
+    buttonBackgroundColor: cleanColor(section?.button_background_color),
+    buttonTextColor: cleanColor(section?.button_text_color),
+  };
+}
+
+function colorStyle(color: string | undefined): React.CSSProperties | undefined {
+  return color ? { color } : undefined;
+}
+
+function backgroundStyle(color: string | undefined): React.CSSProperties | undefined {
+  return color ? { backgroundColor: color } : undefined;
+}
+
+function buttonStyle(colors: EditableColors): React.CSSProperties | undefined {
+  const style: React.CSSProperties = {};
+  if (colors.buttonBackgroundColor) style.backgroundColor = colors.buttonBackgroundColor;
+  if (colors.buttonTextColor) style.color = colors.buttonTextColor;
+  return Object.keys(style).length ? style : undefined;
+}
+
+function borderColorStyle(color: string | undefined): React.CSSProperties | undefined {
+  return color ? { borderColor: color } : undefined;
+}
+
 
 /* ------------------------------------------------------------------ */
 /* Accordion                                                          */
 /* ------------------------------------------------------------------ */
-function Accordion({ title, children, defaultOpen = false }: { title: string; children: React.ReactNode; defaultOpen?: boolean }) {
+function Accordion({
+  title,
+  children,
+  defaultOpen = false,
+  colors = {},
+}: {
+  title: string;
+  children: React.ReactNode;
+  defaultOpen?: boolean;
+  colors?: EditableColors;
+}) {
   const [open, setOpen] = useState(defaultOpen);
   return (
     <div className="border-b border-deep-green/10">
       <button onClick={() => setOpen(!open)} className="w-full flex items-center justify-between py-5 text-left group">
-        <h2 className="text-lg font-medium text-deep-green tracking-wide">{title}</h2>
-        <svg className={`w-5 h-5 text-deep-green/50 transition-transform duration-200 ${open ? 'rotate-45' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <h2 className="text-lg font-medium text-deep-green tracking-wide" style={colorStyle(colors.headingColor)}>{title}</h2>
+        <svg className={`w-5 h-5 text-deep-green/50 transition-transform duration-200 ${open ? 'rotate-45' : ''}`} style={colorStyle(colors.mutedTextColor || colors.headingColor)} fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
         </svg>
       </button>
       <div className={`overflow-hidden transition-all duration-300 ${open ? 'max-h-[600px] pb-5' : 'max-h-0'}`}>
-        <div className="text-deep-green/70 text-sm leading-relaxed">{children}</div>
+        <div className="text-deep-green/70 text-sm leading-relaxed" style={colorStyle(colors.bodyColor)}>{children}</div>
       </div>
     </div>
   );
@@ -119,7 +204,7 @@ function Accordion({ title, children, defaultOpen = false }: { title: string; ch
 /* Vet Testimonial Card                                               */
 /* ------------------------------------------------------------------ */
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-function UpsellCard({ item, lang, t, addItem }: { item: any; lang: string; t: (k: string) => string; addItem: (p: any) => void }) {
+function UpsellCard({ item, lang, t, addItem, colors = {} }: { item: any; lang: string; t: (k: string) => string; addItem: (p: any) => void; colors?: EditableColors }) {
   const { formatPrice } = useCurrency();
   const isUpsell = 'target_product' in item;
   const product = isUpsell ? item.target_product : item;
@@ -142,13 +227,13 @@ function UpsellCard({ item, lang, t, addItem }: { item: any; lang: string; t: (k
           />
         </div>
         <div className="flex-1 min-w-0">
-          <h4 className="font-medium text-deep-green text-sm mb-1 tracking-wide">{title}</h4>
-          {description && <p className="text-xs text-deep-green/60 mb-2 line-clamp-2">{description}</p>}
+          <h4 className="font-medium text-deep-green text-sm mb-1 tracking-wide" style={colorStyle(colors.headingColor)}>{title}</h4>
+          {description && <p className="text-xs text-deep-green/60 mb-2 line-clamp-2" style={colorStyle(colors.mutedTextColor || colors.bodyColor)}>{description}</p>}
           <div className="flex items-center justify-between">
             <div>
-              <span className="font-bold text-deep-green text-sm">{formatPrice(product.price)}</span>
+              <span className="font-bold text-deep-green text-sm" style={colorStyle(colors.headingColor)}>{formatPrice(product.price)}</span>
               {discount > 0 && (
-                <span className="ml-2 text-xs font-bold text-white bg-gold px-2 py-0.5 rounded-full">
+                <span className="ml-2 text-xs font-bold text-white bg-gold px-2 py-0.5 rounded-full" style={colors.accentColor ? { backgroundColor: colors.accentColor } : undefined}>
                   {discount}% off
                 </span>
               )}
@@ -166,6 +251,7 @@ function UpsellCard({ item, lang, t, addItem }: { item: any; lang: string; t: (k
                 });
               }}
               className="px-3 py-1.5 bg-deep-green text-white text-xs font-medium rounded-lg hover:bg-deep-green/90 transition-colors"
+              style={buttonStyle(colors)}
             >
               {t("productDetail.addToCart")}
             </button>
@@ -176,16 +262,16 @@ function UpsellCard({ item, lang, t, addItem }: { item: any; lang: string; t: (k
   );
 }
 
-function VetCard({ vet }: { vet: { name: string; role: string; text: string; product: string; productSlug: string } }) {
+function VetCard({ vet, colors = {} }: { vet: { name: string; role: string; text: string; product: string; productSlug: string }; colors?: EditableColors }) {
   return (
     <div className="min-w-[340px] max-w-[340px] bg-beige-light rounded-2xl p-6 snap-start flex flex-col">
       <div className="mb-3">
-        <h4 className="font-medium text-deep-green text-base tracking-wide"><HyText en={vet.name} /></h4>
-        <span className="text-sm text-deep-green/50"><HyText en={vet.role} /></span>
+        <h4 className="font-medium text-deep-green text-base tracking-wide" style={colorStyle(colors.headingColor)}><HyText en={vet.name} /></h4>
+        <span className="text-sm text-deep-green/50" style={colorStyle(colors.mutedTextColor)}><HyText en={vet.role} /></span>
       </div>
-      <p className="text-sm text-deep-green/70 leading-relaxed flex-1 mb-4"><HyText en={vet.text} /></p>
+      <p className="text-sm text-deep-green/70 leading-relaxed flex-1 mb-4" style={colorStyle(colors.bodyColor)}><HyText en={vet.text} /></p>
       <Link href={`/products/${vet.productSlug}`} className="flex items-center mt-auto pt-4 border-t border-deep-green/10">
-        <span className="text-xs font-medium text-deep-green line-clamp-2"><HyText en={vet.product} /></span>
+        <span className="text-xs font-medium text-deep-green line-clamp-2" style={colorStyle(colors.headingColor)}><HyText en={vet.product} /></span>
       </Link>
     </div>
   );
@@ -194,7 +280,7 @@ function VetCard({ vet }: { vet: { name: string; role: string; text: string; pro
 /* ------------------------------------------------------------------ */
 /* Review Card                                                        */
 /* ------------------------------------------------------------------ */
-function ReviewCard({ review }: { review: { name: string; date: string; rating: number; text: string; title?: string; variant?: string; verified: boolean; images?: string[] }; }) {
+function ReviewCard({ review, colors = {} }: { review: { name: string; date: string; rating: number; text: string; title?: string; variant?: string; verified: boolean; images?: string[] }; colors?: EditableColors }) {
   const [lightbox, setLightbox] = useState<string | null>(null);
   return (
     <>
@@ -205,24 +291,24 @@ function ReviewCard({ review }: { review: { name: string; date: string; rating: 
       )}
       <div className="border border-deep-green/10 rounded-xl p-5">
         <div className="flex items-center gap-2 mb-1">
-          <span className="font-medium text-deep-green text-sm tracking-wide">{review.name}</span>
+          <span className="font-medium text-deep-green text-sm tracking-wide" style={colorStyle(colors.headingColor)}>{review.name}</span>
           {review.verified && (
-            <span className="inline-flex items-center gap-1 text-xs text-gold">
+            <span className="inline-flex items-center gap-1 text-xs text-gold" style={colorStyle(colors.accentColor)}>
               <svg className="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M6.267 3.455a3.066 3.066 0 001.745-.723 3.066 3.066 0 013.976 0 3.066 3.066 0 001.745.723 3.066 3.066 0 012.812 2.812c.051.643.304 1.254.723 1.745a3.066 3.066 0 010 3.976 3.066 3.066 0 00-.723 1.745 3.066 3.066 0 01-2.812 2.812 3.066 3.066 0 00-1.745.723 3.066 3.066 0 01-3.976 0 3.066 3.066 0 00-1.745-.723 3.066 3.066 0 01-2.812-2.812 3.066 3.066 0 00-.723-1.745 3.066 3.066 0 010-3.976 3.066 3.066 0 00.723-1.745 3.066 3.066 0 012.812-2.812zm7.44 5.252a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" /></svg>
               <HyText en="Verified" />
             </span>
           )}
         </div>
-        <div className="text-xs text-deep-green/40 mb-2">{review.date}</div>
+        <div className="text-xs text-deep-green/40 mb-2" style={colorStyle(colors.mutedTextColor)}>{review.date}</div>
         <div className="flex gap-0.5 mb-2">
           {Array.from({ length: 5 }).map((_, i) => (
-            <svg key={i} className={`w-4 h-4 ${i < review.rating ? 'text-gold' : 'text-deep-green/15'}`} fill="currentColor" viewBox="0 0 20 20">
+            <svg key={i} className={`w-4 h-4 ${i < review.rating ? 'text-gold' : 'text-deep-green/15'}`} style={i < review.rating ? colorStyle(colors.accentColor) : undefined} fill="currentColor" viewBox="0 0 20 20">
               <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
             </svg>
           ))}
         </div>
-        {review.title && <p className="text-sm font-medium text-deep-green mb-1"><HyText en={review.title} /></p>}
-        <p className="text-sm text-deep-green/70"><HyText en={review.text} /></p>
+        {review.title && <p className="text-sm font-medium text-deep-green mb-1" style={colorStyle(colors.headingColor)}><HyText en={review.title} /></p>}
+        <p className="text-sm text-deep-green/70" style={colorStyle(colors.bodyColor)}><HyText en={review.text} /></p>
         {review.images && review.images.length > 0 && (
           <div className="flex gap-2 mt-3">
             {review.images.map((img, i) => (
@@ -232,7 +318,7 @@ function ReviewCard({ review }: { review: { name: string; date: string; rating: 
             ))}
           </div>
         )}
-        {review.variant && <p className="text-xs text-deep-green/40 mt-2"><HyText en="Item type" />: <HyText en={review.variant} /></p>}
+        {review.variant && <p className="text-xs text-deep-green/40 mt-2" style={colorStyle(colors.mutedTextColor)}><HyText en="Item type" />: <HyText en={review.variant} /></p>}
       </div>
     </>
   );
@@ -258,6 +344,7 @@ export default function ProductDetailPage() {
   const [isAddingToCart, setIsAddingToCart] = useState(false);
   const [variants, setVariants] = useState<Variant[]>([]);
   const [selectedVariant, setSelectedVariant] = useState<Variant | null>(null);
+  const [headerContent, setHeaderContent] = useState<HeaderContent | null>(null);
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [customSections, setCustomSections] = useState<Map<number, Record<string, any>>>(new Map());
   const vetScrollRef = useRef<HTMLDivElement>(null);
@@ -327,9 +414,23 @@ export default function ProductDetailPage() {
   useEffect(() => {
     async function fetchProduct() {
       setLoading(true);
-      const { data } = await supabase.from('products').select('*').eq('slug', slug).eq('status', 'active').single();
+      setProduct(null);
+      setRelated([]);
+      setBundles([]);
+      setUpsells([]);
+      setVariants([]);
+      setSelectedVariant(null);
+      setCustomSections(new Map());
+      setProductReviews([]);
+      const [loadedHeaderContent, productResult] = await Promise.all([
+        fetchGlobalHeaderContent(),
+        supabase.from('products').select('*').eq('slug', slug).eq('status', 'active').single(),
+      ]);
+      setHeaderContent(loadedHeaderContent);
+      const { data } = productResult;
       if (data) {
         setProduct(data);
+        setLoading(false);
         trackViewContent({ id: data.id, name: data.name, price: data.price, quantity: 1 });
 
         // Fetch related products
@@ -426,8 +527,9 @@ export default function ProductDetailPage() {
             setCustomSections(map);
           }
         }
+      } else {
+        setLoading(false);
       }
-      setLoading(false);
     }
     if (slug) fetchProduct();
   // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -454,15 +556,13 @@ export default function ProductDetailPage() {
 
   /* Loading state */
   if (loading) {
-    return (
-      <><Header /><main className="pt-24"><div className="max-w-[1400px] mx-auto px-4 py-16"><div className="grid grid-cols-1 lg:grid-cols-2 gap-12"><div className="aspect-square bg-gray-200 rounded-2xl animate-pulse" /><div className="space-y-4"><div className="h-8 bg-gray-200 rounded w-3/4 animate-pulse" /><div className="h-6 bg-gray-200 rounded w-1/4 animate-pulse" /><div className="h-4 bg-gray-200 rounded w-full animate-pulse" /><div className="h-12 bg-gray-200 rounded w-48 animate-pulse mt-8" /></div></div></div></main><Footer /></>
-    );
+    return null;
   }
 
   /* 404 */
   if (!product) {
     return (
-      <><Header /><main className="pt-24"><div className="max-w-[1200px] mx-auto px-4 py-20 text-center"><div className="text-6xl mb-4">🐾</div><h1 className="text-3xl font-bold text-deep-green mb-3">{t("products.empty.title")}</h1><p className="text-deep-green/60 mb-6">{t("products.empty.body")}</p><Link href="/products" className="btn-gold">{t("products.title")}</Link></div></main><Footer /></>
+      <><Header content={headerContent ?? undefined} /><main className="pt-24"><div className="max-w-[1200px] mx-auto px-4 py-20 text-center"><div className="text-6xl mb-4">🐾</div><h1 className="text-3xl font-bold text-deep-green mb-3">{t("products.empty.title")}</h1><p className="text-deep-green/60 mb-6">{t("products.empty.body")}</p><Link href="/products" className="btn-gold">{t("products.title")}</Link></div></main><Footer /></>
     );
   }
 
@@ -497,14 +597,33 @@ export default function ProductDetailPage() {
     vetScrollRef.current?.scrollBy({ left: dir === 'left' ? -370 : 370, behavior: 'smooth' });
   };
 
+  const getSection = (index: number) => customSections.get(index) as ProductSectionContent;
+  const heroColors = editableColors(getSection(0));
+  const featureColors = editableColors(getSection(1));
+  const detailColors = editableColors(getSection(2));
+  const ingredientsColors = editableColors(getSection(3));
+  const feedingColors = editableColors(getSection(4));
+  const upsellColors = editableColors(getSection(5));
+  const faqColors = editableColors(getSection(6));
+  const reviewColors = editableColors(getSection(7));
+  const differenceColors = editableColors(getSection(8));
+  const nutritionColors = editableColors(getSection(9));
+  const scienceColors = editableColors(getSection(10));
+  const vetsColors = editableColors(getSection(11));
+  const bestDaysColors = editableColors(getSection(12));
+  const startedColors = editableColors(getSection(13));
+  const missionColors = editableColors(getSection(14));
+  const bannerColors = editableColors(getSection(15));
+  const relatedColors = editableColors(getSection(16));
+
   return (
     <>
-      <Header />
+      <Header content={headerContent ?? undefined} />
       <main className="pt-20">
         {/* ============================================================ */}
         {/* SECTION 1 — Product Hero (Gallery + Info)                    */}
         {/* ============================================================ */}
-        <section className="bg-white">
+        <section className="bg-white" style={backgroundStyle(heroColors.backgroundColor)}>
           <div className="max-w-[1400px] mx-auto px-4 py-8 lg:py-14">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-14">
               {/* --- Gallery --- */}
@@ -548,33 +667,33 @@ export default function ProductDetailPage() {
 
               {/* --- Product Info --- */}
               <div>
-                <h1 className="text-3xl md:text-4xl font-medium text-deep-green mb-2 leading-snug tracking-wide"><HyText en={product.name} savedHy={product.i18n?.hy?.name} /></h1>
+                <h1 className="text-3xl md:text-4xl font-medium text-deep-green mb-2 leading-snug tracking-wide" style={colorStyle(heroColors.headingColor)}><HyText en={product.name} savedHy={product.i18n?.hy?.name} /></h1>
 
                 {hasReviews && (
                   <a href="#reviews" onClick={(e) => { e.preventDefault(); document.getElementById('reviews')?.scrollIntoView({ behavior: 'smooth' }); }} className="inline-flex items-center gap-2 mb-4 group cursor-pointer">
                     <div className="flex gap-0.5">
                       {Array.from({ length: 5 }).map((_, i) => (
-                        <svg key={i} className={`w-5 h-5 ${i < Math.round(displayRating) ? 'text-gold' : 'text-deep-green/15'}`} fill="currentColor" viewBox="0 0 20 20">
+                        <svg key={i} className={`w-5 h-5 ${i < Math.round(displayRating) ? 'text-gold' : 'text-deep-green/15'}`} style={i < Math.round(displayRating) ? colorStyle(heroColors.accentColor) : undefined} fill="currentColor" viewBox="0 0 20 20">
                           <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
                         </svg>
                       ))}
                     </div>
-                    <span className="text-sm font-medium text-deep-green/60 group-hover:text-deep-green group-hover:underline transition">{displayReviewCount} {t("productDetail.reviews")}</span>
+                    <span className="text-sm font-medium text-deep-green/60 group-hover:text-deep-green group-hover:underline transition" style={colorStyle(heroColors.mutedTextColor)}>{displayReviewCount} {t("productDetail.reviews")}</span>
                   </a>
                 )}
 
                 {/* Price */}
                 <div className="mb-2">
-                  <span className="text-2xl font-bold text-deep-green">{formatPrice(displayPrice)}</span>
-                  {hasDiscount && <span className="text-base text-deep-green/40 line-through ml-2">{formatPrice(displayCompareAt!)}</span>}
+                  <span className="text-2xl font-bold text-deep-green" style={colorStyle(heroColors.headingColor)}>{formatPrice(displayPrice)}</span>
+                  {hasDiscount && <span className="text-base text-deep-green/40 line-through ml-2" style={colorStyle(heroColors.mutedTextColor)}>{formatPrice(displayCompareAt!)}</span>}
                 </div>
-                <p className="text-sm text-deep-green/50 mb-5">{t("productDetail.shippingAtCheckout")}</p>
+                <p className="text-sm text-deep-green/50 mb-5" style={colorStyle(heroColors.mutedTextColor)}>{t("productDetail.shippingAtCheckout")}</p>
 
                 {/* Description */}
                 {product.short_description && (
                   <div className="mb-6">
-                    <p className="font-medium text-deep-green mb-1 tracking-wide">{t("productDetail.premiumNutrition")}</p>
-                    <p className="text-deep-green/70 text-sm leading-relaxed"><HyText en={product.short_description} savedHy={product.i18n?.hy?.short_description} /></p>
+                    <p className="font-medium text-deep-green mb-1 tracking-wide" style={colorStyle(heroColors.headingColor)}>{t("productDetail.premiumNutrition")}</p>
+                    <p className="text-deep-green/70 text-sm leading-relaxed" style={colorStyle(heroColors.bodyColor)}><HyText en={product.short_description} savedHy={product.i18n?.hy?.short_description} /></p>
                   </div>
                 )}
 
@@ -583,7 +702,7 @@ export default function ProductDetailPage() {
                   <div className="mb-6">
                     {Object.entries(variantGroups).map(([type, opts]) => (
                       <div key={type} className="mb-4">
-                        <h3 className="text-sm font-semibold text-deep-green mb-2">{type}</h3>
+                        <h3 className="text-sm font-semibold text-deep-green mb-2" style={colorStyle(heroColors.headingColor)}>{type}</h3>
                         <div className="flex flex-wrap gap-2">
                           {opts.map((v) => (
                             <button
@@ -612,7 +731,7 @@ export default function ProductDetailPage() {
                 {/* --- Bundles --- */}
                 {bundles.length > 0 && (
                   <div className="mb-6">
-                    <h3 className="font-medium text-deep-green mb-3 tracking-wide">{t("productDetail.valueBundles")}</h3>
+                    <h3 className="font-medium text-deep-green mb-3 tracking-wide" style={colorStyle(heroColors.headingColor)}>{t("productDetail.valueBundles")}</h3>
                     <div className="space-y-3">
                       {bundles.slice(0, 2).map((bundle) => (
                         <div key={bundle.id} className="border border-deep-green/10 rounded-xl p-4 hover:border-gold/30 transition-colors">
@@ -635,18 +754,18 @@ export default function ProductDetailPage() {
                               })()}
                             </div>
                             <div className="flex-1 min-w-0">
-                              <h4 className="font-medium text-deep-green text-sm mb-1 tracking-wide"><HyText en={bundle.name} savedHy={(bundle as { i18n?: { hy?: { name?: string } } }).i18n?.hy?.name} /></h4>
-                              <p className="text-xs text-deep-green/60 mb-2 line-clamp-2"><HyText en={bundle.description} savedHy={(bundle as { i18n?: { hy?: { description?: string } } }).i18n?.hy?.description} /></p>
+                              <h4 className="font-medium text-deep-green text-sm mb-1 tracking-wide" style={colorStyle(heroColors.headingColor)}><HyText en={bundle.name} savedHy={(bundle as { i18n?: { hy?: { name?: string } } }).i18n?.hy?.name} /></h4>
+                              <p className="text-xs text-deep-green/60 mb-2 line-clamp-2" style={colorStyle(heroColors.mutedTextColor || heroColors.bodyColor)}><HyText en={bundle.description} savedHy={(bundle as { i18n?: { hy?: { description?: string } } }).i18n?.hy?.description} /></p>
                               <div className="flex items-center justify-between">
                                 <div>
                                   {bundle.compare_at_price && (
-                                    <span className="text-xs text-deep-green/40 line-through mr-1">
+                                    <span className="text-xs text-deep-green/40 line-through mr-1" style={colorStyle(heroColors.mutedTextColor)}>
                                       {formatPrice(bundle.compare_at_price)}
                                     </span>
                                   )}
-                                  <span className="font-bold text-deep-green text-sm">{formatPrice(bundle.total_price)}</span>
+                                  <span className="font-bold text-deep-green text-sm" style={colorStyle(heroColors.headingColor)}>{formatPrice(bundle.total_price)}</span>
                                   {bundle.discount_percentage > 0 && (
-                                    <span className="ml-2 text-xs font-bold text-white bg-gold px-2 py-0.5 rounded-full">
+                                    <span className="ml-2 text-xs font-bold text-white bg-gold px-2 py-0.5 rounded-full" style={heroColors.accentColor ? { backgroundColor: heroColors.accentColor } : undefined}>
                                       {t("productDetail.savePct").replace("{pct}", String(bundle.discount_percentage))}
                                     </span>
                                   )}
@@ -669,6 +788,7 @@ export default function ProductDetailPage() {
                                     });
                                   }}
                                   className="px-3 py-1.5 bg-deep-green text-white text-xs font-medium rounded-lg hover:bg-deep-green/90 transition-colors"
+                                  style={buttonStyle(heroColors)}
                                 >
                                   {t("productDetail.addBundle")}
                                 </button>
@@ -713,6 +833,7 @@ export default function ProductDetailPage() {
                     }}
                     disabled={isAddingToCart}
                     className="flex-1 bg-deep-green text-white font-semibold py-3.5 rounded-full hover:bg-deep-green/90 transition text-base disabled:opacity-60 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                    style={buttonStyle(heroColors)}
                   >
                     {isAddingToCart ? (
                       <>
@@ -728,7 +849,7 @@ export default function ProductDetailPage() {
                 {/* --- Upsells & Cross-sells --- */}
                 {(upsells.length > 0 || related.length > 0) && (
                   <div className="mb-6">
-                    <h3 className="font-semibold text-deep-green mb-3">
+                    <h3 className="font-semibold text-deep-green mb-3" style={colorStyle(upsellColors.headingColor || heroColors.headingColor)}>
                       {upsells.some(u => u.upsell_type === 'upsell') ? t("productDetail.upgradeOrder") : t("productDetail.perfectPairings")}
                     </h3>
                     <div className="space-y-3">
@@ -741,6 +862,7 @@ export default function ProductDetailPage() {
                             lang={lang}
                             t={t}
                             addItem={addItem}
+                            colors={upsellColors}
                           />
                         );
                       })}
@@ -754,15 +876,15 @@ export default function ProductDetailPage() {
                     <svg className="w-5 h-5 text-gold" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M6.267 3.455a3.066 3.066 0 001.745-.723 3.066 3.066 0 013.976 0 3.066 3.066 0 001.745.723 3.066 3.066 0 012.812 2.812c.051.643.304 1.254.723 1.745a3.066 3.066 0 010 3.976 3.066 3.066 0 00-.723 1.745 3.066 3.066 0 01-2.812 2.812 3.066 3.066 0 00-1.745.723 3.066 3.066 0 01-3.976 0 3.066 3.066 0 00-1.745-.723 3.066 3.066 0 01-2.812-2.812 3.066 3.066 0 00-.723-1.745 3.066 3.066 0 010-3.976 3.066 3.066 0 00.723-1.745 3.066 3.066 0 012.812-2.812zm7.44 5.252a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" /></svg>
                   </div>
                   <div>
-                    <p className="text-sm font-semibold text-deep-green">{t("productDetail.vetApprovedLabTested")} <span className="text-[10px] font-bold bg-gold/20 text-deep-green px-1.5 py-0.5 rounded ml-1">2026</span></p>
-                    <p className="text-xs text-deep-green/50">{t("productDetail.allIngredientsTested")}</p>
+                    <p className="text-sm font-semibold text-deep-green" style={colorStyle(heroColors.headingColor)}>{t("productDetail.vetApprovedLabTested")} <span className="text-[10px] font-bold bg-gold/20 text-deep-green px-1.5 py-0.5 rounded ml-1">2026</span></p>
+                    <p className="text-xs text-deep-green/50" style={colorStyle(heroColors.mutedTextColor)}>{t("productDetail.allIngredientsTested")}</p>
                   </div>
                 </div>
 
                 {/* Custom: Feature Highlights (section index 1) */}
                 {customSections.get(1)?.features_heading && (
-                  <div className="mb-6 pt-4 border-t border-deep-green/10">
-                    <h3 className="font-semibold text-deep-green mb-3">{customSections.get(1)?.features_heading}</h3>
+                  <div className="mb-6 pt-4 border-t border-deep-green/10" style={backgroundStyle(featureColors.backgroundColor)}>
+                    <h3 className="font-semibold text-deep-green mb-3" style={colorStyle(featureColors.headingColor)}>{customSections.get(1)?.features_heading}</h3>
                     <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
                       {[1, 2, 3].map(n => {
                         const sec = customSections.get(1);
@@ -771,8 +893,8 @@ export default function ProductDetailPage() {
                         if (!title) return null;
                         return (
                           <div key={n} className="bg-beige-light rounded-xl p-4">
-                            <h4 className="font-medium text-deep-green text-sm mb-1">{String(title)}</h4>
-                            {desc && <p className="text-xs text-deep-green/60">{String(desc)}</p>}
+                            <h4 className="font-medium text-deep-green text-sm mb-1" style={colorStyle(featureColors.headingColor)}>{String(title)}</h4>
+                            {desc && <p className="text-xs text-deep-green/60" style={colorStyle(featureColors.bodyColor || featureColors.mutedTextColor)}>{String(desc)}</p>}
                           </div>
                         );
                       })}
@@ -780,14 +902,29 @@ export default function ProductDetailPage() {
                   </div>
                 )}
 
+                {/* Custom: Detailed Description (section index 2) */}
+                {(customSections.get(2)?.detail_heading || customSections.get(2)?.detail_body || customSections.get(2)?.detail_image) && (
+                  <div className="mb-6 pt-4 border-t border-deep-green/10" style={backgroundStyle(detailColors.backgroundColor)}>
+                    {customSections.get(2)?.detail_heading && (
+                      <h3 className="font-semibold text-deep-green mb-3" style={colorStyle(detailColors.headingColor)}>{String(customSections.get(2)?.detail_heading)}</h3>
+                    )}
+                    {customSections.get(2)?.detail_image && (
+                      <img src={String(customSections.get(2)?.detail_image)} alt="" className="w-full rounded-xl mb-3 object-cover max-h-72" />
+                    )}
+                    {customSections.get(2)?.detail_body && (
+                      <div className="text-sm leading-relaxed text-deep-green/70" style={colorStyle(detailColors.bodyColor)} dangerouslySetInnerHTML={{ __html: String(customSections.get(2)!.detail_body).replace(/\n/g, '<br/>') }} />
+                    )}
+                  </div>
+                )}
+
                 {/* Accordions */}
-                <Accordion title={String(customSections.get(3)?.ingredients_heading || t("product.ingredients"))} defaultOpen>
+                <Accordion title={String(customSections.get(3)?.ingredients_heading || t("product.ingredients"))} defaultOpen colors={ingredientsColors}>
                   {customSections.get(3)?.ingredients_list ? (
-                    <div>
+                    <div style={backgroundStyle(ingredientsColors.backgroundColor)}>
                       <div dangerouslySetInnerHTML={{ __html: String(customSections.get(3)!.ingredients_list).replace(/\n/g, '<br/>') }} />
                       {customSections.get(3)?.nutrition_info && (
                         <div className="mt-4 pt-3 border-t border-deep-green/10">
-                          <h4 className="font-semibold text-deep-green text-sm mb-2">{String(customSections.get(3)?.nutrition_heading || 'Nutritional Information')}</h4>
+                          <h4 className="font-semibold text-deep-green text-sm mb-2" style={colorStyle(ingredientsColors.headingColor)}>{String(customSections.get(3)?.nutrition_heading || 'Nutritional Information')}</h4>
                           <div dangerouslySetInnerHTML={{ __html: String(customSections.get(3)!.nutrition_info).replace(/\n/g, '<br/>') }} />
                         </div>
                       )}
@@ -798,7 +935,7 @@ export default function ProductDetailPage() {
                     <p>Made with natural, human-grade ingredients carefully selected by veterinary nutritionists.</p>
                   )}
                 </Accordion>
-                <Accordion title={String(customSections.get(4)?.feeding_heading || t("productDetail.feedingGuide"))}>
+                <Accordion title={String(customSections.get(4)?.feeding_heading || t("productDetail.feedingGuide"))} colors={feedingColors}>
                   {customSections.get(4)?.feeding_body ? (
                     <div dangerouslySetInnerHTML={{ __html: String(customSections.get(4)!.feeding_body).replace(/\n/g, '<br/>') }} />
                   ) : (
@@ -813,7 +950,7 @@ export default function ProductDetailPage() {
                     </>
                   )}
                 </Accordion>
-                <Accordion title={t("productDetail.shippingReturns")}>
+                <Accordion title={t("productDetail.shippingReturns")} colors={heroColors}>
                   <p>{t("productDetail.freeUkDelivery")}</p>
                   <p className="mt-2">{t("productDetail.standardDelivery")}</p>
                   <p className="mt-2">{t("productDetail.notHappy")}</p>
@@ -821,13 +958,13 @@ export default function ProductDetailPage() {
 
                 {/* Custom: Product FAQ (section index 6) */}
                 {customSections.get(6)?.faq_1_q && (
-                  <div className="mt-2">
-                    <h3 className="text-lg font-semibold text-deep-green mb-3 pt-4">{String(customSections.get(6)?.faq_heading || 'FAQ')}</h3>
+                  <div className="mt-2" style={backgroundStyle(faqColors.backgroundColor)}>
+                    <h3 className="text-lg font-semibold text-deep-green mb-3 pt-4" style={colorStyle(faqColors.headingColor)}>{String(customSections.get(6)?.faq_heading || 'FAQ')}</h3>
                     {[1, 2, 3, 4].map(n => {
                       const q = customSections.get(6)?.[`faq_${n}_q`];
                       const a = customSections.get(6)?.[`faq_${n}_a`];
                       if (!q) return null;
-                      return <Accordion key={n} title={String(q)}><p>{String(a || '')}</p></Accordion>;
+                      return <Accordion key={n} title={String(q)} colors={faqColors}><p>{String(a || '')}</p></Accordion>;
                     })}
                   </div>
                 )}
@@ -839,9 +976,9 @@ export default function ProductDetailPage() {
         {/* ============================================================ */}
         {/* SECTION 2 — "The Jeko Difference" badge row                  */}
         {/* ============================================================ */}
-        <section className="bg-off-white py-14 border-t border-b border-deep-green/5">
+        <section className="bg-off-white py-14 border-t border-b border-deep-green/5" style={backgroundStyle(differenceColors.backgroundColor)}>
           <div className="max-w-[1200px] mx-auto px-4 text-center">
-            <h2 className="text-3xl md:text-4xl font-bold text-deep-green mb-10 italic">{t("productDetail.theJekoDifference")}</h2>
+            <h2 className="text-3xl md:text-4xl font-bold text-deep-green mb-10 italic" style={colorStyle(differenceColors.headingColor)}>{t("productDetail.theJekoDifference")}</h2>
             <div className="flex flex-wrap justify-center gap-x-8 gap-y-4">
               {[
                 t("productDetail.diff.vetApproved"),
@@ -853,8 +990,8 @@ export default function ProductDetailPage() {
                 t("productDetail.diff.nutrientRich"),
               ].map(badge => (
                 <div key={badge} className="flex items-center gap-2">
-                  <svg className="w-6 h-6 text-gold" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" /></svg>
-                  <span className="text-deep-green font-medium text-sm">{badge}</span>
+                  <svg className="w-6 h-6 text-gold" style={colorStyle(differenceColors.accentColor)} fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" /></svg>
+                  <span className="text-deep-green font-medium text-sm" style={colorStyle(differenceColors.bodyColor || differenceColors.headingColor)}>{badge}</span>
                 </div>
               ))}
             </div>
@@ -864,7 +1001,7 @@ export default function ProductDetailPage() {
         {/* ============================================================ */}
         {/* SECTION 3 — Nutrition Highlights (image + text)              */}
         {/* ============================================================ */}
-        <section className="relative overflow-hidden bg-deep-green">
+        <section className="relative overflow-hidden bg-deep-green" style={backgroundStyle(nutritionColors.backgroundColor)}>
           <div className="flex flex-col md:flex-row min-h-[480px]">
             {/* Image Left Side - ~43% with vertical zigzag right edge */}
             <div className="w-full md:w-[43%] relative min-h-[300px] md:min-h-[480px]">
@@ -876,17 +1013,17 @@ export default function ProductDetailPage() {
               {/* Vertical zigzag on right edge - teeth pointing LEFT, matches deep-green text panel */}
               <div
                 className="hidden md:block absolute right-0 top-0 h-full z-10 zigzag-vertical-right"
-                style={{ ['--zigzag-color' as string]: '#274C46' } as React.CSSProperties}
+                style={{ ['--zigzag-color' as string]: nutritionColors.backgroundColor || '#274C46' } as React.CSSProperties}
               />
             </div>
 
             {/* Text Right Side - ~57% */}
-            <div className="w-full md:w-[57%] flex items-center">
-              <div className="px-8 md:px-16 lg:px-24 py-12">
-                <h2 className="text-[32px] md:text-[40px] font-semibold text-white font-rubik leading-tight mb-6 italic">
+              <div className="w-full md:w-[57%] flex items-center">
+                <div className="px-8 md:px-16 lg:px-24 py-12">
+                <h2 className="text-[32px] md:text-[40px] font-semibold text-white font-rubik leading-tight mb-6 italic" style={colorStyle(nutritionColors.headingColor)}>
                   {t("productDetail.freshTagline")}
                 </h2>
-                <div className="space-y-4 text-white/80 text-[18px] leading-relaxed">
+                <div className="space-y-4 text-white/80 text-[18px] leading-relaxed" style={colorStyle(nutritionColors.bodyColor)}>
                   <p>{t("productDetail.proteinProfile")}</p>
                   <p>{t("productDetail.nutritionHighlights")}</p>
                   <p>{t("productDetail.preparation")}</p>
@@ -899,18 +1036,18 @@ export default function ProductDetailPage() {
         {/* ============================================================ */}
         {/* SECTION 5 — "Learn The Science" CTA                         */}
         {/* ============================================================ */}
-        <section className="relative overflow-hidden bg-off-white">
+        <section className="relative overflow-hidden bg-off-white" style={backgroundStyle(scienceColors.backgroundColor)}>
           <div className="flex flex-col md:flex-row min-h-[480px]">
             {/* Text Left Side - ~57% */}
             <div className="w-full md:w-[57%] flex items-center order-2 md:order-1">
               <div className="px-8 md:px-16 lg:px-24 py-12">
-                <h2 className="text-[32px] md:text-[40px] font-semibold text-deep-green font-rubik leading-tight mb-4">
+                <h2 className="text-[32px] md:text-[40px] font-semibold text-deep-green font-rubik leading-tight mb-4" style={colorStyle(scienceColors.headingColor)}>
                   {t("productDetail.learnTheScience")}
                 </h2>
-                <p className="text-deep-green/70 text-[18px] leading-relaxed mb-6">
+                <p className="text-deep-green/70 text-[18px] leading-relaxed mb-6" style={colorStyle(scienceColors.bodyColor)}>
                   {t("productDetail.scienceIntro")}
                 </p>
-                <Link href="/benefits" className="btn-gold inline-block">{t("productDetail.learnMore")}</Link>
+                <Link href="/benefits" className="btn-gold inline-block" style={buttonStyle(scienceColors)}>{t("productDetail.learnMore")}</Link>
               </div>
             </div>
 
@@ -922,7 +1059,10 @@ export default function ProductDetailPage() {
                 className="w-full h-full object-cover"
               />
               {/* Vertical zigzag on left edge - teeth pointing RIGHT, matches off-white text panel */}
-              <div className="hidden md:block absolute left-0 top-0 h-full z-10 zigzag-vertical-left" />
+              <div
+                className="hidden md:block absolute left-0 top-0 h-full z-10 zigzag-vertical-left"
+                style={{ ['--zigzag-color' as string]: scienceColors.backgroundColor || '#EAE5DC' } as React.CSSProperties}
+              />
             </div>
           </div>
         </section>
@@ -930,17 +1070,17 @@ export default function ProductDetailPage() {
         {/* ============================================================ */}
         {/* SECTION 6 — Trusted by Vets (horizontal scroll)             */}
         {/* ============================================================ */}
-        <section className="bg-beige-light py-16">
+        <section className="bg-beige-light py-16" style={backgroundStyle(vetsColors.backgroundColor)}>
           <div className="max-w-[1400px] mx-auto px-4">
             <div className="flex items-end justify-between mb-8">
-              <h2 className="text-3xl md:text-4xl font-bold text-deep-green italic">{t("productDetail.trustedByVets")}</h2>
+              <h2 className="text-3xl md:text-4xl font-bold text-deep-green italic" style={colorStyle(vetsColors.headingColor)}>{t("productDetail.trustedByVets")}</h2>
               <div className="hidden md:flex gap-2">
-                <button onClick={() => scrollVets('left')} className="w-10 h-10 rounded-full border border-deep-green/20 flex items-center justify-center hover:bg-deep-green hover:text-white transition text-deep-green"><svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" /></svg></button>
-                <button onClick={() => scrollVets('right')} className="w-10 h-10 rounded-full border border-deep-green/20 flex items-center justify-center hover:bg-deep-green hover:text-white transition text-deep-green"><svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" /></svg></button>
+                <button onClick={() => scrollVets('left')} className="w-10 h-10 rounded-full border border-deep-green/20 flex items-center justify-center hover:bg-deep-green hover:text-white transition text-deep-green" style={{ ...colorStyle(vetsColors.headingColor), ...borderColorStyle(vetsColors.mutedTextColor || vetsColors.headingColor) }}><svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" /></svg></button>
+                <button onClick={() => scrollVets('right')} className="w-10 h-10 rounded-full border border-deep-green/20 flex items-center justify-center hover:bg-deep-green hover:text-white transition text-deep-green" style={{ ...colorStyle(vetsColors.headingColor), ...borderColorStyle(vetsColors.mutedTextColor || vetsColors.headingColor) }}><svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" /></svg></button>
               </div>
             </div>
             <div ref={vetScrollRef} className="flex gap-5 overflow-x-auto pb-4 snap-x snap-mandatory" style={{ scrollbarWidth: 'none' }}>
-              {vets.map((v, i) => <VetCard key={i} vet={v} />)}
+              {vets.map((v, i) => <VetCard key={i} vet={v} colors={vetsColors} />)}
             </div>
           </div>
         </section>
@@ -948,7 +1088,7 @@ export default function ProductDetailPage() {
         {/* ============================================================ */}
         {/* SECTION 7 — "Food that fuels their best days" (image + text) */}
         {/* ============================================================ */}
-        <section className="relative overflow-hidden">
+        <section className="relative overflow-hidden" style={backgroundStyle(bestDaysColors.backgroundColor)}>
           <div className="flex flex-col md:flex-row min-h-[480px]">
             {/* Image Left Side - ~43% with vertical zigzag right edge */}
             <div className="w-full md:w-[43%] relative min-h-[300px] md:min-h-[480px]">
@@ -960,24 +1100,24 @@ export default function ProductDetailPage() {
               {/* Vertical zigzag on right edge - teeth pointing LEFT, matches off-white text panel */}
               <div
                 className="hidden md:block absolute right-0 top-0 h-full z-10 zigzag-vertical-right"
-                style={{ ['--zigzag-color' as string]: '#EAE5DC' } as React.CSSProperties}
+                style={{ ['--zigzag-color' as string]: bestDaysColors.backgroundColor || '#EAE5DC' } as React.CSSProperties}
               />
             </div>
 
             {/* Text Right Side - ~57% */}
-            <div className="w-full md:w-[57%] bg-off-white flex items-center">
+            <div className="w-full md:w-[57%] bg-off-white flex items-center" style={backgroundStyle(bestDaysColors.backgroundColor)}>
               <div className="px-8 md:px-16 lg:px-24 py-12">
-                <h2 className="text-[32px] md:text-[40px] font-semibold text-deep-green font-rubik leading-tight mb-6 italic">
+                <h2 className="text-[32px] md:text-[40px] font-semibold text-deep-green font-rubik leading-tight mb-6 italic" style={colorStyle(bestDaysColors.headingColor)}>
                   <HyText en="Food that fuels their best days" />
                 </h2>
-                <div className="space-y-3 text-deep-green/70 text-[18px] leading-relaxed">
-                  <p><strong className="text-deep-green"><HyText en="At Jeko, the mission is simple:" /></strong></p>
+                <div className="space-y-3 text-deep-green/70 text-[18px] leading-relaxed" style={colorStyle(bestDaysColors.bodyColor)}>
+                  <p><strong className="text-deep-green" style={colorStyle(bestDaysColors.headingColor)}><HyText en="At Jeko, the mission is simple:" /></strong></p>
                   <p><HyText en="Create food that makes your dog feel as good as it tastes." /></p>
                   <p><HyText en="Always fresh, natural & vet-approved." /></p>
                   <p><HyText en="It's the kind they love, crave, and sprint to the bowl for every single time — for boundless energy, a shiny coat, and a happier, healthier life." /></p>
                   <p><HyText en="Jeko is for the devoted pet parents simply seeking more for their best friend." /></p>
                 </div>
-                <Link href={signupUrl} className="btn-gold mt-8 inline-block"><HyText en="Try Jeko" /></Link>
+                <Link href={signupUrl} className="btn-gold mt-8 inline-block" style={buttonStyle(bestDaysColors)}><HyText en="Try Jeko" /></Link>
               </div>
             </div>
           </div>
@@ -986,21 +1126,21 @@ export default function ProductDetailPage() {
         {/* ============================================================ */}
         {/* SECTION 8 — "Why We Started Jeko" (image + text)            */}
         {/* ============================================================ */}
-        <section className="relative overflow-hidden bg-white">
+        <section className="relative overflow-hidden bg-white" style={backgroundStyle(startedColors.backgroundColor)}>
           <div className="flex flex-col md:flex-row min-h-[480px]">
             {/* Text Left Side - ~57% */}
             <div className="w-full md:w-[57%] flex items-center order-2 md:order-1">
               <div className="px-8 md:px-16 lg:px-24 py-12">
-                <h2 className="text-[32px] md:text-[40px] font-semibold text-deep-green font-rubik leading-tight mb-6 italic">
+                <h2 className="text-[32px] md:text-[40px] font-semibold text-deep-green font-rubik leading-tight mb-6 italic" style={colorStyle(startedColors.headingColor)}>
                   <HyText en="Why We Started Jeko" />
                 </h2>
-                <div className="space-y-3 text-deep-green/70 text-[18px] leading-relaxed">
+                <div className="space-y-3 text-deep-green/70 text-[18px] leading-relaxed" style={colorStyle(startedColors.bodyColor)}>
                   <p><HyText en="We didn't start this brand for the trend." /></p>
                   <p><HyText en="We started Jeko because our own dogs deserved better — and so does yours." /></p>
                   <p><HyText en={"When we looked at what was in most commercial dog food, we were shocked. Fillers, preservatives, mysterious “meat derivatives” — making our dogs worse, not better."} /></p>
                   <p><HyText en="They needed a better option — so we created one." /></p>
                 </div>
-                <Link href="/about" className="btn-outline mt-8 inline-block">{t("productDetail.learnMore")}</Link>
+                <Link href="/about" className="btn-outline mt-8 inline-block" style={buttonStyle(startedColors)}>{t("productDetail.learnMore")}</Link>
               </div>
             </div>
 
@@ -1014,7 +1154,7 @@ export default function ProductDetailPage() {
               {/* Vertical zigzag on left edge - teeth pointing RIGHT, matches white text panel */}
               <div
                 className="hidden md:block absolute left-0 top-0 h-full z-10 zigzag-vertical-left"
-                style={{ ['--zigzag-color' as string]: '#FFFFFF' } as React.CSSProperties}
+                style={{ ['--zigzag-color' as string]: startedColors.backgroundColor || '#FFFFFF' } as React.CSSProperties}
               />
             </div>
           </div>
@@ -1023,21 +1163,21 @@ export default function ProductDetailPage() {
         {/* ============================================================ */}
         {/* SECTION 9 — Our Mission quote                                */}
         {/* ============================================================ */}
-        <section className="bg-deep-green py-20">
+        <section className="bg-deep-green py-20" style={backgroundStyle(missionColors.backgroundColor)}>
           <div className="max-w-[900px] mx-auto px-4 text-center">
-            <h2 className="text-3xl md:text-4xl font-bold text-white mb-6 italic"><HyText en="Our Mission" /></h2>
-            <p className="text-xl md:text-2xl text-white/80 leading-relaxed italic">&ldquo;<HyText en="To create food that helps your dog feel their best, so they can keep doing what they love — being your best friend." />&rdquo;</p>
+            <h2 className="text-3xl md:text-4xl font-bold text-white mb-6 italic" style={colorStyle(missionColors.headingColor)}><HyText en="Our Mission" /></h2>
+            <p className="text-xl md:text-2xl text-white/80 leading-relaxed italic" style={colorStyle(missionColors.bodyColor)}>&ldquo;<HyText en="To create food that helps your dog feel their best, so they can keep doing what they love — being your best friend." />&rdquo;</p>
           </div>
         </section>
 
         {/* ============================================================ */}
         {/* SECTION 10 — Full-width lifestyle banner                     */}
         {/* ============================================================ */}
-        <section className="relative h-[400px] lg:h-[500px] overflow-hidden">
+        <section className="relative h-[400px] lg:h-[500px] overflow-hidden" style={backgroundStyle(bannerColors.backgroundColor)}>
           <img src="https://images.unsplash.com/photo-1552053831-71594a27632d?w=1400&h=500&fit=crop" alt="Happy healthy dogs" className="w-full h-full object-cover" />
           <div className="absolute inset-0 bg-gradient-to-r from-deep-green/70 to-transparent flex items-center">
             <div className="max-w-[1400px] mx-auto px-4 w-full">
-              <h2 className="text-3xl md:text-5xl font-bold text-white max-w-lg italic leading-tight"><HyText en="Boundless Energy, Shiny Coat, Happier Days" /></h2>
+              <h2 className="text-3xl md:text-5xl font-bold text-white max-w-lg italic leading-tight" style={colorStyle(bannerColors.headingColor)}><HyText en="Boundless Energy, Shiny Coat, Happier Days" /></h2>
             </div>
           </div>
         </section>
@@ -1045,19 +1185,19 @@ export default function ProductDetailPage() {
         {/* ============================================================ */}
         {/* Customer Reviews                                              */}
         {/* ============================================================ */}
-        <section className="bg-white py-16" id="reviews">
+        <section className="bg-white py-16" id="reviews" style={backgroundStyle(reviewColors.backgroundColor)}>
           <div className="max-w-[1200px] mx-auto px-4">
-            <h2 className="text-3xl md:text-4xl font-bold text-deep-green text-center mb-10 italic">{t("productDetail.customerReviews")}</h2>
+            <h2 className="text-3xl md:text-4xl font-bold text-deep-green text-center mb-10 italic" style={colorStyle(reviewColors.headingColor)}>{String(customSections.get(7)?.reviews_heading || t("productDetail.customerReviews"))}</h2>
             <div className="flex items-center justify-between mb-6">
               {hasReviews ? (
                 <div className="flex items-center gap-3">
-                  <div className="flex">{Array.from({ length: 5 }).map((_, i) => <svg key={i} className={`w-6 h-6 ${i < Math.round(displayRating) ? 'text-gold' : 'text-deep-green/15'}`} fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" /></svg>)}</div>
-                  <span className="text-deep-green font-medium">{displayReviewCount} {t("productDetail.reviews")}</span>
+                  <div className="flex">{Array.from({ length: 5 }).map((_, i) => <svg key={i} className={`w-6 h-6 ${i < Math.round(displayRating) ? 'text-gold' : 'text-deep-green/15'}`} style={i < Math.round(displayRating) ? colorStyle(reviewColors.accentColor) : undefined} fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" /></svg>)}</div>
+                  <span className="text-deep-green font-medium" style={colorStyle(reviewColors.headingColor)}>{displayReviewCount} {t("productDetail.reviews")}</span>
                 </div>
               ) : (
-                <p className="text-sm text-deep-green/60"><HyText en="No reviews yet" /></p>
+                <p className="text-sm text-deep-green/60" style={colorStyle(reviewColors.mutedTextColor)}><HyText en="No reviews yet" /></p>
               )}
-              <button onClick={() => { setShowReviewForm(!showReviewForm); setReviewSuccess(false); }} className="btn-outline text-sm py-2 px-4">
+              <button onClick={() => { setShowReviewForm(!showReviewForm); setReviewSuccess(false); }} className="btn-outline text-sm py-2 px-4" style={buttonStyle(reviewColors)}>
                 {showReviewForm ? <HyText en="Cancel" /> : <HyText en="Write a review" />}
               </button>
             </div>
@@ -1072,25 +1212,25 @@ export default function ProductDetailPage() {
             {/* Review Form */}
             {showReviewForm && (
               <div className="bg-beige-light rounded-2xl p-6 mb-8 border border-deep-green/10">
-                <h3 className="text-lg font-semibold text-deep-green mb-4">Write a Review</h3>
+                <h3 className="text-lg font-semibold text-deep-green mb-4" style={colorStyle(reviewColors.headingColor)}>Write a Review</h3>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
                   <div>
-                    <label className="block text-sm font-medium text-deep-green mb-1">Your Name *</label>
+                    <label className="block text-sm font-medium text-deep-green mb-1" style={colorStyle(reviewColors.headingColor)}>Your Name *</label>
                     <input value={reviewForm.name} onChange={e => setReviewForm({ ...reviewForm, name: e.target.value })} className="w-full px-3 py-2.5 border border-deep-green/15 rounded-lg text-sm bg-white focus:ring-2 focus:ring-gold/30 focus:border-gold outline-none" placeholder="John D." />
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-deep-green mb-1">Email <span className="text-deep-green/40">(optional)</span></label>
+                    <label className="block text-sm font-medium text-deep-green mb-1" style={colorStyle(reviewColors.headingColor)}>Email <span className="text-deep-green/40" style={colorStyle(reviewColors.mutedTextColor)}>(optional)</span></label>
                     <input type="email" value={reviewForm.email} onChange={e => setReviewForm({ ...reviewForm, email: e.target.value })} className="w-full px-3 py-2.5 border border-deep-green/15 rounded-lg text-sm bg-white focus:ring-2 focus:ring-gold/30 focus:border-gold outline-none" placeholder="john@example.com" />
                   </div>
                 </div>
 
                 {/* Star rating */}
                 <div className="mb-4">
-                  <label className="block text-sm font-medium text-deep-green mb-2">Rating *</label>
+                  <label className="block text-sm font-medium text-deep-green mb-2" style={colorStyle(reviewColors.headingColor)}>Rating *</label>
                   <div className="flex gap-1">
                     {[1, 2, 3, 4, 5].map(star => (
                       <button key={star} type="button" onClick={() => setReviewForm({ ...reviewForm, rating: star })}>
-                        <svg className={`w-8 h-8 ${star <= reviewForm.rating ? 'text-gold' : 'text-deep-green/15'} hover:text-gold/70 transition cursor-pointer`} fill="currentColor" viewBox="0 0 20 20">
+                        <svg className={`w-8 h-8 ${star <= reviewForm.rating ? 'text-gold' : 'text-deep-green/15'} hover:text-gold/70 transition cursor-pointer`} style={star <= reviewForm.rating ? colorStyle(reviewColors.accentColor) : undefined} fill="currentColor" viewBox="0 0 20 20">
                           <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
                         </svg>
                       </button>
@@ -1099,18 +1239,18 @@ export default function ProductDetailPage() {
                 </div>
 
                 <div className="mb-4">
-                  <label className="block text-sm font-medium text-deep-green mb-1">{t("product.review.title")} <span className="text-deep-green/40">{t("product.review.optional")}</span></label>
+                  <label className="block text-sm font-medium text-deep-green mb-1" style={colorStyle(reviewColors.headingColor)}>{t("product.review.title")} <span className="text-deep-green/40" style={colorStyle(reviewColors.mutedTextColor)}>{t("product.review.optional")}</span></label>
                   <input value={reviewForm.title} onChange={e => setReviewForm({ ...reviewForm, title: e.target.value })} className="w-full px-3 py-2.5 border border-deep-green/15 rounded-lg text-sm bg-white focus:ring-2 focus:ring-gold/30 focus:border-gold outline-none" placeholder={t("product.review.titlePlaceholder")} />
                 </div>
 
                 <div className="mb-4">
-                  <label className="block text-sm font-medium text-deep-green mb-1">{t("product.review.body")}</label>
+                  <label className="block text-sm font-medium text-deep-green mb-1" style={colorStyle(reviewColors.headingColor)}>{t("product.review.body")}</label>
                   <textarea value={reviewForm.text} onChange={e => setReviewForm({ ...reviewForm, text: e.target.value })} rows={4} className="w-full px-3 py-2.5 border border-deep-green/15 rounded-lg text-sm bg-white resize-none focus:ring-2 focus:ring-gold/30 focus:border-gold outline-none" placeholder={t("product.review.bodyPlaceholder")} />
                 </div>
 
                 {/* Image upload */}
                 <div className="mb-5">
-                  <label className="block text-sm font-medium text-deep-green mb-2">{t("product.review.addPhotos")} <span className="text-deep-green/40">{t("product.review.upTo5")}</span></label>
+                  <label className="block text-sm font-medium text-deep-green mb-2" style={colorStyle(reviewColors.headingColor)}>{t("product.review.addPhotos")} <span className="text-deep-green/40" style={colorStyle(reviewColors.mutedTextColor)}>{t("product.review.upTo5")}</span></label>
                   <div className="flex items-center gap-3 flex-wrap">
                     {reviewImages.map((img, i) => (
                       <div key={i} className="relative w-16 h-16 rounded-lg overflow-hidden border border-deep-green/10 group">
@@ -1133,7 +1273,7 @@ export default function ProductDetailPage() {
                   </div>
                 </div>
 
-                <button onClick={submitReview} disabled={reviewSubmitting || !reviewForm.name.trim() || !reviewForm.text.trim()} className="bg-deep-green text-white font-semibold py-3 px-8 rounded-full hover:bg-deep-green/90 transition text-sm disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2">
+                <button onClick={submitReview} disabled={reviewSubmitting || !reviewForm.name.trim() || !reviewForm.text.trim()} className="bg-deep-green text-white font-semibold py-3 px-8 rounded-full hover:bg-deep-green/90 transition text-sm disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2" style={buttonStyle(reviewColors)}>
                   {reviewSubmitting ? (
                     <><div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" /> {t("product.review.submitting")}</>
                   ) : (
@@ -1144,7 +1284,7 @@ export default function ProductDetailPage() {
             )}
 
             <div className="space-y-4">
-              {reviews.map((r, i) => <ReviewCard key={i} review={r} />)}
+              {reviews.map((r, i) => <ReviewCard key={i} review={r} colors={reviewColors} />)}
             </div>
           </div>
         </section>
@@ -1153,9 +1293,9 @@ export default function ProductDetailPage() {
         {/* Related Products                                              */}
         {/* ============================================================ */}
         {related.length > 0 && (
-          <section className="bg-off-white py-16">
+          <section className="bg-off-white py-16" style={backgroundStyle(relatedColors.backgroundColor)}>
             <div className="max-w-[1200px] mx-auto px-4">
-              <h2 className="text-2xl font-bold text-deep-green mb-8">{t("product.relatedTitle")}</h2>
+              <h2 className="text-2xl font-bold text-deep-green mb-8" style={colorStyle(relatedColors.headingColor)}>{t("product.relatedTitle")}</h2>
               {/* Mobile: horizontal scroll with 2 cards visible; Desktop: 4-column grid */}
               <div className="flex gap-4 overflow-x-auto pb-3 snap-x snap-mandatory scrollbar-hide lg:grid lg:grid-cols-4 lg:gap-6 lg:overflow-visible lg:pb-0">
                 {related.map(p => (

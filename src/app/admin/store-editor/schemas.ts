@@ -1302,19 +1302,45 @@ const SEO_SECTIONS: SectionSchema[] = [
    PRODUCT PAGE (per-product customisation)
    ═══════════════════════════════════════════════════════════════════════════ */
 
+const PRODUCT_COLOR_FIELDS: FieldDef[] = [
+  { key: 'background_color', label: 'Section Background Color', type: 'color' },
+  { key: 'heading_color', label: 'Heading Text Color', type: 'color' },
+  { key: 'body_text_color', label: 'Body Text Color', type: 'color' },
+  { key: 'muted_text_color', label: 'Muted / Secondary Text Color', type: 'color' },
+  { key: 'accent_color', label: 'Accent / Icon Color', type: 'color' },
+  { key: 'button_background_color', label: 'Button Background Color', type: 'color' },
+  { key: 'button_text_color', label: 'Button Text Color', type: 'color' },
+];
+
+const PRODUCT_COLOR_DEFAULTS = {
+  background_color: '',
+  heading_color: '',
+  body_text_color: '',
+  muted_text_color: '',
+  accent_color: '',
+  button_background_color: '',
+  button_text_color: '',
+};
+
+function productColorDefaults(overrides: Record<string, unknown> = {}) {
+  return { ...PRODUCT_COLOR_DEFAULTS, ...overrides };
+}
+
 export const PRODUCT_PAGE_SECTIONS: SectionSchema[] = [
   {
     name: 'Hero Override', icon: ICON_PATHS.image, color: 'bg-deep-green',
     fields: [
+      ...PRODUCT_COLOR_FIELDS,
       { key: 'subtitle', label: 'Subtitle / Badge', type: 'text', placeholder: 'e.g. Vet Recommended' },
       { key: 'hero_image', label: 'Hero Banner Image', type: 'image' },
       { key: 'hero_description', label: 'Hero Description Override', type: 'textarea' },
     ],
-    defaultContent: { subtitle: '', hero_image: '', hero_description: '' },
+    defaultContent: productColorDefaults({ subtitle: '', hero_image: '', hero_description: '' }),
   },
   {
     name: 'Feature Highlights', icon: ICON_PATHS.grid, color: 'bg-gold',
     fields: [
+      ...PRODUCT_COLOR_FIELDS,
       { key: 'features_heading', label: 'Section Heading', type: 'text', placeholder: 'Why choose this product?' },
       { key: 'feature_1_title', label: 'Feature 1 Title', type: 'text' },
       { key: 'feature_1_description', label: 'Feature 1 Description', type: 'textarea' },
@@ -1323,47 +1349,52 @@ export const PRODUCT_PAGE_SECTIONS: SectionSchema[] = [
       { key: 'feature_3_title', label: 'Feature 3 Title', type: 'text' },
       { key: 'feature_3_description', label: 'Feature 3 Description', type: 'textarea' },
     ],
-    defaultContent: { features_heading: '', feature_1_title: '', feature_1_description: '', feature_2_title: '', feature_2_description: '', feature_3_title: '', feature_3_description: '' },
+    defaultContent: productColorDefaults({ features_heading: '', feature_1_title: '', feature_1_description: '', feature_2_title: '', feature_2_description: '', feature_3_title: '', feature_3_description: '' }),
   },
   {
     name: 'Detailed Description', icon: ICON_PATHS.text, color: 'bg-teal-600',
     fields: [
+      ...PRODUCT_COLOR_FIELDS,
       { key: 'detail_heading', label: 'Section Heading', type: 'text', placeholder: 'About this product' },
       { key: 'detail_body', label: 'Full Description', type: 'textarea' },
       { key: 'detail_image', label: 'Description Image', type: 'image' },
     ],
-    defaultContent: { detail_heading: '', detail_body: '', detail_image: '' },
+    defaultContent: productColorDefaults({ detail_heading: '', detail_body: '', detail_image: '' }),
   },
   {
     name: 'Ingredients & Nutrition', icon: ICON_PATHS.book, color: 'bg-green-600',
     fields: [
+      ...PRODUCT_COLOR_FIELDS,
       { key: 'ingredients_heading', label: 'Section Heading', type: 'text', placeholder: 'Ingredients' },
       { key: 'ingredients_list', label: 'Ingredients', type: 'textarea', placeholder: 'List ingredients...' },
       { key: 'nutrition_heading', label: 'Nutrition Heading', type: 'text', placeholder: 'Nutritional Information' },
       { key: 'nutrition_info', label: 'Nutrition Details', type: 'textarea' },
     ],
-    defaultContent: { ingredients_heading: 'Ingredients', ingredients_list: '', nutrition_heading: 'Nutritional Information', nutrition_info: '' },
+    defaultContent: productColorDefaults({ ingredients_heading: 'Ingredients', ingredients_list: '', nutrition_heading: 'Nutritional Information', nutrition_info: '' }),
   },
   {
     name: 'Feeding Guide', icon: ICON_PATHS.steps, color: 'bg-orange-600',
     fields: [
+      ...PRODUCT_COLOR_FIELDS,
       { key: 'feeding_heading', label: 'Section Heading', type: 'text', placeholder: 'Feeding Guide' },
       { key: 'feeding_body', label: 'Feeding Instructions', type: 'textarea' },
       { key: 'feeding_image', label: 'Feeding Guide Image', type: 'image' },
     ],
-    defaultContent: { feeding_heading: 'Feeding Guide', feeding_body: '', feeding_image: '' },
+    defaultContent: productColorDefaults({ feeding_heading: 'Feeding Guide', feeding_body: '', feeding_image: '' }),
   },
   {
     name: 'Upsells & Cross-sells', icon: ICON_PATHS.heart, color: 'bg-pink-600',
     fields: [
+      ...PRODUCT_COLOR_FIELDS,
       { key: 'upsells_heading', label: 'Section Heading', type: 'text', placeholder: 'You may also like' },
       { key: 'upsells_enabled', label: 'Show Upsells', type: 'toggle' },
     ],
-    defaultContent: { upsells_heading: 'You may also like', upsells_enabled: true },
+    defaultContent: productColorDefaults({ upsells_heading: 'You may also like', upsells_enabled: true }),
   },
   {
     name: 'Product FAQ', icon: ICON_PATHS.faq, color: 'bg-purple-600',
     fields: [
+      ...PRODUCT_COLOR_FIELDS,
       { key: 'faq_heading', label: 'FAQ Heading', type: 'text', placeholder: 'Frequently Asked Questions' },
       { key: 'faq_1_q', label: 'Q1', type: 'text' },
       { key: 'faq_1_a', label: 'A1', type: 'textarea' },
@@ -1374,16 +1405,62 @@ export const PRODUCT_PAGE_SECTIONS: SectionSchema[] = [
       { key: 'faq_4_q', label: 'Q4', type: 'text' },
       { key: 'faq_4_a', label: 'A4', type: 'textarea' },
     ],
-    defaultContent: { faq_heading: 'Frequently Asked Questions', faq_1_q: '', faq_1_a: '', faq_2_q: '', faq_2_a: '', faq_3_q: '', faq_3_a: '', faq_4_q: '', faq_4_a: '' },
+    defaultContent: productColorDefaults({ faq_heading: 'Frequently Asked Questions', faq_1_q: '', faq_1_a: '', faq_2_q: '', faq_2_a: '', faq_3_q: '', faq_3_a: '', faq_4_q: '', faq_4_a: '' }),
   },
   {
     name: 'Reviews Display', icon: ICON_PATHS.star, color: 'bg-amber-600',
     fields: [
+      ...PRODUCT_COLOR_FIELDS,
       { key: 'reviews_heading', label: 'Reviews Section Heading', type: 'text', placeholder: 'Customer Reviews' },
       { key: 'show_reviews', label: 'Show Reviews Section', type: 'toggle' },
       { key: 'reviews_count', label: 'Number of Reviews to Show', type: 'number' },
     ],
-    defaultContent: { reviews_heading: 'Customer Reviews', show_reviews: true, reviews_count: 5 },
+    defaultContent: productColorDefaults({ reviews_heading: 'Customer Reviews', show_reviews: true, reviews_count: 5 }),
+  },
+  {
+    name: 'Jeko Difference Colors', icon: ICON_PATHS.star, color: 'bg-emerald-600',
+    fields: PRODUCT_COLOR_FIELDS,
+    defaultContent: productColorDefaults(),
+  },
+  {
+    name: 'Nutrition Highlights Colors', icon: ICON_PATHS.book, color: 'bg-deep-green',
+    fields: PRODUCT_COLOR_FIELDS,
+    defaultContent: productColorDefaults(),
+  },
+  {
+    name: 'Learn The Science Colors', icon: ICON_PATHS.text, color: 'bg-blue-600',
+    fields: PRODUCT_COLOR_FIELDS,
+    defaultContent: productColorDefaults(),
+  },
+  {
+    name: 'Trusted By Vets Colors', icon: ICON_PATHS.heart, color: 'bg-teal-600',
+    fields: PRODUCT_COLOR_FIELDS,
+    defaultContent: productColorDefaults(),
+  },
+  {
+    name: 'Best Days Story Colors', icon: ICON_PATHS.image, color: 'bg-lime-600',
+    fields: PRODUCT_COLOR_FIELDS,
+    defaultContent: productColorDefaults(),
+  },
+  {
+    name: 'Why We Started Colors', icon: ICON_PATHS.text, color: 'bg-slate-600',
+    fields: PRODUCT_COLOR_FIELDS,
+    defaultContent: productColorDefaults(),
+  },
+  {
+    name: 'Mission Quote Colors', icon: ICON_PATHS.faq, color: 'bg-purple-600',
+    fields: PRODUCT_COLOR_FIELDS,
+    defaultContent: productColorDefaults(),
+  },
+  {
+    name: 'Lifestyle Banner Colors', icon: ICON_PATHS.image, color: 'bg-rose-600',
+    fields: PRODUCT_COLOR_FIELDS,
+    defaultContent: productColorDefaults(),
+  },
+  {
+    name: 'Related Products Colors', icon: ICON_PATHS.grid, color: 'bg-amber-600',
+    fields: PRODUCT_COLOR_FIELDS,
+    defaultContent: productColorDefaults(),
   },
 ];
 

@@ -126,6 +126,7 @@ const CloseIcon = () => (
 
 export default function Header({ content }: { content?: HeaderContent }) {
   const [globalHeaderContent, setGlobalHeaderContent] = useState<HeaderContent | null>(null);
+  const [globalHeaderLoaded, setGlobalHeaderLoaded] = useState(!!content);
   const effectiveContent = content ?? globalHeaderContent ?? undefined;
   const { t, lang } = useT();
   const { ct } = useContentT(effectiveContent);
@@ -239,7 +240,14 @@ export default function Header({ content }: { content?: HeaderContent }) {
     : defaultNavItems);
 
   useEffect(() => {
-    if (content || globalHeaderContent) return;
+    if (content) {
+      setGlobalHeaderLoaded(true);
+      return;
+    }
+    if (globalHeaderContent) {
+      setGlobalHeaderLoaded(true);
+      return;
+    }
     let cancelled = false;
     (async () => {
       try {
@@ -264,6 +272,8 @@ export default function Header({ content }: { content?: HeaderContent }) {
         }
       } catch {
         // Keep hardcoded header defaults if saved content cannot be loaded.
+      } finally {
+        if (!cancelled) setGlobalHeaderLoaded(true);
       }
     })();
     return () => {
@@ -278,6 +288,8 @@ export default function Header({ content }: { content?: HeaderContent }) {
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+
+  if (!content && !globalHeaderLoaded) return null;
 
   return (
     <header className="fixed top-0 left-0 w-full z-50">

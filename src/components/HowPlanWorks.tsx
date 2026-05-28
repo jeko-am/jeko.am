@@ -8,17 +8,31 @@ import { dynFontClass, dynFontStyle } from "@/lib/dynamic-font-size";
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export default function HowPlanWorks({ content }: { content?: any }) {
-  const { ct, t, lang } = useContentT(content);
-  const heading = ct("heading", "home.howPlan.heading").replace(/\bPure\b/gi, "Jeko");
+  const { t, lang } = useContentT(content);
+  const sectionText = (key: string, fallbackKey: string) => {
+    const fallback = t(fallbackKey);
+    if (lang === "hy") {
+      const hy = content?.hy as Record<string, unknown> | undefined;
+      if (hy && Object.prototype.hasOwnProperty.call(hy, key)) {
+        return typeof hy[key] === "string" ? hy[key] : "";
+      }
+      return fallback;
+    }
+    if (Object.prototype.hasOwnProperty.call(content || {}, key)) {
+      return typeof content?.[key] === "string" ? content[key] : "";
+    }
+    return fallback;
+  };
+  const heading = sectionText("heading", "home.howPlan.heading").replace(/\bPure\b/gi, "Jeko");
   const stepLabel = t("home.howPlan.stepLabel");
-  const step1Title = ct("step_1_title", "home.howPlan.step1Title");
-  const step1Description = ct("step_1_description", "home.howPlan.step1Title");
-  const step2Title = ct("step_2_title", "home.howPlan.step2Title");
-  const step2Description = ct("step_2_description", "home.howPlan.step2Title");
-  const step3Title = ct("step_3_title", "home.howPlan.step3Title");
-  const step3Description = ct("step_3_description", "home.howPlan.step3Title");
-  const step4Title = ct("step_4_title", "home.howPlan.step4Title");
-  const buttonText = ct("button_text", "home.howPlan.buttonText");
+  const step1Title = sectionText("step_1_title", "home.howPlan.step1Title");
+  const step1Description = sectionText("step_1_description", "home.howPlan.step1Title");
+  const step2Title = sectionText("step_2_title", "home.howPlan.step2Title");
+  const step2Description = sectionText("step_2_description", "home.howPlan.step2Title");
+  const step3Title = sectionText("step_3_title", "home.howPlan.step3Title");
+  const step3Description = sectionText("step_3_description", "home.howPlan.step3Title");
+  const step4Title = sectionText("step_4_title", "home.howPlan.step4Title");
+  const buttonText = sectionText("button_text", "home.howPlan.buttonText");
   const signupUrl = useSignupUrl();
   const buttonUrl = typeof content?.button_url === "string" ? content.button_url : signupUrl;
   const showButton = content?.button_visible !== false && buttonText.trim() !== "" && buttonUrl.trim() !== "";
