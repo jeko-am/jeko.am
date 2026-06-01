@@ -9,6 +9,7 @@ import EditorOverlay from "@/components/EditorOverlay";
 import HyText from "@/components/HyText";
 import { useSignupUrl } from "@/lib/useSignupUrl";
 import { useT } from "@/lib/i18n/LangProvider";
+import { hiddenSectionCss } from "@/lib/section-visibility";
 
 interface BenefitsPageClientProps {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -75,6 +76,7 @@ export default function BenefitsPageClient({ sections }: BenefitsPageClientProps
   return (
     <>
       <EditorOverlay />
+      <style dangerouslySetInnerHTML={{ __html: hiddenSectionCss(sections) }} />
       <Header />
       <main style={{ paddingTop: "80px" }}>
         {/* ========== Hero Section ========== */}

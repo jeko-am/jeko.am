@@ -5,9 +5,11 @@ import { useAuth } from '@/lib/auth';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { FormEvent, Suspense, useEffect, useState } from 'react';
 import { useT } from '@/lib/i18n/LangProvider';
+import { useSectionVisibility } from '@/lib/use-section-visibility';
 
 function LoginForm() {
   const { t } = useT();
+  const hiddenCss = useSectionVisibility('/auth/login');
   const { signIn, signOut, user, isAdmin, loading } = useAuth();
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -104,8 +106,9 @@ function LoginForm() {
 
   return (
     <div className="min-h-screen bg-deep-green flex flex-col">
+      <style dangerouslySetInnerHTML={{ __html: hiddenCss }} />
       {/* Header with Jeko Logo */}
-      <div className="bg-deep-green border-b border-white/10 px-4 py-4">
+      <div data-section-index="0" className="bg-deep-green border-b border-white/10 px-4 py-4">
         <div className="max-w-6xl mx-auto flex items-center">
           <Link href="/" className="flex-shrink-0">
             <span
@@ -126,13 +129,13 @@ function LoginForm() {
       <div className="flex-1 flex items-center justify-center px-4 py-8">
       <div className="w-full max-w-md">
         {/* Logo / Brand */}
-        <div className="text-center mb-8">
+        <div data-section-index="1" className="text-center mb-8">
           <h1 className="text-xl font-bold text-white">{t('auth.login.welcomeBack')}</h1>
           <p className="text-white/50 text-xs mt-1">{t('auth.login.subtitleShort')}</p>
         </div>
 
         {/* Login Card */}
-        <div className="bg-white rounded-2xl shadow-xl p-8">
+        <div data-section-index="2" className="bg-white rounded-2xl shadow-xl p-8">
           {stuckOnAdminRedirect && (
             <div className="mb-6 flex items-start gap-3 bg-amber-50 border border-amber-200 text-amber-800 px-4 py-3 rounded-xl text-sm">
               <svg className="w-5 h-5 flex-shrink-0 mt-0.5 text-amber-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
@@ -235,7 +238,7 @@ function LoginForm() {
         </div>
 
         {/* Footer */}
-        <p className="text-center text-white/30 text-xs mt-6">
+        <p data-section-index="3" className="text-center text-white/30 text-xs mt-6">
           {t('auth.login.secureLogin')}
         </p>
       </div>

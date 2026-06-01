@@ -15,6 +15,7 @@ import { useRouter, useSearchParams } from 'next/navigation';
 import { FormEvent, useEffect, useMemo, useRef, useState } from 'react';
 import { useT } from '@/lib/i18n/LangProvider';
 import { DEFAULT_SIGNUP_OPTION_ICONS, QIcon } from '@/lib/signupIcons';
+import { useSectionVisibility } from '@/lib/use-section-visibility';
 
 /* ------------------------------------------------------------------ */
 /*  Quiz step definitions                                              */
@@ -379,6 +380,7 @@ function BreedAutocomplete({
 
 function SignupPageInner() {
   const { t, lang } = useT();
+  const hiddenCss = useSectionVisibility('/auth/signup');
   const { signUp, signInWithGoogle, user, loading: authLoading } = useAuth();
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -397,11 +399,12 @@ function SignupPageInner() {
 
       const { data: sections } = await supabase
         .from('page_sections')
-        .select('content')
+        .select('content, is_visible')
         .eq('page_id', pageId);
       if (!alive || !sections) return;
 
       const merged = sections
+        .filter((section) => section.is_visible !== false)
         .map((section) => section.content as Record<string, unknown> | null)
         .filter(Boolean)
         .sort((a, b) => Number(a?._section_index ?? 0) - Number(b?._section_index ?? 0))
@@ -1306,6 +1309,7 @@ function SignupPageInner() {
 
   return (
     <div className="min-h-screen bg-off-white flex flex-col">
+      <style dangerouslySetInnerHTML={{ __html: hiddenCss }} />
       <Header />
 
       {/* -------- Main quiz area -------- */}
@@ -1314,7 +1318,7 @@ function SignupPageInner() {
           <div className={`flex-1 flex flex-col items-center justify-center px-5 pt-8 pb-8 transition-all duration-300 ease-in-out ${slideClass}`}>
 
             {/* Segmented progress bar */}
-            <div className="w-full max-w-md mb-8">
+            <div data-section-index="0" className="w-full max-w-md mb-8">
               <div className="flex gap-1">
                 {Array.from({ length: TOTAL_STEPS }).map((_, i) => (
                   <div key={i} className="flex-1 h-1.5 rounded-full bg-deep-green/15 overflow-hidden">
@@ -1329,7 +1333,7 @@ function SignupPageInner() {
             </div>
 
             {/* Motivational message */}
-            <p className="text-deep-green text-2xl font-semibold mb-6">
+            <p data-section-index="1" className="text-deep-green text-2xl font-semibold mb-6">
               {STEP_MESSAGES[step]}
             </p>
 
@@ -1801,7 +1805,7 @@ function SignupPageInner() {
                 </h1>
                 <p className="text-deep-green/50 text-sm mb-8">{signupText('step7Subtitle', 'auth.signup.step7Subtitle')}</p>
 
-                <div className="space-y-4 text-left">
+                <div data-section-index="2" className="space-y-4 text-left">
                   {/* Country Dropdown */}
                   <div>
                     <label className="block text-sm font-medium text-deep-green mb-1.5">{t('auth.signup.country')} <span className="text-red-400">*</span></label>

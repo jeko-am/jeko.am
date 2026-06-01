@@ -8,6 +8,7 @@ import Footer from "@/components/Footer";
 import { useAuth } from "@/lib/auth";
 import { supabase } from "@/lib/supabase";
 import { useT } from "@/lib/i18n/LangProvider";
+import { useSectionVisibility } from "@/lib/use-section-visibility";
 
 // In-memory cache so each EN caption is only translated once per session.
 const __captionTranslationCache = new Map<string, string>();
@@ -1851,6 +1852,7 @@ function EmptyState({ activeTab }: { activeTab: FeedTab }) {  const { t } = useT
 // ---------------------------------------------------------------------------
 
 export default function FeedPage() {  const { t } = useT();
+  const hiddenCss = useSectionVisibility("/community");
 
   const { user, isAdmin, loading: authLoading } = useAuth();
   // Gate auth-dependent UI until after hydration so the server-rendered tree
@@ -2209,11 +2211,12 @@ export default function FeedPage() {  const { t } = useT();
   // =======================================================================
   return (
     <>
+      <style dangerouslySetInnerHTML={{ __html: hiddenCss }} />
       <Header />
       <main className="bg-off-white min-h-screen pt-[100px] lg:pt-[120px] pb-24 font-rubik">
         <div className="max-w-[1200px] mx-auto px-4 lg:px-12">
           {/* Title section */}
-          <div className="text-center mb-8 lg:mb-14">
+          <div data-section-index="0" className="text-center mb-8 lg:mb-14">
             <h1 className="font-rubik font-bold text-deep-green text-3xl lg:text-4xl xl:text-5xl mb-3 lg:mb-4">
               Community
             </h1>
@@ -2225,21 +2228,21 @@ export default function FeedPage() {  const { t } = useT();
 
           {/* Auth banner for guests */}
           {mounted && !authLoading && !user && (
-            <>
+            <div data-section-index="1">
               <div className="hidden lg:block">
                 <DesktopGuestBanner />
               </div>
               <div className="lg:hidden">
                 <MobileGuestBanner />
               </div>
-            </>
+            </div>
           )}
 
           {/* Post creator (logged-in only) */}
           {mounted && !authLoading && user && (
             <>
               {/* Desktop: inline post creator */}
-              <div className="hidden lg:block max-w-[640px] mx-auto">
+              <div data-section-index="2" className="hidden lg:block max-w-[640px] mx-auto">
                 <PostCreator
                   userId={user.id}
                   userEmail={user.email}
@@ -2249,7 +2252,7 @@ export default function FeedPage() {  const { t } = useT();
                 />
               </div>
               {/* Mobile: button to open post creator sheet */}
-              <div className="lg:hidden px-4 py-3">
+              <div data-section-index="2" className="lg:hidden px-4 py-3">
                 <button
                   onClick={() => setShowCreateSheet(true)}
                   className="w-full bg-white border border-gray-200 rounded-xl px-4 py-3 flex items-center gap-3 text-left shadow-sm hover:bg-gray-50 transition-colors"
@@ -2266,14 +2269,14 @@ export default function FeedPage() {  const { t } = useT();
           )}
 
           {/* Feed Tabs - desktop style on lg+, mobile pill style below */}
-          <div className="hidden lg:block">
+          <div data-section-index="3" className="hidden lg:block">
             <DesktopFeedTabs
               activeTab={activeTab}
               onTabChange={handleTabChange}
               isLoggedIn={mounted && !!user}
             />
           </div>
-          <div className="lg:hidden">
+          <div data-section-index="3" className="lg:hidden">
             <MobileFeedTabs
               activeTab={activeTab}
               onTabChange={handleTabChange}
@@ -2308,7 +2311,7 @@ export default function FeedPage() {  const { t } = useT();
 
           {/* Posts feed - responsive masonry layout */}
           {!loading && !error && (
-            <>
+            <div data-section-index="4">
               {posts.length === 0 ? (
                 <EmptyState activeTab={activeTab} />
               ) : (
@@ -2369,7 +2372,7 @@ export default function FeedPage() {  const { t } = useT();
                   </button>
                 </div>
               )}
-            </>
+            </div>
           )}
         </div>
       </main>

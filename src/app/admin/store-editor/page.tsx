@@ -1141,11 +1141,12 @@ export default function AdminStoreEditorPage() {
     const schema = activeSections[index];
     if (!schema) return null;
     const indexKey = activePageConfig.indexKey;
-    // Try both the page-specific index key and fallback _homepage_index for legacy compat
+    // Try both the page-specific index key and fallback keys for legacy compat.
+    // Do not use array position: sparse DB rows made later section toggles hit the wrong row.
     return sections.find(s => {
-      const c = s.content as Record<string, unknown>;
-      return c?.[indexKey] === index || c?._homepage_index === index || c?._section_index === index;
-    }) || sections[index] || null;
+      const c = (s.content || {}) as Record<string, unknown>;
+      return c?.[indexKey] === index || c?._homepage_index === index || c?._section_index === index || s.sort_order === index;
+    }) || null;
   }
 
   // ─── Field change handler ─────────────────────────────────────────────
@@ -1297,11 +1298,46 @@ export default function AdminStoreEditorPage() {
 
   // ─── Toggle visibility ────────────────────────────────────────────────
   async function toggleVisibility(index: number) {
-    const record = getSectionRecord(index);
-    if (!record) return;
+    setError(null);
     try {
-      await supabase.from('page_sections').update({ is_visible: !record.is_visible }).eq('id', record.id);
-      const { data } = await supabase.from('page_sections').select('*').eq('page_id', currentPage!.id).order('sort_order', { ascending: true });
+      let page = currentPage;
+      if (!page) {
+        page = await ensurePageExists(activePageConfig.slug);
+        setCurrentPage(page);
+      }
+
+      const schema = activeSections[index];
+      if (!schema) return;
+
+      const record = getSectionRecord(index);
+      if (record) {
+        await supabase
+          .from('page_sections')
+          .update({ is_visible: record.is_visible === false })
+          .eq('id', record.id);
+      } else {
+        const indexKey = activePageConfig.indexKey;
+        const content: Record<string, unknown> = {
+          ...schema.defaultContent,
+          [indexKey]: index,
+        };
+        if (indexKey !== '_homepage_index') {
+          content._section_index = index;
+        }
+
+        const { error: insertErr } = await supabase
+          .from('page_sections')
+          .insert([{
+            page_id: page!.id,
+            section_type: schema.name,
+            content,
+            sort_order: index,
+            is_visible: false,
+          }]);
+        if (insertErr) throw insertErr;
+      }
+
+      const { data } = await supabase.from('page_sections').select('*').eq('page_id', page!.id).order('sort_order', { ascending: true });
       setSections(data || []);
       setPreviewKey(k => k + 1);
     } catch (err: unknown) {

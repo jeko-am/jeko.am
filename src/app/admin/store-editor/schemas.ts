@@ -1195,6 +1195,268 @@ const SIGNUP_SECTIONS: SectionSchema[] = [
   },
 ];
 
+const CONTACT_PAGE_SECTIONS: SectionSchema[] = [
+  {
+    name: 'Hero',
+    icon: ICON_PATHS.banner,
+    color: 'bg-deep-green',
+    fields: [
+      { key: 'heading', label: 'Heading', type: 'text', i18nKey: 'contact.page.heading' },
+      { key: 'subheading', label: 'Subheading', type: 'textarea', i18nKey: 'contact.page.subheading' },
+    ],
+    defaultContent: { heading: 'Contact Us', subheading: 'Have a question? We are here to help.' },
+  },
+  {
+    name: 'Contact Form',
+    icon: ICON_PATHS.text,
+    color: 'bg-blue-500',
+    fields: [
+      { key: 'form_heading', label: 'Form Heading', type: 'text', i18nKey: 'contact.form.heading' },
+      { key: 'form_subheading', label: 'Form Subheading', type: 'textarea', i18nKey: 'contact.form.subheading' },
+      { key: 'submit_text', label: 'Submit Button', type: 'text', i18nKey: 'contact.form.submitBtn' },
+    ],
+    defaultContent: { form_heading: 'Send us a message', form_subheading: 'Fill out the form below and we will get back to you.', submit_text: 'Send Message' },
+  },
+  {
+    name: 'Contact Information',
+    icon: ICON_PATHS.faq,
+    color: 'bg-emerald-500',
+    fields: [
+      { key: 'info_heading', label: 'Info Heading', type: 'text', i18nKey: 'contact.info.heading' },
+      { key: 'email_label', label: 'Email Label', type: 'text', i18nKey: 'contact.info.email' },
+      { key: 'phone_label', label: 'Phone Label', type: 'text', i18nKey: 'contact.info.phone' },
+      { key: 'hours_label', label: 'Hours Label', type: 'text', i18nKey: 'contact.info.hours' },
+      { key: 'address_label', label: 'Address Label', type: 'text', i18nKey: 'contact.info.address' },
+    ],
+    defaultContent: { info_heading: 'Get in touch', email_label: 'Email', phone_label: 'Phone', hours_label: 'Business hours', address_label: 'Address' },
+  },
+  {
+    name: 'Map & Helpful Links',
+    icon: ICON_PATHS.image,
+    color: 'bg-amber-500',
+    fields: [
+      { key: 'map_label', label: 'Map Label', type: 'text' },
+      { key: 'links_heading', label: 'Links Heading', type: 'text' },
+    ],
+    defaultContent: { map_label: 'Yorkshire Business Park, Leeds', links_heading: 'Helpful links' },
+  },
+];
+
+const COMMUNITY_PAGE_SECTIONS: SectionSchema[] = [
+  {
+    name: 'Hero',
+    icon: ICON_PATHS.banner,
+    color: 'bg-deep-green',
+    fields: [
+      { key: 'heading', label: 'Heading', type: 'text' },
+      { key: 'subheading', label: 'Subheading', type: 'textarea' },
+    ],
+    defaultContent: { heading: 'Community', subheading: 'Share moments, connect with fellow pet parents, and celebrate your furry friends.' },
+  },
+  {
+    name: 'Guest Signup Banner',
+    icon: ICON_PATHS.check,
+    color: 'bg-gold',
+    fields: [
+      { key: 'banner_heading', label: 'Banner Heading', type: 'text' },
+      { key: 'banner_body', label: 'Banner Body', type: 'textarea' },
+    ],
+    defaultContent: { banner_heading: 'Join the community', banner_body: 'Create an account to post, like, and follow other pet parents.' },
+  },
+  {
+    name: 'Post Composer',
+    icon: ICON_PATHS.text,
+    color: 'bg-blue-500',
+    fields: [
+      { key: 'placeholder', label: 'Composer Placeholder', type: 'text' },
+    ],
+    defaultContent: { placeholder: 'Share something about your pet...' },
+  },
+  {
+    name: 'Feed Tabs',
+    icon: ICON_PATHS.grid,
+    color: 'bg-purple-500',
+    fields: [
+      { key: 'all_label', label: 'All Label', type: 'text' },
+      { key: 'following_label', label: 'Following Label', type: 'text' },
+      { key: 'trending_label', label: 'Trending Label', type: 'text' },
+    ],
+    defaultContent: { all_label: 'All', following_label: 'Following', trending_label: 'Trending' },
+  },
+  {
+    name: 'Posts Feed',
+    icon: ICON_PATHS.grid,
+    color: 'bg-emerald-500',
+    fields: [
+      { key: 'empty_heading', label: 'Empty Heading', type: 'text' },
+      { key: 'load_more', label: 'Load More Button', type: 'text' },
+    ],
+    defaultContent: { empty_heading: 'No posts yet', load_more: 'Load more' },
+  },
+];
+
+const BLOG_PAGE_SECTIONS: SectionSchema[] = [
+  {
+    name: 'Hero',
+    icon: ICON_PATHS.banner,
+    color: 'bg-deep-green',
+    fields: [
+      { key: 'heading', label: 'Heading', type: 'text', i18nKey: 'blog.page.heading' },
+      { key: 'subheading', label: 'Subheading', type: 'textarea', i18nKey: 'blog.page.subheading' },
+    ],
+    defaultContent: { heading: 'From the Blog', subheading: 'Fresh dog care tips, nutrition notes, and Jeko updates.' },
+  },
+  {
+    name: 'Category Filters',
+    icon: ICON_PATHS.grid,
+    color: 'bg-blue-500',
+    fields: [
+      { key: 'all_label', label: 'All Label', type: 'text', i18nKey: 'blog.filter.all' },
+    ],
+    defaultContent: { all_label: 'All' },
+  },
+  {
+    name: 'Blog Grid',
+    icon: ICON_PATHS.grid,
+    color: 'bg-emerald-500',
+    fields: [
+      { key: 'empty_heading', label: 'Empty Heading', type: 'text', i18nKey: 'blog.empty.heading' },
+      { key: 'empty_body', label: 'Empty Body', type: 'textarea', i18nKey: 'blog.empty.body' },
+    ],
+    defaultContent: { empty_heading: 'No posts yet', empty_body: 'Check back soon for new articles.' },
+  },
+];
+
+const LOGIN_PAGE_SECTIONS: SectionSchema[] = [
+  {
+    name: 'Logo Header',
+    icon: ICON_PATHS.header,
+    color: 'bg-deep-green',
+    fields: [
+      { key: 'logo_text', label: 'Logo Text', type: 'text' },
+    ],
+    defaultContent: { logo_text: 'JEKO' },
+  },
+  {
+    name: 'Intro Text',
+    icon: ICON_PATHS.text,
+    color: 'bg-blue-500',
+    fields: [
+      { key: 'welcome', label: 'Welcome Heading', type: 'text', i18nKey: 'auth.login.welcomeBack' },
+      { key: 'subtitle', label: 'Subtitle', type: 'text', i18nKey: 'auth.login.subtitleShort' },
+    ],
+    defaultContent: { welcome: 'Welcome back', subtitle: 'Sign in to continue' },
+  },
+  {
+    name: 'Login Form',
+    icon: ICON_PATHS.text,
+    color: 'bg-emerald-500',
+    fields: [
+      { key: 'email_label', label: 'Email Label', type: 'text', i18nKey: 'auth.login.emailLabel' },
+      { key: 'password_label', label: 'Password Label', type: 'text', i18nKey: 'auth.login.passwordLabel' },
+      { key: 'submit', label: 'Submit Button', type: 'text', i18nKey: 'auth.login.submit' },
+    ],
+    defaultContent: { email_label: 'Email', password_label: 'Password', submit: 'Sign in' },
+  },
+  {
+    name: 'Security Footer',
+    icon: ICON_PATHS.faq,
+    color: 'bg-gray-500',
+    fields: [
+      { key: 'secure_text', label: 'Secure Login Text', type: 'text', i18nKey: 'auth.login.secureLogin' },
+    ],
+    defaultContent: { secure_text: 'Secure login' },
+  },
+];
+
+const SIGNUP_AUTH_SECTIONS: SectionSchema[] = [
+  {
+    name: 'Progress Bar',
+    icon: ICON_PATHS.steps,
+    color: 'bg-blue-500',
+    fields: [
+      { key: 'progress_label', label: 'Progress Label', type: 'text' },
+    ],
+    defaultContent: { progress_label: 'Progress' },
+  },
+  {
+    name: 'Step Headings',
+    icon: ICON_PATHS.text,
+    color: 'bg-purple-500',
+    fields: [
+      ...Array.from({ length: 9 }, (_, i) => ({
+        key: `stepTitle${i}`,
+        label: `Step ${i + 1} Title`,
+        type: 'text' as FieldType,
+        i18nKey: `auth.signup.stepTitle${i}`,
+      })),
+      ...Array.from({ length: 9 }, (_, i) => ({
+        key: `motivate${i + 1}`,
+        label: `Step ${i + 1} Top Message`,
+        type: 'text' as FieldType,
+        i18nKey: `auth.signup.motivate${i + 1}`,
+      })),
+    ],
+    defaultContent: SIGNUP_SECTIONS[0].defaultContent,
+  },
+  {
+    name: 'Email Signup Form',
+    icon: ICON_PATHS.text,
+    color: 'bg-emerald-500',
+    fields: [
+      { key: 'orSignUpEmail', label: 'Email Signup Link', type: 'text', i18nKey: 'auth.signup.orSignUpEmail' },
+      { key: 'orSignUpEmailDiv', label: 'Email Signup Divider', type: 'text', i18nKey: 'auth.signup.orSignUpEmailDiv' },
+      { key: 'joinPack', label: 'Create Account Button', type: 'text', i18nKey: 'auth.signup.joinPack' },
+      { key: 'creating', label: 'Creating Account State', type: 'text', i18nKey: 'auth.signup.creating' },
+    ],
+    defaultContent: SIGNUP_SECTIONS[0].defaultContent,
+  },
+];
+
+const APP_PAGE_SECTIONS: SectionSchema[] = [
+  {
+    name: 'Page Header',
+    icon: ICON_PATHS.header,
+    color: 'bg-deep-green',
+    fields: [
+      { key: 'heading', label: 'Heading', type: 'text' },
+      { key: 'subheading', label: 'Subheading', type: 'textarea' },
+    ],
+    defaultContent: { heading: 'Page heading', subheading: '' },
+  },
+  {
+    name: 'Main Content',
+    icon: ICON_PATHS.text,
+    color: 'bg-blue-500',
+    fields: [
+      { key: 'title', label: 'Title', type: 'text' },
+      { key: 'body', label: 'Body', type: 'textarea' },
+    ],
+    defaultContent: { title: 'Main content', body: '' },
+  },
+  {
+    name: 'Empty / Loading State',
+    icon: ICON_PATHS.faq,
+    color: 'bg-gray-500',
+    fields: [
+      { key: 'empty_heading', label: 'Empty Heading', type: 'text' },
+      { key: 'empty_body', label: 'Empty Body', type: 'textarea' },
+      { key: 'loading_text', label: 'Loading Text', type: 'text' },
+    ],
+    defaultContent: { empty_heading: 'Nothing here yet', empty_body: '', loading_text: 'Loading...' },
+  },
+  {
+    name: 'Primary Actions',
+    icon: ICON_PATHS.check,
+    color: 'bg-gold',
+    fields: [
+      { key: 'primary_button', label: 'Primary Button', type: 'text' },
+      { key: 'secondary_button', label: 'Secondary Button', type: 'text' },
+    ],
+    defaultContent: { primary_button: 'Continue', secondary_button: 'Back' },
+  },
+];
+
 /* ═══════════════════════════════════════════════════════════════════════════
    MATCHING PREFERENCES CONFIG
    ═══════════════════════════════════════════════════════════════════════════ */
@@ -1797,18 +2059,18 @@ export const ALL_PAGE_CONFIGS: PageConfig[] = [
   { label: 'Recipes', slug: '/recipes', previewPath: '/recipes', indexKey: '_section_index', sections: withSectionColorControls(RECIPES_SECTIONS) },
   { label: 'Reviews', slug: '/reviews', previewPath: '/reviews', indexKey: '_section_index', sections: withSectionColorControls(REVIEWS_SECTIONS) },
   { label: 'Beyond the Bowl', slug: '/beyond-the-bowl', previewPath: '/beyond-the-bowl', indexKey: '_section_index', sections: withSectionColorControls(BEYOND_BOWL_SECTIONS) },
-  { label: 'Contact', slug: '/contact', previewPath: '/contact', indexKey: '_section_index', sections: withSectionColorControls(SIGNUP_SECTIONS) },
-  { label: 'Community', slug: '/community', previewPath: '/community', indexKey: '_section_index', sections: withSectionColorControls(SIGNUP_SECTIONS) },
-  { label: 'Blog', slug: '/blog', previewPath: '/blog', indexKey: '_section_index', sections: withSectionColorControls(SIGNUP_SECTIONS) },
-  { label: 'Cart', slug: '/cart', previewPath: '/cart', indexKey: '_section_index', sections: withSectionColorControls(SIGNUP_SECTIONS) },
-  { label: 'Checkout', slug: '/checkout', previewPath: '/checkout', indexKey: '_section_index', sections: withSectionColorControls(SIGNUP_SECTIONS) },
-  { label: 'Profile', slug: '/profile', previewPath: '/profile', indexKey: '_section_index', sections: withSectionColorControls(SIGNUP_SECTIONS) },
-  { label: 'Find Pet Owners', slug: '/find-owners', previewPath: '/find-owners', indexKey: '_section_index', sections: withSectionColorControls(SIGNUP_SECTIONS) },
-  { label: 'Swipe', slug: '/swipe', previewPath: '/swipe', indexKey: '_section_index', sections: withSectionColorControls(SIGNUP_SECTIONS) },
-  { label: 'Matches', slug: '/matches', previewPath: '/matches', indexKey: '_section_index', sections: withSectionColorControls(SIGNUP_SECTIONS) },
-  { label: 'Messages', slug: '/messages', previewPath: '/messages', indexKey: '_section_index', sections: withSectionColorControls(SIGNUP_SECTIONS) },
-  { label: 'Login', slug: '/auth/login', previewPath: '/auth/login', indexKey: '_section_index', sections: withSectionColorControls(SIGNUP_SECTIONS) },
-  { label: 'Signup (Auth)', slug: '/auth/signup', previewPath: '/auth/signup', indexKey: '_section_index', sections: withSectionColorControls(SIGNUP_SECTIONS) },
+  { label: 'Contact', slug: '/contact', previewPath: '/contact', indexKey: '_section_index', sections: withSectionColorControls(CONTACT_PAGE_SECTIONS) },
+  { label: 'Community', slug: '/community', previewPath: '/community', indexKey: '_section_index', sections: withSectionColorControls(COMMUNITY_PAGE_SECTIONS) },
+  { label: 'Blog', slug: '/blog', previewPath: '/blog', indexKey: '_section_index', sections: withSectionColorControls(BLOG_PAGE_SECTIONS) },
+  { label: 'Cart', slug: '/cart', previewPath: '/cart', indexKey: '_section_index', sections: withSectionColorControls(APP_PAGE_SECTIONS) },
+  { label: 'Checkout', slug: '/checkout', previewPath: '/checkout', indexKey: '_section_index', sections: withSectionColorControls(APP_PAGE_SECTIONS) },
+  { label: 'Profile', slug: '/profile', previewPath: '/profile', indexKey: '_section_index', sections: withSectionColorControls(APP_PAGE_SECTIONS) },
+  { label: 'Find Pet Owners', slug: '/find-owners', previewPath: '/find-owners', indexKey: '_section_index', sections: withSectionColorControls(APP_PAGE_SECTIONS) },
+  { label: 'Swipe', slug: '/swipe', previewPath: '/swipe', indexKey: '_section_index', sections: withSectionColorControls(APP_PAGE_SECTIONS) },
+  { label: 'Matches', slug: '/matches', previewPath: '/matches', indexKey: '_section_index', sections: withSectionColorControls(APP_PAGE_SECTIONS) },
+  { label: 'Messages', slug: '/messages', previewPath: '/messages', indexKey: '_section_index', sections: withSectionColorControls(APP_PAGE_SECTIONS) },
+  { label: 'Login', slug: '/auth/login', previewPath: '/auth/login', indexKey: '_section_index', sections: withSectionColorControls(LOGIN_PAGE_SECTIONS) },
+  { label: 'Signup (Auth)', slug: '/auth/signup', previewPath: '/auth/signup', indexKey: '_section_index', sections: withSectionColorControls(SIGNUP_AUTH_SECTIONS) },
   { label: 'Privacy Policy', slug: '/privacy-policy', previewPath: '/privacy-policy', indexKey: '_section_index', sections: withSectionColorControls(LEGAL_BLOCKS_SECTIONS) },
   { label: 'Terms of Use', slug: '/terms-of-use', previewPath: '/terms-of-use', indexKey: '_section_index', sections: withSectionColorControls(LEGAL_BLOCKS_SECTIONS) },
   { label: 'Cookie Policy', slug: '/cookie-policy', previewPath: '/cookie-policy', indexKey: '_section_index', sections: withSectionColorControls(LEGAL_BLOCKS_SECTIONS) },
@@ -1822,7 +2084,7 @@ export const ALL_PAGE_CONFIGS: PageConfig[] = [
   {
     label: 'Matching Preferences',
     slug: 'preferences-config',
-    previewPath: '/profile',
+    previewPath: '/admin/store-editor/preferences-preview',
     indexKey: '_section_index',
     sections: withSectionColorControls(PREFERENCES_CONFIG_SECTIONS),
   },

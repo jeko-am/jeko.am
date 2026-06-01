@@ -8,6 +8,8 @@ import Footer from "@/components/Footer";
 import EditorOverlay from "@/components/EditorOverlay";
 import { useT } from "@/lib/i18n/LangProvider";
 import HyText from "@/components/HyText";
+import { dynFontClass, dynFontStyle } from "@/lib/dynamic-font-size";
+import { hiddenSectionCss } from "@/lib/section-visibility";
 
 /* Decorative SVG components */
 function LeafShape({ className = "", fill = "#274C46", opacity = 0.2, style }: { className?: string; fill?: string; opacity?: number; style?: React.CSSProperties }) {
@@ -44,17 +46,28 @@ function PurpleDot({ className = "", size = 10, style }: { className?: string; s
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export default function AboutPageClient({ sections }: { sections: Record<string, any> }) {
-  const { t } = useT();
+  const { t, lang } = useT();
   const s = sections; // shorthand
+  const savedHy = (sectionIndex: number, key: string) => {
+    const value = s[sectionIndex]?.hy?.[key];
+    return typeof value === "string" ? value : undefined;
+  };
+  const fontClass = (sectionIndex: number, key: string) => dynFontClass(s[sectionIndex], key);
+  const fontStyle = (sectionIndex: number, key: string, extra?: React.CSSProperties) => ({
+    ...(extra ?? {}),
+    ...dynFontStyle(s[sectionIndex], key, lang),
+  });
 
   const timeline = [
     {
       year: s[1]?.year ?? "2012",
+      section: s[1],
       title: s[1]?.title ?? "It started with a simple question",
       content: [
         s[1]?.content_1 ?? "\"Little brown biscuits – we wouldn't eat these for every meal, every day, so why should our pets?\"",
         s[1]?.content_2 ?? "This is the question that led us on a journey to change the face of pet food for the better, offering up a service entirely different for dog owners all over the country.",
       ],
+      contentKeys: ["content_1", "content_2"],
       image: null as string | null,
       bgColor: "bg-off-white",
       contentItalic: [true, false] as boolean[],
@@ -63,11 +76,13 @@ export default function AboutPageClient({ sections }: { sections: Record<string,
     },
     {
       year: s[2]?.year ?? "2013",
+      section: s[2],
       title: s[2]?.title ?? "A food",
       titleHighlight: s[2]?.title_highlight ?? "revelation",
       content: [
         s[2]?.content ?? "Months of research led us to an age-old preservation method of removing the moisture from food, resulting in natural, high-quality, convenient meals without using the harmful extrusion process used to make traditional dry biscuit food.",
       ],
+      contentKeys: ["content"],
       image: s[2]?.image || "https://images.unsplash.com/photo-1587300003388-59208cc962cb?w=400&h=300&fit=crop",
       bgColor: "bg-off-white",
       imageRight: true,
@@ -76,11 +91,13 @@ export default function AboutPageClient({ sections }: { sections: Record<string,
     },
     {
       year: s[3]?.year ?? "2014",
+      section: s[3],
       title: s[3]?.title ?? "Memorable",
       titleHighlight: s[3]?.title_highlight ?? "milestones",
       content: [
         s[3]?.content ?? "In 2014, our co-founders entered the Dragons' Den and we were lucky enough to win over two dragons! Despite the fantastic offers, the terms didn't quite suit us, and thanks to Jeko's success, it's certainly not a decision we regret.",
       ],
+      contentKeys: ["content"],
       image: s[3]?.image || "https://images.unsplash.com/photo-1518717758536-85ae29035b6d?w=400&h=300&fit=crop",
       bgColor: "bg-off-white",
       imageRight: false,
@@ -89,11 +106,13 @@ export default function AboutPageClient({ sections }: { sections: Record<string,
     },
     {
       year: s[4]?.year ?? "2017",
+      section: s[4],
       title: s[4]?.title ?? "Hosting a",
       titleHighlight: s[4]?.title_highlight ?? "royal visit",
       content: [
         s[4]?.content ?? "Her Royal Highness Princess Anne, a keen animal lover, visited us here in West Yorkshire in 2017. After a tour around, we couldn't let her go without a few treats for her own dogs!",
       ],
+      contentKeys: ["content"],
       image: s[4]?.image || "https://images.unsplash.com/photo-1534361960057-19889db9621e?w=400&h=300&fit=crop",
       bgColor: "bg-off-white",
       imageRight: true,
@@ -102,12 +121,14 @@ export default function AboutPageClient({ sections }: { sections: Record<string,
     },
     {
       year: s[5]?.year ?? "2024",
+      section: s[5],
       title: s[5]?.title ?? "Where we are",
       titleHighlight: s[5]?.title_highlight ?? "today",
       content: [
         s[5]?.content_1 ?? "We've come a long way from creating recipes in Dan's kitchen. Jeko has moved into bigger and better facilities in West Yorkshire, working alongside industry-leading vets and nutritionists to cultivate one of the best, natural dog food brands in the UK. Although we may have grown, what drives us remains the same: to provide happier, healthier and longer lives for our pets.",
         s[5]?.content_2 ?? "So you could say that in many ways, this is only the beginning!",
       ],
+      contentKeys: ["content_1", "content_2"],
       image: null as string | null,
       bgColor: "bg-off-white",
       sectionIndex: 5,
@@ -118,13 +139,14 @@ export default function AboutPageClient({ sections }: { sections: Record<string,
   return (
     <>
       <EditorOverlay />
+      <style dangerouslySetInnerHTML={{ __html: hiddenSectionCss(s) }} />
       <Header />
       <main style={{ paddingTop: "80px" }}>
         {/* Hero Video Section */}
         <div data-section-index={0} data-section-name="Hero">
           <section
             className="relative w-full overflow-hidden"
-            style={{ minHeight: "520px" }}
+            style={{ minHeight: "520px", backgroundColor: s[0]?.background_color || undefined }}
           >
             <div className="absolute inset-0">
               <Image
@@ -148,7 +170,7 @@ export default function AboutPageClient({ sections }: { sections: Record<string,
             <div key={index} data-section-index={item.sectionIndex} data-section-name={item.sectionName}>
               <section
                 className={`${item.bgColor} relative overflow-hidden`}
-                style={{ paddingTop: index === 0 ? "48px" : "56px", paddingBottom: index === timeline.length - 1 ? "56px" : "56px" }}
+                style={{ paddingTop: index === 0 ? "48px" : "56px", paddingBottom: index === timeline.length - 1 ? "56px" : "56px", backgroundColor: item.section?.background_color || undefined }}
               >
                 {/* ---- Decorative elements per section ---- */}
 
@@ -212,15 +234,15 @@ export default function AboutPageClient({ sections }: { sections: Record<string,
                   {!item.image ? (
                     /* Text-only section (centered) */
                     <div className="text-center max-w-[650px] mx-auto">
-                      <p className="text-gold font-semibold text-[15px] tracking-wide mb-3 uppercase" style={{ letterSpacing: "0.05em" }}>
-                        {item.year}
+                      <p className={`text-gold font-semibold text-[15px] tracking-wide mb-3 uppercase ${fontClass(item.sectionIndex, "year")}`} style={fontStyle(item.sectionIndex, "year", { letterSpacing: "0.05em" })}>
+                        <HyText en={item.year} savedHy={savedHy(item.sectionIndex, "year")} />
                       </p>
-                      <h2 className="text-[28px] md:text-[36px] font-semibold text-deep-green font-rubik leading-tight mb-6">
-                        <HyText en={item.title} />
+                      <h2 className={`text-[28px] md:text-[36px] font-semibold text-deep-green font-rubik leading-tight mb-6 ${fontClass(item.sectionIndex, "title")}`} style={fontStyle(item.sectionIndex, "title")}>
+                        <HyText en={item.title} savedHy={savedHy(item.sectionIndex, "title")} />
                         {item.titleHighlight && (
                           <>
                             <br />
-                            <span className="text-gold"><HyText en={item.titleHighlight} /></span>
+                            <span className={`text-gold ${fontClass(item.sectionIndex, "title_highlight")}`} style={fontStyle(item.sectionIndex, "title_highlight")}><HyText en={item.titleHighlight} savedHy={savedHy(item.sectionIndex, "title_highlight")} /></span>
                           </>
                         )}
                       </h2>
@@ -228,11 +250,12 @@ export default function AboutPageClient({ sections }: { sections: Record<string,
                         {item.content.map((para, pIdx) => (
                           <p
                             key={pIdx}
-                            className={`text-deep-green text-[16px] leading-[1.75] ${
+                            className={`text-deep-green text-[16px] leading-[1.75] ${fontClass(item.sectionIndex, item.contentKeys[pIdx])} ${
                               item.contentItalic?.[pIdx] ? "italic" : ""
                             }`}
+                            style={fontStyle(item.sectionIndex, item.contentKeys[pIdx])}
                           >
-                            <HyText en={para} />
+                            <HyText en={para} savedHy={savedHy(item.sectionIndex, item.contentKeys[pIdx])} />
                           </p>
                         ))}
                       </div>
@@ -245,16 +268,16 @@ export default function AboutPageClient({ sections }: { sections: Record<string,
                       } items-center gap-10 md:gap-12`}
                     >
                       <div className="w-full md:w-1/2">
-                        <p className="text-gold font-semibold text-[15px] tracking-wide mb-3 uppercase" style={{ letterSpacing: "0.05em" }}>
-                          {item.year}
+                        <p className={`text-gold font-semibold text-[15px] tracking-wide mb-3 uppercase ${fontClass(item.sectionIndex, "year")}`} style={fontStyle(item.sectionIndex, "year", { letterSpacing: "0.05em" })}>
+                          <HyText en={item.year} savedHy={savedHy(item.sectionIndex, "year")} />
                         </p>
-                        <h2 className="text-[26px] md:text-[34px] font-semibold text-deep-green font-rubik leading-tight mb-4">
-                          <HyText en={item.title} />
+                        <h2 className={`text-[26px] md:text-[34px] font-semibold text-deep-green font-rubik leading-tight mb-4 ${fontClass(item.sectionIndex, "title")}`} style={fontStyle(item.sectionIndex, "title")}>
+                          <HyText en={item.title} savedHy={savedHy(item.sectionIndex, "title")} />
                           {item.titleHighlight && (
                             <>
                               <br />
-                              <span className="text-gold">
-                                <HyText en={item.titleHighlight} />
+                              <span className={`text-gold ${fontClass(item.sectionIndex, "title_highlight")}`} style={fontStyle(item.sectionIndex, "title_highlight")}>
+                                <HyText en={item.titleHighlight} savedHy={savedHy(item.sectionIndex, "title_highlight")} />
                               </span>
                             </>
                           )}
@@ -263,9 +286,10 @@ export default function AboutPageClient({ sections }: { sections: Record<string,
                           {item.content.map((para, pIdx) => (
                             <p
                               key={pIdx}
-                              className="text-deep-green text-[15px] leading-[1.75]"
+                              className={`text-deep-green text-[15px] leading-[1.75] ${fontClass(item.sectionIndex, item.contentKeys[pIdx])}`}
+                              style={fontStyle(item.sectionIndex, item.contentKeys[pIdx])}
                             >
-                              <HyText en={para} />
+                              <HyText en={para} savedHy={savedHy(item.sectionIndex, item.contentKeys[pIdx])} />
                             </p>
                           ))}
                         </div>
@@ -303,19 +327,19 @@ export default function AboutPageClient({ sections }: { sections: Record<string,
 
         {/* Stats Section - clean, no zigzag dividers */}
         <div data-section-index={6} data-section-name="Stats">
-          <section className="bg-deep-green py-16 md:py-20">
+          <section className="bg-deep-green py-16 md:py-20" style={{ backgroundColor: s[6]?.background_color || "#274C46" }}>
             <div className="max-w-[1200px] mx-auto px-6 text-center">
-              <h2 className="text-[24px] md:text-[28px] font-semibold text-white font-rubik mb-1">
-                <HyText en={s[6]?.heading ?? t("about.stats.heading")} />
+              <h2 className={`text-[24px] md:text-[28px] font-semibold text-white font-rubik mb-1 ${fontClass(6, "heading")}`} style={fontStyle(6, "heading")}>
+                <HyText en={s[6]?.heading ?? t("about.stats.heading")} savedHy={savedHy(6, "heading")} />
               </h2>
-              <p className="text-gold text-[22px] md:text-[28px] font-semibold font-rubik mb-5">
-                <HyText en={s[6]?.subtitle ?? t("about.stats.subtitle")} />
+              <p className={`text-gold text-[22px] md:text-[28px] font-semibold font-rubik mb-5 ${fontClass(6, "subtitle")}`} style={fontStyle(6, "subtitle")}>
+                <HyText en={s[6]?.subtitle ?? t("about.stats.subtitle")} savedHy={savedHy(6, "subtitle")} />
               </p>
-              <div className="text-[52px] md:text-[72px] lg:text-[80px] font-bold text-gold font-rubik mb-5 leading-none tracking-tight">
+              <div className={`text-[52px] md:text-[72px] lg:text-[80px] font-bold text-gold font-rubik mb-5 leading-none tracking-tight ${fontClass(6, "number")}`} style={fontStyle(6, "number")}>
                 {s[6]?.number ?? "92,871,751"}
               </div>
-              <p className="text-[16px] text-white/80 max-w-lg mx-auto leading-relaxed">
-                <HyText en={s[6]?.description ?? t("about.stats.description")} />
+              <p className={`text-[16px] text-white/80 max-w-lg mx-auto leading-relaxed ${fontClass(6, "description")}`} style={fontStyle(6, "description")}>
+                <HyText en={s[6]?.description ?? t("about.stats.description")} savedHy={savedHy(6, "description")} />
               </p>
             </div>
           </section>
@@ -323,7 +347,7 @@ export default function AboutPageClient({ sections }: { sections: Record<string,
 
         {/* Learn more about Jeko - asymmetrical layout */}
         <div data-section-index={7} data-section-name="Learn More">
-          <section className="relative overflow-hidden">
+          <section className="relative overflow-hidden" style={{ backgroundColor: s[7]?.background_color || undefined }}>
             <div className="flex flex-col md:flex-row min-h-[440px]">
               <div className="w-full md:w-[42%] relative min-h-[360px] md:min-h-[440px]">
                 <Image
@@ -336,19 +360,19 @@ export default function AboutPageClient({ sections }: { sections: Record<string,
                 {/* Vertical zigzag on right edge - teeth pointing LEFT into image, matches off-white text panel */}
                 <div
                   className="hidden md:block absolute right-0 top-0 h-full z-10 zigzag-vertical-right"
-                  style={{ ['--zigzag-color' as string]: '#EAE5DC' } as React.CSSProperties}
+                  style={{ ['--zigzag-color' as string]: s[7]?.background_color || '#EAE5DC' } as React.CSSProperties}
                 />
               </div>
-              <div className="w-full md:w-[58%] bg-off-white flex items-center">
+              <div className="w-full md:w-[58%] bg-off-white flex items-center" style={{ backgroundColor: s[7]?.background_color || undefined }}>
                 <div className="px-8 md:px-14 lg:px-20 py-12 md:py-16">
-                  <h2 className="text-[28px] md:text-[36px] font-semibold text-deep-green font-rubik leading-tight mb-1">
-                    <HyText en={s[7]?.heading ?? t("about.learnMore.heading")} />
+                  <h2 className={`text-[28px] md:text-[36px] font-semibold text-deep-green font-rubik leading-tight mb-1 ${fontClass(7, "heading")}`} style={fontStyle(7, "heading")}>
+                    <HyText en={s[7]?.heading ?? t("about.learnMore.heading")} savedHy={savedHy(7, "heading")} />
                   </h2>
-                  <p className="text-gold text-[26px] md:text-[34px] font-semibold font-rubik mb-6">
-                    <HyText en={s[7]?.subtitle ?? t("about.learnMore.subtitle")} />
+                  <p className={`text-gold text-[26px] md:text-[34px] font-semibold font-rubik mb-6 ${fontClass(7, "subtitle")}`} style={fontStyle(7, "subtitle")}>
+                    <HyText en={s[7]?.subtitle ?? t("about.learnMore.subtitle")} savedHy={savedHy(7, "subtitle")} />
                   </p>
-                  <p className="text-deep-green text-[15px] leading-[1.8]">
-                    <HyText en={s[7]?.description ?? "Our dogs are a part of the family, so they deserve the best food. After all, healthy dogs live longer lives! Just tell us about your dog and we\u2019ll create tailored recipes so they can always enjoy healthy, delicious food that\u2019s delivered straight to your door. Simply add water, stir and serve."} />
+                  <p className={`text-deep-green text-[15px] leading-[1.8] ${fontClass(7, "description")}`} style={fontStyle(7, "description")}>
+                    <HyText en={s[7]?.description ?? "Our dogs are a part of the family, so they deserve the best food. After all, healthy dogs live longer lives! Just tell us about your dog and we\u2019ll create tailored recipes so they can always enjoy healthy, delicious food that\u2019s delivered straight to your door. Simply add water, stir and serve."} savedHy={savedHy(7, "description")} />
                   </p>
                 </div>
               </div>
@@ -358,24 +382,25 @@ export default function AboutPageClient({ sections }: { sections: Record<string,
 
         {/* Personalise your dog's food CTA - asymmetrical, purple bg */}
         <div data-section-index={8} data-section-name="Personalise CTA">
-          <section className="relative overflow-hidden">
+          <section className="relative overflow-hidden" style={{ backgroundColor: s[8]?.background_color || '#5F295E' }}>
             <div className="flex flex-col md:flex-row min-h-[420px]">
               <div className="w-full md:w-[55%] flex items-center" style={{ backgroundColor: s[8]?.background_color || '#5F295E' }}>
                 <div className="px-8 md:px-14 lg:px-20 py-12 md:py-16">
-                  <h2 className="text-[30px] md:text-[38px] font-semibold text-white font-rubik leading-tight mb-1">
-                    <HyText en={s[8]?.heading ?? t("about.personaliseCta.heading")} />
+                  <h2 className={`text-[30px] md:text-[38px] font-semibold text-white font-rubik leading-tight mb-1 ${fontClass(8, "heading")}`} style={fontStyle(8, "heading")}>
+                    <HyText en={s[8]?.heading ?? t("about.personaliseCta.heading")} savedHy={savedHy(8, "heading")} />
                   </h2>
-                  <p className="text-gold text-[26px] md:text-[34px] font-semibold font-rubik mb-6">
-                    <HyText en={s[8]?.subtitle ?? t("about.personaliseCta.subtitle")} />
+                  <p className={`text-gold text-[26px] md:text-[34px] font-semibold font-rubik mb-6 ${fontClass(8, "subtitle")}`} style={fontStyle(8, "subtitle")}>
+                    <HyText en={s[8]?.subtitle ?? t("about.personaliseCta.subtitle")} savedHy={savedHy(8, "subtitle")} />
                   </p>
-                  <p className="text-white/85 text-[15px] leading-[1.8] mb-8 max-w-md">
-                    <HyText en={s[8]?.description ?? t("about.personaliseCta.description")} />
+                  <p className={`text-white/85 text-[15px] leading-[1.8] mb-8 max-w-md ${fontClass(8, "description")}`} style={fontStyle(8, "description")}>
+                    <HyText en={s[8]?.description ?? t("about.personaliseCta.description")} savedHy={savedHy(8, "description")} />
                   </p>
                   <Link
                     href={s[8]?.button_url ?? "/products"}
-                    className="inline-block bg-gold text-deep-green px-7 py-3 rounded-[5px] font-semibold text-[16px] hover:bg-[#d99500] transition-colors"
+                    className={`inline-block bg-gold text-deep-green px-7 py-3 rounded-[5px] font-semibold text-[16px] hover:bg-[#d99500] transition-colors ${fontClass(8, "button_text")}`}
+                    style={fontStyle(8, "button_text")}
                   >
-                    <HyText en={s[8]?.button_text ?? t("about.personaliseCta.button")} />
+                    <HyText en={s[8]?.button_text ?? t("about.personaliseCta.button")} savedHy={savedHy(8, "button_text")} />
                   </Link>
                 </div>
               </div>

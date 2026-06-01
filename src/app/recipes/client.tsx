@@ -10,6 +10,7 @@ import EditorOverlay from "@/components/EditorOverlay";
 import { useSignupUrl } from "@/lib/useSignupUrl";
 import { useT } from "@/lib/i18n/LangProvider";
 import HyText from "@/components/HyText";
+import { hiddenSectionCss } from "@/lib/section-visibility";
 
 const recipes = [
   {
@@ -91,6 +92,7 @@ export default function RecipesPageClient({ sections }: RecipesPageClientProps) 
   return (
     <>
       <EditorOverlay />
+      <style dangerouslySetInnerHTML={{ __html: hiddenSectionCss(sections) }} />
       <Header />
       <main style={{ paddingTop: "80px" }}>
         {/* Hero Section */}

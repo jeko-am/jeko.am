@@ -112,7 +112,7 @@ export default function MatchingPreferences({ petProfileId, petType, onPreferenc
         if (!sectionData) return;
 
         const find = (name: string) => {
-          const s = sectionData.find(s => s.section_type === name);
+          const s = sectionData.find(s => s.section_type === name && s.is_visible !== false);
           const opts = (s?.content as Record<string, unknown>)?.options;
           return Array.isArray(opts) && opts.length > 0 ? (opts as string[]) : null;
         };

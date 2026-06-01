@@ -60,6 +60,7 @@ export default function HealthConditionPage(props: HealthConditionProps) {
   // Admin overrides loaded from page_sections (admin store editor writes here).
   // Each section's content is keyed by `_section_index` (0=Hero, 1=What Is, 2=How Diet Helps, 3=Testimonial).
   const [overrides, setOverrides] = useState<Record<number, Record<string, unknown>> | null>(null);
+  const [hiddenSections, setHiddenSections] = useState<Set<number>>(new Set());
   useEffect(() => {
     if (!pageSlug) return;
     let cancelled = false;
@@ -76,14 +77,24 @@ export default function HealthConditionPage(props: HealthConditionProps) {
         if (!pageId) return;
         const { data: sections } = await supabase
           .from('page_sections')
-          .select('content')
+          .select('content, is_visible')
           .eq('page_id', pageId);
         const map: Record<number, Record<string, unknown>> = {};
-        sections?.forEach((s: { content: Record<string, unknown> | null }) => {
-          const idx = (s.content?._section_index ?? s.content?._homepage_index) as number | undefined;
-          if (typeof idx === 'number') map[idx] = s.content || {};
+        const hidden = new Set<number>();
+        sections?.forEach((s: { content: Record<string, unknown> | null; is_visible?: boolean | null }) => {
+          const rawIdx = s.content?._section_index ?? s.content?._homepage_index;
+          const idx = rawIdx === undefined || rawIdx === null ? undefined : Number(rawIdx);
+          if (typeof idx !== 'number' || !Number.isFinite(idx)) return;
+          if (s.is_visible === false) {
+            hidden.add(idx);
+            return;
+          }
+          map[idx] = s.content || {};
         });
-        if (!cancelled) setOverrides(map);
+        if (!cancelled) {
+          setOverrides(map);
+          setHiddenSections(hidden);
+        }
       } catch {
         // Ignore — fall back to props.
       }
@@ -164,45 +175,49 @@ export default function HealthConditionPage(props: HealthConditionProps) {
       <Header />
       <main style={{ paddingTop: "80px" }}>
         {/* Hero */}
-        <section
-          className="relative w-full overflow-hidden"
-          style={{ minHeight: "520px" }}
-        >
-          <div className="absolute inset-0">
-            <Image
-              src={heroImage}
-              alt={condition}
-              fill
-              unoptimized
-              className="object-cover"
-              priority
-            />
-            <div className="absolute inset-0 bg-gradient-to-r from-deep-green/90 via-deep-green/70 to-transparent" />
-          </div>
-          <div className="relative z-10 max-w-[1200px] mx-auto px-6 py-16 md:py-24">
-            <div className="max-w-[560px]">
-              <p className="text-gold font-semibold text-sm tracking-wide uppercase mb-3">
-                <HyText en={eyebrow} />
-              </p>
-              <h1 className="font-rubik text-white text-[36px] md:text-[48px] font-bold leading-[1.12] mb-5">
-                <HyText en={condition} />{" "}
-                <span className="text-gold italic"><HyText en={tagline} /></span>
-              </h1>
-              <p className="text-white/90 text-[17px] leading-relaxed mb-8 max-w-[480px]">
-                <HyText en={heroDescription} />
-              </p>
-              <Link
-                href={signupUrl}
-                className="inline-block bg-gold text-deep-green px-7 py-3 rounded-[5px] font-semibold text-[16px] hover:bg-[#d99500] transition-colors"
-              >
-                <HyText en={heroCta} />
-              </Link>
+        {!hiddenSections.has(0) && (
+          <section
+            data-section-index="0"
+            className="relative w-full overflow-hidden"
+            style={{ minHeight: "520px" }}
+          >
+            <div className="absolute inset-0">
+              <Image
+                src={heroImage}
+                alt={condition}
+                fill
+                unoptimized
+                className="object-cover"
+                priority
+              />
+              <div className="absolute inset-0 bg-gradient-to-r from-deep-green/90 via-deep-green/70 to-transparent" />
             </div>
-          </div>
-        </section>
+            <div className="relative z-10 max-w-[1200px] mx-auto px-6 py-16 md:py-24">
+              <div className="max-w-[560px]">
+                <p className="text-gold font-semibold text-sm tracking-wide uppercase mb-3">
+                  <HyText en={eyebrow} />
+                </p>
+                <h1 className="font-rubik text-white text-[36px] md:text-[48px] font-bold leading-[1.12] mb-5">
+                  <HyText en={condition} />{" "}
+                  <span className="text-gold italic"><HyText en={tagline} /></span>
+                </h1>
+                <p className="text-white/90 text-[17px] leading-relaxed mb-8 max-w-[480px]">
+                  <HyText en={heroDescription} />
+                </p>
+                <Link
+                  href={signupUrl}
+                  className="inline-block bg-gold text-deep-green px-7 py-3 rounded-[5px] font-semibold text-[16px] hover:bg-[#d99500] transition-colors"
+                >
+                  <HyText en={heroCta} />
+                </Link>
+              </div>
+            </div>
+          </section>
+        )}
 
         {/* What is it */}
-        <section className="bg-off-white py-14 md:py-20">
+        {!hiddenSections.has(1) && (
+        <section data-section-index="1" className="bg-off-white py-14 md:py-20">
           <div className="max-w-[900px] mx-auto px-6">
             <h2 className="font-rubik text-[28px] md:text-[36px] font-bold text-deep-green leading-tight mb-6">
               <HyText en={whatIsTitle} />
@@ -219,9 +234,11 @@ export default function HealthConditionPage(props: HealthConditionProps) {
             </div>
           </div>
         </section>
+        )}
 
         {/* Symptoms / Signs */}
-        <section className="bg-white py-14 md:py-20">
+        {!hiddenSections.has(2) && (
+        <section data-section-index="2" className="bg-white py-14 md:py-20">
           <div className="max-w-[1100px] mx-auto px-6">
             <h2 className="font-rubik text-[26px] md:text-[32px] font-bold text-deep-green text-center mb-3">
               <HyText en={signsHeading} />
@@ -247,9 +264,11 @@ export default function HealthConditionPage(props: HealthConditionProps) {
             </div>
           </div>
         </section>
+        )}
 
         {/* How diet helps - split layout */}
-        <section className="relative overflow-hidden">
+        {!hiddenSections.has(3) && (
+        <section data-section-index="3" className="relative overflow-hidden">
           <div className="flex flex-col md:flex-row min-h-[440px]">
             <div className="w-full md:w-[45%] relative min-h-[300px] md:min-h-[440px]">
               <Image
@@ -302,9 +321,11 @@ export default function HealthConditionPage(props: HealthConditionProps) {
             </div>
           </div>
         </section>
+        )}
 
         {/* Testimonial */}
-        <section className="bg-deep-green py-14 md:py-20">
+        {!hiddenSections.has(4) && (
+        <section data-section-index="4" className="bg-deep-green py-14 md:py-20">
           <div className="max-w-[800px] mx-auto px-6 text-center">
             <div className="w-20 h-20 mx-auto mb-6 rounded-full overflow-hidden relative">
               <Image
@@ -323,9 +344,11 @@ export default function HealthConditionPage(props: HealthConditionProps) {
             </p>
           </div>
         </section>
+        )}
 
         {/* FAQs */}
-        <section className="bg-off-white py-14 md:py-20">
+        {!hiddenSections.has(5) && (
+        <section data-section-index="5" className="bg-off-white py-14 md:py-20">
           <div className="max-w-[800px] mx-auto px-6">
             <h2 className="font-rubik text-[26px] md:text-[32px] font-bold text-deep-green text-center mb-10">
               <HyText en={faqsHeading} />
@@ -362,9 +385,11 @@ export default function HealthConditionPage(props: HealthConditionProps) {
             </div>
           </div>
         </section>
+        )}
 
         {/* CTA */}
-        <section className="relative overflow-hidden">
+        {!hiddenSections.has(6) && (
+        <section data-section-index="6" className="relative overflow-hidden">
           <div className="flex flex-col md:flex-row min-h-[380px]">
             <div className="w-full md:w-[55%] bg-[#5F295E] flex items-center">
               <div className="px-8 md:px-14 lg:px-20 py-12 md:py-16">
@@ -396,6 +421,7 @@ export default function HealthConditionPage(props: HealthConditionProps) {
             </div>
           </div>
         </section>
+        )}
       </main>
       <Footer />
     </>

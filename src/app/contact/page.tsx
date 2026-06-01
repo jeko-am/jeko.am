@@ -8,10 +8,12 @@ import Footer from "@/components/Footer";
 import { supabase } from "@/lib/supabase";
 import { useSignupUrl } from "@/lib/useSignupUrl";
 import { useT } from "@/lib/i18n/LangProvider";
+import { useSectionVisibility } from "@/lib/use-section-visibility";
 
 export default function ContactPage() {
   const { t } = useT();
   const signupUrl = useSignupUrl();
+  const hiddenCss = useSectionVisibility("/contact");
   const [formData, setFormData] = useState({
     fullName: "",
     email: "",
@@ -63,11 +65,12 @@ export default function ContactPage() {
 
   return (
     <div className="min-h-screen flex flex-col bg-off-white">
+      <style dangerouslySetInnerHTML={{ __html: hiddenCss }} />
       <Header />
 
       <main style={{ paddingTop: "80px" }}>
         {/* Hero Section */}
-        <section className="bg-deep-green zigzag-bottom py-16 md:py-20">
+        <section data-section-index="0" className="bg-deep-green zigzag-bottom py-16 md:py-20">
           <div className="max-w-[1200px] mx-auto px-6 text-center">
             <h1 className="text-white font-rubik font-bold text-4xl md:text-5xl mb-4">
               {t("contact.page.heading")}
@@ -79,7 +82,7 @@ export default function ContactPage() {
         </section>
 
         {/* Contact Content */}
-        <section className="bg-off-white py-16 md:py-20">
+        <section data-section-index="1" className="bg-off-white py-16 md:py-20">
           <div className="max-w-[1200px] mx-auto px-6">
             <div className="grid grid-cols-1 lg:grid-cols-5 gap-10 lg:gap-14">
               {/* Left Column - Contact Form */}
@@ -294,7 +297,7 @@ export default function ContactPage() {
               </div>
 
               {/* Right Column - Contact Info */}
-              <div className="lg:col-span-2 space-y-8">
+              <div data-section-index="2" className="lg:col-span-2 space-y-8">
                 {/* Get in Touch */}
                 <div>
                   <h2 className="text-deep-green font-rubik font-bold text-2xl md:text-3xl mb-6">
@@ -494,7 +497,7 @@ export default function ContactPage() {
         </section>
 
         {/* Bottom Section - Map Placeholder & Helpful Links */}
-        <section className="bg-deep-green/5 py-16">
+        <section data-section-index="3" className="bg-deep-green/5 py-16">
           <div className="max-w-[1200px] mx-auto px-6">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
               {/* Map Placeholder */}

@@ -11,6 +11,7 @@ export default function ConditionalDogChatbot() {
   const { isOpen: isCartOpen } = useCart();
   const [content, setContent] = useState<ChatbotContent | null>(null);
   const [loaded, setLoaded] = useState(false);
+  const [hiddenByAdmin, setHiddenByAdmin] = useState(false);
 
   useEffect(() => {
     let cancelled = false;
@@ -29,10 +30,12 @@ export default function ConditionalDogChatbot() {
           .eq('page_id', pageId);
         const sec = secs?.find((s) => {
           const c = s.content as Record<string, unknown> | null;
-          return c?._section_index === 0;
+          return Number(c?._section_index) === 0;
         });
         if (cancelled) return;
-        if (sec && sec.is_visible !== false) {
+        if (sec?.is_visible === false) {
+          setHiddenByAdmin(true);
+        } else if (sec) {
           setContent(sec.content as ChatbotContent);
         }
         setLoaded(true);
@@ -48,7 +51,7 @@ export default function ConditionalDogChatbot() {
   const isCheckoutPage = pathname.startsWith('/checkout');
   const isSwipePage = pathname.startsWith('/swipe');
 
-  if (isAuthPage || isCheckoutPage || isSwipePage || isCartOpen) {
+  if (isAuthPage || isCheckoutPage || isSwipePage || isCartOpen || hiddenByAdmin) {
     return null;
   }
 

@@ -53,6 +53,7 @@ export default function LegalStructuredRenderer({
 }: LegalStructuredRendererProps) {
   const lang = useLang();
   const [sectionsByIdx, setSectionsByIdx] = useState<Map<number, SectionContent>>(new Map());
+  const [hiddenByIdx, setHiddenByIdx] = useState<Set<number>>(new Set());
 
   useEffect(() => {
     let cancelled = false;
@@ -70,17 +71,23 @@ export default function LegalStructuredRenderer({
 
         const { data: sections } = await supabase
           .from("page_sections")
-          .select("content")
+          .select("content, is_visible")
           .eq("page_id", pageId);
         if (cancelled || !sections) return;
 
         const next = new Map<number, SectionContent>();
-        sections.forEach((row: { content: SectionContent }) => {
+        const hidden = new Set<number>();
+        sections.forEach((row: { content: SectionContent; is_visible: boolean | null }) => {
           const c = row.content || {};
-          const idx = (c._section_index as number | undefined) ?? (c._homepage_index as number | undefined);
-          if (typeof idx === "number") next.set(idx, c);
+          const rawIdx = c._section_index ?? c._homepage_index;
+          const idx = rawIdx === undefined || rawIdx === null ? undefined : Number(rawIdx);
+          if (typeof idx === "number" && Number.isFinite(idx)) {
+            if (row.is_visible === false) hidden.add(idx);
+            else next.set(idx, c);
+          }
         });
         setSectionsByIdx(next);
+        setHiddenByIdx(hidden);
       } catch {
         /* silent — fallback renders */
       }
@@ -163,14 +170,14 @@ export default function LegalStructuredRenderer({
     const cmsBody = pick(cmsContent, "body");
     const heading = cmsHeading || fb.heading;
     const body = cmsBody || fb.body || "";
-    return { heading, body, extra: fb.extra, key: `block-${i}` };
+    return { heading, body, extra: fb.extra, key: `block-${i}`, index: i + 1 };
   });
 
   return (
     <>
       <Header />
       <main style={{ paddingTop: "80px" }}>
-        <section
+        {!hiddenByIdx.has(0) && <section
           className="py-16 text-center relative zigzag-bottom"
           style={{ backgroundColor: heroBg }}
           data-section-index={0}
@@ -189,7 +196,7 @@ export default function LegalStructuredRenderer({
               <p className="text-white/70 max-w-xl mx-auto text-lg">{subtitle}</p>
             ) : null}
           </div>
-        </section>
+        </section>}
 
         <section className="bg-off-white">
           <div className="max-w-[900px] mx-auto px-6 py-16">
@@ -197,8 +204,8 @@ export default function LegalStructuredRenderer({
               <p className="text-deep-green/60 text-sm font-rubik mb-10 italic">{lastUpdated}</p>
             ) : null}
 
-            {renderedBlocks.map((b, i) => (
-              <div key={b.key} className="mb-12" data-section-index={i + 1}>
+            {renderedBlocks.filter((b) => !hiddenByIdx.has(b.index)).map((b) => (
+              <div key={b.key} className="mb-12" data-section-index={b.index}>
                 {b.heading ? (
                   <h2 className="text-deep-green font-rubik font-bold text-2xl mb-4">{b.heading}</h2>
                 ) : null}

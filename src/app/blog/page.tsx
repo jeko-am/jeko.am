@@ -8,6 +8,7 @@ import Footer from '@/components/Footer';
 import { supabase } from '@/lib/supabase';
 import { useT } from '@/lib/i18n/LangProvider';
 import { localize } from '@/lib/i18n/localizeRecord';
+import { useSectionVisibility } from '@/lib/use-section-visibility';
 
 interface BlogPost {
   id: string;
@@ -33,6 +34,7 @@ function formatDate(dateStr: string): string {
 
 export default function BlogPage() {
   const { t, lang } = useT();
+  const hiddenCss = useSectionVisibility('/blog');
   const [posts, setPosts] = useState<BlogPost[]>([]);
   const [loading, setLoading] = useState(true);
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
@@ -58,11 +60,12 @@ export default function BlogPage() {
 
   return (
     <>
+      <style dangerouslySetInnerHTML={{ __html: hiddenCss }} />
       <Header />
       <main className="bg-off-white min-h-screen pt-[100px] lg:pt-[120px] pb-24 font-rubik">
         <div className="max-w-[1100px] mx-auto px-4 lg:px-8">
           {/* Title */}
-          <div className="text-center mb-10 lg:mb-14">
+          <div data-section-index="0" className="text-center mb-10 lg:mb-14">
             <h1 className="font-rubik font-bold text-deep-green text-3xl lg:text-5xl mb-3">
               {t("blog.page.heading")}
             </h1>
@@ -73,7 +76,7 @@ export default function BlogPage() {
 
           {/* Category filters */}
           {categories.length > 0 && (
-            <div className="flex flex-wrap justify-center gap-2 mb-10">
+            <div data-section-index="1" className="flex flex-wrap justify-center gap-2 mb-10">
               <button
                 onClick={() => setSelectedCategory(null)}
                 className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${
@@ -109,7 +112,7 @@ export default function BlogPage() {
 
           {/* Empty state */}
           {!loading && filtered.length === 0 && (
-            <div className="text-center py-20">
+            <div data-section-index="2" className="text-center py-20">
               <div className="w-20 h-20 mx-auto mb-6 bg-deep-green/10 rounded-full flex items-center justify-center text-4xl">
                 📝
               </div>
@@ -122,7 +125,7 @@ export default function BlogPage() {
 
           {/* Blog grid */}
           {!loading && filtered.length > 0 && (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div data-section-index="2" className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {filtered.map(post => (
                 <Link
                   key={post.id}

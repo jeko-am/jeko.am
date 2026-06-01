@@ -11,6 +11,7 @@ import { useSignupUrl } from "@/lib/useSignupUrl";
 import { useT } from "@/lib/i18n/LangProvider";
 import { useContentT } from "@/lib/i18n/useContentT";
 import HyText from "@/components/HyText";
+import { hiddenSectionCss } from "@/lib/section-visibility";
 
 // Hardcoded review fallbacks removed — Reviews page section (index 2) in the
 // store editor is now the single source of truth for customer testimonials.
@@ -155,6 +156,7 @@ export default function ReviewsPageClient({ sections }: ReviewsPageClientProps) 
   return (
     <>
       <EditorOverlay />
+      <style dangerouslySetInnerHTML={{ __html: hiddenSectionCss(sections) }} />
       <Header />
       <main style={{ paddingTop: "80px" }}>
         {/* Hero Section */}

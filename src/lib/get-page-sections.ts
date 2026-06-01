@@ -34,13 +34,18 @@ export async function getPageSections(pageSlug: string): Promise<Map<number, Sec
 
     const { data: sections } = await supabase
       .from("page_sections")
-      .select("content")
+      .select("content, is_visible")
       .eq("page_id", pageId);
 
     sections?.forEach((s) => {
       // Support both _section_index (new) and _homepage_index (legacy)
       const idx = s.content?._section_index ?? s.content?._homepage_index;
-      if (idx !== undefined && idx !== null) map.set(Number(idx), s.content);
+      if (idx !== undefined && idx !== null) {
+        map.set(Number(idx), {
+          ...(s.content || {}),
+          __isVisible: s.is_visible !== false,
+        });
+      }
     });
   } catch {
     // Fallback to hardcoded defaults on error

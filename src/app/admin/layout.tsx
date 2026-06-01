@@ -68,6 +68,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
   const { user, isAdmin, loading, signOut } = useAuth();
   const router = useRouter();
   const pathname = usePathname();
+  const isAdminAuthRoute = pathname.startsWith('/admin/auth');
   const [sidebarOpen, setSidebarOpen] = useState(true);
   const [mounted, setMounted] = useState(false);
   const hasRedirected = useRef(false);
@@ -78,9 +79,12 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
     // Only run redirects after the auth system has finished loading
     if (loading) return;
 
+    // Admin auth routes render their own standalone screens.
+    if (isAdminAuthRoute) return;
+
     // Redirect immediately if no user
     if (!user) {
-      router.push('/auth/login?redirect=/admin/dashboard');
+      router.push(`/auth/login?redirect=${encodeURIComponent(pathname || '/admin/dashboard')}`);
       return;
     }
 
@@ -88,9 +92,13 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
     // during the brief window after login before admin check completes
     if (!isAdmin && !hasRedirected.current) {
       hasRedirected.current = true;
-      router.push('/auth/login?redirect=/admin/dashboard');
+      router.push(`/auth/login?redirect=${encodeURIComponent(pathname || '/admin/dashboard')}`);
     }
-  }, [user, isAdmin, loading, router]);
+  }, [user, isAdmin, loading, router, pathname, isAdminAuthRoute]);
+
+  if (isAdminAuthRoute) {
+    return <>{children}</>;
+  }
 
   if (!mounted || loading) {
     return (

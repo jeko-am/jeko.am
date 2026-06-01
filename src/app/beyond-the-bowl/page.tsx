@@ -30,6 +30,7 @@ export default function BeyondTheBowlPage() {
   const [hero, setHero] = useState<Record<string, string>>({});
   const [grid, setGrid] = useState<Record<string, string>>({});
   const [cta, setCta] = useState<Record<string, string>>({});
+  const [hidden, setHidden] = useState<Set<number>>(new Set());
 
   useEffect(() => {
     let cancelled = false;
@@ -44,15 +45,22 @@ export default function BeyondTheBowlPage() {
         if (!pageId) return;
         const { data } = await supabase
           .from("page_sections")
-          .select("content")
+          .select("content, is_visible")
           .eq("page_id", pageId);
         if (cancelled || !data) return;
-        data.forEach((row: { content: Record<string, unknown> }) => {
-          const idx = row.content?._section_index as number | undefined;
+        const nextHidden = new Set<number>();
+        data.forEach((row: { content: Record<string, unknown>; is_visible: boolean | null }) => {
+          const rawIdx = row.content?._section_index ?? row.content?._homepage_index;
+          const idx = rawIdx === undefined || rawIdx === null ? undefined : Number(rawIdx);
+          if (typeof idx === "number" && Number.isFinite(idx) && row.is_visible === false) {
+            nextHidden.add(idx);
+            return;
+          }
           if (idx === 0) setHero(row.content as Record<string, string>);
           else if (idx === 1) setGrid(row.content as Record<string, string>);
           else if (idx === 2) setCta(row.content as Record<string, string>);
         });
+        setHidden(nextHidden);
       } catch {
         /* fallback to hardcoded */
       }
@@ -83,16 +91,16 @@ export default function BeyondTheBowlPage() {
     <>
       <Header />
       <main style={{ paddingTop: "80px" }}>
-        <section className="bg-deep-green py-16 text-center relative zigzag-bottom" data-section-index={0}>
+        {!hidden.has(0) && <section className="bg-deep-green py-16 text-center relative zigzag-bottom" data-section-index={0}>
           <div className="max-w-[1200px] mx-auto px-6">
             <h1 className="font-rubik text-white text-[38px] md:text-[48px] font-bold leading-[1.15] mb-4">
               {heading} <span className="text-gold">{headingHighlight}</span>
             </h1>
             <p className="text-white/80 max-w-2xl mx-auto text-lg leading-relaxed">{subheading}</p>
           </div>
-        </section>
+        </section>}
 
-        <section className="bg-off-white" data-section-index={1}>
+        {!hidden.has(1) && <section className="bg-off-white" data-section-index={1}>
           <div className="max-w-[1200px] mx-auto px-6 py-16">
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
               {articles.map((article, i) => (
@@ -124,15 +132,15 @@ export default function BeyondTheBowlPage() {
               ))}
             </div>
 
-            <div className="mt-16 bg-deep-green rounded-2xl p-10 text-center" data-section-index={2}>
+            {!hidden.has(2) && <div className="mt-16 bg-deep-green rounded-2xl p-10 text-center" data-section-index={2}>
               <h2 className="text-white font-rubik font-bold text-2xl mb-3">{ctaHeading}</h2>
               <p className="text-white/80 max-w-lg mx-auto mb-6">{ctaBody}</p>
               <Link href={ctaUrl} className="inline-block bg-gold text-deep-green font-semibold px-8 py-3 rounded-full hover:bg-gold/90 transition-colors">
                 {ctaText}
               </Link>
-            </div>
+            </div>}
           </div>
-        </section>
+        </section>}
       </main>
       <Footer />
     </>
