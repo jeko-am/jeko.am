@@ -12,6 +12,8 @@ import { useT } from "@/lib/i18n/LangProvider";
 import { useContentT } from "@/lib/i18n/useContentT";
 import HyText from "@/components/HyText";
 import { hiddenSectionCss } from "@/lib/section-visibility";
+import { contentText, contentUrl } from "@/lib/content-field";
+import { dynButtonStyle, dynFontClass } from "@/lib/dynamic-font-size";
 
 // Hardcoded review fallbacks removed — Reviews page section (index 2) in the
 // store editor is now the single source of truth for customer testimonials.
@@ -121,14 +123,14 @@ export default function ReviewsPageClient({ sections }: ReviewsPageClientProps) 
   const s2 = sections[2] || {};
   const cmsReviews = Array.from({ length: 9 }, (_, i) => {
     const n = i + 1;
-    const name = s2[`r${n}_name`] || reviews[i]?.name || '';
+    const name = contentText(s2, `r${n}_name`, reviews[i]?.name || '');
     if (!name) return null;
     return {
       name,
       initial: name.charAt(0).toUpperCase(),
       rating: Number(s2[`r${n}_rating`]) || reviews[i]?.rating || 5,
-      title: s2[`r${n}_title`] || reviews[i]?.title || '',
-      text: s2[`r${n}_text`] || reviews[i]?.text || '',
+      title: contentText(s2, `r${n}_title`, reviews[i]?.title || ''),
+      text: contentText(s2, `r${n}_text`, reviews[i]?.text || ''),
     };
   }).filter(Boolean) as typeof reviews;
 
@@ -136,18 +138,19 @@ export default function ReviewsPageClient({ sections }: ReviewsPageClientProps) 
 
   // Build category testimonials from CMS (section index 6) with hardcoded fallbacks
   const s6 = sections[6] || {};
-  const cmsCategories = s6.categories
-    ? String(s6.categories).split(',').map((c: string) => c.trim()).filter(Boolean)
-    : categories;
+  const cmsCategoriesRaw = contentText(s6, "categories", categories.join(","));
+  const cmsCategories = cmsCategoriesRaw
+    ? cmsCategoriesRaw.split(',').map((c: string) => c.trim()).filter(Boolean)
+    : [];
 
   const cmsTestimonials = Array.from({ length: 4 }, (_, i) => {
     const n = i + 1;
-    const name = s6[`t${n}_name`] || categoryTestimonials[i]?.name || '';
+    const name = contentText(s6, `t${n}_name`, categoryTestimonials[i]?.name || '');
     if (!name) return null;
     return {
       name,
       image: s6[`t${n}_image`] || categoryTestimonials[i]?.image || '',
-      text: s6[`t${n}_text`] || categoryTestimonials[i]?.text || '',
+      text: contentText(s6, `t${n}_text`, categoryTestimonials[i]?.text || ''),
     };
   }).filter(Boolean) as typeof categoryTestimonials;
 
@@ -185,8 +188,9 @@ export default function ReviewsPageClient({ sections }: ReviewsPageClientProps) 
                   {heroCt.ct("subheading", "reviews.hero.subheading")}
                 </p>
                 <Link
-                  href={sections[0]?.button_url ?? signupUrl}
-                  className="inline-block bg-gold text-deep-green px-8 py-3.5 rounded-[5px] font-bold text-[16px] hover:bg-[#d99500] transition-colors"
+                  href={contentUrl(sections[0], "button_url", signupUrl)}
+                  className={`inline-block bg-gold text-deep-green px-8 py-3.5 rounded-[5px] font-bold text-[16px] hover:bg-[#d99500] transition-colors ${dynFontClass(sections[0], "button_text")}`}
+                  style={dynButtonStyle(sections[0], "button_text", lang)}
                 >
                   {heroCt.ct("button_text", "reviews.hero.button")}
                 </Link>
@@ -198,7 +202,7 @@ export default function ReviewsPageClient({ sections }: ReviewsPageClientProps) 
         {/* Offer Banner */}
         <div data-section-index={1} data-section-name="Offer Banner">
           <Link
-            href={sections[1]?.link_url ?? signupUrl}
+            href={contentUrl(sections[1], "link_url", signupUrl)}
             className="block w-full bg-[#E65A1E] hover:bg-[#D04E15] transition-colors duration-200 py-3 text-center text-white"
           >
             <p className="text-[15px] leading-snug tracking-wide">
@@ -313,7 +317,7 @@ export default function ReviewsPageClient({ sections }: ReviewsPageClientProps) 
                       &ldquo;<HyText en={sectionText(sections[4], "vet_1_quote", vetsCt.ct("vet_1_quote"), "I\u2019ve been a vet for over 30 years and for about the last 5 years I\u2019ve been suggesting Jeko to my patients. I\u2019ve found it to be incredibly helpful and some of the dogs have responded dramatically well.")} />&rdquo;
                     </p>
                     <p className="text-white font-bold text-[13px]">
-                      <HyText en={sections[4]?.vet_1_name ?? "Dr Julian Norton MA VetMB GPcertSAP MRCVS, Partner"} />
+                      <HyText en={contentText(sections[4], "vet_1_name", "Dr Julian Norton MA VetMB GPcertSAP MRCVS, Partner")} />
                     </p>
                   </div>
                 </div>
@@ -334,7 +338,7 @@ export default function ReviewsPageClient({ sections }: ReviewsPageClientProps) 
                       &ldquo;<HyText en={sectionText(sections[4], "vet_2_quote", vetsCt.ct("vet_2_quote"), "When owners are asked what makes a healthy pet food, they often mention ingredients. But what is often not considered is how the food is processed, and this is possibly the most significant factor when choosing a dog food.")} />&rdquo;
                     </p>
                     <p className="text-white font-bold text-[13px]">
-                      <HyText en={sections[4]?.vet_2_name ?? "Dr Brendan Clark MRCVS"} />
+                      <HyText en={contentText(sections[4], "vet_2_name", "Dr Brendan Clark MRCVS")} />
                     </p>
                   </div>
                 </div>
@@ -387,10 +391,10 @@ export default function ReviewsPageClient({ sections }: ReviewsPageClientProps) 
             <div className="max-w-[1100px] mx-auto px-6">
               <div className="text-center mb-8">
                 <h2 className="text-[32px] md:text-[40px] font-bold text-deep-green font-rubik mb-0">
-                  <HyText en={sections[6]?.heading ?? t("reviews.helped.heading")} />
+                  <HyText en={contentText(sections[6], "heading", t("reviews.helped.heading"))} />
                 </h2>
                 <p className="text-gold text-[30px] md:text-[38px] font-bold font-rubik">
-                  <HyText en={sections[6]?.subtitle ?? t("reviews.helped.subtitle")} />
+                  <HyText en={contentText(sections[6], "subtitle", t("reviews.helped.subtitle"))} />
                 </p>
               </div>
 
@@ -452,14 +456,14 @@ export default function ReviewsPageClient({ sections }: ReviewsPageClientProps) 
               <div className="w-full md:w-[58%] bg-deep-green flex items-center">
                 <div className="px-8 md:px-14 lg:px-20 py-12 max-w-[560px]">
                   <h2 className="text-[34px] md:text-[42px] font-bold text-white font-rubik leading-[1.1] mb-6">
-                    <HyText en={(sections[7] as Record<string, unknown> | undefined)?.heading as string | undefined ?? t("reviews.diesel.heading")} />
+                    <HyText en={contentText(sections[7], "heading", t("reviews.diesel.heading"))} />
                   </h2>
                   <div className="space-y-4">
                     <p className="text-white/85 text-[15px] leading-[1.7]">
-                      <HyText en={(sections[7] as Record<string, unknown> | undefined)?.text_1 as string | undefined ?? "This is Diesel. For the first two years, he was a happy and healthy pup, it wasn\u2019t until just after his 2nd birthday that he started to develop skin, stomach and bladder problems."} />
+                      <HyText en={contentText(sections[7], "text_1", "This is Diesel. For the first two years, he was a happy and healthy pup, it wasn\u2019t until just after his 2nd birthday that he started to develop skin, stomach and bladder problems.")} />
                     </p>
                     <p className="text-white/85 text-[15px] leading-[1.7]">
-                      <HyText en={(sections[7] as Record<string, unknown> | undefined)?.text_2 as string | undefined ?? "We switched to Jeko as it\u2019s nutritious and doesn\u2019t have any of the nasty stuff in it. We\u2019ve realised by investing in Diesel\u2019s health we can give him a healthy, happy life."} />
+                      <HyText en={contentText(sections[7], "text_2", "We switched to Jeko as it\u2019s nutritious and doesn\u2019t have any of the nasty stuff in it. We\u2019ve realised by investing in Diesel\u2019s health we can give him a healthy, happy life.")} />
                     </p>
                   </div>
                 </div>
@@ -485,29 +489,29 @@ export default function ReviewsPageClient({ sections }: ReviewsPageClientProps) 
           <section className="bg-off-white py-16">
             <div className="max-w-[1200px] mx-auto px-6 text-center">
               <h2 className="text-[34px] md:text-[40px] font-bold text-deep-green font-rubik mb-2">
-                <HyText en={sections[8]?.heading ?? t("reviews.stats.heading")} />
+                <HyText en={contentText(sections[8], "heading", t("reviews.stats.heading"))} />
               </h2>
               <div className="text-[52px] md:text-[72px] font-bold text-gold font-rubik mb-3 leading-[1]">
-                {sections[8]?.number ?? "92,871,751"}
+                {contentText(sections[8], "number", "92,871,751")}
               </div>
               <p className="text-[16px] text-deep-green/80 max-w-lg mx-auto mb-12">
-                <HyText en={sections[8]?.description ?? t("reviews.stats.description")} />
+                <HyText en={contentText(sections[8], "description", t("reviews.stats.description"))} />
               </p>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-3xl mx-auto">
                 <div className="bg-beige-light rounded-xl p-6 flex items-center gap-5">
                   <span className="text-[44px] md:text-[52px] font-bold text-gold font-rubik shrink-0 leading-[1]">
-                    {sections[8]?.stat_1_value ?? "94%"}
+                    {contentText(sections[8], "stat_1_value", "94%")}
                   </span>
                   <p className="text-left text-[15px] font-semibold text-deep-green leading-snug">
-                    <HyText en={sections[8]?.stat_1_label ?? t("home.stats.stat1Label")} />
+                    <HyText en={contentText(sections[8], "stat_1_label", t("home.stats.stat1Label"))} />
                   </p>
                 </div>
                 <div className="bg-beige-light rounded-xl p-6 flex items-center gap-5">
                   <span className="text-[44px] md:text-[52px] font-bold text-gold font-rubik shrink-0 leading-[1]">
-                    {sections[8]?.stat_2_value ?? "91%"}
+                    {contentText(sections[8], "stat_2_value", "91%")}
                   </span>
                   <p className="text-left text-[15px] font-semibold text-deep-green leading-snug">
-                    <HyText en={sections[8]?.stat_2_label ?? t("home.stats.stat2Label")} />
+                    <HyText en={contentText(sections[8], "stat_2_label", t("home.stats.stat2Label"))} />
                   </p>
                 </div>
               </div>

@@ -4,24 +4,14 @@ import Link from "next/link";
 import Image from "next/image";
 import { useSignupUrl } from "@/lib/useSignupUrl";
 import { useContentT } from "@/lib/i18n/useContentT";
-import { dynFontClass, dynFontStyle } from "@/lib/dynamic-font-size";
+import { dynButtonStyle, dynFontClass, dynFontStyle } from "@/lib/dynamic-font-size";
+import { localizedContentText } from "@/lib/content-field";
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export default function HowPlanWorks({ content }: { content?: any }) {
   const { t, lang } = useContentT(content);
   const sectionText = (key: string, fallbackKey: string) => {
-    const fallback = t(fallbackKey);
-    if (lang === "hy") {
-      const hy = content?.hy as Record<string, unknown> | undefined;
-      if (hy && Object.prototype.hasOwnProperty.call(hy, key)) {
-        return typeof hy[key] === "string" ? hy[key] : "";
-      }
-      return fallback;
-    }
-    if (Object.prototype.hasOwnProperty.call(content || {}, key)) {
-      return typeof content?.[key] === "string" ? content[key] : "";
-    }
-    return fallback;
+    return localizedContentText(content, key, lang, t(fallbackKey));
   };
   const heading = sectionText("heading", "home.howPlan.heading").replace(/\bPure\b/gi, "Jeko");
   const stepLabel = t("home.howPlan.stepLabel");
@@ -143,7 +133,7 @@ export default function HowPlanWorks({ content }: { content?: any }) {
           <Link
             href={buttonUrl}
             className={`inline-block bg-gold text-deep-green px-8 py-3.5 rounded-[5px] font-semibold text-[18px] hover:bg-[#d99500] transition-colors duration-300 ${dynFontClass(content, "button_text")}`}
-            style={dynFontStyle(content, "button_text", lang)}
+            style={dynButtonStyle(content, "button_text", lang)}
           >
             {buttonText}
           </Link>

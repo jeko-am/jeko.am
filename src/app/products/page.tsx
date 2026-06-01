@@ -7,6 +7,7 @@ import Footer from '@/components/Footer';
 import ProductCard from '@/components/ProductCard';
 import { useT } from '@/lib/i18n/LangProvider';
 import { dynFontClass, dynFontStyle } from '@/lib/dynamic-font-size';
+import { localizedContentText } from '@/lib/content-field';
 import { useSectionVisibility } from '@/lib/use-section-visibility';
 
 interface Product {
@@ -114,12 +115,7 @@ export default function ProductsPage() {
   }, [selectedCategory, sortBy, search]);
 
   const contentText = (sectionIndex: number, key: string, fallback: string) => {
-    const content = sections[sectionIndex];
-    const hy = content?.hy && typeof content.hy === 'object' ? (content.hy as Record<string, unknown>) : null;
-    const value = lang === 'hy' && hy && Object.prototype.hasOwnProperty.call(hy, key)
-      ? hy[key]
-      : content?.[key];
-    return typeof value === 'string' && value.trim() ? value : fallback;
+    return localizedContentText(sections[sectionIndex], key, lang, fallback);
   };
   const textStyle = (sectionIndex: number, key: string, colorKey?: string) => {
     const content = sections[sectionIndex];

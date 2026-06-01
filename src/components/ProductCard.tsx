@@ -9,7 +9,8 @@ import { recordProductView } from '@/lib/product-history';
 import { useT } from '@/lib/i18n/LangProvider';
 import { localize } from '@/lib/i18n/localizeRecord';
 import { useCurrency } from '@/lib/currency';
-import { dynFontClass, dynFontStyle } from '@/lib/dynamic-font-size';
+import { dynButtonStyle, dynFontClass, dynFontStyle } from '@/lib/dynamic-font-size';
+import { localizedContentText } from '@/lib/content-field';
 
 // Per-session memo for machine translations so each EN string only hits the API once.
 const __cardTranslationCache = new Map<string, string>();
@@ -111,21 +112,14 @@ export default function ProductCard({ product, content }: { product: Product; co
   const hasImage = product.images?.[0] && !imgError;
   const imageUrl = hasImage ? product.images![0] : '';
   const fieldText = (key: string, fallback: string) => {
-    const hy = content?.hy && typeof content.hy === 'object' ? (content.hy as Record<string, unknown>) : null;
-    const value = lang === 'hy' && hy && Object.prototype.hasOwnProperty.call(hy, key)
-      ? hy[key]
-      : content?.[key];
-    return typeof value === 'string' && value.trim() ? value : fallback;
+    return localizedContentText(content, key, lang, fallback);
   };
   const textStyle = (key: string, colorKey?: string) => ({
     ...(dynFontStyle(content, key, lang) || {}),
     ...(colorKey && typeof content?.[colorKey] === 'string' && content[colorKey] ? { color: content[colorKey] as string } : {}),
   });
   const buttonStyle = {
-    ...textStyle('add_to_cart_text', 'button_text_color'),
-    ...(typeof content?.button_background_color === 'string' && content.button_background_color
-      ? { backgroundColor: content.button_background_color }
-      : {}),
+    ...(dynButtonStyle(content, 'add_to_cart_text', lang) || {}),
   };
 
   const handleAddToCart = (e: React.MouseEvent) => {

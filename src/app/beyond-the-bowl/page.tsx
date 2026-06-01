@@ -7,6 +7,8 @@ import Link from "next/link";
 import Image from "next/image";
 import { useT } from "@/lib/i18n/LangProvider";
 import { supabase } from "@/lib/supabase";
+import { contentText, contentUrl } from "@/lib/content-field";
+import { dynButtonStyle, dynFontClass } from "@/lib/dynamic-font-size";
 
 interface Article {
   title: string;
@@ -26,7 +28,7 @@ const fallbackArticles: Article[] = [
 ];
 
 export default function BeyondTheBowlPage() {
-  const { t } = useT();
+  const { t, lang } = useT();
   const [hero, setHero] = useState<Record<string, string>>({});
   const [grid, setGrid] = useState<Record<string, string>>({});
   const [cta, setCta] = useState<Record<string, string>>({});
@@ -70,22 +72,22 @@ export default function BeyondTheBowlPage() {
 
   const cmsArticles = ([1, 2, 3, 4, 5, 6] as const)
     .map((n) => ({
-      title: String(grid[`a${n}_title`] || ""),
-      excerpt: String(grid[`a${n}_excerpt`] || ""),
+      title: contentText(grid, `a${n}_title`, ""),
+      excerpt: contentText(grid, `a${n}_excerpt`, ""),
       image: String(grid[`a${n}_image`] || ""),
-      category: String(grid[`a${n}_category`] || ""),
-      url: String(grid[`a${n}_url`] || "#"),
+      category: contentText(grid, `a${n}_category`, ""),
+      url: contentUrl(grid, `a${n}_url`, "#"),
     }))
     .filter((a) => a.title);
   const articles = cmsArticles.length > 0 ? cmsArticles : fallbackArticles;
 
-  const heading = hero.heading || t("beyond.page.heading");
-  const headingHighlight = hero.heading_highlight || t("beyond.page.headingHighlight");
-  const subheading = hero.subtitle || t("beyond.page.subheading");
-  const ctaHeading = cta.heading || t("beyond.newsletter.heading");
-  const ctaBody = cta.body || t("beyond.newsletter.body");
-  const ctaText = cta.cta_text || t("beyond.newsletter.cta");
-  const ctaUrl = cta.cta_url || "/products";
+  const heading = contentText(hero, "heading", t("beyond.page.heading"));
+  const headingHighlight = contentText(hero, "heading_highlight", t("beyond.page.headingHighlight"));
+  const subheading = contentText(hero, "subtitle", t("beyond.page.subheading"));
+  const ctaHeading = contentText(cta, "heading", t("beyond.newsletter.heading"));
+  const ctaBody = contentText(cta, "body", t("beyond.newsletter.body"));
+  const ctaText = contentText(cta, "cta_text", t("beyond.newsletter.cta"));
+  const ctaUrl = contentUrl(cta, "cta_url", "/products");
 
   return (
     <>
@@ -135,7 +137,11 @@ export default function BeyondTheBowlPage() {
             {!hidden.has(2) && <div className="mt-16 bg-deep-green rounded-2xl p-10 text-center" data-section-index={2}>
               <h2 className="text-white font-rubik font-bold text-2xl mb-3">{ctaHeading}</h2>
               <p className="text-white/80 max-w-lg mx-auto mb-6">{ctaBody}</p>
-              <Link href={ctaUrl} className="inline-block bg-gold text-deep-green font-semibold px-8 py-3 rounded-full hover:bg-gold/90 transition-colors">
+              <Link
+                href={ctaUrl}
+                className={`inline-block bg-gold text-deep-green font-semibold px-8 py-3 rounded-full hover:bg-gold/90 transition-colors ${dynFontClass(cta, "cta_text")}`}
+                style={dynButtonStyle(cta, "cta_text", lang)}
+              >
                 {ctaText}
               </Link>
             </div>}

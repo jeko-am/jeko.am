@@ -81,3 +81,15 @@ export function dynFontClass(content: Content, fieldKey: string): string {
   const hasMobile = toPx(content[`${fieldKey}_font_size_mobile`]) !== null;
   return hasDesktop || hasMobile ? "dyn-fs" : "";
 }
+
+export function dynButtonStyle(content: Content, fieldKey: string, lang: string = "en"): CSSProperties | undefined {
+  const style = { ...(dynFontStyle(content, fieldKey, lang) || {}) } as CSSProperties;
+  if (content && typeof content.button_background_color === "string" && content.button_background_color.trim()) {
+    style.backgroundColor = content.button_background_color;
+    style.borderColor = content.button_background_color;
+  }
+  if (content && typeof content.button_text_color === "string" && content.button_text_color.trim()) {
+    style.color = content.button_text_color;
+  }
+  return Object.keys(style).length > 0 ? style : undefined;
+}

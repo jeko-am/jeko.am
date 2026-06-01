@@ -3,7 +3,7 @@
 import Image from "next/image";
 import { useSignupUrl } from "@/lib/useSignupUrl";
 import { useContentT } from "@/lib/i18n/useContentT";
-import { dynFontStyle, dynFontClass } from "@/lib/dynamic-font-size";
+import { dynButtonStyle, dynFontStyle, dynFontClass } from "@/lib/dynamic-font-size";
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export default function HeroSection({ content }: { content?: Record<string, any> }) {
@@ -102,7 +102,7 @@ export default function HeroSection({ content }: { content?: Record<string, any>
               href={buttonUrl}
               className="inline-flex min-h-[58px] min-w-[168px] items-center justify-center rounded-full border-2 border-gold bg-gold px-10 py-4 text-center font-rubik text-[18px] font-bold leading-none text-deep-green no-underline transition-all duration-300 hover:border-[#d99500] hover:bg-[#d99500] hover:shadow-lg md:min-h-[64px] md:min-w-[196px] md:px-12 md:text-[20px]"
               style={{
-                ...dynFontStyle(content, "button_text", lang),
+                ...dynButtonStyle(content, "button_text", lang),
                 display: "inline-flex",
                 alignItems: "center",
                 justifyContent: "center",

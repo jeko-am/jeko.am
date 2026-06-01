@@ -10,6 +10,8 @@ import HyText from "@/components/HyText";
 import { useSignupUrl } from "@/lib/useSignupUrl";
 import { useT } from "@/lib/i18n/LangProvider";
 import { hiddenSectionCss } from "@/lib/section-visibility";
+import { contentText, contentUrl } from "@/lib/content-field";
+import { dynButtonStyle, dynFontClass } from "@/lib/dynamic-font-size";
 
 interface BenefitsPageClientProps {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -17,12 +19,12 @@ interface BenefitsPageClientProps {
 }
 
 export default function BenefitsPageClient({ sections }: BenefitsPageClientProps) {
-  const { t } = useT();
+  const { t, lang } = useT();
   const signupUrl = useSignupUrl();
   const contentSections = [
     {
-      title: sections[2]?.title ?? t("benefits.section.commonSense.title"),
-      text: sections[2]?.text ?? "We work on facts and common sense over here in Yorkshire. After all, we all know natural, healthy food is the best way to feed any animal. Our food is made in the UK, is full of the same ingredients you'd find in your own food and doesn't include anything you wouldn't eat yourself.",
+      title: contentText(sections[2], "title", t("benefits.section.commonSense.title")),
+      text: contentText(sections[2], "text", "We work on facts and common sense over here in Yorkshire. After all, we all know natural, healthy food is the best way to feed any animal. Our food is made in the UK, is full of the same ingredients you'd find in your own food and doesn't include anything you wouldn't eat yourself."),
       image: sections[2]?.image || "https://www.datocms-assets.com/55536/1673605636-delicious-dog-food.jpg?auto=format&fit=crop&h=600&w=1000",
       imageLeft: true,
       bg: "bg-off-white",
@@ -31,21 +33,21 @@ export default function BenefitsPageClient({ sections }: BenefitsPageClientProps
       sectionIndex: 2,
     },
     {
-      title: sections[3]?.title ?? t("benefits.section.noNasties.title"),
-      text: sections[3]?.text ?? "We preserve our high quality natural ingredients by removing the water, meaning we don't add any preservatives, while avoiding the high temperature and high pressure extrusion process used to make traditional dry biscuit dog food. Gone are the days of mysterious brown biscuits full of nasties.",
+      title: contentText(sections[3], "title", t("benefits.section.noNasties.title")),
+      text: contentText(sections[3], "text", "We preserve our high quality natural ingredients by removing the water, meaning we don't add any preservatives, while avoiding the high temperature and high pressure extrusion process used to make traditional dry biscuit dog food. Gone are the days of mysterious brown biscuits full of nasties."),
       image: sections[3]?.image || "https://www.datocms-assets.com/55536/1673605662-personalised-dog-food.jpg?auto=format&fit=crop&h=600&w=1000",
       imageLeft: false,
       bg: "bg-white",
       bgColor: "#FFFFFF",
       cta: {
-        label: sections[3]?.cta_label ?? t("benefits.readFood.cta"),
-        href: sections[3]?.cta_href ?? "/recipes",
+        label: contentText(sections[3], "cta_label", t("benefits.readFood.cta")),
+        href: contentUrl(sections[3], "cta_href", "/recipes"),
       },
       sectionIndex: 3,
     },
     {
-      title: sections[4]?.title ?? t("benefits.section.longLives.title"),
-      text: sections[4]?.text ?? "Studies have found that puppies fed a processed diet initially appeared to be healthy, but once they reached maturity, they were more likely to rapidly age and develop degenerative disease symptoms. We stand for fresh, healthy food for long, healthy lives.",
+      title: contentText(sections[4], "title", t("benefits.section.longLives.title")),
+      text: contentText(sections[4], "text", "Studies have found that puppies fed a processed diet initially appeared to be healthy, but once they reached maturity, they were more likely to rapidly age and develop degenerative disease symptoms. We stand for fresh, healthy food for long, healthy lives."),
       image: sections[4]?.image || "https://www.datocms-assets.com/55536/1664894577-dog-walking.jpg?auto=format&fit=crop&h=600&w=1000",
       imageLeft: true,
       bg: "bg-off-white",
@@ -58,18 +60,18 @@ export default function BenefitsPageClient({ sections }: BenefitsPageClientProps
   const testimonials = [
     {
       image: sections[5]?.t1_image || "https://www.datocms-assets.com/55536/1664896642-lucy.jpg?auto=format&fit=crop&h=800&w=800",
-      quote: sections[5]?.t1_quote ?? "My experience shows that the effects of feeding a highly-processed diet start to show most in later life. Young dogs often have the vitality to cope with poor quality ingredients, just like children do with fast food. It's not until mid to later life that we really start to see the issues that these inflammatory diets are linked with.",
-      name: sections[5]?.t1_name ?? "Dr Lucy Williamson BVM&S",
+      quote: contentText(sections[5], "t1_quote", "My experience shows that the effects of feeding a highly-processed diet start to show most in later life. Young dogs often have the vitality to cope with poor quality ingredients, just like children do with fast food. It's not until mid to later life that we really start to see the issues that these inflammatory diets are linked with."),
+      name: contentText(sections[5], "t1_name", "Dr Lucy Williamson BVM&S"),
     },
     {
       image: sections[5]?.t2_image || "https://www.datocms-assets.com/55536/1664896665-lloyd-peta.jpg?auto=format&fit=crop&h=800&w=800",
-      quote: sections[5]?.t2_quote ?? "We rescued Lulu, she had a whole host of stomach and digestive issues. They were so bad that euthanasia was discussed twice by our vets. We tried everything. We found Jeko after seeing a review online, within just 2 days her issues had eased, and now 3 months on she's a different dog.",
-      name: sections[5]?.t2_name ?? "Lloyd, Peta & Lulu",
+      quote: contentText(sections[5], "t2_quote", "We rescued Lulu, she had a whole host of stomach and digestive issues. They were so bad that euthanasia was discussed twice by our vets. We tried everything. We found Jeko after seeing a review online, within just 2 days her issues had eased, and now 3 months on she's a different dog."),
+      name: contentText(sections[5], "t2_name", "Lloyd, Peta & Lulu"),
     },
     {
       image: sections[5]?.t3_image || "https://www.datocms-assets.com/55536/1673543479-healthy-dog-food.jpg?auto=format&fit=crop&h=800&w=800",
-      quote: sections[5]?.t3_quote ?? "We've seen a real difference in our dog's coat and energy levels since switching to Jeko. The food is clearly made with care, and the fact that every ingredient is one I recognise gives me real peace of mind. I would recommend it to anyone.",
-      name: sections[5]?.t3_name ?? "Sarah, Tim & Biscuit",
+      quote: contentText(sections[5], "t3_quote", "We've seen a real difference in our dog's coat and energy levels since switching to Jeko. The food is clearly made with care, and the fact that every ingredient is one I recognise gives me real peace of mind. I would recommend it to anyone."),
+      name: contentText(sections[5], "t3_name", "Sarah, Tim & Biscuit"),
     },
   ];
 
@@ -99,20 +101,21 @@ export default function BenefitsPageClient({ sections }: BenefitsPageClientProps
             <div className="relative z-10 max-w-[1200px] mx-auto px-6 py-16 md:py-24">
               <div className="max-w-[520px]">
                 <h1 className="font-rubik text-white text-[38px] md:text-[48px] font-bold leading-[1.15] mb-5">
-                  <HyText en={sections[0]?.heading ?? t("benefits.hero.heading")} />{" "}
+                  <HyText en={contentText(sections[0], "heading", t("benefits.hero.heading"))} />{" "}
                   <span className="text-gold italic">
-                    <HyText en={sections[0]?.heading_highlight ?? t("benefits.hero.headingHighlight")} />
+                    <HyText en={contentText(sections[0], "heading_highlight", t("benefits.hero.headingHighlight"))} />
                   </span>
                 </h1>
                 <p className="text-white/90 text-[17px] leading-relaxed mb-8 max-w-[440px]">
-                  <HyText en={sections[0]?.subheading ?? t("benefits.hero.subheading")} />
+                  <HyText en={contentText(sections[0], "subheading", t("benefits.hero.subheading"))} />
                 </p>
                 <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
                   <Link
-                    href={sections[0]?.button_url ?? signupUrl}
-                    className="inline-block bg-gold text-deep-green px-7 py-3 rounded-[5px] font-semibold text-[16px] hover:bg-[#d99500] transition-colors"
+                    href={contentUrl(sections[0], "button_url", signupUrl)}
+                    className={`inline-block bg-gold text-deep-green px-7 py-3 rounded-[5px] font-semibold text-[16px] hover:bg-[#d99500] transition-colors ${dynFontClass(sections[0], "button_text")}`}
+                    style={dynButtonStyle(sections[0], "button_text", lang)}
                   >
-                    <HyText en={sections[0]?.button_text ?? t("benefits.hero.button")} />
+                    <HyText en={contentText(sections[0], "button_text", t("benefits.hero.button"))} />
                   </Link>
                   {/* Trustpilot stars */}
                   <div className="flex items-center gap-2">
@@ -166,16 +169,16 @@ export default function BenefitsPageClient({ sections }: BenefitsPageClientProps
         {/* ========== Offer Banner ========== */}
         <div data-section-index="1" data-section-name="Offer Banner">
           <Link
-            href={sections[1]?.link_url ?? signupUrl}
+            href={contentUrl(sections[1], "link_url", signupUrl)}
             className="block w-full bg-[#E65A1E] hover:bg-[#D04E15] transition-colors duration-200 py-3 text-center text-white"
           >
             <p className="text-[17px] leading-snug font-rubik">
               <span className="font-bold">
-                <HyText en={sections[1]?.primary_text ?? t("benefits.offer.primary")} />
+                <HyText en={contentText(sections[1], "primary_text", t("benefits.offer.primary"))} />
               </span>
               <span className="mx-2 font-light">+</span>
               <span className="font-medium text-[15px] text-white/90">
-                <HyText en={sections[1]?.secondary_text ?? t("benefits.offer.secondary")} />
+                <HyText en={contentText(sections[1], "secondary_text", t("benefits.offer.secondary"))} />
               </span>
             </p>
           </Link>
@@ -230,7 +233,8 @@ export default function BenefitsPageClient({ sections }: BenefitsPageClientProps
                     {section.cta && (
                       <Link
                         href={section.cta.href}
-                        className="inline-block mt-7 border-2 border-deep-green text-deep-green px-6 py-2.5 rounded-[5px] font-semibold text-[15px] hover:bg-deep-green hover:text-white transition-all duration-200"
+                        className={`inline-block mt-7 border-2 border-deep-green text-deep-green px-6 py-2.5 rounded-[5px] font-semibold text-[15px] hover:bg-deep-green hover:text-white transition-all duration-200 ${dynFontClass(sections[section.sectionIndex], "cta_label")}`}
+                        style={dynButtonStyle(sections[section.sectionIndex], "cta_label", lang)}
                       >
                         <HyText en={section.cta.label} />
                       </Link>
@@ -282,7 +286,7 @@ export default function BenefitsPageClient({ sections }: BenefitsPageClientProps
             <div className="max-w-[1200px] mx-auto px-6">
               <div className="md:ml-auto md:w-1/2 md:pl-10 lg:pl-16">
                 <h2 className="text-[28px] md:text-[34px] font-bold text-deep-green font-rubik leading-tight mb-1">
-                  <HyText en={sections[6]?.heading ?? t("benefits.bellies.heading")} />
+                  <HyText en={contentText(sections[6], "heading", t("benefits.bellies.heading"))} />
                 </h2>
                 <p
                   className="text-gold text-[28px] md:text-[34px] mb-6"
@@ -297,10 +301,10 @@ export default function BenefitsPageClient({ sections }: BenefitsPageClientProps
                     textDecorationThickness: "2px",
                   }}
                 >
-                  <HyText en={sections[6]?.subtitle ?? t("benefits.bellies.subtitle")} />
+                  <HyText en={contentText(sections[6], "subtitle", t("benefits.bellies.subtitle"))} />
                 </p>
                 <p className="text-deep-green/90 text-[15px] leading-[1.75] max-w-[500px]">
-                  <HyText en={sections[6]?.description ?? "Brown biscuits full of artificial ingredients that are scientifically designed in a lab, can often go in one way and come out the other, smelly and unpleasant. Switching to a highly digestible, high quality food will improve smell and stool consistency. A welcome change!"} />
+                  <HyText en={contentText(sections[6], "description", "Brown biscuits full of artificial ingredients that are scientifically designed in a lab, can often go in one way and come out the other, smelly and unpleasant. Switching to a highly digestible, high quality food will improve smell and stool consistency. A welcome change!")} />
                 </p>
               </div>
             </div>
@@ -313,14 +317,14 @@ export default function BenefitsPageClient({ sections }: BenefitsPageClientProps
             <div className="max-w-[1200px] mx-auto px-6">
               <div className="md:w-1/2 md:pr-10 lg:pr-16">
                 <h2 className="text-[28px] md:text-[34px] font-bold text-deep-green font-rubik leading-tight mb-5">
-                  <HyText en={sections[7]?.heading ?? t("benefits.obesity.heading")} />
+                  <HyText en={contentText(sections[7], "heading", t("benefits.obesity.heading"))} />
                 </h2>
                 <div className="space-y-4">
                   <p className="text-deep-green/90 text-[15px] leading-[1.75]">
-                    <HyText en={sections[7]?.text_1 ?? "According to the PFMA, 51% of dogs are overweight or obese. Obesity leads to a whole host of health issues in later life such as arthritis, diabetes and even cancer. Poor quality foods can cause your dog to eat more to feel full."} />
+                    <HyText en={contentText(sections[7], "text_1", "According to the PFMA, 51% of dogs are overweight or obese. Obesity leads to a whole host of health issues in later life such as arthritis, diabetes and even cancer. Poor quality foods can cause your dog to eat more to feel full.")} />
                   </p>
                   <p className="text-deep-green/90 text-[15px] leading-[1.75]">
-                    <HyText en={sections[7]?.text_2 ?? "We know in our diet, if we eat processed food regularly, we can feel sluggish, become overweight and suffer from health issues later in life. Switching to a healthier, natural diet helps maintain a healthy body weight and combat obesity."} />
+                    <HyText en={contentText(sections[7], "text_2", "We know in our diet, if we eat processed food regularly, we can feel sluggish, become overweight and suffer from health issues later in life. Switching to a healthier, natural diet helps maintain a healthy body weight and combat obesity.")} />
                   </p>
                 </div>
               </div>
@@ -335,7 +339,7 @@ export default function BenefitsPageClient({ sections }: BenefitsPageClientProps
               <div className="w-full md:w-[55%] bg-[#5F295E] flex items-center">
                 <div className="px-8 md:px-14 lg:px-20 py-12 md:py-16 max-w-[520px]">
                   <h2 className="text-[30px] md:text-[38px] font-bold text-white font-rubik leading-tight mb-1">
-                    <HyText en={sections[8]?.heading ?? t("benefits.personalise.heading")} />
+                    <HyText en={contentText(sections[8], "heading", t("benefits.personalise.heading"))} />
                   </h2>
                   <p
                     className="text-gold text-[28px] md:text-[36px] font-bold font-rubik mb-6"
@@ -350,16 +354,17 @@ export default function BenefitsPageClient({ sections }: BenefitsPageClientProps
                       textDecorationThickness: "2px",
                     }}
                   >
-                    <HyText en={sections[8]?.subtitle ?? t("benefits.personalise.subtitle")} />
+                    <HyText en={contentText(sections[8], "subtitle", t("benefits.personalise.subtitle"))} />
                   </p>
                   <p className="text-white/85 text-[15px] leading-[1.75] mb-8 max-w-[420px]">
-                    <HyText en={sections[8]?.description ?? "Proactively invest in your pet\u2019s health with a nutritious, vet-approved dog food subscription that\u2019s trusted by thousands. Discover your dog\u2019s recipe today with free dog food delivery."} />
+                    <HyText en={contentText(sections[8], "description", "Proactively invest in your pet\u2019s health with a nutritious, vet-approved dog food subscription that\u2019s trusted by thousands. Discover your dog\u2019s recipe today with free dog food delivery.")} />
                   </p>
                   <Link
-                    href={sections[8]?.button_url ?? "/products"}
-                    className="inline-block bg-gold text-deep-green px-7 py-3 rounded-[5px] font-semibold text-[16px] hover:bg-[#d99500] transition-colors"
+                    href={contentUrl(sections[8], "button_url", "/products")}
+                    className={`inline-block bg-gold text-deep-green px-7 py-3 rounded-[5px] font-semibold text-[16px] hover:bg-[#d99500] transition-colors ${dynFontClass(sections[8], "button_text")}`}
+                    style={dynButtonStyle(sections[8], "button_text", lang)}
                   >
-                    <HyText en={sections[8]?.button_text ?? t("benefits.personalise.button")} />
+                    <HyText en={contentText(sections[8], "button_text", t("benefits.personalise.button"))} />
                   </Link>
                 </div>
               </div>

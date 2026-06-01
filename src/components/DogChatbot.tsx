@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { useRouter, usePathname } from "next/navigation";
 import { useT } from "@/lib/i18n/LangProvider";
 import { supabase } from "@/lib/supabase";
+import { contentText, contentUrl } from "@/lib/content-field";
 
 export type ChatbotContent = {
   enabled?: boolean;
@@ -28,14 +29,14 @@ export default function DogChatbot({ content }: { content?: ChatbotContent }) {
   const [userCount, setUserCount] = useState<number | null>(null);
 
   const iconSrc = content?.icon_image || "/WhatsApp_Image_2026-04-11_at_09.54.12-removebg-preview.png";
-  const linkUrl = content?.link_url || "/matches";
-  const ariaLabel = content?.aria_label || "Find pet matches";
+  const linkUrl = contentUrl(content, "link_url", "/matches");
+  const ariaLabel = contentText(content, "aria_label", "Find pet matches");
   const bubbleEnabled = content?.bubble_enabled !== false;
   const counterEnabled = content?.counter_enabled !== false;
   const bgColor = content?.background_color || "#F2A900";
-  const greeting = content?.bubble_greeting ?? t("chatbot.bubble.greeting");
-  const subtext = content?.bubble_subtext ?? t("chatbot.bubble.subtext");
-  const counterLabel = content?.counter_label ?? t("chatbot.counter.label") ?? "pets registered";
+  const greeting = contentText(content, "bubble_greeting", t("chatbot.bubble.greeting"));
+  const subtext = contentText(content, "bubble_subtext", t("chatbot.bubble.subtext"));
+  const counterLabel = contentText(content, "counter_label", t("chatbot.counter.label") ?? "pets registered");
   const hasBubbleText = Boolean((greeting && greeting.trim()) || (subtext && subtext.trim()));
 
   useEffect(() => {

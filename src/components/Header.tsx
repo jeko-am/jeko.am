@@ -9,7 +9,7 @@ import LanguageSwitcher from "@/components/LanguageSwitcher";
 import { useT } from "@/lib/i18n/LangProvider";
 import { useContentT } from "@/lib/i18n/useContentT";
 import { supabase } from "@/lib/supabase";
-import { dynFontClass, dynFontStyle } from "@/lib/dynamic-font-size";
+import { dynButtonStyle, dynFontClass, dynFontStyle } from "@/lib/dynamic-font-size";
 
 type HeaderContent = Record<string, unknown>;
 type HeaderMenuItem = {
@@ -281,6 +281,7 @@ export default function Header({ content }: { content?: HeaderContent }) {
   const helpVisible = effectiveContent?.help_visible !== false;
   const loginUrl = effectiveContent?.login_url ?? "/login";
   const textStyle = (key: string) => dynFontStyle(effectiveContent, key, lang);
+  const buttonStyle = (key: string) => dynButtonStyle(effectiveContent, key, lang);
 
   // Treat undefined as visible (legacy rows). Only an explicit `false` hides the item.
   const visible = (v: unknown) => v !== false;
@@ -504,7 +505,7 @@ export default function Header({ content }: { content?: HeaderContent }) {
               <Link
                 href={ctaUrl}
                 className={`${signupCls} ${dynFontClass(effectiveContent, "cta_text")}`}
-                style={textStyle("cta_text")}
+                style={buttonStyle("cta_text")}
               >
                 {ctaText}
               </Link>
@@ -572,7 +573,8 @@ export default function Header({ content }: { content?: HeaderContent }) {
             {helpVisible && helpText ? (
               <Link
                 href={helpUrl}
-                className="text-white text-[18px] font-rubik font-medium py-3 hover:opacity-80 transition-opacity"
+                className={`text-white text-[18px] font-rubik font-medium py-3 hover:opacity-80 transition-opacity ${dynFontClass(effectiveContent, "help_text")}`}
+                style={textStyle("help_text")}
                 onClick={() => setMobileMenuOpen(false)}
               >
                 {helpText}
@@ -634,7 +636,8 @@ export default function Header({ content }: { content?: HeaderContent }) {
             ) : (
               <Link
                 href={loginUrl}
-                className="text-white text-[18px] font-rubik font-medium py-3 hover:opacity-80 transition-opacity"
+                className={`text-white text-[18px] font-rubik font-medium py-3 hover:opacity-80 transition-opacity ${dynFontClass(effectiveContent, "login_text")}`}
+                style={textStyle("login_text")}
                 onClick={() => setMobileMenuOpen(false)}
               >
                 {t("common.login")}
@@ -644,7 +647,8 @@ export default function Header({ content }: { content?: HeaderContent }) {
             {!user && (
               <Link
                 href={ctaUrl}
-                className="bg-gold text-deep-green text-[18px] font-rubik font-semibold px-6 py-3 rounded-lg hover:bg-[var(--gold-hover)] transition-colors text-center mt-4"
+                className={`bg-gold text-deep-green text-[18px] font-rubik font-semibold px-6 py-3 rounded-lg hover:bg-[var(--gold-hover)] transition-colors text-center mt-4 ${dynFontClass(effectiveContent, "cta_text")}`}
+                style={buttonStyle("cta_text")}
                 onClick={() => setMobileMenuOpen(false)}
               >
                 {ctaText}

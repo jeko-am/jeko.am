@@ -6,6 +6,7 @@ import Footer from "@/components/Footer";
 import { supabase } from "@/lib/supabase";
 import { useLang } from "@/lib/i18n/LangProvider";
 import { dynFontClass, dynFontStyle } from "@/lib/dynamic-font-size";
+import { localizedContentText } from "@/lib/content-field";
 
 interface LegalPageRendererProps {
   slug: string;
@@ -86,13 +87,7 @@ export default function LegalPageRenderer({
 
   /** Pick localised value: prefer hy override when on /hy locale, else EN. */
   function pick(content: SectionContent | null, key: string): string {
-    if (!content) return "";
-    if (lang === "hy" && content.hy && typeof content.hy === "object") {
-      const hyVal = (content.hy as Record<string, unknown>)[key];
-      if (typeof hyVal === "string" && hyVal.length > 0) return hyVal;
-    }
-    const v = content[key];
-    return typeof v === "string" ? v : "";
+    return localizedContentText(content, key, lang, "");
   }
 
   function textStyle(content: SectionContent | null, key: string, colorKey: string): CSSProperties | undefined {
@@ -102,13 +97,13 @@ export default function LegalPageRenderer({
     };
   }
 
-  const heading = pick(hero, "heading") || fallbackHeading;
-  const headingHighlight = pick(hero, "heading_highlight") || fallbackHeadingHighlight || "";
-  const subtitle = pick(hero, "subtitle") || fallbackSubtitle;
+  const heading = localizedContentText(hero, "heading", lang, fallbackHeading);
+  const headingHighlight = localizedContentText(hero, "heading_highlight", lang, fallbackHeadingHighlight || "");
+  const subtitle = localizedContentText(hero, "subtitle", lang, fallbackSubtitle);
   const heroBg = pick(hero, "background_color") || "#274C46";
 
-  const lastUpdated = pick(body, "last_updated") || fallbackLastUpdated || "";
-  const bodyHtml = pick(body, "body_html") || "";
+  const lastUpdated = localizedContentText(body, "last_updated", lang, fallbackLastUpdated || "");
+  const bodyHtml = localizedContentText(body, "body_html", lang, "");
   const bodyBg = pick(body, "background_color") || "";
 
   return (

@@ -1167,8 +1167,7 @@ export default function AdminStoreEditorPage() {
       const updates: Record<string, string> = {};
       for (const f of schema.fields) {
         if (f.type !== 'text' && f.type !== 'textarea' && f.type !== 'rich_text') continue;
-        const existing = editValuesHy[f.key];
-        if (typeof existing === 'string' && existing.length > 0) continue;
+        if (Object.prototype.hasOwnProperty.call(editValuesHy, f.key)) continue;
         if (f.i18nKey && dictionaries.hy[f.i18nKey]) continue;
         const en = editValues[f.key];
         if (typeof en !== 'string' || !en.trim()) continue;
@@ -1233,8 +1232,10 @@ export default function AdminStoreEditorPage() {
     const field = activeSections[selectedIndex ?? -1]?.fields.find(f => f.key === key);
     const translatable = !field?.shared && (fieldType === 'text' || fieldType === 'textarea' || fieldType === 'rich_text' || fieldType === 'image' || fieldType === 'url');
     if (editLang === 'hy' && translatable) {
-      const v = editValuesHy[key];
-      if (v !== undefined && v !== null && v !== '') return v;
+      if (Object.prototype.hasOwnProperty.call(editValuesHy, key)) {
+        const v = editValuesHy[key];
+        return v === undefined || v === null ? '' : v;
+      }
       // Static Armenian dictionary (when field has an i18nKey).
       if (field?.i18nKey && dictionaries.hy[field.i18nKey]) return dictionaries.hy[field.i18nKey];
       // No HY value yet — return empty so the auto-translate effect can

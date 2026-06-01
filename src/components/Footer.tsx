@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import { supabase } from "@/lib/supabase";
 import { useT } from "@/lib/i18n/LangProvider";
 import { useContentT } from "@/lib/i18n/useContentT";
-import { dynFontClass, dynFontStyle } from "@/lib/dynamic-font-size";
+import { dynButtonStyle, dynFontClass, dynFontStyle } from "@/lib/dynamic-font-size";
 
 type FooterLink = { label: string; href: string };
 type FooterColumn = { label: string; href: string; links: FooterLink[] };
@@ -198,7 +198,8 @@ export default function Footer({ content: providedContent }: { content?: any }) 
                         <button
                           onClick={handleSubscribe}
                           disabled={status === "saving"}
-                          className="px-5 py-3 bg-white text-deep-green font-semibold rounded-[5px] hover:bg-off-white transition-colors text-[15px] disabled:opacity-50"
+                          className={`px-5 py-3 bg-white text-deep-green font-semibold rounded-[5px] hover:bg-off-white transition-colors text-[15px] disabled:opacity-50 ${dynFontClass(content, "signup_button_text")}`}
+                          style={dynButtonStyle(content, "signup_button_text", lang)}
                         >
                           {status === "saving" ? "..." : ct("signup_button_text", "footer.vip.signup")}
                         </button>

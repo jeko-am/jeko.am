@@ -14,6 +14,7 @@ import { trackViewContent } from '@/lib/tracking';
 import { useT } from '@/lib/i18n/LangProvider';
 import HyText, { useHyAuto } from '@/components/HyText';
 import { useCurrency } from '@/lib/currency';
+import { contentText } from '@/lib/content-field';
 
 interface Product {
   id: string;
@@ -918,13 +919,13 @@ export default function ProductDetailPage() {
                 )}
 
                 {/* Accordions */}
-                <Accordion title={String(customSections.get(3)?.ingredients_heading || t("product.ingredients"))} defaultOpen colors={ingredientsColors}>
+                <Accordion title={contentText(customSections.get(3), "ingredients_heading", t("product.ingredients"))} defaultOpen colors={ingredientsColors}>
                   {customSections.get(3)?.ingredients_list ? (
                     <div style={backgroundStyle(ingredientsColors.backgroundColor)}>
                       <div dangerouslySetInnerHTML={{ __html: String(customSections.get(3)!.ingredients_list).replace(/\n/g, '<br/>') }} />
                       {customSections.get(3)?.nutrition_info && (
                         <div className="mt-4 pt-3 border-t border-deep-green/10">
-                          <h4 className="font-semibold text-deep-green text-sm mb-2" style={colorStyle(ingredientsColors.headingColor)}>{String(customSections.get(3)?.nutrition_heading || 'Nutritional Information')}</h4>
+                          <h4 className="font-semibold text-deep-green text-sm mb-2" style={colorStyle(ingredientsColors.headingColor)}>{contentText(customSections.get(3), "nutrition_heading", 'Nutritional Information')}</h4>
                           <div dangerouslySetInnerHTML={{ __html: String(customSections.get(3)!.nutrition_info).replace(/\n/g, '<br/>') }} />
                         </div>
                       )}
@@ -935,7 +936,7 @@ export default function ProductDetailPage() {
                     <p>Made with natural, human-grade ingredients carefully selected by veterinary nutritionists.</p>
                   )}
                 </Accordion>
-                <Accordion title={String(customSections.get(4)?.feeding_heading || t("productDetail.feedingGuide"))} colors={feedingColors}>
+                <Accordion title={contentText(customSections.get(4), "feeding_heading", t("productDetail.feedingGuide"))} colors={feedingColors}>
                   {customSections.get(4)?.feeding_body ? (
                     <div dangerouslySetInnerHTML={{ __html: String(customSections.get(4)!.feeding_body).replace(/\n/g, '<br/>') }} />
                   ) : (
@@ -1187,7 +1188,7 @@ export default function ProductDetailPage() {
         {/* ============================================================ */}
         <section className="bg-white py-16" id="reviews" style={backgroundStyle(reviewColors.backgroundColor)}>
           <div className="max-w-[1200px] mx-auto px-4">
-            <h2 className="text-3xl md:text-4xl font-bold text-deep-green text-center mb-10 italic" style={colorStyle(reviewColors.headingColor)}>{String(customSections.get(7)?.reviews_heading || t("productDetail.customerReviews"))}</h2>
+            <h2 className="text-3xl md:text-4xl font-bold text-deep-green text-center mb-10 italic" style={colorStyle(reviewColors.headingColor)}>{contentText(customSections.get(7), "reviews_heading", t("productDetail.customerReviews"))}</h2>
             <div className="flex items-center justify-between mb-6">
               {hasReviews ? (
                 <div className="flex items-center gap-3">

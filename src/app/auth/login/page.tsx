@@ -6,9 +6,12 @@ import { useRouter, useSearchParams } from 'next/navigation';
 import { FormEvent, Suspense, useEffect, useState } from 'react';
 import { useT } from '@/lib/i18n/LangProvider';
 import { useSectionVisibility } from '@/lib/use-section-visibility';
+import { supabase } from '@/lib/supabase';
+import { localizedContentText } from '@/lib/content-field';
+import { dynButtonStyle, dynFontClass } from '@/lib/dynamic-font-size';
 
 function LoginForm() {
-  const { t } = useT();
+  const { t, lang } = useT();
   const hiddenCss = useSectionVisibility('/auth/login');
   const { signIn, signOut, user, isAdmin, loading } = useAuth();
   const router = useRouter();
@@ -21,6 +24,34 @@ function LoginForm() {
   const [error, setError] = useState<string | null>(null);
   const [submitting, setSubmitting] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
+  const [sections, setSections] = useState<Record<number, Record<string, unknown>>>({});
+  const ct = (idx: number, key: string, fallback: string) =>
+    localizedContentText(sections[idx], key, lang, fallback);
+
+  useEffect(() => {
+    let cancelled = false;
+    (async () => {
+      const { data: pages } = await supabase
+        .from('pages')
+        .select('id')
+        .or('slug.eq./auth/login,slug.eq.auth/login')
+        .limit(1);
+      const pageId = pages?.[0]?.id;
+      if (!pageId) return;
+      const { data } = await supabase
+        .from('page_sections')
+        .select('content, sort_order')
+        .eq('page_id', pageId);
+      const next: Record<number, Record<string, unknown>> = {};
+      data?.forEach((section) => {
+        const content = (section.content || {}) as Record<string, unknown>;
+        const idx = Number(content._section_index ?? section.sort_order);
+        if (Number.isFinite(idx)) next[idx] = content;
+      });
+      if (!cancelled) setSections(next);
+    })();
+    return () => { cancelled = true; };
+  }, []);
 
   // Redirect if already authenticated
   // For admin redirects, wait until isAdmin is resolved to avoid loop
@@ -119,7 +150,7 @@ function LoginForm() {
                 display: 'inline-block',
               }}
             >
-              JEKO
+              {ct(0, 'logo_text', 'JEKO')}
             </span>
           </Link>
         </div>
@@ -130,8 +161,8 @@ function LoginForm() {
       <div className="w-full max-w-md">
         {/* Logo / Brand */}
         <div data-section-index="1" className="text-center mb-8">
-          <h1 className="text-xl font-bold text-white">{t('auth.login.welcomeBack')}</h1>
-          <p className="text-white/50 text-xs mt-1">{t('auth.login.subtitleShort')}</p>
+          <h1 className="text-xl font-bold text-white">{ct(1, 'welcome', t('auth.login.welcomeBack'))}</h1>
+          <p className="text-white/50 text-xs mt-1">{ct(1, 'subtitle', t('auth.login.subtitleShort'))}</p>
         </div>
 
         {/* Login Card */}
@@ -167,7 +198,7 @@ function LoginForm() {
             {/* Email */}
             <div>
               <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1.5">
-                {t('auth.login.emailLabel')}
+                {ct(2, 'email_label', t('auth.login.emailLabel'))}
               </label>
               <input
                 id="email"
@@ -185,7 +216,7 @@ function LoginForm() {
             {/* Password */}
             <div>
               <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-1.5">
-                {t('auth.login.passwordLabel')}
+                {ct(2, 'password_label', t('auth.login.passwordLabel'))}
               </label>
               <div className="relative">
                 <input
@@ -223,7 +254,8 @@ function LoginForm() {
             <button
               type="submit"
               disabled={submitting}
-              className="w-full bg-gold hover:bg-yellow-500 text-deep-green font-semibold py-3 px-4 rounded-xl transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 shadow-sm"
+              className={`w-full bg-gold hover:bg-yellow-500 text-deep-green font-semibold py-3 px-4 rounded-xl transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 shadow-sm ${dynFontClass(sections[2], 'submit')}`}
+              style={dynButtonStyle(sections[2], 'submit', lang)}
             >
               {submitting ? (
                 <>
@@ -231,7 +263,7 @@ function LoginForm() {
                   {t('auth.login.signingIn')}
                 </>
               ) : (
-                t('auth.login.submit')
+                ct(2, 'submit', t('auth.login.submit'))
               )}
             </button>
           </form>
@@ -239,7 +271,7 @@ function LoginForm() {
 
         {/* Footer */}
         <p data-section-index="3" className="text-center text-white/30 text-xs mt-6">
-          {t('auth.login.secureLogin')}
+          {ct(3, 'secure_text', t('auth.login.secureLogin'))}
         </p>
       </div>
       </div>

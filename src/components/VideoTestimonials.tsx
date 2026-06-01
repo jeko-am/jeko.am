@@ -4,6 +4,7 @@ import { useRef } from "react";
 import { useT } from "@/lib/i18n/LangProvider";
 import { useContentT } from "@/lib/i18n/useContentT";
 import { dynFontClass, dynFontStyle } from "@/lib/dynamic-font-size";
+import { localizedContentText } from "@/lib/content-field";
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export default function VideoTestimonials({ content }: { content?: any }) {
@@ -28,8 +29,8 @@ export default function VideoTestimonials({ content }: { content?: any }) {
       if (url) {
         out.push({
           src: url,
-          title: ct(`video_${i}_title`) || defaultVideos[i - 1]?.title || '',
-          duration: (content as Record<string, string>)[`video_${i}_duration`] || defaultVideos[i - 1]?.duration || '',
+          title: localizedContentText(content, `video_${i}_title`, lang, defaultVideos[i - 1]?.title || ''),
+          duration: localizedContentText(content, `video_${i}_duration`, lang, defaultVideos[i - 1]?.duration || ''),
         });
       } else if (defaultVideos[i - 1]) {
         out.push(defaultVideos[i - 1]);

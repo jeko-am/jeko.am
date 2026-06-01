@@ -6,6 +6,7 @@ import Footer from "@/components/Footer";
 import { supabase } from "@/lib/supabase";
 import { useLang } from "@/lib/i18n/LangProvider";
 import { dynFontClass, dynFontStyle } from "@/lib/dynamic-font-size";
+import { localizedContentText } from "@/lib/content-field";
 
 export interface LegalBlock {
   /** Heading text — rendered as a styled <h2>. */
@@ -154,30 +155,22 @@ export default function LegalStructuredRenderer({
   }
 
   function pick(content: SectionContent | undefined, key: string): string {
-    if (!content) return "";
-    if (lang === "hy" && content.hy && typeof content.hy === "object") {
-      const hyVal = (content.hy as Record<string, unknown>)[key];
-      if (typeof hyVal === "string" && hyVal.length > 0) return hyVal;
-    }
-    const v = content[key];
-    return typeof v === "string" ? v : "";
+    return localizedContentText(content, key, lang, "");
   }
 
   const hero = sectionsByIdx.get(0);
-  const heading = pick(hero, "heading") || fallbackHero.heading;
-  const headingHighlight = pick(hero, "heading_highlight") || fallbackHero.headingHighlight || "";
-  const subtitle = pick(hero, "subtitle") || fallbackHero.subtitle;
-  const lastUpdated = pick(hero, "last_updated") || fallbackHero.lastUpdated || "";
+  const heading = localizedContentText(hero, "heading", lang, fallbackHero.heading);
+  const headingHighlight = localizedContentText(hero, "heading_highlight", lang, fallbackHero.headingHighlight || "");
+  const subtitle = localizedContentText(hero, "subtitle", lang, fallbackHero.subtitle);
+  const lastUpdated = localizedContentText(hero, "last_updated", lang, fallbackHero.lastUpdated || "");
   const heroBg = pick(hero, "background_color") || fallbackHero.backgroundColor || "#274C46";
 
   // For each block index 1..N (1-indexed in editor; 1-indexed in section_index too):
   //   prefer CMS heading + body, else fall through to in-code defaults.
   const renderedBlocks = fallbackBlocks.map((fb, i) => {
     const cmsContent = sectionsByIdx.get(i + 1);
-    const cmsHeading = pick(cmsContent, "heading");
-    const cmsBody = pick(cmsContent, "body");
-    const heading = cmsHeading || fb.heading;
-    const body = cmsBody || fb.body || "";
+    const heading = localizedContentText(cmsContent, "heading", lang, fb.heading);
+    const body = localizedContentText(cmsContent, "body", lang, fb.body || "");
     return { heading, body, extra: fb.extra, key: `block-${i}`, index: i + 1 };
   });
 

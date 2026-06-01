@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import HyText from "@/components/HyText";
 import Link from "next/link";
 import Header from "@/components/Header";
@@ -9,11 +9,14 @@ import { supabase } from "@/lib/supabase";
 import { useSignupUrl } from "@/lib/useSignupUrl";
 import { useT } from "@/lib/i18n/LangProvider";
 import { useSectionVisibility } from "@/lib/use-section-visibility";
+import { localizedContentText } from "@/lib/content-field";
+import { dynButtonStyle, dynFontClass } from "@/lib/dynamic-font-size";
 
 export default function ContactPage() {
-  const { t } = useT();
+  const { t, lang } = useT();
   const signupUrl = useSignupUrl();
   const hiddenCss = useSectionVisibility("/contact");
+  const [sections, setSections] = useState<Record<number, Record<string, unknown>>>({});
   const [formData, setFormData] = useState({
     fullName: "",
     email: "",
@@ -62,6 +65,33 @@ export default function ContactPage() {
 
   const inputClasses =
     "w-full px-4 py-3 rounded-xl bg-beige-light/50 border-2 border-transparent focus:border-gold focus:outline-none text-deep-green";
+  const ct = (idx: number, key: string, fallback: string) =>
+    localizedContentText(sections[idx], key, lang, fallback);
+
+  useEffect(() => {
+    let cancelled = false;
+    (async () => {
+      const { data: pages } = await supabase
+        .from("pages")
+        .select("id")
+        .or("slug.eq./contact,slug.eq.contact")
+        .limit(1);
+      const pageId = pages?.[0]?.id;
+      if (!pageId) return;
+      const { data } = await supabase
+        .from("page_sections")
+        .select("content, sort_order")
+        .eq("page_id", pageId);
+      const next: Record<number, Record<string, unknown>> = {};
+      data?.forEach((section) => {
+        const content = (section.content || {}) as Record<string, unknown>;
+        const idx = Number(content._section_index ?? section.sort_order);
+        if (Number.isFinite(idx)) next[idx] = content;
+      });
+      if (!cancelled) setSections(next);
+    })();
+    return () => { cancelled = true; };
+  }, []);
 
   return (
     <div className="min-h-screen flex flex-col bg-off-white">
@@ -73,10 +103,10 @@ export default function ContactPage() {
         <section data-section-index="0" className="bg-deep-green zigzag-bottom py-16 md:py-20">
           <div className="max-w-[1200px] mx-auto px-6 text-center">
             <h1 className="text-white font-rubik font-bold text-4xl md:text-5xl mb-4">
-              {t("contact.page.heading")}
+              <HyText en={ct(0, "heading", t("contact.page.heading"))} />
             </h1>
             <p className="text-off-white/80 text-lg md:text-xl max-w-2xl mx-auto leading-relaxed">
-              {t("contact.page.subheading")}
+              <HyText en={ct(0, "subheading", t("contact.page.subheading"))} />
             </p>
           </div>
         </section>
@@ -134,10 +164,10 @@ export default function ContactPage() {
                     /* Form */
                     <>
                       <h2 className="text-deep-green font-rubik font-bold text-2xl md:text-3xl mb-2">
-                        {t("contact.form.heading")}
+                        <HyText en={ct(1, "form_heading", t("contact.form.heading"))} />
                       </h2>
                       <p className="text-deep-green/60 mb-8">
-                        {t("contact.form.subheading")}
+                        <HyText en={ct(1, "form_subheading", t("contact.form.subheading"))} />
                       </p>
                       <form onSubmit={handleSubmit} className="space-y-5">
                         {/* Full Name */}
@@ -286,9 +316,10 @@ export default function ContactPage() {
                         <button
                           type="submit"
                           disabled={submitting}
-                          className="w-full bg-gold text-deep-green font-bold rounded-xl hover:bg-yellow-400 transition-colors py-3.5 text-lg mt-2 disabled:opacity-60 disabled:cursor-not-allowed"
+                          className={`w-full bg-gold text-deep-green font-bold rounded-xl hover:bg-yellow-400 transition-colors py-3.5 text-lg mt-2 disabled:opacity-60 disabled:cursor-not-allowed ${dynFontClass(sections[1], "submit_text")}`}
+                          style={dynButtonStyle(sections[1], "submit_text", lang)}
                         >
-                          {submitting ? t("contact.form.submitting") : t("contact.form.submitBtn")}
+                          {submitting ? t("contact.form.submitting") : <HyText en={ct(1, "submit_text", t("contact.form.submitBtn"))} />}
                         </button>
                       </form>
                     </>
@@ -301,7 +332,7 @@ export default function ContactPage() {
                 {/* Get in Touch */}
                 <div>
                   <h2 className="text-deep-green font-rubik font-bold text-2xl md:text-3xl mb-6">
-                    {t("contact.info.heading")}
+                    <HyText en={ct(2, "info_heading", t("contact.info.heading"))} />
                   </h2>
                   <div className="space-y-5">
                     {/* Email */}
@@ -330,7 +361,7 @@ export default function ContactPage() {
                       </div>
                       <div>
                         <p className="text-deep-green font-semibold text-sm mb-0.5">
-                          {t("contact.info.email")}
+                          <HyText en={ct(2, "email_label", t("contact.info.email"))} />
                         </p>
                         <a
                           href="mailto:hello@jeko.am"
@@ -360,7 +391,7 @@ export default function ContactPage() {
                       </div>
                       <div>
                         <p className="text-deep-green font-semibold text-sm mb-0.5">
-                          {t("contact.info.phone")}
+                          <HyText en={ct(2, "phone_label", t("contact.info.phone"))} />
                         </p>
                         <a
                           href="tel:+37410000000"
@@ -391,7 +422,7 @@ export default function ContactPage() {
                       </div>
                       <div>
                         <p className="text-deep-green font-semibold text-sm mb-0.5">
-                          {t("contact.info.hours")}
+                          <HyText en={ct(2, "hours_label", t("contact.info.hours"))} />
                         </p>
                         <p className="text-deep-green/70 text-sm leading-relaxed">
                           Mon&ndash;Fri: 9am&ndash;5pm
@@ -421,7 +452,7 @@ export default function ContactPage() {
                       </div>
                       <div>
                         <p className="text-deep-green font-semibold text-sm mb-0.5">
-                          {t("contact.info.address")}
+                          <HyText en={ct(2, "address_label", t("contact.info.address"))} />
                         </p>
                         <p className="text-deep-green/70 text-sm leading-relaxed">
                           Jeko
@@ -520,7 +551,7 @@ export default function ContactPage() {
                     <line x1="15" x2="15" y1="6" y2="21" />
                   </svg>
                   <p className="text-deep-green/40 font-semibold text-sm">
-                    <HyText en="Yorkshire Business Park, Leeds" />
+                    <HyText en={ct(3, "map_label", "Yorkshire Business Park, Leeds")} />
                   </p>
                   <p className="text-deep-green/30 text-xs mt-1">
                     <HyText en="Yerevan, Armenia" />
@@ -539,7 +570,7 @@ export default function ContactPage() {
               {/* Helpful Links */}
               <div className="bg-white rounded-2xl shadow-lg p-8">
                 <h4 className="text-deep-green font-rubik font-bold text-lg mb-6">
-                  {t("contact.links.heading")}
+                  <HyText en={ct(3, "links_heading", t("contact.links.heading"))} />
                 </h4>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <Link

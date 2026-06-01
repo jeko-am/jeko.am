@@ -9,6 +9,8 @@ import { useT } from "@/lib/i18n/LangProvider";
 import HyText from "@/components/HyText";
 import { useEffect, useState } from "react";
 import { supabase } from "@/lib/supabase";
+import { localizedContentText } from "@/lib/content-field";
+import { dynButtonStyle, dynFontClass } from "@/lib/dynamic-font-size";
 
 interface Symptom {
   icon: string;
@@ -104,15 +106,7 @@ export default function HealthConditionPage(props: HealthConditionProps) {
 
   // Resolve a string field with locale-aware override lookup.
   const fieldStr = (idx: number, key: string, fallback: string): string => {
-    const o = overrides?.[idx];
-    if (!o) return fallback;
-    if (lang === 'hy') {
-      const hy = (o.hy as Record<string, unknown> | undefined)?.[key];
-      if (typeof hy === 'string' && hy.length > 0) return hy;
-    }
-    const en = o[key];
-    if (typeof en === 'string' && en.length > 0) return en;
-    return fallback;
+    return localizedContentText(overrides?.[idx], key, lang, fallback);
   };
 
   // Section indices after schema expansion:
@@ -129,7 +123,7 @@ export default function HealthConditionPage(props: HealthConditionProps) {
     const t2 = fieldStr(1, 'what_is_text_2', '');
     const t3 = fieldStr(1, 'what_is_text_3', '');
     const collected = [t1, t2, t3].filter(Boolean);
-    return collected.length > 0 ? collected : props.whatIsText;
+    return overrides?.[1] ? collected : props.whatIsText;
   })();
   const signsHeading = fieldStr(2, 'signs_heading', t('health.signs.heading'));
   const signsSubtitle = fieldStr(2, 'signs_subtitle', t('health.signs.subtitle'));
@@ -139,7 +133,7 @@ export default function HealthConditionPage(props: HealthConditionProps) {
       title: fieldStr(2, `symptom_${n}_title`, ''),
       description: fieldStr(2, `symptom_${n}_description`, ''),
     })).filter((s) => s.title || s.description);
-    return fromDb.length > 0 ? fromDb : props.symptoms;
+    return overrides?.[2] ? fromDb : props.symptoms;
   })();
   const howDietHelpsTitle = fieldStr(3, 'how_diet_title', props.howDietHelpsTitle);
   const howDietAccent = fieldStr(3, 'how_diet_accent', t('health.diet.accent'));
@@ -150,7 +144,7 @@ export default function HealthConditionPage(props: HealthConditionProps) {
       title: fieldStr(3, `food_benefit_${n}_title`, ''),
       description: fieldStr(3, `food_benefit_${n}_description`, ''),
     })).filter((b) => b.title || b.description);
-    return fromDb.length > 0 ? fromDb : props.foodBenefits;
+    return overrides?.[3] ? fromDb : props.foodBenefits;
   })();
   const testimonial = {
     quote: fieldStr(4, 'testimonial_quote', props.testimonial.quote),
@@ -163,7 +157,7 @@ export default function HealthConditionPage(props: HealthConditionProps) {
       question: fieldStr(5, `faq_${n}_question`, ''),
       answer: fieldStr(5, `faq_${n}_answer`, ''),
     })).filter((f) => f.question || f.answer);
-    return fromDb.length > 0 ? fromDb : props.faqs;
+    return overrides?.[5] ? fromDb : props.faqs;
   })();
   const ctaHeading = fieldStr(6, 'cta_heading', t('health.cta.heading'));
   const ctaSubtitle = fieldStr(6, 'cta_subtitle', t('health.cta.subtitle'));
@@ -206,7 +200,8 @@ export default function HealthConditionPage(props: HealthConditionProps) {
                 </p>
                 <Link
                   href={signupUrl}
-                  className="inline-block bg-gold text-deep-green px-7 py-3 rounded-[5px] font-semibold text-[16px] hover:bg-[#d99500] transition-colors"
+                  className={`inline-block bg-gold text-deep-green px-7 py-3 rounded-[5px] font-semibold text-[16px] hover:bg-[#d99500] transition-colors ${dynFontClass(overrides?.[0], "hero_cta")}`}
+                  style={dynButtonStyle(overrides?.[0], "hero_cta", lang)}
                 >
                   <HyText en={heroCta} />
                 </Link>
@@ -404,7 +399,8 @@ export default function HealthConditionPage(props: HealthConditionProps) {
                 </p>
                 <Link
                   href="/products"
-                  className="inline-block bg-gold text-deep-green px-7 py-3 rounded-[5px] font-semibold text-[16px] hover:bg-[#d99500] transition-colors"
+                  className={`inline-block bg-gold text-deep-green px-7 py-3 rounded-[5px] font-semibold text-[16px] hover:bg-[#d99500] transition-colors ${dynFontClass(overrides?.[6], "cta_button")}`}
+                  style={dynButtonStyle(overrides?.[6], "cta_button", lang)}
                 >
                   <HyText en={ctaButton} />
                 </Link>

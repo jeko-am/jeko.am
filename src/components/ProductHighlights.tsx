@@ -6,7 +6,7 @@ import { useAuth } from '@/lib/auth';
 import { getViewedProductIds } from '@/lib/product-history';
 import ProductCard from './ProductCard';
 import { useContentT } from '@/lib/i18n/useContentT';
-import { dynFontClass, dynFontStyle } from '@/lib/dynamic-font-size';
+import { dynButtonStyle, dynFontClass, dynFontStyle } from '@/lib/dynamic-font-size';
 
 interface Product {
   id: string;
@@ -127,7 +127,8 @@ export default function ProductHighlights({ content }: { content?: any }) {
         <div className="text-center mt-10">
           <a
             href={buttonUrl}
-            className="btn-gold inline-flex items-center gap-2"
+            className={`btn-gold inline-flex items-center gap-2 ${dynFontClass(content, "button_text")}`}
+            style={dynButtonStyle(content, "button_text", lang)}
           >
             {buttonText}
             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">

@@ -8,8 +8,9 @@ import Footer from "@/components/Footer";
 import EditorOverlay from "@/components/EditorOverlay";
 import { useT } from "@/lib/i18n/LangProvider";
 import HyText from "@/components/HyText";
-import { dynFontClass, dynFontStyle } from "@/lib/dynamic-font-size";
+import { dynButtonStyle, dynFontClass, dynFontStyle } from "@/lib/dynamic-font-size";
 import { hiddenSectionCss } from "@/lib/section-visibility";
+import { contentText, contentUrl } from "@/lib/content-field";
 
 /* Decorative SVG components */
 function LeafShape({ className = "", fill = "#274C46", opacity = 0.2, style }: { className?: string; fill?: string; opacity?: number; style?: React.CSSProperties }) {
@@ -60,12 +61,12 @@ export default function AboutPageClient({ sections }: { sections: Record<string,
 
   const timeline = [
     {
-      year: s[1]?.year ?? "2012",
+      year: contentText(s[1], "year", "2012"),
       section: s[1],
-      title: s[1]?.title ?? "It started with a simple question",
+      title: contentText(s[1], "title", "It started with a simple question"),
       content: [
-        s[1]?.content_1 ?? "\"Little brown biscuits – we wouldn't eat these for every meal, every day, so why should our pets?\"",
-        s[1]?.content_2 ?? "This is the question that led us on a journey to change the face of pet food for the better, offering up a service entirely different for dog owners all over the country.",
+        contentText(s[1], "content_1", "\"Little brown biscuits – we wouldn't eat these for every meal, every day, so why should our pets?\""),
+        contentText(s[1], "content_2", "This is the question that led us on a journey to change the face of pet food for the better, offering up a service entirely different for dog owners all over the country."),
       ],
       contentKeys: ["content_1", "content_2"],
       image: null as string | null,
@@ -75,12 +76,12 @@ export default function AboutPageClient({ sections }: { sections: Record<string,
       sectionName: "2012 Timeline",
     },
     {
-      year: s[2]?.year ?? "2013",
+      year: contentText(s[2], "year", "2013"),
       section: s[2],
-      title: s[2]?.title ?? "A food",
-      titleHighlight: s[2]?.title_highlight ?? "revelation",
+      title: contentText(s[2], "title", "A food"),
+      titleHighlight: contentText(s[2], "title_highlight", "revelation"),
       content: [
-        s[2]?.content ?? "Months of research led us to an age-old preservation method of removing the moisture from food, resulting in natural, high-quality, convenient meals without using the harmful extrusion process used to make traditional dry biscuit food.",
+        contentText(s[2], "content", "Months of research led us to an age-old preservation method of removing the moisture from food, resulting in natural, high-quality, convenient meals without using the harmful extrusion process used to make traditional dry biscuit food."),
       ],
       contentKeys: ["content"],
       image: s[2]?.image || "https://images.unsplash.com/photo-1587300003388-59208cc962cb?w=400&h=300&fit=crop",
@@ -90,12 +91,12 @@ export default function AboutPageClient({ sections }: { sections: Record<string,
       sectionName: "2013 Timeline",
     },
     {
-      year: s[3]?.year ?? "2014",
+      year: contentText(s[3], "year", "2014"),
       section: s[3],
-      title: s[3]?.title ?? "Memorable",
-      titleHighlight: s[3]?.title_highlight ?? "milestones",
+      title: contentText(s[3], "title", "Memorable"),
+      titleHighlight: contentText(s[3], "title_highlight", "milestones"),
       content: [
-        s[3]?.content ?? "In 2014, our co-founders entered the Dragons' Den and we were lucky enough to win over two dragons! Despite the fantastic offers, the terms didn't quite suit us, and thanks to Jeko's success, it's certainly not a decision we regret.",
+        contentText(s[3], "content", "In 2014, our co-founders entered the Dragons' Den and we were lucky enough to win over two dragons! Despite the fantastic offers, the terms didn't quite suit us, and thanks to Jeko's success, it's certainly not a decision we regret."),
       ],
       contentKeys: ["content"],
       image: s[3]?.image || "https://images.unsplash.com/photo-1518717758536-85ae29035b6d?w=400&h=300&fit=crop",
@@ -105,12 +106,12 @@ export default function AboutPageClient({ sections }: { sections: Record<string,
       sectionName: "2014 Timeline",
     },
     {
-      year: s[4]?.year ?? "2017",
+      year: contentText(s[4], "year", "2017"),
       section: s[4],
-      title: s[4]?.title ?? "Hosting a",
-      titleHighlight: s[4]?.title_highlight ?? "royal visit",
+      title: contentText(s[4], "title", "Hosting a"),
+      titleHighlight: contentText(s[4], "title_highlight", "royal visit"),
       content: [
-        s[4]?.content ?? "Her Royal Highness Princess Anne, a keen animal lover, visited us here in West Yorkshire in 2017. After a tour around, we couldn't let her go without a few treats for her own dogs!",
+        contentText(s[4], "content", "Her Royal Highness Princess Anne, a keen animal lover, visited us here in West Yorkshire in 2017. After a tour around, we couldn't let her go without a few treats for her own dogs!"),
       ],
       contentKeys: ["content"],
       image: s[4]?.image || "https://images.unsplash.com/photo-1534361960057-19889db9621e?w=400&h=300&fit=crop",
@@ -120,13 +121,13 @@ export default function AboutPageClient({ sections }: { sections: Record<string,
       sectionName: "2017 Timeline",
     },
     {
-      year: s[5]?.year ?? "2024",
+      year: contentText(s[5], "year", "2024"),
       section: s[5],
-      title: s[5]?.title ?? "Where we are",
-      titleHighlight: s[5]?.title_highlight ?? "today",
+      title: contentText(s[5], "title", "Where we are"),
+      titleHighlight: contentText(s[5], "title_highlight", "today"),
       content: [
-        s[5]?.content_1 ?? "We've come a long way from creating recipes in Dan's kitchen. Jeko has moved into bigger and better facilities in West Yorkshire, working alongside industry-leading vets and nutritionists to cultivate one of the best, natural dog food brands in the UK. Although we may have grown, what drives us remains the same: to provide happier, healthier and longer lives for our pets.",
-        s[5]?.content_2 ?? "So you could say that in many ways, this is only the beginning!",
+        contentText(s[5], "content_1", "We've come a long way from creating recipes in Dan's kitchen. Jeko has moved into bigger and better facilities in West Yorkshire, working alongside industry-leading vets and nutritionists to cultivate one of the best, natural dog food brands in the UK. Although we may have grown, what drives us remains the same: to provide happier, healthier and longer lives for our pets."),
+        contentText(s[5], "content_2", "So you could say that in many ways, this is only the beginning!"),
       ],
       contentKeys: ["content_1", "content_2"],
       image: null as string | null,
@@ -330,16 +331,16 @@ export default function AboutPageClient({ sections }: { sections: Record<string,
           <section className="bg-deep-green py-16 md:py-20" style={{ backgroundColor: s[6]?.background_color || "#274C46" }}>
             <div className="max-w-[1200px] mx-auto px-6 text-center">
               <h2 className={`text-[24px] md:text-[28px] font-semibold text-white font-rubik mb-1 ${fontClass(6, "heading")}`} style={fontStyle(6, "heading")}>
-                <HyText en={s[6]?.heading ?? t("about.stats.heading")} savedHy={savedHy(6, "heading")} />
+                <HyText en={contentText(s[6], "heading", t("about.stats.heading"))} savedHy={savedHy(6, "heading")} />
               </h2>
               <p className={`text-gold text-[22px] md:text-[28px] font-semibold font-rubik mb-5 ${fontClass(6, "subtitle")}`} style={fontStyle(6, "subtitle")}>
-                <HyText en={s[6]?.subtitle ?? t("about.stats.subtitle")} savedHy={savedHy(6, "subtitle")} />
+                <HyText en={contentText(s[6], "subtitle", t("about.stats.subtitle"))} savedHy={savedHy(6, "subtitle")} />
               </p>
               <div className={`text-[52px] md:text-[72px] lg:text-[80px] font-bold text-gold font-rubik mb-5 leading-none tracking-tight ${fontClass(6, "number")}`} style={fontStyle(6, "number")}>
-                {s[6]?.number ?? "92,871,751"}
+                {contentText(s[6], "number", "92,871,751")}
               </div>
               <p className={`text-[16px] text-white/80 max-w-lg mx-auto leading-relaxed ${fontClass(6, "description")}`} style={fontStyle(6, "description")}>
-                <HyText en={s[6]?.description ?? t("about.stats.description")} savedHy={savedHy(6, "description")} />
+                <HyText en={contentText(s[6], "description", t("about.stats.description"))} savedHy={savedHy(6, "description")} />
               </p>
             </div>
           </section>
@@ -366,13 +367,13 @@ export default function AboutPageClient({ sections }: { sections: Record<string,
               <div className="w-full md:w-[58%] bg-off-white flex items-center" style={{ backgroundColor: s[7]?.background_color || undefined }}>
                 <div className="px-8 md:px-14 lg:px-20 py-12 md:py-16">
                   <h2 className={`text-[28px] md:text-[36px] font-semibold text-deep-green font-rubik leading-tight mb-1 ${fontClass(7, "heading")}`} style={fontStyle(7, "heading")}>
-                    <HyText en={s[7]?.heading ?? t("about.learnMore.heading")} savedHy={savedHy(7, "heading")} />
+                    <HyText en={contentText(s[7], "heading", t("about.learnMore.heading"))} savedHy={savedHy(7, "heading")} />
                   </h2>
                   <p className={`text-gold text-[26px] md:text-[34px] font-semibold font-rubik mb-6 ${fontClass(7, "subtitle")}`} style={fontStyle(7, "subtitle")}>
-                    <HyText en={s[7]?.subtitle ?? t("about.learnMore.subtitle")} savedHy={savedHy(7, "subtitle")} />
+                    <HyText en={contentText(s[7], "subtitle", t("about.learnMore.subtitle"))} savedHy={savedHy(7, "subtitle")} />
                   </p>
                   <p className={`text-deep-green text-[15px] leading-[1.8] ${fontClass(7, "description")}`} style={fontStyle(7, "description")}>
-                    <HyText en={s[7]?.description ?? "Our dogs are a part of the family, so they deserve the best food. After all, healthy dogs live longer lives! Just tell us about your dog and we\u2019ll create tailored recipes so they can always enjoy healthy, delicious food that\u2019s delivered straight to your door. Simply add water, stir and serve."} savedHy={savedHy(7, "description")} />
+                    <HyText en={contentText(s[7], "description", "Our dogs are a part of the family, so they deserve the best food. After all, healthy dogs live longer lives! Just tell us about your dog and we\u2019ll create tailored recipes so they can always enjoy healthy, delicious food that\u2019s delivered straight to your door. Simply add water, stir and serve.")} savedHy={savedHy(7, "description")} />
                   </p>
                 </div>
               </div>
@@ -387,20 +388,20 @@ export default function AboutPageClient({ sections }: { sections: Record<string,
               <div className="w-full md:w-[55%] flex items-center" style={{ backgroundColor: s[8]?.background_color || '#5F295E' }}>
                 <div className="px-8 md:px-14 lg:px-20 py-12 md:py-16">
                   <h2 className={`text-[30px] md:text-[38px] font-semibold text-white font-rubik leading-tight mb-1 ${fontClass(8, "heading")}`} style={fontStyle(8, "heading")}>
-                    <HyText en={s[8]?.heading ?? t("about.personaliseCta.heading")} savedHy={savedHy(8, "heading")} />
+                    <HyText en={contentText(s[8], "heading", t("about.personaliseCta.heading"))} savedHy={savedHy(8, "heading")} />
                   </h2>
                   <p className={`text-gold text-[26px] md:text-[34px] font-semibold font-rubik mb-6 ${fontClass(8, "subtitle")}`} style={fontStyle(8, "subtitle")}>
-                    <HyText en={s[8]?.subtitle ?? t("about.personaliseCta.subtitle")} savedHy={savedHy(8, "subtitle")} />
+                    <HyText en={contentText(s[8], "subtitle", t("about.personaliseCta.subtitle"))} savedHy={savedHy(8, "subtitle")} />
                   </p>
                   <p className={`text-white/85 text-[15px] leading-[1.8] mb-8 max-w-md ${fontClass(8, "description")}`} style={fontStyle(8, "description")}>
-                    <HyText en={s[8]?.description ?? t("about.personaliseCta.description")} savedHy={savedHy(8, "description")} />
+                    <HyText en={contentText(s[8], "description", t("about.personaliseCta.description"))} savedHy={savedHy(8, "description")} />
                   </p>
                   <Link
-                    href={s[8]?.button_url ?? "/products"}
+                    href={contentUrl(s[8], "button_url", "/products")}
                     className={`inline-block bg-gold text-deep-green px-7 py-3 rounded-[5px] font-semibold text-[16px] hover:bg-[#d99500] transition-colors ${fontClass(8, "button_text")}`}
-                    style={fontStyle(8, "button_text")}
+                    style={dynButtonStyle(s[8], "button_text", lang)}
                   >
-                    <HyText en={s[8]?.button_text ?? t("about.personaliseCta.button")} savedHy={savedHy(8, "button_text")} />
+                    <HyText en={contentText(s[8], "button_text", t("about.personaliseCta.button"))} savedHy={savedHy(8, "button_text")} />
                   </Link>
                 </div>
               </div>

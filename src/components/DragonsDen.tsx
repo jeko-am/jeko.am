@@ -5,7 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useSignupUrl } from "@/lib/useSignupUrl";
 import { useContentT } from "@/lib/i18n/useContentT";
-import { dynFontClass, dynFontStyle } from "@/lib/dynamic-font-size";
+import { dynButtonStyle, dynFontClass, dynFontStyle } from "@/lib/dynamic-font-size";
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export default function DragonsDen({ content }: { content?: any }) {
@@ -61,7 +61,7 @@ export default function DragonsDen({ content }: { content?: any }) {
               <Link
                 href={buttonUrl}
                 className={`btn-gold inline-block font-semibold text-[18px] transition-colors duration-300 ${dynFontClass(content, "button_text")}`}
-                style={dynFontStyle(content, "button_text", lang)}
+                style={dynButtonStyle(content, "button_text", lang)}
               >
                 {buttonText}
               </Link>

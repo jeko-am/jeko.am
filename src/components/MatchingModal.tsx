@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { useSignupUrl } from '@/lib/useSignupUrl';
 import { supabase } from '@/lib/supabase';
 import { useContentT } from '@/lib/i18n/useContentT';
+import { dynButtonStyle, dynFontClass, dynFontStyle } from '@/lib/dynamic-font-size';
 
 function DigitCounter({ count }: { count: number }) {
   const [flash, setFlash] = useState(false);
@@ -58,7 +59,7 @@ export default function MatchingModal({ content }: { content?: Record<string, an
   const [isMounted, setIsMounted] = useState(false);
   const [userCount, setUserCount] = useState<number | null>(null);
 
-  const { ct } = useContentT(content);
+  const { ct, lang } = useContentT(content);
   const textOrFallback = (key: string, fallback: string) => (
     content ? ct(key) : fallback
   );
@@ -122,14 +123,6 @@ export default function MatchingModal({ content }: { content?: Record<string, an
     localStorage.setItem('matchingModal_dismissed', 'true');
   };
 
-  useEffect(() => {
-    if (isOpen) {
-      document.body.style.overflow = 'hidden';
-    } else {
-      document.body.style.overflow = 'unset';
-    }
-  }, [isOpen]);
-
   if (!isMounted || !isOpen) return null;
 
   return (
@@ -177,16 +170,25 @@ export default function MatchingModal({ content }: { content?: Record<string, an
 
             {/* Text Content */}
             <div className="flex-1 flex flex-col justify-center">
-              <h2 className="text-base sm:text-2xl font-bold text-deep-green mb-1 sm:mb-3 font-rubik">
+              <h2
+                className={`text-base sm:text-2xl font-bold text-deep-green mb-1 sm:mb-3 font-rubik ${dynFontClass(content, 'heading')}`}
+                style={dynFontStyle(content, 'heading', lang)}
+              >
                 {heading}
               </h2>
-              <p className="text-deep-green/60 text-[11px] sm:text-sm leading-tight sm:leading-relaxed mb-2 sm:mb-4">
+              <p
+                className={`text-deep-green/60 text-[11px] sm:text-sm leading-tight sm:leading-relaxed mb-2 sm:mb-4 ${dynFontClass(content, 'description')}`}
+                style={dynFontStyle(content, 'description', lang)}
+              >
                 {description}
               </p>
               {userCount != null && (
                 <div className="flex flex-col items-center bg-blue-50 border border-blue-200 rounded-lg sm:rounded-xl px-2 sm:px-3 py-2 sm:py-3 mb-2 sm:mb-4 gap-1">
                   <DigitCounter count={userCount} />
-                  <p className="text-deep-green text-[10px] sm:text-xs font-semibold leading-tight text-center">
+                  <p
+                    className={`text-deep-green text-[10px] sm:text-xs font-semibold leading-tight text-center ${dynFontClass(content, 'community_count_text')}`}
+                    style={dynFontStyle(content, 'community_count_text', lang)}
+                  >
                     <span className="text-sm sm:text-base" aria-hidden="true">🐾</span>{' '}
                     {communityLabel}
                   </p>
@@ -200,14 +202,16 @@ export default function MatchingModal({ content }: { content?: Record<string, an
                 <Link
                   href={ctaUrl}
                   onClick={handleClose}
-                  className="w-full bg-gold hover:bg-yellow-500 text-deep-green font-bold py-1.5 sm:py-3 px-3 sm:px-4 rounded-lg sm:rounded-2xl transition-all duration-200 shadow-sm hover:shadow-md text-center text-xs sm:text-base"
+                  className={`w-full bg-gold hover:bg-yellow-500 text-deep-green font-bold py-1.5 sm:py-3 px-3 sm:px-4 rounded-lg sm:rounded-2xl transition-all duration-200 shadow-sm hover:shadow-md text-center text-xs sm:text-base ${dynFontClass(content, 'cta_text')}`}
+                  style={dynButtonStyle(content, 'cta_text', lang)}
                 >
                   {ctaText}
                 </Link>
               )}
               <button
                 onClick={handleClose}
-                className="w-full text-deep-green font-semibold py-1 sm:py-2 px-3 sm:px-4 rounded-lg sm:rounded-2xl transition-colors duration-200 text-[11px] sm:text-sm hover:bg-gray-100"
+                className={`w-full text-deep-green font-semibold py-1 sm:py-2 px-3 sm:px-4 rounded-lg sm:rounded-2xl transition-colors duration-200 text-[11px] sm:text-sm hover:bg-gray-100 ${dynFontClass(content, 'close_text')}`}
+                style={dynButtonStyle(content, 'close_text', lang)}
               >
                 {closeText}
               </button>
