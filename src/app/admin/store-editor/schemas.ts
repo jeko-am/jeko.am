@@ -1457,6 +1457,96 @@ const APP_PAGE_SECTIONS: SectionSchema[] = [
   },
 ];
 
+const PRODUCTS_COLLECTION_SECTIONS: SectionSchema[] = [
+  {
+    name: 'Collection Hero',
+    icon: ICON_PATHS.banner,
+    color: 'bg-deep-green',
+    fields: [
+      { key: 'title_prefix', label: 'Title Prefix', type: 'text', i18nKey: 'products.hero.titlePrefix' },
+      { key: 'title_highlight', label: 'Title Highlight', type: 'text', i18nKey: 'products.hero.titleHighlight' },
+      { key: 'subtitle', label: 'Subtitle', type: 'textarea', i18nKey: 'products.hero.subtitle' },
+      { key: 'title_prefix_color', label: 'Title Prefix Color', type: 'color' },
+      { key: 'title_highlight_color', label: 'Title Highlight Color', type: 'color' },
+      { key: 'subtitle_color', label: 'Subtitle Color', type: 'color' },
+      { key: 'background_color', label: 'Hero Background Color', type: 'color' },
+    ],
+    defaultContent: {
+      title_prefix: '',
+      title_highlight: '',
+      subtitle: '',
+      title_prefix_color: '',
+      title_highlight_color: '',
+      subtitle_color: '',
+      background_color: '',
+    },
+  },
+  {
+    name: 'Filters & Sorting',
+    icon: ICON_PATHS.grid,
+    color: 'bg-blue-500',
+    fields: [
+      { key: 'search_placeholder', label: 'Search Placeholder', type: 'text', i18nKey: 'products.search.placeholder' },
+      { key: 'all_filter', label: 'All Filter Label', type: 'text', i18nKey: 'products.filter.all' },
+      { key: 'sort_newest', label: 'Sort: Newest', type: 'text', i18nKey: 'products.sort.newest' },
+      { key: 'sort_price_asc', label: 'Sort: Price Low to High', type: 'text', i18nKey: 'products.sort.priceAsc' },
+      { key: 'sort_price_desc', label: 'Sort: Price High to Low', type: 'text', i18nKey: 'products.sort.priceDesc' },
+      { key: 'sort_name', label: 'Sort: Name A-Z', type: 'text', i18nKey: 'products.sort.nameAsc' },
+      { key: 'filter_text_color', label: 'Filter Text Color', type: 'color' },
+      { key: 'filter_background_color', label: 'Filter Bar Background Color', type: 'color' },
+    ],
+    defaultContent: {
+      search_placeholder: '',
+      all_filter: '',
+      sort_newest: '',
+      sort_price_asc: '',
+      sort_price_desc: '',
+      sort_name: '',
+      filter_text_color: '',
+      filter_background_color: '',
+    },
+  },
+  {
+    name: 'Products Grid & Cards',
+    icon: ICON_PATHS.grid,
+    color: 'bg-gold',
+    fields: [
+      { key: 'results_label', label: 'Results Label', type: 'text', placeholder: '{n} products found' },
+      { key: 'loading_text', label: 'Loading Text', type: 'text', i18nKey: 'products.loading' },
+      { key: 'empty_title', label: 'Empty Title', type: 'text', i18nKey: 'products.empty.title' },
+      { key: 'empty_body', label: 'Empty Body', type: 'textarea', i18nKey: 'products.empty.body' },
+      { key: 'view_product_text', label: 'View Product Text', type: 'text', i18nKey: 'product.viewProduct' },
+      { key: 'add_to_cart_text', label: 'Add to Cart Button Text', type: 'text', i18nKey: 'product.addToCartBtn' },
+      { key: 'added_text', label: 'Added Button Text', type: 'text', i18nKey: 'product.added' },
+      { key: 'results_text_color', label: 'Results Text Color', type: 'color' },
+      { key: 'empty_text_color', label: 'Empty Text Color', type: 'color' },
+      { key: 'product_name_color', label: 'Product Name Color', type: 'color' },
+      { key: 'product_description_color', label: 'Product Description Color', type: 'color' },
+      { key: 'price_text_color', label: 'Price Text Color', type: 'color' },
+      { key: 'button_text_color', label: 'Button Text Color', type: 'color' },
+      { key: 'button_background_color', label: 'Button Background Color', type: 'color' },
+      { key: 'card_background_color', label: 'Card Background Color', type: 'color' },
+    ],
+    defaultContent: {
+      results_label: '',
+      loading_text: '',
+      empty_title: '',
+      empty_body: '',
+      view_product_text: '',
+      add_to_cart_text: '',
+      added_text: '',
+      results_text_color: '',
+      empty_text_color: '',
+      product_name_color: '',
+      product_description_color: '',
+      price_text_color: '',
+      button_text_color: '',
+      button_background_color: '',
+      card_background_color: '',
+    },
+  },
+];
+
 /* ═══════════════════════════════════════════════════════════════════════════
    MATCHING PREFERENCES CONFIG
    ═══════════════════════════════════════════════════════════════════════════ */
@@ -1914,8 +2004,11 @@ const makeBlock = (n: number): SectionSchema => ({
   fields: [
     { key: 'heading', label: `Block ${n} — Heading`, type: 'text', placeholder: `e.g. ${n}. Section title` },
     { key: 'body', label: `Block ${n} — Body (paragraphs separated by blank line)`, type: 'textarea', placeholder: 'Write the body text here. Press Enter twice to start a new paragraph.' },
+    { key: 'heading_color', label: `Block ${n} — Heading Text Color`, type: 'color' },
+    { key: 'body_text_color', label: `Block ${n} — Body Text Color`, type: 'color' },
+    { key: 'background_color', label: `Block ${n} — Background Color`, type: 'color' },
   ],
-  defaultContent: { heading: '', body: '' },
+  defaultContent: { heading: '', body: '', heading_color: '', body_text_color: '', background_color: '' },
 });
 
 const LEGAL_BLOCKS_SECTIONS: SectionSchema[] = [
@@ -1929,8 +2022,12 @@ const LEGAL_BLOCKS_SECTIONS: SectionSchema[] = [
       { key: 'subtitle', label: 'Subtitle', type: 'textarea', placeholder: 'Short intro line under the heading.' },
       { key: 'last_updated', label: 'Last Updated Note', type: 'text', placeholder: 'Last updated: March 2026' },
       { key: 'background_color', label: 'Hero Background Color', type: 'color' },
+      { key: 'heading_color', label: 'Heading Text Color', type: 'color' },
+      { key: 'heading_highlight_color', label: 'Heading Highlight Color', type: 'color' },
+      { key: 'subtitle_color', label: 'Subtitle Text Color', type: 'color' },
+      { key: 'last_updated_color', label: 'Last Updated Text Color', type: 'color' },
     ],
-    defaultContent: { heading: '', heading_highlight: '', subtitle: '', last_updated: '', background_color: '#274C46' },
+    defaultContent: { heading: '', heading_highlight: '', subtitle: '', last_updated: '', background_color: '#274C46', heading_color: '', heading_highlight_color: '', subtitle_color: '', last_updated_color: '' },
   },
   // 25 editable section blocks — covers the longest policy page (Terms of
   // Use, ~19 sections). Empty blocks fall back to the in-code defaults.
@@ -2005,12 +2102,18 @@ const LEGAL_PAGE_SECTIONS: SectionSchema[] = [
       { key: 'heading_highlight', label: 'Heading Highlight (gold)', type: 'text', placeholder: 'Policy' },
       { key: 'subtitle', label: 'Subtitle', type: 'textarea', placeholder: 'Short intro line under the heading.' },
       { key: 'background_color', label: 'Hero Background Color', type: 'color' },
+      { key: 'heading_color', label: 'Heading Text Color', type: 'color' },
+      { key: 'heading_highlight_color', label: 'Heading Highlight Color', type: 'color' },
+      { key: 'subtitle_color', label: 'Subtitle Text Color', type: 'color' },
     ],
     defaultContent: {
       heading: '',
       heading_highlight: '',
       subtitle: '',
       background_color: '#274C46',
+      heading_color: '',
+      heading_highlight_color: '',
+      subtitle_color: '',
     },
   },
   {
@@ -2020,10 +2123,16 @@ const LEGAL_PAGE_SECTIONS: SectionSchema[] = [
     fields: [
       { key: 'last_updated', label: 'Last Updated Note', type: 'text', placeholder: 'Last updated: March 2026' },
       { key: 'body_html', label: 'Body Content (HTML)', type: 'rich_text', placeholder: '<h2>1. Introduction</h2><p>...</p>' },
+      { key: 'last_updated_color', label: 'Last Updated Text Color', type: 'color' },
+      { key: 'body_text_color', label: 'Body Text Color', type: 'color' },
+      { key: 'background_color', label: 'Body Background Color', type: 'color' },
     ],
     defaultContent: {
       last_updated: '',
       body_html: '',
+      last_updated_color: '',
+      body_text_color: '',
+      background_color: '',
     },
   },
 ];
@@ -2062,6 +2171,7 @@ export const ALL_PAGE_CONFIGS: PageConfig[] = [
   { label: 'Contact', slug: '/contact', previewPath: '/contact', indexKey: '_section_index', sections: withSectionColorControls(CONTACT_PAGE_SECTIONS) },
   { label: 'Community', slug: '/community', previewPath: '/community', indexKey: '_section_index', sections: withSectionColorControls(COMMUNITY_PAGE_SECTIONS) },
   { label: 'Blog', slug: '/blog', previewPath: '/blog', indexKey: '_section_index', sections: withSectionColorControls(BLOG_PAGE_SECTIONS) },
+  { label: 'Products / Collection', slug: '/products', previewPath: '/products', indexKey: '_section_index', sections: withSectionColorControls(PRODUCTS_COLLECTION_SECTIONS) },
   { label: 'Cart', slug: '/cart', previewPath: '/cart', indexKey: '_section_index', sections: withSectionColorControls(APP_PAGE_SECTIONS) },
   { label: 'Checkout', slug: '/checkout', previewPath: '/checkout', indexKey: '_section_index', sections: withSectionColorControls(APP_PAGE_SECTIONS) },
   { label: 'Profile', slug: '/profile', previewPath: '/profile', indexKey: '_section_index', sections: withSectionColorControls(APP_PAGE_SECTIONS) },

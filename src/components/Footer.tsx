@@ -1,10 +1,11 @@
 "use client";
 
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { supabase } from "@/lib/supabase";
 import { useT } from "@/lib/i18n/LangProvider";
 import { useContentT } from "@/lib/i18n/useContentT";
+import { dynFontClass, dynFontStyle } from "@/lib/dynamic-font-size";
 
 type FooterLink = { label: string; href: string };
 type FooterColumn = { label: string; href: string; links: FooterLink[] };
@@ -38,9 +39,50 @@ function normalizeFooterColumns(value: unknown): FooterColumn[] | null {
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-export default function Footer({ content }: { content?: any }) {
-  const { t } = useT();
+export default function Footer({ content: providedContent }: { content?: any }) {
+  const { t, lang } = useT();
+  const [globalFooterContent, setGlobalFooterContent] = useState<Record<string, unknown> | null>(null);
+  const [globalFooterLoaded, setGlobalFooterLoaded] = useState(!!providedContent);
+  const content = providedContent ?? globalFooterContent ?? undefined;
   const { ct } = useContentT(content);
+
+  useEffect(() => {
+    if (providedContent) {
+      setGlobalFooterLoaded(true);
+      return;
+    }
+    let cancelled = false;
+    (async () => {
+      try {
+        const { data: pages } = await supabase
+          .from("pages")
+          .select("id")
+          .or("slug.eq.home,slug.eq.homepage,slug.eq./,slug.eq.")
+          .limit(1);
+        const pageId = pages?.[0]?.id;
+        if (!pageId) return;
+        const { data: sections } = await supabase
+          .from("page_sections")
+          .select("content, is_visible")
+          .eq("page_id", pageId);
+        const footerSection = sections?.find((section) => {
+          const sectionContent = section.content as Record<string, unknown> | null;
+          const index = sectionContent?._homepage_index ?? sectionContent?._section_index;
+          return Number(index) === 14;
+        });
+        if (!cancelled && footerSection?.content) {
+          setGlobalFooterContent(footerSection.content as Record<string, unknown>);
+        }
+      } catch {
+        // Keep hardcoded footer defaults if saved content cannot be loaded.
+      } finally {
+        if (!cancelled) setGlobalFooterLoaded(true);
+      }
+    })();
+    return () => {
+      cancelled = true;
+    };
+  }, [providedContent]);
   const ddVisible = (v: unknown) => v !== false;
   const buildLinks = (
     prefix: string,
@@ -119,6 +161,13 @@ export default function Footer({ content }: { content?: any }) {
     }
   }
 
+  if (!providedContent && !globalFooterLoaded) return null;
+
+  const textStyle = (key: string, color?: string) => ({
+    ...(dynFontStyle(content, key, lang) || {}),
+    ...(color ? { color } : {}),
+  });
+
   return (
     <footer className="bg-deep-green text-off-white pt-12 pb-8" style={{ backgroundColor: footerBackgroundColor }}>
       <div className="max-w-[1200px] mx-auto px-6">
@@ -129,8 +178,8 @@ export default function Footer({ content }: { content?: any }) {
             <div className="lg:w-[35%]">
               {showVip && (
                 <>
-                  <h4 className="text-white font-semibold text-[18px] mb-3">{ct("vip_heading", "footer.vip.heading")}</h4>
-                  <p className="text-off-white/80 text-[15px] mb-5 leading-relaxed">
+                  <h4 className={`text-white font-semibold text-[18px] mb-3 ${dynFontClass(content, "vip_heading")}`} style={textStyle("vip_heading")}>{ct("vip_heading", "footer.vip.heading")}</h4>
+                  <p className={`text-off-white/80 text-[15px] mb-5 leading-relaxed ${dynFontClass(content, "vip_description")}`} style={textStyle("vip_description")}>
                     {ct("vip_description", "footer.vip.description")}
                   </p>
                   {showNewsletter && (
@@ -162,7 +211,7 @@ export default function Footer({ content }: { content?: any }) {
 
               {hasSocials && (
                 <>
-                <h4 className="text-white font-semibold text-[18px] mb-3">{ct("social_heading", "footer.social.heading")}</h4>
+                <h4 className={`text-white font-semibold text-[18px] mb-3 ${dynFontClass(content, "social_heading")}`} style={textStyle("social_heading")}>{ct("social_heading", "footer.social.heading")}</h4>
                 <div className="flex gap-4 items-center">
                   {hasInstagram && (
                     <a href={content.instagram_url} aria-label="Instagram" className="opacity-80 hover:opacity-100 transition-opacity inline-flex items-center justify-center w-7 h-7 rounded text-white text-[11px] font-bold" style={{ backgroundColor: "var(--social-instagram)" }} target="_blank" rel="noopener noreferrer">
@@ -190,17 +239,21 @@ export default function Footer({ content }: { content?: any }) {
           {/* Link Columns */}
           {showColumns && (
             <div className={`${showLeftColumn ? "lg:w-[65%]" : "w-full"} grid grid-cols-2 md:grid-cols-3 gap-8`}>
-              {footerColumns.filter((column) => column.links.length > 0).map((column) => (
+              {footerColumns.filter((column) => column.links.length > 0).map((column, columnIndex) => (
                 <div key={column.label}>
-                  <h4 className="text-white font-semibold text-[18px] mb-4">
+                  <h4 className={`text-white font-semibold text-[18px] mb-4 ${dynFontClass(content, `col${columnIndex + 1}_heading`)}`} style={textStyle(`col${columnIndex + 1}_heading`)}>
                     {column.href ? (
                       <Link href={column.href} className="hover:text-gold transition-colors">{column.label}</Link>
                     ) : column.label}
                   </h4>
                   <ul className="space-y-2.5">
-                    {column.links.map((link) => (
+                    {column.links.map((link, linkIndex) => (
                       <li key={`${column.label}-${link.label}`}>
-                        <Link href={link.href} className="text-off-white/80 hover:text-white transition-colors text-[15px]">
+                        <Link
+                          href={link.href}
+                          className={`text-off-white/80 hover:text-white transition-colors text-[15px] ${dynFontClass(content, `col${columnIndex + 1}_link_${linkIndex + 1}_label`)}`}
+                          style={textStyle(`col${columnIndex + 1}_link_${linkIndex + 1}_label`)}
+                        >
                           {link.label}
                         </Link>
                       </li>

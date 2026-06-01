@@ -1,10 +1,11 @@
 "use client";
 
-import { useEffect, useState, ReactNode } from "react";
+import { useEffect, useState, ReactNode, type CSSProperties } from "react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { supabase } from "@/lib/supabase";
 import { useLang } from "@/lib/i18n/LangProvider";
+import { dynFontClass, dynFontStyle } from "@/lib/dynamic-font-size";
 
 export interface LegalBlock {
   /** Heading text — rendered as a styled <h2>. */
@@ -105,7 +106,14 @@ export default function LegalStructuredRenderer({
    *   - Lines starting with "- "  → grouped into a <ul>
    *   - Otherwise                 → <p>
    */
-  function renderBody(body: string): ReactNode[] {
+  function textStyle(content: SectionContent | undefined, key: string, colorKey: string): CSSProperties | undefined {
+    return {
+      ...(dynFontStyle(content, key, lang) || {}),
+      ...(pick(content, colorKey) ? { color: pick(content, colorKey) } : {}),
+    };
+  }
+
+  function renderBody(body: string, content?: SectionContent): ReactNode[] {
     const blocks = body.split(/\n{2,}/);
     const out: ReactNode[] = [];
     blocks.forEach((block, bi) => {
@@ -114,7 +122,7 @@ export default function LegalStructuredRenderer({
       // Sub-heading
       if (trimmed.startsWith("## ")) {
         out.push(
-          <h3 key={`h-${bi}`} className="text-deep-green font-rubik font-semibold text-lg mb-3 mt-6">
+          <h3 key={`h-${bi}`} className={`text-deep-green font-rubik font-semibold text-lg mb-3 mt-6 ${dynFontClass(content, "heading")}`} style={textStyle(content, "heading", "heading_color")}>
             {trimmed.slice(3).trim()}
           </h3>
         );
@@ -127,7 +135,7 @@ export default function LegalStructuredRenderer({
         out.push(
           <ul key={`u-${bi}`} className="list-disc pl-6 mb-6 space-y-2">
             {lines.map((l, li) => (
-              <li key={li} className="text-deep-green/80 text-[16px] leading-relaxed">
+              <li key={li} className={`text-deep-green/80 text-[16px] leading-relaxed ${dynFontClass(content, "body")}`} style={textStyle(content, "body", "body_text_color")}>
                 {l.trim().slice(2)}
               </li>
             ))}
@@ -137,7 +145,7 @@ export default function LegalStructuredRenderer({
       }
       // Plain paragraph
       out.push(
-        <p key={`p-${bi}`} className="text-deep-green/80 text-[16px] leading-relaxed mb-4">
+        <p key={`p-${bi}`} className={`text-deep-green/80 text-[16px] leading-relaxed mb-4 ${dynFontClass(content, "body")}`} style={textStyle(content, "body", "body_text_color")}>
           {trimmed}
         </p>
       );
@@ -183,17 +191,17 @@ export default function LegalStructuredRenderer({
           data-section-index={0}
         >
           <div className="max-w-[1200px] mx-auto px-4">
-            <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">
+            <h1 className={`text-4xl md:text-5xl font-bold text-white mb-4 ${dynFontClass(hero, "heading")}`} style={textStyle(hero, "heading", "heading_color")}>
               {heading}
               {headingHighlight ? (
                 <>
                   {" "}
-                  <span className="text-gold">{headingHighlight}</span>
+                  <span className={`text-gold ${dynFontClass(hero, "heading_highlight")}`} style={textStyle(hero, "heading_highlight", "heading_highlight_color")}>{headingHighlight}</span>
                 </>
               ) : null}
             </h1>
             {subtitle ? (
-              <p className="text-white/70 max-w-xl mx-auto text-lg">{subtitle}</p>
+              <p className={`text-white/70 max-w-xl mx-auto text-lg ${dynFontClass(hero, "subtitle")}`} style={textStyle(hero, "subtitle", "subtitle_color")}>{subtitle}</p>
             ) : null}
           </div>
         </section>}
@@ -201,15 +209,15 @@ export default function LegalStructuredRenderer({
         <section className="bg-off-white">
           <div className="max-w-[900px] mx-auto px-6 py-16">
             {lastUpdated ? (
-              <p className="text-deep-green/60 text-sm font-rubik mb-10 italic">{lastUpdated}</p>
+              <p className={`text-deep-green/60 text-sm font-rubik mb-10 italic ${dynFontClass(hero, "last_updated")}`} style={textStyle(hero, "last_updated", "last_updated_color")}>{lastUpdated}</p>
             ) : null}
 
             {renderedBlocks.filter((b) => !hiddenByIdx.has(b.index)).map((b) => (
-              <div key={b.key} className="mb-12" data-section-index={b.index}>
+              <div key={b.key} className="mb-12" data-section-index={b.index} style={{ backgroundColor: pick(sectionsByIdx.get(b.index), "background_color") || undefined }}>
                 {b.heading ? (
-                  <h2 className="text-deep-green font-rubik font-bold text-2xl mb-4">{b.heading}</h2>
+                  <h2 className={`text-deep-green font-rubik font-bold text-2xl mb-4 ${dynFontClass(sectionsByIdx.get(b.index), "heading")}`} style={textStyle(sectionsByIdx.get(b.index), "heading", "heading_color")}>{b.heading}</h2>
                 ) : null}
-                {b.body ? renderBody(b.body) : null}
+                {b.body ? renderBody(b.body, sectionsByIdx.get(b.index)) : null}
                 {b.extra ? <div className="mt-2">{b.extra}</div> : null}
               </div>
             ))}

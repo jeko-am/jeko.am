@@ -1,10 +1,11 @@
 "use client";
 
-import { ReactNode, useEffect, useState } from "react";
+import { ReactNode, useEffect, useState, type CSSProperties } from "react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { supabase } from "@/lib/supabase";
 import { useLang } from "@/lib/i18n/LangProvider";
+import { dynFontClass, dynFontStyle } from "@/lib/dynamic-font-size";
 
 interface LegalPageRendererProps {
   slug: string;
@@ -94,6 +95,13 @@ export default function LegalPageRenderer({
     return typeof v === "string" ? v : "";
   }
 
+  function textStyle(content: SectionContent | null, key: string, colorKey: string): CSSProperties | undefined {
+    return {
+      ...(dynFontStyle(content, key, lang) || {}),
+      ...(pick(content, colorKey) ? { color: pick(content, colorKey) } : {}),
+    };
+  }
+
   const heading = pick(hero, "heading") || fallbackHeading;
   const headingHighlight = pick(hero, "heading_highlight") || fallbackHeadingHighlight || "";
   const subtitle = pick(hero, "subtitle") || fallbackSubtitle;
@@ -101,6 +109,7 @@ export default function LegalPageRenderer({
 
   const lastUpdated = pick(body, "last_updated") || fallbackLastUpdated || "";
   const bodyHtml = pick(body, "body_html") || "";
+  const bodyBg = pick(body, "background_color") || "";
 
   return (
     <>
@@ -112,32 +121,33 @@ export default function LegalPageRenderer({
           data-section-index={0}
         >
           <div className="max-w-[1200px] mx-auto px-4">
-            <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">
+            <h1 className={`text-4xl md:text-5xl font-bold text-white mb-4 ${dynFontClass(hero, "heading")}`} style={textStyle(hero, "heading", "heading_color")}>
               {heading}
               {headingHighlight ? (
                 <>
                   {" "}
-                  <span className="text-gold">{headingHighlight}</span>
+                  <span className={`text-gold ${dynFontClass(hero, "heading_highlight")}`} style={textStyle(hero, "heading_highlight", "heading_highlight_color")}>{headingHighlight}</span>
                 </>
               ) : null}
             </h1>
             {subtitle ? (
-              <p className="text-white/70 max-w-xl mx-auto text-lg">{subtitle}</p>
+              <p className={`text-white/70 max-w-xl mx-auto text-lg ${dynFontClass(hero, "subtitle")}`} style={textStyle(hero, "subtitle", "subtitle_color")}>{subtitle}</p>
             ) : null}
           </div>
         </section>}
 
-        {!hiddenByIdx.has(1) && <section className="bg-off-white" data-section-index={1}>
+        {!hiddenByIdx.has(1) && <section className="bg-off-white" data-section-index={1} style={{ backgroundColor: bodyBg || undefined }}>
           <div className="max-w-[900px] mx-auto px-6 py-16">
             {lastUpdated ? (
-              <p className="text-deep-green/60 text-sm font-rubik mb-10 italic">
+              <p className={`text-deep-green/60 text-sm font-rubik mb-10 italic ${dynFontClass(body, "last_updated")}`} style={textStyle(body, "last_updated", "last_updated_color")}>
                 {lastUpdated}
               </p>
             ) : null}
 
             {bodyHtml ? (
               <div
-                className="legal-prose text-deep-green/80"
+                className={`legal-prose text-deep-green/80 ${dynFontClass(body, "body_html")}`}
+                style={textStyle(body, "body_html", "body_text_color")}
                 // eslint-disable-next-line react/no-danger
                 dangerouslySetInnerHTML={{ __html: bodyHtml }}
               />

@@ -12,6 +12,7 @@ import ConditionalDogChatbot from "@/components/ConditionalDogChatbot";
 import TrackingScripts from "@/components/TrackingScripts";
 import AnalyticsInit from "@/components/AnalyticsInit";
 import GTMNoScript from "@/components/GTMNoScript";
+import StoreEditorStyleBridge from "@/components/StoreEditorStyleBridge";
 import { LangProvider } from "@/lib/i18n/LangProvider";
 import TranslationsBootstrap from "@/lib/i18n/TranslationsBootstrap";
 import { getServerLang } from "@/lib/i18n/server";
@@ -97,6 +98,7 @@ export default async function RootLayout({
           <TranslationsBootstrap />
           <SiteThemeBootstrap />
           <CustomFontsBootstrap />
+          <StoreEditorStyleBridge />
           <AuthProvider>
             <CurrencyProvider>
               <CartProvider>

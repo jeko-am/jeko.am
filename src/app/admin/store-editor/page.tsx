@@ -663,6 +663,54 @@ function FontSizeControl({
   );
 }
 
+function TextColorControl({
+  fieldKey,
+  value,
+  setEditValues,
+  setHasChanges,
+}: {
+  fieldKey: string;
+  value: unknown;
+  setEditValues: React.Dispatch<React.SetStateAction<Record<string, unknown>>>;
+  setHasChanges: (v: boolean) => void;
+}) {
+  const storageKey = `${fieldKey}_color`;
+  const current = typeof value === 'string' && value ? value : '';
+  const update = (raw: string) => {
+    setEditValues(prev => {
+      const next = { ...prev };
+      if (!raw) delete next[storageKey];
+      else next[storageKey] = raw;
+      return next;
+    });
+    setHasChanges(true);
+  };
+
+  return (
+    <div className="flex items-center gap-1 flex-shrink-0" title="Text color">
+      <svg className="w-3 h-3 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+        <path strokeLinecap="round" strokeLinejoin="round" d="M7 20h10M9 16l3-12 3 12M10 12h4" />
+      </svg>
+      <input
+        type="color"
+        value={current || '#274C46'}
+        onChange={(e) => update(e.target.value)}
+        className="w-7 h-7 rounded-md border border-gray-200 cursor-pointer p-0.5 bg-white"
+      />
+      {current && (
+        <button
+          type="button"
+          onClick={() => update('')}
+          className="text-[10px] text-gray-400 hover:text-red-500"
+          title="Clear text color"
+        >
+          clear
+        </button>
+      )}
+    </div>
+  );
+}
+
 /* ═══════════════════════════════════════════════════════════════════════════
    UPSELL MANAGER (inline for product pages)
    ═══════════════════════════════════════════════════════════════════════════ */
@@ -1625,6 +1673,7 @@ export default function AdminStoreEditorPage() {
 
                   if (field.type === 'rich_text') {
                     const hyPlaceholder = editLang === 'hy' && enValue ? String(enValue) : field.placeholder;
+                    const inferred = inferFieldFontDefaults(field);
                     return (
                       <div key={field.key}>
                         <div className="flex flex-col gap-1.5 mb-1.5">
@@ -1636,6 +1685,32 @@ export default function AdminStoreEditorPage() {
                           <p className="text-[11px] text-gray-500 leading-relaxed">
                             HTML supported. Use &lt;h2&gt;, &lt;h3&gt;, &lt;p&gt;, &lt;ul&gt;, &lt;li&gt;, &lt;strong&gt;, &lt;a&gt;, &lt;br&gt;.
                           </p>
+                          <div className="flex flex-wrap items-center gap-2">
+                            <FontFamilyControl
+                              fieldKey={field.key}
+                              value={editLang === 'hy' ? editValues[`${field.key}_font_family_hy`] : editValues[`${field.key}_font_family`]}
+                              defaultFamily={field.defaultFontFamily ?? inferred.family}
+                              lang={editLang}
+                              setEditValues={setEditValues}
+                              setHasChanges={setHasChanges}
+                            />
+                            <FontSizeControl
+                              fieldKey={field.key}
+                              desktopValue={editValues[`${field.key}_font_size_desktop`]}
+                              mobileValue={editValues[`${field.key}_font_size_mobile`]}
+                              legacyValue={editValues[`${field.key}_font_size`]}
+                              defaultDesktop={field.defaultFontSizeDesktop ?? inferred.desktop}
+                              defaultMobile={field.defaultFontSizeMobile ?? inferred.mobile}
+                              setEditValues={setEditValues}
+                              setHasChanges={setHasChanges}
+                            />
+                            <TextColorControl
+                              fieldKey={field.key}
+                              value={editValues[`${field.key}_color`]}
+                              setEditValues={setEditValues}
+                              setHasChanges={setHasChanges}
+                            />
+                          </div>
                         </div>
                         <textarea
                           value={String(value || '')}
@@ -1716,6 +1791,12 @@ export default function AdminStoreEditorPage() {
                                   legacyValue={editValues[`${field.key}_font_size`]}
                                   defaultDesktop={field.defaultFontSizeDesktop ?? inferred.desktop}
                                   defaultMobile={field.defaultFontSizeMobile ?? inferred.mobile}
+                                  setEditValues={setEditValues}
+                                  setHasChanges={setHasChanges}
+                                />
+                                <TextColorControl
+                                  fieldKey={field.key}
+                                  value={editValues[`${field.key}_color`]}
                                   setEditValues={setEditValues}
                                   setHasChanges={setHasChanges}
                                 />
@@ -1833,6 +1914,12 @@ export default function AdminStoreEditorPage() {
                                 legacyValue={editValues[`${field.key}_font_size`]}
                                 defaultDesktop={field.defaultFontSizeDesktop ?? inferred.desktop}
                                 defaultMobile={field.defaultFontSizeMobile ?? inferred.mobile}
+                                setEditValues={setEditValues}
+                                setHasChanges={setHasChanges}
+                              />
+                              <TextColorControl
+                                fieldKey={field.key}
+                                value={editValues[`${field.key}_color`]}
                                 setEditValues={setEditValues}
                                 setHasChanges={setHasChanges}
                               />

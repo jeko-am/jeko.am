@@ -9,6 +9,7 @@ import { recordProductView } from '@/lib/product-history';
 import { useT } from '@/lib/i18n/LangProvider';
 import { localize } from '@/lib/i18n/localizeRecord';
 import { useCurrency } from '@/lib/currency';
+import { dynFontClass, dynFontStyle } from '@/lib/dynamic-font-size';
 
 // Per-session memo for machine translations so each EN string only hits the API once.
 const __cardTranslationCache = new Map<string, string>();
@@ -42,7 +43,9 @@ interface Product {
   i18n?: { hy?: { name?: string; short_description?: string; description?: string } } | null;
 }
 
-export default function ProductCard({ product }: { product: Product }) {
+type CardContent = Record<string, unknown> | null | undefined;
+
+export default function ProductCard({ product, content }: { product: Product; content?: CardContent }) {
   const { t, lang } = useT();
   const { formatPrice } = useCurrency();
   const [imgError, setImgError] = useState(false);
@@ -107,6 +110,23 @@ export default function ProductCard({ product }: { product: Product }) {
 
   const hasImage = product.images?.[0] && !imgError;
   const imageUrl = hasImage ? product.images![0] : '';
+  const fieldText = (key: string, fallback: string) => {
+    const hy = content?.hy && typeof content.hy === 'object' ? (content.hy as Record<string, unknown>) : null;
+    const value = lang === 'hy' && hy && Object.prototype.hasOwnProperty.call(hy, key)
+      ? hy[key]
+      : content?.[key];
+    return typeof value === 'string' && value.trim() ? value : fallback;
+  };
+  const textStyle = (key: string, colorKey?: string) => ({
+    ...(dynFontStyle(content, key, lang) || {}),
+    ...(colorKey && typeof content?.[colorKey] === 'string' && content[colorKey] ? { color: content[colorKey] as string } : {}),
+  });
+  const buttonStyle = {
+    ...textStyle('add_to_cart_text', 'button_text_color'),
+    ...(typeof content?.button_background_color === 'string' && content.button_background_color
+      ? { backgroundColor: content.button_background_color }
+      : {}),
+  };
 
   const handleAddToCart = (e: React.MouseEvent) => {
     e.preventDefault();
@@ -129,7 +149,10 @@ export default function ProductCard({ product }: { product: Product }) {
 
   return (
     <Link href={`/products/${product.slug}`} className="group block h-full" data-testid="product-card" onClick={handleProductClick}>
-      <div className="bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition-shadow duration-300 border-2 border-transparent hover:border-gold/30 h-full flex flex-col">
+      <div
+        className="bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition-shadow duration-300 border-2 border-transparent hover:border-gold/30 h-full flex flex-col"
+        style={typeof content?.card_background_color === 'string' && content.card_background_color ? { backgroundColor: content.card_background_color } : undefined}
+      >
         {/* Image */}
         <div className="relative aspect-[3/4] overflow-hidden bg-beige-light p-4">
           {hasImage ? (
@@ -156,22 +179,38 @@ export default function ProductCard({ product }: { product: Product }) {
           )}
           {/* Paw overlay on hover */}
           <div className="absolute inset-0 bg-deep-green/0 group-hover:bg-deep-green/10 transition-colors duration-300 flex items-center justify-center">
-            <span className="opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-gold text-deep-green font-semibold text-sm px-5 py-2 rounded-full shadow-lg">
-              {t("product.viewProduct")}
+            <span
+              className={`opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-gold text-deep-green font-semibold text-sm px-5 py-2 rounded-full shadow-lg ${dynFontClass(content, 'view_product_text')}`}
+              style={textStyle('view_product_text')}
+            >
+              {fieldText('view_product_text', t("product.viewProduct"))}
             </span>
           </div>
         </div>
 
         {/* Info */}
         <div className="p-4 flex-1 flex flex-col justify-between">
-          <h3 className="font-medium text-deep-green text-lg leading-snug mb-2 group-hover:text-gold transition-colors line-clamp-2 tracking-wide">
+          <h3
+            className={`font-medium text-deep-green text-lg leading-snug mb-2 group-hover:text-gold transition-colors line-clamp-2 tracking-wide ${dynFontClass(content, 'product_name')}`}
+            style={textStyle('product_name', 'product_name_color')}
+          >
             {displayName}
           </h3>
           {displayShort && (
-            <p className="text-sm text-deep-green/60 mb-3 line-clamp-2">{displayShort}</p>
+            <p
+              className={`text-sm text-deep-green/60 mb-3 line-clamp-2 ${dynFontClass(content, 'product_description')}`}
+              style={textStyle('product_description', 'product_description_color')}
+            >
+              {displayShort}
+            </p>
           )}
           <div className="flex items-center gap-2 mt-auto">
-            <span className="text-lg font-bold text-deep-green">{formatPrice(product.price)}</span>
+            <span
+              className={`text-lg font-bold text-deep-green ${dynFontClass(content, 'price_text')}`}
+              style={textStyle('price_text', 'price_text_color')}
+            >
+              {formatPrice(product.price)}
+            </span>
             {hasDiscount && (
               <span className="text-sm text-deep-green/40 line-through">{formatPrice(product.compare_at_price!)}</span>
             )}
@@ -196,14 +235,15 @@ export default function ProductCard({ product }: { product: Product }) {
           <button
             onClick={handleAddToCart}
             disabled={isAdding}
-            className="w-full mt-4 bg-deep-green text-white py-2 px-4 rounded-lg hover:bg-deep-green/90 transition-colors disabled:opacity-50 disabled:cursor-not-allowed text-sm font-medium flex items-center justify-center gap-2"
+            className={`w-full mt-4 bg-deep-green text-white py-2 px-4 rounded-lg hover:bg-deep-green/90 transition-colors disabled:opacity-50 disabled:cursor-not-allowed text-sm font-medium flex items-center justify-center gap-2 ${dynFontClass(content, 'add_to_cart_text')}`}
+            style={buttonStyle}
           >
             {isAdding ? (
               <>
                 <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-                {t("product.added")}
+                {fieldText('added_text', t("product.added"))}
               </>
-            ) : t("product.addToCartBtn")}
+            ) : fieldText('add_to_cart_text', t("product.addToCartBtn"))}
           </button>
         </div>
       </div>

@@ -22,6 +22,26 @@ function toPx(v: unknown): string | null {
   return `${n}px`;
 }
 
+function toColor(v: unknown): string | null {
+  return typeof v === "string" && v.trim() ? v : null;
+}
+
+function colorFor(content: Content, fieldKey: string): string | null {
+  if (!content) return null;
+  const direct =
+    toColor(content[`${fieldKey}_color`]) ??
+    toColor(content[`${fieldKey}_text_color`]);
+  if (direct) return direct;
+
+  if (/price/i.test(fieldKey)) return toColor(content.price_text_color);
+  if (/(button|cta|add_to_cart)/i.test(fieldKey)) return toColor(content.button_text_color);
+  if (/(heading|title|name|year|stat|author)/i.test(fieldKey)) return toColor(content.heading_color);
+  if (/(body|description|subheading|text|content|quote|label|subtitle)/i.test(fieldKey)) {
+    return toColor(content.body_text_color);
+  }
+  return null;
+}
+
 export function dynFontStyle(content: Content, fieldKey: string, lang: string = "en"): CSSProperties | undefined {
   if (!content) return undefined;
   const desktop =
@@ -33,10 +53,11 @@ export function dynFontStyle(content: Content, fieldKey: string, lang: string = 
     content[`${fieldKey}_font_family_hy`],
     lang
   );
+  const color = colorFor(content, fieldKey);
   // Defensive: keep the standalone helper available for other callers.
   void fontFamilyFor;
 
-  if (!desktop && !mobile && !family) return undefined;
+  if (!desktop && !mobile && !family && !color) return undefined;
   // Both vars default to each other so partial config still works.
   const style: Record<string, string> = {};
   if (desktop) style["--fs-desktop"] = desktop;
@@ -44,6 +65,7 @@ export function dynFontStyle(content: Content, fieldKey: string, lang: string = 
   if (desktop && !mobile) style["--fs-mobile"] = desktop;
   if (mobile && !desktop) style["--fs-desktop"] = mobile;
   if (family) style.fontFamily = family;
+  if (color) style.color = color;
   return style as CSSProperties;
 }
 

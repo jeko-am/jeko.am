@@ -9,6 +9,7 @@ import LanguageSwitcher from "@/components/LanguageSwitcher";
 import { useT } from "@/lib/i18n/LangProvider";
 import { useContentT } from "@/lib/i18n/useContentT";
 import { supabase } from "@/lib/supabase";
+import { dynFontClass, dynFontStyle } from "@/lib/dynamic-font-size";
 
 type HeaderContent = Record<string, unknown>;
 type HeaderMenuItem = {
@@ -19,27 +20,81 @@ type HeaderMenuItem = {
   visible: boolean;
 };
 
-function normalizeCustomNavItems(value: unknown): HeaderMenuItem[] | null {
+const NAV_LABEL_KEYS: Record<string, string> = {
+  "/about": "header.nav.about",
+  "/community": "header.nav.community",
+  "/blog": "header.nav.blog",
+  "/swipe": "header.nav.swipe",
+  "/matches": "header.nav.matches",
+  "/find-owners": "header.nav.findOwners",
+  "/messages": "header.nav.messages",
+  "/products": "header.nav.shop",
+  "/reviews": "header.nav.reviews",
+  "/benefits": "benefits.title",
+  "/benefits/colitis": "benefits.colitis.title",
+  "/benefits/digestion-issues": "benefits.digestion.title",
+  "/benefits/hypoallergenic": "benefits.hypoallergenic.title",
+  "/benefits/pancreatitis": "benefits.pancreatitis.title",
+  "/benefits/weight-management": "benefits.weight.title",
+};
+
+const NAV_LABEL_ALIASES: Record<string, string> = {
+  about: "header.nav.about",
+  "our story": "footer.link.ourStory",
+  community: "header.nav.community",
+  blog: "header.nav.blog",
+  swipe: "header.nav.swipe",
+  matches: "header.nav.matches",
+  "find owners": "header.nav.findOwners",
+  messages: "header.nav.messages",
+  shop: "header.nav.shop",
+  reviews: "header.nav.reviews",
+  "health & breeds": "benefits.title",
+  benefits: "benefits.title",
+  colitis: "benefits.colitis.title",
+  "digestion issues": "benefits.digestion.title",
+  hypoallergenic: "benefits.hypoallergenic.title",
+  pancreatitis: "benefits.pancreatitis.title",
+  "weight management": "benefits.weight.title",
+};
+
+function isPlaceholderMenuItem(label: string, href: string, children: unknown): boolean {
+  const normalized = label.trim().toLowerCase();
+  const hasChildren = Array.isArray(children) && children.length > 0;
+  return !hasChildren && href === "/" && (normalized === "new item" || normalized === "dropdown item");
+}
+
+function localizedMenuLabel(label: string, href: string, lang: string, t: (key: string) => string): string {
+  if (lang !== "hy") return label;
+  const key = NAV_LABEL_KEYS[href] ?? NAV_LABEL_ALIASES[label.trim().toLowerCase()];
+  return key ? t(key) : label;
+}
+
+function normalizeCustomNavItems(
+  value: unknown,
+  lang: string,
+  t: (key: string) => string,
+): HeaderMenuItem[] | null {
   if (!Array.isArray(value)) return null;
   return value
     .map((raw) => {
       const item = raw && typeof raw === "object" ? raw as Record<string, unknown> : {};
       const label = typeof item.label === "string" ? item.label.trim() : "";
       const href = typeof item.url === "string" && item.url.trim() ? item.url : "/";
-      if (!label || item.visible === false) return null;
+      if (!label || item.visible === false || isPlaceholderMenuItem(label, href, item.children)) return null;
       const dropdown = Array.isArray(item.children)
         ? item.children
             .map((rawChild) => {
               const child = rawChild && typeof rawChild === "object" ? rawChild as Record<string, unknown> : {};
               const childLabel = typeof child.label === "string" ? child.label.trim() : "";
               const childHref = typeof child.url === "string" && child.url.trim() ? child.url : "/";
-              if (!childLabel || child.visible === false) return null;
-              return { label: childLabel, href: childHref };
+              if (!childLabel || child.visible === false || isPlaceholderMenuItem(childLabel, childHref, child.children)) return null;
+              return { label: localizedMenuLabel(childLabel, childHref, lang, t), href: childHref };
             })
             .filter((child): child is { label: string; href: string } => child !== null)
         : [];
       return {
-        label,
+        label: localizedMenuLabel(label, href, lang, t),
         href,
         hasDropdown: dropdown.length > 0,
         dropdown,
@@ -225,10 +280,11 @@ export default function Header({ content }: { content?: HeaderContent }) {
   const helpUrl = effectiveContent?.help_url ?? "/contact";
   const helpVisible = effectiveContent?.help_visible !== false;
   const loginUrl = effectiveContent?.login_url ?? "/login";
+  const textStyle = (key: string) => dynFontStyle(effectiveContent, key, lang);
 
   // Treat undefined as visible (legacy rows). Only an explicit `false` hides the item.
   const visible = (v: unknown) => v !== false;
-  const customNavItems = normalizeCustomNavItems(effectiveContent?.nav_items);
+  const customNavItems = normalizeCustomNavItems(effectiveContent?.nav_items, lang, t);
   const navItems = customNavItems ?? (effectiveContent
     ? [
         { label: ct("nav_1_label", "header.nav.about"), href: effectiveContent.nav_1_url ?? "/about", hasDropdown: aboutDropdown.length > 0, dropdown: aboutDropdown, visible: visible(effectiveContent.nav_1_visible) },
@@ -313,12 +369,13 @@ export default function Header({ content }: { content?: HeaderContent }) {
               />
             ) : (
               <span
-                className="text-[32px] lg:text-[36px] xl:text-[40px] leading-none select-none notranslate"
+                className={`text-[32px] lg:text-[36px] xl:text-[40px] leading-none select-none notranslate ${dynFontClass(effectiveContent, "logo_text")}`}
                 translate="no"
                 style={{
                   fontFamily: "'TR Frankfurter', 'Rubik', sans-serif",
                   color: '#F2A900',
                   display: 'inline-block',
+                  ...(textStyle("logo_text") || {}),
                 }}
               >
                 {logoText}
@@ -328,7 +385,7 @@ export default function Header({ content }: { content?: HeaderContent }) {
 
           {/* Desktop Navigation - Center (iPad landscape and larger shows hamburger until xl) */}
           <nav className={`hidden xl:flex items-center ${isHy ? "gap-4" : "gap-6"}`}>
-            {navItems.map((item) => (
+            {navItems.map((item, itemIndex) => (
               <div
                 key={item.label}
                 className="relative"
@@ -337,7 +394,8 @@ export default function Header({ content }: { content?: HeaderContent }) {
               >
                 <Link
                   href={item.href}
-                  className={navItemCls}
+                  className={`${navItemCls} ${dynFontClass(effectiveContent, `nav_${itemIndex + 1}_label`)}`}
+                  style={textStyle(`nav_${itemIndex + 1}_label`)}
                 >
                   {item.label}
                   {item.hasDropdown && <ChevronDown />}
@@ -347,11 +405,12 @@ export default function Header({ content }: { content?: HeaderContent }) {
                     className="absolute top-full left-0 bg-deep-green rounded-b-lg shadow-xl min-w-[220px] py-2 z-50"
                     style={{ backgroundColor: dropdownBackgroundColor }}
                   >
-                    {item.dropdown.map((sub) => (
+                    {item.dropdown.map((sub, subIndex) => (
                       <Link
                         key={sub.label}
                         href={sub.href}
-                        className="block px-5 py-2.5 text-white text-[15px] hover:bg-white/10 transition-colors"
+                        className={`block px-5 py-2.5 text-white text-[15px] hover:bg-white/10 transition-colors ${dynFontClass(effectiveContent, `nav_${itemIndex + 1}_dd_${subIndex + 1}_label`)}`}
+                        style={textStyle(`nav_${itemIndex + 1}_dd_${subIndex + 1}_label`)}
                       >
                         {sub.label}
                       </Link>
@@ -385,7 +444,8 @@ export default function Header({ content }: { content?: HeaderContent }) {
                 {helpVisible && helpText ? (
                   <Link
                     href={helpUrl}
-                    className={ctaCls}
+                    className={`${ctaCls} ${dynFontClass(effectiveContent, "help_text")}`}
+                    style={textStyle("help_text")}
                   >
                     {helpText}
                   </Link>
@@ -432,7 +492,8 @@ export default function Header({ content }: { content?: HeaderContent }) {
                 ) : (
                   <Link
                     href={loginUrl}
-                    className={ctaCls}
+                    className={`${ctaCls} ${dynFontClass(effectiveContent, "login_text")}`}
+                    style={textStyle("login_text")}
                   >
                     {t("common.login")}
                   </Link>
@@ -442,7 +503,8 @@ export default function Header({ content }: { content?: HeaderContent }) {
             {!user && ctaVisible && (
               <Link
                 href={ctaUrl}
-                className={signupCls}
+                className={`${signupCls} ${dynFontClass(effectiveContent, "cta_text")}`}
+                style={textStyle("cta_text")}
               >
                 {ctaText}
               </Link>
