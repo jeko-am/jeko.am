@@ -119,17 +119,25 @@ function ImageField({
             <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity rounded-lg flex items-center justify-center gap-2">
               <button
                 onClick={() => inputRef.current?.click()}
-                className="px-3 py-1.5 bg-white text-gray-800 text-xs font-medium rounded-lg hover:bg-gray-100 transition-colors"
+                disabled={uploading}
+                className="px-3 py-1.5 bg-white text-gray-800 text-xs font-medium rounded-lg hover:bg-gray-100 transition-colors disabled:cursor-not-allowed disabled:opacity-60"
               >
                 Replace
               </button>
               <button
                 onClick={() => onChange('')}
-                className="px-3 py-1.5 bg-red-500 text-white text-xs font-medium rounded-lg hover:bg-red-600 transition-colors"
+                disabled={uploading}
+                className="px-3 py-1.5 bg-red-500 text-white text-xs font-medium rounded-lg hover:bg-red-600 transition-colors disabled:cursor-not-allowed disabled:opacity-60"
               >
                 Remove
               </button>
             </div>
+            {uploading && (
+              <div className="absolute inset-0 z-10 rounded-lg bg-white/85 backdrop-blur-[1px] flex flex-col items-center justify-center gap-2">
+                <div className="w-8 h-8 border-3 border-deep-green border-t-transparent rounded-full animate-spin" />
+                <p className="text-xs font-medium text-deep-green">Uploading image...</p>
+              </div>
+            )}
           </div>
         ) : (
           <div
@@ -162,6 +170,7 @@ function ImageField({
           accept="image/*"
           className="hidden"
           onChange={handleFileChange}
+          disabled={uploading}
         />
       </div>
       {/* Manual URL input */}

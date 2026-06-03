@@ -30,8 +30,6 @@ type UploadSignature = {
   error?: string;
 };
 
-class DirectUploadUnavailableError extends Error {}
-
 async function readUploadResponse(res: Response) {
   const text = await res.text();
   if (!text) return {};
@@ -54,7 +52,7 @@ async function uploadDirectToCloudinary(file: File) {
   const signatureData = (await signatureRes.json().catch(() => ({}))) as UploadSignature;
 
   if (!signatureRes.ok) {
-    throw new DirectUploadUnavailableError(signatureData.error || 'Direct upload is not configured');
+    throw new Error(signatureData.error || 'Direct upload is not configured');
   }
 
   const formData = new FormData();
@@ -82,36 +80,10 @@ async function uploadDirectToCloudinary(file: File) {
   return url;
 }
 
-async function uploadThroughAppServer(file: File) {
-  const formData = new FormData();
-  formData.append('file', file);
-
-  const res = await fetch('/api/upload', { method: 'POST', body: formData });
-  const data = await readUploadResponse(res);
-
-  if (!res.ok) {
-    throw new Error(normalizeUploadError(getUploadErrorMessage(data)));
-  }
-
-  if (!data.url) {
-    throw new Error('Upload succeeded but no image URL was returned.');
-  }
-
-  return data.url;
-}
-
 export async function uploadImageFile(file: File) {
   if (!ACCEPTED_IMAGE_TYPES.has(file.type)) {
     throw new Error('Invalid file type. Allowed: JPG, PNG, WebP, GIF, SVG');
   }
 
-  try {
-    return await uploadDirectToCloudinary(file);
-  } catch (error) {
-    if (!(error instanceof DirectUploadUnavailableError)) {
-      throw error;
-    }
-  }
-
-  return uploadThroughAppServer(file);
+  return uploadDirectToCloudinary(file);
 }
