@@ -57,11 +57,19 @@ const subscribers = new Set<() => void>();
 let snapshot: FontOption[] = BUILT_IN_FONTS;
 
 function rebuildSnapshot() {
-  snapshot = [...BUILT_IN_FONTS, ...customFonts];
+  const seen = new Set<string>();
+  snapshot = [...BUILT_IN_FONTS, ...customFonts].filter((font) => {
+    if (seen.has(font.value)) return false;
+    seen.add(font.value);
+    return true;
+  });
 }
 
 export function setCustomFonts(rows: CustomFontRow[]): void {
-  customFonts = rows.map(rowToOption);
+  const builtInValues = new Set(BUILT_IN_FONTS.map((font) => font.value));
+  customFonts = rows
+    .map(rowToOption)
+    .filter((font) => !builtInValues.has(font.value));
   rebuildSnapshot();
   subscribers.forEach((cb) => cb());
 }

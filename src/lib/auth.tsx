@@ -64,6 +64,9 @@ function clearAuthCache() {
   } catch {}
 }
 
+let userBansUnavailable = false;
+const USER_BANS_ENABLED = process.env.NEXT_PUBLIC_ENABLE_USER_BANS === 'true';
+
 // Read the Supabase session from localStorage synchronously to avoid
 // a flash of logged-out UI on hard refresh.
 function getInitialAuth(): { user: User | null; session: Session | null; isAdmin: boolean } {
@@ -189,30 +192,37 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       }
 
       // ── Ban check — banned users cannot use the platform ──
-      try {
-        const { data: ban } = await supabase
+      if (USER_BANS_ENABLED && !userBansUnavailable) {
+        try {
+          const { data: ban, error: banError } = await supabase
           .from('user_bans')
           .select('id, reason')
           .eq('user_id', userId)
           .is('unbanned_at', null)
           .maybeSingle();
-        if (ban) {
-          clearAuthCache();
-          await supabase.auth.signOut({ scope: 'local' }).catch(() => {});
-          setSession(null);
-          setUser(null);
-          setIsAdmin(false);
-          adminCheckRef.current = null;
-          if (mounted) setLoading(false);
-          if (typeof window !== 'undefined') {
-            const reason = encodeURIComponent(ban.reason || 'Your account has been banned.');
-            if (!window.location.pathname.startsWith('/login')) {
-              window.location.href = `/login?error=banned&reason=${reason}`;
+
+          if (banError) {
+            if (banError.code === '42P01' || banError.code === 'PGRST205' || banError.message?.includes('user_bans')) {
+              userBansUnavailable = true;
             }
+          } else if (ban) {
+            clearAuthCache();
+            await supabase.auth.signOut({ scope: 'local' }).catch(() => {});
+            setSession(null);
+            setUser(null);
+            setIsAdmin(false);
+            adminCheckRef.current = null;
+            if (mounted) setLoading(false);
+            if (typeof window !== 'undefined') {
+              const reason = encodeURIComponent(ban.reason || 'Your account has been banned.');
+              if (!window.location.pathname.startsWith('/login')) {
+                window.location.href = `/login?error=banned&reason=${reason}`;
+              }
+            }
+            return;
           }
-          return;
-        }
-      } catch { /* ignore, fail-open */ }
+        } catch { /* ignore, fail-open */ }
+      }
 
       setSession(session);
       setUser(session.user);

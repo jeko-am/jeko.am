@@ -2,6 +2,7 @@ import { supabase } from './supabase';
 
 const SESSION_KEY = 'jeko_analytics_session';
 const SESSION_DURATION = 30 * 60 * 1000; // 30 minutes
+const ANALYTICS_ENABLED = process.env.NEXT_PUBLIC_ENABLE_SUPABASE_ANALYTICS === 'true';
 
 let sessionId: string | null = null;
 let initialized = false;
@@ -58,31 +59,32 @@ async function upsertSession(landing: boolean = false) {
   if (!sid) return;
 
   try {
-    // Check if session exists
+    const now = new Date().toISOString();
     const { data: existing } = await supabase
       .from('analytics_sessions')
       .select('id')
       .eq('session_id', sid)
       .maybeSingle();
 
-    if (existing) {
-      // Update last activity
-      await supabase
-        .from('analytics_sessions')
-        .update({ last_activity_at: new Date().toISOString() })
-        .eq('session_id', sid);
-    } else {
-      // Create new session
-      await supabase.from('analytics_sessions').insert({
+    await supabase
+      .from('analytics_sessions')
+      .upsert({
         session_id: sid,
-        ip_hash: simpleHashIP(),
-        user_agent_hash: hashString(navigator.userAgent),
-        landing_page: landing ? window.location.pathname : null,
-        referrer: document.referrer || null,
-        device_type: getDeviceType(),
-        total_events: 1,
-        is_bounce: true,
-      });
+        last_activity_at: now,
+        ...(existing
+          ? {}
+          : {
+              ip_hash: simpleHashIP(),
+              user_agent_hash: hashString(navigator.userAgent),
+              landing_page: landing ? window.location.pathname : null,
+              referrer: document.referrer || null,
+              device_type: getDeviceType(),
+              total_events: 1,
+              is_bounce: true,
+            }),
+      }, { onConflict: 'session_id' });
+
+    if (!existing) {
       // Enrich with real IP + geolocation (runs once per new session, non-blocking)
       try {
         fetch('/api/analytics/geo', {
@@ -109,6 +111,8 @@ export async function trackEvent(
     metadata?: Record<string, unknown>;
   }
 ) {
+  if (!ANALYTICS_ENABLED) return;
+
   const sid = getOrCreateSessionId();
   if (!sid) return;
 
@@ -134,7 +138,7 @@ export async function trackEvent(
 }
 
 export function initAnalytics() {
-  if (initialized || typeof window === 'undefined') return;
+  if (!ANALYTICS_ENABLED || initialized || typeof window === 'undefined') return;
   initialized = true;
 
   // Track page view on init

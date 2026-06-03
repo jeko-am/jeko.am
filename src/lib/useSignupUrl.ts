@@ -1,4 +1,5 @@
 import { useAuth } from './auth';
+import { useEffect, useState } from 'react';
 
 /**
  * Returns '/profile' when the user is already logged in,
@@ -6,6 +7,12 @@ import { useAuth } from './auth';
  */
 export function useSignupUrl(fallback = '/auth/signup'): string {
   const { user, loading } = useAuth();
-  if (loading) return fallback;
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  if (!mounted || loading) return fallback;
   return user ? '/profile' : fallback;
 }
