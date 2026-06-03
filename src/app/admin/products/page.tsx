@@ -3,6 +3,7 @@
 import { supabase } from '@/lib/supabase';
 import { useEffect, useState, useCallback, useMemo, useRef } from 'react';
 import { useAdminEditLang } from '@/lib/i18n/AdminEditLang';
+import { uploadImageFile } from '@/lib/upload-image';
 
 // ---------------------------------------------------------------------------
 // Types
@@ -423,18 +424,8 @@ export default function AdminProductsPage() {
     try {
       for (let i = 0; i < files.length; i++) {
         const file = files[i];
-        const formData = new FormData();
-        formData.append('file', file);
-
-        const res = await fetch('/api/upload', { method: 'POST', body: formData });
-        const data = await res.json();
-
-        if (!res.ok) {
-          addToast('error', data.error || 'Upload failed');
-          continue;
-        }
-
-        currentImages.push(data.url);
+        const url = await uploadImageFile(file);
+        currentImages.push(url);
       }
 
       updateField('images', currentImages.length > 0 ? currentImages : null);
@@ -1147,7 +1138,7 @@ export default function AdminProductsPage() {
                       <p className="text-sm text-gray-600">
                         <span className="font-medium text-deep-green">Click to upload</span> or drag and drop
                       </p>
-                      <p className="text-xs text-gray-400">JPG, PNG, WebP, GIF, SVG (max 10MB each)</p>
+                      <p className="text-xs text-gray-400">JPG, PNG, WebP, GIF, SVG</p>
                     </div>
                   )}
                 </div>

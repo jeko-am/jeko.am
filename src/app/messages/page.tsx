@@ -16,6 +16,7 @@ import Footer from "@/components/Footer";
 import { useAuth } from "@/lib/auth";
 import { useSignupUrl } from "@/lib/useSignupUrl";
 import { supabase } from "@/lib/supabase";
+import { uploadImageFile } from "@/lib/upload-image";
 import { useT } from "@/lib/i18n/LangProvider";
 
 /* ─── Types ──────────────────────────────────────────────────────────── */
@@ -647,16 +648,8 @@ function DesktopChatView({
     if (!file) return;
     setUploading(true);
     try {
-      const formData = new FormData();
-      formData.append("file", file);
-      const res = await fetch("/api/upload", {
-        method: "POST",
-        body: formData,
-      });
-      if (res.ok) {
-        const data = await res.json();
-        setImageUrl(data.url || data.publicUrl || data.imageUrl);
-      }
+      const url = await uploadImageFile(file);
+      setImageUrl(url);
     } catch {
       // Upload failed silently
     } finally {
@@ -1035,16 +1028,8 @@ function MobileChatView({
     if (!file) return;
     setUploading(true);
     try {
-      const formData = new FormData();
-      formData.append("file", file);
-      const res = await fetch("/api/upload", {
-        method: "POST",
-        body: formData,
-      });
-      if (res.ok) {
-        const data = await res.json();
-        setImageUrl(data.url || data.publicUrl || data.imageUrl);
-      }
+      const url = await uploadImageFile(file);
+      setImageUrl(url);
     } catch {
       // Upload failed silently
     } finally {

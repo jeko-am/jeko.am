@@ -7,6 +7,7 @@ import { useAdminEditLang } from '@/lib/i18n/AdminEditLang';
 import { dictionaries } from '@/lib/i18n/translations';
 import { memoTranslateHy } from '@/components/HyText';
 import { useFontOptions, type FontOption } from '@/lib/font-options';
+import { uploadImageFile } from '@/lib/upload-image';
 import Link from 'next/link';
 
 /** Build the HY default value map for a section's translatable fields from the static dictionary. */
@@ -75,15 +76,8 @@ function ImageField({
   async function uploadFile(file: File) {
     setUploading(true);
     try {
-      const formData = new FormData();
-      formData.append('file', file);
-      const res = await fetch('/api/upload', { method: 'POST', body: formData });
-      if (!res.ok) {
-        const err = await res.json();
-        throw new Error(err.error || 'Upload failed');
-      }
-      const data = await res.json();
-      onChange(data.url);
+      const url = await uploadImageFile(file);
+      onChange(url);
     } catch (err) {
       alert(err instanceof Error ? err.message : 'Upload failed');
     } finally {
@@ -157,7 +151,7 @@ function ImageField({
                 <p className="text-xs text-gray-500 text-center">
                   Drop image here or <span className="text-deep-green font-medium">browse</span>
                 </p>
-                <p className="text-[10px] text-gray-400">JPG, PNG, WebP, GIF up to 10MB</p>
+                <p className="text-[10px] text-gray-400">JPG, PNG, WebP, GIF</p>
               </>
             )}
           </div>

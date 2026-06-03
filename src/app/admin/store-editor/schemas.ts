@@ -207,6 +207,7 @@ const HOMEPAGE_SECTIONS: SectionSchema[] = [
       ...BUTTON_STYLE_FIELDS,
       { key: 'background_image', label: 'Hero Image (Desktop)', type: 'image' },
       { key: 'background_image_mobile', label: 'Hero Image (Mobile)', type: 'image' },
+      { key: 'show_trustpilot_reviews', label: 'Show / Hide Trustpilot Reviews', type: 'toggle' },
       { key: 'trustpilot_label', label: 'Trustpilot Label', type: 'text', placeholder: 'Excellent', i18nKey: 'home.hero.trustpilotLabel' },
       { key: 'trustpilot_score', label: 'Trustpilot Score (e.g. 4.6)', type: 'text', placeholder: '4.6' },
       { key: 'trustpilot_score_text', label: 'Trustpilot Score Text', type: 'text', placeholder: '4.6 out of 5', i18nKey: 'home.hero.trustpilotScoreText' },
@@ -215,7 +216,7 @@ const HOMEPAGE_SECTIONS: SectionSchema[] = [
       heading: 'The easiest way to feed healthy,', heading_highlight: 'natural dog food',
       subheading: 'Enjoy fresh food without the fuss, from only 89p a day',
       button_visible: true, button_text: 'Get started today', button_url: '/auth/signup', background_image: '', background_image_mobile: '',
-      trustpilot_label: 'Excellent', trustpilot_score: '4.6', trustpilot_score_text: '4.6 out of 5',
+      show_trustpilot_reviews: true, trustpilot_label: 'Excellent', trustpilot_score: '4.6', trustpilot_score_text: '4.6 out of 5',
     },
   },
   {

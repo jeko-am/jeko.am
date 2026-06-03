@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
 import { supabase } from '@/lib/supabase';
 import { QIcon } from '@/lib/signupIcons';
+import { uploadImageFile } from '@/lib/upload-image';
 
 type Group = {
   title: string;
@@ -209,15 +210,8 @@ function OptionRow({
   async function uploadFile(file: File) {
     setUploading(true);
     try {
-      const fd = new FormData();
-      fd.append('file', file);
-      const res = await fetch('/api/upload', { method: 'POST', body: fd });
-      if (!res.ok) {
-        const err = await res.json().catch(() => ({}));
-        throw new Error(err.error || 'Upload failed');
-      }
-      const data = await res.json();
-      onChange(data.url);
+      const url = await uploadImageFile(file);
+      onChange(url);
     } catch (err) {
       alert(err instanceof Error ? err.message : 'Upload failed');
     } finally {

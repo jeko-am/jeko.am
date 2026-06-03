@@ -16,6 +16,7 @@ import { FormEvent, useEffect, useMemo, useRef, useState } from 'react';
 import { useT } from '@/lib/i18n/LangProvider';
 import { DEFAULT_SIGNUP_OPTION_ICONS, QIcon } from '@/lib/signupIcons';
 import { useSectionVisibility } from '@/lib/use-section-visibility';
+import { uploadImageFile } from '@/lib/upload-image';
 
 /* ------------------------------------------------------------------ */
 /*  Quiz step definitions                                              */
@@ -1018,13 +1019,9 @@ function SignupPageInner() {
     setErrors((prev) => { const { profilePhoto, ...rest } = prev; return rest; });
     const promise = (async (): Promise<string | null> => {
       try {
-        const formData = new FormData();
-        formData.append('file', file);
-        const res = await fetch('/api/upload', { method: 'POST', body: formData });
-        const data = await res.json();
-        if (!res.ok) throw new Error(data.error || 'Upload failed');
-        setUploadedPhotoUrl(data.url);
-        return data.url;
+        const url = await uploadImageFile(file);
+        setUploadedPhotoUrl(url);
+        return url;
       } catch (err) {
         setErrors((prev) => ({ ...prev, profilePhoto: err instanceof Error ? err.message : t('auth.signup.err.photoUpload') }));
         setUploadedPhotoUrl('');

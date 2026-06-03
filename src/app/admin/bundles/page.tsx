@@ -4,6 +4,7 @@ import { supabase } from '@/lib/supabase';
 import { useEffect, useState, useCallback } from 'react';
 import Link from 'next/link';
 import { useAdminEditLang } from '@/lib/i18n/AdminEditLang';
+import { uploadImageFile } from '@/lib/upload-image';
 
 // ---------------------------------------------------------------------------
 // Types
@@ -199,21 +200,10 @@ export default function BundlesAdminPage() {
     setUploadingImage(true);
 
     try {
-      const formData = new FormData();
-      formData.append('file', file);
-
-      const res = await fetch('/api/upload', { method: 'POST', body: formData });
-      const data = await res.json();
-
-      if (!res.ok) {
-        alert('Error uploading image: ' + (data.error || 'Upload failed'));
-        setUploadingImage(false);
-        return;
-      }
-
-      setFormData(prev => ({ ...prev, image_url: data.url }));
-    } catch {
-      alert('Image upload failed. Please try again.');
+      const url = await uploadImageFile(file);
+      setFormData(prev => ({ ...prev, image_url: url }));
+    } catch (err) {
+      alert(err instanceof Error ? err.message : 'Image upload failed. Please try again.');
     } finally {
       setUploadingImage(false);
     }

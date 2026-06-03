@@ -9,6 +9,7 @@ import { useAuth } from "@/lib/auth";
 import { supabase } from "@/lib/supabase";
 import { useT } from "@/lib/i18n/LangProvider";
 import { useSectionVisibility } from "@/lib/use-section-visibility";
+import { uploadImageFile } from "@/lib/upload-image";
 
 // In-memory cache so each EN caption is only translated once per session.
 const __captionTranslationCache = new Map<string, string>();
@@ -287,11 +288,6 @@ function PostCreator({
     const file = e.target.files?.[0];
     if (!file) return;
 
-    if (file.size > 10 * 1024 * 1024) {
-      setError("Image must be under 10 MB.");
-      return;
-    }
-
     setImageFile(file);
     setError(null);
     const reader = new FileReader();
@@ -316,21 +312,7 @@ function PostCreator({
       let imageUrl: string | null = null;
 
       if (imageFile) {
-        const formData = new FormData();
-        formData.append("file", imageFile);
-
-        const res = await fetch("/api/upload", {
-          method: "POST",
-          body: formData,
-        });
-
-        if (!res.ok) {
-          const data = await res.json();
-          throw new Error(data.error || t("community.uploadFailed"));
-        }
-
-        const data = await res.json();
-        imageUrl = data.url;
+        imageUrl = await uploadImageFile(imageFile);
       }
 
       const { data: newPost, error: insertError } = await supabase

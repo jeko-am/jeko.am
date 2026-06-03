@@ -15,6 +15,7 @@ import { useT } from '@/lib/i18n/LangProvider';
 import HyText, { useHyAuto } from '@/components/HyText';
 import { useCurrency } from '@/lib/currency';
 import { contentText } from '@/lib/content-field';
+import { uploadImageFile } from '@/lib/upload-image';
 
 interface Product {
   id: string;
@@ -377,12 +378,9 @@ export default function ProductDetailPage() {
     setReviewUploading(true);
     const uploaded: string[] = [];
     for (let i = 0; i < Math.min(files.length, 3); i++) {
-      const formData = new FormData();
-      formData.append('file', files[i]);
       try {
-        const res = await fetch('/api/upload', { method: 'POST', body: formData });
-        const json = await res.json();
-        if (json.url) uploaded.push(json.url);
+        const url = await uploadImageFile(files[i]);
+        uploaded.push(url);
       } catch { /* skip failed uploads */ }
     }
     setReviewImages(prev => [...prev, ...uploaded].slice(0, 5));

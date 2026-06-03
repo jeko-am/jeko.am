@@ -17,6 +17,7 @@ export default function HeroSection({ content }: { content?: Record<string, any>
   const showButton = content?.button_visible !== false && buttonText.trim() !== "" && buttonUrl.trim() !== "";
   const bgImage = content?.background_image || "https://images.unsplash.com/photo-1587300003388-59208cc962cb?auto=format&fit=crop&h=800&w=1920";
   const bgImageMobile = content?.background_image_mobile || bgImage;
+  const showTrustpilotReviews = content?.show_trustpilot_reviews !== false;
   const trustpilotLabel = ct("trustpilot_label", "home.hero.trustpilotLabel");
   const trustpilotScoreText = ct("trustpilot_score_text", "home.hero.trustpilotScoreText");
   const trustpilotScore = parseFloat(content?.trustpilot_score || "4.6");
@@ -117,6 +118,7 @@ export default function HeroSection({ content }: { content?: Record<string, any>
           )}
 
           {/* Trustpilot-style badge */}
+          {showTrustpilotReviews && (
           <div className="mt-6 flex items-center gap-2">
             {/* Trustpilot star icon */}
             <div className="flex items-center gap-0.5">
@@ -191,6 +193,7 @@ export default function HeroSection({ content }: { content?: Record<string, any>
               </span>
             </div>
           </div>
+          )}
         </div>
       </div>
 

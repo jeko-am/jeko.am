@@ -41,11 +41,6 @@ export default function ImageUpload({
       return;
     }
 
-    if (file.size > 5 * 1024 * 1024) { // 5MB limit
-      alert('Image size must be less than 5MB');
-      return;
-    }
-
     setInternalUploading(true);
     try {
       const url = await onUpload(file);

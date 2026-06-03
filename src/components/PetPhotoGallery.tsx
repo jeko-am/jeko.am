@@ -56,11 +56,6 @@ export default function PetPhotoGallery({
           return null;
         }
 
-        if (file.size > 5 * 1024 * 1024) { // 5MB limit
-          console.warn(`File too large: ${file.name}`);
-          return null;
-        }
-
         // Upload to Cloudinary
         const result = await uploadToCloudinary(file, {
           folder: "pure-pet/pet-gallery",
@@ -257,7 +252,7 @@ export default function PetPhotoGallery({
               </label>
               {" "}or drag and drop
             </div>
-            <p className="text-xs text-gray-500">PNG, JPG, GIF up to 5MB each</p>
+            <p className="text-xs text-gray-500">PNG, JPG, GIF</p>
             <input
               id="file-upload"
               type="file"
