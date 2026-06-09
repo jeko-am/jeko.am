@@ -24,5 +24,14 @@ export function localizedContentText(content: Content, key: string, lang: string
 }
 
 export function contentUrl(content: Content, key: string, fallback = ""): string {
-  return contentText(content, key, fallback);
+  return normalizeContentUrl(contentText(content, key, fallback));
+}
+
+export function normalizeContentUrl(url: unknown, fallback = ""): string {
+  const value = typeof url === "string" ? url.trim() : "";
+  const next = value || fallback;
+  if (next === "/signup" || next === "signup") return "/auth/signup";
+  if (next.startsWith("/signup?")) return `/auth/signup${next.slice("/signup".length)}`;
+  if (next.startsWith("/signup#")) return `/auth/signup${next.slice("/signup".length)}`;
+  return next;
 }

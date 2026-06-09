@@ -166,7 +166,15 @@ export function AuthProvider({ children }: { children: ReactNode }) {
               .eq('user_id', userId)
               .maybeSingle();
 
-        if (!petRow) {
+        const { data: profileRow } = !petRow && !isAdminAccount
+          ? await supabase
+              .from('user_profiles')
+              .select('user_id')
+              .eq('user_id', userId)
+              .maybeSingle()
+          : { data: null as { user_id: string } | null };
+
+        if (!petRow && !profileRow) {
           // Quiz data in sessionStorage → redirect to finish signup
           const hasQuizData = typeof sessionStorage !== 'undefined' && !!sessionStorage.getItem('jeko-signup-quiz');
           if (hasQuizData) {

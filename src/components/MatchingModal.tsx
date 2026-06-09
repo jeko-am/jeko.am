@@ -6,6 +6,7 @@ import { useSignupUrl } from '@/lib/useSignupUrl';
 import { supabase } from '@/lib/supabase';
 import { useContentT } from '@/lib/i18n/useContentT';
 import { dynButtonStyle, dynFontClass, dynFontStyle } from '@/lib/dynamic-font-size';
+import { normalizeContentUrl } from '@/lib/content-field';
 
 function DigitCounter({ count }: { count: number }) {
   const [flash, setFlash] = useState(false);
@@ -70,7 +71,7 @@ export default function MatchingModal({ content }: { content?: Record<string, an
   const image = content?.image || '/WhatsApp Image 2026-04-11 at 09.54.12.jpeg';
   const ctaText = textOrFallback('cta_text', 'Register My Pet');
   const signupUrl = useSignupUrl();
-  const ctaUrl = typeof content?.cta_url === "string" ? content.cta_url : signupUrl;
+  const ctaUrl = normalizeContentUrl(content?.cta_url, signupUrl);
   const showCta = content?.cta_visible !== false && ctaText.trim() !== "" && ctaUrl.trim() !== "";
   const closeText = textOrFallback('close_text', 'Maybe later');
   const communityLabel = textOrFallback('community_count_text', 'pet parents already in our community!');

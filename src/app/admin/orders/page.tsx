@@ -158,6 +158,27 @@ function extractCustomerFromNotes(notes: string | null): { name: string; email: 
   return defaultCustomer;
 }
 
+function orderMatchesSearch(order: Order, rawTerm: string): boolean {
+  const term = rawTerm.trim().toLowerCase();
+  if (!term) return true;
+
+  const customerFromNotes = extractCustomerFromNotes(order.notes);
+  const searchable = [
+    String(order.order_number),
+    order.customers?.first_name,
+    order.customers?.last_name,
+    order.customers?.email,
+    customerFromNotes.name,
+    customerFromNotes.email,
+    customerFromNotes.phone,
+  ]
+    .filter(Boolean)
+    .join(' ')
+    .toLowerCase();
+
+  return searchable.includes(term);
+}
+
 // ---------------------------------------------------------------------------
 // Component
 // ---------------------------------------------------------------------------
@@ -199,14 +220,14 @@ export default function AdminOrdersPage() {
     setError(null);
 
     try {
+      const searchTerm = searchQuery.trim();
       let query = supabase
         .from('orders')
         .select(
           `*, customers!orders_customer_id_fkey(first_name, last_name, email), order_items(*)`,
           { count: 'exact' }
         )
-        .order('created_at', { ascending: false })
-        .range(page * PAGE_SIZE, (page + 1) * PAGE_SIZE - 1);
+        .order('created_at', { ascending: false });
 
       if (statusFilter !== 'all') {
         query = query.eq('status', statusFilter);
@@ -222,19 +243,25 @@ export default function AdminOrdersPage() {
         query = query.lte('created_at', end.toISOString());
       }
 
-      if (searchQuery.trim()) {
-        const term = searchQuery.trim();
-        query = query.or(
-          `order_number.eq.${parseInt(term) || 0},customers.first_name.ilike.%${term}%,customers.last_name.ilike.%${term}%`
-        );
+      if (!searchTerm) {
+        query = query.range(page * PAGE_SIZE, (page + 1) * PAGE_SIZE - 1);
       }
 
       const { data, error: fetchError, count } = await query;
 
       if (fetchError) throw fetchError;
 
-      setOrders((data as Order[]) ?? []);
-      setTotalCount(count ?? 0);
+      let nextOrders = ((data as Order[]) ?? []);
+      let nextCount = count ?? nextOrders.length;
+
+      if (searchTerm) {
+        const filtered = nextOrders.filter((order) => orderMatchesSearch(order, searchTerm));
+        nextCount = filtered.length;
+        nextOrders = filtered.slice(page * PAGE_SIZE, (page + 1) * PAGE_SIZE);
+      }
+
+      setOrders(nextOrders);
+      setTotalCount(nextCount);
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Failed to load orders');
     } finally {

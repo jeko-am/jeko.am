@@ -28,6 +28,11 @@ export default function SideCart() {
     router.push('/checkout');
   };
 
+  const handleContinueShopping = () => {
+    closeCart();
+    router.push('/products');
+  };
+
   if (!isOpen) return null;
 
   return (
@@ -66,7 +71,7 @@ export default function SideCart() {
                 <h3 className="text-lg font-medium text-gray-900 mb-2">{t("sidecart.empty.title")}</h3>
                 <p className="text-gray-500 mb-6">{t("sidecart.empty.body")}</p>
                 <button
-                  onClick={closeCart}
+                  onClick={handleContinueShopping}
                   className="btn-gold"
                 >
                   {t("cart.continue")}
@@ -188,7 +193,7 @@ export default function SideCart() {
 
               {/* Continue Shopping */}
               <button
-                onClick={closeCart}
+                onClick={handleContinueShopping}
                 className="w-full text-center text-sm text-gray-600 hover:text-gray-900 transition-colors"
               >
                 {t("cart.continue")}

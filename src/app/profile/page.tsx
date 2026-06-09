@@ -45,6 +45,8 @@ interface PetProfile {
   favorite_activity: string | null;
   gets_along_with_dogs: boolean;
   looking_for_mate: boolean;
+  country?: string | null;
+  state?: string | null;
   created_at: string;
 }
 
@@ -223,6 +225,15 @@ export default function ProfilePage() {
         })
         .eq("user_id", user.id);
 
+      await supabase
+        .from("pet_profiles")
+        .update({
+          city,
+          country,
+          city_normalized: city.trim().toLowerCase(),
+        })
+        .eq("user_id", user.id);
+
       setUserProfile(prev => prev ? {
         ...prev,
         display_name: displayName,
@@ -242,33 +253,42 @@ export default function ProfilePage() {
 
     setSaving(true);
     try {
-      await supabase
-        .from("pet_profiles")
-        .update({
-          pet_name: petName,
-          breed: petBreed,
-          breed_normalized: petBreed.trim().toLowerCase(),
-          dog_age_years: petAge ? parseInt(petAge) : null,
-          weight_kg: petWeight ? parseFloat(petWeight) : null,
-          gender: petGender,
-          bio: petBio,
-          temperament: petTemperament,
-          activity_level: petActivityLevel,
-          walk_preference: petWalkPreference,
-          favorite_activity: petFavoriteActivity,
-          gets_along_with_dogs: petGetsAlongWithDogs,
-          looking_for_mate: petLookingForMate,
-          city: petCity,
-          city_normalized: petCity.trim().toLowerCase(),
-          diet_preference: petDietPreference.length > 0 ? petDietPreference : null,
-          disabilities: petDisabilities.length > 0 && !petDisabilities.includes('None') ? petDisabilities : null,
-          allergies: petAllergies.length > 0 && !petAllergies.includes('None') ? petAllergies : null,
-        })
-        .eq("user_id", user.id);
-
-      setPetProfile(prev => prev ? {
-        ...prev,
+      const payload = {
+        user_id: user.id,
         pet_name: petName,
+        pet_type: petProfile?.pet_type || "Dog",
+        breed: petBreed,
+        breed_normalized: petBreed.trim().toLowerCase(),
+        dog_age_years: petAge ? parseInt(petAge) : null,
+        weight_kg: petWeight ? parseFloat(petWeight) : null,
+        gender: petGender,
+        bio: petBio,
+        temperament: petTemperament,
+        activity_level: petActivityLevel,
+        walk_preference: petWalkPreference,
+        favorite_activity: petFavoriteActivity,
+        gets_along_with_dogs: petGetsAlongWithDogs,
+        looking_for_mate: petLookingForMate,
+        city: petCity || city,
+        country,
+        city_normalized: (petCity || city).trim().toLowerCase(),
+        diet_preference: petDietPreference.length > 0 ? petDietPreference : null,
+        disabilities: petDisabilities.length > 0 && !petDisabilities.includes('None') ? petDisabilities : null,
+        allergies: petAllergies.length > 0 && !petAllergies.includes('None') ? petAllergies : null,
+      };
+
+      const { data } = await supabase
+        .from("pet_profiles")
+        .upsert(payload, { onConflict: "user_id" })
+        .select("*")
+        .maybeSingle();
+
+      setPetProfile(prev => ({
+        ...(prev || {}),
+        ...(data || {}),
+        user_id: user.id,
+        pet_name: petName,
+        pet_type: petProfile?.pet_type || "Dog",
         breed: petBreed,
         dog_age_years: petAge ? parseInt(petAge) : null,
         weight_kg: petWeight ? parseFloat(petWeight) : null,
@@ -280,7 +300,9 @@ export default function ProfilePage() {
         favorite_activity: petFavoriteActivity,
         gets_along_with_dogs: petGetsAlongWithDogs,
         looking_for_mate: petLookingForMate,
-      } : null);
+        city: petCity || city,
+        country,
+      } as PetProfile));
     } catch (error) {
       console.error("Error saving pet profile:", error);
     } finally {

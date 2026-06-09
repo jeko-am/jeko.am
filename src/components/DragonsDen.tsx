@@ -6,13 +6,14 @@ import Link from "next/link";
 import { useSignupUrl } from "@/lib/useSignupUrl";
 import { useContentT } from "@/lib/i18n/useContentT";
 import { dynButtonStyle, dynFontClass, dynFontStyle } from "@/lib/dynamic-font-size";
+import { normalizeContentUrl } from "@/lib/content-field";
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export default function DragonsDen({ content }: { content?: any }) {
   const signupUrl = useSignupUrl();
   const { ct, lang } = useContentT(content);
   const buttonText = ct("button_text", "home.faq.getStarted");
-  const buttonUrl = typeof content?.button_url === "string" ? content.button_url : signupUrl;
+  const buttonUrl = normalizeContentUrl(content?.button_url, signupUrl);
   const showButton = content?.button_visible !== false && buttonText.trim() !== "" && buttonUrl.trim() !== "";
   return (
     <section className="relative overflow-hidden">

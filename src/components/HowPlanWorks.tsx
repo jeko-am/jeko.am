@@ -5,7 +5,7 @@ import Image from "next/image";
 import { useSignupUrl } from "@/lib/useSignupUrl";
 import { useContentT } from "@/lib/i18n/useContentT";
 import { dynButtonStyle, dynFontClass, dynFontStyle } from "@/lib/dynamic-font-size";
-import { localizedContentText } from "@/lib/content-field";
+import { localizedContentText, normalizeContentUrl } from "@/lib/content-field";
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export default function HowPlanWorks({ content }: { content?: any }) {
@@ -24,7 +24,7 @@ export default function HowPlanWorks({ content }: { content?: any }) {
   const step4Title = sectionText("step_4_title", "home.howPlan.step4Title");
   const buttonText = sectionText("button_text", "home.howPlan.buttonText");
   const signupUrl = useSignupUrl();
-  const buttonUrl = typeof content?.button_url === "string" ? content.button_url : signupUrl;
+  const buttonUrl = normalizeContentUrl(content?.button_url, signupUrl);
   const showButton = content?.button_visible !== false && buttonText.trim() !== "" && buttonUrl.trim() !== "";
   const backgroundColor = content?.background_color || "#274C46";
   const contentString = (key: string, fallback: string) => (

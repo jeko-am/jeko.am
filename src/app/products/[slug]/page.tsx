@@ -410,6 +410,14 @@ export default function ProductDetailPage() {
     setReviewImages([]);
   };
 
+  const openReviewForm = () => {
+    setShowReviewForm(true);
+    setReviewSuccess(false);
+    setTimeout(() => {
+      document.getElementById('reviews')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }, 0);
+  };
+
   useEffect(() => {
     async function fetchProduct() {
       setLoading(true);
@@ -680,6 +688,18 @@ export default function ProductDetailPage() {
                     <span className="text-sm font-medium text-deep-green/60 group-hover:text-deep-green group-hover:underline transition" style={colorStyle(heroColors.mutedTextColor)}>{displayReviewCount} {t("productDetail.reviews")}</span>
                   </a>
                 )}
+                <div className="mb-4">
+                  <button
+                    type="button"
+                    onClick={openReviewForm}
+                    className="inline-flex items-center gap-2 rounded-full border border-deep-green/20 px-4 py-2 text-sm font-semibold text-deep-green hover:border-deep-green/40 hover:bg-deep-green/5 transition"
+                  >
+                    <svg className="w-4 h-4 text-gold" fill="currentColor" viewBox="0 0 20 20">
+                      <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                    </svg>
+                    <HyText en="Write a review" />
+                  </button>
+                </div>
 
                 {/* Price */}
                 <div className="mb-2">
@@ -1196,7 +1216,7 @@ export default function ProductDetailPage() {
               ) : (
                 <p className="text-sm text-deep-green/60" style={colorStyle(reviewColors.mutedTextColor)}><HyText en="No reviews yet" /></p>
               )}
-              <button onClick={() => { setShowReviewForm(!showReviewForm); setReviewSuccess(false); }} className="btn-outline text-sm py-2 px-4" style={buttonStyle(reviewColors)}>
+              <button type="button" onClick={() => { setShowReviewForm(!showReviewForm); setReviewSuccess(false); }} className="btn-outline text-sm py-2 px-4" style={buttonStyle(reviewColors)}>
                 {showReviewForm ? <HyText en="Cancel" /> : <HyText en="Write a review" />}
               </button>
             </div>
@@ -1254,13 +1274,13 @@ export default function ProductDetailPage() {
                     {reviewImages.map((img, i) => (
                       <div key={i} className="relative w-16 h-16 rounded-lg overflow-hidden border border-deep-green/10 group">
                         <img src={img} alt="" className="w-full h-full object-cover" />
-                        <button onClick={() => setReviewImages(prev => prev.filter((_, idx) => idx !== i))} className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition flex items-center justify-center">
+                        <button type="button" onClick={() => setReviewImages(prev => prev.filter((_, idx) => idx !== i))} className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition flex items-center justify-center">
                           <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" /></svg>
                         </button>
                       </div>
                     ))}
                     {reviewImages.length < 5 && (
-                      <button onClick={() => reviewFileRef.current?.click()} disabled={reviewUploading} className="w-16 h-16 rounded-lg border-2 border-dashed border-deep-green/20 hover:border-deep-green/40 flex items-center justify-center transition disabled:opacity-50">
+                      <button type="button" onClick={() => reviewFileRef.current?.click()} disabled={reviewUploading} className="w-16 h-16 rounded-lg border-2 border-dashed border-deep-green/20 hover:border-deep-green/40 flex items-center justify-center transition disabled:opacity-50">
                         {reviewUploading ? (
                           <div className="w-5 h-5 border-2 border-deep-green/20 border-t-deep-green rounded-full animate-spin" />
                         ) : (
@@ -1272,7 +1292,7 @@ export default function ProductDetailPage() {
                   </div>
                 </div>
 
-                <button onClick={submitReview} disabled={reviewSubmitting || !reviewForm.name.trim() || !reviewForm.text.trim()} className="bg-deep-green text-white font-semibold py-3 px-8 rounded-full hover:bg-deep-green/90 transition text-sm disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2" style={buttonStyle(reviewColors)}>
+                <button type="button" onClick={submitReview} disabled={reviewSubmitting || !reviewForm.name.trim() || !reviewForm.text.trim()} className="bg-deep-green text-white font-semibold py-3 px-8 rounded-full hover:bg-deep-green/90 transition text-sm disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2" style={buttonStyle(reviewColors)}>
                   {reviewSubmitting ? (
                     <><div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" /> {t("product.review.submitting")}</>
                   ) : (

@@ -72,7 +72,10 @@ export default function MatchingPreferences({ petProfileId, petType, onPreferenc
   });
 
   const [selectedCountry, setSelectedCountry] = useState("Armenia");
+  const countryOptions = Array.from(new Set(["Armenia", ...Object.keys(CITIES_BY_COUNTRY), selectedCountry].filter(Boolean))).sort();
   const citiesForCountry = CITIES_BY_COUNTRY[selectedCountry] ?? [];
+  const selectedCities = preferences.preferred_cities || [];
+  const cityOptions = Array.from(new Set([...citiesForCountry, ...selectedCities])).filter(Boolean);
 
   const [breedSearch, setBreedSearch] = useState("");
   const [breedDropdownOpen, setBreedDropdownOpen] = useState(false);
@@ -141,8 +144,15 @@ export default function MatchingPreferences({ petProfileId, petType, onPreferenc
         .eq("id", petProfileId)
         .maybeSingle();
 
-      if (petProfile?.country) {
-        setSelectedCountry(petProfile.country);
+      const { data: userProfile } = await supabase
+        .from("user_profiles")
+        .select("country, city")
+        .eq("user_id", user?.id)
+        .maybeSingle();
+
+      const profileCountry = petProfile?.country || userProfile?.country;
+      if (profileCountry) {
+        setSelectedCountry(profileCountry);
       }
 
       const { data } = await supabase
@@ -161,8 +171,9 @@ export default function MatchingPreferences({ petProfileId, petType, onPreferenc
         setPreferences((prev) => {
           const merged = { ...prev, ...data } as PreferencesState;
           if (petProfile) {
-            if ((!merged.preferred_cities || merged.preferred_cities.length === 0) && petProfile.city) {
-              merged.preferred_cities = [petProfile.city];
+            const profileCity = petProfile.city || userProfile?.city;
+            if ((!merged.preferred_cities || merged.preferred_cities.length === 0) && profileCity) {
+              merged.preferred_cities = [profileCity];
             }
             if ((!merged.preferred_breeds || merged.preferred_breeds.length === 0) && petProfile.breed) {
               merged.preferred_breeds = [petProfile.breed];
@@ -183,7 +194,7 @@ export default function MatchingPreferences({ petProfileId, petType, onPreferenc
         // First time — seed entirely from pet profile.
         setPreferences((prev) => ({
           ...prev,
-          preferred_cities: petProfile.city ? [petProfile.city] : prev.preferred_cities,
+          preferred_cities: (petProfile.city || userProfile?.city) ? [petProfile.city || userProfile?.city] : prev.preferred_cities,
           preferred_breeds: petProfile.breed ? [petProfile.breed] : prev.preferred_breeds,
           preferred_genders: petProfile.gender ? [petProfile.gender] : prev.preferred_genders,
           preferred_weight_max: weight
@@ -281,6 +292,24 @@ export default function MatchingPreferences({ petProfileId, petType, onPreferenc
             <>
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">
+                  Country
+                </label>
+                <select
+                  value={selectedCountry}
+                  onChange={(e) => {
+                    setSelectedCountry(e.target.value);
+                    updatePreference("preferred_cities", []);
+                  }}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg bg-white text-sm focus:outline-none focus:ring-2 focus:ring-gold focus:border-transparent"
+                >
+                  {countryOptions.map((country) => (
+                    <option key={country} value={country}>{country}</option>
+                  ))}
+                </select>
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">
                   Maximum Distance: {preferences.preferred_distance_km}km
                 </label>
                 <input
@@ -294,11 +323,11 @@ export default function MatchingPreferences({ petProfileId, petType, onPreferenc
                 />
               </div>
 
-              {citiesForCountry.length > 0 && (
+              {cityOptions.length > 0 && (
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">{t("prefs.location.preferredCities")}</label>
                   <div className="grid grid-cols-2 gap-2 max-h-60 overflow-y-auto pr-1">
-                    {citiesForCountry.map(city => (
+                    {cityOptions.map(city => (
                       <label key={city} className="flex items-center text-sm">
                         <input
                           type="checkbox"

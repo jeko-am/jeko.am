@@ -150,10 +150,12 @@ export default function Footer({ content: providedContent }: { content?: any }) 
     if (!email.trim() || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return;
     setStatus("saving");
     try {
-      const { error } = await supabase
-        .from("email_subscribers")
-        .upsert({ email: email.trim().toLowerCase(), source: "footer_vip" }, { onConflict: "email" });
-      if (error) throw error;
+      const response = await fetch("/api/newsletter/subscribe", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, source: "footer_vip" }),
+      });
+      if (!response.ok) throw new Error("Failed to subscribe");
       setStatus("success");
       setEmail("");
     } catch {

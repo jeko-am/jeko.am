@@ -10,6 +10,7 @@ import { useT } from "@/lib/i18n/LangProvider";
 import { useContentT } from "@/lib/i18n/useContentT";
 import { supabase } from "@/lib/supabase";
 import { dynButtonStyle, dynFontClass, dynFontStyle } from "@/lib/dynamic-font-size";
+import { normalizeContentUrl } from "@/lib/content-field";
 
 type HeaderContent = Record<string, unknown>;
 type HeaderMenuItem = {
@@ -268,18 +269,22 @@ export default function Header({ content }: { content?: HeaderContent }) {
   const logoImageHeight = Number(effectiveContent?.logo_image_height) || 40;
   const logoUrl = (effectiveContent?.logo_url as string | undefined) || "/";
   const headerBackgroundColor = (effectiveContent?.background_color as string | undefined) || "#274C46";
-  const dropdownBackgroundColor = (effectiveContent?.dropdown_background_color as string | undefined) || headerBackgroundColor;
+  const rawDropdownBackgroundColor = (effectiveContent?.dropdown_background_color as string | undefined) || "";
+  const dropdownBackgroundColor =
+    !rawDropdownBackgroundColor || rawDropdownBackgroundColor.toLowerCase() === "#000000" || rawDropdownBackgroundColor.toLowerCase() === "black"
+      ? "#5F295E"
+      : rawDropdownBackgroundColor;
   const ctaText = effectiveContent ? ct("cta_text", "common.signUp") : t("common.signUp");
   const signupUrl = useSignupUrl();
   // Gate the dynamic signup→profile swap until after hydration.
-  const ctaUrl = effectiveContent?.cta_url ?? (mounted ? signupUrl : '/auth/signup');
+  const ctaUrl = normalizeContentUrl(effectiveContent?.cta_url, mounted ? signupUrl : '/auth/signup');
   const ctaVisible = effectiveContent?.cta_visible !== false && ctaText.trim() !== "" && String(ctaUrl || "").trim() !== "";
   const helpText = Object.prototype.hasOwnProperty.call(effectiveContent || {}, "help_text")
     ? ct("help_text", "")
     : t("common.help");
-  const helpUrl = effectiveContent?.help_url ?? "/contact";
+  const helpUrl = normalizeContentUrl(effectiveContent?.help_url, "/contact");
   const helpVisible = effectiveContent?.help_visible !== false;
-  const loginUrl = effectiveContent?.login_url ?? "/login";
+  const loginUrl = normalizeContentUrl(effectiveContent?.login_url, "/login");
   const textStyle = (key: string) => dynFontStyle(effectiveContent, key, lang);
   const buttonStyle = (key: string) => dynButtonStyle(effectiveContent, key, lang);
 

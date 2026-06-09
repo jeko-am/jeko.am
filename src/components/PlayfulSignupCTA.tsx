@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useSignupUrl } from "@/lib/useSignupUrl";
 import { useContentT } from "@/lib/i18n/useContentT";
 import { dynFontClass, dynFontStyle } from "@/lib/dynamic-font-size";
+import { normalizeContentUrl } from "@/lib/content-field";
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export default function PlayfulSignupCTA({ content }: { content?: Record<string, any> }) {
@@ -29,7 +30,7 @@ export default function PlayfulSignupCTA({ content }: { content?: Record<string,
   const heading = contentString("heading");
   const subheading = contentString("subheading");
   const buttonText = contentString("button_text");
-  const buttonUrl = contentString("button_url") || signupUrl;
+  const buttonUrl = normalizeContentUrl(contentString("button_url"), signupUrl);
   const showButton = content?.button_visible !== false && buttonText.trim() !== "" && buttonUrl.trim() !== "";
   const backgroundColor = sharedString("background_color", "#F8F2E8");
   const headingColor = sharedString("heading_color", "#274C46");

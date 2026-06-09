@@ -4,6 +4,7 @@ import Image from "next/image";
 import { useSignupUrl } from "@/lib/useSignupUrl";
 import { useContentT } from "@/lib/i18n/useContentT";
 import { dynButtonStyle, dynFontStyle, dynFontClass } from "@/lib/dynamic-font-size";
+import { normalizeContentUrl } from "@/lib/content-field";
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export default function HeroSection({ content }: { content?: Record<string, any> }) {
@@ -13,7 +14,7 @@ export default function HeroSection({ content }: { content?: Record<string, any>
   const subheading = ct("subheading", "home.hero.subheading");
   const buttonText = ct("button_text", "home.hero.buttonText");
   const signupUrl = useSignupUrl();
-  const buttonUrl = typeof content?.button_url === "string" ? content.button_url : signupUrl;
+  const buttonUrl = normalizeContentUrl(content?.button_url, signupUrl);
   const showButton = content?.button_visible !== false && buttonText.trim() !== "" && buttonUrl.trim() !== "";
   const bgImage = content?.background_image || "https://images.unsplash.com/photo-1587300003388-59208cc962cb?auto=format&fit=crop&h=800&w=1920";
   const bgImageMobile = content?.background_image_mobile || bgImage;

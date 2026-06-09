@@ -1222,6 +1222,8 @@ function SignupPageInner() {
         breed: breed.trim(),
         pet_type: petType || 'Dog',
         city: city.trim(),
+        state: state.trim(),
+        country,
         city_normalized: city.trim().toLowerCase(),
         breed_normalized: breed.trim().toLowerCase(),
         contact_email: email.trim().toLowerCase(),

@@ -83,11 +83,19 @@ function OAuthCompleteInner() {
             .from('pet_profiles')
             .select('user_id')
             .eq('user_id', userId)
-            .single();
+            .maybeSingle();
+
+          const { data: userProfile } = !petProfile
+            ? await supabase
+                .from('user_profiles')
+                .select('user_id')
+                .eq('user_id', userId)
+                .maybeSingle()
+            : { data: null as { user_id: string } | null };
 
           clearInterval(msgInterval);
 
-          if (!petProfile) {
+          if (!petProfile && !userProfile) {
             await supabase.auth.signOut();
             router.push('/login?error=not_signed_up');
             return;
@@ -171,6 +179,8 @@ function OAuthCompleteInner() {
             breed: (quiz.breed || '').trim(),
             pet_type: quiz.petType || 'Dog',
             city: (quiz.city || '').trim(),
+            state: (quiz.state || '').trim(),
+            country: quiz.country || '',
             city_normalized: (quiz.city || '').trim().toLowerCase(),
             breed_normalized: (quiz.breed || '').trim().toLowerCase(),
             contact_email: email.trim().toLowerCase(),

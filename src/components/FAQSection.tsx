@@ -7,6 +7,7 @@ import { useSignupUrl } from "@/lib/useSignupUrl";
 import { useT } from "@/lib/i18n/LangProvider";
 import { useContentT } from "@/lib/i18n/useContentT";
 import { dynButtonStyle, dynFontClass, dynFontStyle } from "@/lib/dynamic-font-size";
+import { normalizeContentUrl } from "@/lib/content-field";
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export default function FAQSection({ content }: { content?: any }) {
@@ -16,7 +17,7 @@ export default function FAQSection({ content }: { content?: any }) {
   const { ct, lang } = useContentT(content);
   const backgroundColor = content?.background_color || "#F8F2E8";
   const buttonText = ct("button_text", "home.faq.getStarted");
-  const buttonUrl = typeof content?.button_url === "string" ? content.button_url : signupUrl;
+  const buttonUrl = normalizeContentUrl(content?.button_url, signupUrl);
   const showButton = content?.button_visible !== false && buttonText.trim() !== "" && buttonUrl.trim() !== "";
 
   const faqs = [

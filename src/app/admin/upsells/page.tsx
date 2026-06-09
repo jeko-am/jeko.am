@@ -60,6 +60,10 @@ function formatPrice(value: number): string {
   return new Intl.NumberFormat('en-GB', { style: 'currency', currency: 'GBP' }).format(value);
 }
 
+function recommendationTypeLabel(type: 'upsell' | 'cross_sell'): string {
+  return type === 'upsell' ? 'Upsell / upgrade' : 'Cross-sell / perfect pairing';
+}
+
 export default function UpsellsAdminPage() {
   const [upsells, setUpsells] = useState<Upsell[]>([]);
   const [products, setProducts] = useState<Product[]>([]);
@@ -176,7 +180,9 @@ export default function UpsellsAdminPage() {
         (!editingUpsell || u.id !== editingUpsell.id)
     );
     if (isDuplicate) {
-      setFormError('Duplicate entry — this source → target combination already exists for this type.');
+      const sourceName = products.find(p => p.id === formData.source_product_id)?.name || 'this source product';
+      const targetName = products.find(p => p.id === formData.target_product_id)?.name || 'this target product';
+      setFormError(`${recommendationTypeLabel(formData.upsell_type)} already exists from ${sourceName} to ${targetName}. Edit the existing row or choose a different target/type.`);
       return;
     }
 
@@ -255,6 +261,26 @@ export default function UpsellsAdminPage() {
     return u.source_product_id === filterProduct;
   });
 
+  const selectedSource = products.find(p => p.id === formData.source_product_id);
+  const selectedTarget = products.find(p => p.id === formData.target_product_id);
+  const selectedDuplicate = upsells.find(
+    u =>
+      u.source_product_id === formData.source_product_id &&
+      u.target_product_id === formData.target_product_id &&
+      u.upsell_type === formData.upsell_type &&
+      (!editingUpsell || u.id !== editingUpsell.id)
+  );
+
+  function targetHasDuplicate(targetProductId: string): boolean {
+    return upsells.some(
+      u =>
+        u.source_product_id === formData.source_product_id &&
+        u.target_product_id === targetProductId &&
+        u.upsell_type === formData.upsell_type &&
+        (!editingUpsell || u.id !== editingUpsell.id)
+    );
+  }
+
   if (loading) {
     return (
       <div className="min-h-screen bg-off-white p-8">
@@ -297,7 +323,7 @@ export default function UpsellsAdminPage() {
         </div>
       )}
 
-      <div className="max-w-7xl mx-auto">
+        <div className="max-w-7xl mx-auto">
         {/* Header */}
         <div className="flex items-center justify-between mb-8">
           <div>
@@ -317,6 +343,21 @@ export default function UpsellsAdminPage() {
             >
               + Add Upsell
             </button>
+          </div>
+        </div>
+
+        <div className="mb-6 grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div className="bg-white border border-deep-green/10 rounded-xl p-4">
+            <p className="text-xs font-semibold uppercase tracking-wide text-deep-green/50 mb-1">Source product</p>
+            <p className="text-sm text-deep-green">The product page where the recommendation appears.</p>
+          </div>
+          <div className="bg-white border border-deep-green/10 rounded-xl p-4">
+            <p className="text-xs font-semibold uppercase tracking-wide text-deep-green/50 mb-1">Target product</p>
+            <p className="text-sm text-deep-green">The product being recommended to the shopper.</p>
+          </div>
+          <div className="bg-white border border-deep-green/10 rounded-xl p-4">
+            <p className="text-xs font-semibold uppercase tracking-wide text-deep-green/50 mb-1">Type</p>
+            <p className="text-sm text-deep-green">Cross-sell adds a pairing. Upsell promotes an upgrade.</p>
           </div>
         </div>
 
@@ -463,6 +504,14 @@ export default function UpsellsAdminPage() {
             </div>
 
             <div className="p-6 space-y-6">
+              <div className="rounded-xl border border-gold/30 bg-gold/10 p-4">
+                <p className="text-sm font-semibold text-deep-green mb-1">How this rule works</p>
+                <p className="text-sm text-deep-green/70">
+                  Show <strong>{selectedTarget?.name || 'a target product'}</strong> on the <strong>{selectedSource?.name || 'source product'}</strong> page as a <strong>{recommendationTypeLabel(formData.upsell_type)}</strong>.
+                  Each source, target, and type combination can only be created once.
+                </p>
+              </div>
+
               {/* Inline error */}
               {formError && (
                 <div className="flex items-start gap-2 p-3 bg-red-50 border border-red-200 rounded-lg text-sm text-red-700">
@@ -479,7 +528,7 @@ export default function UpsellsAdminPage() {
                   <label className="block text-sm font-medium text-deep-green mb-1">Source Product *</label>
                   <select
                     value={formData.source_product_id}
-                    onChange={e => { setFormError(null); setFormData(prev => ({ ...prev, source_product_id: e.target.value })); }}
+                    onChange={e => { setFormError(null); setFormData(prev => ({ ...prev, source_product_id: e.target.value, target_product_id: prev.target_product_id === e.target.value ? '' : prev.target_product_id })); }}
                     className="w-full px-3 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-deep-green/20"
                   >
                     <option value="">Select product...</option>
@@ -499,11 +548,21 @@ export default function UpsellsAdminPage() {
                     <option value="">Select product...</option>
                     {products
                       .filter(p => p.id !== formData.source_product_id)
-                      .map(p => (
-                        <option key={p.id} value={p.id}>{p.name}</option>
-                      ))}
+                      .map(p => {
+                        const duplicate = targetHasDuplicate(p.id);
+                        return (
+                          <option key={p.id} value={p.id} disabled={duplicate}>
+                            {p.name}{duplicate ? ' - already added for this type' : ''}
+                          </option>
+                        );
+                      })}
                   </select>
                   <p className="text-xs text-gray-500 mt-1">Product being recommended</p>
+                  {selectedDuplicate && (
+                    <p className="text-xs text-red-600 mt-1">
+                      This recommendation already exists. Use the edit icon on the existing table row.
+                    </p>
+                  )}
                 </div>
               </div>
 
@@ -517,7 +576,7 @@ export default function UpsellsAdminPage() {
                       name="upsell_type"
                       value="cross_sell"
                       checked={formData.upsell_type === 'cross_sell'}
-                      onChange={e => setFormData(prev => ({ ...prev, upsell_type: e.target.value as 'cross_sell' }))}
+                      onChange={e => { setFormError(null); setFormData(prev => ({ ...prev, upsell_type: e.target.value as 'cross_sell' })); }}
                       className="w-4 h-4 text-deep-green"
                     />
                     <span className="text-sm text-deep-green">Cross-sell (Perfect Pairings)</span>
@@ -528,7 +587,7 @@ export default function UpsellsAdminPage() {
                       name="upsell_type"
                       value="upsell"
                       checked={formData.upsell_type === 'upsell'}
-                      onChange={e => setFormData(prev => ({ ...prev, upsell_type: e.target.value as 'upsell' }))}
+                      onChange={e => { setFormError(null); setFormData(prev => ({ ...prev, upsell_type: e.target.value as 'upsell' })); }}
                       className="w-4 h-4 text-deep-green"
                     />
                     <span className="text-sm text-deep-green">Upsell (Upgrade)</span>

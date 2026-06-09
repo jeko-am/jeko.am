@@ -710,6 +710,7 @@ function DesktopPostCard({
   const [reporting, setReporting] = useState(false);
   const [reported, setReported] = useState(false);
   const [deleting, setDeleting] = useState(false);
+  const [deleteError, setDeleteError] = useState<string | null>(null);
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
   const [captionExpanded, setCaptionExpanded] = useState(false);
   const [showCopied, setShowCopied] = useState(false);
@@ -812,7 +813,9 @@ function DesktopPostCard({
   }
 
   async function handleDelete() {
+    if (!canDelete) return;
     setDeleting(true);
+    setDeleteError(null);
     try {
       const { error } = await supabase
         .from("posts")
@@ -821,7 +824,9 @@ function DesktopPostCard({
 
       if (error) throw error;
       onDelete(post.id);
-    } catch {
+    } catch (err: unknown) {
+      const message = err instanceof Error ? err.message : t("community.somethingWrong");
+      setDeleteError(message);
       setDeleting(false);
       setShowDeleteConfirm(false);
     }
@@ -1000,6 +1005,13 @@ function DesktopPostCard({
           )}
         </div>
       </div>
+      {deleteError && (
+        <div className="px-4 pb-2">
+          <p className="text-[11px] text-red-600 bg-red-50 border border-red-100 rounded-lg px-3 py-1.5">
+            {deleteError}
+          </p>
+        </div>
+      )}
 
       {/* Login tooltip */}
       {loginTooltip && (
@@ -1117,6 +1129,7 @@ function MobilePostCard({
   const [reporting, setReporting] = useState(false);
   const [reported, setReported] = useState(false);
   const [deleting, setDeleting] = useState(false);
+  const [deleteError, setDeleteError] = useState<string | null>(null);
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
   const [captionExpanded, setCaptionExpanded] = useState(false);
   const [showCopied, setShowCopied] = useState(false);
@@ -1219,7 +1232,9 @@ function MobilePostCard({
   }
 
   async function handleDelete() {
+    if (!canDelete) return;
     setDeleting(true);
+    setDeleteError(null);
     try {
       const { error } = await supabase
         .from("posts")
@@ -1228,7 +1243,9 @@ function MobilePostCard({
 
       if (error) throw error;
       onDelete(post.id);
-    } catch {
+    } catch (err: unknown) {
+      const message = err instanceof Error ? err.message : t("community.somethingWrong");
+      setDeleteError(message);
       setDeleting(false);
       setShowDeleteConfirm(false);
     }
@@ -1359,6 +1376,13 @@ function MobilePostCard({
           )}
         </div>
       </div>
+      {deleteError && (
+        <div className="px-4 pb-2">
+          <p className="text-[11px] text-red-600 bg-red-50 border border-red-100 rounded-lg px-3 py-1.5">
+            {deleteError}
+          </p>
+        </div>
+      )}
 
       {/* Image - full width, edge-to-edge */}
       {post.image_url && !postImgError && (

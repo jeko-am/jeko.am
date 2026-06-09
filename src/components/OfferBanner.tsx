@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useSignupUrl } from "@/lib/useSignupUrl";
 import { useContentT } from "@/lib/i18n/useContentT";
 import { dynFontClass, dynFontStyle } from "@/lib/dynamic-font-size";
+import { normalizeContentUrl } from "@/lib/content-field";
 
 const Sparkle = () => (
   <svg
@@ -29,7 +30,7 @@ export default function OfferBanner({ content }: { content?: Record<string, any>
 
   const primaryText = ct("primary_text", "home.offer.primaryText");
   const secondaryText = ct("secondary_text", "home.offer.secondaryText");
-  const linkUrl = typeof content?.link_url === "string" ? content.link_url : signupUrl;
+  const linkUrl = normalizeContentUrl(content?.link_url, signupUrl);
   const bgColor = content?.background_color || "#5F295E";
   const showBanner = primaryText.trim() !== "" || secondaryText.trim() !== "";
   const canLink = content?.link_visible !== false && linkUrl.trim() !== "";
